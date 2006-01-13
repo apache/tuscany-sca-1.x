@@ -58,8 +58,8 @@
 
     <modules>
         <module>spec</module>
+        <module>sca</module>
         <!--
-            <module>runtime</module>
             <module>das</module>
             <module>tools</module>
             <module>samples</module>
