@@ -15,17 +15,33 @@
  *  limitations under the License.
  -->
 <project>
-    <parent>
-        <groupId>org.osoa</groupId>
-        <artifactId>tuscany</artifactId>
-        <version>SNAPSHOT</version>
-    </parent>
+    <!-- to keep separation between project and spec we do not extend the Tuscany project POM -->
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.osoa</groupId>
     <artifactId>spec</artifactId>
     <packaging>pom</packaging>
-    <name>OSOA Specifications</name>
+    <name>OSOA Specification API jars</name>
     <version>SNAPSHOT</version>
+
+    <prerequisites>
+        <maven>2.0</maven>
+    </prerequisites>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <repositories>
+        <repository>
+            <id>ibiblio</id>
+            <name>ibiblio</name>
+            <url>http://www.ibiblio.org/maven2</url>
+        </repository>
+    </repositories>
 
     <modules>
         <!--
@@ -34,4 +50,36 @@
         <module>sca</module>
     </modules>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                    <resources>
+                        <resource>
+                            <directory>src/main/resources</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+        <defaultGoal>install</defaultGoal>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jxr-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
