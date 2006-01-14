@@ -58,10 +58,10 @@
 
     <modules>
         <module>spec</module>
+        <module>das</module>
         <module>sca</module>
         <module>samples</module>
         <!--
-            <module>das</module>
             <module>tools</module>
             <module>acceptance</module>
         -->

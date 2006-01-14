@@ -28,7 +28,7 @@
     <version>SNAPSHOT</version>
 
     <modules>
-        <!--<module>bigbank</module>-->
         <module>helloworld</module>
+        <module>bigbank</module>
     </modules>
 </project>
