@@ -26,24 +26,18 @@
     <version>SNAPSHOT</version>
 
     <dependencies>
-        <!--
-            <dependency>
-                <groupId>org.osoa</groupId>
-                <artifactId>sdo-api</artifactId>
-                <version>SNAPSHOT</version>
-            </dependency>
-        -->
-
         <dependency>
-            <groupId>org.eclipse.emf</groupId>
-            <artifactId>commonj-sdo</artifactId>
-            <version>2.1.0</version>
+            <groupId>commonj</groupId>
+            <artifactId>sdo-api</artifactId>
+            <version>SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

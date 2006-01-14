@@ -44,9 +44,7 @@
     </repositories>
 
     <modules>
-        <!--
-            <module>sdo</module>
-        -->
+        <module>sdo</module>
         <module>sca</module>
     </modules>
 
