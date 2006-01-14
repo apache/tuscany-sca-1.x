@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SDO CommonJ APIs
+Bundle-SymbolicName: org.apache.tuscany.sdo.spec
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Bundle-Vendor: Apache
+Export-Package: commonj.sdo,
+ commonj.sdo.helper,
+ commonj.sdo.impl
