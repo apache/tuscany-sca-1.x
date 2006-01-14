@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SCA APIs
+Bundle-SymbolicName: org.apache.tuscany.sca.spec
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Bundle-Vendor: Apache
+Export-Package: org.osoa.sca, org.osoa.sca.annotations, org.osoa.sca.model
