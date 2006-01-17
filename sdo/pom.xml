@@ -21,18 +21,13 @@
         <version>SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>tuscany-sca</artifactId>
+    <artifactId>tuscany-sdo</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Implementation Project</name>
+    <name>Tuscany SDO Implementation Project</name>
     <version>SNAPSHOT</version>
 
     <modules>
-        <module>common</module>
-        <module>model</module>
-        <module>core</module>
-        <module>binding.axis</module>
-        <module>container.java</module>
-        <module>tomcat</module>
+        <module>impl</module>
     </modules>
 
     <build>
@@ -47,19 +42,5 @@
                 </configuration>
             </plugin>
         </plugins>
-        <testResources>
-            <testResource>
-                <directory>src/test/java</directory>
-                <includes>
-                    <include>**/*.componentType</include>
-                </includes>
-            </testResource>
-            <testResource>
-                <directory>src/test/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-            </testResource>
-        </testResources>
     </build>
 </project>

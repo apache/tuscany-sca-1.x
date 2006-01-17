@@ -58,6 +58,7 @@
 
     <modules>
         <module>spec</module>
+        <module>sdo</module>
         <module>das</module>
         <module>sca</module>
         <module>samples</module>
