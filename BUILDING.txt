@@ -1,0 +1,41 @@
+Building tuscany/java
+=====================
+
+Initial setup
+-------------
+
+0) Install J2SE 5.0 SDK (1.5.2_02 works)
+
+1) Install Maven:
+
+Download maven 2.0.2 (download from http://maven.apache.org/download.html).
+Set the env variable MAVEN_HOME to point at your maven installation.
+Add $MAVEN_HOME/bin to your path.
+
+2) Install required Sun jars that can't be re-hosted by maven repos:
+
+You need to download the following from Sun directly:
+
+ jaf-1_0_2-upd2.zip
+ url:  http://java.sun.com/products/javabeans/glasgow/jaf.html
+ jar:  activation.jar
+
+ javamail-1_3_3_01.zip (actual requirement is for 1.3.2, but 1.3.3 works)
+ url:  http://java.sun.com/products/javamail/downloads/index.html
+ jar:  mail.jar
+
+Use the following mvn command-lines to install these into your repo:
+
+mvn install:install-file -Dfile=activation.jar -DgroupId=javax.activation
+-DartifactId=activation -Dversion=1.0.2 -Dpackaging=jar
+mvn install:install-file -Dfile=mail.jar -DgroupId=javax.mail
+-DartifactId=mail -Dversion=1.3.2 -Dpackaging=jar
+
+The -Dfile property wants the full path to each jar.
+
+
+Building
+--------
+
+1) cd tuscany/java
+2) mvn
