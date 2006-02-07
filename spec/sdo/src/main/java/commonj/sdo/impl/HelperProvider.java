@@ -106,7 +106,8 @@ public abstract class HelperProvider {
      * The name of the implementation to use is determined by the value of the "commonj.sdo.impl.HelperProvider"
      * system property. If this is not set or this code does not have permission to read it then the name
      * will be retrieved from the META-INF/services/commonj.sdo.impl.HelperProvider resource as returned
-     * by the supplied classloader as described
+     * by the supplied classloader as described in the
+     * <a href="http://java.sun.com/j2se/1.5.0/docs/guide/jar/jar.html#Service%20Provider">JAR file specification</a>.
      *
      * @param cl the classloader to use to locate and instantiate the implementation
      * @return the specified implementation of HelperProvider
@@ -204,6 +205,8 @@ public abstract class HelperProvider {
         }
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // implementation specific methods for users that don't want to use the default implementation
 
     /**
@@ -270,6 +273,8 @@ public abstract class HelperProvider {
      */
     public abstract ExternalizableDelegator.Resolvable resolvable(Object target);
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // static helper methods required by the specification
 
     /**
