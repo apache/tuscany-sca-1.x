@@ -75,9 +75,11 @@ public abstract class HelperProvider {
      * Attempt to locate a HelperProvider using first the Thread's current context classloader and then,
      * if that is not set, not readable, or does not provide an implementation, using the classloader
      * used to load the HelperProvider class itself.
+     * <p/>
+     * A new instance is returned for each sucessful invocation.
      *
      * @return an implementation of HelperProvider
-     * @throws NoHelperProviderException if no provider implmentation was defined or it could not be instantiated
+     * @throws NoHelperProviderException if no provider implementation was defined or it could not be instantiated
      */
     public static HelperProvider getInstance() throws NoHelperProviderException {
         String implName = getImplementationName();
@@ -108,10 +110,12 @@ public abstract class HelperProvider {
      * will be retrieved from the META-INF/services/commonj.sdo.impl.HelperProvider resource as returned
      * by the supplied classloader as described in the
      * <a href="http://java.sun.com/j2se/1.5.0/docs/guide/jar/jar.html#Service%20Provider">JAR file specification</a>.
+     * <p/>
+     * A new instance is returned for each sucessful invocation.
      *
      * @param cl the classloader to use to locate and instantiate the implementation
      * @return the specified implementation of HelperProvider
-     * @throws NoHelperProviderException if no provider implmentation was defined or it could not be instantiated
+     * @throws NoHelperProviderException if no provider implementation was defined or it could not be instantiated
      */
     public static HelperProvider getInstance(ClassLoader cl) throws NoHelperProviderException {
         String implName = getImplementationName();
