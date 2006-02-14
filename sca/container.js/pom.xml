@@ -16,15 +16,14 @@
  -->
 <project>
     <parent>
-        <groupId>org.apache.tuscany.samples.helloworld</groupId>
-        <artifactId>helloworld-samples</artifactId>
+        <groupId>org.apache.tuscany</groupId>
+        <artifactId>tuscany-sca</artifactId>
         <version>SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>helloworld</artifactId>
-    <packaging>jar</packaging>
-    <name>Tuscany sample HelloWorld</name>
-    <description>Sample classic helloworld</description>
+    <artifactId>tuscany-container-js</artifactId>
+    <name>Tuscany JavaScript Component Implementation Type</name>
+    <description>Tuscany JavaScript Component Implementation Type.</description>
     <version>SNAPSHOT</version>
 
     <dependencies>
@@ -34,17 +33,12 @@
             <version>${pom.version}</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
-            <groupId>org.apache.tuscany</groupId>
-            <artifactId>tuscany-container-java</artifactId>
-            <version>${pom.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tuscany</groupId>
-            <artifactId>tuscany-container-js</artifactId>
-            <version>${pom.version}</version>
-            <scope>compile</scope>
+            <groupId>rhino</groupId>
+            <artifactId>js</artifactId>
+            <version>1.6R2</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

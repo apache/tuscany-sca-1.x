@@ -40,6 +40,12 @@
             <version>${pom.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany</groupId>
+            <artifactId>tuscany-container-js</artifactId>
+            <version>${pom.version}</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
