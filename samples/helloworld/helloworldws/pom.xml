@@ -27,6 +27,26 @@
     <description>Sample classic helloworld SCA Service</description>
     <version>SNAPSHOT</version>
 
+<build>
+
+     <plugins>
+
+       <plugin>
+
+         <artifactId>maven-war-plugin</artifactId>
+
+
+         <configuration>
+
+           <warName>tuscany-samples-helloworldws-service</warName>
+
+         </configuration>
+
+       </plugin>
+
+     </plugins>
+
+   </build>
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany</groupId>

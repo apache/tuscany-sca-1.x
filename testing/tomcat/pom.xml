@@ -26,13 +26,21 @@
     <name>Tuscany Testing in Tomcat</name>
     <version>SNAPSHOT</version>
 
+
     <modules>
-        <module>helloworldweb</module>
-<!--
-        <module>bigbank</module>
-        <module>helloworldaxis</module>
-        <module>helloworldwebdas</module>
         <module>helloworldws</module>
+<!--
+        <module>helloworldaxis</module>
+  these can't seem to run cause they need htmlunit and the dependencies download
+  seems broken for htmlunit
+        htmlunit:htmlunit:jar:1.7
+         dom4j:dom4j:jar:1.5
+        javax.xml:jsr173:jar:1.0  jar seems to be missing here http://www.ibiblio.org/maven2/javax/xml/jsr173/1.0/
+
+
+        <module>helloworldweb</module>
+        <module>bigbank</module>
+        <module>helloworldwebdas</module>
 -->
     </modules>
 
