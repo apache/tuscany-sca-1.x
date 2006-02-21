@@ -16,8 +16,6 @@
  */
 package org.osoa.sca;
 
-import org.osoa.sca.model.Module;
-
 
 /**
  * @version $Rev$ $Date$
@@ -38,13 +36,14 @@ public interface ModuleContext {
      */
     String getURI();
 
-    /**
-     * Returns the Module metadata object.
-     * This represents the root &lt;module&gt; element in the SCA module definition.
-     *
-     * @return the module metadata object
-     */
-    Module getMetaData();
+//FIXME This is not implemented yet, we need the SCA spec to define the metadata model first.
+//    /**
+//     * Returns the Module metadata object.
+//     * This represents the root &lt;module&gt; element in the SCA module definition.
+//     *
+//     * @return the module metadata object
+//     */
+//    Module getMetaData();
 
     /**
      * Returns the request context that corresponds to the last remotable service invocation.
