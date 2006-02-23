@@ -31,7 +31,7 @@
 
 <xsd:attribute name="package" type="xsd:string" />
 <xsd:attribute name="instanceClass" type="xsd:string" />
-<xsd:attribute name="extenedInstanceClass" type="xsd:string" />
+<xsd:attribute name="extendedInstanceClass" type="xsd:string" />
 <xsd:attribute name="nestedInterfaces" type="xsd:boolean" />
 
 <!--
