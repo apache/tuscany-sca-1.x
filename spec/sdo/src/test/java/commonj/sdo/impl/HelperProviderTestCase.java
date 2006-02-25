@@ -30,17 +30,20 @@ import test.TCCL1HelperProvider;
 public class HelperProviderTestCase extends TestCase {
     private URL classes;
     private URL testClasses;
+    private URL def;
     private URL tccl1;
 
     public void testInstanceIsNullWithNoImplementation() throws Exception {
-        ClassLoader cl = new URLClassLoader(new URL[]{classes}, null);
-        Class<?> providerClass = cl.loadClass("commonj.sdo.impl.HelperProvider");
-        assertNull(providerClass.getField("INSTANCE").get(null));
+        assertNull(HelperProvider.INSTANCE);
     }
 
-    public void testDefaultInstance() {
-        assertNotNull(HelperProvider.INSTANCE);
-        assertEquals(DefaultHelperProvider.class, HelperProvider.INSTANCE.getClass());
+    public void testDefaultInstance() throws Exception {
+        ClassLoader cl = new URLClassLoader(new URL[]{classes, def, testClasses}, null);
+        Class<?> providerClass = cl.loadClass(HelperProvider.class.getName());
+        Class<?> implClass = cl.loadClass(DefaultHelperProvider.class.getName());
+        Object instance = providerClass.getField("INSTANCE").get(null);
+        assertNotNull(instance);
+        assertEquals(implClass, instance.getClass());
     }
 
     public void testLocateFromClassLoader() throws Exception {
@@ -83,5 +86,6 @@ public class HelperProviderTestCase extends TestCase {
         classes = new URL(HelperProvider.class.getResource("HelperProvider.class"), "../../..");
         testClasses = new URL(HelperProviderTestCase.class.getResource("HelperProviderTestCase.class"), "../../..");
         tccl1 = new URL(testClasses, "tccl1/");
+        def = new URL(testClasses, "default/");
     }
 }
