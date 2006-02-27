@@ -32,5 +32,9 @@
         <binding.ws port="http://helloworldaxis.samples.tuscany.apache.org#wsdl.endpoint(HelloWorldServiceImplService/helloworldws)"/>
         -->
     </externalService>
+    
+    <import.wsdl
+		location="wsdl/helloworld.wsdl"
+		namespace="http://helloworldaxis.samples.tuscany.apache.org"/>
 
 </module>
