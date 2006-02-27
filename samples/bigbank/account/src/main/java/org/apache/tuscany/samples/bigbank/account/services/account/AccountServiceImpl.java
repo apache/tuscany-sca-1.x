@@ -18,16 +18,18 @@ package org.apache.tuscany.samples.bigbank.account.services.account;
 
 import java.util.List;
 
-import org.osoa.sca.annotations.Property;
-import org.osoa.sca.annotations.Reference;
-
-import org.apache.tuscany.core.deprecated.sdo.util.DataFactory;
-import org.apache.tuscany.core.deprecated.sdo.util.impl.HelperProviderImpl;
+import org.apache.tuscany.samples.bigbank.account.AccountReport;
+import org.apache.tuscany.samples.bigbank.account.AccountSummary;
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.AccountDataService;
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.CheckingAccount;
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.SavingsAccount;
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.StockAccount;
 import org.apache.tuscany.samples.bigbank.account.services.stockquote.StockQuoteService;
+import org.apache.tuscany.sdo.helper.HelperProviderImpl;
+import org.osoa.sca.annotations.Property;
+import org.osoa.sca.annotations.Reference;
+
+import commonj.sdo.helper.DataFactory;
 
 public class AccountServiceImpl implements AccountService {
 

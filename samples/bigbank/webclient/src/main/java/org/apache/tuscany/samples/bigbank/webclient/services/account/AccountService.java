@@ -16,6 +16,7 @@
  */
 package org.apache.tuscany.samples.bigbank.webclient.services.account;
 
+import org.apache.tuscany.samples.bigbank.account.AccountReport;
 import org.osoa.sca.annotations.Remotable;
 
 @Remotable

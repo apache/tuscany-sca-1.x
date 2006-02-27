@@ -53,6 +53,9 @@
     <import.wsdl
 		location="wsdl/AccountService.wsdl"
 		namespace="http://www.bigbank.com/AccountService/"/>
+    <import.wsdl
+		location="wsdl/StockQuoteWebService.wsdl"
+		namespace="http://webservice.stockquote"/>
 		
 </module>
 	

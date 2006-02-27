@@ -48,4 +48,29 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tuscany</groupId>
+                <artifactId>tuscany-sdo-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <schemaFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</schemaFile>
+                            <javaPackage>org.apache.tuscany.samples.bigbank.account</javaPackage>
+                            <noNotification>true</noNotification>
+                            <noContainer>true</noContainer>
+                            <noInterfaces>true</noInterfaces>
+                            <noUnsettable>true</noUnsettable>
+                        </configuration>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

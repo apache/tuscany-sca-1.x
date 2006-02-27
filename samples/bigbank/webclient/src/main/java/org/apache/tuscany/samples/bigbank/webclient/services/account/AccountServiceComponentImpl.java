@@ -16,9 +16,11 @@
  */
 package org.apache.tuscany.samples.bigbank.webclient.services.account;
 
-import commonj.sdo.DataObject;
+import org.apache.tuscany.samples.bigbank.account.AccountReport;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
+
+import commonj.sdo.DataObject;
 
 /**
  */

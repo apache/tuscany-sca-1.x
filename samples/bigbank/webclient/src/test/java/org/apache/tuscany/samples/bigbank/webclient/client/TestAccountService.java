@@ -18,13 +18,12 @@ package org.apache.tuscany.samples.bigbank.webclient.client;
 
 import java.util.List;
 
+import org.apache.tuscany.core.client.TuscanyRuntime;
+import org.apache.tuscany.samples.bigbank.account.AccountReport;
+import org.apache.tuscany.samples.bigbank.webclient.services.account.AccountService;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
 import org.osoa.sca.SCA;
-
-import org.apache.tuscany.core.client.TuscanyRuntime;
-import org.apache.tuscany.samples.bigbank.webclient.services.account.AccountReport;
-import org.apache.tuscany.samples.bigbank.webclient.services.account.AccountService;
 
 
 public class TestAccountService extends SCA {
