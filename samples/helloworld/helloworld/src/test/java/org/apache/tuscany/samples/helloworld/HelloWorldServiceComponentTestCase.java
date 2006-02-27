@@ -44,8 +44,7 @@ public class HelloWorldServiceComponentTestCase extends TestCase {
                 + moduleContext.getName() + "'");
         System.out.println("module context uri '" + moduleContext.getURI()
                 + "'");
-        HelloWorldServiceComponent helloworldService = (HelloWorldServiceComponent) moduleContext
-                .locateService("HelloWorldServiceComponent");
+        HelloWorldServiceComponent helloworldService = (HelloWorldServiceComponent) moduleContext.locateService("HelloWorldServiceComponent");
 
         assertNotNull(helloworldService);
 
