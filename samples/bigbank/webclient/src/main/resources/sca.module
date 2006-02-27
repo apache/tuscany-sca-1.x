@@ -47,5 +47,9 @@
         <binding.ws port="http://www.bigbank.com/AccountService/#AccountServiceSOAP"/>
     </externalService>
 
+    <import.wsdl
+		location="wsdl/AccountService.wsdl"
+		namespace="http://www.bigbank.com/AccountService/"/>
+		
 </module>
 	

@@ -50,5 +50,9 @@
         </externalService>
     -->
 
+    <import.wsdl
+		location="wsdl/AccountService.wsdl"
+		namespace="http://www.bigbank.com/AccountService/"/>
+		
 </module>
 	
