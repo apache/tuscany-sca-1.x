@@ -31,4 +31,8 @@
         <implementation.java class="org.apache.tuscany.samples.helloworldws.HelloWorldServiceComponentImpl"/>
     </component>
     
+    <import.wsdl
+		location="wsdl/helloworld.wsdl"
+		namespace="http://helloworldaxis.samples.tuscany.apache.org"/>
+
 </module>
