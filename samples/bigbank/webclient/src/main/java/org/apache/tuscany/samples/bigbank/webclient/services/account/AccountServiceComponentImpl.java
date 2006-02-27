@@ -16,6 +16,7 @@
  */
 package org.apache.tuscany.samples.bigbank.webclient.services.account;
 
+import org.apache.tuscany.samples.bigbank.account.AccountFactory;
 import org.apache.tuscany.samples.bigbank.account.AccountReport;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
@@ -24,6 +25,8 @@ import org.osoa.sca.annotations.Service;
  */
 @Service(AccountService.class)
 public class AccountServiceComponentImpl implements AccountService {
+    
+    private final static AccountFactory accountFactory=new AccountFactory();
 
     @Reference
     public AccountService accountService;

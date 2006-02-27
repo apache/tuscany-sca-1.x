@@ -31,7 +31,7 @@ import org.osoa.sca.annotations.Reference;
 
 public class AccountServiceImpl implements AccountService {
 
-    private AccountFactory accountFactory=new AccountFactory();
+    private final static AccountFactory accountFactory=new AccountFactory();
 
     @Property
     private String currency = "USD";
