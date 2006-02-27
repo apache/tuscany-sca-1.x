@@ -20,8 +20,6 @@ import org.apache.tuscany.samples.bigbank.account.AccountReport;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
-import commonj.sdo.DataObject;
-
 /**
  */
 @Service(AccountService.class)
@@ -41,8 +39,7 @@ public class AccountServiceComponentImpl implements AccountService {
      * @see org.apache.tuscany.samples.bigbank.webclient.services.account.AccountService#getAccountReport(java.lang.String)
      */
     public AccountReport getAccountReport(String customerID) {
-        DataObject report = (DataObject) accountService.getAccountReport(customerID);
-        return (AccountReport) report;
+        return accountService.getAccountReport(customerID);
     }
 
 }

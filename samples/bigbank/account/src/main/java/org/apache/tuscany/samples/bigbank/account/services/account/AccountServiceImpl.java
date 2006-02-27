@@ -18,6 +18,7 @@ package org.apache.tuscany.samples.bigbank.account.services.account;
 
 import java.util.List;
 
+import org.apache.tuscany.samples.bigbank.account.AccountFactory;
 import org.apache.tuscany.samples.bigbank.account.AccountReport;
 import org.apache.tuscany.samples.bigbank.account.AccountSummary;
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.AccountDataService;
@@ -25,15 +26,12 @@ import org.apache.tuscany.samples.bigbank.account.services.accountdata.CheckingA
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.SavingsAccount;
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.StockAccount;
 import org.apache.tuscany.samples.bigbank.account.services.stockquote.StockQuoteService;
-import org.apache.tuscany.sdo.helper.HelperProviderImpl;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
 
-import commonj.sdo.helper.DataFactory;
-
 public class AccountServiceImpl implements AccountService {
 
-    private DataFactory dataFactory;
+    private AccountFactory accountFactory=new AccountFactory();
 
     @Property
     private String currency = "USD";
@@ -44,31 +42,29 @@ public class AccountServiceImpl implements AccountService {
     private StockQuoteService stockQuoteService;
 
     public AccountServiceImpl() {
-        //FIXME How do we get a DataFactory now?? looks like there's no way to inject one into the component...
-        dataFactory = new HelperProviderImpl().getDataFactory();
     }
 
     public AccountReport getAccountReport(String customerID) {
 
-        AccountReport accountReport = (AccountReport) dataFactory.create(AccountReport.class);
+        AccountReport accountReport = accountFactory.createAccountReport();
         List accountSummaries = accountReport.getAccountSummaries();
 
         CheckingAccount checkingAccount = accountDataService.getCheckingAccount(customerID);
-        AccountSummary checkingAccountSummary = (AccountSummary) dataFactory.create(AccountSummary.class);
+        AccountSummary checkingAccountSummary = accountFactory.createAccountSummary();
         checkingAccountSummary.setAccountNumber(checkingAccount.getAccountNumber());
         checkingAccountSummary.setAccountType("checking");
         checkingAccountSummary.setBalance(fromUSDollarToCurrency(checkingAccount.getBalance()));
         accountSummaries.add(checkingAccountSummary);
 
         SavingsAccount savingsAccount = accountDataService.getSavingsAccount(customerID);
-        AccountSummary savingsAccountSummary = (AccountSummary) dataFactory.create(AccountSummary.class);
+        AccountSummary savingsAccountSummary = accountFactory.createAccountSummary();
         savingsAccountSummary.setAccountNumber(savingsAccount.getAccountNumber());
         savingsAccountSummary.setAccountType("savings");
         savingsAccountSummary.setBalance(fromUSDollarToCurrency(savingsAccount.getBalance()));
         accountSummaries.add(savingsAccountSummary);
 
         StockAccount stockAccount = accountDataService.getStockAccount(customerID);
-        AccountSummary stockAccountSummary = (AccountSummary) dataFactory.create(AccountSummary.class);
+        AccountSummary stockAccountSummary = accountFactory.createAccountSummary();
         stockAccountSummary.setAccountNumber(stockAccount.getAccountNumber());
         stockAccountSummary.setAccountType("stock");
         float balance = (stockQuoteService.getQuote(stockAccount.getSymbol())) * stockAccount.getQuantity();
