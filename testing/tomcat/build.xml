@@ -34,13 +34,18 @@
         </condition>
         <property name="tuscany.acceptance.tc.dir" value='target/apache-tomcat-${tuscany.acceptance.tomcat.version}' />
         <property name="tuscany.acceptance.target.dir" value='target' />
-        <property name="tuscany.acceptance.scaspec.dir" value='../spec/sca' />
 
         <property name="tuscany.acceptance.groupId" value='org/apache/tuscany' />
         <property name="tuscany.acceptance.version" value='SNAPSHOT' />
 
         <property name="tuscany.sca.acceptance.groupId" value='org/osoa' />
         <property name="tuscany.sca.acceptance.version" value='SNAPSHOT' />
+
+        <property name="tuscany.commonj.acceptance.groupId" value='commonj' />
+        <property name="tuscany.commonj.acceptance.version" value='SNAPSHOT' />
+
+        <property name="tuscany.sdo.acceptance.groupId" value='org/apache/tuscany' />
+        <property name="tuscany.sdo.acceptance.version" value='SNAPSHOT' />
 
         <property name="tuscany.acceptance.samples.dir" value='../../samples' />
         <!-- property name="tuscany.maven.repos.dir" value='${user.home}\.maven\repository' / -->
@@ -61,8 +66,6 @@
                 <available property='tuscany.acceptance.tomcat.zipped.available' file='${tuscany.acceptance.tomcat.zipped}' type='file' />
                 <available property='tuscany.acceptance.tomcat.serverxmlorg.available' file='${tuscany.acceptance.tc.dir}/conf/server.xml.original' />
                 <available property='tuscany.acceptance.tomcat.contextxmlorg.available' file='${tuscany.acceptance.tc.dir}/conf/context.xml.original' />
-                <!-- echo message='${tuscany.maven.repos.dir}' />
-                <echo message='${tuscany.acceptance.scaspec.dir}' / -->
         </target>
 
         <target name="check.for.zip" depends="init" unless='tuscany.acceptance.tomcat.zipped.available'>
@@ -80,8 +83,10 @@
                 <include name="**/${tuscany.acceptance.groupId}/tuscany-core/${tuscany.acceptance.version}/tuscany-core-${tuscany.acceptance.version}.jar" />
                 <include name="**/${tuscany.acceptance.groupId}/tuscany-model/${tuscany.acceptance.version}/tuscany-model-${tuscany.acceptance.version}.jar" />
 
+                <include name="**/${tuscany.acceptance.groupId}/tuscany-sdo-impl/${tuscany.acceptance.version}/tuscany-sdo-impl-${tuscany.acceptance.version}.jar" />
 
                 <include name="**/${tuscany.sca.acceptance.groupId}/sca-api/${tuscany.sca.acceptance.version}/sca-api-${tuscany.sca.acceptance.version}.jar" />
+                <include name="**/${tuscany.commonj.acceptance.groupId}/sdo-api/${tuscany.commonj.acceptance.version}/sdo-api-${tuscany.commonj.acceptance.version}.jar" />
 
 
         	    <!-- Kevin's mod to include DAS jar -->
@@ -95,17 +100,13 @@
                 <include name="**/axis/axis-jaxrpc/1.2.1/axis-jaxrpc-1.2.1.jar" />
                 <include name="**/axis/axis-saaj/1.2.1/axis-saaj-1.2.1.jar" />
                 <include name="**/axis/axis-wsdl4j/1.5.1/axis-wsdl4j-1.5.1.jar" />
+                <include name="**/asm/asm/2.2/asm-2.2.jar" />
 
-                <include name="**/org/eclipse/emf/commonj-sdo/2.1.0/commonj-sdo-2.1.0.jar" />
-                <include name="**/org/eclipse/emf/common/2.1.0/common-2.1.0.jar" />
-
-                <include name="**/org/eclipse/emf/common/2.1.0/common-2.1.0.jar" />
-                <include name="**/org/eclipse/emf/ecore/2.1.0/ecore-2.1.0.jar" />
-                <include name="**/org/eclipse/emf/ecore-change/2.1.0/ecore-change-2.1.0.jar" />
-                <include name="**/org/eclipse/emf/ecore-sdo/2.1.1/ecore-sdo-2.1.1.jar" />
-                <include name="**/org/eclipse/emf/ecore-xmi/2.1.0/ecore-xmi-2.1.0.jar" />
-                <include name="**/org/eclipse/wtp/wsdl/1.0.0/wsdl-1.0.0.jar" />
-                <include name="**/org/eclipse/xsd/xsd/2.1.1/xsd-2.1.1.jar" />
+                <include name="**/org/eclipse/emf/common/2.2.0-I200602160000/common-2.2.0-I200602160000.jar" />
+                <include name="**/org/eclipse/emf/ecore/2.2.0-I200602160000/ecore-2.2.0-I200602160000.jar" />
+                <include name="**/org/eclipse/emf/ecore-change/2.2.0-I200602160000/ecore-change-2.2.0-I200602160000.jar" />
+                <include name="**/org/eclipse/emf/ecore-xmi/2.2.0-I200602160000/ecore-xmi-2.2.0-I200602160000.jar" />
+                <include name="**/org/eclipse/xsd/xsd/2.2.0-I200602160000/xsd-2.2.0-I200602160000.jar" />
 
                 <include name="**/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar" />
                 <include name="**/commons-discovery/commons-discovery/0.2/commons-discovery-0.2.jar" />
