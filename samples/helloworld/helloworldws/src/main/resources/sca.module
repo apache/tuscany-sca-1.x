@@ -19,10 +19,7 @@
         name="sampleHelloworld">
 
     <entryPoint name="HelloWorldService">
-        <interface.java interface="org.apache.tuscany.samples.helloworldws.HelloWorldServiceComponent"/>
-        <!--
-        <binding.ws port="http://helloworldaxis.samples.tuscany.apache.org/helloworld#wsdl.endpoint(HelloWorldServiceImplService/helloworldws)"/>
-        -->
+        <interface.wsdl interface="http://helloworldaxis.samples.tuscany.apache.org#HelloWorldServiceImpl"/>
         <binding.ws port="http://helloworldaxis.samples.tuscany.apache.org#helloworld"/>
         <reference>HelloWorldServiceComponent</reference>
     </entryPoint>
