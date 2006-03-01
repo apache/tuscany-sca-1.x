@@ -28,9 +28,9 @@ import org.apache.tuscany.samples.bigbank.account.services.accountdata.StockAcco
 import org.apache.tuscany.samples.bigbank.account.services.stockquote.StockQuoteService;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Service;
 
-import com.bigbank.account.service.AccountService;
-
+@Service(interfaces=AccountService.class)
 public class AccountServiceImpl implements AccountService {
 
     private final static AccountFactory accountFactory=new AccountFactory();

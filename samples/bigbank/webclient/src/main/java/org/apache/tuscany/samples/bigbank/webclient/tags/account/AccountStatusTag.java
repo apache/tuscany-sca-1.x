@@ -16,18 +16,16 @@
  */
 package org.apache.tuscany.samples.bigbank.webclient.tags.account;
 
-import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.tuscany.samples.bigbank.account.services.account.AccountService;
 import org.apache.tuscany.samples.bigbank.webclient.services.profile.ProfileService;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
-
-import com.bigbank.account.service.AccountService;
 
 /**
  * Retrieves and iterates over account summary information for the current

@@ -76,7 +76,7 @@
                     <execution>
                         <configuration>
                             <wsdlFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</wsdlFile>
-                        </configuration>
+							<javaPackage>org.apache.tuscany.samples.bigbank.account.services.account</javaPackage>                        </configuration>
                         <goals>
                             <goal>generate</goal>
                         </goals>

@@ -21,7 +21,7 @@
     <entryPoint name="AccountService">
         <interface.java interface="org.apache.tuscany.samples.bigbank.account.services.account.AccountService"/>
         <binding.ws port="http://www.bigbank.com/AccountService/#AccountServiceSOAP"/>
-        <reference>AccountServiceComponent</reference>
+        <reference>AccountServiceComponent/AccountService</reference>
     </entryPoint>
 
     <component name="AccountServiceComponent">
