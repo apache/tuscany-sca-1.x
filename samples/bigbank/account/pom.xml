@@ -45,11 +45,24 @@
                     <execution>
                         <configuration>
                             <schemaFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</schemaFile>
-                            <javaPackage>org.apache.tuscany.samples.bigbank.account</javaPackage>
                             <noNotification>true</noNotification>
                             <noContainer>true</noContainer>
                             <noInterfaces>true</noInterfaces>
                             <noUnsettable>true</noUnsettable>
+                        </configuration>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tuscany</groupId>
+                <artifactId>tuscany-sca-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <wsdlFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</wsdlFile>
                         </configuration>
                         <goals>
                             <goal>generate</goal>

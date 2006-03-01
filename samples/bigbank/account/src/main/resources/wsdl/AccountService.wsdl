@@ -20,11 +20,12 @@
                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                   xmlns:account="http://www.bigbank.com/Account/"
                   targetNamespace="http://www.bigbank.com/AccountService/"
-
                   name="AccountService">
 
     <wsdl:types>
-        <xsd:schema targetNamespace="http://www.bigbank.com/Account/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:account="http://www.bigbank.com/Account/">
+        <xsd:schema targetNamespace="http://www.bigbank.com/Account/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:account="http://www.bigbank.com/Account/"
+		xmlns:sdojava="commonj.sdo/java"
+		sdojava:package="org.apache.tuscany.samples.bigbank.account">
 
             <xsd:element name="customerID" type="xsd:string"/>
             <xsd:element name="getAccountReportResponse" type="account:AccountReport"/>

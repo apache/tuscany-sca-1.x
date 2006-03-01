@@ -16,16 +16,18 @@
  */
 package org.apache.tuscany.samples.bigbank.webclient.tags.account;
 
+import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.tuscany.samples.bigbank.webclient.services.profile.ProfileService;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
 
-import org.apache.tuscany.samples.bigbank.webclient.services.account.AccountService;
-import org.apache.tuscany.samples.bigbank.webclient.services.profile.ProfileService;
+import com.bigbank.account.service.AccountService;
 
 /**
  * Retrieves and iterates over account summary information for the current
@@ -93,8 +95,12 @@ public class AccountStatusTag extends TagSupport {
             throw new JspException("Service [" + mAccountService
                     + "] not found in current module context");
         }
-        List summaries = service.getAccountReport(profile.getId())
-                .getAccountSummaries();
+        List summaries;
+        try {
+            summaries = service.getAccountReport(profile.getId()).getAccountSummaries();
+        } catch (Exception e) {
+            throw new JspException(e);
+        }
         mIterator = summaries.iterator();
         if (mIterator.hasNext()) {
             pageContext.setAttribute(mId, mIterator.next());

@@ -21,10 +21,11 @@ import java.util.Iterator;
 import org.apache.tuscany.core.client.TuscanyRuntime;
 import org.apache.tuscany.samples.bigbank.account.AccountReport;
 import org.apache.tuscany.samples.bigbank.account.AccountSummary;
-import org.apache.tuscany.samples.bigbank.account.services.account.AccountService;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
 import org.osoa.sca.SCA;
+
+import com.bigbank.account.service.AccountService;
 
 public class AccountClient extends SCA {
 

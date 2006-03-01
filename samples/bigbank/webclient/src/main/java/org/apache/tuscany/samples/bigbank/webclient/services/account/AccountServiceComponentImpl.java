@@ -18,8 +18,11 @@ package org.apache.tuscany.samples.bigbank.webclient.services.account;
 
 import org.apache.tuscany.samples.bigbank.account.AccountFactory;
 import org.apache.tuscany.samples.bigbank.account.AccountReport;
+import org.osoa.sca.ServiceUnavailableException;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
+
+import com.bigbank.account.service.AccountService;
 
 /**
  */
@@ -42,7 +45,11 @@ public class AccountServiceComponentImpl implements AccountService {
      * @see org.apache.tuscany.samples.bigbank.webclient.services.account.AccountService#getAccountReport(java.lang.String)
      */
     public AccountReport getAccountReport(String customerID) {
-        return accountService.getAccountReport(customerID);
+        try {
+            return accountService.getAccountReport(customerID);
+        } catch (Exception e) {
+            throw new ServiceUnavailableException(e);
+        }
     }
 
 }
