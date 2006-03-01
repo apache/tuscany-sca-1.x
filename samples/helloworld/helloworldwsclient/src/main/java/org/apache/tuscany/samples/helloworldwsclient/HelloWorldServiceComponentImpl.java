@@ -23,16 +23,16 @@ import org.osoa.sca.annotations.Reference;
 /**
  * This class implements the HelloWorld service component.
  */
-@Service(HelloWorldServiceComponent.class)
+@Service(HelloWorldService.class)
 //FIXME workaround for JIRA TUSCANY-41
 @Scope("MODULE")
-public class HelloWorldServiceComponentImpl implements HelloWorldServiceComponent {
+public class HelloWorldServiceComponentImpl implements HelloWorldService {
     
     @Reference
-    public HelloWorldServiceComponent hellowWorldService = null; // Injected by the SCA container.
+    public HelloWorldService hellowWorldService = null; // Injected by the SCA container.
 
     /**
-     * @see org.apache.tuscany.samples.helloworldwsclient.HelloWorldServiceComponent#getGreetings(java.lang.String)
+     * @see org.apache.tuscany.samples.helloworldwsclient.HelloWorldService#getGreetings(java.lang.String)
      */
     public String getGreetings(final String name) {
         assert null != hellowWorldService : "helloWorldService was not set by the SCA runtime!";

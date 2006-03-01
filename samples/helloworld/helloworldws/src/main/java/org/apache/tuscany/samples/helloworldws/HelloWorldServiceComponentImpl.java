@@ -21,8 +21,8 @@ import org.osoa.sca.annotations.Service;
 /**
  * This class implements the HelloWorld service component.
  */
-@Service(HelloWorldServiceComponent.class)
-public class HelloWorldServiceComponentImpl implements HelloWorldServiceComponent {
+@Service(HelloWorldService.class)
+public class HelloWorldServiceComponentImpl implements HelloWorldService {
 
      /*
       * @see org.apache.tuscany.samples.helloworld.HelloWorldServiceComponent#getGreetings()

@@ -14,12 +14,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.apache.tuscany.samples.helloworldws;
+package org.apache.tuscany.samples.helloworldwsclient;
 
 /**
  * This is the business interface of the HelloWorld service component.
  */
-public interface HelloWorldServiceComponent {
+public interface HelloWorldService {
 
     public String getGreetings(String name);
 

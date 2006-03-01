@@ -39,7 +39,7 @@ public class HelloWorldClient {
         ModuleContext moduleContext = CurrentModuleContext.getContext();
 
         // Locate the HelloWorld service component and invoke it
-        HelloWorldServiceComponent helloworldService = (HelloWorldServiceComponent) moduleContext.locateService("HelloWorldServiceComponent");
+        HelloWorldService helloworldService = (HelloWorldService) moduleContext.locateService("HelloWorldServiceComponent");
 
         String value = helloworldService.getGreetings("World");
 
