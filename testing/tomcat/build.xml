@@ -99,7 +99,7 @@
                 <include name="**/axis/axis/1.2.1/axis-1.2.1.jar" />
                 <include name="**/axis/axis-jaxrpc/1.2.1/axis-jaxrpc-1.2.1.jar" />
                 <include name="**/axis/axis-saaj/1.2.1/axis-saaj-1.2.1.jar" />
-                <include name="**/axis/axis-wsdl4j/1.5.1/axis-wsdl4j-1.5.1.jar" />
+                <include name="**/axis/axis-wsdl4j/1.2/axis-wsdl4j-1.2.jar" />
                 <include name="**/asm/asm/2.2/asm-2.2.jar" />
 
                 <include name="**/org/eclipse/emf/common/2.2.0-I200602160000/common-2.2.0-I200602160000.jar" />
