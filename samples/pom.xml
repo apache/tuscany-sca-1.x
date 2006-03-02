@@ -30,5 +30,6 @@
     <modules>
         <module>helloworld</module>
         <module>bigbank</module>
+        <module>das</module>
     </modules>
 </project>
