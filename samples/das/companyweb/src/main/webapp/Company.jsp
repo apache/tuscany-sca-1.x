@@ -22,7 +22,7 @@
 
 	pageEncoding="ISO-8859-1"
 
-        import="org.apache.tuscany.samples.das.companies.CompanyClient"
+        import="org.apache.tuscany.samples.das.companyweb.CompanyClient"
         import="commonj.sdo.*"
 %>
 
