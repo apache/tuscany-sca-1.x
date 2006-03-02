@@ -21,7 +21,7 @@ Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
     <display-name>Tuscany DAS sample Company  WEB</display-name>
 
     <welcome-file-list id="WelcomeFileList">
-        <welcome-file>CompanyWeb.jsp</welcome-file>
+        <welcome-file>Company.jsp</welcome-file>
     </welcome-file-list>
 
 </web-app>
