@@ -96,7 +96,6 @@
                 <include name="**/org/eclipse/emf/ecore-change/2.2.0-I200602160000/ecore-change-2.2.0-I200602160000.jar" />
                 <include name="**/org/eclipse/emf/ecore-xmi/2.2.0-I200602160000/ecore-xmi-2.2.0-I200602160000.jar" />
                 <include name="**/org/eclipse/xsd/xsd/2.2.0-I200602160000/xsd-2.2.0-I200602160000.jar" />
-         	<include name="**/org.apache.derby/derby/10.1.2.1/derby-10.1.2.1.jar" />
         </patternset>
         <patternset id="tuscany.acceptance.server.dependencies">
                 <include name="**/axis/axis/1.2.1/axis-1.2.1.jar" />
@@ -106,6 +105,7 @@
                 <include name="**/asm/asm/2.2/asm-2.2.jar" />
                 <include name="**/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar" />
                 <include name="**/commons-discovery/commons-discovery/0.2/commons-discovery-0.2.jar" />
+         	<include name="**/org.apache.derby/derby/10.1.2.1/derby-10.1.2.1.jar" />
         </patternset>
 
         <target name="tuscany.tomcat.unzipWindows" if="isWindows" depends='init,check.for.zip' description='Just unzip tomcat' unless='tomcat.is.available'>
@@ -143,7 +143,7 @@
         <target name="tuscany.tomcat.fixup" depends='tuscany.tomcat.fixserverconfig' description='Fix up tomcat for tuscany.'>
                 <mkdir dir="${tuscany.acceptance.target.dir}" />
 
-                <copy todir="${tuscany.acceptance.tc.dir}/common/lib" flatten='true'>
+                <copy todir="${tuscany.acceptance.tc.dir}/tuscany/lib" flatten='true'>
                         <fileset dir="${tuscany.maven.repos.dir}">
                                 <patternset refid="tuscany.acceptance.tc.common" />
                         </fileset>
@@ -156,7 +156,7 @@
                                 <patternset refid="tuscany.acceptance.common.dependencies" />
                         </fileset>
                 </copy>
-                <copy todir="${tuscany.acceptance.tc.dir}/server/lib" flatten='true'>
+                <copy todir="${tuscany.acceptance.tc.dir}/tuscany/lib" flatten='true'>
                         <fileset dir="${tuscany.maven.repos.dir}">
                                 <patternset refid="tuscany.acceptance.tc.server" />
                         </fileset>
@@ -183,15 +183,12 @@
         <target name="tuscany.tomcat.fixserverxml" depends='init,backup.server.xml'  unless='tuscany.acceptance.tomcat.serverxmlorg.available'>
                 <property name="tuscany.acceptance.tomcat.serverxmlorg.available" value='true' />
                 
-<!--
                 <xslt
                   in="${tuscany.acceptance.tc.dir}/conf/server.xml.original"
                       style="server.xsl" out="${tuscany.acceptance.tc.dir}/conf/server.xml"
                       >
 
                  </xslt>
--->
-                <copy file='server.xml' tofile='${tuscany.acceptance.tc.dir}/conf/server.xml' />
         </target>
         <target name="tuscany.tomcat.fixcontextxml" depends='init,backup.context.xml'  unless='tuscany.acceptance.tomcat.contextxmlorg.available'>
                 <property name="tuscany.acceptance.tomcat.contextxmlorg.available" value='true' />

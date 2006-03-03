@@ -31,6 +31,7 @@
     </xsl:copy>
   </xsl:template>
   
+<!--
   <xsl:template match="Context">
     <Context>
     <xsl:apply-templates select="@*" />
@@ -39,6 +40,7 @@
       select="@* | * | comment() | processing-instruction() | text()" />
     </Context>
   </xsl:template>
+-->
   
   <!-- xsl:template match="/">
     <xsl:apply-templates select="node() | @*" />
