@@ -42,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany</groupId>
-            <artifactId>tuscany-binding-axis</artifactId>
+            <artifactId>tuscany-binding-axis2</artifactId>
             <version>${pom.version}</version>
             <scope>compile</scope>
         </dependency>
