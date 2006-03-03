@@ -56,38 +56,32 @@
             <groupId>org.osoa</groupId>
             <artifactId>sca-api</artifactId>
             <version>${pom.version}</version>
-            <scope>compile</scope> 
+            <scope>provided</scope> 
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany</groupId>
             <artifactId>tuscany-core</artifactId>
             <version>${pom.version}</version>
-            <scope>runtime</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
+            <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany</groupId>
             <artifactId>tuscany-container-java</artifactId>
             <version>${pom.version}</version>
-            <scope>runtime</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
+            <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany</groupId>
             <artifactId>tuscany-binding-axis2</artifactId>
             <version>${pom.version}</version>
-            <scope>runtime</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
+            <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany</groupId>
             <artifactId>tuscany-tomcat</artifactId>
             <version>${pom.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tuscany</groupId>
-            <artifactId>tuscany-binding-axis2</artifactId>
-            <version>${pom.version}</version>
-            <scope>runtime</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
