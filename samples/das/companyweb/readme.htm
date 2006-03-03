@@ -1,130 +1,564 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 10">
+<meta name=Originator content="Microsoft Word 10">
+<link rel=File-List href="readme_files/filelist.xml">
+<title>Tuscany RDB DAS Sample</title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="place"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="State"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="City"/>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>IBM_USER</o:Author>
+  <o:LastAuthor>IBM_USER</o:LastAuthor>
+  <o:Revision>4</o:Revision>
+  <o:TotalTime>118</o:TotalTime>
+  <o:Created>2006-03-03T01:31:00Z</o:Created>
+  <o:LastSaved>2006-03-03T01:31:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>886</o:Words>
+  <o:Characters>5053</o:Characters>
+  <o:Company>IBM</o:Company>
+  <o:Lines>42</o:Lines>
+  <o:Paragraphs>11</o:Paragraphs>
+  <o:CharactersWithSpaces>5928</o:CharactersWithSpaces>
+  <o:Version>10.6735</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
 <!--
-  Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable.
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	mso-font-kerning:16.0pt;}
+p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFootnoteText
+	{mso-style-noshow:yes;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+span.MsoFootnoteReference
+	{mso-style-noshow:yes;
+	vertical-align:super;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+span.codefrag
+	{mso-style-name:codefrag;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:280770398;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1591061486 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l1
+	{mso-list-id:646667692;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-728441462 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l2
+	{mso-list-id:975526902;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1435802096 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l2:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3
+	{mso-list-id:1305811547;
+	mso-list-type:hybrid;
+	mso-list-template-ids:42887628 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l3:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4
+	{mso-list-id:1766462262;
+	mso-list-type:hybrid;
+	mso-list-template-ids:2029450580 67698689 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l4:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]-->
+</head>
 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
 
-     http://www.apache.org/licenses/LICENSE-2.0
+<div class=Section1>
 
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
- -->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head>
+<p class=MsoNormal><span class=GramE><span style='font-size:9.0pt'>Copyright<span
+style='color:black'> </span>(c)<span style='color:black'> </span>2005<span
+style='color:black'> </span>The<span style='color:black'> </span>Apache<span
+style='color:black'> </span>Software<span style='color:black'> </span>Foundation<span
+style='color:black'> </span>or<span style='color:black'> </span>its<span
+style='color:black'> </span>licensors,<span style='color:black'> </span>as<span
+style='color:black'> </span>applicable.</span></span><span style='font-size:
+9.0pt'><o:p></o:p></span></p>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<p class=MsoNormal><span style='font-size:9.0pt'>Licensed<span
+style='color:black'> </span>under<span style='color:black'> </span>the<span
+style='color:black'> </span>Apache<span style='color:black'> </span>License,<span
+style='color:black'> </span>Version<span style='color:black'> </span>2.0<span
+style='color:black'> </span>(the<span style='color:black'> </span>&quot;License&quot;);
+you<span style='color:black'> </span>may<span style='color:black'> </span>not<span
+style='color:black'> </span>use<span style='color:black'> </span>this<span
+style='color:black'> </span>file<span style='color:black'> </span>except<span
+style='color:black'> </span>in<span style='color:black'> </span>compliance<span
+style='color:black'> </span>with<span style='color:black'> </span>the<span
+style='color:black'> </span>License. You<span style='color:black'> </span>may<span
+style='color:black'> </span>obtain<span style='color:black'> </span>a<span
+style='color:black'> </span>copy<span style='color:black'> </span>of<span
+style='color:black'> </span>the<span style='color:black'> </span>License<span
+style='color:black'> </span>at<o:p></o:p></span></p>
 
-    <meta http-equiv="Content-Style-Type" content="text/css">
-    <title>Tuscany Hello World Web Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --></head>
+<p class=MsoNormal><span style='font-size:9.0pt'><o:p>&nbsp;</o:p></span></p>
 
-<body>
+<p class=MsoNormal><span style='font-size:9.0pt;color:black'><span
+style='mso-spacerun:yes'>   </span><span style='mso-spacerun:yes'>  </span></span><span
+style='font-size:9.0pt'>http://www.apache.org/licenses/LICENSE-2.0<o:p></o:p></span></p>
 
-<h2>Tuscany Hello World Web Sample</h2>
+<p class=MsoNormal><span style='font-size:9.0pt'><o:p>&nbsp;</o:p></span></p>
 
-<h3>Overview</h3>
+<p class=MsoNormal><span style='font-size:9.0pt'>Unless<span style='color:black'>
+</span>required<span style='color:black'> </span>by<span style='color:black'> </span>applicable<span
+style='color:black'> </span>law<span style='color:black'> </span>or<span
+style='color:black'> </span>agreed<span style='color:black'> </span>to<span
+style='color:black'> </span>in<span style='color:black'> </span>writing,<span
+style='color:black'> </span>software distributed<span style='color:black'> </span>under<span
+style='color:black'> </span>the<span style='color:black'> </span>License<span
+style='color:black'> </span>is<span style='color:black'> </span>distributed<span
+style='color:black'> </span>on<span style='color:black'> </span>an<span
+style='color:black'> </span>&quot;AS<span style='color:black'> </span>IS&quot;<span
+style='color:black'> </span>BASIS, WITHOUT<span style='color:black'> </span>WARRANTIES<span
+style='color:black'> </span>OR<span style='color:black'> </span>CONDITIONS<span
+style='color:black'> </span>OF<span style='color:black'> </span>ANY<span
+style='color:black'> </span>KIND,<span style='color:black'> </span>either<span
+style='color:black'> </span>express<span style='color:black'> </span>or<span
+style='color:black'> </span>implied. See<span style='color:black'> </span>the<span
+style='color:black'> </span>License<span style='color:black'> </span>for<span
+style='color:black'> </span>the<span style='color:black'> </span>specific<span
+style='color:black'> </span>language<span style='color:black'> </span>governing<span
+style='color:black'> </span>permissions<span style='color:black'> </span>and
+limitations<span style='color:black'> </span>under<span style='color:black'> </span>the<span
+style='color:black'> </span>License.<o:p></o:p></span></p>
 
-<p>The Tuscany hello world web sample shows using the Tuscany SCA
-    runtime in a Tomcat environment being accessed from a JSP
-    page&nbsp;that
-    implements the classic introductory hello world example. </p>
+<h1><st1:State><st1:place>Tuscany</st1:place></st1:State> RDB DAS Sample</h1>
 
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
-<h3>Setup</h3>Set up your server as described in the <a href="../readme.htm#Tomcat_Setup" target="_blank">Tomcat
-    Setup</a>. &nbsp;If you are not configuring with the acceptance test the server, you will need to add <span
-        style="font-weight: bold;">tuscany-samples-helloworldWEB.war</span> to your tomcat's webapp directory.<br>
+<p class=MsoNormal>This stand-alone sample demonstrates usage of the SDO RDB
+Data Access Service in the context of a simple web application.</p>
 
-<h3>Running</h3>
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
-Once you've started your web server, use your browse to view the
-following URL: <a href="http://localhost:8080/tuscany-samples-helloworldWEB/" target="_blank">http://localhost:8080/tuscany-samples-helloworldWEB/</a>
-<br>
+<p class=MsoNormal>The application starts with a canned database of Companies
+and their related Departments.<span style='mso-spacerun:yes'>  </span>Through
+the web page interface, a user can:</p>
 
-You should see a form you can supply your name and a submit button.
-&nbsp;Once you submit the form the JSP page calls a Java class that
-gets the CurrentModuleContext and locates the SCA component to execute
-the greeting service. &nbsp;Note, unlike the a J2SE in a Tomcat environment the Tuscany runtime is automatically
-initialized and running.
-<h3>Results</h3>
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
-<p>The page should be updated with the greeting displayed below
-    the form.<br>
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='mso-list:l2 level1 lfo1;tab-stops:list .5in'>Display
+     all Companies in the database</li>
+ <li class=MsoNormal style='mso-list:l2 level1 lfo1;tab-stops:list .5in'>Display
+     all Companies and related Departments</li>
+ <li class=MsoNormal style='mso-list:l2 level1 lfo1;tab-stops:list .5in'>Add a
+     new Department to a Company</li>
+ <li class=MsoNormal style='mso-list:l2 level1 lfo1;tab-stops:list .5in'>Delete
+     all Departments from a Company</li>
+ <li class=MsoNormal style='mso-list:l2 level1 lfo1;tab-stops:list .5in'>Change
+     the names of Departments in a Company</li>
+</ol>
 
-</p>
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
-<h3>Code Overview</h3>
+<p class=MsoNormal>So, this simple application covers all CRUD operations as
+well as the some relationship manipulation (adding a Department associates that
+Department with the Company).<span style='mso-spacerun:yes'>  </span>The sample
+runs on Tomcat 5.5 and uses <st1:City><st1:place>Derby</st1:place></st1:City>
+database.<span style='mso-spacerun:yes'>  </span>Access to the database is via
+a DataSource.</p>
 
-The source files are physically organized as shown below:<br>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-    <tbody>
-        <tr>
-            <td>
-                <pre>+---main<br>&brvbar;   +---java<br>&brvbar;       &brvbar;   sca.module<br>&brvbar;       &brvbar;
-                    <br>&brvbar;       +---org<br>&brvbar;           +---apache<br>&brvbar;               +---tuscany
-                    <br>&brvbar;                   +---samples<br>&brvbar;                       +---helloworldweb
-                    <br>&brvbar;                               HelloWorldServiceComponent.java<br>&brvbar;
-                    HelloWorldServiceComponentImpl.java<br>&brvbar;<br>+---webapp<br>    &brvbar;   HelloWorldWeb.jsp
-                    <br>    &brvbar;<br> +---WEB-INF<br> web.xml<br></pre>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<br>
-<br>
+<h1>Set Up</h1>
 
-<p>&nbsp;</p>
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='mso-list:l3 level1 lfo2;tab-stops:list .5in'>Download
+     and install the most recent stable version of Tomcat 5.5.<span
+     style='mso-spacerun:yes'>  </span>You can find it here: <a
+     href="http://tomcat.apache.org/download-55.cgi">http://tomcat.apache.org/download-55.cgi</a></li>
+ <li class=MsoNormal style='mso-list:l3 level1 lfo2;tab-stops:list .5in'>Down
+     load the most recent official release of <st1:City><st1:place>Derby</st1:place></st1:City>
+     from here: <a href="http://db.apache.org/derby/index.html">http://db.apache.org/derby/index.html</a>.<span
+     style='mso-spacerun:yes'>  </span>The only file you’ll need from this
+     download is <span class=SpellE>derby.jar</span></li>
+ <li class=MsoNormal style='mso-list:l3 level1 lfo2;tab-stops:list .5in'>Stop
+     Tomcat</li>
+ <li class=MsoNormal style='mso-list:l3 level1 lfo2;tab-stops:list .5in'>Move the
+     following files (details in appendix) to {<span class=SpellE>Tomcat_Home</span>}/common/lib:</li>
+ <ol style='margin-top:0in' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'><span
+      class=SpellE>tuscany-das-rdb-SNAPSHOT.jar</span></li>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'><span
+      class=SpellE>sdo-api-SNAPSHOT.jar</span></li>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'><span
+      class=SpellE>tuscany-sdo-impl-SNAPSHOT.jar</span></li>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'><span
+      class=SpellE>xsd</span>{latest version}.jar</li>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'><span
+      class=SpellE><span class=GramE>ecore</span></span><span class=GramE>-{</span>latest
+      version}..jar</li>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'><span
+      class=SpellE><span class=GramE>ecore</span></span><span class=GramE>-</span>change-{latest
+      version}..jar</li>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'><span
+      class=SpellE>ecore-xmi</span>-{latest version}.jar</li>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'>common-{latest
+      version}.jar</li>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'><span
+      class=SpellE>derby.jar</span></li>
+ </ol>
+ <li class=MsoNormal style='mso-list:l3 level1 lfo2;tab-stops:list .5in'>Add
+     the following files to {<span class=SpellE>Tomcat_Home</span>}/work</li>
+ <ol style='margin-top:0in' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'><span
+      class=SpellE>companyWeb-SNAPSHOT.war</span></li>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'><span
+      class=SpellE>CompanyAppGbl.xml</span></li>
+ </ol>
+ <li class=MsoNormal style='mso-list:l3 level1 lfo2;tab-stops:list .5in'>Install
+     the canned <st1:City><st1:place>Derby</st1:place></st1:City> database by
+     moving the <span class=SpellE>dastest</span> directory to {<span
+     class=SpellE>Tomcat_Home</span>}/Databases (you’ll have to create the
+     Databases directory)</li>
+ <li class=MsoNormal style='mso-list:l3 level1 lfo2;tab-stops:list .5in'>Define
+     a DataSource by adding a <span class=SpellE>datasource</span> definition
+     to {<span class=SpellE><span class=codefrag>Tomcat_Home</span></span><span
+     class=codefrag>}/conf/<span class=SpellE>server.xml</span></span>.</li>
+ <ol style='margin-top:0in' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'>Find
+      the end-of-section marker <span class=codefrag>&lt;/<span class=SpellE>GlobalNamingResources</span>&gt;</span>
+      and add the following lines just above it: </li>
+ </ol>
+</ol>
 
-<table style="text-align: left; width: 100%; height: 154px;" border="0" cellpadding="2" cellspacing="2">
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
 
-    <tbody>
+<pre><span style='mso-spacerun:yes'>        </span><span class=GramE><span
+style='font-size:9.0pt'>&lt;!--</span></span><span style='font-size:9.0pt'> Global <span
+class=SpellE>Datasource</span> for </span><st1:City><st1:place><span
+  style='font-size:9.0pt'>Derby</span></st1:place></st1:City><span
+style='font-size:9.0pt'> <span class=SpellE>dastest</span> database --&gt;<o:p></o:p></span></pre><pre><span
+style='font-size:9.0pt'><span style='mso-spacerun:yes'>         </span>&lt;Resource name=&quot;<span
+class=SpellE>jdbc/dastest</span>&quot;<o:p></o:p></span></pre><pre><span
+style='font-size:9.0pt'><span style='mso-spacerun:yes'>              </span><span
+class=GramE>type</span>=&quot;<span class=SpellE>javax.sql.DataSource</span>&quot;<span style='mso-spacerun:yes'>  </span>auth=&quot;Container&quot;<o:p></o:p></span></pre><pre><span
+style='font-size:9.0pt'><span style='mso-spacerun:yes'>              </span><span
+class=GramE>description</span>=&quot;</span><st1:City><st1:place><span
+  style='font-size:9.0pt'>Derby</span></st1:place></st1:City><span
+style='font-size:9.0pt'> database for DAS Company sample&quot;<o:p></o:p></span></pre><pre><span
+style='font-size:9.0pt'><span style='mso-spacerun:yes'>              </span><span
+class=SpellE><span class=GramE>maxActive</span></span>=&quot;100&quot; <span
+class=SpellE>maxIdle</span>=&quot;30&quot; <span class=SpellE>maxWait</span>=&quot;10000&quot;<o:p></o:p></span></pre><pre><span
+style='font-size:9.0pt'><span style='mso-spacerun:yes'>              </span>username=&quot;&quot; password=&quot;&quot; <o:p></o:p></span></pre><pre><span
+style='font-size:9.0pt'><span style='mso-spacerun:yes'>              </span><span
+class=SpellE><span class=GramE>driverClassName</span></span>=&quot;<span
+class=SpellE>org.apache.derby.jdbc.EmbeddedDriver</span>&quot;<o:p></o:p></span></pre><pre><span
+style='font-size:9.0pt'><span style='mso-spacerun:yes'>              </span><span
+class=SpellE><span class=GramE>url</span></span>=&quot;<span class=SpellE>jdbc:derby:Databases/dastest</span>&quot;/&gt;<o:p></o:p></span></pre><pre><span
+style='mso-tab-count:3'>                       </span></pre>
 
-        <tr>
+<ol style='margin-top:0in' start=8 type=1>
+ <li class=MsoNormal style='mso-list:l3 level1 lfo2;tab-stops:list .5in'><span
+     style='mso-spacerun:yes'>  </span>Start tomcat and </li>
+ <ol style='margin-top:0in' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'>go
+      to the manager console <a href="http://localhost:8080/manager/html">http://localhost:8080/manager/html</a></li>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'>Scroll
+      down to the “deploy” section and enter the following:</li>
+ </ol>
+</ol>
 
-            <td style="vertical-align: top;">sca.module</td>
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
 
-            <td>Defines the SCA module and component. Defines for the
-                HelloWorldServiceComponent component and the Java class that
-                implements that component</td>
+<pre style='margin-left:1.0in'><span style='font-size:9.0pt'>Context Path (optional):<span style='mso-spacerun:yes'>   </span><span
+style='mso-tab-count:1'>   </span>/<span class=SpellE>CompanyApp</span><o:p></o:p></span></pre><pre
+style='margin-left:1.0in'><span style='font-size:9.0pt'>XML Configuration <span
+class=GramE>file</span> URL:<span style='mso-tab-count:1'>   </span>work/<span
+class=SpellE>CompanyAppGbl.xml</span><o:p></o:p></span></pre><pre
+style='margin-left:1.0in'><span style='font-size:9.0pt'>WAR or Directory URL:<span style='mso-spacerun:yes'>   </span><span
+style='mso-tab-count:1'>      </span>work/<span class=SpellE>CompanyApp.war</span><o:p></o:p></span></pre><pre><o:p>&nbsp;</o:p></pre>
 
-        </tr>
+<ol style='margin-top:0in' start=8 type=1>
+ <ol style='margin-top:0in' start=3 type=a>
+  <li class=MsoNormal style='mso-list:l3 level2 lfo2;tab-stops:list 1.0in'>Hit
+      the “deploy” button</li>
+ </ol>
+</ol>
 
-        <tr>
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
 
-            <td style="vertical-align: top;">HelloWorldServiceComponent.java</td>
+<ol style='margin-top:0in' start=9 type=1>
+ <li class=MsoNormal style='mso-list:l3 level1 lfo2;tab-stops:list .5in'>Get to
+     the sample application by clicking the named application in the “path”
+     column of the application <span class=SpellE>sectiom</span> of the manager
+     console.<span style='mso-spacerun:yes'>  </span>Alternatively, you can
+     point your browser to http://localhost:8080/CompanyApp/<o:p></o:p></li>
+</ol>
 
-            <td>Defines the Java interface implemented by the component.</td>
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
-        </tr>
+<h1>Sample Architecture</h1>
 
-        <tr>
+<p class=MsoNormal>This is a simple, single-page, web application.<span
+style='mso-spacerun:yes'>  </span>The main components of this application are:</p>
 
-            <td style="vertical-align: top;">HelloWorldServiceComponentImpl.java</td>
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo3;tab-stops:list .5in'>The
+     RDB Data Access Service (DAS)</li>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo3;tab-stops:list .5in'>SDO</li>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo3;tab-stops:list .5in'><span
+     class=SpellE>CompanyClient.java</span></li>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo3;tab-stops:list .5in'><span
+     class=SpellE>Company.jsp</span></li>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo3;tab-stops:list .5in'>The
+     canned <st1:City><st1:place>Derby</st1:place></st1:City> database</li>
+</ul>
 
-            <td>Implements the SCA component. Uses the SCA service
-                annotation tag on the class to show what SCA interface is being
-                implemented.</td>
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
-        </tr>
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
+<p class=MsoNormal>The <span class=SpellE><b style='mso-bidi-font-weight:normal'>CompanyClient</b></span>
+uses the <b style='mso-bidi-font-weight:normal'>DAS</b> directly and provides
+high-level services to the <span class=SpellE>jsp</span> such as:</p>
 
-        <tr>
-            <td>HelloWorldWeb.jsp</td>
-            <td>Handles Web form input.. Obtains the module context which was defined by the
-                sca.module file. From the module context locates the
-                HelloWorldServiceComponent and then calls&nbsp; the getGreetings
-                method to invoke the component.&nbsp;and formats &nbsp;returned&nbsp;results.</td>
-        </tr>
-        <tr>
-            <td>web.xml</td>
-            <td>Standard J2EE web application's web.xml</td>
-        </tr>
+<p class=MsoNormal style='margin-left:.5in'><span class=GramE>public</span>
+final List <span class=SpellE>getCompanies</span>()</p>
 
-    </tbody>
-</table>
+<p class=MsoNormal>This is a good place to look for how you might use the DAS
+in your own application.</p>
 
-<br>
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
 
-</body></html>
+<p class=MsoNormal>The <span class=SpellE><b style='mso-bidi-font-weight:normal'>Company.jsp</b></span>
+responds to client interaction by invoking services of the <span class=SpellE>CompanyClient</span>.<span
+style='mso-spacerun:yes'>  </span>It receives data from the <span class=SpellE>CompanyClient</span>
+as SDO data graphs and manipulates <span class=SpellE>SDOs</span> directly to
+display data.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>The canned <st1:City><st1:place><b style='mso-bidi-font-weight:
+  normal'>Derby</b></st1:place></st1:City><b style='mso-bidi-font-weight:normal'>
+database</b> comes preloaded with Companies and related Departments.<span
+style='mso-spacerun:yes'>  </span>The database instance is a simple file
+folder.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>The <b style='mso-bidi-font-weight:normal'>DAS</b> accepts
+directives (commands) from the <span class=SpellE><b style='mso-bidi-font-weight:
+normal'>CompanyClient</b></span><b style='mso-bidi-font-weight:normal'> </b>and
+reads and writes to the derby database instance appropriately.<b
+style='mso-bidi-font-weight:normal'> <o:p></o:p></b></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><o:p>&nbsp;</o:p></b></p>
+
+<h1>Appendix</h1>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>The following specifies where you can find the dependency
+jars you need to run this sample.<span style='mso-spacerun:yes'>  </span>These
+jars are available <b style='mso-bidi-font-weight:normal'>only</b> after you
+have successfully downloaded and build Tuscany/java.<span
+style='mso-spacerun:yes'>  </span>Instructions for building can be found here: </p>
+
+<p class=MsoNormal style='margin-left:.5in'><a
+href="https://svn.apache.org/repos/asf/incubator/tuscany/java/BUILDING.txt">https://svn.apache.org/repos/asf/incubator/tuscany/java/BUILDING.txt</a></p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span class=SpellE>Dendendency</span> jar locations:</p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo4;tab-stops:list .5in'><span
+     class=SpellE>tuscany-das-rdb-SNAPSHOT.jar</span> – /java/<span
+     class=SpellE>das/rdb/target</span></li>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo4;tab-stops:list .5in'><span
+     class=SpellE>sdo-api-SNAPSHOT.jar</span> – /java/spec/<span class=SpellE>sdo</span>/target</li>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo4;tab-stops:list .5in'><span
+     class=SpellE>tuscany-sdo-impl-SNAPSHOT.jar</span> – /java/<span
+     class=SpellE>sdo/impl/target</span></li>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo4;tab-stops:list .5in'><span
+     class=SpellE>xsd</span>{latest version}.jar –
+     {user}/.m2/repository/org/eclipse/xsd</li>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo4;tab-stops:list .5in'><span
+     class=SpellE>ecore</span>-{latest version}.jar –
+     {user}/.m2/repository/org/eclipse/emf/ecore</li>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo4;tab-stops:list .5in'><span
+     class=SpellE>ecore</span>-change-{latest version}.jar –
+     {user}/.m2/repository/org/eclipse/emf/ecore-change</li>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo4;tab-stops:list .5in'><span
+     class=SpellE>ecore-xmi</span>-{latest version}.jar <span class=SpellE>jar</span>
+     – {user}/.m2/repository/org/eclipse/emf/ecore-xmi</li>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo4;tab-stops:list .5in'>common-{latest
+     version}.jar <span class=SpellE>jar</span> –
+     {user}/.m2/repository/org/eclipse/emf/common</li>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo4;tab-stops:list .5in'><span
+     class=SpellE>derby.jar</span></li>
+</ul>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>Conventions:</p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo5;tab-stops:list .5in'>{<span
+     class=GramE>user</span>} refers the directory where Maven2 is installed on
+     your machine.<span style='mso-spacerun:yes'>  </span>On my machine,
+     “{user}” is “C:\Documents and Settings\Administrator”</li>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo5;tab-stops:list .5in'>{<span
+     class=SpellE>Tomcat_Home</span>} refers to the directory that Tomcat is
+     installed on your machine.<span style='mso-spacerun:yes'>  </span>On my
+     machine, this is “C:\Program Files\Apache Software Foundation\Tomcat 5.5”</li>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo5;tab-stops:list .5in'>{<span
+     class=GramE>latest</span> version} means the tag associated with the
+     latest version available in the maven2 repository.<span
+     style='mso-spacerun:yes'>  </span>For example the version of <span
+     class=SpellE>ecore</span>-{latest version}.jar that I used for testing
+     this sample is “ecore-2.2.0-I200602160000.jar”<o:p></o:p></li>
+</ul>
+
+</div>
+
+</body>
+
+</html>
