@@ -27,8 +27,20 @@
 		xmlns:sdojava="commonj.sdo/java"
 		sdojava:package="org.apache.tuscany.samples.bigbank.account">
 
-            <xsd:element name="getAccountReport" type="xsd:string"/>
-            <xsd:element name="getAccountReportResponse" type="account:AccountReport"/>
+            <xsd:element name="getAccountReport">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="customerID" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getAccountReportResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="accountReport" type="account:AccountReport"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
 
             <xsd:complexType name="AccountReport">
                 <xsd:sequence>
