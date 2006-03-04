@@ -34,8 +34,8 @@
     shows the wiring of &nbsp;multiple components in a single SCA module. </p>
 
 
-<h3>Setup</h3>The jars for a <a href="../readme.htm#J2SE_setup" target="_blank">J2SE setup</a> &nbsp;not requiring web
-services are required including the sample's own jar <span style="font-weight: bold;">tuscany-samples-helloworldmc-SNAPSHOT.jar</span>.
+<h3>Setup</h3>The jars for a <a href="http://wiki.apache.org/ws/Tuscany/J2SESetup" target="_blank">J2SE setup</a> &nbsp;not requiring web
+services are required including the sample's own jar <span style="font-weight: bold;">helloworldmc-SNAPSHOT.jar</span>.
 
 <h3>Running</h3>
 Using JDK 1.5 java command with the previous jars run the class
@@ -62,7 +62,7 @@ The source files are physically organized as shown below:<br>
             <td>
                 <pre>main<br>+---java<br>    &brvbar;   sca.module<br>    &brvbar;<br> +---org<br> +---apache<br>
                     +---tuscany<br> +---samples<br> +---helloworldmc<br> GreetingPortionProvider.java<br>
-                    GreetingPortionProviderImpl.java<br> HelloWorldServiceComponent.java<br>
+                    GreetingPortionProviderImpl.java<br> HelloWorldService.java<br>
                     HelloWorldServiceComponentImpl.java<br><br></pre>
 
             </td>
@@ -123,7 +123,7 @@ The source files are physically organized as shown below:<br>
 
         <tr>
 
-            <td style="vertical-align: top;">HelloWorldServiceComponent.java</td>
+            <td style="vertical-align: top;">HelloWorldService.java</td>
 
             <td>Defines the Java interface implemented by the
                 component. <span style="font-weight: bold;">HelloWorldServiceComponent</span>.&nbsp;</td>
