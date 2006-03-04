@@ -1,0 +1,7 @@
+<service xmlns:xalan="http://xml.apache.org/xslt" name="HelloWorldServiceImplService">
+    <messageReceivers>
+        <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out" class="org.apache.tuscany.samples.helloworldaxis.HelloWorldServiceImplMessageReceiver"/>
+    </messageReceivers>
+    <parameter locked="false" name="ServiceClass">org.apache.tuscany.samples.helloworldaxis.HelloWorldServiceImplSkeleton</parameter>
+    <!--All public methods of the service class are exposed by default-->
+</service>

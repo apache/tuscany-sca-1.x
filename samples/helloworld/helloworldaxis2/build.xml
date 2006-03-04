@@ -1,0 +1,127 @@
+<project xmlns:xalan="http://xml.apache.org/xslt" default="jar.all" basedir=".">
+	<!--Auto generated ant build file-->
+	<property environment="env" />
+	<!-- property name="axis2.home" value="${env.AXIS2_HOME}"/ -->
+	<property name="axis2.home" value="C:\Apache\axis2-std-0.94-bin" />
+	<property name="axis2.class.path" value="" />
+	<property name="name" value="HelloWorldServiceImplService" />
+	<property name="src" value="${basedir}\src\main\java" />
+	<property name="test" value="${basedir}\src\test\java" />
+	<property name="build" value="${basedir}\target" />
+	<property name="classes" value="${build}\classes" />
+	<property name="lib" value="${build}\lib" />
+	<property name="resources" value="${basedir}\src\main\resources" />
+	<property value="" name="jars.ok" />
+	<path id="axis2.class.path">
+		<pathelement path="${java.class.path}" />
+		<pathelement path="${axis2.class.path}" />
+		<fileset dir="${axis2.home}">
+			<include name="lib/*.jar" />
+		</fileset>
+	</path>
+	<target name="init">
+		<mkdir dir="${build}" />
+		<mkdir dir="${classes}" />
+		<mkdir dir="${lib}" />
+	</target>
+	<target depends="init" name="pre.compile.test">
+		<!--Test the classpath for the availability of necesary classes-->
+		<available classpathref="axis2.class.path" property="stax.available" classname="javax.xml.stream.XMLStreamReader" />
+		<available classpathref="axis2.class.path" property="axis2.available" classname="org.apache.axis2.engine.AxisEngine" />
+		<condition property="jars.ok">
+			<and>
+				<isset property="stax.available" />
+				<isset property="axis2.available" />
+			</and>
+		</condition>
+		<!--Print out the availabilities-->
+		<echo message="Stax Availability= ${stax.available}" />
+		<echo message="Axis2 Availability= ${axis2.available}" />
+	</target>
+	<target depends="pre.compile.test" name="compile.all" if="jars.ok">
+		<javac debug="on" destdir="${classes}" srcdir="${src}">
+			<classpath refid="axis2.class.path" />
+		</javac>
+	</target>
+	<target depends="pre.compile.test" name="compile.test" if="jars.ok">
+		<javac debug="on" destdir="${classes}">
+			<src path="${src}" />
+			<src path="${test}" />
+			<classpath refid="axis2.class.path" />
+		</javac>
+	</target>
+	<target depends="pre.compile.test" name="echo.classpath.problem" unless="jars.ok">
+		<echo message="The class path is not set right!                                Please make sure the following classes are in the classpath                                1. XmlBeans                                2. Stax                                3. Axis2                 " />
+	</target>
+	<target depends="jar.server, jar.client" name="jar.all" />
+	<target depends="compile.all,echo.classpath.problem" name="jar.server" if="jars.ok">
+		<copy toDir="${classes}/META-INF">
+			<fileset dir="${resources}">
+				<include name="*.xml" />
+				<include name="*.wsdl" />
+			</fileset>
+		</copy>
+		<jar destfile="${lib}/${name}.aar">
+			<fileset excludes="**/Test.class" dir="${classes}" />
+		</jar>
+	</target>
+	<target if="jars.ok" depends="compile.test" name="jar.client">
+		<jar destfile="${lib}/${name}-test-client.jar">
+			<fileset dir="${classes}">
+				<exclude name="**/META-INF/*.*" />
+				<exclude name="**/lib/*.*" />
+				<exclude name="**/*MessageReceiver.class" />
+				<exclude name="**/*Skeleton.class" />
+			</fileset>
+			<fileset dir="${resources}">
+				<exclude name="**/*.wsdl" />
+				<exclude name="**/*.xml" />
+			</fileset>
+		</jar>
+	</target>
+	<target if="jars.ok" name="make.repo" depends="jar.server">
+		<mkdir dir="${build}/repo/" />
+		<mkdir dir="${build}/repo/services" />
+		<copy file="${build}/lib/${name}.aar" toDir="${build}/repo/services/" />
+	</target>
+
+	<target if="jars.ok" name="check.server" depends="jar.server">
+		<echo message="Checking if the HTTP server has beem started"/>
+		<waitfor maxwait="30" maxwaitunit="second" checkevery="10" timeoutproperty="server.notstarted">
+			<http url="http://localhost:8080" />
+		</waitfor>
+		<condition property="server.alreadystarted">
+			<not>
+				<istrue value="${server.notstarted}" />
+			</not>
+		</condition>
+		<echo message="HTTP server status: ${server.alreadystarted}"/>
+	</target>
+
+	<target if="jars.ok" name="start.server" depends="check.server, make.repo" unless="server.alreadystarted">
+		<java fork="true" spawn="true" classname="org.apache.axis2.transport.http.SimpleHTTPServer">
+			<arg value="${build}/repo" />
+			<classpath refid="axis2.class.path" />
+		</java>
+	</target>
+	<target depends="compile.test" name="run.test" if="jars.ok">
+		<property refid="axis2.class.path" name="axis2.class.path" />
+		<path id="test.class.path">
+			<pathelement location="${lib}/${name}-test-client.jar" />
+			<pathelement path="${axis2.class.path}" />
+		</path>
+		<mkdir dir="${build}/test-reports/" />
+		<junit haltonfailure="yes" printsummary="yes">
+			<classpath refid="test.class.path" />
+			<formatter type="plain" />
+			<batchtest fork="yes" toDir="${build}/test-reports/">
+				<fileset dir="${test}">
+					<include name="**/*Test*.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	<target name="clean">
+		<delete dir="${build}" />
+	</target>
+</project>

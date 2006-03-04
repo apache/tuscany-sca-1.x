@@ -29,8 +29,10 @@
 
     <modules>
         <module>helloworld</module>
+        <!--
         <module>helloworldaxis</module>
         <module>helloworldaxissvc</module>
+        -->
         <module>helloworldjs</module>
         <module>helloworldmc</module>
         <module>helloworldweb</module>
