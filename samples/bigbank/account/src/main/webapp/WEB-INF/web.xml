@@ -18,17 +18,4 @@
 
     <display-name>Tuscany Bigbank Account sample</display-name>
 
-    <servlet>
-        <servlet-name>WebServiceEntryPointServlet</servlet-name>
-        <servlet-class>org.apache.tuscany.binding.axis.handler.WebServiceEntryPointServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>WebServiceEntryPointServlet</servlet-name>
-        <url-pattern>/servlet/WebServiceEntryPointServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>WebServiceEntryPointServlet</servlet-name>
-        <url-pattern>/services/*</url-pattern>
-    </servlet-mapping>
-
 </web-app>

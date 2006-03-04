@@ -17,6 +17,7 @@
 package org.apache.tuscany.samples.bigbank.webclient.ui;
 
 import java.io.IOException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -24,12 +25,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tuscany.samples.bigbank.webclient.services.profile.LoginService;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
-
-import org.apache.tuscany.core.client.TuscanyRuntime;
-import org.apache.tuscany.core.config.ConfigurationException;
-import org.apache.tuscany.samples.bigbank.webclient.services.profile.LoginService;
 
 
 public class LoginServlet extends HttpServlet {
@@ -41,14 +39,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest pReq, HttpServletResponse pResp) throws ServletException {
-        TuscanyRuntime tuscany;
-        try {
-            tuscany = new TuscanyRuntime("bigbank.webclient.testclient", null);
-        } catch (ConfigurationException e) {
-            throw new ServletException(e.getMessage(), e);
-        }
 
-        tuscany.start();
         ModuleContext moduleContext = CurrentModuleContext.getContext();
         LoginService loginMgr = (LoginService)
                 moduleContext.locateService("LoginServiceComponent");
