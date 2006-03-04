@@ -15,11 +15,11 @@
   limitations under the License.
  -->
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:tns="http://www.bigbank.com/AccountService/"
+                  xmlns:tns="http://www.bigbank.com/Account/"
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                   xmlns:account="http://www.bigbank.com/Account/"
-                  targetNamespace="http://www.bigbank.com/AccountService/"
+                  targetNamespace="http://www.bigbank.com/Account/"
                   name="AccountService">
 
     <wsdl:types>
@@ -27,7 +27,7 @@
 		xmlns:sdojava="commonj.sdo/java"
 		sdojava:package="org.apache.tuscany.samples.bigbank.account">
 
-            <xsd:element name="customerID" type="xsd:string"/>
+            <xsd:element name="getAccountReport" type="xsd:string"/>
             <xsd:element name="getAccountReportResponse" type="account:AccountReport"/>
 
             <xsd:complexType name="AccountReport">
@@ -44,7 +44,7 @@
         </xsd:schema>
     </wsdl:types>
     <wsdl:message name="getAccountReportRequest">
-        <wsdl:part element="account:customerID" name="getAccountReportRequest"/>
+        <wsdl:part element="account:getAccountReport" name="getAccountReportRequest"/>
     </wsdl:message>
     <wsdl:message name="getAccountReportResponse">
         <wsdl:part element="account:getAccountReportResponse" name="getAccountReportResponse"/>
@@ -60,7 +60,7 @@
                       transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="getAccountReport">
             <soap:operation
-                    soapAction="http://www.bigbank.com/AccountService/getAccountReport"/>
+                    soapAction="http://www.bigbank.com/Account/getAccountReport"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>

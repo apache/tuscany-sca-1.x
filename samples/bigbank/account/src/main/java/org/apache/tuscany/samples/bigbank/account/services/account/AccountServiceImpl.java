@@ -26,6 +26,7 @@ import org.apache.tuscany.samples.bigbank.account.services.accountdata.CheckingA
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.SavingsAccount;
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.StockAccount;
 import org.apache.tuscany.samples.bigbank.account.services.stockquote.StockQuoteService;
+import org.apache.tuscany.sdo.util.SDOUtil;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
@@ -33,7 +34,9 @@ import org.osoa.sca.annotations.Service;
 @Service(interfaces=AccountService.class)
 public class AccountServiceImpl implements AccountService {
 
-    private final static AccountFactory accountFactory=new AccountFactory();
+    static {
+        SDOUtil.registerStaticTypes(AccountFactory.class);
+    }
 
     @Property
     private String currency = "USD";
@@ -47,6 +50,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public AccountReport getAccountReport(String customerID) {
+        
+        AccountFactory accountFactory=new AccountFactory();
 
         AccountReport accountReport = accountFactory.createAccountReport();
         List accountSummaries = accountReport.getAccountSummaries();

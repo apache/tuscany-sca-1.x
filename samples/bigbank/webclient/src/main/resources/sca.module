@@ -40,16 +40,16 @@
     </component>
 
     <externalService name="AccountService">
-        <interface.wsdl interface="http://www.bigbank.com/AccountService/#AccountService"/>
+        <interface.wsdl interface="http://www.bigbank.com/Account/#AccountService"/>
         <!--
           <interface.java interface="org.apache.tuscany.samples.bigbank.webclient.services.account.AccountService"/>
           -->
-        <binding.ws port="http://www.bigbank.com/AccountService/#AccountServiceSOAP"/>
+        <binding.ws port="http://www.bigbank.com/Account/#AccountServiceSOAP"/>
     </externalService>
 
     <import.wsdl
 		location="wsdl/AccountService.wsdl"
-		namespace="http://www.bigbank.com/AccountService/"/>
+		namespace="http://www.bigbank.com/Account/"/>
 		
 </module>
 	

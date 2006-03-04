@@ -20,7 +20,7 @@
 
     <entryPoint name="AccountService">
         <interface.java interface="org.apache.tuscany.samples.bigbank.account.services.account.AccountService"/>
-        <binding.ws port="http://www.bigbank.com/AccountService/#AccountServiceSOAP"/>
+        <binding.ws port="http://www.bigbank.com/Account/#AccountServiceSOAP"/>
         <reference>AccountServiceComponent/AccountService</reference>
     </entryPoint>
 
@@ -52,7 +52,7 @@
 
     <import.wsdl
 		location="wsdl/AccountService.wsdl"
-		namespace="http://www.bigbank.com/AccountService/"/>
+		namespace="http://www.bigbank.com/Account/"/>
     <import.wsdl
 		location="wsdl/StockQuoteWebService.wsdl"
 		namespace="http://webservice.stockquote"/>
