@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 
 import org.apache.tuscany.core.client.TuscanyRuntime;
 import org.apache.tuscany.core.config.ConfigurationException;
-import org.apache.tuscany.samples.helloworldwsclient.HelloWorldServiceComponent;
+import org.apache.tuscany.samples.helloworldwsclient.HelloWorldService;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
 
@@ -38,7 +38,7 @@ public class TestHelloWorldWSTestCase extends TestCase {
         ModuleContext moduleContext = CurrentModuleContext.getContext();
 
         // Locate the HelloWorld service component and invoke it
-        HelloWorldServiceComponent helloworldService = (HelloWorldServiceComponent) moduleContext.locateService("HelloWorldServiceComponent");
+        HelloWorldService helloworldService = (HelloWorldService) moduleContext.locateService("HelloWorldServiceComponent");
 
         String value = helloworldService.getGreetings(name);
 
