@@ -34,7 +34,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class TestBigBankTestCase extends TestCase {
 	// public static final String testUrl = "http://localhost:8080/tuscany-samples-bigbank-webclient";
-	public static final String testUrl = "http://localhost:8080/tuscany-samples-bigbank-webclient/login.html";
+	public static final String testUrl = "http://localhost:8080/webclient-SNAPSHOT/login.html";
 	
 
 	public void testBigBankDefault() throws Exception
