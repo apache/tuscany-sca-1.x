@@ -274,26 +274,25 @@
         <target name="tuscany.tomcat.fixserverxml" depends='init,backup.server.xml'  unless='tuscany.acceptance.tomcat.serverxmlorg.available'>
                 <property name="tuscany.acceptance.tomcat.serverxmlorg.available" value='true' />
                 
-<!--
                 <xslt
                   in="${tuscany.acceptance.tc.dir}/conf/server.xml.original"
                       style="server.xsl" out="${tuscany.acceptance.tc.dir}/conf/server.xml"
                       >
 
                  </xslt>
--->
-                <copy file='server.xml' tofile='${tuscany.acceptance.tc.dir}/conf/server.xml' />
+                <echo message='${user.home}/.axis2/axis2.xml '/>
                 <copy file='axis2.xml' tofile='${user.home}/.axis2/axis2.xml' />
         </target>
         <target name="tuscany.tomcat.fixcontextxml" depends='init,backup.context.xml'  unless='tuscany.acceptance.tomcat.contextxmlorg.available'>
                 <property name="tuscany.acceptance.tomcat.contextxmlorg.available" value='true' />
-                
+<!-- DO NOTHING AT THIS TIME                
                 <xslt
                   in="${tuscany.acceptance.tc.dir}/conf/context.xml.original"
                       style="context.xsl" out="${tuscany.acceptance.tc.dir}/conf/context.xml"
                       >
 
                  </xslt>
+                 -->
         </target>
         
         <target name="startTomcatWindows" if="isWindows" unless='tuscany.tomcat.alreadystarted' >

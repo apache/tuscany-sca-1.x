@@ -31,16 +31,16 @@
     </xsl:copy>
   </xsl:template>
   
-<!--
-  <xsl:template match="Server">
-    <Server>
+  <xsl:template match="Host">
+    <Host>
+  <xsl:attribute name="className">
+    <xsl:text>org.apache.tuscany.tomcat.TuscanyHost</xsl:text>
+  </xsl:attribute> 
     <xsl:apply-templates select="@*" />
-    <Listener className="org.apache.tuscany.tomcat.lifecycle.listener.TomcatServerLifecycleListener" /> 
    <xsl:apply-templates
       select="@* | * | comment() | processing-instruction() | text()" />
-    </Server>
+    </Host>
   </xsl:template>
--->
   
   <!-- xsl:template match="/">
     <xsl:apply-templates select="node() | @*" />
