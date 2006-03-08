@@ -23,8 +23,8 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tuscany-testing-tomcat-helloworldweb</artifactId>
     <packaging>jar</packaging>
-    <name>Tuscany Testing Tomcat HelloWorld WEB acceptance</name>
-    <description>Acceptance test for Helloworld web</description>
+    <name>Tuscany Testing Tomcat HelloWorld WEB</name>
+    <description>Testing Tomcat Helloworld Web end user test</description>
     <version>SNAPSHOT</version>
 
 
