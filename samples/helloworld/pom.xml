@@ -29,13 +29,14 @@
 
     <modules>
         <module>helloworld</module>
+        <module>helloworldjs</module>
+        <module>helloworldmc</module>
+        <module>helloworldweb</module>
         <!--
         <module>helloworldaxis</module>
         <module>helloworldaxissvc</module>
         -->
-        <module>helloworldjs</module>
-        <module>helloworldmc</module>
-        <module>helloworldweb</module>
+        <module>helloworldaxis2</module>
         <module>helloworldws</module>
         <module>helloworldwsclient</module>
     </modules>
