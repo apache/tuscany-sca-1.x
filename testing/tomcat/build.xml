@@ -280,8 +280,8 @@
                       >
 
                  </xslt>
-                <echo message='${user.home}/.axis2/axis2.xml '/>
-                <copy file='axis2.xml' tofile='${user.home}/.axis2/axis2.xml' />
+                <!-- echo message='${user.home}/.axis2/axis2.xml '/ -->
+                <!-- copy file='axis2.xml' tofile='${user.home}/.axis2/axis2.xml' / -->
         </target>
         <target name="tuscany.tomcat.fixcontextxml" depends='init,backup.context.xml'  unless='tuscany.acceptance.tomcat.contextxmlorg.available'>
                 <property name="tuscany.acceptance.tomcat.contextxmlorg.available" value='true' />
