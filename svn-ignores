@@ -1,0 +1,13 @@
+target
+*.iws
+*.ipr
+*.iml
+.project
+.classpath
+maven.log
+velocity.log*
+junit*.properties
+.settings
+.deployables
+.wtpmodules
+
