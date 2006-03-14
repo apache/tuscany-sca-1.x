@@ -16,8 +16,11 @@
  */
 package org.apache.tuscany.samples.helloworldws;
 
+import java.io.File;
+
 import junit.framework.TestCase;
 
+import org.apache.axis2.Constants;
 import org.apache.tuscany.samples.helloworldaxis.GetGreetings;
 import org.apache.tuscany.samples.helloworldaxis.GetGreetingsResponse;
 import org.apache.tuscany.samples.helloworldaxis.HelloWorldServiceImplStub;
@@ -40,6 +43,7 @@ public class TestHelloWorldAxisTestCase extends TestCase {
 
 
 	public void testHelloWorldDefault() throws Exception {
+        System.setProperty(Constants.HOME_AXIS2,System.getProperty("basedir"));
 		final String name= "World";
 		String greeting= getGreetings(urlstrTuscanyService, name);
 		assertEquals(greeting, "Hello " + name);
