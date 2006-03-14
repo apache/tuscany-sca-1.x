@@ -170,6 +170,9 @@
                                   <include name="**/${tuscany.acceptance.groupId}/das/tuscany-das-rdb/${tuscany.acceptance.version}/tuscany-das-rdb-${tuscany.acceptance.version}.jar" />
                                   <include name="**/org/apache/derby/derby/10.1.2.1/derby-10.1.2.1.jar" />
                                 </patternset>
+                                <patternset>  <!-- for JSON-RPC support -->
+                                  <include name="**/metaparadigm/jsonrpc/SNAPSHOT/jsonrpc-SNAPSHOT.jar" />
+                                </patternset>
                         </fileset>
                 </copy>
                 <copy todir="${tuscany.acceptance.tc.dir}/server/lib" flatten='true'>
@@ -181,6 +184,11 @@
                         </fileset>
                         <fileset dir="${tuscany.maven.repos.dir}">
                                 <patternset refid="tuscany.acceptance.binding.axis2" />
+                        </fileset>
+                        <fileset dir="${tuscany.maven.repos.dir}">
+                                <patternset>
+                                  <include name="**/${tuscany.acceptance.groupId}/tuscany-binding-jsonrpc/${tuscany.acceptance.version}/tuscany-binding-jsonrpc-${tuscany.acceptance.version}.jar" />
+                                </patternset>
                         </fileset>
                 </copy>
         </target>
