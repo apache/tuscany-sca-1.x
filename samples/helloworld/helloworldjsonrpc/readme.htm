@@ -120,10 +120,10 @@ The source files are physically organized as shown below:<br>
 
         <tr>
             <td>HelloWorldJSONRPC.html</td>
-            <td>Handles Web form input.. Obtains the module context which was defined by the
-                sca.module file. From the module context locates the
-                HelloWorldServiceComponent and then calls&nbsp; the getGreetings
-                method to invoke the component.&nbsp;and formats &nbsp;returned&nbsp;results.</td>
+            <td>The HTML page for the sample. Creates a text box for the user to enter their name, a button to click to get the greeting, and a text field to show the response.
+                The helloworld.js script function getGreeting is used to invoke the SCA service when the button is clicked.
+                To initialize the SCA environment the sca.js script must be defined as the first script in the HTML with the following line:<br>
+                    &lt;script type="text/javascript" src="SCA/scripts/sca.js"></script&gt;
         </tr>
 
         <tr>
