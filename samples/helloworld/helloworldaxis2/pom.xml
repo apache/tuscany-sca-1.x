@@ -29,6 +29,16 @@
 	</description>
 	<version>SNAPSHOT</version>
 
+        <repositories>
+            <repository>
+                <id>jeremy</id>
+                <url>http://people.apache.org/~jboynes/maven2</url>
+                <snapshots>
+                    <enabled>true</enabled>
+                </snapshots>
+            </repository>
+        </repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>axis2</groupId>
