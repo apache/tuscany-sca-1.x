@@ -43,13 +43,31 @@
 		<dependency>
 			<groupId>axis2</groupId>
 			<artifactId>axis2-core</artifactId>
-			<version>0.94</version>
+                       <version>0.95-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>axis2</groupId>
 			<artifactId>axis2-adb</artifactId>
-			<version>0.94</version>
+                       <version>0.95-SNAPSHOT</version>
 		</dependency>
+
+                <dependency>
+                    <groupId>axis2</groupId>
+                    <artifactId>axis2-wsdl</artifactId>
+                    <version>0.95-SNAPSHOT</version>
+                    <scope>compile</scope>
+                </dependency>
+                <dependency>
+                    <groupId>axis2</groupId>
+                    <artifactId>axis2-common</artifactId>
+                    <version>0.95-SNAPSHOT</version>
+                    <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>ws-commons</groupId>
+                    <artifactId>axiom</artifactId>
+                    <version>1.0-SNAPSHOT</version>
+                </dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -81,15 +99,23 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>axis</groupId>
-			<artifactId>axis-wsdl4j</artifactId>
-			<version>1.2</version>
+			<groupId>ws-commons</groupId>
+			<artifactId>policy</artifactId>
+			<version>0.92-SNAPSHOT</version>
+                    <scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>ws-commons</groupId>
-			<artifactId>ws-policy</artifactId>
-			<version>SNAPSHOT</version>
+			<groupId>axis</groupId>
+			<artifactId>axis-wsdl4j</artifactId>
+			<version>1.5.1</version>
+                    <scope>runtime</scope>
 		</dependency>
+                <dependency>
+                    <groupId>ws-commons</groupId>
+                    <artifactId>XmlSchema</artifactId>
+                    <version>1.0-SNAPSHOT</version>
+                    <scope>runtime</scope>
+                </dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

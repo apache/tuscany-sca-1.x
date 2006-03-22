@@ -43,7 +43,7 @@ public class TestHelloWorldAxisTestCase extends TestCase {
 
 
 	public void testHelloWorldDefault() throws Exception {
-        System.setProperty(Constants.HOME_AXIS2,System.getProperty("basedir"));
+        System.setProperty(Constants.AXIS2_HOME,System.getProperty("basedir"));
 		final String name= "World";
 		String greeting= getGreetings(urlstrTuscanyService, name);
 		assertEquals(greeting, "Hello " + name);

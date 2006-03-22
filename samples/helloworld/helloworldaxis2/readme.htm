@@ -40,7 +40,11 @@
     a&nbsp;Java source using Axis's
     java2wsdl to create a document literal WSDL. &nbsp;And then using
     that WSDL in wsdl2java to create all the Axis service and client
-    artifacts. Details on this can be found reviewing the Axis
+    artifacts.
+    <pre>
+      wsdl2java  -uri helloworld.wsdl -o generated -s -ss -sd -g -p org.apache.tuscany.samples.helloworldaxis
+    </pre>
+    Details on this can be found reviewing the Axis
     documentation.</p>
 
 <p>The original Java code to generate is simply:</p>

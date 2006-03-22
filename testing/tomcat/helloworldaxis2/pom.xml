@@ -35,6 +35,12 @@
             <version>${pom.version}</version>
             <scope>compile</scope> 
         </dependency>
+                <dependency>
+                    <groupId>axis2</groupId>
+                    <artifactId>axis2-common</artifactId>
+                    <version>0.95-SNAPSHOT</version>
+                    <scope>runtime</scope>
+                </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
