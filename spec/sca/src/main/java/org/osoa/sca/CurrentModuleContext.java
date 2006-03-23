@@ -25,7 +25,7 @@ package org.osoa.sca;
  * @version $Rev$ $Date$
  */
 public final class CurrentModuleContext {
-    private static final ThreadLocal CURRENT_CONTEXT = new InheritableThreadLocal();
+    private static final ThreadLocal<ModuleContext> CURRENT_CONTEXT = new InheritableThreadLocal<ModuleContext>();
 
     /**
      * Return the current ModuleContext.
@@ -33,7 +33,7 @@ public final class CurrentModuleContext {
      * @return the current ModuleContext
      */
     public static ModuleContext getContext() {
-        return (ModuleContext) CURRENT_CONTEXT.get();
+        return CURRENT_CONTEXT.get();
     }
 
     static void setContext(ModuleContext ctx) {
