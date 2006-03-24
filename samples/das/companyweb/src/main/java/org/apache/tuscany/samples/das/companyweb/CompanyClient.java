@@ -118,6 +118,11 @@ public class CompanyClient {
         apply.execute(root);
 
     }
+    
+    
+    public void releaseResources() {
+        commandGroup.releaseResources();
+    }
 
     // Utilities
 

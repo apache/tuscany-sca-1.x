@@ -55,7 +55,8 @@
 	<tbody>
 
 		<%
-		java.util.Iterator i = (new CompanyClient()).getCompaniesWithDepartments().iterator();
+		CompanyClient companyClient = new CompanyClient();
+		java.util.Iterator i = companyClient.getCompaniesWithDepartments().iterator();
 		while (i.hasNext()) {
 			DataObject company = (DataObject)i.next();
 		%>
@@ -65,6 +66,7 @@
 			<tr>
 		<%	
 		}
+		companyClient.releaseResources();
 		%>
 		
 	</tbody>
@@ -75,25 +77,27 @@
 <!-- Do Add Department -->
 <%
 if(request.getParameter("doAddDepartment") != null){
-
-	(new CompanyClient()).addDepartmentToFirstCompany();
-
+    CompanyClient companyClient = new CompanyClient();
+    companyClient.addDepartmentToFirstCompany();
+    companyClient.releaseResources();
 }
 %>
 
 <!-- Do Delete Departments from first company -->
 <%
 if(request.getParameter("doDeleteDepartments") != null){
-
-	(new CompanyClient()).deleteDepartmentsFromFirstCompany();
+    CompanyClient companyClient = new CompanyClient();
+    companyClient.deleteDepartmentsFromFirstCompany();
+    companyClient.releaseResources();
 }
 %>
 
 <!-- Do Change First Company's Department Names -->
 <%
 if(request.getParameter("doChangeDepartmentNames") != null){
-
-	(new CompanyClient()).changeFirstCompanysDepartmentNames();
+    CompanyClient companyClient = new CompanyClient();
+    companyClient.changeFirstCompanysDepartmentNames();
+    companyClient.releaseResources();
 }
 %>
 
@@ -113,7 +117,8 @@ if(request.getParameter("doChangeDepartmentNames") != null){
 	<tbody>
 
 		<%
-		java.util.Iterator i = (new CompanyClient()).getCompaniesWithDepartments().iterator();
+		CompanyClient companyClient = new CompanyClient();
+		java.util.Iterator i = companyClient.getCompaniesWithDepartments().iterator();
 		while (i.hasNext()) {
 			DataObject company = (DataObject)i.next();
 		%>
@@ -138,6 +143,7 @@ if(request.getParameter("doChangeDepartmentNames") != null){
 			%>
 		<%	
 		}
+		companyClient.releaseResources();
 		%>
 		
 	</tbody>
