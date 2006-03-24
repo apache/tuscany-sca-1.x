@@ -151,6 +151,11 @@
 
         <target name="prepareTomcat" depends='tuscany.tomcat.unzipWindows,tuscany.tomcat.unzipUnix,tuscany.tomcat.unzipMac,tuscany.tomcat.fixup,tuscany.deploy.samples' description='Unzip tomcat, fix it up, and deploy samples'>
                 <dirname property='tuscany.acceptance.tc.dir.full' file="${tuscany.acceptance.tc.dir}/bin" />
+                <echo level="info" message="Tomcat fixed up here:  ${tuscany.acceptance.tc.dir.full}" />
+                <echo level="info" message="http://localhost:8080/helloworldWeb-SNAPSHOT/" />
+                
+        </target>
+        <target name="startTestServer" depends='prepareTomcat' description='start server prepared to run tests'>
                 <waitfor maxwait="1" maxwaitunit="second" checkevery="200" timeoutproperty="tuscany.tomcat.notstarted" >
                         <http url="http://localhost:8080"/>
                 </waitfor>
@@ -160,10 +165,8 @@
                     </not>
                 </condition>
                 <antcall target="startTomcat" />
-                <echo level="info" message="Tomcat fixed up here:  ${tuscany.acceptance.tc.dir.full}" />
-                <echo level="info" message="http://localhost:8080/tuscany-samples-helloworldWEB/" />
-                
         </target>
+
         <target name="tuscany.tomcat.fixup" depends='tuscany.tomcat.fixserverconfig' description='Fix up tomcat for tuscany.'>
                 <mkdir dir="${tuscany.acceptance.target.dir}" />
 
@@ -226,7 +229,7 @@
 
         <!-- provide a convenient -Djava.ext.dirs=  to run j2se and webservice export samples -->
         <target name="j2sews" description='create a java extensions directory to run J2SE tuscany applications.'>
-                <property name="tuscany.acceptance.j2se.dir" value='${tuscany.acceptance.target.dir}/js2sews' />
+                <property name="tuscany.acceptance.j2se.dir" value='${tuscany.acceptance.target.dir}/j2sews' />
 
              <antcall target="j2se"  inheritAll='true' inheritRefs='true' >
               </antcall>
