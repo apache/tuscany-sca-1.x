@@ -24,10 +24,19 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 
 /**
+ * When placed on a service interface, this annotation specifies the interface
+ * to be used for callbacks.
+ * <p/>
+ * When placed on a method or field, this annotation denotes the injection
+ * site to be used for a callback reference.
+ *
  * @version $Rev$ $Date$
  */
 @Target({TYPE, METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface Callback {
+    /**
+     * The Class of the callback interface.
+     */
     Class<?> value() default Void.class;
 }

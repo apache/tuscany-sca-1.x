@@ -18,6 +18,9 @@ package org.osoa.sca;
 
 
 /**
+ * Interface that can be used by SCA Components to access information about the
+ * Module that contains them.
+ *
  * @version $Rev$ $Date$
  */
 public interface ModuleContext {
@@ -79,7 +82,21 @@ public interface ModuleContext {
      */
     ServiceReference createServiceReferenceForSession(Object self, String serviceName);
 
+    /**
+     * Create a new session for stateful interaction with the named service.
+     *
+     * @param serviceName the name of the service to interact with
+     * @return a reference to the service
+     */
     ServiceReference newSession(String serviceName);
 
+    /**
+     * Create a new session for stateful interaction with the named service
+     * using an application-supplied session identifier.
+     *
+     * @param serviceName the name of the service to interact with
+     * @param sessionId a token that identifies this session
+     * @return a reference to the service
+     */
     ServiceReference newSession(String serviceName, Object sessionId);
 }

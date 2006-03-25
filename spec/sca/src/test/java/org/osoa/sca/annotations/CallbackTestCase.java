@@ -23,6 +23,8 @@ import junit.framework.TestCase;
 import org.osoa.sca.annotations.usage.CallbackType;
 
 /**
+ * Test case for callback annotation.
+ *
  * @version $Rev$ $Date$
  */
 public class CallbackTestCase extends TestCase {
@@ -30,18 +32,27 @@ public class CallbackTestCase extends TestCase {
     private Field field;
     private Method method;
 
+    /**
+     * Test annotation of a callback interface.
+     */
     public void testTypeDeclaration() {
         assertTrue(type.isAnnotationPresent(Callback.class));
         Callback callback = type.getAnnotation(Callback.class);
         assertEquals(Object.class, callback.value());
     }
 
+    /**
+     * Test annotation of a private field.
+     */
     public void testField() {
         assertTrue(field.isAnnotationPresent(Callback.class));
         Callback callback = field.getAnnotation(Callback.class);
         assertEquals(Void.class, callback.value());
     }
 
+    /**
+     * Test annotation of a method.
+     */
     public void testMethod() {
         assertTrue(method.isAnnotationPresent(Callback.class));
         Callback callback = method.getAnnotation(Callback.class);

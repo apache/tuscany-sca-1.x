@@ -38,7 +38,7 @@ public interface ServiceReference {
     void endSession();
 
     /**
-     * Returns the callback ID
+     * Returns the callback ID.
      *
      * @return the callback ID
      */
@@ -52,14 +52,14 @@ public interface ServiceReference {
     void setCallbackID(Object callbackID);
 
     /**
-     * Returns the callback object
+     * Returns the callback object.
      *
      * @return the callback object
      */
     Object getCallback();
 
     /**
-     * Sets the callback object
+     * Sets the callback object.
      *
      * @param callback the callback object
      */

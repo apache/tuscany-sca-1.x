@@ -23,6 +23,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 
 /**
+ * Annotation on a method that indicates that its parameters may safely
+ * be passed by reference. The annotation may also be placed on an interface
+ * or class to indicate that all declared methods support this optimization.
+ *
  * @version $Rev$ $Date$
  */
 @Target({TYPE, METHOD})

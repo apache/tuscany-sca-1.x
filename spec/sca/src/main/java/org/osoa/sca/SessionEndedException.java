@@ -17,22 +17,49 @@
 package org.osoa.sca;
 
 /**
+ * Exception thrown to indicate the session being used for a stateful
+ * interaction has been ended.
+ * 
  * @version $Rev$ $Date$
  */
 public class SessionEndedException extends ServiceRuntimeException {
     private static final long serialVersionUID = 3734864942222558406L;
 
+    /**
+     * Override constructor from ServiceRuntimeException.
+     *
+     * @see ServiceRuntimeException
+     */
     public SessionEndedException() {
     }
 
+    /**
+     * Override constructor from ServiceRuntimeException.
+     *
+     * @param message passed to ServiceRuntimeException
+     * @see ServiceRuntimeException
+     */
     public SessionEndedException(String message) {
         super(message);
     }
 
+    /**
+     * Override constructor from ServiceRuntimeException.
+     *
+     * @param message passed to ServiceRuntimeException
+     * @param cause passed to ServiceRuntimeException
+     * @see ServiceRuntimeException
+     */
     public SessionEndedException(String message, Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Override constructor from ServiceRuntimeException.
+     *
+     * @param cause passed to ServiceRuntimeException
+     * @see ServiceRuntimeException
+     */
     public SessionEndedException(Throwable cause) {
         super(cause);
     }

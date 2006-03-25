@@ -19,6 +19,8 @@ package org.osoa.sca.annotations.usage;
 import org.osoa.sca.annotations.Callback;
 
 /**
+ * Mock object for callback annotation tests.
+ *
  * @version $Rev$ $Date$
  */
 @Callback(Object.class)
@@ -26,7 +28,20 @@ public class CallbackType {
     @Callback
     private Object cbField;
 
+    /**
+     * Site for testing annotation of a public method.
+     */
     @Callback
     public void cbMethod() {
+        cbField = new Object();
+    }
+
+    /**
+     * Mock method to make IDEs stop complaining.
+     *
+     * @return nothing
+     */
+    public Object getCbField() {
+        return cbField;
     }
 }
