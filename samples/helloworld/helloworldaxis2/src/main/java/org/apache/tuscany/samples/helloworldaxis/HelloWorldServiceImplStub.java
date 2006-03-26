@@ -7,7 +7,7 @@
         */
         package org.apache.tuscany.samples.helloworldaxis;
 
-import org.apache.ws.commons.om.impl.llom.builder.StAXOMBuilder;
+import org.apache.ws.commons.om.impl.builder.StAXOMBuilder;
 
         
 
