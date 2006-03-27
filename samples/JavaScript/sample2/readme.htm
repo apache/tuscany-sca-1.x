@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+  Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ -->
+<html><head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <title>Tuscany HelloWorld</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --></head>
+
+<body>
+
+<h2>Tuscany JavaScript - Sample 2 - Properties</h2>
+
+<h3>Overview</h3>
+
+<p>The Tuscany JavaScript Sample 2 extends on the helloworld example from sample 1 and shows how SCA properties can be used to configure components.
+ In this example two SCA components are defined, one which uses a default configuration as defined by the .componentType side file, and another that
+ customizes the component configuration by overriding the value of a configuration property.</p>
+
+<h3>Setup</h3>The jars for a <a href="http://wiki.apache.org/ws/Tuscany/J2SESetup" target="_blank">J2SE setup</a> &nbsp;not requiring web
+services are required, allong with the JavaScript component container jar, <span style="font-weight: bold;">tuscany-container-js-SNAPSHOT.jar</span>
+, and the sample's own jar, <span style="font-weight: bold;">javascript-sample1-SNAPSHOT.jar</span>.
+
+<ol>
+</ol>
+
+<h3>Running</h3>
+
+Using the JDK 1.5 java command with the previous jars run the class sample.Sample1Client
+<br>
+
+<h3>Results</h3>
+
+<p>The sample when run should simply display to the standard output:<br>
+<br>
+
+    <code>Hi world</code></code>
+    <br>
+    <code>Guten Tag world</code>
+
+<h3>Code Overview</h3>
+
+The source files are physically organized as shown below (identical to layout from sample 1):
+<pre>sca.module
+<br>sample
+<br>+-- HelloWorld.java
+<br>+-- Sample1Client.java
+<br>+-- HelloWorldImpl.componentType
+<br>+-- HelloWorldImpl.js
+<br><br></pre>
+
+<p>&nbsp;</p>
+
+<table style="text-align: left; width: 879px; height: 154px;" border="0" cellpadding="2" cellspacing="2">
+
+    <tbody>
+
+        <tr>
+
+            <td style="vertical-align: top;">sca.module</td>
+
+            <td>Defines the SCA module 'JavaScriptSample1' and a two components 'HelloWorldComponent' and 'HelloWorldComponentDeutsch'. 
+                Both components uses the JavaScript componentType which gets the script source from the file 'sample/HelloWorldImpl.js'. 
+                The HelloWorldComponentDeutsch component uses the properties parameter to alter a configuration property of the component.</td>
+
+        </tr>
+
+        <tr>
+
+            <td style="vertical-align: top;">HelloWorld.java</td>
+
+            <td>Defines the Java interface implemented by the component.</td>
+
+        </tr>
+
+        <tr>
+
+            <td style="vertical-align: top;">Sample1Client.java</td>
+
+            <td>Creates a Tuscany runtime and starts it.
+                &nbsp;Obtains the module context which was defined by the
+                sca.module file. From the module context locates the
+                HelloWorldComponent and then calls the getGreetings
+                method to invoke the component. Next the HelloWorldComponentDeutsch component 
+                is located and getGreetings is called on that to show the effect of altering the configuration property.</td>
+
+        </tr>
+
+        <tr>
+
+            <td style="vertical-align: top;">HelloWorldImpl.componentType</td>
+
+            <td>The SCA componentType side file defining the service interface implemented by the JavaScript component,
+                along with a property definition which will inject into the script environment a variable with the name
+                of the property with its value set to the property default value.</td>
+
+        </tr>
+
+        <tr>
+
+            <td style="vertical-align: top;">HelloWorldImpl.js</td>
+
+            <td>JavaScript implementation of the SCA component. The greeting that is returned is based on the value of the
+                salutation property from the .componentType side file.</td>
+
+        </tr>
+
+    </tbody>
+</table>
+
+<br>
+
+</body></html>

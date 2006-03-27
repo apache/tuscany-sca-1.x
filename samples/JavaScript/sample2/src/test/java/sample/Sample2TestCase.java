@@ -24,10 +24,9 @@ import junit.framework.TestCase;
 public class Sample2TestCase extends TestCase {
 
     public void testGeetings() throws Exception {
-// TODO: default properties don't work   
-//        String in = "Petra";
-//        String out = Sample2Client.invoke(in);
-//        assertEquals("Hi Petra", out);
+        String in = "Petra";
+        String out = Sample2Client.invoke(in);
+        assertEquals("Hi Petra", out);
     }
 
     public void testDeutschGeetings() throws Exception {
