@@ -43,6 +43,12 @@
         </repository>
     </repositories>
 
+  <scm> <!-- need for continuum -->
+    <connection>scm:svn:http://svn.apache.org/repos/asf/incubator/tuscany</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/incubator/tuscany</developerConnection>
+    <url>http://svn.apache.org/viewcvs.cgi/incubator/tuscany/</url>
+  </scm>
+
     <modules>
         <module>sdo</module>
         <module>sca</module>
