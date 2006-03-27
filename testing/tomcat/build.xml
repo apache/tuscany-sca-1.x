@@ -102,9 +102,7 @@
                 <include name="**/woodstox/wstx-asl/2.8.2/wstx-asl-2.8.2.jar" />
                 <include name="**/log4j/log4j/1.2.12/log4j-1.2.12.jar" />
 
-                <!-- 
                 <include name="**/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar" />
-                -->
 
 
                 <!-- Axis 1.0
