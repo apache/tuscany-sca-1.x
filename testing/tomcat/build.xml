@@ -64,11 +64,11 @@
         </condition>
 
         <patternset id="tuscany.acceptance.emf.dependencies">
-                <include name="**/org/eclipse/emf/common/2.2.0-I200602160000/common-2.2.0-I200602160000.jar" />
-                <include name="**/org/eclipse/emf/ecore/2.2.0-I200602160000/ecore-2.2.0-I200602160000.jar" />
-                <include name="**/org/eclipse/emf/ecore-change/2.2.0-I200602160000/ecore-change-2.2.0-I200602160000.jar" />
-                <include name="**/org/eclipse/emf/ecore-xmi/2.2.0-I200602160000/ecore-xmi-2.2.0-I200602160000.jar" />
-                <include name="**/org/eclipse/xsd/xsd/2.2.0-I200602160000/xsd-2.2.0-I200602160000.jar" />
+                <include name="**/org/eclipse/emf/common/2.2.0-SNAPSHOT/common-2.2.0-SNAPSHOT.jar" />
+                <include name="**/org/eclipse/emf/ecore/2.2.0-SNAPSHOT/ecore-2.2.0-SNAPSHOT.jar" />
+                <include name="**/org/eclipse/emf/ecore-change/2.2.0-SNAPSHOT/ecore-change-2.2.0-SNAPSHOT.jar" />
+                <include name="**/org/eclipse/emf/ecore-xmi/2.2.0-SNAPSHOT/ecore-xmi-2.2.0-SNAPSHOT.jar" />
+                <include name="**/org/eclipse/xsd/xsd/2.2.0-SNAPSHOT/xsd-2.2.0-SNAPSHOT.jar" />
         </patternset>
         <patternset id="tuscany.acceptance.tc.specsdoimpl">  <!--jars which need to go into tomcat common/lib  -->
                 <include name="**/${tuscany.sca.acceptance.groupId}/sca-api/${tuscany.sca.acceptance.version}/sca-api-${tuscany.sca.acceptance.version}.jar" />
