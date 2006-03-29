@@ -66,7 +66,7 @@
             <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
         </dependency>
         <dependency>
-            <groupId>org.apache.tuscany</groupId>
+            <groupId>org.apache.tuscany.sca.containers</groupId>
             <artifactId>tuscany-container-java</artifactId>
             <version>${pom.version}</version>
             <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
