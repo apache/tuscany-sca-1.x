@@ -88,7 +88,7 @@
                 <include name="**/stax/stax-api/1.0/stax-api-1.0.jar" />
         </patternset>
         <patternset id="tuscany.acceptance.binding.axis2">
-                <include name="**/${tuscany.acceptance.groupId}/tuscany-binding-axis2/${tuscany.acceptance.version}/tuscany-binding-axis2-${tuscany.acceptance.version}.jar" />
+                <include name="**/${tuscany.acceptance.bindings}/tuscany-binding-axis2/${tuscany.acceptance.version}/tuscany-binding-axis2-${tuscany.acceptance.version}.jar" />
                 <include name="**/asm/asm/2.2/asm-2.2.jar" /> <!-- needed by org.apache.tuscany.model.types.wsdl.impl.WSDLServiceContractImpl.generateJavaInterface(WSDLServiceContractImpl.java -->
 
                 <include name="**/axis2/axis2-kernel/${tuscany.acceptance.axis2.version}/axis2-kernel-${tuscany.acceptance.axis2.version}.jar" />
