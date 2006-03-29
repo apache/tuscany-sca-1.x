@@ -38,7 +38,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.tuscany</groupId>
+            <groupId>org.apache.tuscany.sca.containers</groupId>
             <artifactId>tuscany-container-js</artifactId>
             <version>${pom.version}</version>
             <scope>compile</scope>

@@ -35,6 +35,7 @@
         <module>sample3</module>
         <module>sample4</module>
         <module>sample5</module>
+        <module>sample7</module>
     </modules>
 
 </project>

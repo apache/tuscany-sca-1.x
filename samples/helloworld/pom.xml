@@ -29,7 +29,6 @@
 
     <modules>
         <module>helloworld</module>
-        <module>helloworldjs</module>
         <module>helloworldmc</module>
         <module>helloworldweb</module>
         <!--
