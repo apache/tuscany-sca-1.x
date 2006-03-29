@@ -49,6 +49,8 @@
 
         <property name="tuscany.acceptance.axis2.version" value='0.95' />
 
+        <property name="tuscany.acceptance.bindings" value='org/apache/tuscany/sca/bindings' />
+
         <property name="tuscany.acceptance.samples.dir" value='../../samples' />
         <!-- property name="tuscany.maven.repos.dir" value='${user.home}\.maven\repository' / -->
         <!-- change for maven 2.0 -->
@@ -197,7 +199,7 @@
                         </fileset>
                         <fileset dir="${tuscany.maven.repos.dir}">
                                 <patternset>
-                                  <include name="**/${tuscany.acceptance.groupId}/tuscany-binding-jsonrpc/${tuscany.acceptance.version}/tuscany-binding-jsonrpc-${tuscany.acceptance.version}.jar" />
+                                  <include name="**/${tuscany.acceptance.bindings}/tuscany-binding-jsonrpc/${tuscany.acceptance.version}/tuscany-binding-jsonrpc-${tuscany.acceptance.version}.jar" />
                                 </patternset>
                         </fileset>
                 </copy>
