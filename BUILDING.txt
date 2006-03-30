@@ -1,5 +1,9 @@
 Building tuscany/java
 =====================
+(Note: if you are building from the head of the svn repository it is best to look at the online instuctions first)
+http://incubator.apache.org/tuscany/samples/java/readme.htm
+     -and-
+http://incubator.apache.org/tuscany/getinvolved.html
 
 Initial setup
 -------------
