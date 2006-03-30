@@ -128,8 +128,8 @@ public abstract class HelperProvider {
 
     private static ClassLoader getContextClassLoader() {
         try {
-            return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
-                public ClassLoader run() {
+            return (ClassLoader)AccessController.doPrivileged(new PrivilegedAction() {
+                public Object run() {
                     return Thread.currentThread().getContextClassLoader();
                 }
             });
@@ -162,9 +162,8 @@ public abstract class HelperProvider {
 
     private static String getImplementationName() {
         try {
-            return AccessController.doPrivileged(new PrivilegedAction<String>() {
-                @SuppressWarnings({"AccessOfSystemProperties"})
-                public String run() {
+            return (String)AccessController.doPrivileged(new PrivilegedAction() {
+                public Object run() {
                     return System.getProperty(PROPERTY_NAME);
                 }
             });

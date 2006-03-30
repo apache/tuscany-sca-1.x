@@ -26,7 +26,6 @@ import test.TCCL1HelperProvider;
 /**
  * @version $Revision$ $Date$
  */
-@SuppressWarnings({"ClassLoader2Instantiation"})
 public class HelperProviderTestCase extends TestCase {
     private URL classes;
     private URL testClasses;
@@ -39,8 +38,8 @@ public class HelperProviderTestCase extends TestCase {
 
     public void testDefaultInstance() throws Exception {
         ClassLoader cl = new URLClassLoader(new URL[]{classes, def, testClasses}, null);
-        Class<?> providerClass = cl.loadClass(HelperProvider.class.getName());
-        Class<?> implClass = cl.loadClass(DefaultHelperProvider.class.getName());
+        Class providerClass = cl.loadClass(HelperProvider.class.getName());
+        Class implClass = cl.loadClass(DefaultHelperProvider.class.getName());
         Object instance = providerClass.getField("INSTANCE").get(null);
         assertNotNull(instance);
         assertEquals(implClass, instance.getClass());
@@ -48,8 +47,9 @@ public class HelperProviderTestCase extends TestCase {
 
     public void testLocateFromClassLoader() throws Exception {
         ClassLoader cl = new URLClassLoader(new URL[]{classes, tccl1, testClasses}, null);
-        Class<?> providerClass = cl.loadClass(HelperProvider.class.getName());
-        Object provider = providerClass.getMethod("getInstance", ClassLoader.class).invoke(null, cl);
+        Class providerClass = cl.loadClass(HelperProvider.class.getName());
+        Object provider = providerClass.getMethod("getInstance", new Class[] {ClassLoader.class})
+            .invoke(null, new Object[] {cl});
         assertNotNull(provider);
         assertEquals(TCCL1HelperProvider.class.getName(), provider.getClass().getName());
     }
@@ -59,8 +59,8 @@ public class HelperProviderTestCase extends TestCase {
         ClassLoader tccl = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(cl);
-            Class<?> providerClass = cl.loadClass(HelperProvider.class.getName());
-            Object provider = providerClass.getMethod("getInstance").invoke(null);
+            Class providerClass = cl.loadClass(HelperProvider.class.getName());
+            Object provider = providerClass.getMethod("getInstance", new Class[0]).invoke(null, new Object[0]);
             assertNotNull(provider);
             assertEquals(TCCL1HelperProvider.class.getName(), provider.getClass().getName());
         } finally {
@@ -69,7 +69,6 @@ public class HelperProviderTestCase extends TestCase {
 
     }
 
-    @SuppressWarnings({"AccessOfSystemProperties"})
     public void testSystemProperty() {
         System.setProperty("commonj.sdo.impl.HelperProvider", "test.TCCL1HelperProvider");
         try {
