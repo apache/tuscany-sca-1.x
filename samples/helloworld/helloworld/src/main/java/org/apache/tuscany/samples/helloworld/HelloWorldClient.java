@@ -17,6 +17,7 @@
 package org.apache.tuscany.samples.helloworld;
 
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.Properties;
 
 import org.osoa.sca.CurrentModuleContext;
@@ -33,14 +34,15 @@ import org.apache.tuscany.common.monitor.impl.JavaLoggingMonitorFactory;
 public class HelloWorldClient {
 
     public static final void main(String[] args) throws Exception {
-        // Setup Tuscany monitoring to use java.util.logging 
+        // Setup Tuscany monitoring to use java.util.logging
+        LogManager.getLogManager().readConfiguration(HelloWorldClient.class.getResourceAsStream("/logging.properties"));
         Properties levels = new Properties();
-        MonitorFactory monitorFactory = new JavaLoggingMonitorFactory(levels, Level.INFO, null);
+        MonitorFactory monitorFactory = new JavaLoggingMonitorFactory(levels, Level.FINEST, "MonitorMessages");
 
         // Obtain Tuscany runtime
         TuscanyRuntime tuscany = new TuscanyRuntime("hello", null, monitorFactory);
 
-        // Start the runtime
+        // Associate the application module component with this thread
         tuscany.start();
 
         // Obtain SCA module context.
@@ -48,12 +50,13 @@ public class HelloWorldClient {
 
         // Locate the HelloWorld service component and invoke it
         HelloWorldService helloworldService = (HelloWorldService) moduleContext.locateService("HelloWorldServiceComponent");
-
         String value = helloworldService.getGreetings("World");
-
         System.out.println(value);
 
-        // Stop the runtime
+        // Disassociate the application module component
         tuscany.stop();
+
+        // Shut down the runtime
+        tuscany.shutdown();
     }
 }
