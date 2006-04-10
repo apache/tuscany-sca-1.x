@@ -46,11 +46,6 @@ public class HelloWorldServiceComponentTestCase extends TestCase {
         tuscany.stop();
     }
 
-    public final static void main(String[] args) throws Exception {
-        HelloWorldServiceComponentTestCase hwc =
-                new HelloWorldServiceComponentTestCase();
-        hwc.testGeetings();
-    }
 
 
 }

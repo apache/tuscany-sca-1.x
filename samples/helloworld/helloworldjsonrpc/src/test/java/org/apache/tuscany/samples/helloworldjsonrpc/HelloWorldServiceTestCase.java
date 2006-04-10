@@ -54,11 +54,6 @@ public class HelloWorldServiceTestCase extends TestCase {
 
     }
 
-    public final static void main(String[] args) throws Exception {
-        HelloWorldServiceTestCase hwc = new HelloWorldServiceTestCase();
-        hwc.testGeetings();
-
-    }
-
+ 
 
 }
