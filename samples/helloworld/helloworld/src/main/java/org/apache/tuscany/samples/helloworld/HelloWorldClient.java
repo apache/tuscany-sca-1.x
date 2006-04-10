@@ -52,6 +52,7 @@ public class HelloWorldClient {
         HelloWorldService helloworldService = (HelloWorldService) moduleContext.locateService("HelloWorldServiceComponent");
         String value = helloworldService.getGreetings("World");
         System.out.println(value);
+        System.out.flush();
 
         // Disassociate the application module component
         tuscany.stop();

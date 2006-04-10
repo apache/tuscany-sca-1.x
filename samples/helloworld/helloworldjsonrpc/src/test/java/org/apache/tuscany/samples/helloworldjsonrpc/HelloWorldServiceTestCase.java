@@ -28,19 +28,13 @@ import org.osoa.sca.ModuleContext;
  * 
  */
 public class HelloWorldServiceTestCase extends TestCase {
-    public boolean verbose = false;
 
     public void testGeetings() throws Exception {
 
-        final boolean viaSCA = true;
         TuscanyRuntime tuscany;
         ModuleContext moduleContext = null;
-        if (verbose)
-            System.out.println("starting test..");
-        System.out.flush();
         HelloWorldService helloworldService = null;
 
-        if (viaSCA) {
             tuscany = new TuscanyRuntime("test", null);
             tuscany.start();
             moduleContext = CurrentModuleContext.getContext();
@@ -51,33 +45,20 @@ public class HelloWorldServiceTestCase extends TestCase {
                     .locateService("HelloWorldServiceComponent");
 
             assertNotNull(helloworldService);
-        } else
-            helloworldService = new HelloWorldServiceComponentImpl();
 
         String value = helloworldService
                 .getGreetings("World");
 
-        if (verbose)
-            System.out.println("Value = '" + value + "'");
         assertEquals("jsonrpcHello World", value);
-        if (viaSCA)
-            tuscany.stop();
+         tuscany.stop();
 
     }
 
     public final static void main(String[] args) throws Exception {
         HelloWorldServiceTestCase hwc = new HelloWorldServiceTestCase();
-        hwc.setVerbose(true);
         hwc.testGeetings();
 
     }
 
-    public boolean isVerbose() {
-        return verbose;
-    }
-
-    public void setVerbose(boolean verbose) {
-        this.verbose = verbose;
-    }
 
 }

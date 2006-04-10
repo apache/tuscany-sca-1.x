@@ -46,6 +46,7 @@ public class HelloWorldAxisClient {
 
         System.out.println((new HelloWorldAxisClient()).getGreetings(urlstr,
                 name));
+        System.out.flush();
 
     }
 

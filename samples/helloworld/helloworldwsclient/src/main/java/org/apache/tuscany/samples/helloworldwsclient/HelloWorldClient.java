@@ -44,6 +44,7 @@ public class HelloWorldClient {
         String value = helloworldService.getGreetings("World");
 
         System.out.println(value);
+        System.out.flush();
 
         // Stop the runtime
         tuscany.stop();

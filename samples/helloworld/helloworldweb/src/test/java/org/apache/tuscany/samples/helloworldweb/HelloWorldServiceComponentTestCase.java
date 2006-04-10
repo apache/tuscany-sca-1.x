@@ -26,40 +26,28 @@ import org.osoa.sca.ModuleContext;
  * 
  */
 public class HelloWorldServiceComponentTestCase extends TestCase {
-    public boolean verbose = false;
 
     public void testGeetings() throws Exception {
         // todo should use SCA ;-)
         final boolean viaSCA = false;
         TuscanyRuntime tuscany;
         ModuleContext moduleContext = null;
-        if (verbose)
-            System.out.println("starting test..");
-        System.out.flush();
+        
         HelloWorldServiceComponent helloworldService = null;
 
-        if (viaSCA) {
             tuscany = new TuscanyRuntime("test", null);
             tuscany.start();
             moduleContext = CurrentModuleContext.getContext();
 
             assertNotNull(moduleContext);
-            System.out.println("module context name '"
-                    + moduleContext.getName() + "'");
-            System.out.println("module context uri '" + moduleContext.getURI()
-                    + "'");
+            
             helloworldService = (HelloWorldServiceComponent) moduleContext
                     .locateService("HelloWorldServiceComponent");
 
             assertNotNull(helloworldService);
-        } else
-            helloworldService = new HelloWorldServiceComponentImpl();
-
         String value = helloworldService
                 .getGreetings("World");
 
-        if (verbose)
-            System.out.println("Value = '" + value + "'");
         assertEquals("Hello World", value);
         if (viaSCA)
             tuscany.stop();
@@ -68,17 +56,9 @@ public class HelloWorldServiceComponentTestCase extends TestCase {
 
     public final static void main(String[] args) throws Exception {
         HelloWorldServiceComponentTestCase hwc = new HelloWorldServiceComponentTestCase();
-        hwc.setVerbose(true);
         hwc.testGeetings();
 
     }
 
-    public boolean isVerbose() {
-        return verbose;
-    }
-
-    public void setVerbose(boolean verbose) {
-        this.verbose = verbose;
-    }
 
 }
