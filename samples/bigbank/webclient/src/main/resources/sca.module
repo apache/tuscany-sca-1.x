@@ -18,6 +18,8 @@
 
         name="tuscany.samples.bigbank.webclient">
 
+    <import.wsdl location="wsdl/AccountService.wsdl" namespace="http://www.bigbank.com/Account/"/>
+
     <component name="LoginServiceComponent">
         <implementation.java class="org.apache.tuscany.samples.bigbank.webclient.services.profile.SimpleLoginServiceImpl"/>
         <references>
@@ -47,9 +49,5 @@
         <binding.ws port="http://www.bigbank.com/Account/#AccountServiceSOAP"/>
     </externalService>
 
-    <import.wsdl
-		location="wsdl/AccountService.wsdl"
-		namespace="http://www.bigbank.com/Account/"/>
-		
 </module>
 	

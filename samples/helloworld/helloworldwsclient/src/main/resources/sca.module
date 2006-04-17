@@ -17,6 +17,8 @@
 <module xmlns="http://www.osoa.org/xmlns/sca/0.9" xmlns:v="http://www.osoa.org/xmlns/sca/values/0.9"
         name="sampleHelloworld">
 
+    <import.wsdl location="wsdl/helloworld.wsdl" namespace="http://helloworldaxis.samples.tuscany.apache.org"/>
+
     <component name="HelloWorldServiceComponent">
         <implementation.java class="org.apache.tuscany.samples.helloworldwsclient.HelloWorldServiceComponentImpl"/>
         <references>
@@ -33,8 +35,4 @@
         -->
     </externalService>
     
-    <import.wsdl
-		location="wsdl/helloworld.wsdl"
-		namespace="http://helloworldaxis.samples.tuscany.apache.org"/>
-
 </module>
