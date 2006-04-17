@@ -39,8 +39,11 @@
    the Java binding of SDO Types and Properties.
 -->
 
+<!-- FIXME need this global attribute because as per spec Type's with JavaInfo.javaClass cannot be (de)serialized -->
+<xsd:attribute name="javaClass" type="sdo:String"/>
+
 <xsd:complexType name="JavaInfo">
-  <xsd:attribute name="javaClass" type="sdo:String"/>
+  <xsd:attribute ref="sdoJava:javaClass"/>
 </xsd:complexType>
 
 <!--
