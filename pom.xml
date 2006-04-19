@@ -62,11 +62,15 @@
         <module>das</module>
         <module>sca</module>
         <module>samples</module>
-        <!--
-            <module>tools</module>
-            <module>acceptance</module>
-        -->
     </modules>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>maven-snapshot-repository</id>
+            <name>Apache SNAPSHOT Repository</name>
+            <url>scpexe://cvs.apache.org/www/cvs.apache.org/maven-snapshot-repository</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>
@@ -104,6 +108,14 @@
             </testResource>
         </testResources>
         <defaultGoal>install</defaultGoal>
+
+        <extensions>
+          <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+             <artifactId>wagon-ssh-external</artifactId>
+             <version>1.0-alpha-5</version>
+          </extension>
+        </extensions>
     </build>
 
 

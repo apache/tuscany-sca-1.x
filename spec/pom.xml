@@ -43,11 +43,19 @@
         </repository>
     </repositories>
 
-  <scm> <!-- need for continuum -->
-    <connection>scm:svn:http://svn.apache.org/repos/asf/incubator/tuscany/java/spec</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/incubator/tuscany/java/spec</developerConnection>
-    <url>http://svn.apache.org/viewcvs.cgi/incubator/tuscany/java/spec</url>
-  </scm>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>maven-snapshot-repository</id>
+            <name>Apache SNAPSHOT Repository</name>
+            <url>scpexe://cvs.apache.org/www/cvs.apache.org/maven-snapshot-repository</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:svn:http://svn.apache.org/repos/asf/incubator/tuscany/java/spec</connection>
+        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/incubator/tuscany/java/spec</developerConnection>
+        <url>http://svn.apache.org/viewcvs.cgi/incubator/tuscany/java/spec</url>
+    </scm>
 
     <modules>
         <module>sdo</module>
@@ -83,6 +91,14 @@
             </plugin>
         </plugins>
         <defaultGoal>install</defaultGoal>
+
+        <extensions>
+          <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+             <artifactId>wagon-ssh-external</artifactId>
+             <version>1.0-alpha-5</version>
+          </extension>
+        </extensions>
     </build>
 
     <reporting>
