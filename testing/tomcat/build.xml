@@ -183,7 +183,7 @@
                                   <include name="**/org/apache/derby/derby/10.1.2.1/derby-10.1.2.1.jar" />
                                 </patternset>
                                 <patternset>  <!-- for JSON-RPC support -->
-                                  <include name="**/metaparadigm/jsonrpc/SNAPSHOT/jsonrpc-SNAPSHOT.jar" />
+                                  <include name="**/metaparadigm/jsonrpc/1.0/jsonrpc-1.0.jar" />
                                 </patternset>
                         </fileset>
                 </copy>
