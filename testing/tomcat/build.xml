@@ -238,11 +238,12 @@
 
         <!-- provide a convenient -Djava.ext.dirs=  to run j2se and webservice export samples -->
         <target name="j2sews" description='create a java extensions directory to run J2SE tuscany applications.'>
-                <property name="tuscany.acceptance.j2se.dir" value='${tuscany.acceptance.target.dir}/j2sews' />
+                <property name="tuscany.acceptance.j2sews.dir" value='${tuscany.acceptance.target.dir}/j2sews' />
 
              <antcall target="j2se"  inheritAll='true' inheritRefs='true' >
+               <param name="tuscany.acceptance.j2se.dir" value="${tuscany.acceptance.j2sews.dir}" />
               </antcall>
-                <copy todir="${tuscany.acceptance.j2se.dir}" flatten='true'>
+                <copy todir="${tuscany.acceptance.j2sews.dir}" flatten='true'>
                         <fileset dir="${tuscany.maven.repos.dir}">
                                 <patternset refid="tuscany.acceptance.common.dependencies" />
                         </fileset>
