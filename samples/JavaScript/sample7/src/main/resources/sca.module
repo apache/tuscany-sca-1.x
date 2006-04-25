@@ -20,12 +20,11 @@
 
         name="JavaScriptSample7">
 
+    <import.wsdl location="wsdl/helloworld.wsdl" namespace="http://helloworld.samples.tuscany.apache.org"/>
+    <import.sdo wsdlLocation="wsdl/helloworld.wsdl"/>
+
     <component name="HelloWorldComponent">
         <js:implementation.js style="e4x" scriptFile="sample/HelloWorldImpl.js"/>
     </component>
-
-    <import.wsdl
-		location="wsdl/helloworld.wsdl"
-		namespace="http://helloworld.samples.tuscany.apache.org"/>
 
 </module>
