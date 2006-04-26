@@ -51,7 +51,7 @@
 
         <property name="tuscany.acceptance.bindings" value='org/apache/tuscany/sca/bindings' />
         <property name="tuscany.acceptance.containers" value='org/apache/tuscany/sca/containers' />
-
+        <property name="tuscany.acceptance.databindings" value='org/apache/tuscany/databinding' />
         <property name="tuscany.acceptance.samples.dir" value='../../samples' />
         <!-- property name="tuscany.maven.repos.dir" value='${user.home}\.maven\repository' / -->
         <!-- change for maven 2.0 -->
@@ -84,6 +84,7 @@
         <patternset id="tuscany.acceptance.sca.core"> <!--jars which need to go into tomcat server/lib  -->
                 <include name="**/${tuscany.acceptance.groupId}/tuscany-common/${tuscany.acceptance.version}/tuscany-common-${tuscany.acceptance.version}.jar" />
                 <include name="**/${tuscany.acceptance.containers}/tuscany-container-java/${tuscany.acceptance.version}/tuscany-container-java-${tuscany.acceptance.version}.jar" />
+                <include name="**/${tuscany.acceptance.databindings}/tuscany-databinding-sdo/${tuscany.acceptance.version}/tuscany-databinding-sdo-${tuscany.acceptance.version}.jar" />
                 <include name="**/${tuscany.acceptance.groupId}/tuscany-core/${tuscany.acceptance.version}/tuscany-core-${tuscany.acceptance.version}.jar" />
                 <include name="**/${tuscany.acceptance.groupId}/tuscany-model/${tuscany.acceptance.version}/tuscany-model-${tuscany.acceptance.version}.jar" />
 
