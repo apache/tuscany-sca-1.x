@@ -18,6 +18,7 @@
         <property environment="env" />
         <property file="${user.home}/tuscany/build.properties" />
         <property file="${user.home}/build.properties" />
+        <property name="wsbinding" value="axis2"/>
 
         <property name="tuscany.acceptance.tomcat.version" value='5.5.15' />
         <condition property="tuscany.acceptance.tomcat.zipped" value='apache-tomcat-${tuscany.acceptance.tomcat.version}.zip'>
@@ -100,6 +101,7 @@
                 <include name="**/stax/stax-api/1.0/stax-api-1.0.jar" />
                 <include name="**/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar" />
         </patternset>
+
         <patternset id="tuscany.acceptance.binding.axis2">
                 <include name="**/${tuscany.acceptance.bindings}/tuscany-binding-axis2/${tuscany.acceptance.version}/tuscany-binding-axis2-${tuscany.acceptance.version}.jar" />
                 <include name="**/axis2/axis2-kernel/${tuscany.acceptance.axis2.version}/axis2-kernel-${tuscany.acceptance.axis2.version}.jar" />
@@ -109,6 +111,36 @@
                 <include name="**/org/apache/ws/commons//XmlSchema/1.0/XmlSchema-1.0.jar" />
                 <include name="**/commons-httpclient/commons-httpclient/3.0/commons-httpclient-3.0.jar" />
                 <include name="**/commons-codec/commons-codec/1.3/commons-codec-1.3.jar" />
+        </patternset>
+
+        <property name="celtix.version" value="1.0-SNAPSHOT"/>
+        <patternset id="tuscany.acceptance.binding.celtix">
+            <include name="**/${tuscany.acceptance.bindings}/tuscany-binding-celtix/${tuscany.acceptance.version}/tuscany-binding-celtix-${tuscany.acceptance.version}.jar" />
+            <include name="**/org/objectweb/celtix/celtix-rt/${celtix.version}/celtix-rt-${celtix.version}.jar"/>
+            <include name="**/org/objectweb/celtix/celtix-api/${celtix.version}/celtix-api-${celtix.version}.jar"/>
+            <include name="**/org/objectweb/celtix/celtix-common/${celtix.version}/celtix-common-${celtix.version}.jar"/>
+            <include name="**/org/objectweb/celtix/celtix-tools/${celtix.version}/celtix-tools-${celtix.version}.jar"/>
+
+            <include name="**/com/sun/xml/jaxb-impl/2.0EA3/jaxb-impl-2.0EA3.jar"/>
+            <include name="**/com/sun/xml/jaxb-xjc/2.0EA3/jaxb-xjc-2.0EA3.jar"/>
+            <include name="**/com/sun/xml/saaj-impl/1.3/saaj-impl-1.3.jar"/>
+            <include name="**/javax/annotation/jsr250-api/2.0-JAXWS-2.0-EA3/jsr250-api-2.0-JAXWS-2.0-EA3.jar"/>
+            <include name="**/javax/jws/jsr181-api/2.0-JAXWS-2.0-EA3/jsr181-api-2.0-JAXWS-2.0-EA3.jar"/>
+            <include name="**/javax/xml/jaxb-api/2.0EA3/jaxb-api-2.0EA3.jar"/>
+            <include name="**/javax/xml/jaxws-api/2.0-JAXWS-2.0-EA3/jaxws-api-2.0-JAXWS-2.0-EA3.jar"/>
+            <include name="**/javax/xml/saaj-api/1.3/saaj-api-1.3.jar"/>
+            <include name="**/jetty/org.mortbay.jetty/5.1.9/org.mortbay.jetty-5.1.9.jar"/>
+            <include name="**/org/springframework/spring-beans/1.2.5/spring-beans-1.2.5.jar"/>
+            <include name="**/org/springframework/spring-core/1.2.5/spring-core-1.2.5.jar"/>
+            <include name="**/regexp/regexp/1.3/regexp-1.3.jar"/>
+            <include name="**/stax/stax-api/1.0/stax-api-1.0.jar"/>
+            <include name="**/velocity/velocity-dep/1.4/velocity-dep-1.4.jar"/>
+            <include name="**/velocity/velocity/1.4/velocity-1.4.jar"/>
+            <include name="**/woodstox/wstx-asl/2.8.2/wstx-asl-2.8.2.jar"/>
+            <include name="**/wsdl4j/wsdl4j/1.5.2/wsdl4j-1.5.2.jar"/>
+
+            <include name="**/org/apache/geronimo/specs/geronimo-activation_1.0.2_spec/1.0/geronimo-activation_1.0.2_spec-1.0.jar"/>
+            <include name="**/asm/asm/2.2/asm-2.2.jar" />
         </patternset>
 
         <target name="init">
@@ -192,7 +224,7 @@
                                 </patternset>
                         </fileset>
                         <fileset dir="${tuscany.maven.repos.dir}">
-                                <patternset refid="tuscany.acceptance.binding.axis2" />
+                                <patternset refid="tuscany.acceptance.binding.${wsbinding}" />
                         </fileset>
                         <fileset dir="${tuscany.maven.repos.dir}">
                                 <patternset>
@@ -240,7 +272,7 @@
                                 <patternset refid="tuscany.acceptance.common.dependencies" />
                         </fileset>
                         <fileset dir="${tuscany.maven.repos.dir}">
-                                <patternset refid="tuscany.acceptance.binding.axis2" />
+                                <patternset refid="tuscany.acceptance.binding.${wsbinding}" />
                         </fileset>
                 </copy>
         </target>
