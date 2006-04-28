@@ -18,6 +18,10 @@
 
         name="tuscany.samples.bigbank.account">
 
+    <import.sdo factory="org.apache.tuscany.samples.bigbank.account.AccountFactory"/>
+    <import.wsdl location="wsdl/AccountService.wsdl" namespace="http://www.bigbank.com/Account/"/>
+    <import.wsdl location="wsdl/StockQuoteWebService.wsdl" namespace="http://webservice.stockquote"/>
+		
     <entryPoint name="AccountService">
         <interface.java interface="org.apache.tuscany.samples.bigbank.account.services.account.AccountService"/>
         <binding.ws port="http://www.bigbank.com/Account/#AccountServiceSOAP"/>
@@ -50,12 +54,5 @@
         </externalService>
     -->
 
-    <import.wsdl
-		location="wsdl/AccountService.wsdl"
-		namespace="http://www.bigbank.com/Account/"/>
-    <import.wsdl
-		location="wsdl/StockQuoteWebService.wsdl"
-		namespace="http://webservice.stockquote"/>
-		
 </module>
 	

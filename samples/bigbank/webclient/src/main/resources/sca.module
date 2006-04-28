@@ -18,6 +18,7 @@
 
         name="tuscany.samples.bigbank.webclient">
 
+    <import.sdo factory="org.apache.tuscany.samples.bigbank.account.AccountFactory"/>
     <import.wsdl location="wsdl/AccountService.wsdl" namespace="http://www.bigbank.com/Account/"/>
 
     <component name="LoginServiceComponent">

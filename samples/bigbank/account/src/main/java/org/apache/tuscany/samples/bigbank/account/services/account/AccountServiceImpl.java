@@ -26,17 +26,12 @@ import org.apache.tuscany.samples.bigbank.account.services.accountdata.CheckingA
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.SavingsAccount;
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.StockAccount;
 import org.apache.tuscany.samples.bigbank.account.services.stockquote.StockQuoteService;
-import org.apache.tuscany.sdo.util.SDOUtil;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
 @Service(interfaces=AccountService.class)
 public class AccountServiceImpl implements AccountService {
-
-    static {
-        SDOUtil.registerStaticTypes(AccountFactory.class);
-    }
 
     @Property
     private String currency = "USD";
