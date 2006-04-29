@@ -16,11 +16,23 @@
  */
 package org.apache.tuscany.samples.bigbank.account.services.accountdata;
 
+import java.rmi.RemoteException;
+
+import com.bigbank.account.AccountReport;
+import com.bigbank.account.CustomerProfileData;
+
 public interface AccountDataService {
+    public CustomerProfileData getCustomerProfile(String logonID) throws RemoteException ;
 
-    CheckingAccount getCheckingAccount(String customerID);
+//    public CheckingAccount getCheckingAccount(int customerID);
 
-    SavingsAccount getSavingsAccount(String customerID);
-
-    StockAccount getStockAccount(String customerID);
+//    public SavingsAccount getSavingsAccount(int  customerID);
+//
+//    public StockAccount getStockAccount(int  customerID);
+    
+    
+    
+    public AccountReport getAccountReport(int customerID ) throws RemoteException;
+    public CustomerProfileData createAccount(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings) throws RemoteException ;
+    
 }

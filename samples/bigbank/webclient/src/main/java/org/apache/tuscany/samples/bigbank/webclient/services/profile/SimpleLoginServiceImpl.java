@@ -42,7 +42,7 @@ public class SimpleLoginServiceImpl implements LoginService {
         profileService.setLoggedIn(true);
         profileService.setFirstName("John");
         profileService.setLastName("Doe");
-        profileService.setId("12345");
+        profileService.setId(12345);
 
         return SUCCESS;
     }

@@ -34,6 +34,45 @@
             <version>${pom.version}</version>
             <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
         </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.das</groupId>
+            <artifactId>tuscany-das-rdb</artifactId>
+            <version>${pom.version}</version>
+            <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.1.2.1</version>
+            <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
+        </dependency>
+
+        <dependency>
+          <groupId>stax</groupId>
+          <artifactId>stax-api</artifactId>
+          <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>woodstox</groupId>
+            <artifactId>wstx-asl</artifactId>
+            <version>2.8.2</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ws-commons</groupId>
+            <artifactId>axiom-api</artifactId>
+            <version>0.95</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -44,7 +83,8 @@
                 <executions>
                     <execution>
                         <configuration>
-                            <schemaFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</schemaFile>
+                            <!-- schemaFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</schemaFile -->
+                            <schemaDir>${basedir}/src/main/resources/wsdl</schemaDir>
                             <noNotification>true</noNotification>
                             <noContainer>true</noContainer>
                             <noInterfaces>true</noInterfaces>
@@ -62,8 +102,9 @@
                 <executions>
                     <execution>
                         <configuration>
-                            <wsdlFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</wsdlFile>
-                            <javaPackage>org.apache.tuscany.samples.bigbank.account.services.account</javaPackage>
+                            <wsdlDir>${basedir}/src/main/resources/wsdl</wsdlDir>
+                            <!-- wsdlFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</wsdlFile -->
+                            <!-- javaPackage>org.apache.tuscany.samples.bigbank.account.services.account</javaPackage -->
                         </configuration>
                         <goals>
                             <goal>generate</goal>

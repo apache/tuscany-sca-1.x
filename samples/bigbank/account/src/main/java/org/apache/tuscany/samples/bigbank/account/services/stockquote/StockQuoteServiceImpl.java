@@ -16,13 +16,17 @@
  */
 package org.apache.tuscany.samples.bigbank.account.services.stockquote;
 
+import java.rmi.RemoteException;
+import java.util.Map;
+
 /* Dummy'd up StockQuoteService, override webservice for now */
 
 public class StockQuoteServiceImpl implements StockQuoteService {
 
-    public float getQuote(String symbol) {
-        // Just hardcode for now
-        return 83.00f;
+ 
+    public Map<String, StockQuote> getQuotes(String[] symbols) throws RemoteException {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

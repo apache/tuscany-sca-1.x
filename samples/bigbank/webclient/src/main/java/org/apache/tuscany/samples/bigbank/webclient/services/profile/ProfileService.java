@@ -30,7 +30,7 @@ public interface ProfileService {
 
     public void setLoggedIn(boolean pStatus);
 
-    public String getId();
+    public int getId();
 
-    public void setId(String pId);
+    public void setId(int pId);
 }

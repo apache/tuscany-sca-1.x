@@ -13,6 +13,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  --%>
+ 
+ <%@ page import="com.bigbank.account.AccountSummary" %> 
 <%@ taglib uri="/WEB-INF/bigbank-tags.tld" prefix="sca" %>
 <sca:login profile="ProfileServiceComponent" url="login.html">
     <sca:service id="profile" name="ProfileServiceComponent"/>
@@ -26,23 +28,86 @@
     <jsp:getProperty name='profile' property='firstName'/>
     <jsp:getProperty name='profile' property='lastName'/>
     <br>
-
+    
     <table>
-        <sca:accountStatus accountService="AccountServiceComponent" profileService="ProfileServiceComponent" id="account">
         <tr>
             <td><strong>Account</strong></td>
+            <td>&nbsp;</td>
             <td><strong>Balance</strong></td>
         </tr>
+        <sca:accountStatus accountService="AccountServiceComponent" profileService="ProfileServiceComponent" id="account">
         <tr>
+			<FORM method="post" action='accountTransaction.jsp'>
+			   <input type="hidden" name="account"    value='<%=((AccountSummary)pageContext.getAttribute("account")).getAccountNumber()%>' />
             <td>
                 <jsp:getProperty name="account" property="accountNumber"/>
+            </td>
+            
+            <td>
+                <jsp:getProperty name="account" property="accountType"/>
             </td>
             <td>
                 <jsp:getProperty name="account" property="balance"/>
             </td>
+            <td>
+           
+            <INPUT type="submit" name='deposit' value="deposit">
+            </td>
+            <td>
+            <INPUT type="submit" name='withdraw' value="withdraw">
+            </td>
+			</FORM>           
         </tr>
         </sca:accountStatus>
+       </table>
+ 
+       
+       
+       <hr/>
+       Strocks:<br/>
         <table>
+        <tr>
+            <td><strong>Symbol</strong></td>
+            <td><strong>Quantity</strong></td>
+            <td><strong>Purchase Date</strong></td>
+            <td><strong>Purchase Price</strong></td>
+            <td><strong>Current Price</strong></td>
+            <td><strong>Company Name</strong></td>
+            <td><strong>Today High</strong></td>
+            <td><strong>Today Low</strong></td>
+        </tr>
+        <sca:stockStatus id="stocksummary">
+        <tr>
+            <td>
+                <jsp:getProperty name="stocksummary" property="symbol"/>
+            </td>
+            <td>
+                <jsp:getProperty name="stocksummary" property="quantity"/>
+            </td>
+            <td>
+                <jsp:getProperty name="stocksummary" property="purchaseDate"/>
+            </td>
+            <td>
+                <jsp:getProperty name="stocksummary" property="purchasePrice"/>
+            </td>
+            
+            <td>
+                <jsp:getProperty name="stocksummary" property="currentPrice"/>
+            </td>
+            <td>
+                <jsp:getProperty name="stocksummary" property="company"/>
+            </td>
+            
+            <td>
+                <jsp:getProperty name="stocksummary" property="highPrice"/>
+            </td>
+            <td>
+                <jsp:getProperty name="stocksummary" property="lowPrice"/>
+            </td>
+        </tr>
+        </sca:stockStatus>
+       </table>
+       
     </body>
     </html>
 </sca:login>

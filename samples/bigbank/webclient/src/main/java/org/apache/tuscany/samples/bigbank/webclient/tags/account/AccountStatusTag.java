@@ -22,10 +22,12 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.tuscany.samples.bigbank.account.services.account.AccountService;
 import org.apache.tuscany.samples.bigbank.webclient.services.profile.ProfileService;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
+
+import com.bigbank.account.AccountReport;
+import com.bigbank.account.AccountService;
 
 /**
  * Retrieves and iterates over account summary information for the current
@@ -95,7 +97,9 @@ public class AccountStatusTag extends TagSupport {
         }
         List summaries;
         try {
-            summaries = service.getAccountReport(profile.getId()).getAccountSummaries();
+            AccountReport accountReport = service.getAccountReport(profile.getId());
+            pageContext.setAttribute("StockSummaries", accountReport.getStockSummaries());
+            summaries = accountReport.getAccountSummaries();
         } catch (Exception e) {
             throw new JspException(e);
         }

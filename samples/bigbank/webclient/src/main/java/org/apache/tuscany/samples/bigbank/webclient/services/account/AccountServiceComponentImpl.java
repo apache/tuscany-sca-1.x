@@ -16,21 +16,36 @@
  */
 package org.apache.tuscany.samples.bigbank.webclient.services.account;
 
-import org.apache.tuscany.samples.bigbank.account.AccountFactory;
-import org.apache.tuscany.samples.bigbank.account.AccountReport;
-import org.apache.tuscany.samples.bigbank.account.services.account.AccountService;
+import java.io.InputStream;
+import java.rmi.RemoteException;
+
 import org.apache.tuscany.sdo.util.SDOUtil;
 import org.osoa.sca.ServiceUnavailableException;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
+import com.bigbank.account.AccountFactory;
+import com.bigbank.account.AccountReport;
+import com.bigbank.account.AccountService;
+import com.bigbank.account.CustomerProfileData;
+import com.bigbank.account.StockSummary;
+import commonj.sdo.helper.TypeHelper;
+import commonj.sdo.helper.XSDHelper;
+
 /**
  */
 @Service(AccountService.class)
 public class AccountServiceComponentImpl implements AccountService {
-    
+
     static {
         SDOUtil.registerStaticTypes(AccountFactory.class);
+        TypeHelper th = SDOUtil.createTypeHelper();
+        XSDHelper xsdHelper = SDOUtil.createXSDHelper(th);
+
+        InputStream xsdInputStream = AccountServiceComponentImpl.class.getClassLoader().getResourceAsStream("wsdl/AccountService.wsdl");
+        xsdHelper.define(xsdInputStream, null);
+
+
     }
 
     private AccountService accountService;
@@ -41,7 +56,7 @@ public class AccountServiceComponentImpl implements AccountService {
     }
 
     /**
-     *
+     * 
      */
     public AccountServiceComponentImpl() {
         super();
@@ -50,12 +65,54 @@ public class AccountServiceComponentImpl implements AccountService {
     /**
      * @see org.apache.tuscany.samples.bigbank.account.services.account.AccountService#getAccountReport(java.lang.String)
      */
-    public AccountReport getAccountReport(String customerID) {
+    public AccountReport getAccountReport(int customerID) {
         try {
             return accountService.getAccountReport(customerID);
         } catch (Exception e) {
             throw new ServiceUnavailableException(e);
         }
     }
+
+    public StockSummary purchaseStock(int customerID) throws RemoteException {
+        try {
+            return accountService.purchaseStock(customerID, null, customerID);
+        } catch (Exception e) {
+            throw new ServiceUnavailableException(e);
+        }
+    }
+
+    public CustomerProfileData getCustomerProfile(String param2) throws RemoteException {
+        try {
+            return accountService.getCustomerProfile(param2);
+        } catch (Exception e) {
+            throw new ServiceUnavailableException(e);
+        }
+    }
+
+    public float deposit(String param6, float param7) throws RemoteException {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public StockSummary purchaseStock(int param0, String param1, int param2) throws RemoteException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public StockSummary sellStock(int param9, int param10) throws RemoteException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public float withdraw(String param12, float param13) throws RemoteException {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public CustomerProfileData createAccount(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings) throws RemoteException {
+        
+        return accountService.createAccount(customerProfile, createSavings, createCheckings);
+    }
+
 
 }

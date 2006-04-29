@@ -16,12 +16,14 @@
  */
 package org.apache.tuscany.samples.bigbank.account.services.stockquote;
 
-import org.osoa.sca.annotations.Remotable;
+import java.rmi.RemoteException;
+import java.util.Map;
 
-@Remotable
+/**
+ * This is the business interface of the HelloWorld service component.
+ */
 public interface StockQuoteService {
 
-    public float getQuote(String symbol);
-}
+    public Map<String, StockQuote> getQuotes(String[] symbols) throws RemoteException;
 
- 
+}

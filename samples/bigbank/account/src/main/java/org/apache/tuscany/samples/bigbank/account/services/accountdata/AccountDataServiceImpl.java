@@ -16,36 +16,64 @@
  */
 package org.apache.tuscany.samples.bigbank.account.services.accountdata;
 
+import java.rmi.RemoteException;
+import java.util.List;
+
 import org.osoa.sca.annotations.Service;
+
+import com.bigbank.account.AccountFactory;
+import com.bigbank.account.AccountReport;
+import com.bigbank.account.AccountSummary;
+import com.bigbank.account.CustomerProfileData;
+import com.bigbank.account.StockSummary;
 
 @Service(AccountDataService.class)
 public class AccountDataServiceImpl implements AccountDataService {
 
-    public CheckingAccount getCheckingAccount(String customerID) {
 
-        CheckingAccount checkingAccount = new CheckingAccount();
-        checkingAccount.setAccountNumber(customerID + "_" + "CHA12345");
-        checkingAccount.setBalance(1500.0f);
-
-        return checkingAccount;
+    public CustomerProfileData getCustomerProfile(String logonID) throws RemoteException {
+        // TODO Auto-generated method stub
+        return null;
     }
 
-    public SavingsAccount getSavingsAccount(String customerID) {
-
-        SavingsAccount savingsAccount = new SavingsAccount();
-        savingsAccount.setAccountNumber(customerID + "_" + "SAA12345");
-        savingsAccount.setBalance(1500.0f);
-
-        return savingsAccount;
+    public AccountReport getAccountReport(int customerID) {
+        final AccountFactory accountFactory = AccountFactory.eINSTANCE;
+        AccountReport accountReport= accountFactory.createAccountReport();
+        List accounts = accountReport.getAccountSummaries();
+        
+        AccountSummary account = accountFactory.createAccountSummary();
+        account.setAccountType("1111");
+        account.setAccountNumber("22-22-22");
+        account.setBalance(123.45F);
+        accounts.add(account);
+        
+        account= accountFactory.createAccountSummary();
+        account.setAccountType("04-11-19");
+        account.setAccountNumber("11-23");
+        account.setBalance(543.21F);
+        accounts.add(account);
+        
+        List stocks = accountReport.getStockSummaries();
+        StockSummary stock = accountFactory.createStockSummary();
+        stock.setSymbol("IBM");
+        stock.setPurchaseDate("1999-11-23");
+        stock.setPurchaseLotNumber(101);
+        stock.setPurchasePrice(33.33F);
+        stock.setQuantity(10);
+        stocks.add(stock);
+        
+        stock = accountFactory.createStockSummary();
+        stock.setSymbol("TUSK");
+        stock.setPurchaseDate("2005-01-05");
+        stock.setPurchaseLotNumber(102);
+        stock.setPurchasePrice(11.11F);
+        stock.setQuantity(4);
+        stocks.add(stock);
+        return accountReport;
     }
 
-    public StockAccount getStockAccount(String customerID) {
-
-        StockAccount stockAccount = new StockAccount();
-        stockAccount.setAccountNumber(customerID + "_" + "STA12345");
-        stockAccount.setSymbol("IBM");
-        stockAccount.setQuantity(100);
-
-        return stockAccount;
+    public CustomerProfileData createAccount(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings) throws RemoteException {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

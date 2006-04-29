@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<Config xsi:noNamespaceSchemaLocation="http:///org.apache.tuscany.das.rdb/config.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <Table name="CUSTOMERS" propertyName="CustomerProfileData">
+    <!-- Column name="firstName" primaryKey="true"/ -->
+    <Column name="FIRSTNAME"/>
+    <Column name="LASTNAME"/> 
+    <Column name="ADDRESS"/> 
+    <Column name="EMAIL"/>
+     <Column name="LOGINID"/> 
+     <Column name="PASSWORD"/> 
+      <Column name="ID"/> 
+  </Table>
+  <Table name="ACCOUNTS" propertyName="AccountSummary">
+    <!-- Column name="firstName" primaryKey="true"/ -->
+    <Column name="ACCOUNTNUMBER"/>
+    <Column name="BALANCE"/> 
+  </Table>
+
+<!--
+"create table stocks(id int NOT NULL, Symbol varchar(8) NOT NULL, quantity int NOT NULL, purchasePrice real NOT NULL, purchaseDate TIMESTAMP, purchaseLotNumber int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY  )");
+-->	
+  <Table name="STOCKS" propertyName="StockSummary" >
+    
+    <Column name="ID"/>
+    <Column name="Symbol"/>
+    <Column name="quantity"/>
+    <Column name="purchasePrice"/>
+    <Column name="PURCHASEDATE" converterClassName="org.apache.tuscany.samples.bigbank.account.services.accountdata.AccountDataServiceDASImpl$DateConverter"/>
+  </Table>
+
+	
+  <Command name="update balance"
+        SQL="update ACCOUNTS set BALANCE = :BALANCE where ACCOUNTNUMBER = :ACCOUNTNUMBER"
+        kind="Update">
+        <Parameter name=":BALANCE"/>
+        <Parameter name=":ACCOUNTNUMBER"/>
+    </Command>
+    
+    
+    <Command name="all stocks" SQL="select * from stocks"  kind="Select"/>
+    <Command name="all customers" SQL="select * from CUSTOMERS"  kind="Select"/>
+    
+	
+</Config>

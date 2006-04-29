@@ -19,12 +19,13 @@ package org.apache.tuscany.samples.bigbank.account.client;
 import java.util.Iterator;
 
 import org.apache.tuscany.core.client.TuscanyRuntime;
-import org.apache.tuscany.samples.bigbank.account.AccountReport;
-import org.apache.tuscany.samples.bigbank.account.AccountSummary;
-import org.apache.tuscany.samples.bigbank.account.services.account.AccountService;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
 import org.osoa.sca.SCA;
+
+import com.bigbank.account.AccountReport;
+import com.bigbank.account.AccountService;
+import com.bigbank.account.AccountSummary;
 
 public class AccountClient extends SCA {
 
@@ -41,7 +42,7 @@ public class AccountClient extends SCA {
 
         AccountService accountService = (AccountService) moduleContext.locateService("AccountServiceComponent");
 
-        AccountReport accountReport = accountService.getAccountReport("12345");
+        AccountReport accountReport = accountService.getAccountReport(12345);
 
         for (Iterator i = accountReport.getAccountSummaries().iterator(); i.hasNext();) {
             AccountSummary accountSummary = (AccountSummary) i.next();

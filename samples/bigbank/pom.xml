@@ -28,7 +28,6 @@
     <version>SNAPSHOT</version>
 
     <modules>
-        <module>customers</module>
         <module>account</module>
         <module>webclient</module>
     </modules>

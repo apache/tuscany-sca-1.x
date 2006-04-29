@@ -62,6 +62,8 @@
                             <noContainer>true</noContainer>
                             <noInterfaces>true</noInterfaces>
                             <noUnsettable>true</noUnsettable>
+                            <!-- javaPackage>com.bigbank.account</javaPackage -->
+                            
                         </configuration>
                         <goals>
                             <goal>generate</goal>
@@ -76,7 +78,8 @@
                     <execution>
                         <configuration>
                             <wsdlFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</wsdlFile>
-							<javaPackage>org.apache.tuscany.samples.bigbank.account.services.account</javaPackage>                        </configuration>
+							<!-- javaPackage>org.apache.tuscany.samples.bigbank.account.services.account</javaPackage -->
+						  </configuration>
                         <goals>
                             <goal>generate</goal>
                         </goals>

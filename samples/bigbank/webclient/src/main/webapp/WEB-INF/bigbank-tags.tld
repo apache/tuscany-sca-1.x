@@ -75,5 +75,17 @@
             <rtexprvalue>false</rtexprvalue>
         </attribute>
     </tag>
+        <tag>
+        <name>stockStatus</name>
+        <tagclass>org.apache.tuscany.samples.bigbank.webclient.tags.account.StockStatusTag</tagclass>
+        <bodycontent>JSP</bodycontent>
+        <info>Accesses and iterates the stocks</info>
+        <attribute>
+            <name>id</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+    </tag>
+    
 
 </taglib>

@@ -26,10 +26,19 @@
         <servlet-class>org.apache.tuscany.samples.bigbank.webclient.ui.LoginServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>FormServlet</servlet-name>
+        <servlet-class>org.apache.tuscany.samples.bigbank.webclient.ui.FormServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/loginAction/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FormServlet</servlet-name>
+        <url-pattern>/FormServlet/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
