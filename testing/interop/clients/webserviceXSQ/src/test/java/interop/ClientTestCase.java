@@ -29,7 +29,7 @@ import org.osoa.sca.ModuleContext;
 /**
  * This client program shows how to create an SCA runtime, start it, locate a simple HelloWorld service component and invoke it.
  */
-public class Client extends TestCase {
+public class ClientTestCase extends TestCase {
 
     public void testGetQuote() throws ConfigurationException, SecurityException, NoSuchMethodException, IllegalArgumentException,
             IllegalAccessException, InvocationTargetException {
