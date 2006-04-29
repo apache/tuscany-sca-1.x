@@ -33,17 +33,31 @@ import org.osoa.sca.annotations.Service;
 @Service(interfaces=AccountService.class)
 public class AccountServiceImpl implements AccountService {
 
-    @Property
     private String currency = "USD";
 
-    @Reference
+    @Property
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
     private AccountDataService accountDataService;
+
     @Reference
+    public void setAccountDataService(AccountDataService accountDataService) {
+        this.accountDataService = accountDataService;
+    }
+
     private StockQuoteService stockQuoteService;
+
+    @Reference
+    public void setStockQuoteService(StockQuoteService stockQuoteService) {
+        this.stockQuoteService = stockQuoteService;
+    }
 
     public AccountServiceImpl() {
     }
 
+    @SuppressWarnings("unchecked")
     public AccountReport getAccountReport(String customerID) {
         
         AccountFactory accountFactory=new AccountFactory();

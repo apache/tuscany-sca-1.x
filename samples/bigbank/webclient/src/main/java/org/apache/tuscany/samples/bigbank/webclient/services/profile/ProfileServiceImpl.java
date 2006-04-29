@@ -24,13 +24,13 @@ import org.osoa.sca.annotations.Service;
 @Scope("session")
 public class ProfileServiceImpl implements ProfileService {
 
-    @Property
     private String firstName;
 
     public String getFirstName() {
         return firstName;
     }
 
+    @Property
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

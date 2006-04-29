@@ -16,8 +16,10 @@
  */
 package org.apache.tuscany.samples.bigbank.webclient.services.account;
 
+import org.apache.tuscany.samples.bigbank.account.AccountFactory;
 import org.apache.tuscany.samples.bigbank.account.AccountReport;
 import org.apache.tuscany.samples.bigbank.account.services.account.AccountService;
+import org.apache.tuscany.sdo.util.SDOUtil;
 import org.osoa.sca.ServiceUnavailableException;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
@@ -27,8 +29,16 @@ import org.osoa.sca.annotations.Service;
 @Service(AccountService.class)
 public class AccountServiceComponentImpl implements AccountService {
     
+    static {
+        SDOUtil.registerStaticTypes(AccountFactory.class);
+    }
+
+    private AccountService accountService;
+
     @Reference
-    public AccountService accountService;
+    public void setAccountService(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     /**
      *
@@ -38,7 +48,7 @@ public class AccountServiceComponentImpl implements AccountService {
     }
 
     /**
-     * @see org.apache.tuscany.samples.bigbank.webclient.services.account.AccountService#getAccountReport(java.lang.String)
+     * @see org.apache.tuscany.samples.bigbank.account.services.account.AccountService#getAccountReport(java.lang.String)
      */
     public AccountReport getAccountReport(String customerID) {
         try {

@@ -28,16 +28,20 @@ import org.osoa.sca.annotations.Reference;
 @Scope("MODULE")
 public class HelloWorldServiceComponentImpl implements HelloWorldService {
     
+    private HelloWorldService helloWorldService = null; // Injected by the SCA container.
+
     @Reference
-    public HelloWorldService hellowWorldService = null; // Injected by the SCA container.
+    public void setHelloWorldService(HelloWorldService helloWorldService){
+        this.helloWorldService = helloWorldService;
+    }
 
     /**
      * @see org.apache.tuscany.samples.helloworldwsclient.HelloWorldService#getGreetings(java.lang.String)
      */
     public String getGreetings(final String name) {
-        assert null != hellowWorldService : "helloWorldService was not set by the SCA runtime!";
+        assert null != helloWorldService : "helloWorldService was not set by the SCA runtime!";
 
-        return hellowWorldService.getGreetings(name);
+        return helloWorldService.getGreetings(name);
     }
 
 }

@@ -26,14 +26,24 @@ import org.osoa.sca.annotations.Service;
 @Service(HelloWorldService.class)
 public class HelloWorldServiceComponentImpl implements HelloWorldService {
 
-    @Property
     public String greetingMiddle;
-
-    @Reference
     public GreetingPortionProvider greetingPrefix;
+    public GreetingPortionProvider greetingSuffix;
+
+    @Property
+    public void setGreetingMiddle(String greetingMiddle) {
+        this.greetingMiddle = greetingMiddle;
+    }
 
     @Reference
-    public GreetingPortionProvider greetingSuffix;
+    public void setGreetingPrefix(GreetingPortionProvider greetingPrefix) {
+        this.greetingPrefix = greetingPrefix;
+    }
+
+    @Reference
+    public void setGreetingSuffix(GreetingPortionProvider greetingSuffix) {
+        this.greetingSuffix = greetingSuffix;
+    }
 
     /**
      * @return

@@ -22,8 +22,12 @@ import org.osoa.sca.annotations.Service;
 @Service(LoginService.class)
 public class SimpleLoginServiceImpl implements LoginService {
 
-    @Reference
     public ProfileService profileService;
+
+    @Reference
+    public void setProfileService(ProfileService profileService) {
+        this.profileService = profileService;
+    }
 
     public int login(String userName, String password) {
 

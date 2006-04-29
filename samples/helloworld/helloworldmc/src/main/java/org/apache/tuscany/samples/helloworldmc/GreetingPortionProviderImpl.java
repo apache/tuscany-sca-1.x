@@ -22,8 +22,12 @@ import org.osoa.sca.annotations.Service;
 @Service(GreetingPortionProvider.class)
 public class GreetingPortionProviderImpl implements GreetingPortionProvider {
 
+    private String greetingPortion;
+
     @Property
-    public String greetingPortion;
+    public void setGreetingPortion(String greetingPortion) {
+        this.greetingPortion = greetingPortion;
+    }
 
     public String getGreetingPortion() {
         return greetingPortion;
