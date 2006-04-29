@@ -23,7 +23,7 @@
     <component name="HelloWorldServiceComponent">
         <implementation.java class="org.apache.tuscany.samples.helloworldwsclient.HelloWorldServiceComponentImpl"/>
         <references>
-            <v:hellowWorldService>HelloWorldService</v:hellowWorldService>
+            <v:helloWorldService>HelloWorldService</v:helloWorldService>
         </references>
     </component>
 
