@@ -28,6 +28,7 @@
     <version>SNAPSHOT</version>
 
     <modules>
+        <module>webserviceInteropDoc</module>
         <module>webserviceXSQ</module>
     </modules>
 
