@@ -43,7 +43,7 @@ public class ClientTestCase extends TestCase {
 
         String sqResponse = (String) m.invoke(serviceProxy, "IBM");
 
-        assertTrue(sqResponse.startsWith("<bla, fix when service is going>"));
+        assertTrue(sqResponse.startsWith("<StockQuotes><Stock><Symbol>IBM</Symbol>"));
 
         tuscany.stop();
     }
