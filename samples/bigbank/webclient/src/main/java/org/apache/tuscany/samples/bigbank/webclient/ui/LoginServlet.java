@@ -17,6 +17,7 @@
 package org.apache.tuscany.samples.bigbank.webclient.ui;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -24,6 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tuscany.samples.bigbank.webclient.services.profile.LoginService;
 import org.osoa.sca.CurrentModuleContext;
@@ -41,6 +43,49 @@ public class LoginServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest pReq, HttpServletResponse pResp) throws ServletException {
+        
+        if("logout".equals(pReq.getParameter("logout"))){
+            HttpSession sess = pReq.getSession();
+            if(sess != null) sess.invalidate();
+            try {
+                pResp.sendRedirect("login.html");
+            } catch (IOException e) {
+                
+                e.printStackTrace();
+                throw new ServletException(e);
+            }
+           
+        }else{
+
+//        ModuleContext moduleContext = CurrentModuleContext.getContext();
+//        LoginService loginMgr = (LoginService)
+//                moduleContext.locateService("LoginServiceComponent");
+//
+//        if (loginMgr == null) {
+//            throw new ServletException("LoginManager not found");
+//        }
+
+        String login = pReq.getParameter("login");
+        String password = pReq.getParameter("password");
+        try {
+//            if (login == null || password == null) {
+//                pResp.sendRedirect("/summary.jsp");
+//            }
+            int resp = login(login, password);
+            if (resp == LoginService.SUCCESS) {
+               // mContext.getRequestDispatcher("/summary.jsp").forward(pReq, pResp);
+                pResp.sendRedirect("summary.jsp");
+            } else {
+               // mContext.getRequestDispatcher("/login.html").forward(pReq, pResp);
+                pResp.sendRedirect("login.html");
+            }
+        } catch (IOException e) {
+            throw new ServletException(e);
+        }
+    }
+    }
+    static int login(final String login, final String password) throws ServletException{
+
 
         ModuleContext moduleContext = CurrentModuleContext.getContext();
         LoginService loginMgr = (LoginService)
@@ -50,20 +95,16 @@ public class LoginServlet extends HttpServlet {
             throw new ServletException("LoginManager not found");
         }
 
-        String login = pReq.getParameter("login");
-        String password = pReq.getParameter("password");
-        try {
-            if (login == null || password == null) {
-                pResp.sendRedirect("summary.jsp");
+//            if (login == null || password == null) {
+//                pResp.sendRedirect("/summary.jsp");
+//            }
+            try {
+                return loginMgr.login(login, password);
+            } catch (RemoteException e) {
+                
+                throw new ServletException(e);
             }
-            int resp = loginMgr.login(login, password);
-            if (resp == LoginService.SUCCESS) {
-                mContext.getRequestDispatcher("/summary.jsp").forward(pReq, pResp);
-            } else {
-                mContext.getRequestDispatcher("/login.html").forward(pReq, pResp);
-            }
-        } catch (IOException e) {
-            throw new ServletException(e);
-        }
+    
     }
-}
+        
+    }

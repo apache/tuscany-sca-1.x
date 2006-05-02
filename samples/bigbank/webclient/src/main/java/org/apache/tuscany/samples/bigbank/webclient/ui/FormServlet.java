@@ -18,6 +18,7 @@ package org.apache.tuscany.samples.bigbank.webclient.ui;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.rmi.RemoteException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -25,7 +26,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 import org.apache.tuscany.samples.bigbank.webclient.services.account.AccountServiceComponentImpl;
 import org.apache.tuscany.sdo.util.SDOUtil;
@@ -49,27 +49,54 @@ public class FormServlet extends HttpServlet {
         InputStream xsdInputStream = AccountServiceComponentImpl.class.getClassLoader().getResourceAsStream("wsdl/AccountService.wsdl");
         xsdHelper.define(xsdInputStream, null);
     }
-    
-    
-
     private ServletContext mContext;
-
     public void init(ServletConfig pCfg) throws ServletException {
         mContext = pCfg.getServletContext();
     }
 
+    
     public void doPost(HttpServletRequest pReq, HttpServletResponse pResp) throws ServletException {
 
-        
-        ModuleContext moduleContext = CurrentModuleContext.getContext();
-        AccountService accountServices = (AccountService)
-                moduleContext.locateService("AccountServiceComponent");
-
-        if (accountServices == null) {
-            throw new ServletException("AccountServiceComponent");
+      
+        try {
+            ModuleContext moduleContext = CurrentModuleContext.getContext();
+            AccountService accountServices = (AccountService) moduleContext.locateService("AccountServiceComponent");
+            if (accountServices == null) {
+                throw new ServletException("AccountServiceComponent");
+            }
+            final String action = pReq.getParameter("action");
+            if ("createAccount".equals(action)) {
+                createAccount(pReq, pResp, accountServices);
+            } else if ("account".equals(action)) {
+                accountTransaction(pReq, pResp, accountServices);
+            }
+            // mContext.getRequestDispatcher("summary.jsp").forward(pReq, pResp);
+             pResp.sendRedirect("summary.jsp");
+        } catch (ServletException e) {
+            e.printStackTrace();
+            throw e;
+            
+        } catch(Exception e){
+            e.printStackTrace();
+            throw new ServletException(e);
         }
+        
 
       
+    }
+
+    private void accountTransaction(HttpServletRequest req, HttpServletResponse resp, AccountService accountServices) throws NumberFormatException, RemoteException {
+        String account = req.getParameter("account");
+        String amount = req.getParameter("Amount");
+        
+        if("deposit".equals(req.getParameter("actionType")))
+            accountServices.deposit(account, Float.parseFloat(amount));
+        else
+            accountServices.withdraw(account,  Float.parseFloat(amount));
+        
+    }
+
+    private void createAccount(HttpServletRequest pReq, HttpServletResponse pResp, AccountService accountServices) throws ServletException {
         try {
             CustomerProfileData customerProfileData = AccountFactory.eINSTANCE.createCustomerProfileData();
             customerProfileData.setFirstName(pReq.getParameter("firstName"));
@@ -80,15 +107,12 @@ public class FormServlet extends HttpServlet {
             customerProfileData.setPassword(pReq.getParameter("password"));
             
             
-             CustomerProfileData resp = accountServices.createAccount(customerProfileData, "savings".equals(pReq.getParameter("savings")) , "checkings".equals(pReq.getParameter("checkings")));
-              System.err.println(resp.getId());
-//            if (resp == LoginService.SUCCESS) {
-//                mContext.getRequestDispatcher("/summary.jsp").forward(pReq, pResp);
-//            } else {
-//                mContext.getRequestDispatcher("/login.html").forward(pReq, pResp);
-//            }
+            CustomerProfileData resp = accountServices.createAccount(customerProfileData, "savings".equals(pReq.getParameter("savings")) , "checkings".equals(pReq.getParameter("checkings")));
+            LoginServlet.login(resp.getLoginID(), resp.getPassword());
+             
         } catch (IOException e) {
             throw new ServletException(e);
         }
+        
     }
 }

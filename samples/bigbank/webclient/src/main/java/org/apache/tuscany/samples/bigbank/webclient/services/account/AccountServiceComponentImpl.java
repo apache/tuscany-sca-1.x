@@ -89,9 +89,12 @@ public class AccountServiceComponentImpl implements AccountService {
         }
     }
 
-    public float deposit(String param6, float param7) throws RemoteException {
-        // TODO Auto-generated method stub
-        return 0;
+    public float deposit(String account, float amount) throws RemoteException {
+        try {
+            return accountService.deposit(account, amount);
+        } catch (Exception e) {
+            throw new ServiceUnavailableException(e);
+        }
     }
 
     public StockSummary purchaseStock(int param0, String param1, int param2) throws RemoteException {
@@ -104,9 +107,12 @@ public class AccountServiceComponentImpl implements AccountService {
         return null;
     }
 
-    public float withdraw(String param12, float param13) throws RemoteException {
-        // TODO Auto-generated method stub
-        return 0;
+    public float withdraw(String account, float amount) throws RemoteException {
+        try {
+            return accountService.withdraw(account,  amount);
+        } catch (Exception e) {
+            throw new ServiceUnavailableException(e);
+        }
     }
 
     public CustomerProfileData createAccount(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings) throws RemoteException {

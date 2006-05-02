@@ -17,16 +17,50 @@
 package org.apache.tuscany.samples.bigbank.account.services.stockquote;
 
 import java.rmi.RemoteException;
+import java.util.Hashtable;
 import java.util.Map;
+import java.util.Random;
 
 /* Dummy'd up StockQuoteService, override webservice for now */
 
 public class StockQuoteServiceImpl implements StockQuoteService {
 
- 
-    public Map<String, StockQuote> getQuotes(String[] symbols) throws RemoteException {
-        // TODO Auto-generated method stub
-        return null;
+    static Random rn = new Random(); // squence.
+
+    static Hashtable<String, StockQuote> stocks = new Hashtable<String, StockQuote>();
+
+    public synchronized  Map<String, StockQuote>  getQuotes(String[] symbols) throws RemoteException {
+        Map<String, StockQuote> ret = new Hashtable<String, StockQuote>();
+        for (String sym : symbols) {
+            sym= sym.toUpperCase();
+            if (!ret.containsKey(sym)) {
+                StockQuote sq = stocks.get(sym);
+                if (sq == null) {
+                    sq = new StockQuote();
+                    stocks.put(sym, sq);
+                    sq.setSymbol(sym);
+                    sq.setCompanyName(sym + " INC");
+                    float val = rn.nextFloat() * 97.0F + 3.0F;
+                    sq.setStockQuote(val + "");
+                    sq.setDayHighPrice(val + "");
+                    sq.setDayLowPrice(val + "");
+                    sq.setOpenPrice(val + "");
+                } else {
+                    float diff = (rn.nextFloat() * 2.0F) - 1;
+                    float newval = new Float(sq.getStockQuote()) + diff; // auto boxing cool.
+                    sq.setStockQuote(newval + "");
+                    float dh = Math.max(newval, new Float(sq.getDayHighPrice()));
+                    sq.setDayHighPrice(dh + "");
+                    float dl = Math.min(newval, new Float(sq.getDayLowPrice()));
+                    sq.setDayLowPrice(dl +"");
+
+                }
+                ret.put(sym, (StockQuote) sq.clone());
+            }
+
+        }
+
+        return ret;
     }
 
 }

@@ -23,6 +23,7 @@ import org.osoa.sca.annotations.Service;
 
 import com.bigbank.account.AccountFactory;
 import com.bigbank.account.AccountReport;
+import com.bigbank.account.AccountService;
 import com.bigbank.account.AccountSummary;
 import com.bigbank.account.CustomerProfileData;
 import com.bigbank.account.StockSummary;
@@ -75,5 +76,25 @@ public class AccountDataServiceImpl implements AccountDataService {
     public CustomerProfileData createAccount(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings) throws RemoteException {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public float deposit(String param6, float param7) throws RemoteException {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public StockSummary purchaseStock(int param0, String param1, int param2) throws RemoteException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public StockSummary sellStock(int param13, int param14) throws RemoteException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public float withdraw(String param16, float param17) throws RemoteException {
+        // TODO Auto-generated method stub
+        return 0;
     }
 }

@@ -49,18 +49,20 @@
         <implementation.java class="org.apache.tuscany.samples.bigbank.account.services.accountdata.AccountDataServiceDASImpl"/>
     </component>
 
+<!--  WebservicexService
     <component name="StockQuoteServiceComponent">
         <implementation.java class="org.apache.tuscany.samples.bigbank.account.services.stockquote.StockQuoteWebservicexServiceImpl"/>
         <references>
             <v:stockQuoteService>StockQuoteWebService</v:stockQuoteService>
         </references>
     </component>
+    -->
 
-<!--   local
-    <component name="StockQuoteServiceComponet">
+<!--   local  -->
+    <component name="StockQuoteServiceComponent">
         <implementation.java class="org.apache.tuscany.samples.bigbank.account.services.stockquote.StockQuoteServiceImpl"/>
     </component>
-    -->
+   
 
     <externalService name="StockQuoteWebService">
         <interface.wsdl interface="http://www.webserviceX.NET/#StockQuoteSoap"/>

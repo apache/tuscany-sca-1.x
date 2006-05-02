@@ -201,5 +201,23 @@ public class StockQuote {
         result.append(')');
         return result.toString();
     }
+    public StockQuote clone(){
+        StockQuote ret = new StockQuote();
+        ret.companyName= companyName;
+        ret.symbol= symbol;
+        ret.stockQuote= stockQuote;
+        ret.lastUpdated= lastUpdated;
+        ret.change= change;
+        ret.openPrice= openPrice;
+        ret.dayHighPrice= dayHighPrice;
+        ret.dayLowPrice= dayLowPrice;
+        ret.volume= volume;
+        ret.marketCap= marketCap;
+        ret.yearRange= yearRange;
+        ret.exDividendDate= exDividendDate;
+        ret.dividendYield= dividendYield;
+        ret.dividendPerShare= dividendPerShare;
+        return ret;
+    }
 
-} // Quote
+} 

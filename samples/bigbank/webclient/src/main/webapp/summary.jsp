@@ -15,6 +15,8 @@
  --%>
  
  <%@ page import="com.bigbank.account.AccountSummary" %> 
+ <%@ page session="true" %>
+ <%@ page autoFlush="true" %>
 <%@ taglib uri="/WEB-INF/bigbank-tags.tld" prefix="sca" %>
 <sca:login profile="ProfileServiceComponent" url="login.html">
     <sca:service id="profile" name="ProfileServiceComponent"/>
@@ -25,9 +27,12 @@
     <body>
 
     Account Information for
+    <FORM method="post" action='loginAction'>
     <jsp:getProperty name='profile' property='firstName'/>
     <jsp:getProperty name='profile' property='lastName'/>
+    <INPUT type="submit" name='logout' value="logout">
     <br>
+    </FORM>
     
     <table>
         <tr>
@@ -51,10 +56,10 @@
             </td>
             <td>
            
-            <INPUT type="submit" name='deposit' value="deposit">
+            <INPUT type="submit" name='transaction' value="deposit">
             </td>
             <td>
-            <INPUT type="submit" name='withdraw' value="withdraw">
+            <INPUT type="submit" name='transaction' value="withdraw">
             </td>
 			</FORM>           
         </tr>
@@ -64,7 +69,7 @@
        
        
        <hr/>
-       Strocks:<br/>
+       Stocks:<br/>
         <table>
         <tr>
             <td><strong>Symbol</strong></td>

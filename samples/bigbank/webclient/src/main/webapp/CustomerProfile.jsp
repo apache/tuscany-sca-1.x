@@ -27,7 +27,8 @@
 <BODY><P><FONT size="+1">Customer Account</FONT><BR>
 <BR>
 </P>
-<FORM method="post" action="FormServlet/createAccount">
+<FORM method="post" action="FormServlet">
+<input type="hidden" name="action"    value='createAccount' />
 <TABLE border="0">
 	<TBODY>
 		<TR>

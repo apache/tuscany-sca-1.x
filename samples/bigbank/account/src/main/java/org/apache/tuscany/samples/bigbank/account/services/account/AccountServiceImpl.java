@@ -174,11 +174,6 @@ public class AccountServiceImpl implements AccountService {
             return 0.0f;
     }
 
-    public StockSummary purchaseStock(int param0) throws RemoteException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     public CustomerProfileData getCustomerProfile(String logonID) throws RemoteException { 
         
     try{
@@ -191,24 +186,16 @@ public class AccountServiceImpl implements AccountService {
     
     }
 
-    public float deposit(String param4) throws RemoteException {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    public StockSummary sellStock(int param6) throws RemoteException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public float withdraw(String param8) throws RemoteException {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    public float deposit(String param6, float param7) throws RemoteException {
-        // TODO Auto-generated method stub
-        return 0;
+    public float deposit(String account, float ammount) throws RemoteException {
+        try{
+            return accountDataService.deposit(account, ammount);
+        } catch (RemoteException  e){
+            e.printStackTrace();
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+             throw new RemoteException(e.getClass() + " " +e.getMessage(),e); 
+        }        
     }
 
     public StockSummary purchaseStock(int param0, String param1, int param2) throws RemoteException {
@@ -221,21 +208,27 @@ public class AccountServiceImpl implements AccountService {
         return null;
     }
 
-    public float withdraw(String param12, float param13) throws RemoteException {
-        // TODO Auto-generated method stub
-        return 0;
+    public float withdraw(String account, float ammount) throws RemoteException {
+        try{
+            return accountDataService.withdraw(account, ammount);
+        } catch (RemoteException  e){
+            e.printStackTrace();
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+             throw new RemoteException(e.getClass() + " " +e.getMessage(),e); 
+        }        
     }
 
     public CustomerProfileData createAccount(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings) throws RemoteException {
         try{
             return accountDataService.createAccount(customerProfile, createSavings, createCheckings);
+        } catch (RemoteException  e){
+            e.printStackTrace();
+            throw e;
         } catch (Exception e) {
             e.printStackTrace();
-            if (e instanceof RemoteException) throw (RemoteException)e;
-            else throw new RemoteException(e.getClass() + " " +e.getMessage(),e); 
+             throw new RemoteException(e.getClass() + " " +e.getMessage(),e); 
         }        
-        
-        
-      
     }
 }

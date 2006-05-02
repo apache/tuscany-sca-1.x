@@ -23,6 +23,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.tuscany.samples.bigbank.webclient.services.profile.ProfileService;
+import org.apache.tuscany.samples.bigbank.webclient.tags.sca.LoginBarrierTag;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
 

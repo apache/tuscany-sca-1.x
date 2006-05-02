@@ -16,23 +16,67 @@
  */
 package org.apache.tuscany.samples.bigbank.account.services.accountdata;
 
-import java.rmi.RemoteException;
+import com.bigbank.account.AccountService;
 
-import com.bigbank.account.AccountReport;
-import com.bigbank.account.CustomerProfileData;
-
-public interface AccountDataService {
-    public CustomerProfileData getCustomerProfile(String logonID) throws RemoteException ;
-
-//    public CheckingAccount getCheckingAccount(int customerID);
-
-//    public SavingsAccount getSavingsAccount(int  customerID);
-//
-//    public StockAccount getStockAccount(int  customerID);
+public interface AccountDataService  {
+     
+    /**
+     * Auto generated method signatures
+     * @param param0* @param param1* @param param2
+     */
+     public com.bigbank.account.StockSummary purchaseStock(
+     int param0,java.lang.String param1,int param2) throws java.rmi.RemoteException;
     
     
+    /**
+     * Auto generated method signatures
+     * @param param4
+     */
+     public com.bigbank.account.CustomerProfileData getCustomerProfile(
+     java.lang.String param4) throws java.rmi.RemoteException;
     
-    public AccountReport getAccountReport(int customerID ) throws RemoteException;
-    public CustomerProfileData createAccount(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings) throws RemoteException ;
     
-}
+    /**
+     * Auto generated method signatures
+     * @param param6* @param param7
+     */
+     public float deposit(
+     java.lang.String param6,float param7) throws java.rmi.RemoteException;
+    
+    
+    /**
+     * Auto generated method signatures
+     * @param param9* @param param10* @param param11
+     */
+     public com.bigbank.account.CustomerProfileData createAccount(
+     com.bigbank.account.CustomerProfileData param9,boolean param10,boolean param11) throws java.rmi.RemoteException;
+    
+    
+    /**
+     * Auto generated method signatures
+     * @param param13* @param param14
+     */
+     public com.bigbank.account.StockSummary sellStock(
+     int param13,int param14) throws java.rmi.RemoteException;
+    
+    
+    /**
+     * Auto generated method signatures
+     * @param param16* @param param17
+     */
+     public float withdraw(
+     java.lang.String param16,float param17) throws java.rmi.RemoteException;
+    
+    
+    /**
+     * Auto generated method signatures
+     * @param param19
+     */
+     public com.bigbank.account.AccountReport getAccountReport(
+     int param19) throws java.rmi.RemoteException;
+    
+    
+
+    
+   //
+   }

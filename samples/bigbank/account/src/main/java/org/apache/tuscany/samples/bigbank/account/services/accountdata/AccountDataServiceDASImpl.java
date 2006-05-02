@@ -38,8 +38,12 @@ import org.osoa.sca.annotations.Service;
 
 import com.bigbank.account.AccountFactory;
 import com.bigbank.account.AccountReport;
+import com.bigbank.account.AccountService;
+import com.bigbank.account.AccountSummary;
 import com.bigbank.account.CustomerProfileData;
 import com.bigbank.account.DataGraphRoot;
+import com.bigbank.account.StockSummary;
+
 import commonj.sdo.DataObject;
 import commonj.sdo.helper.TypeHelper;
 
@@ -85,23 +89,6 @@ public class AccountDataServiceDASImpl implements AccountDataService {
 
     protected static final String protocol = "jdbc:derby:";
 
-    protected InputStream createConfigStream() {
-        InputStream mapping = getClass().getClassLoader().getResourceAsStream("DasAccountConfiguration.xml");
-        return mapping;
-    }
-
-    protected Connection getConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-        Connection conn;
-        Class.forName(driver).newInstance();
-        Properties props = new Properties();
-        // props.put("user", "tuscany");
-        // props.put("password", "tuscany");
-        conn = DriverManager.getConnection(protocol + dbDirectory + ";create=true", props);
-
-        conn.setAutoCommit(false);
-        return conn;
-    }
-
     public CustomerProfileData testgetCustomerByLoginIDThroughDASRead(final String logonID) throws Exception {
 
         InputStream mapping = createConfigStream();
@@ -120,48 +107,9 @@ public class AccountDataServiceDASImpl implements AccountDataService {
 
         Collection customers = root.getCustomerProfileData();
         CustomerProfileData customerProfileData = (CustomerProfileData) customers.iterator().next();
-        System.out.println(customerProfileData);
-        System.out.flush();
+System.out.println(customerProfileData);
+System.out.flush();
         return customerProfileData;
-
-    }
-
-    public static class DateConverter implements Converter {
-        public DateConverter() {
-        }
-
-        private static final DateFormat tsformat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-        private static final DateFormat tsformatXSDDate = new SimpleDateFormat("yyyy-MM-dd");
-
-        private static final DateFormat tsformatXSDDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz");
-
-        public Object getPropertyValue(Object columnData) {
-
-            try {
-
-                tsformatXSDDateTime.setTimeZone(TimeZone.getTimeZone("UTC"));
-                String ret = tsformatXSDDateTime.format(columnData);
-                if (ret.endsWith("UTC"))
-                    ret = ret.substring(0, ret.length() - 3) + "Z";
-                return ret;
-
-            } catch (Exception e) {
-
-                e.printStackTrace();
-                throw new IllegalArgumentException(e);
-            }
-
-        }
-
-        public Object getColumnValue(Object propertyData) {
-
-            if (propertyData instanceof Date) {
-                return tsformat.format(propertyData);
-            } else
-                throw new IllegalArgumentException();
-
-        }
 
     }
 
@@ -271,5 +219,106 @@ public class AccountDataServiceDASImpl implements AccountDataService {
             throw new RemoteException("getAccountReport failed. customerID ('" + customerID + "')" + e.getClass().getName() + "'. " + e.getMessage(),
                     e);
         }
+    }
+
+    public float withdraw(String account, float ammount) throws RemoteException {
+        
+        return deposit(account, -ammount);
+    }
+
+    public float deposit(String account, float ammount) throws RemoteException {
+
+        try {
+            Command select = Command.FACTORY.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = :accountNumber",
+                    createConfigStream());
+            Connection conn = getConnection();
+            select.setConnection(conn);
+            select.setParameterValue("accountNumber", account);
+            TypeHelper helper = TypeHelper.INSTANCE;
+            select.setDataObjectModel(helper.getType(DataGraphRoot.class));
+            DataGraphRoot root = (DataGraphRoot) select.executeQuery();
+            Collection accounts = root.getAccountSummaries();
+            AccountSummary accountData = (AccountSummary) accounts.iterator().next();
+            float newbalance = accountData.getBalance() + ammount;
+            accountData.setBalance(newbalance);
+            // update department set companyid = ? where department.name = ?
+            CommandGroup commandGroup = CommandGroup.FACTORY.createCommandGroup(createConfigStream());
+            commandGroup.setConnection(conn);
+            Command update = commandGroup.getCommand("update balance");
+            update.setParameterValue("BALANCE", new Float(newbalance));
+            update.setParameterValue("ACCOUNTNUMBER", account);
+            update.execute();
+            conn.close();
+            return newbalance;
+        } catch (Exception e) {
+            throw new RemoteException(e.getClass().getName() ,e);
+        }        
+
+    }
+
+    public StockSummary sellStock(int param13, int param14) throws RemoteException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public StockSummary purchaseStock(int param0, String param1, int param2) throws RemoteException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    protected Connection getConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+        Connection conn;
+        Class.forName(driver).newInstance();
+        Properties props = new Properties();
+        // props.put("user", "tuscany");
+        // props.put("password", "tuscany");
+        conn = DriverManager.getConnection(protocol + dbDirectory + ";create=true", props);
+    
+        conn.setAutoCommit(false);
+        return conn;
+    }
+
+    protected InputStream createConfigStream() {
+        InputStream mapping = getClass().getClassLoader().getResourceAsStream("DasAccountConfiguration.xml");
+        return mapping;
+    }
+
+    public static class DateConverter implements Converter {
+        public DateConverter() {
+        }
+    
+        private static final DateFormat tsformat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    
+        private static final DateFormat tsformatXSDDate = new SimpleDateFormat("yyyy-MM-dd");
+    
+        private static final DateFormat tsformatXSDDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz");
+    
+        public Object getPropertyValue(Object columnData) {
+    
+            try {
+    
+                tsformatXSDDateTime.setTimeZone(TimeZone.getTimeZone("UTC"));
+                String ret = tsformatXSDDateTime.format(columnData);
+                if (ret.endsWith("UTC"))
+                    ret = ret.substring(0, ret.length() - 3) + "Z";
+                return ret;
+    
+            } catch (Exception e) {
+    
+                e.printStackTrace();
+                throw new IllegalArgumentException(e);
+            }
+    
+        }
+    
+        public Object getColumnValue(Object propertyData) {
+    
+            if (propertyData instanceof Date) {
+                return tsformat.format(propertyData);
+            } else
+                throw new IllegalArgumentException();
+    
+        }
+    
     }
 }
