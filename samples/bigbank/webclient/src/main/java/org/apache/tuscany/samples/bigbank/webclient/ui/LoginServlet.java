@@ -57,20 +57,10 @@ public class LoginServlet extends HttpServlet {
            
         }else{
 
-//        ModuleContext moduleContext = CurrentModuleContext.getContext();
-//        LoginService loginMgr = (LoginService)
-//                moduleContext.locateService("LoginServiceComponent");
-//
-//        if (loginMgr == null) {
-//            throw new ServletException("LoginManager not found");
-//        }
 
         String login = pReq.getParameter("login");
         String password = pReq.getParameter("password");
         try {
-//            if (login == null || password == null) {
-//                pResp.sendRedirect("/summary.jsp");
-//            }
             int resp = login(login, password);
             if (resp == LoginService.SUCCESS) {
                // mContext.getRequestDispatcher("/summary.jsp").forward(pReq, pResp);
@@ -95,9 +85,6 @@ public class LoginServlet extends HttpServlet {
             throw new ServletException("LoginManager not found");
         }
 
-//            if (login == null || password == null) {
-//                pResp.sendRedirect("/summary.jsp");
-//            }
             try {
                 return loginMgr.login(login, password);
             } catch (RemoteException e) {

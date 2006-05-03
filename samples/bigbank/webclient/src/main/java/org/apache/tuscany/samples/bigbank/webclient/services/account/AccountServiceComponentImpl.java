@@ -37,16 +37,16 @@ import commonj.sdo.helper.XSDHelper;
 @Service(AccountService.class)
 public class AccountServiceComponentImpl implements AccountService {
 
-    static {
-        SDOUtil.registerStaticTypes(AccountFactory.class);
-        TypeHelper th = SDOUtil.createTypeHelper();
-        XSDHelper xsdHelper = SDOUtil.createXSDHelper(th);
-
-        InputStream xsdInputStream = AccountServiceComponentImpl.class.getClassLoader().getResourceAsStream("wsdl/AccountService.wsdl");
-        xsdHelper.define(xsdInputStream, null);
-
-
-    }
+//    static {
+//        SDOUtil.registerStaticTypes(AccountFactory.class);
+//        TypeHelper th = SDOUtil.createTypeHelper();
+//        XSDHelper xsdHelper = SDOUtil.createXSDHelper(th);
+//
+//        InputStream xsdInputStream = AccountServiceComponentImpl.class.getClassLoader().getResourceAsStream("wsdl/AccountService.wsdl");
+//        xsdHelper.define(xsdInputStream, null);
+//
+//
+//    }
 
     private AccountService accountService;
 
@@ -73,9 +73,9 @@ public class AccountServiceComponentImpl implements AccountService {
         }
     }
 
-    public StockSummary purchaseStock(int customerID) throws RemoteException {
+    public StockSummary purchaseStock(int customerID, StockSummary stockSummary) throws RemoteException {
         try {
-            return accountService.purchaseStock(customerID, null, customerID);
+            return accountService.purchaseStock(customerID,  stockSummary);
         } catch (Exception e) {
             throw new ServiceUnavailableException(e);
         }
@@ -97,14 +97,13 @@ public class AccountServiceComponentImpl implements AccountService {
         }
     }
 
-    public StockSummary purchaseStock(int param0, String param1, int param2) throws RemoteException {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
-    public StockSummary sellStock(int param9, int param10) throws RemoteException {
-        // TODO Auto-generated method stub
-        return null;
+    public StockSummary sellStock(int purchaseLotNumber, int quantity) throws RemoteException {
+        try {
+            return accountService.sellStock(purchaseLotNumber, quantity);
+        } catch (Exception e) {
+            throw new ServiceUnavailableException(e);
+        }
     }
 
     public float withdraw(String account, float amount) throws RemoteException {

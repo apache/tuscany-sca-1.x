@@ -16,15 +16,19 @@
  */
 package org.apache.tuscany.samples.bigbank.account.services.accountdata;
 
+import java.awt.geom.QuadCurve2D;
 import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.List;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -54,7 +58,13 @@ public class AccountDataServiceDASImpl implements AccountDataService {
     static {
         SDOUtil.registerStaticTypes(AccountFactory.class);
     }
-
+    public static final DateFormat tsformatXSDDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz");
+    public static final DateFormat sqlformatDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSz");
+    
+    static {
+       tsformatXSDDateTime.setTimeZone(TimeZone.getTimeZone("UTC"));
+       //sqlformatDateTime.setTimeZone(TimeZone.getTimeZone("UTC"));
+     }
     public CustomerProfileData getCustomerProfile(String logonID) throws RemoteException {
 
         try {
@@ -107,8 +117,8 @@ public class AccountDataServiceDASImpl implements AccountDataService {
 
         Collection customers = root.getCustomerProfileData();
         CustomerProfileData customerProfileData = (CustomerProfileData) customers.iterator().next();
-System.out.println(customerProfileData);
-System.out.flush();
+//System.out.println(customerProfileData);
+//System.out.flush();
         return customerProfileData;
 
     }
@@ -256,14 +266,68 @@ System.out.flush();
 
     }
 
-    public StockSummary sellStock(int param13, int param14) throws RemoteException {
-        // TODO Auto-generated method stub
-        return null;
+    public StockSummary sellStock(int purchaseLotNumber, int quantity) throws RemoteException {
+        try {
+            CommandGroup commandGroup = CommandGroup.FACTORY.createCommandGroup(createConfigStream());
+            commandGroup.setConnection(getConnection());
+
+            Command read = commandGroup.getCommand("stockbylotSelect");
+            TypeHelper helper = TypeHelper.INSTANCE;
+            read.setDataObjectModel(helper.getType(DataGraphRoot.class));
+            read.setParameterValue("PURCHASELOTNUMBER", purchaseLotNumber);//autoboxing :-)
+            DataGraphRoot root = (DataGraphRoot)  read.executeQuery();
+            List stocks= root.getStockSummaries();
+            if(null != stocks && !stocks.isEmpty()){
+                StockSummary stock= (StockSummary) stocks.get(0);
+                int newQuatity = Math.max(stock.getQuantity() - quantity, 0);
+                if( newQuatity <1 ){
+                    
+                    Command delete = Command.FACTORY.createCommand("DELETE FROM STOCKS WHERE PURCHASELOTNUMBER = ?");
+                    delete.setParameterValue(1, purchaseLotNumber);
+                    delete.setConnection(getConnection());
+                    delete.execute();
+                    
+                }else{
+                    
+                    Command update = commandGroup.getCommand("stockbylot");
+                    
+                    update.setParameterValue("QUANTITY", newQuatity);
+                    update.setParameterValue("PURCHASELOTNUMBER", purchaseLotNumber);
+                    update.execute();
+
+                    stock.setQuantity(newQuatity);
+                }
+                
+            }
+            
+            
+            return null;
+        }  catch (Exception e) {
+            throw new RemoteException("sellStock",e);
+        }       
     }
 
-    public StockSummary purchaseStock(int param0, String param1, int param2) throws RemoteException {
-        // TODO Auto-generated method stub
-        return null;
+    public StockSummary purchaseStock(int id, StockSummary stock) throws RemoteException {
+
+        try {
+            
+            Command insert = Command.FACTORY.createCommand("insert into stocks (id, symbol, quantity, purchasePrice, purchaseDate) values (?,?,?,?,?)");
+                   insert.setParameterValue(1, new Integer(id));
+                   insert.setParameterValue(2,  stock.getSymbol());
+                   insert.setParameterValue(3,  stock.getQuantity());
+                   insert.setParameterValue(4,  stock.getPurchasePrice());
+                   insert.setParameterValue(5,  DateConverter.INSTANCE.getColumnValue(stock.getPurchaseDate()));
+            
+            insert.setConnection(getConnection());
+            insert.execute();
+            
+
+            return stock;
+        } catch (Exception e) {
+            if (e instanceof RemoteException)
+                throw (RemoteException) e;
+            throw new RemoteException("purchaseStock " + e.getClass().getName() + "'. " + e.getMessage(), e);
+        }
     }
 
     protected Connection getConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
@@ -284,6 +348,7 @@ System.out.flush();
     }
 
     public static class DateConverter implements Converter {
+        public final static DateConverter INSTANCE = new DateConverter();
         public DateConverter() {
         }
     
@@ -291,13 +356,10 @@ System.out.flush();
     
         private static final DateFormat tsformatXSDDate = new SimpleDateFormat("yyyy-MM-dd");
     
-        private static final DateFormat tsformatXSDDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz");
-    
         public Object getPropertyValue(Object columnData) {
     
             try {
-    
-                tsformatXSDDateTime.setTimeZone(TimeZone.getTimeZone("UTC"));
+               
                 String ret = tsformatXSDDateTime.format(columnData);
                 if (ret.endsWith("UTC"))
                     ret = ret.substring(0, ret.length() - 3) + "Z";
@@ -312,12 +374,34 @@ System.out.flush();
         }
     
         public Object getColumnValue(Object propertyData) {
-    
-            if (propertyData instanceof Date) {
-                return tsformat.format(propertyData);
+
+            if (propertyData instanceof java.util.Date) {
+                //Need to convert back to local time for DB and remove timezone notation at the end..
+                String ret= sqlformatDateTime.format(propertyData);
+                char lc= ret.charAt(ret.length()-1);
+                while(!Character.isDigit(lc)){
+                    ret= ret.substring(0, ret.length()-1);
+                     lc= ret.charAt(ret.length()-1);
+                }
+                return ret;
+            } else if (propertyData instanceof String) {
+                
+                try {
+                     String time= (String) propertyData;
+                     char last= time.charAt(time.length()-1);
+                     if(last == 'z' || last =='Z'){
+                         time= time.substring(0,time.length()-1);
+                     }
+                     if(!time.endsWith("UTC")){
+                         time= time + "UTC";
+                     }
+                    return getColumnValue(tsformatXSDDateTime.parse(time));
+                } catch (ParseException e) {
+                  throw new IllegalArgumentException("'" +propertyData +"' does not parse to date.");
+                }
             } else
                 throw new IllegalArgumentException();
-    
+
         }
     
     }

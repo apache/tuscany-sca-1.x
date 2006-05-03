@@ -17,10 +17,14 @@
 package org.apache.tuscany.samples.bigbank.account.services.account;
 
 import java.rmi.RemoteException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.apache.tuscany.samples.bigbank.account.services.accountdata.AccountDataService;
 import org.apache.tuscany.samples.bigbank.account.services.stockquote.StockQuote;
@@ -44,8 +48,11 @@ public class AccountServiceImpl implements AccountService {
     public static final String ACCOUNT_TYPE_SAVINGS = "savings";
     public static final String ACCOUNT_TYPE_CHECKINGS = "checkings";
 
-    static {
+    public static final DateFormat tsformatXSDDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz");
+    
+   static {
         SDOUtil.registerStaticTypes(AccountFactory.class);
+        AccountServiceImpl.tsformatXSDDateTime.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     private String currency = "USD";
@@ -198,14 +205,39 @@ public class AccountServiceImpl implements AccountService {
         }        
     }
 
-    public StockSummary purchaseStock(int param0, String param1, int param2) throws RemoteException {
-        // TODO Auto-generated method stub
-        return null;
+    public StockSummary purchaseStock(int id, StockSummary stock) throws RemoteException {
+        try{
+            String symbol= stock.getSymbol();
+            Map<String, StockQuote> stockInfo = stockQuoteService.getQuotes(new String[]{symbol});
+            
+            StockQuote stockQuote = stockInfo.get(symbol);
+            stock.setPurchasePrice(Float.parseFloat(stockQuote.getStockQuote()));
+            String purchaseDate= tsformatXSDDateTime.format(new Date());
+            if (purchaseDate.endsWith("UTC"))
+                purchaseDate = purchaseDate.substring(0, purchaseDate.length() - 3) + "Z";
+            stock.setPurchaseDate(purchaseDate);
+            
+
+            return accountDataService.purchaseStock(id, stock);
+        } catch (RemoteException  e){
+            e.printStackTrace();
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RemoteException(e.getClass() + " " +e.getMessage(),e); 
+        }        
     }
 
-    public StockSummary sellStock(int param9, int param10) throws RemoteException {
-        // TODO Auto-generated method stub
-        return null;
+    public StockSummary sellStock(int purchaseLotNumber, int quantity) throws RemoteException {
+        try{
+            return accountDataService.sellStock(purchaseLotNumber, quantity);
+        } catch (RemoteException  e){
+            e.printStackTrace();
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+             throw new RemoteException(e.getClass() + " " +e.getMessage(),e); 
+        }        
     }
 
     public float withdraw(String account, float ammount) throws RemoteException {

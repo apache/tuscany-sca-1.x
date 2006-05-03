@@ -153,8 +153,7 @@
 				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="id" type="xsd:int" />
-						<xsd:element name="symbol" type="xsd:string" />
-						<xsd:element name="quantity" type="xsd:int" />
+						<xsd:element name="stock" type="account:StockSummary" />
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>

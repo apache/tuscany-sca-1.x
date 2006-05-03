@@ -25,7 +25,7 @@ public interface AccountDataService  {
      * @param param0* @param param1* @param param2
      */
      public com.bigbank.account.StockSummary purchaseStock(
-     int param0,java.lang.String param1,int param2) throws java.rmi.RemoteException;
+     int param0,com.bigbank.account.StockSummary parm1) throws java.rmi.RemoteException;
     
     
     /**

@@ -34,6 +34,7 @@ import com.bigbank.account.AccountService;
 import com.bigbank.account.AccountSummary;
 import com.bigbank.account.CustomerProfileData;
 import com.bigbank.account.DataGraphRoot;
+import com.bigbank.account.StockSummary;
 import com.bigbank.account.purchaseStock;
 import com.bigbank.account.withdraw;
 import commonj.sdo.DataObject;
@@ -279,9 +280,11 @@ public class AccountDBInit extends HttpServlet {
         // test stock purchase.
 
         purchaseStock sp = AccountFactory.INSTANCE.createpurchaseStock();
-        sp.setSymbol("GOOG");
+        StockSummary stock= AccountFactory.INSTANCE.createStockSummary();
+        sp.setStock(stock);
+        stock.setSymbol("GOOG");
         sp.setId(1);
-        sp.setQuantity(10);
+        stock.setQuantity(10);
         accountDBInit.testStrockPurchaseThroughDAS(sp);
 
         accountDBInit.readDBstdout(System.out);
@@ -301,8 +304,8 @@ public class AccountDBInit extends HttpServlet {
         // Create a new stockPurchase
         DataObject stockPurchase = root.createDataObject("STOCKS");
         stockPurchase.set("ID", new Integer(sp.getId()));
-        stockPurchase.set("SYMBOL", sp.getSymbol());
-        stockPurchase.set("QUANTITY", new Integer(sp.getQuantity()));
+        stockPurchase.set("SYMBOL", sp.getStock().getSymbol());
+        stockPurchase.set("QUANTITY", new Integer(sp.getStock().getQuantity()));
         stockPurchase.set("PURCHASEPRICE", new Float(11.00));
         stockPurchase.set("PURCHASEDATE", new Date());
 

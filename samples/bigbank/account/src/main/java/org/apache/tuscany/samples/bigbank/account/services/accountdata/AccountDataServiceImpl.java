@@ -18,7 +18,9 @@ package org.apache.tuscany.samples.bigbank.account.services.accountdata;
 
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.TimeZone;
 
+import org.apache.tuscany.samples.bigbank.account.services.account.AccountServiceImpl;
 import org.osoa.sca.annotations.Service;
 
 import com.bigbank.account.AccountFactory;
@@ -32,6 +34,7 @@ import com.bigbank.account.StockSummary;
 public class AccountDataServiceImpl implements AccountDataService {
 
 
+   
     public CustomerProfileData getCustomerProfile(String logonID) throws RemoteException {
         // TODO Auto-generated method stub
         return null;
@@ -83,7 +86,7 @@ public class AccountDataServiceImpl implements AccountDataService {
         return 0;
     }
 
-    public StockSummary purchaseStock(int param0, String param1, int param2) throws RemoteException {
+    public StockSummary purchaseStock(int param0, StockSummary stock) throws RemoteException {
         // TODO Auto-generated method stub
         return null;
     }
