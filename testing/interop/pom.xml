@@ -29,9 +29,7 @@
 
     <modules>
         <module>clients</module>
-<!--
         <module>services</module>
--->
     </modules>
 
 </project>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable.
+  Copyright (c) 2005 BEA Sytems Inc.
+  Copyright (c) 2005 International Business Machines
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,24 +16,19 @@
   limitations under the License.
  -->
 <module xmlns="http://www.osoa.org/xmlns/sca/0.9" xmlns:v="http://www.osoa.org/xmlns/sca/values/0.9"
-        name="interop.client">
+        name="interop.server">
 
     <import.sdo factory="org.soapinterop.SoapinteropFactory"/>
     <import.wsdl location="wsdl/interopdoc.wsdl" namespace="http://soapinterop.org/"/>
-
-    <component name="LoopbackInteropDocServiceComponent">
-        <implementation.java class="org.apache.tuscany.test.interop.client.LoopbackInteropDocServiceComponentImpl"/>
-    </component>
-    
-    <externalService name="RemoteInteropDocService">
-        <interface.wsdl interface="http://soapinterop.org/#DocTestPortType"/>
+		
+    <entryPoint name="InteropDocService">
+       <interface.wsdl interface="http://soapinterop.org/#DocTestPortType"/>
         <binding.ws port="http://soapinterop.org/#interopDocPort"/>
-    </externalService>
-    
-    <externalService name="LocalHostInteropDocService">
-        <interface.wsdl interface="http://soapinterop.org/#DocTestPortType"/>
-        <binding.ws uri="http://localhost:8080/http://localhost:8080/interop-service-webserviceInteropDoc-SNAPSHOT/services/InteropDocService"
-          port="http://soapinterop.org/#interopDocPort"/>
-    </externalService>
+        <reference>InteropDocServiceComponent/DocTestPortType</reference>
+    </entryPoint>
+
+    <component name="InteropDocServiceComponent">
+        <implementation.java class="org.apache.tuscany.test.interop.server.InteropDocServiceComponentImpl"/>
+    </component>
     
 </module>
