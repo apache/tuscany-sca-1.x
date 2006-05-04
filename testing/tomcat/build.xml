@@ -54,6 +54,7 @@
         <property name="tuscany.acceptance.containers" value='org/apache/tuscany/sca/containers' />
         <property name="tuscany.acceptance.databindings" value='org/apache/tuscany/databinding' />
         <property name="tuscany.acceptance.samples.dir" value='../../samples' />
+        <property name="tuscany.acceptance.interop.dir" value='../interop' />
         <!-- property name="tuscany.maven.repos.dir" value='${user.home}\.maven\repository' / -->
         <!-- change for maven 2.0 -->
         <property name="tuscany.maven.repos.dir" value='${user.home}\.m2\repository' />
@@ -175,10 +176,10 @@
                 <antcall target="tuscany.tomcat.unzipUnix" /> <!-- just use unix for now -->
         </target>
 
-        <target name="prepareTomcat" depends='tuscany.tomcat.unzipWindows,tuscany.tomcat.unzipUnix,tuscany.tomcat.unzipMac,tuscany.tomcat.fixup,tuscany.deploy.samples' description='Unzip tomcat, fix it up, and deploy samples'>
+        <target name="prepareTomcat" depends='tuscany.tomcat.unzipWindows,tuscany.tomcat.unzipUnix,tuscany.tomcat.unzipMac,tuscany.tomcat.fixup,tuscany.deploy.samples,tuscany.deploy.interop' description='Unzip tomcat, fix it up, and deploy samples'>
                 <dirname property='tuscany.acceptance.tc.dir.full' file="${tuscany.acceptance.tc.dir}/bin" />
                 <echo level="info" message="Tomcat fixed up here:  ${tuscany.acceptance.tc.dir.full}" />
-                <echo level="info" message="http://localhost:8080/helloworldWeb-SNAPSHOT/" />
+                <echo level="info" message="http://localhost:8080/helloworldweb-SNAPSHOT/" />
                 
         </target>
         <target name="startTestServer" depends='prepareTomcat' description='start server prepared to run tests'>
@@ -243,6 +244,14 @@
                 </copy>
         </target>
 
+
+        <target name="tuscany.deploy.interop" description='Deploy tuscany interop test wars to tomcat webapps.'>
+                <copy todir="${tuscany.acceptance.tc.dir}/webapps" flatten='true'>
+                        <fileset dir="${tuscany.acceptance.interop.dir}">
+                                <include name="**/*.war" />
+                        </fileset>
+                </copy>
+        </target>
 
         <!-- provide a convenient -Djava.ext.dirs=  to run j2se samples -->
         <target name="j2se" description='create a java extensions directory to run J2SE tuscany applications.'>
