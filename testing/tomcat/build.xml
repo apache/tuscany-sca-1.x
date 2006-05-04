@@ -48,7 +48,7 @@
         <property name="tuscany.sdo.acceptance.groupId" value='org/apache/tuscany' />
         <property name="tuscany.sdo.acceptance.version" value='SNAPSHOT' />
 
-        <property name="tuscany.acceptance.axis2.version" value='0.95' />
+        <property name="tuscany.acceptance.axis2.version" value='1.0-RC4' />
 
         <property name="tuscany.acceptance.bindings" value='org/apache/tuscany/sca/bindings' />
         <property name="tuscany.acceptance.containers" value='org/apache/tuscany/sca/containers' />
@@ -106,10 +106,10 @@
         <patternset id="tuscany.acceptance.binding.axis2">
                 <include name="**/${tuscany.acceptance.bindings}/tuscany-binding-axis2/${tuscany.acceptance.version}/tuscany-binding-axis2-${tuscany.acceptance.version}.jar" />
                 <include name="**/axis2/axis2-kernel/${tuscany.acceptance.axis2.version}/axis2-kernel-${tuscany.acceptance.axis2.version}.jar" />
-                <include name="**/ws-commons/axiom-api/0.95/axiom-api-0.95.jar" />
-                <include name="**/ws-commons/axiom-impl/0.95/axiom-impl-0.95.jar" />
-                <include name="**/ws-commons/policy/1.0/policy-1.0.jar" />
-                <include name="**/org/apache/ws/commons//XmlSchema/1.0/XmlSchema-1.0.jar" />
+                <include name="**/ws-commons/axiom-api/SNAPSHOT/axiom-api-SNAPSHOT.jar" />
+                <include name="**/ws-commons/axiom-impl/SNAPSHOT/axiom-impl-SNAPSHOT.jar" />
+                <include name="**/ws-commons/policy/SNAPSHOT/policy-SNAPSHOT.jar" />
+                <include name="**/org/apache/ws/commons//XmlSchema/SNAPSHOT/XmlSchema-SNAPSHOT.jar" />
                 <include name="**/commons-httpclient/commons-httpclient/3.0/commons-httpclient-3.0.jar" />
                 <include name="**/commons-codec/commons-codec/1.3/commons-codec-1.3.jar" />
         </patternset>
@@ -137,7 +137,7 @@
             <include name="**/stax/stax-api/1.0/stax-api-1.0.jar"/>
             <include name="**/velocity/velocity-dep/1.4/velocity-dep-1.4.jar"/>
             <include name="**/velocity/velocity/1.4/velocity-1.4.jar"/>
-            <include name="**/woodstox/wstx-asl/2.8.2/wstx-asl-2.8.2.jar"/>
+            <include name="**/woodstox/wstx-asl/2.9.2/wstx-asl-2.9.2.jar"/>
             <include name="**/wsdl4j/wsdl4j/1.5.2/wsdl4j-1.5.2.jar"/>
 
             <include name="**/org/apache/geronimo/specs/geronimo-activation_1.0.2_spec/1.0/geronimo-activation_1.0.2_spec-1.0.jar"/>
