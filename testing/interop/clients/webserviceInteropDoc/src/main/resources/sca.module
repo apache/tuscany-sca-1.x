@@ -31,7 +31,7 @@
     
     <externalService name="LocalHostInteropDocService">
         <interface.wsdl interface="http://soapinterop.org/#DocTestPortType"/>
-        <binding.ws uri="http://localhost:8080/http://localhost:8080/interop-service-webserviceInteropDoc-SNAPSHOT/services/InteropDocService"
+        <binding.ws uri="http://localhost:8080/tuscany-testing-interop-service-webserviceInteropDoc-SNAPSHOT/services/InteropDocService"
           port="http://soapinterop.org/#interopDocPort"/>
     </externalService>
     
