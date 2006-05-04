@@ -30,10 +30,6 @@
     <modules>
         <module>helloworldws</module>
 <!--
-        <module>helloworldaxis</module>
--->
-        <module>helloworldaxis2</module>
-<!--
   these can't seem to run cause they need htmlunit and the dependencies download
   seems broken for htmlunit
         htmlunit:htmlunit:jar:1.7
@@ -41,7 +37,6 @@
         javax.xml:jsr173:jar:1.0  jar seems to be missing here http://www.ibiblio.org/maven2/javax/xml/jsr173/1.0/
         <module>helloworldweb</module>
         <module>bigbank</module>
-        <module>helloworldwebdas</module>
 -->
     </modules>
 
