@@ -16,15 +16,15 @@
  -->
 <project>
     <parent>
-        <groupId>org.apache.tuscany.samples.helloworld</groupId>
-        <artifactId>helloworld-samples</artifactId>
+        <groupId>org.apache.tuscany.sca.samples</groupId>
+        <artifactId>tuscany-sca-samples</artifactId>
         <version>SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>helloworldasync</artifactId>
+    <artifactId>supplychain</artifactId>
     <packaging>jar</packaging>
-    <name>Tuscany sample Async HelloWorld</name>
-    <description>Sample Async Helloworld</description>
+    <name>Tuscany Supply Chain Sample</name>
+    <description>A sample implementation of an asynchronous supply chain application.</description>
     <version>SNAPSHOT</version>
 
     <dependencies>

@@ -14,26 +14,33 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.apache.tuscany.samples.helloworld.async;
+package org.apache.tuscany.samples.supplychain;
 
-import java.util.concurrent.CountDownLatch;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
 
-import junit.framework.TestCase;
-
+import org.apache.tuscany.common.monitor.MonitorFactory;
+import org.apache.tuscany.common.monitor.impl.JavaLoggingMonitorFactory;
 import org.apache.tuscany.core.client.TuscanyRuntime;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
 
 /**
  * This client program shows how to create an SCA runtime, start it,
- * locate a simple HelloWorld service component and invoke it.
+ * locate a Customer service component and invoke it.
  */
-public class HelloWorldClientTestCase extends TestCase {
+public class SupplyChainClient {
 
-    public void test() throws Exception {
+    public static final void main(String[] args) throws Exception {
         
+        // Setup Tuscany monitoring to use java.util.logging
+        LogManager.getLogManager().readConfiguration(SupplyChainClient.class.getResourceAsStream("/logging.properties"));
+        Properties levels = new Properties();
+        MonitorFactory monitorFactory = new JavaLoggingMonitorFactory(levels, Level.FINEST, "MonitorMessages");
+
         // Obtain Tuscany runtime
-        TuscanyRuntime tuscany = new TuscanyRuntime("hello", null);
+        TuscanyRuntime tuscany = new TuscanyRuntime("supplychain", null, monitorFactory);
 
         // Associate the application module component with this thread
         tuscany.start();
@@ -42,19 +49,9 @@ public class HelloWorldClientTestCase extends TestCase {
         ModuleContext moduleContext = CurrentModuleContext.getContext();
 
         // Locate the HelloWorld service component and invoke it
-        HelloWorldService helloworldService = (HelloWorldService) moduleContext.locateService("HelloWorldServiceComponent");
+        Customer customer = (Customer) moduleContext.locateService("CustomerComponent");
+        System.out.println("Main thread " + Thread.currentThread());
+        customer.purchaseGoods();
 
-        CountDownLatch startSignal = new CountDownLatch(1);
-        CountDownLatch doneSignal = new CountDownLatch(1);
-        helloworldService.greetings("World", startSignal, doneSignal);
-        
-        startSignal.countDown();
-        doneSignal.await();
-
-        // Disassociate the application module component
-        tuscany.stop();
-
-        // Shut down the runtime
-        tuscany.shutdown();
     }
 }

@@ -29,7 +29,6 @@
 
     <modules>
         <module>helloworldmc</module>
-        <module>helloworldasync</module>
         <module>helloworldjsonrpc</module>
     </modules>
 </project>

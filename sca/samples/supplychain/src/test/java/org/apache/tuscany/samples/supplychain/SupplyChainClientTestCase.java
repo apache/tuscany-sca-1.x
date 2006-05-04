@@ -14,14 +14,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.apache.tuscany.samples.helloworld.async;
+package org.apache.tuscany.samples.supplychain;
 
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
+import junit.framework.TestCase;
 
-import org.apache.tuscany.common.monitor.MonitorFactory;
-import org.apache.tuscany.common.monitor.impl.JavaLoggingMonitorFactory;
 import org.apache.tuscany.core.client.TuscanyRuntime;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
@@ -30,17 +26,12 @@ import org.osoa.sca.ModuleContext;
  * This client program shows how to create an SCA runtime, start it,
  * locate a simple HelloWorld service component and invoke it.
  */
-public class HelloWorldClient {
+public class SupplyChainClientTestCase extends TestCase {
 
-    public static final void main(String[] args) throws Exception {
+    public void test() throws Exception {
         
-        // Setup Tuscany monitoring to use java.util.logging
-        LogManager.getLogManager().readConfiguration(HelloWorldClient.class.getResourceAsStream("/logging.properties"));
-        Properties levels = new Properties();
-        MonitorFactory monitorFactory = new JavaLoggingMonitorFactory(levels, Level.FINEST, "MonitorMessages");
-
         // Obtain Tuscany runtime
-        TuscanyRuntime tuscany = new TuscanyRuntime("hello", null, monitorFactory);
+        TuscanyRuntime tuscany = new TuscanyRuntime("hello", null);
 
         // Associate the application module component with this thread
         tuscany.start();
@@ -49,9 +40,10 @@ public class HelloWorldClient {
         ModuleContext moduleContext = CurrentModuleContext.getContext();
 
         // Locate the HelloWorld service component and invoke it
-        HelloWorldService helloworldService = (HelloWorldService) moduleContext.locateService("HelloWorldServiceComponent");
+        // Locate the CustomerComponent service component and invoke it
+        Customer customer = (Customer) moduleContext.locateService("CustomerComponent");
         System.out.println("Main thread " + Thread.currentThread());
-        helloworldService.greetings("World");
+        customer.purchaseGoods();
 
     }
 }

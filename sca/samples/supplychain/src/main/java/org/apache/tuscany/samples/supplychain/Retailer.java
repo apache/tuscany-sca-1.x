@@ -14,21 +14,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.apache.tuscany.samples.helloworld.async;
-
-import java.util.concurrent.CountDownLatch;
-
-import org.osoa.sca.annotations.OneWay;
+package org.apache.tuscany.samples.supplychain;
 
 /**
- * This is the business interface of the HelloWorld service component.
+ * This is the business interface of the Retailer service component.
  */
-public interface HelloWorldService {
-
-    @OneWay
-    public void greetings(String name);
-
-    @OneWay
-    public void greetings(String name, CountDownLatch startSignal, CountDownLatch doneSignal);
+public interface Retailer {
+    
+    public void submitOrder(String order);
 
 }

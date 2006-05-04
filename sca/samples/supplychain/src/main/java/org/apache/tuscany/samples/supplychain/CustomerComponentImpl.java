@@ -14,32 +14,31 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.apache.tuscany.samples.helloworld.async;
-
-import java.util.concurrent.CountDownLatch;
+package org.apache.tuscany.samples.supplychain;
 
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
 /**
- * This class implements the HelloWorld service component.
+ * This class implements the Customer service component.
  */
-@Service(HelloWorldService.class)
-public class HelloWorldServiceProxyImpl implements HelloWorldService {
+@Service(Customer.class)
+public class CustomerComponentImpl implements Customer {
     
-    private HelloWorldService target;
-
+    private Retailer retailer;
+    
     @Reference
-    public void setTarget(HelloWorldService target) {
-        this.target = target;
-    }
-
-    public void greetings(String name) {
-        target.greetings(name);
+    public void setRetailer(Retailer retailer) {
+        this.retailer = retailer;
     }
     
-    public void greetings(String name, CountDownLatch startSignal, CountDownLatch doneSignal) {
-        target.greetings(name, startSignal, doneSignal);
+    public void purchaseGoods() {
+        retailer.submitOrder("Order");
+    }
+    
+    public void notifyShipment(String order) {
+        System.out.print("Work thread " + Thread.currentThread() + " - ");
+        System.out.println(order);
     }
 
 }
