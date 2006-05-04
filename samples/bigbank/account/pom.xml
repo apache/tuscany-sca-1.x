@@ -17,14 +17,14 @@
 <project>
     <parent>
         <groupId>org.apache.tuscany.samples.bigbank</groupId>
-        <artifactId>bigbank-samples</artifactId>
+        <artifactId>bigbank-scenario</artifactId>
         <version>SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>account</artifactId>
+    <artifactId>bigbank-account</artifactId>
     <packaging>war</packaging>
-    <name>Tuscany sample BigBank account</name>
-    <description>BigBank sample - account module</description>
+    <name>Tuscany BigBank Account Module</name>
+    <description>BigBank Scenario - Account Management Module</description>
     <version>SNAPSHOT</version>
 
     <dependencies>
@@ -32,25 +32,25 @@
             <groupId>org.apache.tuscany</groupId>
             <artifactId>tuscany-core</artifactId>
             <version>${pom.version}</version>
-            <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.das</groupId>
             <artifactId>tuscany-das-rdb</artifactId>
             <version>${pom.version}</version>
-            <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.4</version>
-            <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
             <version>10.1.2.1</version>
-            <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

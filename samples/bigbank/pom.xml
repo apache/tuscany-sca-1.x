@@ -22,9 +22,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.samples.bigbank</groupId>
-    <artifactId>bigbank-samples</artifactId>
+    <artifactId>bigbank-scenario</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany BigBank Samples</name>
+    <name>Tuscany BigBank Scenario Sample</name>
     <version>SNAPSHOT</version>
 
     <modules>

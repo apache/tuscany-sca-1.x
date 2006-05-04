@@ -17,14 +17,14 @@
 <project>
     <parent>
         <groupId>org.apache.tuscany.samples.bigbank</groupId>
-        <artifactId>bigbank-samples</artifactId>
+        <artifactId>bigbank-scenario</artifactId>
         <version>SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>webclient</artifactId>
+    <artifactId>bigbank-webclient</artifactId>
     <packaging>war</packaging>
-    <name>Tuscany sample BigBank webclient</name>
-    <description>BigBank sample - webclient module</description>
+    <name>Tuscany BigBank Web Client Module</name>
+    <description>BigBank Scenario Sample - Web Front-End Module</description>
     <version>SNAPSHOT</version>
 
     <dependencies>
@@ -62,7 +62,6 @@
                             <noContainer>true</noContainer>
                             <noInterfaces>true</noInterfaces>
                             <noUnsettable>true</noUnsettable>
-                            <!-- javaPackage>com.bigbank.account</javaPackage -->
                             
                         </configuration>
                         <goals>
@@ -78,8 +77,7 @@
                     <execution>
                         <configuration>
                             <wsdlFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</wsdlFile>
-							<!-- javaPackage>org.apache.tuscany.samples.bigbank.account.services.account</javaPackage -->
-						  </configuration>
+                        </configuration>
                         <goals>
                             <goal>generate</goal>
                         </goals>
