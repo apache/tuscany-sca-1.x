@@ -53,7 +53,8 @@
         <property name="tuscany.acceptance.bindings" value='org/apache/tuscany/sca/bindings' />
         <property name="tuscany.acceptance.containers" value='org/apache/tuscany/sca/containers' />
         <property name="tuscany.acceptance.databindings" value='org/apache/tuscany/databinding' />
-        <property name="tuscany.acceptance.samples.dir" value='../../sca/samples' />
+        <property name="tuscany.acceptance.sca.samples.dir" value='../../sca/samples' />
+        <property name="tuscany.acceptance.samples.dir" value='../../samples' />
         <property name="tuscany.acceptance.interop.dir" value='../interop' />
         <!-- property name="tuscany.maven.repos.dir" value='${user.home}\.maven\repository' / -->
         <!-- change for maven 2.0 -->
@@ -238,6 +239,9 @@
 
         <target name="tuscany.deploy.samples" description='Deploy tuscany sample wars to tomcat webapps.'>
                 <copy todir="${tuscany.acceptance.tc.dir}/webapps" flatten='true'>
+                        <fileset dir="${tuscany.acceptance.sca.samples.dir}">
+                                <include name="**/*.war" />
+                        </fileset>
                         <fileset dir="${tuscany.acceptance.samples.dir}">
                                 <include name="**/*.war" />
                         </fileset>
