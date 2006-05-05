@@ -56,9 +56,6 @@ import commonj.sdo.helper.TypeHelper;
 public class AccountDataServiceDASImpl implements AccountDataService {
     // TODO get rid of this!!
     static public String dbDirectory = null;
-    static {
-        SDOUtil.registerStaticTypes(AccountFactory.class);
-    }
     public static final DateFormat tsformatXSDDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz");
     public static final DateFormat sqlformatDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSz");
     

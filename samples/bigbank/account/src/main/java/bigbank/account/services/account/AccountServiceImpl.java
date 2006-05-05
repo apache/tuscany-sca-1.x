@@ -50,11 +50,10 @@ public class AccountServiceImpl implements AccountService {
     public static final String ACCOUNT_TYPE_CHECKINGS = "checkings";
 
     public static final DateFormat tsformatXSDDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz");
-    
-   static {
-        SDOUtil.registerStaticTypes(AccountFactory.class);
+    static {
         AccountServiceImpl.tsformatXSDDateTime.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
+
 
     private String currency = "USD";
 

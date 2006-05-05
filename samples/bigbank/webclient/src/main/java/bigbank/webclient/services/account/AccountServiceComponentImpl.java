@@ -37,16 +37,6 @@ import commonj.sdo.helper.XSDHelper;
 @Service(AccountService.class)
 public class AccountServiceComponentImpl implements AccountService {
 
-//    static {
-//        SDOUtil.registerStaticTypes(AccountFactory.class);
-//        TypeHelper th = SDOUtil.createTypeHelper();
-//        XSDHelper xsdHelper = SDOUtil.createXSDHelper(th);
-//
-//        InputStream xsdInputStream = AccountServiceComponentImpl.class.getClassLoader().getResourceAsStream("wsdl/AccountService.wsdl");
-//        xsdHelper.define(xsdInputStream, null);
-//
-//
-//    }
 
     private AccountService accountService;
 

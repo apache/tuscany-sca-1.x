@@ -46,15 +46,6 @@ import commonj.sdo.helper.XSDHelper;
 // FIXME workaround for JIRA TUSCANY-41
 @Scope("MODULE")
 public class StockQuoteWebservicexServiceImpl implements StockQuoteService {
-    static {
-        SDOUtil.registerStaticTypes(WebserviceFactory.class);
-        TypeHelper th = SDOUtil.createTypeHelper();
-        XSDHelper xsdHelper = SDOUtil.createXSDHelper(th);
-
-        InputStream xsdInputStream = StockQuoteWebservicexServiceImpl.class.getClassLoader().getResourceAsStream("wsdl/stockquotes.webservicex.wsdl");
-        xsdHelper.define(xsdInputStream, null);
-
-    }
 
     @Reference
     public StockQuoteSoap stockQuoteService = null; // Injected by the SCA container.
