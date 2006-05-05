@@ -35,7 +35,7 @@
     </entryPoint>
 
     <component name="AccountServiceComponent">
-        <implementation.java class="org.apache.tuscany.samples.bigbank.account.services.account.AccountServiceImpl"/>
+        <implementation.java class="bigbank.account.services.account.AccountServiceImpl"/>
         <properties>
             <v:currency>EURO</v:currency>
         </properties>
@@ -46,12 +46,12 @@
     </component>
 
     <component name="AccountDataServiceComponent">
-        <implementation.java class="org.apache.tuscany.samples.bigbank.account.services.accountdata.AccountDataServiceDASImpl"/>
+        <implementation.java class="bigbank.account.services.accountdata.AccountDataServiceDASImpl"/>
     </component>
 
 <!--  WebservicexService
     <component name="StockQuoteServiceComponent">
-        <implementation.java class="org.apache.tuscany.samples.bigbank.account.services.stockquote.StockQuoteWebservicexServiceImpl"/>
+        <implementation.java class="bigbank.account.services.stockquote.StockQuoteWebservicexServiceImpl"/>
         <references>
             <v:stockQuoteService>StockQuoteWebService</v:stockQuoteService>
         </references>
@@ -60,7 +60,7 @@
 
 <!--   local  -->
     <component name="StockQuoteServiceComponent">
-        <implementation.java class="org.apache.tuscany.samples.bigbank.account.services.stockquote.StockQuoteServiceImpl"/>
+        <implementation.java class="bigbank.account.services.stockquote.StockQuoteServiceImpl"/>
     </component>
    
 

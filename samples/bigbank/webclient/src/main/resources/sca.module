@@ -23,7 +23,7 @@
     <import.wsdl location="wsdl/AccountService.wsdl" namespace="http://www.bigbank.com/account"/>
 
     <component name="LoginServiceComponent">
-        <implementation.java class="org.apache.tuscany.samples.bigbank.webclient.services.profile.AccountLoginServiceImpl"/>
+        <implementation.java class="bigbank.webclient.services.profile.AccountLoginServiceImpl"/>
         <references>
             <v:accountService>AccountServiceComponent</v:accountService>
             <v:profileService>ProfileServiceComponent</v:profileService>
@@ -31,14 +31,14 @@
     </component>
 
     <component name="ProfileServiceComponent">
-        <implementation.java class="org.apache.tuscany.samples.bigbank.webclient.services.profile.ProfileServiceImpl"/>
+        <implementation.java class="bigbank.webclient.services.profile.ProfileServiceImpl"/>
         <properties>
             <v:firstName>Anonymous</v:firstName>
         </properties>
     </component>
 
     <component name="AccountServiceComponent">
-        <implementation.java class="org.apache.tuscany.samples.bigbank.webclient.services.account.AccountServiceComponentImpl"/>
+        <implementation.java class="bigbank.webclient.services.account.AccountServiceComponentImpl"/>
         <references>
             <v:accountService>AccountService</v:accountService>
         </references>
@@ -47,7 +47,7 @@
     <externalService name="AccountService">
         <interface.wsdl interface="http://www.bigbank.com/account#AccountService"/>
         <!--
-          <interface.java interface="org.apache.tuscany.samples.bigbank.webclient.services.account.AccountService"/>
+          <interface.java interface="bigbank.webclient.services.account.AccountService"/>
           -->
         <binding.ws port="http://www.bigbank.com/account#AccountServiceSOAP"/>
     </externalService>

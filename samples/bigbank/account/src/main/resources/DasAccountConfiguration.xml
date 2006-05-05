@@ -25,7 +25,7 @@
     <Column name="Symbol"/>
     <Column name="quantity"/>
     <Column name="purchasePrice"/>
-    <Column name="PURCHASEDATE" converterClassName="org.apache.tuscany.samples.bigbank.account.services.accountdata.AccountDataServiceDASImpl$DateConverter"/>
+    <Column name="PURCHASEDATE" converterClassName="bigbank.account.services.accountdata.AccountDataServiceDASImpl$DateConverter"/>
   </Table>
 
 	

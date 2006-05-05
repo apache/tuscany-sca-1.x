@@ -14,18 +14,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.apache.tuscany.samples.bigbank.webclient.client;
+package bigbank.account.client;
 
+import java.util.Iterator;
+
+import org.apache.tuscany.core.client.TuscanyRuntime;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
 import org.osoa.sca.SCA;
 
-import org.apache.tuscany.core.client.TuscanyRuntime;
+import com.bigbank.account.AccountReport;
+import com.bigbank.account.AccountService;
+import com.bigbank.account.AccountSummary;
 
-import bigbank.webclient.services.profile.LoginService;
-
-
-public class TestLoginService extends SCA {
+public class AccountClient extends SCA {
 
     public void start() {
     }
@@ -34,17 +36,22 @@ public class TestLoginService extends SCA {
     }
 
     public static void main(String[] args) throws Exception {
-
-
-        TuscanyRuntime tuscany = new TuscanyRuntime("bigbank.webclient.testclient", null);
+        TuscanyRuntime tuscany = new TuscanyRuntime("bigbank.account.testclient", null);
         tuscany.start();
         ModuleContext moduleContext = CurrentModuleContext.getContext();
-        LoginService loginService = (LoginService)
-                moduleContext.locateService("LoginServiceComponent");
 
-        if (loginService.login("test", "password") == LoginService.SUCCESS)
-            System.out.println("Success");
-        else
-            System.out.println("Failure");
+        AccountService accountService = (AccountService) moduleContext.locateService("AccountServiceComponent");
+
+        AccountReport accountReport = accountService.getAccountReport(12345);
+
+        for (Iterator i = accountReport.getAccountSummaries().iterator(); i.hasNext();) {
+            AccountSummary accountSummary = (AccountSummary) i.next();
+
+            System.out.println(accountSummary.getAccountNumber());
+            System.out.println(accountSummary.getAccountType());
+            System.out.println(accountSummary.getBalance());
+        }
+
     }
+
 }

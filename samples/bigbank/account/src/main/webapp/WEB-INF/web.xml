@@ -20,7 +20,7 @@
     <servlet>
         <!-- Initialize bigbank database -->
 	    <servlet-name>AccountDBInit</servlet-name>
-	    <servlet-class>org.apache.tuscany.samples.bigbank.account.services.accountdb.AccountDBInit</servlet-class>
+	    <servlet-class>bigbank.account.services.accountdb.AccountDBInit</servlet-class>
 	    <load-on-startup>2</load-on-startup>
   </servlet>
     

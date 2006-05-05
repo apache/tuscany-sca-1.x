@@ -23,12 +23,12 @@
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>org.apache.tuscany.samples.bigbank.webclient.ui.LoginServlet</servlet-class>
+        <servlet-class>bigbank.webclient.ui.LoginServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
         <servlet-name>FormServlet</servlet-name>
-        <servlet-class>org.apache.tuscany.samples.bigbank.webclient.ui.FormServlet</servlet-class>
+        <servlet-class>bigbank.webclient.ui.FormServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
 
