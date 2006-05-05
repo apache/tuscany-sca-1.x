@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.apache.tuscany.samples.bigbank.webclient.client;
+package bigbank.webclient.client;
 
 import java.util.List;
 
