@@ -16,6 +16,9 @@
  */
 package sample;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import org.apache.tuscany.core.client.TuscanyRuntime;
 import org.apache.tuscany.core.config.ConfigurationException;
 import org.osoa.sca.CurrentModuleContext;
@@ -26,13 +29,13 @@ import org.osoa.sca.ModuleContext;
  */
 public class Sample7Client {
 
-    public static final void main(String[] args) throws ConfigurationException {
+    public static final void main(String[] args) throws Exception {
 
         Sample7Client.invoke("world");
 
     }
 
-    public static String invoke(String in) throws ConfigurationException {
+    public static String invoke(String in) throws ConfigurationException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 
         // Obtain Tuscany runtime
         TuscanyRuntime tuscany = new TuscanyRuntime("sample7", null);
@@ -44,9 +47,12 @@ public class Sample7Client {
         ModuleContext moduleContext = CurrentModuleContext.getContext();
 
         // Locate the HelloWorld service component and invoke it
-        HelloWorld helloworldService = (HelloWorld) moduleContext.locateService("HelloWorldComponent");
-
-        String value = helloworldService.getGreetings(in);
+// TODO: TUSCANY-312
+//        HelloWorld helloworldService = (HelloWorld) moduleContext.locateService("HelloWorldComponent");
+//        String value = helloworldService.getGreetings(in);
+        Object proxy = moduleContext.locateService("HelloWorldComponent");
+        Method m = proxy.getClass().getDeclaredMethod("getGreetings", new Class[] {String.class});
+        String value = (String) m.invoke(proxy, in);
 
         System.out.println(value);
 

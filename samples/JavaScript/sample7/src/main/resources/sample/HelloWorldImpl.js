@@ -17,7 +17,7 @@
 
 function getGreetings(xmlIn) {
 
-   var greeting = "e4xHello " + xmlIn..*::in0.toString();
+   var greeting = "e4xHello " + xmlIn..*::in0;
 
    var xmlOut = 
       <helloworld:getGreetingsResponse xmlns:helloworld="http://helloworld.samples.tuscany.apache.org">
