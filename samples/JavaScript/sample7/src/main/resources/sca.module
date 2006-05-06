@@ -24,7 +24,7 @@
     <import.sdo wsdlLocation="wsdl/helloworld.wsdl"/>
 
     <component name="HelloWorldComponent">
-        <js:implementation.js style="e4x" scriptFile="sample/HelloWorldImpl.js"/>
+        <js:implementation.js scriptFile="sample/HelloWorldImpl.js"/>
     </component>
 
 </module>
