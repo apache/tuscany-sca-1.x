@@ -29,8 +29,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.tuscany</groupId>
-            <artifactId>tuscany-container-js</artifactId>
+            <groupId>org.apache.tuscany.sca.containers</groupId>
+            <artifactId>tuscany-container-rhino</artifactId>
             <version>${pom.version}</version>
             <scope>test</scope>
         </dependency>
