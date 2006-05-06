@@ -28,16 +28,9 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 
-import net.x.webservice.StockQuoteSoap;
-import net.x.webservice.WebserviceFactory;
-
-import org.apache.tuscany.sdo.util.SDOUtil;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
-
-import commonj.sdo.helper.TypeHelper;
-import commonj.sdo.helper.XSDHelper;
 
 /**
  * This class implements the Stock quote service component.
@@ -48,7 +41,7 @@ import commonj.sdo.helper.XSDHelper;
 public class StockQuoteWebservicexServiceImpl implements StockQuoteService {
 
     @Reference
-    public StockQuoteSoap stockQuoteService = null; // Injected by the SCA container.
+    public net.x.webservice.StockQuote stockQuoteService = null; // Injected by the SCA container.
 
     /**
      * @throws RemoteException
