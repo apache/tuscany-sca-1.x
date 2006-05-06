@@ -28,6 +28,8 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 
+import net.x.webservice.StockQuoteSoap;
+
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
@@ -41,7 +43,7 @@ import org.osoa.sca.annotations.Service;
 public class StockQuoteWebservicexServiceImpl implements StockQuoteService {
 
     @Reference
-    public net.x.webservice.StockQuote stockQuoteService = null; // Injected by the SCA container.
+    public StockQuoteSoap stockQuoteService = null; // Injected by the SCA container.
 
     /**
      * @throws RemoteException
