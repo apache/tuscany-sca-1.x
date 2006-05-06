@@ -72,6 +72,7 @@
         <patternset id="tuscany.acceptance.common.dependencies">
                 <include name="**/woodstox/wstx-asl/2.9.3/wstx-asl-2.9.3.jar" />
         </patternset>
+
         <patternset id="tuscany.acceptance.emf.dependencies">
                 <include name="**/org/eclipse/emf/common/2.2.0-SNAPSHOT/common-2.2.0-SNAPSHOT.jar" />
                 <include name="**/org/eclipse/emf/ecore/2.2.0-SNAPSHOT/ecore-2.2.0-SNAPSHOT.jar" />
@@ -79,11 +80,13 @@
                 <include name="**/org/eclipse/emf/ecore-xmi/2.2.0-SNAPSHOT/ecore-xmi-2.2.0-SNAPSHOT.jar" />
                 <include name="**/org/eclipse/xsd/xsd/2.2.0-SNAPSHOT/xsd-2.2.0-SNAPSHOT.jar" />
         </patternset>
+
         <patternset id="tuscany.acceptance.tc.specsdoimpl">  <!--jars which need to go into tomcat common/lib  -->
                 <include name="**/${tuscany.sca.acceptance.groupId}/sca-api/${tuscany.sca.acceptance.version}/sca-api-${tuscany.sca.acceptance.version}.jar" />
                 <include name="**/${tuscany.commonj.acceptance.groupId}/sdo-api/${tuscany.commonj.acceptance.version}/sdo-api-${tuscany.commonj.acceptance.version}.jar" />
                 <include name="**/${tuscany.acceptance.groupId}/tuscany-sdo-impl/${tuscany.acceptance.version}/tuscany-sdo-impl-${tuscany.acceptance.version}.jar" />
         </patternset>
+
         <patternset id="tuscany.acceptance.sca.core"> <!--jars which need to go into tomcat server/lib  -->
                 <include name="**/${tuscany.acceptance.groupId}/tuscany-common/${tuscany.acceptance.version}/tuscany-common-${tuscany.acceptance.version}.jar" />
                 <include name="**/${tuscany.acceptance.containers}/tuscany-container-java/${tuscany.acceptance.version}/tuscany-container-java-${tuscany.acceptance.version}.jar" />
@@ -137,7 +140,7 @@
             <include name="**/stax/stax-api/1.0/stax-api-1.0.jar"/>
             <include name="**/velocity/velocity-dep/1.4/velocity-dep-1.4.jar"/>
             <include name="**/velocity/velocity/1.4/velocity-1.4.jar"/>
-            <include name="**/woodstox/wstx-asl/2.9.2/wstx-asl-2.9.2.jar"/>
+            <include name="**/woodstox/wstx-asl/2.9.3/wstx-asl-2.9.3.jar"/>
             <include name="**/wsdl4j/wsdl4j/1.5.2/wsdl4j-1.5.2.jar"/>
 
             <include name="**/org/apache/geronimo/specs/geronimo-activation_1.0.2_spec/1.0/geronimo-activation_1.0.2_spec-1.0.jar"/>
