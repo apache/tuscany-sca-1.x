@@ -1,6 +1,5 @@
 package bigbank.account.services.accountdb;
 
-import java.io.File;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.sql.Connection;
@@ -31,7 +30,6 @@ import bigbank.account.services.account.AccountServiceImpl;
 import bigbank.account.services.accountdata.AccountDataServiceDASImpl;
 
 import com.bigbank.account.AccountFactory;
-import com.bigbank.account.AccountService;
 import com.bigbank.account.AccountSummary;
 import com.bigbank.account.CustomerProfileData;
 import com.bigbank.account.DataGraphRoot;
@@ -56,16 +54,10 @@ public class AccountDBInit extends HttpServlet {
 
     protected String dbDirectory = null;
 
-    // static{
-    // System.err.println("instatic");
-    // System.out.println("instatic");
-    // }
 
     @Override
     public void init() throws ServletException {
         try {
-            // System.err.println("init()");
-            // System.out.println("init()");
 
             registerTypes();
             ServletConfig servletConfig = getServletConfig();
@@ -74,12 +66,12 @@ public class AccountDBInit extends HttpServlet {
             this.deleteExisting = false;
 
             createDB(dbDirectory);
-            final String msgDBcreated = "BigBank database created '" + dbDirectory + "'.";
-            System.out.println(msgDBcreated);
-            System.err.println(msgDBcreated);
-            log(msgDBcreated);
+//            final String msgDBcreated = "BigBank database created '" + dbDirectory + "'.";
+//            System.out.println(msgDBcreated);
+//            System.err.println(msgDBcreated);
+//            log(msgDBcreated);
             // TODO get rid of this!!!
-            AccountDataServiceDASImpl.dbDirectory = dbDirectory;
+            
 
         } catch (Exception e) {
 
@@ -99,8 +91,9 @@ public class AccountDBInit extends HttpServlet {
         this.deleteExisting = deleteExisting;
     }
 
-    protected void createDB(final String location) throws Exception {
+    public static void  createDB(final String location) throws Exception {
         Connection conn = null;
+        AccountDataServiceDASImpl.dbDirectory = location;
         Exception processessingException = null;
         try {
             conn = createConnection(location);
@@ -131,15 +124,9 @@ public class AccountDBInit extends HttpServlet {
                 conn.rollback();
             if (e.getErrorCode() == 20000 && "X0Y32".equalsIgnoreCase(e.getSQLState()) && -1 != e.getMessage().indexOf("already exists")) {
                 // this is ok the database is there.
-                if (false && deleteExisting) {
-                    deleteExisting = false;
-                    File dbFILE = new File(dbDirectory);
 
-                    // createDB(dbDirectory);
-                }
-
-                System.out.println("DB already there.");
-                System.out.flush();
+//                System.out.println("DB already there.");
+//                System.out.flush();
 
             } else {
 
@@ -168,7 +155,7 @@ public class AccountDBInit extends HttpServlet {
         return createConnection(dbDirectory);
     }
 
-    private Connection createConnection(final String location) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
+    private static Connection createConnection(final String location) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
             SQLException {
         Connection conn;
         Class.forName(driver).newInstance();
@@ -181,7 +168,7 @@ public class AccountDBInit extends HttpServlet {
         return conn;
     }
 
-    protected void creatTables(Connection conn) throws Exception {
+    protected static void creatTables(Connection conn) throws Exception {
         
         
         
@@ -197,7 +184,7 @@ public class AccountDBInit extends HttpServlet {
         s.close();
     }
 
-    protected int createCustomer(Connection conn, final String firstName, final String lastName, final String address, final String email,  final String logonID, final String password)
+    protected static int createCustomer(Connection conn, final String firstName, final String lastName, final String address, final String email,  final String logonID, final String password)
             throws SQLException, Exception {
         Statement s = conn.createStatement();
 
@@ -214,7 +201,7 @@ public class AccountDBInit extends HttpServlet {
         return id;
     }
 
-    protected void createAccount(Connection conn, int customerID, final String accountNumber, final String accountType, final float balance)
+    protected static void createAccount(Connection conn, int customerID, final String accountNumber, final String accountType, final float balance)
             throws SQLException, Exception {
         Statement s = conn.createStatement();
 
@@ -231,7 +218,7 @@ public class AccountDBInit extends HttpServlet {
         return mapping;
     }
 
-    protected void createStockPurchase(Connection conn, int customerID, final String stockSymbol, final int quantity, final float purchasePrice,
+    protected static void createStockPurchase(Connection conn, int customerID, final String stockSymbol, final int quantity, final float purchasePrice,
             String purchaseDate) throws SQLException, Exception {
         Statement s = conn.createStatement();
 
@@ -268,7 +255,7 @@ public class AccountDBInit extends HttpServlet {
         }
         AccountDBInit accountDBInit = new AccountDBInit(dbDirectory, deleteExisting);
 
-        accountDBInit.createDB(dbDirectory);
+        createDB(dbDirectory);
         accountDBInit.readDBstdout(System.out);
         // CustomerProfileData customerProfileData = accountDBInit.testgetCustomerByLoginIDThroughDASRead("cr22rc");
 
