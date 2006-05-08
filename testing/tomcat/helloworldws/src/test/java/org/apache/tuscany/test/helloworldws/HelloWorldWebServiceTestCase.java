@@ -14,18 +14,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.apache.tuscany.samples.helloworldws;
+package org.apache.tuscany.test.helloworldws;
 
+import helloworld.HelloWorldService;
 import junit.framework.TestCase;
 
 import org.apache.tuscany.core.client.TuscanyRuntime;
 import org.apache.tuscany.core.config.ConfigurationException;
-import org.apache.tuscany.samples.helloworldwsclient.HelloWorldService;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
 
 
-public class TestHelloWorldWSTestCase extends TestCase {
+public class HelloWorldWebServiceTestCase extends TestCase {
     
     String getGreetings(String name) throws ConfigurationException {
         // Obtain Tuscany runtime
@@ -38,12 +38,10 @@ public class TestHelloWorldWSTestCase extends TestCase {
         ModuleContext moduleContext = CurrentModuleContext.getContext();
 
         // Locate the HelloWorld service component and invoke it
-        HelloWorldService helloworldService = (HelloWorldService) moduleContext.locateService("HelloWorldServiceComponent");
+        HelloWorldService helloworldService = (HelloWorldService) moduleContext.locateService("HelloWorldService");
 
         String value = helloworldService.getGreetings(name);
-
-        System.out.println(value);
-
+        
         // Stop the runtime
         tuscany.stop();
         

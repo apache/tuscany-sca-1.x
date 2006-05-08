@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.apache.tuscany.samples.helloworldweb;
+package org.apache.tuscany.test.helloworldweb;
 
 import java.net.URL;
 import java.util.Iterator;
@@ -32,7 +32,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 
-public class TestHelloWorldWebTestCase extends TestCase {
+public class HelloWorldWebTestCase extends TestCase {
 	public static final String testUrl = "http://localhost:8080/helloworldWeb-SNAPSHOT/";
 
 	public void testHelloWorldDefault() throws Exception

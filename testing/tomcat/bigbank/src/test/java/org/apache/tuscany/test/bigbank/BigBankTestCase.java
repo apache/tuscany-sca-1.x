@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.apache.tuscany.samples.bigbank;
+package org.apache.tuscany.test.bigbank;
 
 import java.net.URL;
 import java.util.Iterator;
@@ -32,7 +32,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 
-public class TestBigBankTestCase extends TestCase {
+public class BigBankTestCase extends TestCase {
 	// public static final String testUrl = "http://localhost:8080/tuscany-samples-bigbank-webclient";
 	public static final String testUrl = "http://localhost:8080/webclient-SNAPSHOT/login.html";
 	
