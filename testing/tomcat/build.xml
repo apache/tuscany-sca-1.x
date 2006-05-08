@@ -20,7 +20,7 @@
         <property file="${user.home}/build.properties" />
         <property name="wsbinding" value="axis2"/>
 
-        <property name="tuscany.acceptance.tomcat.version" value='5.5.15' />
+        <property name="tuscany.acceptance.tomcat.version" value='5.5.16' />
         <condition property="tuscany.acceptance.tomcat.zipped" value='apache-tomcat-${tuscany.acceptance.tomcat.version}.zip'>
             <os family="windows"/>
         </condition>
@@ -117,7 +117,7 @@
                 <include name="**/commons-codec/commons-codec/1.3/commons-codec-1.3.jar" />
         </patternset>
 
-        <property name="celtix.version" value="1.0-SNAPSHOT"/>
+        <property name="celtix.version" value="1.0"/>
         <patternset id="tuscany.acceptance.binding.celtix">
             <include name="**/${tuscany.acceptance.bindings}/tuscany-binding-celtix/${tuscany.acceptance.version}/tuscany-binding-celtix-${tuscany.acceptance.version}.jar" />
             <include name="**/org/objectweb/celtix/celtix-rt/${celtix.version}/celtix-rt-${celtix.version}.jar"/>
