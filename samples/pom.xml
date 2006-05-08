@@ -29,7 +29,6 @@
 
     <modules>
         <module>helloworld</module>
-        <module>das</module>
         <module>bigbank</module>
         <module>JavaScript</module>
     </modules>

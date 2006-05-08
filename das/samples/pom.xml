@@ -16,8 +16,8 @@
  -->
 <project>
     <parent>
-        <groupId>org.apache.tuscany.samples</groupId>
-        <artifactId>tuscany-samples</artifactId>
+        <groupId>org.apache.tuscany.das</groupId>
+        <artifactId>tuscany-das</artifactId>
         <version>SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
