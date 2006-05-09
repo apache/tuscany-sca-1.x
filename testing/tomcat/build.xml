@@ -20,7 +20,7 @@
         <property file="${user.home}/build.properties" />
         <property name="wsbinding" value="axis2"/>
 
-        <property name="tuscany.acceptance.tomcat.version" value='5.5.16' />
+        <property name="tuscany.acceptance.tomcat.version" value='5.5.17' />
         <condition property="tuscany.acceptance.tomcat.zipped" value='apache-tomcat-${tuscany.acceptance.tomcat.version}.zip'>
             <os family="windows"/>
         </condition>
