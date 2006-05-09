@@ -24,11 +24,10 @@
     <groupId>org.apache.tuscany.samples</groupId>
     <artifactId>tuscany-samples</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany Samples</name>
+    <name>Tuscany Scenario Samples</name>
     <version>SNAPSHOT</version>
 
     <modules>
-        <module>helloworld</module>
         <module>bigbank</module>
         <module>JavaScript</module>
     </modules>
