@@ -52,7 +52,6 @@
       <wsdl:output message="tns:GetQuoteSoapOut"/>
     </wsdl:operation>
   </wsdl:portType>
- <!-- 
   <wsdl:portType name="StockQuoteHttpGet">
     <wsdl:operation name="GetQuote">
       <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get Stock quote for a company Symbol</documentation>
@@ -67,7 +66,6 @@
       <wsdl:output message="tns:GetQuoteHttpPostOut"/>
     </wsdl:operation>
   </wsdl:portType>
- --> 
   <wsdl:binding name="StockQuoteSoap" type="tns:StockQuoteSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
     <wsdl:operation name="GetQuote">
@@ -80,7 +78,7 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-<!--  
+  
   <wsdl:binding name="StockQuoteHttpGet" type="tns:StockQuoteHttpGet">
     <http:binding verb="GET"/>
     <wsdl:operation name="GetQuote">
@@ -105,19 +103,16 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
--->  
+
   <wsdl:service name="StockQuote">
     <wsdl:port name="StockQuoteSoap" binding="tns:StockQuoteSoap">
       <soap:address location="http://www.webservicex.com/stockquote.asmx"/>
-      <!-- soap:address location="http://localhost:9999/stockquote.asmx"/ -->
     </wsdl:port>
-<!--    
     <wsdl:port name="StockQuoteHttpGet" binding="tns:StockQuoteHttpGet">
       <http:address location="http://www.webservicex.com/stockquote.asmx"/>
     </wsdl:port>
     <wsdl:port name="StockQuoteHttpPost" binding="tns:StockQuoteHttpPost">
       <http:address location="http://www.webservicex.com/stockquote.asmx"/>
     </wsdl:port>
--->
   </wsdl:service>
 </wsdl:definitions>

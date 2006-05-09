@@ -100,9 +100,19 @@
                 <executions>
                     <execution>
                         <configuration>
-                            <wsdlDir>${basedir}/src/main/resources/wsdl</wsdlDir>
-                            <!-- wsdlFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</wsdlFile -->
-                            <!-- javaPackage>bigbank.account.services.account</javaPackage -->
+                            <wsdlFiles>
+                              <wsdlFile>
+                                 <fileName>${basedir}/src/main/resources/wsdl/stockquotes.webservicex.wsdl</fileName>
+                                 <ports>
+                                  <port>
+                                   StockQuoteSoap
+                                  </port>
+                                 </ports>
+                              </wsdlFile>
+                              <wsdlFile>
+                                 <fileName>${basedir}/src/main/resources/wsdl/AccountService.wsdl</fileName>
+                              </wsdlFile>
+                            </wsdlFiles>
                         </configuration>
                         <goals>
                             <goal>generate</goal>
