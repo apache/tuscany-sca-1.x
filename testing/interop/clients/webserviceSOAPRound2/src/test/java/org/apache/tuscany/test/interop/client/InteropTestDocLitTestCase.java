@@ -17,13 +17,17 @@
 package org.apache.tuscany.test.interop.client;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 import junit.framework.TestCase;
 
 import org.apache.tuscany.core.client.TuscanyRuntime;
 import org.osoa.sca.CurrentModuleContext;
-import org.soapinterop.WSDLInteropTestDocLitPortType;
+import org.soapinterop.wsdl.interop.test.doc.lit.WSDLInteropTestDocLitPortType;
+import org.soapinterop.xsd.ArrayOfstring_literal;
 import org.soapinterop.xsd.SOAPStruct;
+import org.soapinterop.xsd.XsdPackage;
 
 import commonj.sdo.helper.DataFactory;
 
@@ -69,10 +73,21 @@ public class InteropTestDocLitTestCase extends TestCase {
      * @return
      */
 	protected WSDLInteropTestDocLitPortType locateInteropDocService() {
-        return (WSDLInteropTestDocLitPortType)CurrentModuleContext.getContext().locateService("RemoteInteropDocServiceComponent");
+        Object o = CurrentModuleContext.getContext().locateService("RemoteInteropDocService");
+        Class[] ifaces = o.getClass().getInterfaces();
+        return (WSDLInteropTestDocLitPortType) o;
     }
 	
-	/**
+    /**
+     * test echo void
+     * @throws RemoteException
+     */
+    public void testEchoVoid() throws RemoteException {
+        doc.echoVoid();
+        assertTrue(true);
+    }
+
+    /**
 	 * test echo string
 	 * @throws RemoteException
 	 */
@@ -82,6 +97,25 @@ public class InteropTestDocLitTestCase extends TestCase {
 		assertEquals(input, output);
 	}
 		
+    /**
+     * test echo string
+     * @throws RemoteException
+     */
+    public void testEchoStringArray() throws RemoteException {
+
+        ArrayOfstring_literal input=(ArrayOfstring_literal)dataFactory.create(ArrayOfstring_literal.class);
+        List inStrings = Arrays.asList(new String[] {"petra", "sue"});
+        input.set(XsdPackage.ARRAY_OFSTRING_LITERAL__STRING, inStrings);
+
+        ArrayOfstring_literal output = doc.echoStringArray(input);
+         
+        List outStrings = output.getString();         
+        assertNotNull(outStrings);
+        assertEquals(2, outStrings.size());
+        assertEquals("petra", outStrings.get(0));
+        assertEquals("sue", outStrings.get(1));
+    }
+        
 	/**
 	 * test echo struct
 	 * @throws RemoteException

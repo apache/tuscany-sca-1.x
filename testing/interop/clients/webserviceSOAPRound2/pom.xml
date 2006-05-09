@@ -75,7 +75,7 @@
                     <execution>
                         <configuration>
                             <wsdlFile>${basedir}/src/main/resources/wsdl/interoptestdoclit.wsdl</wsdlFile>
-                            <javaPackage>org.soapinterop</javaPackage>
+                            <javaPackage>org.soapinterop.wsdl.interop.test.doc.lit</javaPackage>
                         </configuration>
                         <goals>
                             <goal>generate</goal>
