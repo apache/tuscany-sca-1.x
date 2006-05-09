@@ -32,9 +32,8 @@
             <groupId>org.apache.tuscany</groupId>
             <artifactId>tuscany-core</artifactId>
             <version>${pom.version}</version>
-            <scope>provided</scope> <!-- use provided so tuscany infrastructue is not inc. in the war-->
+            <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>tomcat</groupId>
             <artifactId>servlet-api</artifactId>
