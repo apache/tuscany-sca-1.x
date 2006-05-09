@@ -28,7 +28,6 @@
     <version>SNAPSHOT</version>
 
     <modules>
-        <module>helloworldmc</module>
         <module>helloworldjsonrpc</module>
     </modules>
 </project>
