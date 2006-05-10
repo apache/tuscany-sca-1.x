@@ -39,7 +39,7 @@ public class ClientTestCase extends TestCase {
         ModuleContext moduleContext = CurrentModuleContext.getContext();
 
         Object serviceProxy = moduleContext.locateService("webserviceXSQ");
-        Method m = serviceProxy.getClass().getMethod("getQuote", new Class[] { Object.class }); // TODO: yesterday this worked with arg type String.class
+        Method m = serviceProxy.getClass().getMethod("getQuote", new Class[] { String.class });
 
         String sqResponse = (String) m.invoke(serviceProxy, "IBM");
 
