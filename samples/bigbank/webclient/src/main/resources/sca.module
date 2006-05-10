@@ -15,12 +15,11 @@
   limitations under the License.
  -->
 <module xmlns="http://www.osoa.org/xmlns/sca/0.9" xmlns:v="http://www.osoa.org/xmlns/sca/values/0.9"
-
         name="tuscany.samples.bigbank.webclient">
 
-
     <import.sdo factory="com.bigbank.account.AccountFactory" />
-    <import.wsdl location="wsdl/AccountService.wsdl" namespace="http://www.bigbank.com/account"/>
+    
+    <import.wsdl wsdlLocation="wsdl/AccountService.wsdl"/>
 
     <component name="LoginServiceComponent">
         <implementation.java class="bigbank.webclient.services.profile.AccountLoginServiceImpl"/>

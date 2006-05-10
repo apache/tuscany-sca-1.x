@@ -16,17 +16,13 @@
  -->
 <module xmlns="http://www.osoa.org/xmlns/sca/0.9" xmlns:v="http://www.osoa.org/xmlns/sca/values/0.9"
         name="tuscany.samples.bigbank.account">
+        
 	<import.sdo factory="com.bigbank.account.AccountFactory" />
 	<import.sdo factory="net.x.webservice.WebserviceFactory" />
-    <import.wsdl
-                location="wsdl/AccountService.wsdl"
-                namespace="http://www.bigbank.com/account"/>
-    <!-- import.wsdl
-                location="wsdl/StockQuoteWebService.wsdl"
-                namespace="http://webservice.stockquote"/ -->
-
-    <import.wsdl location="wsdl/stockquotes.webservicex.wsdl"
-      namespace="http://www.webserviceX.NET/"/>
+    
+    <import.wsdl wsdlLocation="wsdl/AccountService.wsdl"/>
+    <!-- import.wsdl wsdlLocation="wsdl/StockQuoteWebService.wsdl"/ -->
+    <import.wsdl wsdlLocation="wsdl/stockquotes.webservicex.wsdl"/>
 
     <entryPoint name="AccountService">
         <interface.java interface="com.bigbank.account.AccountService"/>
