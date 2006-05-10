@@ -19,7 +19,7 @@
         name="webserviceXSQ">
 
     <import.sdo wsdlLocation="wsdl/sq.wsdl"/>
-    <import.wsdl location="wsdl/sq.wsdl" namespace="http://www.webserviceX.NET/"/>
+    <import.wsdl wsdlLocation="wsdl/sq.wsdl"/>
 
     <externalService name="webserviceXSQ">
         <interface.wsdl interface="http://www.webserviceX.NET/#StockQuoteSoap"/>

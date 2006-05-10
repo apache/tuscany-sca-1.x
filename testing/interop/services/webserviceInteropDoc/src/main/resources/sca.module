@@ -19,7 +19,7 @@
         name="interop.server">
 
     <import.sdo factory="org.soapinterop.SoapinteropFactory"/>
-    <import.wsdl location="wsdl/interopdoc.wsdl" namespace="http://soapinterop.org/"/>
+    <import.wsdl wsdlLocation="wsdl/interopdoc.wsdl"/>
 		
     <entryPoint name="InteropDocService">
        <interface.wsdl interface="http://soapinterop.org/#DocTestPortType"/>

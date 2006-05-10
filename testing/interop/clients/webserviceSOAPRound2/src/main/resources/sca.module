@@ -18,7 +18,7 @@
     name="InteropClient">
 
     <import.sdo factory="org.soapinterop.xsd.XsdFactory"/>
-    <import.wsdl location="wsdl/interoptestdoclit.wsdl" namespace="http://soapinterop.org/WSDLInteropTestDocLit"/>
+    <import.wsdl wsdlLocation="wsdl/interoptestdoclit.wsdl"/>
 
     <externalService name="RemoteInteropDocService">
         <interface.wsdl interface="http://soapinterop.org/WSDLInteropTestDocLit#WSDLInteropTestDocLitPortType"/>
