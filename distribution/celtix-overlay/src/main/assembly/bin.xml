@@ -1,0 +1,23 @@
+<assembly>
+    <id>dist</id>
+    <formats>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>celtix-overlay/target</directory>
+            <outputDirectory>lib/celtix</outputDirectory>
+            <includes>
+                <include>tuscany-celtix.jar</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>lib/celtix</outputDirectory>
+        </dependencySet>
+    </dependencySets>
+</assembly>
+
+     

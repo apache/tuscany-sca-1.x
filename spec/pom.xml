@@ -47,7 +47,7 @@
         <snapshotRepository>
             <id>maven-snapshot-repository</id>
             <name>Apache SNAPSHOT Repository</name>
-            <url>scpexe://cvs.apache.org/www/cvs.apache.org/maven-snapshot-repository</url>
+            <url>ftp://ftp.enjoyjava.com/tuscany/repository</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -98,6 +98,12 @@
              <artifactId>wagon-ssh-external</artifactId>
              <version>1.0-alpha-5</version>
           </extension>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+         <artifactId>wagon-ftp</artifactId>
+         <version>1.0-alpha-6</version>
+      </extension>
+
         </extensions>
     </build>
 
@@ -111,4 +117,116 @@
             </plugin>
         </plugins>
     </reporting>
+
+	<profiles>
+		<profile>
+			<id>distribution</id>
+
+			<activation>
+				<property>
+					<name>tuscany.home</name>
+				</property>
+			</activation>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<source>1.5</source>
+							<target>1.5</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>package</id>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<!--
+							<outputDirectory>${tuscany.home}/distribution/build/javadoc/${project.artifactId}</outputDirectory>
+							-->
+							<attach>true</attach>
+							<quiet>true</quiet>
+							<bottom>-</bottom>
+							<header>${project.name}</header>
+							<footer>${project.name}</footer>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>create-dist</id>
+								<phase>install</phase>
+								<configuration>
+									<tasks>
+										<ant inheritRefs="true"
+											antfile="buildDistribution.xml" dir="${tuscany.home}"
+											target="createDistribution">
+											<property name="dist.folder"
+												value="${tuscany.home}/distribution/build" />
+											<property
+												name="project.packaging" value="${project.packaging}" />
+											<property
+												name="project.groupId" value="${project.groupId}" />
+											<property
+												name="project.artifactId" value="${project.artifactId}" />
+											<property
+												name="project.version" value="${project.version}" />
+											<property
+												name="project.basedir" value="${basedir}" />
+										</ant>
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>clean-dist</id>
+								<phase>clean</phase>
+								<configuration>
+									<tasks>
+										<ant inheritRefs="true"
+											antfile="buildDistribution.xml" dir="${tuscany.home}"
+											target="cleanDistribution">
+											<property name="dist.folder"
+												value="${tuscany.home}/distribution/build" />
+											<property
+												name="project.packaging" value="${project.packaging}" />
+											<property
+												name="project.groupId" value="${project.groupId}" />
+											<property
+												name="project.artifactId" value="${project.artifactId}" />
+											<property
+												name="project.version" value="${project.version}" />
+											<property
+												name="project.basedir" value="${basedir}" />
+										</ant>
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+	</profiles>
+
+
 </project>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project name="project" default="fixupJars">
+
+    <target name="fixupJars">
+        <delete>
+            <fileset dir="${target.dir}/lib/axis2" includes="*.jar">
+                <present present="both" targetdir="${target.dir}/lib" />
+            </fileset>
+            <fileset dir="${target.dir}/lib/celtix" includes="*.jar">
+                <present present="both" targetdir="${target.dir}/lib" />
+            </fileset>
+            <fileset dir="${target.dir}/lib/tools" includes="*.jar">
+                <present present="both" targetdir="${target.dir}/lib" />
+            </fileset>
+        </delete>
+    	<copy todir="${target.dir}/javadoc">
+    		<fileset dir="${target.dir}/../../build/javadoc">
+    			<include name="**/*"/>
+    		</fileset>
+    	</copy>
+    </target>
+
+</project>
+
+<?xml version="1.0"?>
+<project name="project" default="fixupJars">
+
+    <target name="fixupJars">
+        <delete>
+            <fileset dir="${target.dir}/lib/axis2" includes="*.jar">
+                <present present="both" targetdir="${target.dir}/lib" />
+            </fileset>
+            <fileset dir="${target.dir}/lib/celtix" includes="*.jar">
+                <present present="both" targetdir="${target.dir}/lib" />
+            </fileset>
+            <fileset dir="${target.dir}/lib/tools" includes="*.jar">
+                <present present="both" targetdir="${target.dir}/lib" />
+            </fileset>
+        </delete>
+    	<copy todir="${target.dir}/javadoc">
+    		<fileset dir="${target.dir}/../../build/javadoc">
+    			<include name="**/*"/>
+    		</fileset>
+    	</copy>
+    </target>
+
+</project>
+

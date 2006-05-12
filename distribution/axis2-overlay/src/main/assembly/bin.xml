@@ -1,0 +1,22 @@
+<assembly>
+    <id>dist</id>
+    <formats>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>axis2-overlay/target</directory>
+            <outputDirectory>lib/axis2</outputDirectory>
+            <includes>
+                <include>tuscany-axis2.jar</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>lib/axis2</outputDirectory>
+        </dependencySet>
+    </dependencySets>
+</assembly>
+
