@@ -130,6 +130,8 @@
             name="WSDLInteropTestDocLitPort">
             <soap:address 
                 location="http://mssoapinterop.org/stkv3/wsdl/interopTestDocLit.wsdl"/>
+            <http-conf:client xmlns:http-conf="http://celtix.objectweb.org/transports/http/configuration"
+                AllowChunking="false"/>
         </port>
     </service>
 </definitions>

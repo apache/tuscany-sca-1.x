@@ -27,6 +27,10 @@
     <name>Tuscany Interop Testing - Clients - webserviceXSQ</name>
     <version>SNAPSHOT</version>
 
+    <properties>
+        <ws.type>axis2</ws.type>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany</groupId>
@@ -36,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.bindings</groupId>
-            <artifactId>tuscany-binding-axis2</artifactId>
+            <artifactId>tuscany-binding-${ws.type}</artifactId>
             <version>${pom.version}</version>
             <scope>test</scope>
         </dependency>

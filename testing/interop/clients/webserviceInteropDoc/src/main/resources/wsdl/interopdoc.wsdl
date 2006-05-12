@@ -155,6 +155,8 @@
 
   		<port name="interopDocPort" binding="tns:doc_test_binding">
     			<soap:address location="http://www.whitemesa.net/interopdoc"/>
+                <http-conf:client xmlns:http-conf="http://celtix.objectweb.org/transports/http/configuration"
+                    AllowChunking="false"/>
   		</port>
 
 	</service>
