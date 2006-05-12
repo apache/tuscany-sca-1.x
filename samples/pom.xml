@@ -24,7 +24,7 @@
     <groupId>org.apache.tuscany.samples</groupId>
     <artifactId>tuscany-samples</artifactId>
     <packaging>pom</packaging>
-    <name>Samples</name>
+    <name>Tuscany Samples</name>
     <version>SNAPSHOT</version>
 
     <modules>
