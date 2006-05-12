@@ -18,7 +18,11 @@
                 <include name="**/*"/>
             </fileset>
         </copy>
-        <zip destfile="${target.dir}/tuscany.zip" basedir="${target.dir}"></zip>
+        <zip destfile="${target.dir}/tuscany.zip">
+                        <fileset dir="${target.dir}">
+                            <exclude name="tuscany.zip"/>
+                        </fileset>
+        </zip>
     </target>
  
 </project> 
