@@ -17,13 +17,13 @@
 <project>
 
     <parent>
-        <groupId>org.apache.tuscany.samples.javascript</groupId>
-        <artifactId>tuscany-samples-javascript</artifactId>
+        <groupId>org.apache.tuscany.samples.sca.javascript</groupId>
+        <artifactId>samples-javascript</artifactId>
         <version>SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>javascript-sample7</artifactId>
+    <artifactId>sample-javascript7</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany Samples - JavaScript - Sample 7 - E4X</name>
     <description>Shows how to use E4X XML messages in an SCA JavaScript component</description>
