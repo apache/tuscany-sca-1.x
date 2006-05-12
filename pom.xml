@@ -62,6 +62,7 @@
         <module>das</module>
         <module>sca</module>
         <module>samples</module>
+        <module>sampleapps</module>
     </modules>
 
     <distributionManagement>
