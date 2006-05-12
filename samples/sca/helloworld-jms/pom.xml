@@ -16,29 +16,19 @@
  -->
 <project>
     <parent>
-        <groupId>org.apache.tuscany.samples</groupId>
-        <artifactId>tuscany-samples</artifactId>
+        <groupId>org.apache.tuscany.sca.samples</groupId>
+        <artifactId>tuscany-sca-samples</artifactId>
         <version>SNAPSHOT</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.tuscany.samples.sca</groupId>
-    <artifactId>tuscany-samples-sca</artifactId>
+    <groupId>org.apache.tuscany.sca.samples.jms</groupId>
+    <artifactId>tuscany-sca-jms-samples</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Samples</name>
+    <name>Tuscany SCA JMS Samples</name>
     <version>SNAPSHOT</version>
 
     <modules>
-        <module>helloworld</module>
-        <module>helloworldweb</module>
-        <module>calculator</module>
-        <module>customerinfo</module>
-        <module>helloworldws</module>
-        <module>helloworldws-celtix</module>
-        <module>helloworldwsclient</module>
-        <module>supplychain</module>
-        <module>helloworldjsonrpc</module>
-        <module>JavaScript</module>
-        <module>helloworld-jms</module>
+        <module>client</module>
+        <module>server</module>
     </modules>
 </project>
