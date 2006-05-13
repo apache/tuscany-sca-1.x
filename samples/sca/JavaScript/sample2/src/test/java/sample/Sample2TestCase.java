@@ -24,14 +24,14 @@ import junit.framework.TestCase;
 public class Sample2TestCase extends TestCase {
 
     public void testGeetings() throws Exception {
-//        String in = "Petra";
-//        String out = Sample2Client.invoke(in);
-//        assertEquals("Hi Petra", out);
+        String in = "Petra";
+        String out = Sample2Client.invoke(in);
+        assertEquals("Hi Petra", out);
     }
 
     public void testDeutschGeetings() throws Exception {
-//        String in = "Sue";
-//        String out = Sample2Client.invokeDeutsch(in);
-//        assertEquals("Guten Tag Sue", out);
+        String in = "Sue";
+        String out = Sample2Client.invokeDeutsch(in);
+        assertEquals("Guten Tag Sue", out);
     }
 }
