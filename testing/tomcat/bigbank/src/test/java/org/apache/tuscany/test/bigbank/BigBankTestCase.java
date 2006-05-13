@@ -24,87 +24,213 @@ import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
 
-import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-
 public class BigBankTestCase extends TestCase {
-	// public static final String testUrl = "http://localhost:8080/tuscany-samples-bigbank-webclient";
-	public static final String testUrl = "http://localhost:8080/webclient-SNAPSHOT/login.html";
-	
+    // public static final String testUrl = "http://localhost:8080/tuscany-samples-bigbank-webclient";
+    public static final String testUrl = "http://localhost:8080/sample-bigbank-webclient-SNAPSHOT/";
 
-	public void testBigBankDefault() throws Exception
-	{
-		System.err.println("Running: testcase:");
-		// New HTMLunit web client
-		WebClient client = new WebClient();
-		client.setRedirectEnabled(true);
-		
-		// Going to have the WebClient connect to this URL
-		URL url = new URL(testUrl);
-		HtmlPage page = (HtmlPage)client.getPage(url);
-		//System.out.println(page.getTitleText());
-		
-		// Check response code
-		WebResponse resp = page.getWebResponse();
-		assertTrue(resp.getStatusCode() <= 200);
-		List forms = page.getForms();
-		Iterator iter = forms.iterator();
-		
-		// Iterate over all forms on page, should only be one.
-		while(iter.hasNext())
-		{
-			HtmlForm form = (HtmlForm)iter.next();
-			
-			
-			HtmlInput login = form.getInputByName("login");
-			HtmlInput password = form.getInputByName("password");
-			login.setValueAttribute("test");
-			password.setValueAttribute("password");
+    public void testBigBankDefault() throws Exception {
+        System.err.println("Running: testcase:");
+        // New HTMLunit web client
+        WebClient client = new WebClient();
+        client.setRedirectEnabled(true);
 
-			Page resultPage = form.submit();
-			// Check response from servlet
-			WebResponse resultResponse  = resultPage.getWebResponse();
-			assertTrue(resultResponse.getStatusCode() <= 200);
-			
-			// TODO Check response content..
-			String response = resultResponse.getContentAsString();
-			assertTrue(-1 != response.indexOf("Account"));
-			assertTrue(-1 != response.indexOf("Balance"));
-			assertTrue(-1 != response.indexOf("12345_CHA12345"));
-			assertTrue(-1 != response.indexOf("1200.0"));
-			
-			
-			
-			/**	
-			 * 	or..
-			 * 
-			 * 	HtmlPage htmlResponse = (HtmlPage)resultPage;
-			 *	HtmlElement element = htmlResponse.getHtmlElementById("ELEMENT-ID");
-			 *	assertEquals(element.getNodeValue(), ... );
-			 *	
-			 *	or..
-			 *
-			 *	String resultString = resultResponse.getContentAsString();
-			 *	assertEquals(resultString, ... );
-			 *		
-			 *  etc.
-			 * 
-			 **/
-		}
-		
-	}
+        // Going to have the WebClient connect to this URL
+        URL url = new URL(testUrl);
+        HtmlPage page = (HtmlPage) client.getPage(url);
+        // System.out.println(page.getTitleText());
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-	
+        // Check response code
+        WebResponse resp = page.getWebResponse();
+        assertTrue(resp.getStatusCode() <= 200);
+        List forms = page.getForms();
+        
 
-	}
+        HtmlPage resultPage = null;
+        WebResponse resultResponse= null;
+        boolean formfound = false;
+        for (Iterator iter = forms.iterator(); formfound != true && iter.hasNext();) {
+            HtmlForm form = (HtmlForm) iter.next();
+
+            if ("loginAction".equals(form.getActionAttribute())) {
+                formfound = true;
+                HtmlInput login = form.getInputByName("login");
+                HtmlInput password = form.getInputByName("password");
+                login.setValueAttribute("test");
+                password.setValueAttribute("password");
+
+                resultPage = (HtmlPage) form.submit();
+                // Check response from servlet
+                resultResponse = resultPage.getWebResponse();
+                assertTrue(resultResponse.getStatusCode() <= 200);
+
+              
+                String response = resultResponse.getContentAsString();
+                assertTrue(-1 != response.indexOf("Account Information for"));
+                assertTrue(-1 != response.indexOf("test"));
+                assertTrue(-1 != response.indexOf("134-42-6231"));
+                assertTrue(-1 != response.indexOf("123.43"));
+                assertTrue(-1 != response.indexOf("134-43-3941"));
+                assertTrue(-1 != response.indexOf("23.12"));
+
+                Pattern pat = Pattern.compile("LU.*7", Pattern.DOTALL);
+                Matcher test = pat.matcher(response);
+                assertTrue(test.find());
+            }
+
+        }
+        forms = resultPage.getForms();
+        
+        formfound = false;
+        for(Iterator iter = forms.iterator();  formfound != true && iter.hasNext();) {
+            HtmlForm form = (HtmlForm) iter.next();
+
+            if ("purchaseStock.jsp".equals(form.getActionAttribute())) {
+                formfound = true;
+                resultPage = (HtmlPage) form.submit();
+            }
+
+        }
+        assertTrue(formfound);
+        forms = resultPage.getForms();
+        formfound = false;
+        for (Iterator iter = forms.iterator(); formfound != true && iter.hasNext();) {
+            HtmlForm form = (HtmlForm) iter.next();
+
+            if ("FormServlet".equals(form.getActionAttribute())) {
+                formfound = true;
+
+                HtmlInput login = form.getInputByName("symbol");
+                HtmlInput password = form.getInputByName("quantity");
+                login.setValueAttribute("EDS");
+                password.setValueAttribute("131");
+                
+                resultPage = (HtmlPage) form.submit();
+                // Check response from servlet
+                resultResponse = resultPage.getWebResponse();
+                assertTrue(resultResponse.getStatusCode() <= 200);
+
+             
+                String response = resultResponse.getContentAsString();
+                assertTrue(-1 != response.indexOf("Account Information for"));
+                assertTrue(-1 != response.indexOf("test"));
+                assertTrue(-1 != response.indexOf("134-42-6231"));
+                assertTrue(-1 != response.indexOf("123.43"));
+                assertTrue(-1 != response.indexOf("134-43-3941"));
+                assertTrue(-1 != response.indexOf("23.12"));
+
+                Pattern pat = Pattern.compile("LU.*7", Pattern.DOTALL);
+                Matcher test = pat.matcher(response);
+                assertTrue(test.find());
+                pat = Pattern.compile("EDS.*131", Pattern.DOTALL);
+                test = pat.matcher(response);
+                assertTrue(test.find());
+
+            }
+
+        }
+        assertTrue(formfound);
+        forms = resultPage.getForms();
+        formfound = false;
+        for (Iterator iter = forms.iterator(); formfound != true && iter.hasNext();) {
+            HtmlForm form = (HtmlForm) iter.next();
+
+            if ("stockSale.jsp".equals(form.getActionAttribute())) {
+//                System.err.println(form.asText());
+                
+                
+                
+                Pattern pat = Pattern.compile("EDS.*131", Pattern.DOTALL);
+                
+                Matcher test = pat.matcher(form.asText());
+                if(!test.find()) continue;
+
+                
+                
+                
+                formfound = true;
+                resultPage = (HtmlPage) form.submit();
+                // Check response from servlet
+                resultResponse = resultPage.getWebResponse();
+                assertTrue(resultResponse.getStatusCode() <= 200);
+
+
+            }
+
+        }
+        forms = resultPage.getForms();
+        
+        
+        
+        formfound = false;
+        for(Iterator iter = forms.iterator();  formfound != true && iter.hasNext();) {
+            HtmlForm form = (HtmlForm) iter.next();
+
+            if ("FormServlet".equals(form.getActionAttribute())) {
+                formfound = true;
+
+                
+                HtmlInput password = form.getInputByName("quantity");
+                
+                password.setValueAttribute("131");
+
+                resultPage = (HtmlPage) form.submit();
+                // Check response from servlet
+                resultResponse = resultPage.getWebResponse();
+                assertTrue(resultResponse.getStatusCode() <= 200);
+
+                
+                String response = resultResponse.getContentAsString();
+                assertTrue(-1 != response.indexOf("Account Information for"));
+                assertTrue(-1 != response.indexOf("test"));
+                assertTrue(-1 != response.indexOf("134-42-6231"));
+                assertTrue(-1 != response.indexOf("123.43"));
+                assertTrue(-1 != response.indexOf("134-43-3941"));
+                assertTrue(-1 != response.indexOf("23.12"));
+
+                Pattern pat = Pattern.compile("LU.*7", Pattern.DOTALL);
+                Matcher test = pat.matcher(response);
+                assertTrue(test.find());
+                // pat = Pattern.compile("EDS.*131", Pattern.DOTALL);
+                // test = pat.matcher(response);
+                //                assertFalse(test.find());
+
+
+            }
+
+        }
+        assertTrue(formfound);
+        
+        forms = resultPage.getForms();
+        formfound = false;
+        for (Iterator iter = forms.iterator(); formfound != true && iter.hasNext();) {
+            HtmlForm form = (HtmlForm) iter.next();
+
+            if ("loginAction".equals(form.getActionAttribute())) {
+                formfound = true;
+                
+                resultPage = (HtmlPage) form.submit();
+
+            }
+
+        }
+        assertTrue(formfound);
+
+
+
+
+    }
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+
+    }
 
 }

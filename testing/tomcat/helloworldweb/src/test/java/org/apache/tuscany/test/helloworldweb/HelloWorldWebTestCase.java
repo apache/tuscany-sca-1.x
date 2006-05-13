@@ -33,7 +33,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 
 public class HelloWorldWebTestCase extends TestCase {
-	public static final String testUrl = "http://localhost:8080/helloworldWeb-SNAPSHOT/";
+	public static final String testUrl = "http://localhost:8080/sample-helloworldweb-SNAPSHOT/";
 
 	public void testHelloWorldDefault() throws Exception
 	{

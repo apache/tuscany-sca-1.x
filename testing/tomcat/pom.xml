@@ -29,6 +29,8 @@
 
     <modules>
         <module>helloworldws</module>
+        <module>helloworldweb</module>
+        <module>bigbank</module>
 <!--
   these can't seem to run cause they need htmlunit and the dependencies download
   seems broken for htmlunit
