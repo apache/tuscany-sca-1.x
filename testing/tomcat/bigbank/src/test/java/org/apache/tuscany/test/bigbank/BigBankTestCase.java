@@ -214,15 +214,13 @@ public class BigBankTestCase extends TestCase {
             if ("loginAction".equals(form.getActionAttribute())) {
                 formfound = true;
                 
-                resultPage = (HtmlPage) form.submit();
+                // FIXME this seems to performs a log-in again instead of logout...
+                // resultPage = (HtmlPage) form.submit();
 
             }
 
         }
         assertTrue(formfound);
-
-
-
 
     }
 
