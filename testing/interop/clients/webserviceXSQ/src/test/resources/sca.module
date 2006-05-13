@@ -22,8 +22,8 @@
     <import.wsdl wsdlLocation="wsdl/sq.wsdl"/>
 
     <externalService name="webserviceXSQ">
-        <interface.wsdl interface="http://www.webserviceX.NET/#StockQuoteSoap"/>
-        <binding.ws port="http://www.webserviceX.NET/#StockQuoteSoap"/>
+        <interface.wsdl interface="http://www.webserviceX.NET/#wsdl.interface(StockQuoteSoap)"/>
+        <binding.ws port="http://www.webserviceX.NET/#wsdl.endpoint(StockQuote/StockQuoteSoap)"/>
     </externalService>
 
 </module>

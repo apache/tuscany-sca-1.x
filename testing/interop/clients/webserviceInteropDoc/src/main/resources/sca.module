@@ -25,14 +25,14 @@
     </component>
     
     <externalService name="RemoteInteropDocService">
-        <interface.wsdl interface="http://soapinterop.org/#DocTestPortType"/>
-        <binding.ws port="http://soapinterop.org/#interopDocPort"/>
+        <interface.wsdl interface="http://soapinterop.org/#wsdl.interface(DocTestPortType)"/>
+        <binding.ws port="http://soapinterop.org/#wsdl.endpoint(interopDocSvc/interopDocPort)"/>
     </externalService>
     
     <externalService name="LocalHostInteropDocService">
-        <interface.wsdl interface="http://soapinterop.org/#DocTestPortType"/>
+        <interface.wsdl interface="http://soapinterop.org/#wsdl.interface(DocTestPortType)"/>
         <binding.ws uri="http://localhost:8080/tuscany-testing-interop-service-webserviceInteropDoc-SNAPSHOT/services/InteropDocService"
-          port="http://soapinterop.org/#interopDocPort"/>
+          port="http://soapinterop.org/#wsdl.endpoint(interopDocSvc/interopDocPort)"/>
     </externalService>
     
 </module>

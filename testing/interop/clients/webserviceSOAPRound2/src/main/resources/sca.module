@@ -21,8 +21,8 @@
     <import.wsdl wsdlLocation="wsdl/interoptestdoclit.wsdl"/>
 
     <externalService name="RemoteInteropDocService">
-        <interface.wsdl interface="http://soapinterop.org/WSDLInteropTestDocLit#WSDLInteropTestDocLitPortType"/>
-        <binding.ws port="http://soapinterop.org/WSDLInteropTestDocLit#WSDLInteropTestDocLitPort"/>
+        <interface.wsdl interface="http://soapinterop.org/WSDLInteropTestDocLit#wsdl.interface(WSDLInteropTestDocLitPortType)"/>
+        <binding.ws port="http://soapinterop.org/WSDLInteropTestDocLit#wsdl.endpoint(WSDLInteropTestDocLitService/WSDLInteropTestDocLitPort)"/>
     </externalService>
     
 </module>

@@ -22,8 +22,8 @@
     <import.wsdl wsdlLocation="wsdl/interopdoc.wsdl"/>
 		
     <entryPoint name="InteropDocService">
-       <interface.wsdl interface="http://soapinterop.org/#DocTestPortType"/>
-        <binding.ws port="http://soapinterop.org/#interopDocPort"/>
+       <interface.wsdl interface="http://soapinterop.org/#wsdl.interface(DocTestPortType)"/>
+        <binding.ws port="http://soapinterop.org/#wsdl.endpoint(interopDocSvc/interopDocPort)"/>
         <reference>InteropDocServiceComponent/DocTestPortType</reference>
     </entryPoint>
 
