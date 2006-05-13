@@ -82,6 +82,8 @@
                                 <tasks>
                                     <ant inheritRefs='true' antfile="build.xml" dir="${basedir}/.." target="startTestServer">
                                     	<property name="user.home" value="${user.home}" />
+                                    	<property name="target.dir" value="${basedir}/../target" />
+
                                         <!-- property name="tuscany.maven.repos.dir" value="${maven.local.repo}"/ -->
                                     </ant>
                                 </tasks>
@@ -95,7 +97,9 @@
                             <phase>clean</phase>
                             <configuration>
                                 <tasks>
-                                    <ant inheritRefs='true' antfile="build.xml" dir="${basedir}/.." target="clean" />
+                                    <ant inheritRefs='true' antfile="build.xml" dir="${basedir}/.." target="clean">
+                                    	<property name="target.dir" value="${basedir}/target" />
+						</ant>
                                 </tasks>
                             </configuration>
                             <goals>
