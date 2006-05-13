@@ -22,8 +22,8 @@
     <import.wsdl wsdlLocation="wsdl/helloworld.wsdl"/>
 
     <entryPoint name="HelloWorldWebService">
-        <interface.wsdl interface="http://helloworld#HelloWorld"/>
-        <binding.ws port="http://helloworld#HelloWorldSoapPort"/>
+        <interface.wsdl interface="http://helloworld#wsdl.interface(HelloWorld)"/>
+        <binding.ws port="http://helloworld#wsdl.endpoint(HelloWorldService/HelloWorldSoapPort)"/>
         <reference>HelloWorldServiceComponent/HelloWorldService</reference>
     </entryPoint>
 
