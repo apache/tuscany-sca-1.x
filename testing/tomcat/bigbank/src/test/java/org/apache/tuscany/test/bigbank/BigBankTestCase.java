@@ -215,7 +215,7 @@ public class BigBankTestCase extends TestCase {
                 formfound = true;
                 
                 // FIXME this seems to performs a log-in again instead of logout...
-                // resultPage = (HtmlPage) form.submit();
+                 resultPage = (HtmlPage) form.submit();
 
             }
 

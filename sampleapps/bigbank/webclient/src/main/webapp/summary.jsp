@@ -31,6 +31,7 @@
     <FORM method="post" action='loginAction'>
     <jsp:getProperty name='profile' property='firstName'/>
     <jsp:getProperty name='profile' property='lastName'/>
+    <input type="hidden" name="logoutHIDDEN"    value='logoutHIDDEN' />
     &nbsp;&nbsp;<INPUT type="submit" name='logout' value="logout">
     <br>
     </FORM>

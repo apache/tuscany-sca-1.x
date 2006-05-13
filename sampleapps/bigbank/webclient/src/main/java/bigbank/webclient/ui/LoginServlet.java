@@ -45,7 +45,9 @@ public class LoginServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest pReq, HttpServletResponse pResp) throws ServletException {
         
-        if("logout".equals(pReq.getParameter("logout"))){
+        if("logout".equals(pReq.getParameter("logout")) ||
+                "logoutHIDDEN".equals(pReq.getParameter("logoutHIDDEN"))
+                ){
             HttpSession sess = pReq.getSession();
             if(sess != null) sess.invalidate();
             try {
