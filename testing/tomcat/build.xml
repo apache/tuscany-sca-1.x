@@ -75,6 +75,11 @@
                 <include name="**/woodstox/wstx-asl/2.9.3/wstx-asl-2.9.3.jar" />
         </patternset>
 
+        <patternset id="tuscany.acceptance.javascript.dependencies">
+            <include name="**/rhino/js/1.6R2/js-1.6R2.jar"/>
+            <include name="**/xmlbeans/xbean/2.1.0/xbean-2.1.0.jar"/>
+        </patternset>
+
         <patternset id="tuscany.acceptance.emf.dependencies">
                 <include name="**/org/eclipse/emf/common/2.2.0-SNAPSHOT/common-2.2.0-SNAPSHOT.jar" />
                 <include name="**/org/eclipse/emf/ecore/2.2.0-SNAPSHOT/ecore-2.2.0-SNAPSHOT.jar" />
@@ -92,6 +97,7 @@
         <patternset id="tuscany.acceptance.sca.core"> <!--jars which need to go into tomcat server/lib  -->
                 <include name="**/${tuscany.acceptance.groupId}/tuscany-common/${tuscany.acceptance.version}/tuscany-common-${tuscany.acceptance.version}.jar" />
                 <include name="**/${tuscany.acceptance.containers}/tuscany-container-java/${tuscany.acceptance.version}/tuscany-container-java-${tuscany.acceptance.version}.jar" />
+                <include name="**/${tuscany.acceptance.containers}/tuscany-container-rhino/${tuscany.acceptance.version}/tuscany-container-rhino-${tuscany.acceptance.version}.jar" />
                 <include name="**/${tuscany.acceptance.databindings}/tuscany-databinding-sdo/${tuscany.acceptance.version}/tuscany-databinding-sdo-${tuscany.acceptance.version}.jar" />
                 <include name="**/${tuscany.acceptance.groupId}/tuscany-core/${tuscany.acceptance.version}/tuscany-core-${tuscany.acceptance.version}.jar" />
                 <include name="**/${tuscany.acceptance.groupId}/tuscany-model/${tuscany.acceptance.version}/tuscany-model-${tuscany.acceptance.version}.jar" />
@@ -216,6 +222,9 @@
 	                    <fileset dir="${tuscany.maven.repos.dir}">
         	                    <patternset refid="tuscany.acceptance.common.dependencies" />
     	                </fileset>
+                        <fileset dir="${tuscany.maven.repos.dir}">
+                                <patternset refid="tuscany.acceptance.javascript.dependencies" />
+                        </fileset>
                 </copy>
                 <copy todir="${tuscany.acceptance.tc.dir}/server/lib" flatten='true'>
                         <fileset dir="${tuscany.maven.repos.dir}">
