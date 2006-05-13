@@ -23,7 +23,7 @@
     </parent>
 	
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-companyWeb</artifactId>
+    <artifactId>sample-companyweb</artifactId>
     <packaging>war</packaging>
     <name>Tuscany DAS sample Company WEB</name>
     <description>Sample use of RDB DAS with JSP</description>
