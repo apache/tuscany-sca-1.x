@@ -15,7 +15,7 @@
   limitations under the License.
  -->
 <module xmlns="http://www.osoa.org/xmlns/sca/0.9" xmlns:v="http://www.osoa.org/xmlns/sca/values/0.9"
-        name="tuscany.samples.bigbank.account">
+        name="bigbank.account">
         
 	<import.sdo factory="com.bigbank.account.AccountFactory" />
 	<import.sdo factory="net.x.webservice.WebserviceFactory" />
@@ -26,7 +26,7 @@
 
     <entryPoint name="AccountService">
         <interface.java interface="com.bigbank.account.AccountService"/>
-        <binding.ws port="http://www.bigbank.com/account#AccountServiceSOAP"/>
+        <binding.ws port="http://www.bigbank.com/account#wsdl.endpoint(AccountService/AccountServiceSOAP)"/>
         <reference>AccountServiceComponent/AccountService</reference>
     </entryPoint>
 
@@ -45,27 +45,15 @@
         <implementation.java class="bigbank.account.services.accountdata.AccountDataServiceDASImpl"/>
     </component>
 
-<!--  WebservicexService
-    <component name="StockQuoteServiceComponent">
-        <implementation.java class="bigbank.account.services.stockquote.StockQuoteWebservicexServiceImpl"/>
-        <references>
-            <v:stockQuoteService>StockQuoteWebService</v:stockQuoteService>
-        </references>
-    </component>
-    -->
-
-<!--   local  -->
+	<!-- Local -->
     <component name="StockQuoteServiceComponent">
         <implementation.java class="bigbank.account.services.stockquote.StockQuoteServiceImpl"/>
     </component>
    
-
+   <!-- WebServiceX Web Service -->
     <externalService name="StockQuoteWebService">
-        <interface.wsdl interface="http://www.webserviceX.NET/#StockQuoteSoap"/>
-        <binding.ws port="http://www.webserviceX.NET/#StockQuoteSoap"/>
-        
+        <interface.wsdl interface="http://www.webserviceX.NET/#wsdl.interface(StockQuoteSoap)"/>
+        <binding.ws port="http://www.webserviceX.NET/#wsdl.endpoint(StockQuote/StockQuoteSoap)"/>
     </externalService>
 
-
-                
 </module>

@@ -15,12 +15,11 @@
   limitations under the License.
  -->
 <subsystem	xmlns="http://www.osoa.org/xmlns/sca/0.9" xmlns:v="http://www.osoa.org/xmlns/sca/values/0.9"
+	name="sample-bigbank-webclient-subsystem">
 
-	name="tuscany.samples.bigbank.webclient">
-
-	<moduleComponent name="WebClientModuleComponent" module="tuscany.samples.bigbank.webclient">
+	<moduleComponent name="sample-bigbank-webclient" module="bigbank.webclient">
 		<references>
-			<v:AccountService>bigbank.accountsunbsystem/AccountModuleComponent/AccountService</v:AccountService>
+			<v:AccountService>sample-bigbank-account-subsystem/sample-bigbank-account/AccountService</v:AccountService>
 		</references>	
 	</moduleComponent>
 
