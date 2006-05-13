@@ -48,8 +48,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.tuscany.sca.samples</groupId>
-            <artifactId>helloworldwsclient</artifactId>
+            <groupId>org.apache.tuscany.samples.sca</groupId>
+            <artifactId>sample-helloworldwsclient</artifactId>
             <version>${pom.version}</version>
             <scope>provided</scope> 
         </dependency>
