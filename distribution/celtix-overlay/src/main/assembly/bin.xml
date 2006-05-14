@@ -9,7 +9,7 @@
             <directory>celtix-overlay/target</directory>
             <outputDirectory>lib/celtix</outputDirectory>
             <includes>
-                <include>tuscany-celtix-${project.version}.jar</include>
+                <include>tuscany-celtix-incubating-M1.jar</include>
             </includes>
         </fileSet>
     </fileSets>

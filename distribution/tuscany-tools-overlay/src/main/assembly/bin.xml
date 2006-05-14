@@ -9,7 +9,7 @@
             <directory>tuscany-tools-overlay/target</directory>
             <outputDirectory>lib/tools</outputDirectory>
             <includes>
-                <include>tuscany-tools-${project.version}.jar</include>
+                <include>tuscany-tools-incubating-M1.jar</include>
             </includes>
         </fileSet>
     </fileSets>

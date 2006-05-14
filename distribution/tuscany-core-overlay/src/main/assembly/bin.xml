@@ -9,7 +9,7 @@
             <directory>tuscany-core-overlay/target</directory>
             <outputDirectory>lib</outputDirectory>
             <includes>
-                <include>tuscany-runtime-${project.version}.jar</include>
+                <include>tuscany-runtime-incubating-M1.jar</include>
             </includes>
         </fileSet>
     </fileSets>
