@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Tuscany HelloWorld WS Client Sample</TITLE>
+
+    <script type="text/javascript" src="SCA/scripts/sca.js"></script>
+
+    <script language="JavaScript">
+       function getGreeting(service) {
+          var name = document.getElementById("name").value;
+          var result = service.getGreetings(name);
+          document.getElementById('greeting').innerHTML=result;
+       }
+    </script>
+  </head>
+
+  <body>
+
+    <h2>Tuscany HelloWorld WS Client Sample</h2><br>
+     
+    <p>
+      Name please: &nbsp;&nbsp;&nbsp;
+      <input type="text" id="name" size="30" value="World" />
+
+      <br><BR>
+
+      <input type="button" value="Java WS" onclick="getGreeting(SCA.JavaHelloworld)" />
+      <input type="button" value="E4X WS" onclick="getGreeting(SCA.E4XHelloworld)" />
+
+    </p>
+        
+    <br><hr>
+    <div id='greeting'></div>
+       
+  </body>
+</html>

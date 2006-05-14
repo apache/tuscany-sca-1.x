@@ -40,5 +40,6 @@
         <module>helloworldjsonrpc</module>
         <module>helloworld-jms</module>
         <module>helloworlde4xws</module>
+        <module>helloworldjsclient</module>
     </modules>
 </project>
