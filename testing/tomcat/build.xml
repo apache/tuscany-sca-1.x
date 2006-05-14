@@ -34,8 +34,8 @@
             <os family="unix"/>
         </condition>
 
-        <property name="tuscany.acceptance.tc.dir" value='${target.dir}/apache-tomcat-${tuscany.acceptance.tomcat.version}' />
-        <property name="tuscany.acceptance.target.dir" value='${target.dir}' />
+        <property name="tuscany.acceptance.target.dir" value='target' />
+        <property name="tuscany.acceptance.tc.dir" value='${tuscany.acceptance.target.dir}/apache-tomcat-${tuscany.acceptance.tomcat.version}' />
 
         <property name="tuscany.acceptance.groupId" value='org/apache/tuscany' />
         <property name="tuscany.acceptance.version" value='SNAPSHOT' />
@@ -359,7 +359,7 @@
         </target>
 
         <target name="clean" description='Clean out all built artifacts'>
-                <delete dir="${tuscany.acceptance.tc.dir}" />
+                <delete dir="${tuscany.acceptance.target.dir}" />
         </target>
 
         <target name='setup.TC.antscripts' depends='tuscany.tomcat.unzipWindows,tuscany.tomcat.unzipUnix,tuscany.tomcat.unzipMac'>
