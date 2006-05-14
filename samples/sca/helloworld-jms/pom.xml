@@ -16,13 +16,14 @@
  -->
 <project>
     <parent>
-        <groupId>org.apache.tuscany.sca.samples</groupId>
-        <artifactId>tuscany-sca-samples</artifactId>
+        <groupId>org.apache.tuscany.samples.sca</groupId>
+        <artifactId>tuscany-samples-sca</artifactId>
         <version>SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.tuscany.sca.samples.jms</groupId>
-    <artifactId>tuscany-sca-jms-samples</artifactId>
+    <groupId>org.apache.tuscany.samples.sca.jms</groupId>
+    <artifactId>samples-helloworldjms</artifactId>
     <packaging>pom</packaging>
     <name>Tuscany SCA JMS Samples</name>
     <version>SNAPSHOT</version>

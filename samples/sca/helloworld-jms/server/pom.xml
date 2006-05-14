@@ -16,12 +16,12 @@
  -->
 <project>
     <parent>
-        <groupId>org.apache.tuscany.sca.samples.jms</groupId>
-        <artifactId>tuscany-sca-jms-samples</artifactId>
+        <groupId>org.apache.tuscany.samples.sca.jms</groupId>
+        <artifactId>samples-helloworldjms</artifactId>
         <version>SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>helloworldws-jms</artifactId>
+    <artifactId>sample-helloworldjms-service</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany HelloWorld Celtix JMS Service Sample</name>
     <description>A sample HelloWorld JMS Service.</description>
@@ -29,7 +29,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.tuscany.sca.samples</groupId>
+            <groupId>org.apache.tuscany.samples.sca</groupId>
             <artifactId>helloworld</artifactId>
             <version>${pom.version}</version>
             <scope>compile</scope>

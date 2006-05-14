@@ -16,12 +16,13 @@
  -->
 <project>
     <parent>
-        <groupId>org.apache.tuscany.sca.samples.jms</groupId>
-        <artifactId>tuscany-sca-jms-samples</artifactId>
+        <groupId>org.apache.tuscany.samples.sca.jms</groupId>
+        <artifactId>samples-helloworldjms</artifactId>
         <version>SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>helloworldwsclient-jms</artifactId>
+    <artifactId>sample-helloworldwsclient-jms</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany HelloWorld JMS Service Client Sample</name>
     <description>A sample client for a HelloWorld JMS Service.</description>
