@@ -38,7 +38,7 @@
         <module>helloworldwsclient</module>
         <module>supplychain</module>
         <module>helloworldjsonrpc</module>
-        <module>JavaScript</module>
         <module>helloworld-jms</module>
+        <module>helloworlde4xws</module>
     </modules>
 </project>
