@@ -18,15 +18,15 @@
 	
     <parent>
         <groupId>org.apache.tuscany.samples.das</groupId>
-        <artifactId>das-samples</artifactId>
+        <artifactId>tuscany-samples-das</artifactId>
         <version>SNAPSHOT</version>
     </parent>
 	
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sample-companyweb</artifactId>
     <packaging>war</packaging>
-    <name>Tuscany DAS sample Company WEB</name>
-    <description>Sample use of RDB DAS with JSP</description>
+    <name>Tuscany DAS Company Sample</name>
+    <description>Sample use of RDB DAS in a Web application</description>
     <version>SNAPSHOT</version>
 
     <dependencies>

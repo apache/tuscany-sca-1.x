@@ -20,9 +20,10 @@
         <artifactId>tuscany-samples</artifactId>
         <version>SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.samples.das</groupId>
-    <artifactId>das</artifactId>
+    <artifactId>tuscany-samples-das</artifactId>
     <packaging>pom</packaging>
     <name>Tuscany DAS Samples</name>
     <version>SNAPSHOT</version>
