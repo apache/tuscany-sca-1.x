@@ -170,7 +170,7 @@
 								<configuration>
 									<tasks>
 										<ant inheritRefs="true"
-											antfile="buildDistribution.xml" dir="${tuscany.home}"
+											antfile="${tuscany.home}/distribution/buildDistribution.xml" dir="${tuscany.home}"
 											target="createDistribution">
 											<property name="dist.folder"
 												value="${tuscany.home}/distribution/build" />
@@ -197,7 +197,7 @@
 								<configuration>
 									<tasks>
 										<ant inheritRefs="true"
-											antfile="buildDistribution.xml" dir="${tuscany.home}"
+											antfile="${tuscany.home}/distribution/buildDistribution.xml" dir="${tuscany.home}"
 											target="cleanDistribution">
 											<property name="dist.folder"
 												value="${tuscany.home}/distribution/build" />
