@@ -1,7 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<!--
+<html><head><!--
   Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  -->
+
 
 
     
@@ -34,18 +33,15 @@
   
 
   
-  <title>Tuscany Hello World Web Sample</title>
-<!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven -->
-  <style type="text/css" media="all">
+  
+
+  <title>Tuscany Hello World Web Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven --><style type="text/css" media="all">
 @import url("../../../../css/maven-base.css");
 @import url("../../../../css/maven-theme.css");
 @import url("../../../../css/site.css");
   </style>
   
-  <link rel="stylesheet" href="./css/print.css" type="text/css" media="print">
-<!-- end maven -->
-</head>
-
+  <link rel="stylesheet" href="./css/print.css" type="text/css" media="print"><!-- end maven --></head>
 
 <body>
 
@@ -122,7 +118,7 @@ The source files are physically organized as shown below:<br>
             <td>
                 
       
-      <pre>+---main<br>&brvbar;   +---java<br>&brvbar;       &brvbar;   sca.module<br>&brvbar;       &brvbar;<br>                    <br>&brvbar;       +---org<br>&brvbar;           +---apache<br>&brvbar;               +---tuscany<br>                    <br>&brvbar;                   +---samples<br>&brvbar;                       +---helloworldweb<br>                    <br>&brvbar;                               HelloWorldService.java<br>&brvbar;<br>                    HelloWorldServiceComponentImpl.java<br>&brvbar;<br>+---webapp<br>    &brvbar;   HelloWorldWeb.jsp<br>                    <br>    &brvbar;<br> +---WEB-INF<br> web.xml<br></pre>
+      <pre>src<br>+---main<br>    +---java<br>    &brvbar;   +---helloworld<br>    &brvbar;           HelloWorldImpl.java<br>    &brvbar;           HelloWorldService.java<br>    &brvbar;<br>    +---resources<br>    &brvbar;       sca.module<br>    &brvbar;<br>    +---webapp<br>        &brvbar;   HelloWorldWeb.jsp<br>        &brvbar;<br>        &brvbar;<br>        +---WEB-INF<br>                web.xml<br><br></pre>
 
 
             </td>
@@ -194,7 +190,7 @@ The source files are physically organized as shown below:<br>
 
 
 
-            <td style="vertical-align: top;">HelloWorldServiceComponentImpl.java</td>
+            <td style="vertical-align: top;">HelloWorldImpl.java</td>
 
 
 
@@ -248,5 +244,4 @@ The source files are physically organized as shown below:<br>
 
 
 
-</body>
-</html>
+</body></html>
