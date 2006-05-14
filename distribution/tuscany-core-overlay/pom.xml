@@ -58,6 +58,7 @@
             <artifactId>tuscany-container-java</artifactId>
             <version>${pom.version}</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.apache.tuscany</groupId>
             <artifactId>tuscany-tomcat</artifactId>
@@ -69,6 +70,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        -->
     </dependencies>
     <build>
         <plugins>
