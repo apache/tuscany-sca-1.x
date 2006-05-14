@@ -18,6 +18,11 @@
                 <include name="**/*"/>
             </fileset>
         </copy>
+        <copy todir="${target.dir}/docs">
+            <fileset dir="../../docs">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
         <zip destfile="${target.dir}/../tuscany-incubating-M1.zip">
                         <zipfileset dir="${target.dir}" prefix="tuscany-incubating-M1">
                         </zipfileset>
