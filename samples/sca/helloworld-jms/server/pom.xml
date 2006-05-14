@@ -30,7 +30,7 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.samples.sca</groupId>
-            <artifactId>helloworld</artifactId>
+            <artifactId>sample-helloworld</artifactId>
             <version>${pom.version}</version>
             <scope>compile</scope>
         </dependency>
