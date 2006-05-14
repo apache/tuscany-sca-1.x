@@ -18,13 +18,13 @@
     <parent>
         <groupId>org.apache.tuscany</groupId>
         <artifactId>tuscany-project</artifactId>
-        <version>SNAPSHOT</version>
+        <version>incubating-M1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tuscany-testing-tomcat</artifactId>
     <packaging>pom</packaging>
     <name>Tuscany Testing in Tomcat</name>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
 
     <modules>

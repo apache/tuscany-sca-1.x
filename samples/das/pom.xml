@@ -18,7 +18,7 @@
     <parent>
         <groupId>org.apache.tuscany.samples</groupId>
         <artifactId>tuscany-samples</artifactId>
-        <version>SNAPSHOT</version>
+        <version>incubating-M1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -26,7 +26,7 @@
     <artifactId>tuscany-samples-das</artifactId>
     <packaging>pom</packaging>
     <name>Tuscany DAS Samples</name>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
     <modules>
         <module>companyweb</module>

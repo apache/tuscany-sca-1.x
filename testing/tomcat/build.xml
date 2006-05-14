@@ -38,16 +38,16 @@
         <property name="tuscany.acceptance.tc.dir" value='${tuscany.acceptance.target.dir}/apache-tomcat-${tuscany.acceptance.tomcat.version}' />
 
         <property name="tuscany.acceptance.groupId" value='org/apache/tuscany' />
-        <property name="tuscany.acceptance.version" value='SNAPSHOT' />
+        <property name="tuscany.acceptance.version" value='incubating-M1' />
 
         <property name="tuscany.sca.acceptance.groupId" value='org/osoa' />
-        <property name="tuscany.sca.acceptance.version" value='SNAPSHOT' />
+        <property name="tuscany.sca.acceptance.version" value='incubating-M1' />
 
         <property name="tuscany.commonj.acceptance.groupId" value='commonj' />
-        <property name="tuscany.commonj.acceptance.version" value='SNAPSHOT' />
+        <property name="tuscany.commonj.acceptance.version" value='incubating-M1' />
 
         <property name="tuscany.sdo.acceptance.groupId" value='org/apache/tuscany' />
-        <property name="tuscany.sdo.acceptance.version" value='SNAPSHOT' />
+        <property name="tuscany.sdo.acceptance.version" value='incubating-M1' />
 
         <property name="tuscany.acceptance.axis2.version" value='1.0' />
 

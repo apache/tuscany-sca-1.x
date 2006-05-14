@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.apache.tuscany.samples.sca</groupId>
         <artifactId>tuscany-samples-sca</artifactId>
-        <version>SNAPSHOT</version>
+        <version>incubating-M1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -27,7 +27,7 @@
     <packaging>war</packaging>
     <name>Tuscany HelloWorld JavaScript/E4X Web Service Sample</name>
     <description>A sample HelloWorld Web Service using JavaScript/E4X</description>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
     <dependencies>
     

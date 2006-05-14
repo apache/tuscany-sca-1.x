@@ -18,13 +18,13 @@
     <parent>
         <groupId>org.apache.tuscany</groupId>
         <artifactId>tuscany-distribution</artifactId>
-        <version>SNAPSHOT</version>
+        <version>incubating-M1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tuscany-distribution-tuscany-tools-overlay</artifactId>
     <packaging>pom</packaging>
     <name>Tuscany Distribution Project - Tuscany Tools Overlay</name>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
     <dependencies>
         <dependency>
@@ -44,7 +44,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <finalName>tuscany-tools</finalName>
+                    <finalName>tuscany-tools-${project.version}</finalName>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>

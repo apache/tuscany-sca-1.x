@@ -18,14 +18,14 @@
     <parent>
         <groupId>org.apache.tuscany.samples.bigbank</groupId>
         <artifactId>bigbank-scenario</artifactId>
-        <version>SNAPSHOT</version>
+        <version>incubating-M1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sample-bigbank-webclient</artifactId>
     <packaging>war</packaging>
     <name>Tuscany BigBank Web Client Module</name>
     <description>BigBank Scenario Sample - Web Front-End Module</description>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
     <dependencies>
         <dependency>

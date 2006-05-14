@@ -9,7 +9,7 @@
             <directory>axis2-overlay/target</directory>
             <outputDirectory>lib/axis2</outputDirectory>
             <includes>
-                <include>tuscany-axis2.jar</include>
+                <include>tuscany-axis2-${project.version}.jar</include>
             </includes>
         </fileSet>
     </fileSets>

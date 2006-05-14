@@ -27,6 +27,11 @@
                         <zipfileset dir="${target.dir}" prefix="tuscany-incubating-M1">
                         </zipfileset>
         </zip>
+        <tar destfile="${target.dir}/../tuscany-incubating-M1.tar">
+                        <tarfileset dir="${target.dir}" prefix="tuscany-incubating-M1">
+                        </tarfileset>
+        </tar>
+        <gzip zipfile="${target.dir}/../tuscany-incubating-M1.tar.gz" src="${target.dir}/../tuscany-incubating-M1.tar"/>
     </target>
  
 </project> 

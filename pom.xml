@@ -18,7 +18,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany</groupId>
     <artifactId>tuscany-project</artifactId>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
     <packaging>pom</packaging>
     <name>Tuscany Project</name>
     <url>http://incubator.apache.org/tuscany/</url>
@@ -68,7 +68,7 @@
     <distributionManagement>
         <snapshotRepository>
             <id>maven-snapshot-repository</id>
-            <name>Apache SNAPSHOT Repository</name>
+            <name>Apache incubating-M1 Repository</name>
             <url>scpexe://cvs.apache.org/www/cvs.apache.org/maven-snapshot-repository</url>
         </snapshotRepository>
     </distributionManagement>
@@ -217,7 +217,7 @@
                                 <configuration>
                                     <tasks>
                                         <ant inheritRefs="true"
-                                            antfile="${tuscany,home}/distribution/buildDistribution.xml" dir="${tuscany.home}"
+                                            antfile="${tuscany.home}/distribution/buildDistribution.xml" dir="${tuscany.home}"
                                             target="cleanDistribution">
                                             <property name="dist.folder"
                                                 value="${tuscany.home}/distribution/build" />

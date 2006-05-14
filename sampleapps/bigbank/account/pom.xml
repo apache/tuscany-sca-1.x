@@ -18,14 +18,14 @@
     <parent>
         <groupId>org.apache.tuscany.samples.bigbank</groupId>
         <artifactId>bigbank-scenario</artifactId>
-        <version>SNAPSHOT</version>
+        <version>incubating-M1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sample-bigbank-account</artifactId>
     <packaging>war</packaging>
     <name>Tuscany BigBank Account Module</name>
     <description>BigBank Scenario - Account Management Module</description>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
     <dependencies>
         <dependency>

@@ -18,7 +18,7 @@
     <parent>
         <groupId>org.apache.tuscany.samples.sca.jms</groupId>
         <artifactId>samples-helloworldjms</artifactId>
-        <version>SNAPSHOT</version>
+        <version>incubating-M1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -26,7 +26,7 @@
     <packaging>jar</packaging>
     <name>Tuscany HelloWorld JMS Service Client Sample</name>
     <description>A sample client for a HelloWorld JMS Service.</description>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
     <dependencies>
         <dependency>

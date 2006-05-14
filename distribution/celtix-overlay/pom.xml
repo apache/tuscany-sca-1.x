@@ -18,13 +18,13 @@
     <parent>
         <groupId>org.apache.tuscany</groupId>
         <artifactId>tuscany-distribution</artifactId>
-        <version>SNAPSHOT</version>
+        <version>incubating-M1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tuscany-distribution-celtix-overlay</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany Distribution Project - Celtix Overlay</name>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
     <dependencies>
         <dependency>
@@ -45,7 +45,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <finalName>tuscany-celtix</finalName>
+                    <finalName>tuscany-celtix-${project.version}</finalName>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>

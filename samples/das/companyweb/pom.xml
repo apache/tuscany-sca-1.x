@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.apache.tuscany.samples.das</groupId>
         <artifactId>tuscany-samples-das</artifactId>
-        <version>SNAPSHOT</version>
+        <version>incubating-M1</version>
     </parent>
 	
     <modelVersion>4.0.0</modelVersion>
@@ -27,7 +27,7 @@
     <packaging>war</packaging>
     <name>Tuscany DAS Company Sample</name>
     <description>Sample use of RDB DAS in a Web application</description>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
     <dependencies>
 		

@@ -21,7 +21,7 @@
     <artifactId>spec</artifactId>
     <packaging>pom</packaging>
     <name>OSOA Specification API jars</name>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
     <prerequisites>
         <maven>2.0</maven>

@@ -9,7 +9,7 @@
             <directory>tuscany-tools-overlay/target</directory>
             <outputDirectory>lib/tools</outputDirectory>
             <includes>
-                <include>tuscany-tools.jar</include>
+                <include>tuscany-tools-${project.version}.jar</include>
             </includes>
         </fileSet>
     </fileSets>

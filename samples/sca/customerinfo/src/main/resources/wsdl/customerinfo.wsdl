@@ -69,7 +69,7 @@
 
     <wsdl:service name="CustomerInfoService">
         <wsdl:port binding="tns:CustomerInfoSoapBinding" name="CustomerInfoSoapPort">
-            <wsdlsoap:address location="http://localhost:8080/sample-helloworldws-SNAPSHOT/services/CustomerInfoService"/>
+            <wsdlsoap:address location="http://localhost:8080/sample-helloworldws-incubating-M1/services/CustomerInfoService"/>
         </wsdl:port>
     </wsdl:service>
 

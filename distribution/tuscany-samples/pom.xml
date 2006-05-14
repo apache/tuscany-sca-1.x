@@ -18,13 +18,13 @@
     <parent>
         <groupId>org.apache.tuscany</groupId>
         <artifactId>tuscany-distribution</artifactId>
-        <version>SNAPSHOT</version>
+        <version>incubating-M1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tuscany-distribution-tuscany-samples</artifactId>
     <packaging>pom</packaging>
     <name>Tuscany Distribution Project - Tuscany Samples Overlay</name>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
     <build>
         <plugins>

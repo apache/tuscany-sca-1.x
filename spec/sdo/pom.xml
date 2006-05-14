@@ -18,13 +18,13 @@
     <parent>
         <groupId>org.osoa</groupId>
         <artifactId>spec</artifactId>
-        <version>SNAPSHOT</version>
+        <version>incubating-M1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>commonj</groupId>
     <artifactId>sdo-api</artifactId>
     <name>SDO API</name>
-    <version>SNAPSHOT</version>
+    <version>incubating-M1</version>
 
     <dependencies>
         <dependency>
