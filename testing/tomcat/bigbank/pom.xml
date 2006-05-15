@@ -21,7 +21,7 @@
         <version>incubating-M1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>tuscany-testing-tomcat-bigbank</artifactId>
+    <artifactId>tomcat-bigbank</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany Testing Tomcat Big Bank</name>
     <description>Testing Tomcat Big Bank end user test</description>

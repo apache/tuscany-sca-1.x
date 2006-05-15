@@ -17,12 +17,12 @@
 <project>
     <parent>
         <groupId>org.apache.tuscany</groupId>
-        <artifactId>tuscany-testing-interop-clients</artifactId>
+        <artifactId>tuscany-interop-clients</artifactId>
         <version>incubating-M1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>tuscany-testing-interop-client-webserviceSOAPRound2</artifactId>
+    <artifactId>interop-client-webserviceSOAPRound2</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany Interop Testing - Clients - SOAP Builders Round 2 Interop Test</name>
     <version>incubating-M1</version>

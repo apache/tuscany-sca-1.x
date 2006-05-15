@@ -22,7 +22,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>tuscany-testing-interop-clients</artifactId>
+    <artifactId>tuscany-interop-clients</artifactId>
     <packaging>pom</packaging>
     <name>Tuscany Interop Testing - Clients</name>
     <version>incubating-M1</version>
