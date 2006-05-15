@@ -1,37 +1,76 @@
 <?xml version="1.0"?>
 <project name="project" default="fixupJars">
- 
-    <target name="fixupJars">
-        <delete>
-            <fileset dir="${target.dir}/lib/axis2" includes="*.jar">
-                <present present="both" targetdir="${target.dir}/lib" />
-            </fileset>
-            <fileset dir="${target.dir}/lib/celtix" includes="*.jar">
-                <present present="both" targetdir="${target.dir}/lib" />
-            </fileset>
-            <fileset dir="${target.dir}/lib/tools" includes="*.jar">
-                <present present="both" targetdir="${target.dir}/lib" />
-            </fileset>
-        </delete>
-        <copy todir="${target.dir}/javadoc">
-            <fileset dir="${target.dir}/../../build/javadoc">
-                <include name="**/*"/>
-            </fileset>
-        </copy>
-        <copy todir="${target.dir}/docs">
-            <fileset dir="../../docs">
-                <include name="**/*"/>
-            </fileset>
-        </copy>
-        <zip destfile="${target.dir}/../tuscany-incubating-M1.zip">
-                        <zipfileset dir="${target.dir}" prefix="tuscany-incubating-M1">
-                        </zipfileset>
-        </zip>
-        <tar destfile="${target.dir}/../tuscany-incubating-M1.tar">
-                        <tarfileset dir="${target.dir}" prefix="tuscany-incubating-M1">
-                        </tarfileset>
-        </tar>
-        <gzip zipfile="${target.dir}/../tuscany-incubating-M1.tar.gz" src="${target.dir}/../tuscany-incubating-M1.tar"/>
-    </target>
- 
-</project> 
+
+	<target name="fixupJars">
+		<delete>
+			<fileset dir="${target.dir}/lib/axis2" includes="*.jar">
+				<present present="both" targetdir="${target.dir}/lib" />
+			</fileset>
+			<fileset dir="${target.dir}/lib/celtix" includes="*.jar">
+				<present present="both" targetdir="${target.dir}/lib" />
+			</fileset>
+			<fileset dir="${target.dir}/lib/tools" includes="*.jar">
+				<present present="both" targetdir="${target.dir}/lib" />
+			</fileset>
+		</delete>
+		<copy todir="${target.dir}/javadoc">
+			<fileset dir="${target.dir}/../../build/javadoc">
+				<include name="sca-api/**/*" />
+				<include name="sdo-api/**/*" />
+				<include name="tuscany-common/**/*" />
+				<include name="tuscany-core/**/*" />
+				<include name="tuscany-model/**/*" />
+				<include name="tuscany-das-rdb/**/*" />
+				<include name="tuscany-databinding-sdo/**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${target.dir}/docs">
+			<fileset dir="../../docs">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<zip destfile="${target.dir}/../tuscany-incubating-M1.zip">
+			<zipfileset dir="${target.dir}" prefix="tuscany-incubating-M1">
+			</zipfileset>
+		</zip>
+		<tar destfile="${target.dir}/../tuscany-incubating-M1.tar" longfile="gnu">
+			<tarfileset dir="${target.dir}" prefix="tuscany-incubating-M1">
+			</tarfileset>
+		</tar>
+		<gzip zipfile="${target.dir}/../tuscany-incubating-M1.tar.gz" src="${target.dir}/../tuscany-incubating-M1.tar" />
+		
+		<patternset id="exclusionList">
+            <exclude name="**/target"/>
+            <exclude name="**/target/**/*"/>
+            <exclude name="**/.svn"/>
+            <exclude name="**/.svn/**/*"/>
+            <exclude name="**/build"/>
+            <exclude name="**/build/**/*"/>
+            <exclude name="**/.settings/**/*"/>
+            <exclude name="**/.classpath"/>
+            <exclude name="**/.project"/>
+            <exclude name="**/.wtpmodules"/>
+            <exclude name="**/surefire*"/>
+            <exclude name="**/cobertura.ser"/>
+            <exclude name="**/bin/*"/>
+            <exclude name="**/var/journal"/>
+            <exclude name="**/build.out*"/>		
+            <exclude name="**/apache-tomcat-*.zip"/>		
+            <exclude name="**/apache-tomcat-*.tar.gz"/>		
+		</patternset>
+		
+		<zip destfile="${target.dir}/../tuscany-incubating-M1-src.zip">
+			<zipfileset dir="${target.dir}/../../.." prefix="tuscany-incubating-M1">
+				<patternset refid="exclusionList"/>
+			</zipfileset>
+		</zip>
+		<tar destfile="${target.dir}/../tuscany-incubating-M1-src.tar" longfile="gnu">
+			<tarfileset dir="${target.dir}/../../.." prefix="tuscany-incubating-M1">
+				<patternset refid="exclusionList"/>
+			</tarfileset>
+		</tar>
+		<gzip zipfile="${target.dir}/../tuscany-incubating-M1-src-tar.gz" src="${target.dir}/../tuscany-incubating-M1-src.tar" />
+		
+	</target>
+
+</project>

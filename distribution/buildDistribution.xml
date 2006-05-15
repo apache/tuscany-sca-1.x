@@ -20,7 +20,14 @@
 		</and>
 	</condition>
 
-	<target name="createDistribution" depends="copySample, copyJar"/>
+	<condition property="isFirstTime">
+		<and>
+			<equals arg1="${project.groupId}" arg2="org.osoa" />
+			<equals arg1="${project.artifactId}" arg2="spec" />
+		</and>
+	</condition>
+
+	<target name="createDistribution" depends="copyJavadoc" />
 
 	<target name="copySample" if="isSample" description="Copy the sample code to the Tuscany distribution folder">
 		<property name="target.folder" value="${dist.folder}/samples/${project.artifactId}" />
@@ -33,38 +40,29 @@
 		</copy>
 	</target>
 
-	<target name="copyJar" if="isJar" description="Copy the jar to the Tuscany distribution folder">
-		<!--
-		<copy todir="${dist.folder}/lib">
-			<fileset dir="${project.basedir}/target">
-				<include name="${project.artifactId}-${project.version}.${project.packaging}" />
-			</fileset>
-		</copy>
-		-->
-		<copy todir="${dist.folder}/javadoc">
-			<fileset dir="${project.basedir}/target">
-				<include name="${project.artifactId}-${project.version}-javadoc.${project.packaging}" />
-			</fileset>
-		</copy>
+	<target name="copyJavadoc" if="isJar" description="Copy the javadoc to the Tuscany distribution folder">
 		<copy todir="${dist.folder}/javadoc/${project.artifactId}">
 			<fileset dir="${project.basedir}/target/javadoc">
 				<include name="**/*" />
 			</fileset>
 		</copy>
 	</target>
-	
-	<target name="cleanDistribution" depends="cleanJar, cleanSample"/>
-	
-	<target name="cleanJar" if="isJar">
-		<delete file="${dist.folder}/lib/${project.artifactId}-${project.version}.${project.packaging}" quiet="true"/>
-		<delete file="${dist.folder}/javadoc/${project.artifactId}-${project.version}-javadoc.${project.packaging}" quiet="true"/>
-		<delete dir="${dist.folder}/javadoc/${project.artifactId}" quiet="true"/>
-	</target>
-	
-	<target name="cleanSample" if="isSample">
-		<delete dir="${dist.folder}/samples/${project.artifactId}" quiet="true"/>
+
+	<target name="cleanDistribution" depends="cleanJavadoc, cleanBuild" />
+
+	<target name="cleanJavadoc" if="isJar">
+		<delete file="${dist.folder}/lib/${project.artifactId}-${project.version}.${project.packaging}" quiet="true" />
+		<delete file="${dist.folder}/javadoc/${project.artifactId}-${project.version}-javadoc.${project.packaging}" quiet="true" />
+		<delete dir="${dist.folder}/javadoc/${project.artifactId}" quiet="true" />
 	</target>
 
+	<target name="cleanSample" if="isSample">
+		<delete dir="${dist.folder}/samples/${project.artifactId}" quiet="true" />
+	</target>
+
+	<target name="cleanBuild" if="isFirstTime">
+		<delete dir="${dist.folder}" quiet="true" />
+	</target>
 
 </project>
 
