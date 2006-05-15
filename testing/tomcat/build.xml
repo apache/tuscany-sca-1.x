@@ -338,7 +338,6 @@
         <target name="startTomcatUnix" if="isUnix" unless='tuscany.tomcat.alreadystarted'>
             <echo level="info" message="Starting Tomcat"/>
             <exec spawn='true' vmlauncher="false" failonerror='false' dir="${tuscany.acceptance.tc.dir}/bin" executable="xterm" >
-                <env key='CATALINA_HOME' value='${tuscany.acceptance.tc.dir}'/>
                 <arg line="-e ./catalina.sh run"/>
             </exec>
         </target>
@@ -350,7 +349,6 @@
              <echo level="info" message="Tomcat has been already started! ${tuscany.tomcat.alreadystarted}" />
         </target>
         <target name="startTomcat" description="Start up tomcat." depends="tuscany.tomcat.alreadystartedmsg,startTomcatWindows,startTomcatUnix,startTomcatMac" unless='tuscany.tomcat.alreadystarted'>
-                <!-- env key="CATALINA_OPTS" value="-Dhttp.proxyHost=localhost  -Dhttp.proxyPort=8090 -DproxySet=true"/-->
                 <sleep seconds="10"/> <!-- it's going to at least require this -->
                 <waitfor maxwait="15" maxwaitunit="second" checkevery="200">
                         <http url="http://localhost:8080"/>
