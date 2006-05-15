@@ -33,8 +33,13 @@
             <version>${pom.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.tuscany</groupId>
-            <artifactId>tuscany-sca-plugin</artifactId>
+            <groupId>org.apache.tuscany.sca.plugins</groupId>
+            <artifactId>tuscany-plugin-wsdl2java</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca.plugins</groupId>
+            <artifactId>tuscany-plugin-java2wsdl</artifactId>
             <version>${pom.version}</version>
         </dependency>
     </dependencies>
