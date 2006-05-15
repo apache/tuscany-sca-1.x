@@ -30,12 +30,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.tuscany.samples.sca</groupId>
-            <artifactId>sample-helloworld</artifactId>
-            <version>${pom.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.apache.tuscany</groupId>
             <artifactId>tuscany-core</artifactId>
             <version>${pom.version}</version>
