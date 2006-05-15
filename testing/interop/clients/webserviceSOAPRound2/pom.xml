@@ -80,8 +80,8 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.tuscany</groupId>
-                <artifactId>tuscany-sca-plugin</artifactId>
+                <groupId>org.apache.tuscany.sca.plugins</groupId>
+                <artifactId>tuscany-plugin-wsdl2java</artifactId>
                 <executions>
                     <execution>
                         <configuration>
