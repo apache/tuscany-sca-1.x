@@ -118,115 +118,142 @@
         </plugins>
     </reporting>
 
-	<profiles>
-		<profile>
-			<id>distribution</id>
+    <profiles>
+        <profile>
+            <id>distribution</id>
 
-			<activation>
-				<property>
-					<name>tuscany.home</name>
-				</property>
-			</activation>
+            <activation>
+                <property>
+                    <name>tuscany.home</name>
+                </property>
+            </activation>
 
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<configuration>
-							<source>1.5</source>
-							<target>1.5</target>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>package</id>
-								<phase>package</phase>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<!--
-							<outputDirectory>${tuscany.home}/distribution/build/javadoc/${project.artifactId}</outputDirectory>
-							-->
-							<attach>true</attach>
-							<quiet>true</quiet>
-							<bottom>-</bottom>
-							<header>${project.name}</header>
-							<footer>${project.name}</footer>
-						</configuration>
-					</plugin>
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>create-dist</id>
-								<phase>install</phase>
-								<configuration>
-									<tasks>
-										<ant inheritRefs="true"
-											antfile="${tuscany.home}/distribution/buildDistribution.xml" dir="${tuscany.home}"
-											target="createDistribution">
-											<property name="dist.folder"
-												value="${tuscany.home}/distribution/build" />
-											<property
-												name="project.packaging" value="${project.packaging}" />
-											<property
-												name="project.groupId" value="${project.groupId}" />
-											<property
-												name="project.artifactId" value="${project.artifactId}" />
-											<property
-												name="project.version" value="${project.version}" />
-											<property
-												name="project.basedir" value="${basedir}" />
-										</ant>
-									</tasks>
-								</configuration>
-								<goals>
-									<goal>run</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>clean-dist</id>
-								<phase>clean</phase>
-								<configuration>
-									<tasks>
-										<ant inheritRefs="true"
-											antfile="${tuscany.home}/distribution/buildDistribution.xml" dir="${tuscany.home}"
-											target="cleanDistribution">
-											<property name="dist.folder"
-												value="${tuscany.home}/distribution/build" />
-											<property
-												name="project.packaging" value="${project.packaging}" />
-											<property
-												name="project.groupId" value="${project.groupId}" />
-											<property
-												name="project.artifactId" value="${project.artifactId}" />
-											<property
-												name="project.version" value="${project.version}" />
-											<property
-												name="project.basedir" value="${basedir}" />
-										</ant>
-									</tasks>
-								</configuration>
-								<goals>
-									<goal>run</goal>
-								</goals>
-							</execution>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>1.5</source>
+                            <target>1.5</target>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+			<version>2.0</version>
+                        <executions>
+                            <execution>
+                                <id>package</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>javadoc</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+				<links>
+					<link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+				</links>
+				<offlineLinks>
+					<offlineLink>
+						<url>../sca-api</url>
+						<location>${tuscany.home}/spec/sca/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../sdo-api</url>
+						<location>${tuscany.home}/spec/sdo/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-common</url>
+						<location>${tuscany.home}/sca/common/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-model</url>
+						<location>${tuscany.home}/sca/model/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-core</url>
+						<location>${tuscany.home}/sca/core/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-databinding-sdo</url>
+						<location>${tuscany.home}/sca/databinding/sdo/target/site/apidocs</location>
+					</offlineLink>
+				</offlineLinks>
+                            <!--
+                            <outputDirectory>${tuscany.home}/distribution/build/javadoc/${project.artifactId}</outputDirectory>
+                            -->
+                            <attach>true</attach>
+                            <quiet>true</quiet>
+                            <bottom>-</bottom>
+                            <header>${project.name}</header>
+                            <footer>${project.name}</footer>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>create-dist</id>
+                                <phase>install</phase>
+                                <configuration>
+                                    <tasks>
+                                        <ant inheritRefs="true"
+                                            antfile="${tuscany.home}/distribution/buildDistribution.xml" dir="${tuscany.home}"
+                                            target="createDistribution">
+                                            <property name="dist.folder"
+                                                value="${tuscany.home}/distribution/build" />
+                                            <property
+                                                name="project.packaging" value="${project.packaging}" />
+                                            <property
+                                                name="project.groupId" value="${project.groupId}" />
+                                            <property
+                                                name="project.artifactId" value="${project.artifactId}" />
+                                            <property
+                                                name="project.version" value="${project.version}" />
+                                            <property
+                                                name="project.basedir" value="${basedir}" />
+                                        </ant>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>clean-dist</id>
+                                <phase>clean</phase>
+                                <configuration>
+                                    <tasks>
+                                        <ant inheritRefs="true"
+                                            antfile="${tuscany.home}/distribution/buildDistribution.xml" dir="${tuscany.home}"
+                                            target="cleanDistribution">
+                                            <property name="dist.folder"
+                                                value="${tuscany.home}/distribution/build" />
+                                            <property
+                                                name="project.packaging" value="${project.packaging}" />
+                                            <property
+                                                name="project.groupId" value="${project.groupId}" />
+                                            <property
+                                                name="project.artifactId" value="${project.artifactId}" />
+                                            <property
+                                                name="project.version" value="${project.version}" />
+                                            <property
+                                                name="project.basedir" value="${basedir}" />
+                                        </ant>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
 
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-
-	</profiles>
-
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
