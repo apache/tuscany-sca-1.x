@@ -42,7 +42,7 @@
 
 	<target name="copyJavadoc" if="isJar" description="Copy the javadoc to the Tuscany distribution folder">
 		<copy todir="${dist.folder}/javadoc/${project.artifactId}">
-			<fileset dir="${project.basedir}/target/javadoc">
+			<fileset dir="${project.basedir}/target/site/apidocs">
 				<include name="**/*" />
 			</fileset>
 		</copy>
