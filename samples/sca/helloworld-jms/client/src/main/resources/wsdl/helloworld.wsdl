@@ -66,7 +66,8 @@
         </wsdl:operation>
     </wsdl:binding>
 
-    <wsdl:service name="HelloWorldService">
+
+    <wsdl:service name="HelloWorldJMSService">
         <wsdl:port binding="tns:HelloWorldBinding" name="HelloWorldPort">
             <jms:address xmlns:jms="http://celtix.objectweb.org/transports/jms"
                 destinationStyle="queue"

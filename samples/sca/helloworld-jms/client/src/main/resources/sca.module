@@ -22,7 +22,7 @@
 
     <externalService name="HelloWorldService">
         <interface.java interface="helloworld.HelloWorldService"/>
-        <binding.ws port="http://helloworld#HelloWorldPort"/>
+        <binding.ws port="http://helloworld#wsdl.endpoint(HelloWorldJMSService/HelloWorldPort)"/>
     </externalService>
     
 </module>

@@ -78,7 +78,7 @@
         </wsdl:operation>
     </wsdl:binding>
 
-    <wsdl:service name="HelloWorldService">
+    <wsdl:service name="HelloWorldJMSService">
         <wsdl:port binding="tns:HelloWorldBinding" name="HelloWorldPort">
             <jms:address xmlns:jms="http://celtix.objectweb.org/transports/jms"
                 destinationStyle="queue"
@@ -90,9 +90,9 @@
             </jms:address>
         </wsdl:port>
     </wsdl:service>
-    <wsdl:service name="HelloWorldSoapService">
+    <wsdl:service name="HelloWorldService">
         <wsdl:port binding="tns:HelloWorldSoapBinding" name="HelloWorldSoapPort">
-            <wsdlsoap:address location="http://localhost:8080/helloworldws-incubating-M1/services/HelloWorldWebService"/>
+            <wsdlsoap:address location="http://localhost:8080/sample-helloworldws-incubating-M1/services/HelloWorldWebService"/>
         </wsdl:port>
     </wsdl:service>
 

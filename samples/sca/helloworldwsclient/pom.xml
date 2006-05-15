@@ -27,6 +27,10 @@
     <description>A sample client for a HelloWorld Web Service.</description>
     <version>incubating-M1</version>
 
+    <properties>
+        <ws.type>axis2</ws.type>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany</groupId>
@@ -42,7 +46,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.bindings</groupId>
-            <artifactId>tuscany-binding-axis2</artifactId>
+            <artifactId>tuscany-binding-${ws.type}</artifactId>
             <version>${pom.version}</version>
             <scope>provided</scope>
         </dependency>
