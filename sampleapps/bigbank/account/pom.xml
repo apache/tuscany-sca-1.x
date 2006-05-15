@@ -18,14 +18,14 @@
     <parent>
         <groupId>org.apache.tuscany.samples.bigbank</groupId>
         <artifactId>bigbank-scenario</artifactId>
-        <version>incubating-M1</version>
+        <version>SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sample-bigbank-account</artifactId>
     <packaging>war</packaging>
     <name>Tuscany BigBank Account Module</name>
     <description>BigBank Scenario - Account Management Module</description>
-    <version>incubating-M1</version>
+    <version>SNAPSHOT</version>
 
     <dependencies>
         <dependency>
@@ -95,8 +95,8 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.tuscany</groupId>
-                <artifactId>tuscany-sca-plugin</artifactId>
+                <groupId>org.apache.tuscany.sca.plugins</groupId>
+                <artifactId>tuscany-plugin-wsdl2java</artifactId>
                 <executions>
                     <execution>
                         <configuration>
