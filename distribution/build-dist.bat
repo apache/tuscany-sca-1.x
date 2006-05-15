@@ -23,9 +23,9 @@ SET TUSCANY_HOME=%cd%
 cd /d "%CUR_DIR%"
 echo Building Tuscany ...
 cd /d "%TUSCANY_HOME%"
-call mvn -Dtuscany.home=%TUSCANY_HOME% clean install -Dmaven.test.skip=true
+call mvn -Dtuscany.home=%TUSCANY_HOME% %1 clean install -Dmaven.test.skip=true
 cd /d "%TUSCANY_HOME%/distribution"
 echo Creating Tuscany distribution ...
-call mvn clean install
+call mvn %1 clean install
 cd /d "%CUR_DIR%"
 @endlocal
