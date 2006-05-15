@@ -161,16 +161,46 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
+			<version>2.0</version>
                         <executions>
                             <execution>
                                 <id>package</id>
                                 <phase>package</phase>
                                 <goals>
-                                    <goal>jar</goal>
+                                    <goal>javadoc</goal>
                                 </goals>
                             </execution>
                         </executions>
                         <configuration>
+				<links>
+					<link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+				</links>
+				<offlineLinks>
+					<offlineLink>
+						<url>../sca-api</url>
+						<location>${tuscany.home}/spec/sca/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../sdo-api</url>
+						<location>${tuscany.home}/spec/sdo/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-common</url>
+						<location>${tuscany.home}/sca/common/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-model</url>
+						<location>${tuscany.home}/sca/model/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-core</url>
+						<location>${tuscany.home}/sca/core/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-databinding-sdo</url>
+						<location>${tuscany.home}/sca/databinding/sdo/target/site/apidocs</location>
+					</offlineLink>
+				</offlineLinks>
                             <!--
                             <outputDirectory>${tuscany.home}/distribution/build/javadoc/${project.artifactId}</outputDirectory>
                             -->
