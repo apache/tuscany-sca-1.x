@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><!--
+  Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ -->
+
+
+
+    
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+    
+  
+  <meta http-equiv="Content-Style-Type" content="text/css">
+
+
+    
+
+  
+
+  
+  
+
+  <title>Tuscany Hello World JS WS Client Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven --><style type="text/css" media="all">
+@import url("../../../../css/maven-base.css");
+@import url("../../../../css/maven-theme.css");
+@import url("../../../../css/site.css");
+  </style>
+  
+  <link rel="stylesheet" href="./css/print.css" type="text/css" media="print"><!-- end maven --></head>
+
+<body>
+
+
+
+<h2>Tuscany Hello World JS WS Client Sample</h2>
+
+
+
+<h3>Overview</h3>
+
+
+
+<p>The Tuscany hello world JS client WS sample shows using the Tuscany SCA
+    runtime in a Tomcat environment providing a client for the Tuscany helloworld WS samples, <a target="_blank" href="../helloworldws/readme.htm">helloworldws</a> and <a target="_blank" href="../helloworlde4xws/readme.htm">helloworlde4xws</a>.</p>
+<h3>Location</h3>
+This sample is located in the samples\sca\helloworldjsclient directory.
+
+
+
+<h3>Setup</h3>
+Set up your server as described in the <a href="../../../docs/sampleSetup.htm" target="_blank">Tomcat
+Setup</a>. &nbsp;If
+you are not configuring with the acceptance test the server, you will
+need to add <span style="font-weight: bold;">sample-helloworldjsclient-incubating-M1.war</span>
+to your Tomcat's webapp directory.
+
+
+<h3>Running</h3>
+
+Once you've started your web server, use your browse to view the
+following URL: <a href="http://localhost:8080/sample-helloworldjsclient-incubating-M1/" target="_blank">http://localhost:8080/sample-helloworldjsclient-incubating-M1/</a>
+<br>
+
+<h3>Code Overview</h3>
+The source files are physically organized as shown below:<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td>
+<pre>+---main<br>    +---resources<br>    &brvbar;   &brvbar;   sca.module<br>    &brvbar;   &brvbar;<br>    &brvbar;   +---wsdl<br>    &brvbar;           helloworld.wsdl<br>    &brvbar;<br>    +---webapp<br>        &brvbar;   HelloWorldClient.html<br>        &brvbar;<br>        +---WEB-INF<br>                web.xml<br></pre></td></tr></tbody></table>
+
+<br><br><table style="text-align: left; width: 100%; height: 154px;" border="0" cellpadding="2" cellspacing="2"><tbody>
+<tr>
+<td style="vertical-align: top; height: 62px;">
+<a target="_blank" href="../helloworldjsclient/src/main/resources/sca.module">sca.module</a>
+</td>
+<td style="height: 62px;">Defines the SCA module, and
+entryPoints which are wired directly to externalServices for each of the web services.</td>
+</tr>
+<tr>
+<td><a target="_blank" href="../helloworldjsclient/src/main/resources/wsdl/helloworld.wsdl">helloworld.wsdl</a></td>
+<td>WSDL for the service.</td>
+</tr>
+<tr>
+<td><a target="_blank" href="../helloworldjsclient/src/main/webapp/HelloWorldClient.html">HelloWorldClient.html</a></td>
+<td>The HTML page for the client. This includes a JavaScript script which uses the SCA JSON-RPC support to invoke methods on the SCA entryPoints.</td>
+</tr>
+<tr>
+<td><a target="_blank" href="../helloworldjsclient/src/main/webapp/WEB-INF/web.xml">web.xml</a></td>
+<td>Standard J2EE web application's web.xml</td>
+</tr></tbody></table>
+
+<p>
+There isn't much code in this sample, only the script in the HTML for the page, and even that script is fairly simple. It demonstrates how simple SCA and its assembly model can make component implementations.  
+</p>
+
+</body></html>
+

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><!--
+  Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ -->
+
+
+
+    
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+    
+  
+  <meta http-equiv="Content-Style-Type" content="text/css">
+
+
+    
+
+  
+
+  
+  
+
+  <title>Tuscany Hello World JavaScript/E4X WS Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven --><style type="text/css" media="all">
+@import url("../../../../css/maven-base.css");
+@import url("../../../../css/maven-theme.css");
+@import url("../../../../css/site.css");
+  </style>
+  
+  <link rel="stylesheet" href="./css/print.css" type="text/css" media="print"><!-- end maven --></head>
+
+<body>
+
+
+
+<h2>Tuscany Hello World JavaScript/E4X WS Sample</h2>
+
+
+
+<h3>Overview</h3>
+
+
+
+<p>The Tuscany hello world JavaScript/E4X WS sample shows using the Tuscany SCA
+    runtime in a Tomcat environment providing a web service implemented in JavaScript/E4X.</p>
+<h3>Location</h3>
+This sample is located in the samples\sca\helloworlde4xws directory.
+
+
+
+<h3>Setup</h3>
+Set up your server as described in the <a href="../../../docs/sampleSetup.htm" target="_blank">Tomcat
+Setup</a>. &nbsp;If
+you are not configuring with the acceptance test the server, you will
+need to add <span style="font-weight: bold;">helloworlde4xws-incubating-M1.war</span>
+to your Tomcat's webapp directory.
+
+
+<h3>Running</h3>
+This service can be invoked by&nbsp;the Tuscany SCA <a target="_blank" href="../helloworldjsclient/readme.htm">helloworldjsclient</a>
+sample.<br>
+
+<h3>Code Overview</h3>
+The source files are physically organized as shown below:<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td>
+<pre>+---main<br>    +---resources<br>    &brvbar;   &brvbar;   sca.module<br>    &brvbar;   &brvbar;<br>    &brvbar;   +---helloworld<br>    &brvbar;   &brvbar;       HelloWorldImpl.componentType<br>    &brvbar;   &brvbar;       HelloWorldImpl.js<br>    &brvbar;   &brvbar;<br>    &brvbar;   +---wsdl<br>    &brvbar;           helloworld.wsdl<br>    &brvbar;<br>    +---webapp<br>        +---WEB-INF<br>                web.xml<br></pre></td></tr></tbody></table>
+
+<br><br><table style="text-align: left; width: 100%; height: 154px;" border="0" cellpadding="2" cellspacing="2"><tbody>
+<tr>
+<td style="vertical-align: top; height: 62px;">
+<a target="_blank" href="../helloworlde4xws/src/main/resources/sca.module">sca.module</a>
+</td>
+<td style="height: 62px;">Defines the SCA module,
+entryPoint and component. Defines for the HelloWorldComponent
+component and the JavaScript script that implements the component. For the
+entryPoint it defines WSDL for the service, and wires the service to
+the&nbsp;HelloWorldComponent</td>
+</tr>
+<tr>
+<td><a target="_blank" href="../helloworlde4xws/src/main/resources/helloworld/HelloWorldImpl.componentType">HelloWorldImpl.componentType</a></td>
+<td>The .componentType side file describing the service</td>
+</tr>
+<tr>
+<td><a target="_blank" href="../helloworlde4xws/src/main/resources/helloworld/HelloWorldImpl.js">HelloWorldImpl.js</a></td>
+<td>The JavaScript implementation of the service</td>
+</tr>
+<tr>
+<td><a target="_blank" href="../helloworlde4xws/src/main/resources/wsdl/helloworld.wsdl">helloworld.wsdl</a></td>
+<td>WSDL for the service.</td>
+</tr>
+<tr>
+<td><a target="_blank" href="../helloworlde4xws/src/main/webapp/WEB-INF/web.xml">web.xml</a></td>
+<td>Standard J2EE web application's web.xml</td>
+</tr></tbody></table>
+</body></html>
+
