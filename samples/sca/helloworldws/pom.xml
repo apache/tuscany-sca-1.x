@@ -27,6 +27,10 @@
     <description>A sample HelloWorld Web Service.</description>
     <version>incubating-M1</version>
 
+    <properties>
+        <ws.type>axis2</ws.type>
+    </properties>
+
     <dependencies>
     
         <dependency>
