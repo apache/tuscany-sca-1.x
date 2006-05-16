@@ -29,14 +29,19 @@
 				<include name="**/*" />
 			</fileset>
 		</copy>
+
 		<zip destfile="${target.dir}/../tuscany-incubating-M1.zip">
 			<zipfileset dir="${target.dir}" prefix="tuscany-incubating-M1">
 			</zipfileset>
 		</zip>
 		<tar destfile="${target.dir}/../tuscany-incubating-M1.tar" longfile="gnu">
-			<tarfileset dir="${target.dir}" prefix="tuscany-incubating-M1">
+			<tarfileset dir="${target.dir}" prefix="tuscany-incubating-M1" mode="755">
+				<include name="**/*.sh"/>
 			</tarfileset>
-		</tar>
+ 			<tarfileset dir="${target.dir}" prefix="tuscany-incubating-M1">
+				<exclude name="**/*.sh"/>
+ 			</tarfileset>
+ 		</tar>
 		<gzip zipfile="${target.dir}/../tuscany-incubating-M1.tar.gz" src="${target.dir}/../tuscany-incubating-M1.tar" />
 		
 		<patternset id="exclusionList">
