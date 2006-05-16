@@ -20,19 +20,22 @@
     </p>
     <h3>Location</h3> This sample is located &nbsp;in the samples\sca\helloworldws-celtix 
     directory.<br>
-    <h3>Setup</h3> 
-    The jars for a <a href="../../../../docs/sampleSetup.htm" target="_blank">J2SE 
-    setup</a> &nbsp;including those necessary&nbsp; for web services are required 
-    including the sample's own jar 
+
+
+    <h3>Setup</h3>This sample depends on the Tuscany runtime, Celtix, and the sample jar, 
+
     <span style="font-weight: bold;">
     sample-helloworldws-celtix-incubating-M1.jar
     </span>
-    . <h3>Running</h3> In the directory samples/sca/helloworldws-celtix use the JDK 1.5 java command with the previous mentioned jars, including the tuscany-celtix.jar, 
-    run the class&nbsp;helloworld.HelloWorldServer   
-    <pre>
-        java -cp ../../../lib/tuscany-runtime-incubating-M1.jar:../../../lib/celtix/tuscany-celtix-incubating-M1.jar:target/sample-helloworldws-celtix-incubating-M1.jar helloworld.HelloWorldServer
-    </pre>
-    
+
+, all of these must be available on the classpath to run the sample.
+
+<h3>Running</h3>
+
+    In the directory samples/sca/helloworld use the JDK 1.5 java command to run the class helloworld.HelloWorldClient
+
+    <pre>Linux: java -cp ../../../lib/tuscany-runtime-incubating-M1.jar:../../../lib/celtix/tuscany-celtix-incubating-M1.jar:target/sample-helloworldws-celtix-incubating-M1.jar helloworld.HelloWorldServer</pre>
+    <pre>Windows: java -cp ../../../lib/tuscany-runtime-incubating-M1.jar;../../../lib/celtix/tuscany-celtix-incubating-M1.jar;target/sample-helloworldws-celtix-incubating-M1.jar helloworld.HelloWorldServer</pre>
 
     <h3>Code Overview</h3> The source files are physically organized as shown below:<br>
     <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">

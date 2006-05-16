@@ -13,20 +13,24 @@ Hello World Web Sample</title> <!-- LINK rel="stylesheet" href="ait.css" type="t
 Tuscany SCA runtime in a J2SE environment invoking a web service. </p>
 <h3>Location</h3>
 This sample is located &nbsp;in the samples\sca\helloworldwsclient
-directory.<br><h3>Setup</h3>
-The jars for a <a href="../../../docs/sampleSetup.htm" target="_blank">J2SE setup</a> &nbsp;including
-those necessary&nbsp;
-for web services are required including the sample's own jar <span style="font-weight: bold;">helloworldwsclient-SNAPSHOT.jar</span>.
-<h3>Running</h3>
-Using JDK 1.5 java command with the previous mentioned jars run the
-class&nbsp;elloworldwsclient.HelloWorldClient
+directory.<br>
 
-<h3>Running</h3>
-In the directory samples/sca/helloworldwsclient use the JDK 1.5 java command with the previous mentioned jars, run the class&nbsp;helloworld.HelloWorldClient   
-    <pre>
-        java -cp ../../../lib/tuscany-runtime-incubating-M1.jar;../../../lib/axis2/tuscany-axis2-incubating-M1.jar;target/sample-helloworldwsclient-incubating-M1.jar helloworld.HelloWorldClient
-    </pre>
 
+<h3>Setup</h3>This sample depends on the Tuscany runtime, Axis2, and the sample jar, 
+
+    <span style="font-weight: bold;">
+    sample-helloworldwsclient-incubating-M1.jar
+    </span>
+
+, all of these must be available on the classpath to run the sample. Additionally, one of the helloworld web services must be running, either the Tomcat version, <a target="_blank" href="../helloworldws/readme.htm">helloworldws sample</a> or the Celtix version, <a target="_blank" href="../helloworldws-celtix/readme.htm">helloworldws-celtix sample</a>.
+<ol>
+</ol>
+<h3>Running</h3>
+
+    In the directory samples/sca/helloworldwsclient use the JDK 1.5 java command to run the class helloworld.HelloWorldClient
+
+    <pre>Linux: java -cp ../../../lib/tuscany-runtime-incubating-M1.jar:../../../lib/axis2/tuscany-axis2-incubating-M1.jar:target/sample-helloworldwsclient-incubating-M1.jar helloworld.HelloWorldClient</pre>
+    <pre>Windows: java -cp ../../../lib/tuscany-runtime-incubating-M1.jar;../../../lib/axis2/tuscany-axis2-incubating-M1.jar;target/sample-helloworldwsclient-incubating-M1.jar helloworld.HelloWorldClient</pre>
 
 <h3>Results</h3>
 <p>The sample when run should simply display to the standard
