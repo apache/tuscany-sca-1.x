@@ -7,8 +7,7 @@ window.open(img,"Image","menubar=no,resizable=no,status=no,toolbar=no,location=n
 function goURL(url) {
 window.location = url;
 }
-</script><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><meta http-equiv="Content-Style-Type" content="text/css"><title>Tuscany
-BigBank Sample Application</title><style type="text/css" media="all">
+</script><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><meta http-equiv="Content-Style-Type" content="text/css"><title>Tuscany BigBank Sample Application</title><style type="text/css" media="all">
 @import url("../../../../css/maven-base.css");
 @import url("../../../../css/maven-theme.css");
 @import url("../../../../css/site.css");
@@ -22,7 +21,7 @@ shows using the Tuscany SCA runtime to build an&nbsp; financial
 application.</p><h3>Location</h3>This
 sample is located&nbsp;in the&nbsp;<a href=".">sampleapps\bigbank</a>
 directory. There are two subdirectories in that for the two modules <a href="account" target="_blank">account</a> and <a href="webclient" target="_blank">webclient.</a>
-<h3>Setup</h3>The Setup section is not required if you are
+<h3>Setup</h3>This Setup section is not required if you are
 working from a binary distribution. Set up your server as described in
 the <a href="../../docs/sampleSetup.htm" target="_blank">Tomcat
 Setup</a>. &nbsp;If you are not configuring with the
@@ -32,13 +31,16 @@ and&nbsp;amples\bigbank\webclient\target\bigbank-webclient-SNAPSHOT.war&nbsp;<sp
 webapp directory.<br>
 <h3>Running</h3>
 Once you've started your web server, use your web browser to view the
-following URL <a href="http://localhost:8080/sample-bigbank-webclient-incubating-M1/" target="_blank">http://localhost:8080/sample-bigbank-webclient-incubating-M1/</a><br><br><h3>Introduction</h3>This
+following URL <a href="http://localhost:8080/sample-bigbank-webclient-incubating-M1/" target="_blank">http://localhost:8080/sample-bigbank-webclient-incubating-M1/</a><br>You can either use an already supplied account with <span style="font-weight: bold;">Login</span> as <span style="color: rgb(204, 0, 0); font-weight: bold;">test</span><span style="font-weight: bold;"> </span>and <span style="font-weight: bold;">Password</span> as <span style="color: rgb(204, 0, 0); font-weight: bold;">password, </span>or you can &nbsp;create a new account.<br>The
+demo is first configured to use a local mock stock quote service that
+returns random stock data. &nbsp;If you want to use an actual stock
+quote provider follow these steps:<br><ul><li>Stop your server by issuing in the <span style="font-weight: bold;">apache-tomcat-5.5.17\bin</span> directory</li><li>Issue <span style="font-weight: bold;">shutdown </span>command to stop your web application server<span style="font-weight: bold;">.</span></li><li><span style="font-weight: bold;">Change the directory to <span style="font-weight: bold;">apache-tomcat-5.5.17\webapps\sample-bigbank-account-incubating-M1\WEB-INF\classes</span></span></li><li>Copy the file<span style="font-weight: bold;"><span style="font-weight: bold;"> WebservicexService_stockquote.fragment </span></span>to<span style="font-weight: bold;"><span style="font-weight: bold;"> sca.fragment</span></span></li><li>Change to the directory &nbsp;<span style="font-weight: bold;">apache-tomcat-5.5.17\bin&nbsp;</span></li><li><span style="font-weight: bold;"></span> issue<span style="font-weight: bold;"> startup &nbsp;</span>command to start up the server<span style="font-weight: bold;">.</span></li></ul>The sample should now be using the real stock quote provider.<br><br><br><h3>Introduction</h3>This
 example illustrates using Tuscany runtime in building
-a&nbsp;finanical applciation&nbsp;using SCA programing model.
+a financial application&nbsp;using SCA programing model.
 &nbsp;The following key concepts are covered:
 <ul><li>&nbsp;<b><i>Component
 implementations</i></b>. that provide web based&nbsp;
-html&nbsp;user interface </li><li><b><i>Component
+HTML&nbsp;user interface </li><li><b><i>Component
 implementations</i></b> that provide <b><i>local
 services</i></b> in Java. Local services implement internal
 application business logic such as tracking user state and are not
@@ -87,7 +89,7 @@ that &nbsp;defines the account service.</td></tr><tr><td>bigbank-tags.tld</td><t
 the tag libs for the user interface.</td></tr></tbody></table></td></tr></tbody></table>
 <!-- account --><h4>Account</h4>
 <table style="text-align: left; width: 100%;" border="0" cellpadding="1" cellspacing="0" width="100%"><tbody><tr><td align="left" valign="top" width="*"><a href="javascript:expandImage('docs/Show.Image.html?url=accountfiles.png',550,500)"><img style="width: 262px; height: 360px;" alt="Webclient files" title="Click to expand" src="docs/accountfiles.png"></a>&nbsp;<br><div style="text-align: center;"><small><span style="font-style: italic;">click to enlarge</span></small></div></td><td style="text-align: left;" align="left" valign="top" width="80%"><table style="text-align: left; width: 100%;" border="0" cellpadding="1" cellspacing="0"><tbody><tr><td style="width: 10%;">AccountServiceImpl.java</td><td>Implements
-the account service component.</td></tr><tr><td>AccountDataService.java</td><td>Interface defined for component implementing &nbsp;an account's data service.</td></tr><tr><td>AccountDataServiceDASImpl.java</td><td>A Data Access Service (DAS) implementation of of the Account Data Service.</td></tr><tr><td>AccountDataServiceImpl.java</td><td>A Data Service impementation not using DAS.</td></tr><tr><td>AccountDBInit.java</td><td>A utility to just create the database and it table and fill in some initial data.</td></tr><tr><td>StockQuote.java</td><td>A class to hold the StockQuote information.</td></tr><tr><td>StockQuoteService.java</td><td>Interface defined for a component implementing a stock quote service.</td></tr><tr><td>StockQuoteServiceImpl.java</td><td>Implements a fake stock quote service.</td></tr><tr><td>StockQuoteWebservicexServiceImpl.java</td><td>Implements an actual stock quote service.</td></tr><tr><td>AccountService.wsdl</td><td>WSDL
+the account service component.</td></tr><tr><td>AccountDataService.java</td><td>Interface defined for component implementing &nbsp;an account's data service.</td></tr><tr><td>AccountDataServiceDASImpl.java</td><td>A Data Access Service (DAS) implementation of of the Account Data Service.</td></tr><tr><td>AccountDataServiceImpl.java</td><td>A Data Service implementation not using DAS.</td></tr><tr><td>AccountDBInit.java</td><td>A utility to just create the database and it table and fill in some initial data.</td></tr><tr><td>StockQuote.java</td><td>A class to hold the StockQuote information.</td></tr><tr><td>StockQuoteService.java</td><td>Interface defined for a component implementing a stock quote service.</td></tr><tr><td>StockQuoteServiceImpl.java</td><td>Implements a fake stock quote service.</td></tr><tr><td>StockQuoteWebservicexServiceImpl.java</td><td>Implements an actual stock quote service.</td></tr><tr><td>AccountService.wsdl</td><td>WSDL
 that &nbsp;defines the account service</td></tr><tr><td>stockquotes.webservicex.wsdl</td><td>Actual stock quote service.</td></tr><tr><td>DasAccountConfiguration.xml</td><td>Provides any needed configuration info including datasource properties, table definitions,</td></tr><tr><td>sca.module</td><td>SCA module.</td></tr><tr><td>sca.subsystem</td><td>Processes
-logging in and loggout.</td></tr><tr><td>web.xml</td><td>sca.module.</td></tr></tbody></table></td></tr></tbody></table>
+logging in and logout.</td></tr><tr><td>web.xml</td><td>sca.module.</td></tr></tbody></table></td></tr></tbody></table>
 </div></body></html>
