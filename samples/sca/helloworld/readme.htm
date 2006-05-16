@@ -18,12 +18,16 @@ sample is located &nbsp;in the samples\sca\helloworld directory.<br><br>
 <h3>Setup</h3>&nbsp;The
 jars for a <a href="../../../docs/sampleSetup.htm" target="_blank">J2SE
 setup</a> &nbsp;not requiring web
-services are required including the sample's own jar <span style="font-weight: bold;">helloworld-SNAPSHOT.jar</span>.
+services are required including the sample's own jar <span style="font-weight: bold;">sample-helloworld-incubating-M1.jar</span>.
 <ol>
-</ol><h3>Running</h3>
-Using JDK 1.5 java command with the previous jars run the class
-org.apache.tuscany.samples.helloworld.HelloWorldClient
-<br><h3>Results</h3>
+</ol>
+<h3>Running</h3>
+In the directory samples/sca/helloworld use the JDK 1.5 java command with the previous mentioned jars, run the class&nbsp;helloworld.HelloWorldClient   
+    <pre>
+        java -cp ../../../lib/tuscany-runtime-incubating-M1.jar;target/sample-helloworld-incubating-M1.jar helloworld.HelloWorldClient
+    </pre>
+
+<h3>Results</h3>
 <p>The sample when run should simply display to the standard
 output:<br> <code>Hello World</code></p>
 <h3>Code Overview</h3>
