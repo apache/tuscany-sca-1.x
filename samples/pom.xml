@@ -40,6 +40,11 @@
             <name>ibiblio</name>
             <url>http://www.ibiblio.org/maven2</url>
         </repository>
+        <repository>
+            <id>incubating-M1</id>
+            <name>incubating-M1</name>
+            <url>http://people.apache.org/~jsdelfino/maven2</url>
+        </repository>
     </repositories>
 
     <modules>
