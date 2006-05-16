@@ -15,17 +15,21 @@ runtime in a J2SE environment &nbsp;loading a component that
 implements the classic introductory hello world example.</p>
 <h3>Location</h3>This
 sample is located &nbsp;in the samples\sca\helloworld directory.<br><br>
-<h3>Setup</h3>&nbsp;The
-jars for a <a href="../../../docs/sampleSetup.htm" target="_blank">J2SE
-setup</a> &nbsp;not requiring web
-services are required including the sample's own jar <span style="font-weight: bold;">sample-helloworld-incubating-M1.jar</span>.
+<h3>Setup</h3>This sample depends on the Tuscany runtime and the sample jar, 
+
+    <span style="font-weight: bold;">
+    sample-helloworld-incubating-M1.jar
+    </span>
+
+, both of these must be available on the classpath to run the sample.
 <ol>
 </ol>
 <h3>Running</h3>
-In the directory samples/sca/helloworld use the JDK 1.5 java command with the previous mentioned jars, run the class&nbsp;helloworld.HelloWorldClient   
-    <pre>
-        java -cp ../../../lib/tuscany-runtime-incubating-M1.jar;target/sample-helloworld-incubating-M1.jar helloworld.HelloWorldClient
-    </pre>
+
+    In the directory samples/sca/helloworld use the JDK 1.5 java command to run the class helloworld.HelloWorldClient
+
+    <pre>Linux: java -cp ../../../lib/tuscany-runtime-incubating-M1.jar:target/sample-helloworld-incubating-M1.jar helloworld.HelloWorldClient</pre>
+    <pre>Windows: java -cp ../../../lib/tuscany-runtime-incubating-M1.jar;target/sample-helloworld-incubating-M1.jar helloworld.HelloWorldClient</pre>
 
 <h3>Results</h3>
 <p>The sample when run should simply display to the standard

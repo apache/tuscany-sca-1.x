@@ -22,6 +22,31 @@
     </p>
     <h3>Location</h3> This sample is located &nbsp;in the samples\sca\helloworld-jms\server 
     directory.<br>
+
+    <h3>Setup</h3>This sample depends on the Tuscany runtime, Celtix, and the sample jar, 
+
+    <span style="font-weight: bold;">
+    sample-helloworldjms-service-incubating-M1.jar
+    </span>
+
+, all of these must be available on the classpath to run the sample.
+
+<h3>Running</h3>
+
+    In the directory samples/sca/helloworld-jms/server use the JDK 1.5 java command to start the JMS broker and then run the class&nbsp;helloworld.HelloWorldServer.
+
+    <pre>Linux:<br>
+
+        java -cp ../../../../lib/tuscany-runtime-incubating-M1.jar:../../../../lib/celtix/tuscany-celtix-incubating-M1.jar org.activemq.spring.Main activemq.xml
+        java -cp ../../../../lib/tuscany-runtime-incubating-M1.jar:../../../../lib/celtix/tuscany-celtix-incubating-M1.jar:target/sample-helloworldjms-service-incubating-M1.jar helloworld.HelloWorldServer
+    </pre>
+
+    <pre>Windows:<br>
+        java -cp ../../../../lib/tuscany-runtime-incubating-M1.jar;../../../../lib/celtix/tuscany-celtix-incubating-M1.jar org.activemq.spring.Main activemq.xml
+        java -cp ../../../../lib/tuscany-runtime-incubating-M1.jar;../../../../lib/celtix/tuscany-celtix-incubating-M1.jar;target/sample-helloworldjms-service-incubating-M1.jar helloworld.HelloWorldServer
+    </pre>
+
+
     <h3>Setup</h3> 
     The jars for a <a href="../../../../docs/sampleSetup.htm" target="_blank">J2SE 
     setup</a> &nbsp;including those necessary&nbsp; for web services are required 

@@ -15,13 +15,23 @@ runtime in a J2SE environment &nbsp;loading several components.
 Each component provides a basic operation (add, subtract, etc).<br>The
 main component uses each of these to perrform a simple calculation.</p><h3>Location</h3>This
 sample is located &nbsp;in the samples\sca\calculator directory.<br><br>
-<h3>Setup</h3>&nbsp;The
-jars for a <a href="../../../docs/sampleSetup.htm" target="_blank">J2SE
-setup</a> &nbsp;not requiring web
-services are required including the sample's own jar <span style="font-weight: bold;">sample-calculator-SNAPSHOT.jar</span>.
+
+<h3>Setup</h3>This sample depends on the Tuscany runtime and the sample jar, 
+
+    <span style="font-weight: bold;">
+    sample-calculator-incubating-M1.jar
+    </span>
+
+, both of these must be available on the classpath to run the sample.
+<ol>
+</ol>
 <h3>Running</h3>
-Using JDK 1.5 java command with the previous jars run the class
-org.apache.tuscany.samples.helloworld.HelloWorldClient
+
+    In the directory samples/sca/calculator use the JDK 1.5 java command to run the class calculator.CalculatorClient
+
+    <pre>Linux: java -cp ../../../lib/tuscany-runtime-incubating-M1.jar:target/sample-calculator-incubating-M1.jar calculator.CalculatorClient</pre>
+    <pre>Windows: java -cp ../../../lib/tuscany-runtime-incubating-M1.jar;target/sample-calculator-incubating-M1.jar calculator.CalculatorClient</pre>
+
 <br><h3>Results</h3>
 <p>The sample when run should simply display to the standard
 output:<br> <code>Hello World</code></p>
