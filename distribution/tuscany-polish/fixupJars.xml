@@ -30,9 +30,12 @@
 			</fileset>
 		</copy>
 		<copy todir="${target.dir}">
-			<fileset dir="..">
+			<fileset dir="../..">
 				<include name="README.txt" />
 				<include name="LICENSE.txt" />
+			</fileset>
+			<fileset dir="../../..">
+				<include name="STATUS" />
 			</fileset>
 		</copy>		
 		<zip destfile="${target.dir}/../tuscany-incubating-M1.zip">
@@ -50,23 +53,23 @@
 		<gzip zipfile="${target.dir}/../tuscany-incubating-M1.tar.gz" src="${target.dir}/../tuscany-incubating-M1.tar" />
 		
 		<patternset id="exclusionList">
-            <exclude name="**/target"/>
-            <exclude name="**/target/**/*"/>
-            <exclude name="**/.svn"/>
-            <exclude name="**/.svn/**/*"/>
-            <exclude name="**/build"/>
-            <exclude name="**/build/**/*"/>
-            <exclude name="**/.settings/**/*"/>
-            <exclude name="**/.classpath"/>
-            <exclude name="**/.project"/>
-            <exclude name="**/.wtpmodules"/>
-            <exclude name="**/surefire*"/>
-            <exclude name="**/cobertura.ser"/>
-            <exclude name="**/bin/*"/>
-            <exclude name="**/var/journal"/>
-            <exclude name="**/build.out*"/>		
-            <exclude name="**/apache-tomcat-*.zip"/>		
-            <exclude name="**/apache-tomcat-*.tar.gz"/>		
+                  <exclude name="**/target"/>
+                  <exclude name="**/target/**/*"/>
+                  <exclude name="**/.svn"/>
+                  <exclude name="**/.svn/**/*"/>
+                  <exclude name="**/build"/>
+                  <exclude name="**/build/**/*"/>
+                  <exclude name="**/.settings/**/*"/>
+                  <exclude name="**/.classpath"/>
+                  <exclude name="**/.project"/>
+                  <exclude name="**/.wtpmodules"/>
+                  <exclude name="**/surefire*"/>
+                  <exclude name="**/cobertura.ser"/>
+                  <exclude name="**/bin/*"/>
+                  <exclude name="**/var/journal"/>
+                  <exclude name="**/build.out*"/>		
+                  <exclude name="**/apache-tomcat-*.zip"/>		
+                  <exclude name="**/apache-tomcat-*.tar.gz"/>		
 		</patternset>
 		
 		<zip destfile="${target.dir}/../tuscany-incubating-M1-src.zip">
