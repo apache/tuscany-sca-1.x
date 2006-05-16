@@ -24,8 +24,10 @@ cd /d "%CUR_DIR%"
 echo Building Tuscany ...
 cd /d "%TUSCANY_HOME%"
 call mvn -Dtuscany.home=%TUSCANY_HOME% %1 clean install -Dmaven.test.skip=true
+if ERRORLEVEL 1 goto error
 cd /d "%TUSCANY_HOME%/distribution"
 echo Creating Tuscany distribution ...
 call mvn %1 clean install
+:error
 cd /d "%CUR_DIR%"
 @endlocal

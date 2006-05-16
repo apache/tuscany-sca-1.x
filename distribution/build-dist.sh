@@ -22,8 +22,12 @@ CUR_DIR=`pwd`
 cd ..
 TUSCANY_HOME=`pwd`
 echo Building Tuscany ...
+echo $TUSCANY_HOME
 mvn -Dtuscany.home=$TUSCANY_HOME $1 clean install -Dmaven.test.skip=true
+if [ $? -eq 0 ]
+then 
 cd $CUR_DIR
 echo Creating Tuscany distribution ...
 mvn $1 clean install
+fi
 
