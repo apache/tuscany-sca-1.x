@@ -31,6 +31,7 @@
             <directory>../sampleapps</directory>
             <outputDirectory>sampleapps</outputDirectory>
             <includes>
+                <include>pom.xml</include>
                 <include>**/target/*.jar</include>
                 <include>**/target/*.war</include>
             </includes>
@@ -65,6 +66,7 @@
             <directory>../samples</directory>
             <outputDirectory>samples</outputDirectory>
             <includes>
+                <include>pom.xml</include>
                 <include>**/target/*.jar</include>
                 <include>**/target/*.war</include>
             </includes>
