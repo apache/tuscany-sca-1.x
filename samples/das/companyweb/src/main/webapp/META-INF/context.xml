@@ -1,11 +1,6 @@
+<Context path="/DAS Stand alone app" debug="5" reloadable="true" crossContext="true">
 
-<!--  CONTEXT added per Global JNDI doc - link App to Global context above  -->
-         <Context path="/sample-companyweb-incubating-M1"
-                 debug="5" reloadable="true" crossContext="true">
-
-		    <Manager pathname=""/>
-            <ResourceLink name="jdbc/dastest"
-               global="jdbc/dastest"
-                type="javax.sql.DataSource" />
+   <Manager pathname=""/>
+   <ResourceLink name="jdbc/dastest" global="jdbc/dastest" type="javax.sql.DataSource" />
                         
-         </Context>
+</Context>
