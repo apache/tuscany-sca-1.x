@@ -29,12 +29,25 @@
 
     <dependencies>
     
-          <dependency>
-            <groupId>org.apache.tuscany.samples.sca</groupId>
-            <artifactId>sample-helloworld</artifactId>
+        <dependency>
+            <groupId>org.apache.tuscany</groupId>
+            <artifactId>tuscany-core</artifactId>
             <version>${pom.version}</version>
-            <scope>compile</scope> 
+            <scope>provided</scope>
         </dependency>
-    
+        <dependency>
+            <groupId>org.apache.tuscany.sca.containers</groupId>
+            <artifactId>tuscany-container-java</artifactId>
+            <version>${pom.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        
     </dependencies>
 </project>
