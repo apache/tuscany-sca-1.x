@@ -15,11 +15,6 @@
  *  limitations under the License.
  -->
 <project>
-    <parent>
-        <groupId>org.apache.tuscany</groupId>
-        <artifactId>tuscany-project</artifactId>
-        <version>incubating-M1</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.samples</groupId>
     <artifactId>tuscany-samples</artifactId>
@@ -27,8 +22,68 @@
     <name>Tuscany Samples</name>
     <version>incubating-M1</version>
 
+    <prerequisites>
+        <maven>2.0</maven>
+    </prerequisites>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <repositories>
+        <repository>
+            <id>ibiblio</id>
+            <name>ibiblio</name>
+            <url>http://www.ibiblio.org/maven2</url>
+        </repository>
+    </repositories>
+
     <modules>
         <module>das</module>
         <module>sca</module>
     </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.componentType</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/java</directory>
+                <includes>
+                    <include>**/*.componentType</include>
+                </includes>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
+        <defaultGoal>install</defaultGoal>
+
+    </build>
+
 </project>
