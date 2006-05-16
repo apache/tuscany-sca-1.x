@@ -349,7 +349,7 @@
                <echo level="info" message="Running datasource.xsl" />
                <xslt
                   in="${tuscany.acceptance.tc.dir}/conf/server_temp.xml" style="datasource.xsl" out="${tuscany.acceptance.tc.dir}/conf/server.xml">
-                  <param name="database_location" expression="jdbc:derby:${fullpath.tuscany.acceptance.tc.dir}/Databases/dastest"/>
+                  <param name="database_location" expression="jdbc:derby:../Databases/dastest"/>
                 </xslt>
 
 
