@@ -29,6 +29,11 @@
 				<include name="**/*" />
 			</fileset>
 		</copy>
+		<copy todir="${target.dir}/sampleapps">
+			<fileset dir="../../sampleapps">
+				<include name="**/*.htm*" />
+			</fileset>
+		</copy>
 		<copy todir="${target.dir}">
 			<fileset dir="../..">
 				<include name="README.txt" />
