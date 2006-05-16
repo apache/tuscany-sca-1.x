@@ -17,8 +17,8 @@
 <module xmlns="http://www.osoa.org/xmlns/sca/0.9" xmlns:v="http://www.osoa.org/xmlns/sca/values/0.9"
         name="bigbank.account">
         
-	<import.sdo factory="com.bigbank.account.AccountFactory" />
-	<import.sdo factory="net.x.webservice.WebserviceFactory" />
+    <import.sdo factory="com.bigbank.account.AccountFactory" />
+    <import.sdo factory="net.x.webservice.WebserviceFactory" />
     
     <import.wsdl wsdlLocation="wsdl/AccountService.wsdl"/>
     <!-- import.wsdl wsdlLocation="wsdl/StockQuoteWebService.wsdl"/ -->
@@ -45,12 +45,8 @@
         <implementation.java class="bigbank.account.services.accountdata.AccountDataServiceDASImpl"/>
     </component>
 
-	<!-- Local -->
-    <component name="StockQuoteServiceComponent">
-        <implementation.java class="bigbank.account.services.stockquote.StockQuoteServiceImpl"/>
-    </component>
    
-   <!-- WebServiceX Web Service -->
+   <!-- Stock Quote Web Service -->
     <externalService name="StockQuoteWebService">
         <interface.wsdl interface="http://www.webserviceX.NET/#wsdl.interface(StockQuoteSoap)"/>
         <binding.ws port="http://www.webserviceX.NET/#wsdl.endpoint(StockQuote/StockQuoteSoap)"/>
