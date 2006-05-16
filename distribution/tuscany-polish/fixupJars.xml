@@ -70,12 +70,12 @@
 		</patternset>
 		
 		<zip destfile="${target.dir}/../tuscany-incubating-M1-src.zip">
-			<zipfileset dir="${target.dir}/../../.." prefix="tuscany-incubating-M1">
+			<zipfileset dir="${target.dir}/../../.." prefix="tuscany-incubating-M1-src">
 				<patternset refid="exclusionList"/>
 			</zipfileset>
 		</zip>
 		<tar destfile="${target.dir}/../tuscany-incubating-M1-src.tar" longfile="gnu">
-			<tarfileset dir="${target.dir}/../../.." prefix="tuscany-incubating-M1">
+			<tarfileset dir="${target.dir}/../../.." prefix="tuscany-incubating-M1-src">
 				<patternset refid="exclusionList"/>
 			</tarfileset>
 		</tar>
