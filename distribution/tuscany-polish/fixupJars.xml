@@ -82,7 +82,7 @@
 				<patternset refid="exclusionList"/>
 			</tarfileset>
 		</tar>
-		<gzip zipfile="${target.dir}/../tuscany-incubating-M1-src-tar.gz" src="${target.dir}/../tuscany-incubating-M1-src.tar" />
+		<gzip zipfile="${target.dir}/../tuscany-incubating-M1-src.tar.gz" src="${target.dir}/../tuscany-incubating-M1-src.tar" />
 		
 	</target>
 
