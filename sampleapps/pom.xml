@@ -79,6 +79,13 @@
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
+            <resource>
+                <directory>.</directory>
+                <includes>
+                    <include>README.txt</include>
+                    <include>LICENSE.txt</include>
+                </includes>
+            </resource>
         </resources>
 
         <testResources>
