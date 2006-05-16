@@ -81,23 +81,13 @@ a jsp tag that displays the stock information.</td></tr><tr><td>LoginBarrierTag.
 a jsp tag that ensures the user is logged in.</td></tr><tr><td>ServiceTag.java</td><td>Places
 an SCA service in the JSP page context.</td></tr><tr><td>FormServlet.java</td><td>Process
 user input and uses the AccountService component.</td></tr><tr><td>LoginServlet.java</td><td>Processes
-logging in and loggout.</td></tr><tr><td>sca.module</td><td>SCA
-component module.</td></tr><tr><td>sca.subsystem</td><td>SCA
+logging in and loggout.</td></tr><tr><td>sca.module</td><td>SCA&nbsp; module. D</td></tr><tr><td>sca.subsystem</td><td>SCA
 subsystem.</td></tr><tr><td>AccountService.wsdl</td><td>WSDL
 that &nbsp;defines the account service.</td></tr><tr><td>bigbank-tags.tld</td><td>Defines
 the tag libs for the user interface.</td></tr></tbody></table></td></tr></tbody></table>
 <!-- account --><h4>Account</h4>
 <table style="text-align: left; width: 100%;" border="0" cellpadding="1" cellspacing="0" width="100%"><tbody><tr><td align="left" valign="top" width="*"><a href="javascript:expandImage('docs/Show.Image.html?url=accountfiles.png',550,500)"><img style="width: 262px; height: 360px;" alt="Webclient files" title="Click to expand" src="docs/accountfiles.png"></a>&nbsp;<br><div style="text-align: center;"><small><span style="font-style: italic;">click to enlarge</span></small></div></td><td style="text-align: left;" align="left" valign="top" width="80%"><table style="text-align: left; width: 100%;" border="0" cellpadding="1" cellspacing="0"><tbody><tr><td style="width: 10%;">AccountServiceImpl.java</td><td>Implements
-the account service.</td></tr><tr><td>AccountDataService.java</td><td>Implements
-the Logiin service.</td></tr><tr><td>AccountDataServiceDASImpl.java</td><td>Interface
-for a services provided by a login&nbsp; service component.</td></tr><tr><td>AccountDataServiceImpl.java</td><td>Interface
-for a service provided by a profile component.</td></tr><tr><td>AccountDBInit.java</td><td>Implements
-the profile component.</td></tr><tr><td>StockQuote.java</td><td>A
-simple in memory login service.</td></tr><tr><td>StockQuoteService.java</td><td>Implements
-a jsp tag that&nbsp;displayis the account information</td></tr><tr><td>StockQuoteServiceImpl.java</td><td>Implements
-a jsp tag that displays the stock information.</td></tr><tr><td>StockQuoteWebservicexServiceImpl.java</td><td>Implements
-a jsp tag that ensures the user is logged in.</td></tr><tr><td>AccountService.wsdl</td><td></td></tr><tr><td>stockquotes.webservicex.wsdl</td><td></td></tr><tr><td>DasAccountConfiguration.xml</td><td>Places
-an SCA service in the JSP page context.</td></tr><tr><td>sca.module</td><td>Process
-user input and uses the AccountService component.</td></tr><tr><td>sca.subsystem</td><td>Processes
+the account service component.</td></tr><tr><td>AccountDataService.java</td><td>Interface defined for component implementing &nbsp;an account's data service.</td></tr><tr><td>AccountDataServiceDASImpl.java</td><td>A Data Access Service (DAS) implementation of of the Account Data Service.</td></tr><tr><td>AccountDataServiceImpl.java</td><td>A Data Service impementation not using DAS.</td></tr><tr><td>AccountDBInit.java</td><td>A utility to just create the database and it table and fill in some initial data.</td></tr><tr><td>StockQuote.java</td><td>A class to hold the StockQuote information.</td></tr><tr><td>StockQuoteService.java</td><td>Interface defined for a component implementing a stock quote service.</td></tr><tr><td>StockQuoteServiceImpl.java</td><td>Implements a fake stock quote service.</td></tr><tr><td>StockQuoteWebservicexServiceImpl.java</td><td>Implements an actual stock quote service.</td></tr><tr><td>AccountService.wsdl</td><td>WSDL
+that &nbsp;defines the account service</td></tr><tr><td>stockquotes.webservicex.wsdl</td><td>Actual stock quote service.</td></tr><tr><td>DasAccountConfiguration.xml</td><td>Provides any needed configuration info including datasource properties, table definitions,</td></tr><tr><td>sca.module</td><td>SCA module.</td></tr><tr><td>sca.subsystem</td><td>Processes
 logging in and loggout.</td></tr><tr><td>web.xml</td><td>sca.module.</td></tr></tbody></table></td></tr></tbody></table>
 </div></body></html>
