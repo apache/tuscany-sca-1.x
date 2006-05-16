@@ -16,7 +16,7 @@
  -->
 <project>
     <parent>
-        <groupId>org.apache.tuscany.samplesapps</groupId>
+        <groupId>org.apache.tuscany.sampleapps</groupId>
         <artifactId>tuscany-sampleapps</artifactId>
         <version>incubating-M1</version>
     </parent>

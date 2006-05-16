@@ -22,7 +22,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.tuscany.samplesapps</groupId>
+    <groupId>org.apache.tuscany.sampleapps</groupId>
     <artifactId>tuscany-sampleapps</artifactId>
     <packaging>pom</packaging>
     <name>Tuscany Scenario Samples</name>
