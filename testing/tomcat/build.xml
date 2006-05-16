@@ -90,11 +90,11 @@
         </patternset>
 
         <patternset id="tuscany.acceptance.emf.dependencies">
-                <include name="**/org/eclipse/emf/common/2.2.0-SNAPSHOT/common-2.2.0-SNAPSHOT.jar" />
-                <include name="**/org/eclipse/emf/ecore/2.2.0-SNAPSHOT/ecore-2.2.0-SNAPSHOT.jar" />
-                <include name="**/org/eclipse/emf/ecore-change/2.2.0-SNAPSHOT/ecore-change-2.2.0-SNAPSHOT.jar" />
-                <include name="**/org/eclipse/emf/ecore-xmi/2.2.0-SNAPSHOT/ecore-xmi-2.2.0-SNAPSHOT.jar" />
-                <include name="**/org/eclipse/xsd/xsd/2.2.0-SNAPSHOT/xsd-2.2.0-SNAPSHOT.jar" />
+                <include name="**/org/eclipse/emf/common/2.2.0-RC4/common-2.2.0-RC4.jar" />
+                <include name="**/org/eclipse/emf/ecore/2.2.0-RC4/ecore-2.2.0-RC4.jar" />
+                <include name="**/org/eclipse/emf/ecore-change/2.2.0-RC4/ecore-change-2.2.0-RC4.jar" />
+                <include name="**/org/eclipse/emf/ecore-xmi/2.2.0-RC4/ecore-xmi-2.2.0-RC4.jar" />
+                <include name="**/org/eclipse/xsd/xsd/2.2.0-RC4/xsd-2.2.0-RC4.jar" />
         </patternset>
 
         <patternset id="tuscany.acceptance.tc.specsdoimpl">  <!--jars which need to go into tomcat common/lib  -->
