@@ -37,6 +37,11 @@
         <property name="tuscany.acceptance.target.dir" value='target' />
         <property name="tuscany.acceptance.tc.dir" value='${tuscany.acceptance.target.dir}/apache-tomcat-${tuscany.acceptance.tomcat.version}' />
 
+
+<!-- KJW define property for the complete path of apache dir -->
+        <property name="fullpath.tuscany.acceptance.tc.dir" value= '${basedir}/${tuscany.acceptance.tc.dir}' />
+
+
         <property name="tuscany.acceptance.groupId" value='org/apache/tuscany' />
         <property name="tuscany.acceptance.version" value='incubating-M1' />
 
@@ -55,6 +60,10 @@
         <property name="tuscany.acceptance.containers" value='org/apache/tuscany/sca/containers' />
         <property name="tuscany.acceptance.databindings" value='org/apache/tuscany/databinding' />
         <property name="tuscany.acceptance.sca.samples.dir" value='../../samples' />
+
+<!--KJW  Define location of canned Derby database -->
+        <property name="tuscany.acceptance.das.samples.companyweb.dir" value='../../samples/das/companyweb' />
+
         <property name="tuscany.acceptance.samples.dir" value='../../sampleapps' />
         <property name="tuscany.acceptance.interop.dir" value='../../testing/interop' />
         <!-- property name="tuscany.maven.repos.dir" value='${user.home}\.maven\repository' / -->
@@ -183,7 +192,7 @@
                 <antcall target="tuscany.tomcat.unzipUnix" /> <!-- just use unix for now -->
         </target>
 
-        <target name="prepareTomcat" depends='tuscany.tomcat.unzipWindows,tuscany.tomcat.unzipUnix,tuscany.tomcat.unzipMac,tuscany.tomcat.fixup,tuscany.deploy.samples,tuscany.deploy.interop' description='Unzip tomcat, fix it up, and deploy samples'>
+        <target name="prepareTomcat" depends='tuscany.tomcat.unzipWindows,tuscany.tomcat.unzipUnix,tuscany.tomcat.unzipMac,tuscany.tomcat.fixup,tuscany.deploy.samples,tuscany.deploy.interop, tuscany.deploy.das.standalone' description='Unzip tomcat, fix it up, and deploy samples'>
                 <dirname property='tuscany.acceptance.tc.dir.full' file="${tuscany.acceptance.tc.dir}/bin" />
                 <echo level="info" message="Tomcat fixed up here:  ${tuscany.acceptance.tc.dir.full}" />
                 
@@ -243,6 +252,7 @@
                         </fileset>
 
                 </copy>
+
         </target>
 
         <target name="tuscany.deploy.samples" description='Deploy tuscany sample wars to tomcat webapps.'>
@@ -264,6 +274,25 @@
                         </fileset>
                 </copy>
         </target>
+
+
+
+        <!-- DAS standalone target -->
+        <target name="tuscany.deploy.das.standalone" description='Deploy DAS stand alone sample to tomcat.'>
+
+
+                <!-- Create directory for the derby database -->
+                <property name="tuscany.acceptance.target.databases.dir" value='${tuscany.acceptance.tc.dir}/Databases' />
+                <mkdir dir="${tuscany.acceptance.target.databases.dir}" />
+
+                <!-- Copy over the Derby database -->
+                <copy todir="${tuscany.acceptance.target.databases.dir}">
+                        <fileset dir="${tuscany.acceptance.das.samples.companyweb.dir}">
+                                <include name="**/dastest/**" />
+                        </fileset>
+                </copy>
+        </target>
+
 
         <!-- provide a convenient -Djava.ext.dirs=  to run j2se samples -->
         <target name="j2se" description='create a java extensions directory to run J2SE tuscany applications.'>
@@ -309,12 +338,21 @@
         <target name="tuscany.tomcat.fixserverxml" depends='init,backup.server.xml'  unless='tuscany.acceptance.tomcat.serverxmlorg.available'>
                 <property name="tuscany.acceptance.tomcat.serverxmlorg.available" value='true' />
                 
+<!-- KJW save results to server_temp.xml -->
                 <xslt processor="trax"
-                  in="${tuscany.acceptance.tc.dir}/conf/server.xml.original"
-                      style="server.xsl" out="${tuscany.acceptance.tc.dir}/conf/server.xml"
-                      >
+                  in="${tuscany.acceptance.tc.dir}/conf/server.xml.original" 
+                  style="server.xsl" 
+                  out="${tuscany.acceptance.tc.dir}/conf/server_temp.xml">
+                </xslt>
 
-                 </xslt>
+<!--KJW modify server.xml to include derby database resource -->
+               <echo level="info" message="Running datasource.xsl" />
+               <xslt
+                  in="${tuscany.acceptance.tc.dir}/conf/server_temp.xml" style="datasource.xsl" out="${tuscany.acceptance.tc.dir}/conf/server.xml">
+                  <param name="database_location" expression="jdbc:derby:${fullpath.tuscany.acceptance.tc.dir}/Databases/dastest"/>
+                </xslt>
+
+
                 <!-- echo message='${user.home}/.axis2/axis2.xml '/ -->
                 <!-- copy file='axis2.xml' tofile='${user.home}/.axis2/axis2.xml' / -->
         </target>
