@@ -18,15 +18,11 @@ package bigbank.account.services.accountdata;
 
 import java.rmi.RemoteException;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.osoa.sca.annotations.Service;
 
-import bigbank.account.services.account.AccountServiceImpl;
-
 import com.bigbank.account.AccountFactory;
 import com.bigbank.account.AccountReport;
-import com.bigbank.account.AccountService;
 import com.bigbank.account.AccountSummary;
 import com.bigbank.account.CustomerProfileData;
 import com.bigbank.account.StockSummary;
@@ -34,8 +30,6 @@ import com.bigbank.account.StockSummary;
 @Service(AccountDataService.class)
 public class AccountDataServiceImpl implements AccountDataService {
 
-
-   
     public CustomerProfileData getCustomerProfile(String logonID) throws RemoteException {
         // TODO Auto-generated method stub
         return null;
@@ -43,21 +37,21 @@ public class AccountDataServiceImpl implements AccountDataService {
 
     public AccountReport getAccountReport(int customerID) {
         final AccountFactory accountFactory = AccountFactory.eINSTANCE;
-        AccountReport accountReport= accountFactory.createAccountReport();
+        AccountReport accountReport = accountFactory.createAccountReport();
         List accounts = accountReport.getAccountSummaries();
-        
+
         AccountSummary account = accountFactory.createAccountSummary();
         account.setAccountType("1111");
         account.setAccountNumber("22-22-22");
         account.setBalance(123.45F);
         accounts.add(account);
-        
-        account= accountFactory.createAccountSummary();
+
+        account = accountFactory.createAccountSummary();
         account.setAccountType("04-11-19");
         account.setAccountNumber("11-23");
         account.setBalance(543.21F);
         accounts.add(account);
-        
+
         List stocks = accountReport.getStockSummaries();
         StockSummary stock = accountFactory.createStockSummary();
         stock.setSymbol("IBM");
@@ -66,7 +60,7 @@ public class AccountDataServiceImpl implements AccountDataService {
         stock.setPurchasePrice(33.33F);
         stock.setQuantity(10);
         stocks.add(stock);
-        
+
         stock = accountFactory.createStockSummary();
         stock.setSymbol("TUSK");
         stock.setPurchaseDate("2005-01-05");
@@ -77,7 +71,8 @@ public class AccountDataServiceImpl implements AccountDataService {
         return accountReport;
     }
 
-    public CustomerProfileData createAccount(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings) throws RemoteException {
+    public CustomerProfileData createAccount(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings)
+            throws RemoteException {
         // TODO Auto-generated method stub
         return null;
     }

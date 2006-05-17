@@ -65,4 +65,3 @@ public class ProfileServiceImpl implements ProfileService {
         this.id = id;
     }
 }
-

@@ -21,9 +21,10 @@ import java.rmi.RemoteException;
 public interface LoginService {
 
     public static final int SUCCESS = 1;
+
     public static final int INVALID_LOGIN = -1;
+
     public static final int INVALID_PASSWORD = -2;
 
     public int login(String userName, String password) throws RemoteException;
 }
-

@@ -16,27 +16,21 @@
  */
 package bigbank.webclient.services.account;
 
-import java.io.InputStream;
 import java.rmi.RemoteException;
 
-import org.apache.tuscany.sdo.util.SDOUtil;
 import org.osoa.sca.ServiceUnavailableException;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
-import com.bigbank.account.AccountFactory;
 import com.bigbank.account.AccountReport;
 import com.bigbank.account.AccountService;
 import com.bigbank.account.CustomerProfileData;
 import com.bigbank.account.StockSummary;
-import commonj.sdo.helper.TypeHelper;
-import commonj.sdo.helper.XSDHelper;
 
 /**
  */
 @Service(AccountService.class)
 public class AccountServiceComponentImpl implements AccountService {
-
 
     private AccountService accountService;
 
@@ -65,7 +59,7 @@ public class AccountServiceComponentImpl implements AccountService {
 
     public StockSummary purchaseStock(int customerID, StockSummary stockSummary) throws RemoteException {
         try {
-            return accountService.purchaseStock(customerID,  stockSummary);
+            return accountService.purchaseStock(customerID, stockSummary);
         } catch (Exception e) {
             throw new ServiceUnavailableException(e);
         }
@@ -87,7 +81,6 @@ public class AccountServiceComponentImpl implements AccountService {
         }
     }
 
-
     public StockSummary sellStock(int purchaseLotNumber, int quantity) throws RemoteException {
         try {
             return accountService.sellStock(purchaseLotNumber, quantity);
@@ -98,16 +91,16 @@ public class AccountServiceComponentImpl implements AccountService {
 
     public float withdraw(String account, float amount) throws RemoteException {
         try {
-            return accountService.withdraw(account,  amount);
+            return accountService.withdraw(account, amount);
         } catch (Exception e) {
             throw new ServiceUnavailableException(e);
         }
     }
 
-    public CustomerProfileData createAccount(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings) throws RemoteException {
-        
+    public CustomerProfileData createAccount(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings)
+            throws RemoteException {
+
         return accountService.createAccount(customerProfile, createSavings, createCheckings);
     }
-
 
 }

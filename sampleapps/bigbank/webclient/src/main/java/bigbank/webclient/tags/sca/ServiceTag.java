@@ -22,10 +22,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
 
-
 /**
- * Places an SCA service in the JSP page context, making it available to other
- * tags corresponding to its id value.
+ * Places an SCA service in the JSP page context, making it available to other tags corresponding to its id value.
  */
 
 public class ServiceTag extends TagSupport {

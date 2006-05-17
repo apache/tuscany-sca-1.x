@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,69 +31,61 @@ import org.osoa.sca.ModuleContext;
 
 import bigbank.webclient.services.profile.LoginService;
 
-
 public class LoginServlet extends HttpServlet {
-    
-    
-
-    private ServletContext mContext;
 
     public void init(ServletConfig pCfg) throws ServletException {
-        mContext = pCfg.getServletContext();
+
     }
 
     public void doPost(HttpServletRequest pReq, HttpServletResponse pResp) throws ServletException {
-        
-        if("logout".equals(pReq.getParameter("logout")) ||
-                "logoutHIDDEN".equals(pReq.getParameter("logoutHIDDEN"))
-                ){
+
+        if ("logout".equals(pReq.getParameter("logout")) || "logoutHIDDEN".equals(pReq.getParameter("logoutHIDDEN"))) {
             HttpSession sess = pReq.getSession();
-            if(sess != null) sess.invalidate();
+            if (sess != null)
+                sess.invalidate();
             try {
                 pResp.sendRedirect("login.html");
             } catch (IOException e) {
-                
+
                 e.printStackTrace();
                 throw new ServletException(e);
             }
-           
-        }else{
 
+        } else {
 
-        String login = pReq.getParameter("login");
-        String password = pReq.getParameter("password");
-        try {
-            int resp = login(login, password);
-            if (resp == LoginService.SUCCESS) {
-               // mContext.getRequestDispatcher("/summary.jsp").forward(pReq, pResp);
-                pResp.sendRedirect("summary.jsp");
-            } else {
-               // mContext.getRequestDispatcher("/login.html").forward(pReq, pResp);
-                pResp.sendRedirect("login.html");
+            String login = pReq.getParameter("login");
+            String password = pReq.getParameter("password");
+            try {
+                int resp = login(login, password);
+                if (resp == LoginService.SUCCESS) {
+
+                    pResp.sendRedirect("summary.jsp");
+                } else {
+
+                    pResp.sendRedirect("login.html");
+                }
+            } catch (IOException e) {
+                throw new ServletException(e);
             }
-        } catch (IOException e) {
-            throw new ServletException(e);
         }
     }
-    }
-    static int login(final String login, final String password) throws ServletException{
 
+    static int login(final String login, final String password) throws ServletException {
 
         ModuleContext moduleContext = CurrentModuleContext.getContext();
-        LoginService loginMgr = (LoginService)
-                moduleContext.locateService("LoginServiceComponent");
+        LoginService loginMgr = (LoginService) moduleContext.locateService("LoginServiceComponent");
 
         if (loginMgr == null) {
             throw new ServletException("LoginManager not found");
         }
 
-            try {
-                return loginMgr.login(login, password);
-            } catch (RemoteException e) {
-                
-                throw new ServletException(e);
-            }
-    
+        try {
+            return loginMgr.login(login, password);
+        } catch (RemoteException e) {
+
+            throw new ServletException(e);
+        }
+
     }
-        
-    }
+
+}

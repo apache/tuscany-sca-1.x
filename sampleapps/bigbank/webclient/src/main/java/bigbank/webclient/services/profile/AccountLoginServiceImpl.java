@@ -26,15 +26,16 @@ import com.bigbank.account.CustomerProfileData;
 
 @Service(LoginService.class)
 public class AccountLoginServiceImpl implements LoginService {
-    @Reference 
+    @Reference
     public AccountService accountService;
+
     @Reference
     public ProfileService profileService;
 
     public int login(String userName, String password) throws RemoteException {
 
         CustomerProfileData profileData = accountService.getCustomerProfile(userName);
- 
+
         if (!password.equals(profileData.getPassword())) {
             return INVALID_PASSWORD;
         }

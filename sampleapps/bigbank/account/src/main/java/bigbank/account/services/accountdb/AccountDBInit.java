@@ -82,12 +82,7 @@ public class AccountDBInit extends HttpServlet {
             this.deleteExisting = false;
 
             createDB(dbDirectory);
-//            final String msgDBcreated = "BigBank database created '" + dbDirectory + "'.";
-//            System.out.println(msgDBcreated);
-//            System.err.println(msgDBcreated);
-//            log(msgDBcreated);
-            // TODO get rid of this!!!
-            
+           
 
         } catch (Exception e) {
 
@@ -98,8 +93,6 @@ public class AccountDBInit extends HttpServlet {
     }
 
     public AccountDBInit() {
-        // System.err.println("AccountDBInit()");
-        // System.out.println("AccountDBInit()");
     }
 
     public AccountDBInit(String dbDirectory, Boolean deleteExisting) {
@@ -123,26 +116,23 @@ public class AccountDBInit extends HttpServlet {
             createStockPurchase(conn, id, "DELL", 13, 12.74F, "2003-01-03 11:04:03");
             createStockPurchase(conn, id, "LU", 7, 2.74F, "2003-01-04 16:04:03");
             createStockPurchase(conn, id, "IBM", 22, 81.43F, "2004-02-03 13:04:33");
-            // System.out.println("id " +id); System.out.flush();
+
             id = createCustomer(conn, "test2", "demo2", "Pleasant Plains Rd, ViewMount, CO","test2@das.org", "test2", "password");
             createAccount(conn, id, AccountServiceImpl.SAVINGS_ACCOUNT_PREFIX + id, AccountServiceImpl.ACCOUNT_TYPE_SAVINGS, 924.40F);
             createAccount(conn, id, AccountServiceImpl.CHECKING_ACCOUNT_PREFIX+id, AccountServiceImpl.ACCOUNT_TYPE_CHECKINGS, 33.26F);
             createStockPurchase(conn, id, "FOO", 3, 6.20F, "2000-09-11 09:11:01");
 
-            // System.out.println("id " +id); System.out.flush();
+
 
             conn.commit();
-            System.out.println("done.");
-            System.out.flush();
+            
+            
 
         } catch (org.apache.derby.impl.jdbc.EmbedSQLException e) {
             if (conn != null && !conn.isClosed())
                 conn.rollback();
             if (e.getErrorCode() == 20000 && "X0Y32".equalsIgnoreCase(e.getSQLState()) && -1 != e.getMessage().indexOf("already exists")) {
                 // this is ok the database is there.
-
-//                System.out.println("DB already there.");
-//                System.out.flush();
 
             } else {
 
@@ -176,8 +166,6 @@ public class AccountDBInit extends HttpServlet {
         Connection conn;
         Class.forName(driver).newInstance();
         Properties props = new Properties();
-        // props.put("user", "tuscany");
-        // props.put("password", "tuscany");
         conn = DriverManager.getConnection(protocol + location + ";create=true", props);
 
         conn.setAutoCommit(false);
@@ -213,7 +201,7 @@ public class AccountDBInit extends HttpServlet {
         }
         int id = rs.getInt(2);
         s.close();
-        // System.out.println("cr2wrc id='" + id +"'"); System.out.flush();
+
         return id;
     }
 
@@ -225,7 +213,7 @@ public class AccountDBInit extends HttpServlet {
                 + accountType + "', " + balance + ")");
 
         s.close();
-        // System.out.println("cr2wrc id='" + id +"'"); System.out.flush();
+
 
     }
 
@@ -242,8 +230,7 @@ public class AccountDBInit extends HttpServlet {
                 + quantity + ", " + purchasePrice + ", '" + purchaseDate + "')");
 
         s.close();
-        // System.out.println("cr2wrc id='" + id +"'"); System.out.flush();
-
+       
     }
 
     protected static void registerTypes() {
@@ -273,7 +260,7 @@ public class AccountDBInit extends HttpServlet {
 
         createDB(dbDirectory);
         accountDBInit.readDBstdout(System.out);
-        // CustomerProfileData customerProfileData = accountDBInit.testgetCustomerByLoginIDThroughDASRead("cr22rc");
+
 
         // Test withdrawl
         withdraw wd = AccountFactory.INSTANCE.createwithdraw();
@@ -314,10 +301,10 @@ public class AccountDBInit extends HttpServlet {
         stockPurchase.set("PURCHASEDATE", new Date());
 
         ApplyChangesCommand apply = commandGroup.getApplyChangesCommand();
-   //     apply.addConverter("STOCKS.PURCHASEDATE", MyDateConverter.class.getName());
+
         apply.execute(root);
 
-        // System.out.println(sp);
+
 
     }
 

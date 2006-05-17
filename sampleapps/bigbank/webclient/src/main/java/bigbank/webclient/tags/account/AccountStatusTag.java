@@ -26,14 +26,12 @@ import org.osoa.sca.CurrentModuleContext;
 import org.osoa.sca.ModuleContext;
 
 import bigbank.webclient.services.profile.ProfileService;
-import bigbank.webclient.tags.sca.LoginBarrierTag;
 
 import com.bigbank.account.AccountReport;
 import com.bigbank.account.AccountService;
 
 /**
- * Retrieves and iterates over account summary information for the current
- * profile by accessing the remotable account service component
+ * Retrieves and iterates over account summary information for the current profile by accessing the remotable account service component
  */
 
 public class AccountStatusTag extends TagSupport {
@@ -84,18 +82,14 @@ public class AccountStatusTag extends TagSupport {
 
     public int doStartTag() throws JspException {
         ModuleContext moduleContext = CurrentModuleContext.getContext();
-        ProfileService profile = (ProfileService) moduleContext
-                .locateService(mProfileService);
+        ProfileService profile = (ProfileService) moduleContext.locateService(mProfileService);
         if (profile == null) {
-            throw new JspException("Profile [" + mProfileService
-                    + "] not found in current module context");
+            throw new JspException("Profile [" + mProfileService + "] not found in current module context");
         }
 
-        AccountService service = (AccountService) moduleContext
-                .locateService(mAccountService);
+        AccountService service = (AccountService) moduleContext.locateService(mAccountService);
         if (service == null) {
-            throw new JspException("Service [" + mAccountService
-                    + "] not found in current module context");
+            throw new JspException("Service [" + mAccountService + "] not found in current module context");
         }
         List summaries;
         try {

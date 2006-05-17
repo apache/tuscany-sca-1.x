@@ -33,18 +33,15 @@ import com.bigbank.account.AccountService;
 import com.bigbank.account.CustomerProfileData;
 import com.bigbank.account.StockSummary;
 
-
 public class FormServlet extends HttpServlet {
-    
-//    private ServletContext mContext;
-//    public void init(ServletConfig pCfg) throws ServletException {
-//        mContext = pCfg.getServletContext();
-//    }
 
-    
+    // private ServletContext mContext;
+    // public void init(ServletConfig pCfg) throws ServletException {
+    // mContext = pCfg.getServletContext();
+    // }
+
     public void doPost(HttpServletRequest pReq, HttpServletResponse pResp) throws ServletException {
 
-      
         try {
             final String action = pReq.getParameter("action");
             ModuleContext moduleContext = CurrentModuleContext.getContext();
@@ -58,33 +55,33 @@ public class FormServlet extends HttpServlet {
                 if (profileServices == null) {
                     throw new ServletException("ProfileServiceComponent not found.");
                 }
-                if(!profileServices.isLoggedIn()){
-                    throw new ServletException("User id '"+ profileServices.getId() +"' not logged on.");
+                if (!profileServices.isLoggedIn()) {
+                    throw new ServletException("User id '" + profileServices.getId() + "' not logged on.");
                 }
             }
-            
+
             if ("createAccount".equals(action)) {
                 createAccount(pReq, pResp, accountServices);
             } else if ("account".equals(action)) {
                 accountTransaction(pReq, pResp, accountServices);
-            }else if ("stockPurchase".equals(action)) {
+            } else if ("stockPurchase".equals(action)) {
                 stockPurchase(pReq, pResp, profileServices, accountServices);
-            }else if ("stockSale".equals(action)){
+            } else if ("stockSale".equals(action)) {
                 stockSale(pReq, pResp, profileServices, accountServices);
-            }else{
-                throw new IllegalArgumentException("Unknown action in Form servlet '" +action+"'.");
+            } else {
+                throw new IllegalArgumentException("Unknown action in Form servlet '" + action + "'.");
             }
             // mContext.getRequestDispatcher("summary.jsp").forward(pReq, pResp);
-             pResp.sendRedirect("summary.jsp");
+            pResp.sendRedirect("summary.jsp");
         } catch (ServletException e) {
             e.printStackTrace();
             throw e;
-            
-        } catch(Exception e){
-            
+
+        } catch (Exception e) {
+
             throw new ServletException(e);
         }
-      
+
     }
 
     private void stockSale(HttpServletRequest req, HttpServletResponse resp, ProfileService profileServices, AccountService accountServices)
@@ -104,8 +101,8 @@ public class FormServlet extends HttpServlet {
 
     }
 
-
-    private void stockPurchase(HttpServletRequest req, HttpServletResponse resp, ProfileService profileServices, AccountService accountServices) throws ServletException {
+    private void stockPurchase(HttpServletRequest req, HttpServletResponse resp, ProfileService profileServices, AccountService accountServices)
+            throws ServletException {
         try {
             if (!"cancel".equals(req.getParameter("cancel"))) {
 
@@ -118,9 +115,8 @@ public class FormServlet extends HttpServlet {
             }
         } catch (Exception e) {
             throw new ServletException("stockPurchase " + e.getMessage(), e);
-        }       
+        }
     }
-
 
     private void accountTransaction(HttpServletRequest req, HttpServletResponse resp, AccountService accountServices) throws ServletException {
         try {
@@ -134,7 +130,7 @@ public class FormServlet extends HttpServlet {
             }
         } catch (Exception e) {
             throw new ServletException("accountTransaction " + e.getMessage(), e);
-        }        
+        }
 
     }
 
@@ -147,14 +143,14 @@ public class FormServlet extends HttpServlet {
             customerProfileData.setEmail(pReq.getParameter("email"));
             customerProfileData.setLoginID(pReq.getParameter("loginID"));
             customerProfileData.setPassword(pReq.getParameter("password"));
-            
-            
-            CustomerProfileData resp = accountServices.createAccount(customerProfileData, "savings".equals(pReq.getParameter("savings")) , "checkings".equals(pReq.getParameter("checkings")));
+
+            CustomerProfileData resp = accountServices.createAccount(customerProfileData, "savings".equals(pReq.getParameter("savings")), "checkings"
+                    .equals(pReq.getParameter("checkings")));
             LoginServlet.login(resp.getLoginID(), resp.getPassword());
-             
+
         } catch (IOException e) {
             throw new ServletException(e);
         }
-        
+
     }
 }

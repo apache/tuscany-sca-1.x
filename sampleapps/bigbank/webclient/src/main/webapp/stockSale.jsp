@@ -31,13 +31,7 @@
 <input type="hidden" name="purchaseLotNumber"  value='<%=request.getParameter("purchaseLotNumber")%>' />
 <TABLE border="0">
 	<TBODY>
-<%--	
-		<TR>
-			<TD>Symbol </TD>
-			<TD width="10%"></TD>
-			<TD><INPUT type="text" name="symbol" size="6"></TD>
-		</TR>
---%>		
+		
 		<TR>
 			<TD>Quantity</TD>
 			<TD></TD>

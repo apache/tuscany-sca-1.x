@@ -17,11 +17,9 @@
 package bigbank.webclient.tags.sca;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
@@ -55,11 +53,9 @@ public class LoginBarrierTag extends TagSupport {
     public void setUrl(String pUrl) {
         mUrl = pUrl;
     }
-    
-    int doPage= EVAL_PAGE;
-    
-//  TODO REMOVE 
-//    public static ProfileService hackCauseSessionAreLost= null;
+
+    int doPage = EVAL_PAGE;
+
 
     public int doStartTag() throws JspException {
         if (mProfile == null || mProfile.length() < 1) {
@@ -67,23 +63,20 @@ public class LoginBarrierTag extends TagSupport {
         }
 
         ModuleContext moduleContext = CurrentModuleContext.getContext();
-        
-         ProfileService profile = (ProfileService) moduleContext.locateService(mProfile);
-        
-        
+
+        ProfileService profile = (ProfileService) moduleContext.locateService(mProfile);
+
         if (profile == null) {
             throw new JspException("Profile [" + mProfile + "] not found in current module context");
         }
-        
-        
-        
+
         if (profile.isLoggedIn()) {
             return EVAL_BODY_INCLUDE;
         } else {
             try {
-                doPage= SKIP_PAGE;
+                doPage = SKIP_PAGE;
                 pageContext.forward(mUrl);
-               ((HttpServletResponse) (pageContext.getResponse())).sendRedirect("login.html");
+                ((HttpServletResponse) (pageContext.getResponse())).sendRedirect("login.html");
                 return SKIP_BODY;
             } catch (ServletException e) {
                 throw new JspException("Unable to forward to [" + mUrl + "]");

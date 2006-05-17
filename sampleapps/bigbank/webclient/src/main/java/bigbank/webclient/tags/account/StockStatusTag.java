@@ -22,33 +22,16 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.osoa.sca.CurrentModuleContext;
-import org.osoa.sca.ModuleContext;
-
-import bigbank.webclient.services.profile.ProfileService;
-
-import com.bigbank.account.AccountReport;
-import com.bigbank.account.AccountService;
-
 /**
- * Retrieves and iterates over account summary information for the current
- * profile by accessing the remotable account service component
+ * Retrieves and iterates over account summary information for the current profile by accessing the remotable account service component
  */
 
 public class StockStatusTag extends TagSupport {
 
-    // ----------------------------------
-    // Constructors
-    // ----------------------------------
 
     public StockStatusTag() {
         super();
     }
-
-    // ----------------------------------
-    // Methods
-    // ----------------------------------
-
 
 
     private String mId;
@@ -64,9 +47,10 @@ public class StockStatusTag extends TagSupport {
     private Iterator mIterator;
 
     public int doStartTag() throws JspException {
-         
-        List summaries= (List) pageContext.getAttribute("StockSummaries");
-        if(null == summaries) return SKIP_BODY;
+
+        List summaries = (List) pageContext.getAttribute("StockSummaries");
+        if (null == summaries)
+            return SKIP_BODY;
         mIterator = summaries.iterator();
         if (mIterator.hasNext()) {
             pageContext.setAttribute(mId, mIterator.next());

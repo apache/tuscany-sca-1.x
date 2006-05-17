@@ -38,7 +38,6 @@ import org.osoa.sca.annotations.Service;
  * This class implements the Stock quote service component.
  */
 @Service(StockQuoteService.class)
-// FIXME workaround for JIRA TUSCANY-41
 @Scope("MODULE")
 public class StockQuoteWebservicexServiceImpl implements StockQuoteService {
 
@@ -59,13 +58,12 @@ public class StockQuoteWebservicexServiceImpl implements StockQuoteService {
                 sb.append(sym);
             }
             String stockdata = stockQuoteService.GetQuote(sb.toString());
-            // System.err.println(stockdata);
 
             InputStream in = new ByteArrayInputStream(stockdata.getBytes());
             XMLInputFactory factory = XMLInputFactory.newInstance();
             XMLStreamReader parser = factory.createXMLStreamReader(in);
             ArrayList<StockQuote> listQuotes = new ArrayList<StockQuote>();
-            Hashtable<String,StockQuote> listQuoteHT= new Hashtable<String,StockQuote>();
+            Hashtable<String, StockQuote> listQuoteHT = new Hashtable<String, StockQuote>();
             MapStock currentStock = null;
             StringBuilder currentText = new StringBuilder(100);
             for (int event = parser.next(); event != XMLStreamConstants.END_DOCUMENT; event = parser.next()) {
@@ -79,19 +77,19 @@ public class StockQuoteWebservicexServiceImpl implements StockQuoteService {
                     }
                     break;
                 case XMLStreamConstants.END_ELEMENT:
-                    lname= parser.getLocalName();
+                    lname = parser.getLocalName();
                     String mname = "set" + lname;
                     try {
                         Method setter = MapStock.class.getMethod(mname, new Class[] { String.class });
                         if (setter != null) {
                             setter.invoke(currentStock, currentText.toString());
-                            if( lname.equals("Symbol")){
+                            if (lname.equals("Symbol")) {
                                 listQuoteHT.put(currentText.toString(), currentStock);
-                                
+
                             }
                         }
                     } catch (NoSuchMethodException e) {
-                        // TODO: handle exception
+
                     }
                     // System.err.println(parser.getLocalName() + ":" + currentText.toString());
                     currentText.setLength(0);

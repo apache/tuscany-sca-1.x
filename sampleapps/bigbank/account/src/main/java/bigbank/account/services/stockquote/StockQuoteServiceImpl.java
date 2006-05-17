@@ -21,18 +21,18 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Random;
 
-/* Dummy'd up StockQuoteService, override webservice for now */
+/* Mock StockQuoteService */
 
 public class StockQuoteServiceImpl implements StockQuoteService {
 
-    static Random rn = new Random(); // squence.
+    static Random rn = new Random(); 
 
     static Hashtable<String, StockQuote> stocks = new Hashtable<String, StockQuote>();
 
-    public synchronized  Map<String, StockQuote>  getQuotes(String[] symbols) throws RemoteException {
+    public synchronized Map<String, StockQuote> getQuotes(String[] symbols) throws RemoteException {
         Map<String, StockQuote> ret = new Hashtable<String, StockQuote>();
         for (String sym : symbols) {
-            sym= sym.toUpperCase();
+            sym = sym.toUpperCase();
             if (!ret.containsKey(sym)) {
                 StockQuote sq = stocks.get(sym);
                 if (sq == null) {
@@ -52,7 +52,7 @@ public class StockQuoteServiceImpl implements StockQuoteService {
                     float dh = Math.max(newval, new Float(sq.getDayHighPrice()));
                     sq.setDayHighPrice(dh + "");
                     float dl = Math.min(newval, new Float(sq.getDayLowPrice()));
-                    sq.setDayLowPrice(dl +"");
+                    sq.setDayLowPrice(dl + "");
 
                 }
                 ret.put(sym, (StockQuote) sq.clone());

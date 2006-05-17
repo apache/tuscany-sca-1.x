@@ -1,6 +1,5 @@
 /**
  *
- *  Copyright 2005 The Apache Software Foundation or its licensors, as applicable.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,7 +15,6 @@
  */
 package bigbank.account.services.accountdata;
 
-import com.bigbank.account.AccountService;
 
 public interface AccountDataService  {
      
@@ -75,8 +73,5 @@ public interface AccountDataService  {
      public com.bigbank.account.AccountReport getAccountReport(
      int param19) throws java.rmi.RemoteException;
     
-    
 
-    
-   //
    }
