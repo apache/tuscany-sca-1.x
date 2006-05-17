@@ -44,11 +44,18 @@
     </repositories>
 
     <distributionManagement>
+       <!--
         <snapshotRepository>
-            <id>maven-snapshot-repository</id>
-            <name>Apache SNAPSHOT Repository</name>
-            <url>ftp://ftp.enjoyjava.com/tuscany/repository</url>
+           <id>maven-snapshot-repository</id>
+           <name>Apache SNAPSHOT Repository</name>
+           <url>scpexe://cvs.apache.org/www/cvs.apache.org/maven-snapshot-repository</url>
         </snapshotRepository>
+        -->
+        <repository>
+            <id>maven-test-repository</id>
+            <name>Test Repository</name>
+            <url>scp://people.apache.org/home/jsdelfino/public_html/maven2</url>
+        </repository>
     </distributionManagement>
 
     <scm>
@@ -98,11 +105,11 @@
              <artifactId>wagon-ssh-external</artifactId>
              <version>1.0-alpha-5</version>
           </extension>
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-         <artifactId>wagon-ftp</artifactId>
-         <version>1.0-alpha-6</version>
-      </extension>
+          <extension>
+             <groupId>org.apache.maven.wagon</groupId>
+             <artifactId>wagon-ftp</artifactId>
+             <version>1.0-alpha-6</version>
+          </extension>
 
         </extensions>
     </build>

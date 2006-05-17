@@ -66,11 +66,18 @@
     </modules>
 
     <distributionManagement>
+       <!--
         <snapshotRepository>
-            <id>maven-snapshot-repository</id>
-            <name>Apache SNAPSHOT Repository</name>
-            <url>scpexe://cvs.apache.org/www/cvs.apache.org/maven-snapshot-repository</url>
+           <id>maven-snapshot-repository</id>
+           <name>Apache SNAPSHOT Repository</name>
+           <url>scpexe://cvs.apache.org/www/cvs.apache.org/maven-snapshot-repository</url>
         </snapshotRepository>
+        -->
+        <repository>
+            <id>maven-test-repository</id>
+            <name>Test Repository</name>
+            <url>scp://people.apache.org/home/jsdelfino/public_html/maven2</url>
+        </repository>
     </distributionManagement>
 
     <build>
