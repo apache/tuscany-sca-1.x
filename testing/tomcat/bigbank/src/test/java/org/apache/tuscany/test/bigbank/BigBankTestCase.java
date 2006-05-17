@@ -72,7 +72,7 @@ public class BigBankTestCase extends TestCase {
               
                 String response = resultResponse.getContentAsString();
                 assertTrue(-1 != response.indexOf("Account Information for"));
-                assertTrue(-1 != response.indexOf("test"));
+                assertTrue(-1 != response.indexOf("Test"));
                 assertTrue(-1 != response.indexOf("134-42-6231"));
                 assertTrue(-1 != response.indexOf("123.43"));
                 assertTrue(-1 != response.indexOf("134-43-3941"));
@@ -118,7 +118,7 @@ public class BigBankTestCase extends TestCase {
              
                 String response = resultResponse.getContentAsString();
                 assertTrue(-1 != response.indexOf("Account Information for"));
-                assertTrue(-1 != response.indexOf("test"));
+                assertTrue(-1 != response.indexOf("Test"));
                 assertTrue(-1 != response.indexOf("134-42-6231"));
                 assertTrue(-1 != response.indexOf("123.43"));
                 assertTrue(-1 != response.indexOf("134-43-3941"));
@@ -187,7 +187,7 @@ public class BigBankTestCase extends TestCase {
                 
                 String response = resultResponse.getContentAsString();
                 assertTrue(-1 != response.indexOf("Account Information for"));
-                assertTrue(-1 != response.indexOf("test"));
+                assertTrue(-1 != response.indexOf("Test"));
                 assertTrue(-1 != response.indexOf("134-42-6231"));
                 assertTrue(-1 != response.indexOf("123.43"));
                 assertTrue(-1 != response.indexOf("134-43-3941"));

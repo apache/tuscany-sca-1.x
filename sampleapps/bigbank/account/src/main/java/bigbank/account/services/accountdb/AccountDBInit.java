@@ -116,7 +116,7 @@ public class AccountDBInit extends HttpServlet {
 
             creatTables(conn);
 
-            int id = createCustomer(conn, "test", "das", "304 Fox Trot ln, Apex, NC", "test@das.org", "test", "password");
+            int id = createCustomer(conn, "Test", "User", "304 Fox Trot ln, Apex, NC", "test@das.org", "test", "password");
             createAccount(conn, id, AccountServiceImpl.SAVINGS_ACCOUNT_PREFIX + id, AccountServiceImpl.ACCOUNT_TYPE_SAVINGS, 123.43F);
             createAccount(conn, id, AccountServiceImpl.CHECKING_ACCOUNT_PREFIX+id, AccountServiceImpl.ACCOUNT_TYPE_CHECKINGS, 23.12F);
             createStockPurchase(conn, id, "IBM", 33, 66.20F, "2005-11-23 13:22:02");
