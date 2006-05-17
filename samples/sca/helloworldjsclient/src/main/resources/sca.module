@@ -43,7 +43,7 @@
     <externalService name="E4XHelloworldWS">
         <interface.wsdl interface="http://helloworld#wsdl.interface(HelloWorld)"/>
         <binding.ws 
-           uri="http://localhost:8080/sample-helloworlde4xws-incubating-M1/services/HelloWorldE4XWebService"
+           uri="http://localhost:8080/sample-helloworlde4xws/services/HelloWorldE4XWebService"
            port="http://helloworld#wsdl.endpoint(HelloWorldService/HelloWorldSoapPort)"/>
     </externalService>
 
