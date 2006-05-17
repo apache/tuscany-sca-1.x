@@ -22,7 +22,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>tuscany-testing-interop-service-webserviceInteropDoc</artifactId>
+    <artifactId>interop-service-webserviceInteropDoc</artifactId>
     <packaging>war</packaging>
     <name>Tuscany Interop Testing - Services - InteropDoc</name>
     <version>incubating-M1</version>

@@ -121,7 +121,7 @@ public class InteropDocClientTestCase extends TestCase {
      * @return
      */
     protected DocTestPortType locateInteropDocService() {
-        String interopServiceName = System.getProperty("interopServiceName");
+        String interopLocation = System.getProperty("interopLocation");
         
         // Valid service names are:
         // RemoteInteropDocService: the live interop Web Service 
@@ -130,10 +130,10 @@ public class InteropDocClientTestCase extends TestCase {
         
         // To specify the service name run mvn -DinteropDocServiceName="RemoteInteropDocService"
         
-        if (interopServiceName == null)
-            interopServiceName = "RemoteInteropDocService";
+        if (interopLocation == null)
+        	interopLocation = "Remote";
         
-        return (DocTestPortType)CurrentModuleContext.getContext().locateService(interopServiceName);
+        return (DocTestPortType)CurrentModuleContext.getContext().locateService(interopLocation + "InteropDocService");
     }
     
     protected void tearDown() throws Exception {
