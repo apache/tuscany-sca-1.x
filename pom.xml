@@ -68,7 +68,7 @@
     <distributionManagement>
         <snapshotRepository>
             <id>maven-snapshot-repository</id>
-            <name>Apache incubating-M1 Repository</name>
+            <name>Apache SNAPSHOT Repository</name>
             <url>scpexe://cvs.apache.org/www/cvs.apache.org/maven-snapshot-repository</url>
         </snapshotRepository>
     </distributionManagement>
