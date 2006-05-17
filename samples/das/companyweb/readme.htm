@@ -12,26 +12,26 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <link rel=File-List href="readme_files/filelist.xml">
 <title>Tuscany RDB DAS Sample</title>
 <o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
- name="place"/>
+ name="City"/>
 <o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
  name="State"/>
 <o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
- name="City"/>
+ name="place"/>
 <!--[if gte mso 9]><xml>
  <o:DocumentProperties>
   <o:Author>IBM_USER</o:Author>
   <o:LastAuthor>IBM_USER</o:LastAuthor>
-  <o:Revision>4</o:Revision>
-  <o:TotalTime>469</o:TotalTime>
-  <o:Created>2006-05-17T18:07:00Z</o:Created>
-  <o:LastSaved>2006-05-17T18:07:00Z</o:LastSaved>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>473</o:TotalTime>
+  <o:Created>2006-05-17T18:16:00Z</o:Created>
+  <o:LastSaved>2006-05-17T18:16:00Z</o:LastSaved>
   <o:Pages>1</o:Pages>
-  <o:Words>1126</o:Words>
-  <o:Characters>6420</o:Characters>
+  <o:Words>1125</o:Words>
+  <o:Characters>6417</o:Characters>
   <o:Company>IBM</o:Company>
   <o:Lines>53</o:Lines>
   <o:Paragraphs>15</o:Paragraphs>
-  <o:CharactersWithSpaces>7531</o:CharactersWithSpaces>
+  <o:CharactersWithSpaces>7527</o:CharactersWithSpaces>
   <o:Version>10.6735</o:Version>
  </o:DocumentProperties>
 </xml><![endif]--><!--[if gte mso 9]><xml>
@@ -386,7 +386,7 @@ style='color:black'> </span>License.<o:p></o:p></span></p>
 9.0pt'>Kevin Williams<o:p></o:p></span></p>
 
 <p class=MsoNormal align=right style='text-align:right'><span style='font-size:
-9.0pt'>V-0.3<o:p></o:p></span></p>
+9.0pt'>V-0.4<o:p></o:p></span></p>
 
 <h1><st1:State><st1:place>Tuscany</st1:place></st1:State> RDB DAS Sample (<span
 class=SpellE>companyweb</span>)</h1>
@@ -395,8 +395,8 @@ class=SpellE>companyweb</span>)</h1>
 
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
-<p class=MsoNormal>This stand-alone sample demonstrates usage of the SDO RDB
-Data Access Service in the context of a simple web application.</p>
+<p class=MsoNormal>This stand-alone sample demonstrates the SDO RDB Data Access
+Service in the context of a simple web application.</p>
 
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
@@ -425,27 +425,29 @@ the web page interface, a user can:</p>
 well as the some relationship manipulation (adding a Department associates that
 Department with the Company).<span style='mso-spacerun:yes'>  </span>The sample
 runs on Tomcat 5.5 and employs a <st1:City><st1:place>Derby</st1:place></st1:City>
-database.<span style='mso-spacerun:yes'>  </span>Access to the database is via
-a DataSource.</p>
+database accessed via a DataSource.</p>
 
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
 <p class=MsoNormal>This sample application is deployed (along with the canned
-test database) to an instance of Tomcat as part of our automated sample testing.<span
-style='mso-spacerun:yes'>  </span>This means you can run the
+test database) to an instance of Tomcat as part of our automated sample
+testing.<span style='mso-spacerun:yes'>  </span>This means you can run the
 java/testing/tomcat build (see java/testing/tomcat/<span class=GramE>readme.htm
-)</span><span style='mso-spacerun:yes'>  </span>and then just access the
-application by pointing your browser to http://localhost:8080/sample-companyweb/.<span
+)</span><span style='mso-spacerun:yes'>  </span>and then access the application
+by pointing your browser to http://localhost:8080/sample-companyweb/.<span
 style='mso-spacerun:yes'>  </span></p>
 
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
-<p class=MsoNormal>This sample also comes pre-deployed in a Tomcat instance
-along with the <st1:State><st1:place>Tuscany</st1:place></st1:State> binary
+<p class=MsoNormal>This sample is also pre-deployed in a Tomcat instance as
+part of the <st1:State><st1:place>Tuscany</st1:place></st1:State> binary
 distribution.<span style='mso-spacerun:yes'>  </span>When starting with this,
-you just</p>
+you just:</p>
 
 <ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo11;tab-stops:list .5in'>Unzip the distribution
+     archive</li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      mso-list:l8 level1 lfo11;tab-stops:list .5in'>Change the directory to
      &nbsp;<b>apache-tomcat-5.5.17\bin</b><o:p></o:p></li>
@@ -472,7 +474,7 @@ you just</p>
 sample to your own Tomcat installation by following the instructions below.<span
 style='mso-spacerun:yes'>  </span>These instructions assume that you have
 downloaded the <st1:State><st1:place>Tuscany</st1:place></st1:State> source and
-run our maven build.<span style='mso-spacerun:yes'>  </span><a
+run our maven build. <span style='mso-spacerun:yes'> </span><a
 href="https://svn.apache.org/repos/asf/incubator/tuscany/java/BUILDING.txt">https://svn.apache.org/repos/asf/incubator/tuscany/java/BUILDING.txt</a></p>
 
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
@@ -554,7 +556,7 @@ style='font-size:9.0pt'><span style='mso-spacerun:yes'>         </span>&lt;Resou
 class=SpellE>jdbc/dastest</span>&quot;<o:p></o:p></span></pre><pre><span
 style='font-size:9.0pt'><span style='mso-spacerun:yes'>              </span><span
 class=GramE>type</span>=&quot;<span class=SpellE>javax.sql.DataSource</span>&quot;<span style='mso-spacerun:yes'>  </span>auth=&quot;Container&quot;<o:p></o:p></span></pre><pre><span
-style='font-size:9.0pt'><span style='mso-spacerun:yes'>              </span><span
+style='font-size:9.0pt'><span style='mso-spacerun:yes'>   </span><span style='mso-spacerun:yes'>           </span><span
 class=GramE>description</span>=&quot;</span><st1:City><st1:place><span
   style='font-size:9.0pt'>Derby</span></st1:place></st1:City><span
 style='font-size:9.0pt'> database for DAS Company sample&quot;<o:p></o:p></span></pre><pre><span
@@ -719,8 +721,8 @@ Step #4<o:p></o:p></span></p>
      style='mso-spacerun:yes'> </span>–
      {user}/.m2/repository/org/eclipse/emf/ecore-xmi<o:p></o:p></span></li>
  <li class=MsoNormal style='mso-list:l7 level1 lfo4;tab-stops:list .5in'><span
-     style='font-size:10.0pt'>common-{latest version}.jar<span
-     style='mso-spacerun:yes'>  </span>– {user}/.m2/repository/org/eclipse/emf/common<o:p></o:p></span></li>
+     style='font-size:10.0pt'>common-{latest version}.jar <span
+     style='mso-spacerun:yes'> </span>– {user}/.m2/repository/org/eclipse/emf/common<o:p></o:p></span></li>
  <li class=MsoNormal style='mso-list:l7 level1 lfo4;tab-stops:list .5in'><span
      class=SpellE><span style='font-size:10.0pt'>derby.jar</span></span><span
      style='font-size:10.0pt'> – Extract from the archive file you downloaded
