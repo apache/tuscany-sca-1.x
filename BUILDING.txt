@@ -4,17 +4,22 @@ Building tuscany/java
 Initial Setup
 -------------
 
-1) Install J2SE 5.0 SDK (1.5.2_06 works)
+1) Install J2SE 5.0 SDK (1.5.0_06-b05 works)
 
 2) Install Maven:
-Download maven 2.0.4 (download from http://maven.apache.org/download.html).
-Set the env variable MVN_HOME to point at your maven installation.
+Download Maven 2.0.4 (download from http://maven.apache.org/download.html).
+Set the env variable MVN_HOME to point at your Maven installation.
 Add $MVN_HOME/bin to your path.
+
+3) Install Ant:
+Download Ant 1.6.5 (download from http://ant.apache.org/bindownload.cgi).
+Set the env variable ANT_HOME to point at your Ant installation.
+Add $ANT_HOME/bin to your path.
 
 
 Building
 --------
 
-1) cd tuscany/java
+1) Make sure you are in the tuscany/java directory
 2) mvn
 
