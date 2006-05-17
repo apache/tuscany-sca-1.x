@@ -12,26 +12,26 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <link rel=File-List href="readme_files/filelist.xml">
 <title>Tuscany RDB DAS Sample</title>
 <o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
- name="City"/>
+ name="place"/>
 <o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
  name="State"/>
 <o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
- name="place"/>
+ name="City"/>
 <!--[if gte mso 9]><xml>
  <o:DocumentProperties>
   <o:Author>IBM_USER</o:Author>
   <o:LastAuthor>IBM_USER</o:LastAuthor>
   <o:Revision>4</o:Revision>
-  <o:TotalTime>454</o:TotalTime>
-  <o:Created>2006-05-16T22:37:00Z</o:Created>
-  <o:LastSaved>2006-05-16T22:37:00Z</o:LastSaved>
+  <o:TotalTime>469</o:TotalTime>
+  <o:Created>2006-05-17T18:07:00Z</o:Created>
+  <o:LastSaved>2006-05-17T18:07:00Z</o:LastSaved>
   <o:Pages>1</o:Pages>
-  <o:Words>1028</o:Words>
-  <o:Characters>5862</o:Characters>
+  <o:Words>1126</o:Words>
+  <o:Characters>6420</o:Characters>
   <o:Company>IBM</o:Company>
-  <o:Lines>48</o:Lines>
-  <o:Paragraphs>13</o:Paragraphs>
-  <o:CharactersWithSpaces>6877</o:CharactersWithSpaces>
+  <o:Lines>53</o:Lines>
+  <o:Paragraphs>15</o:Paragraphs>
+  <o:CharactersWithSpaces>7531</o:CharactersWithSpaces>
   <o:Version>10.6735</o:Version>
  </o:DocumentProperties>
 </xml><![endif]--><!--[if gte mso 9]><xml>
@@ -111,6 +111,12 @@ a:visited, span.MsoHyperlinkFollowed
 	{color:purple;
 	text-decoration:underline;
 	text-underline:single;}
+code
+	{font-family:"Courier New";
+	mso-ascii-font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
 pre
 	{margin:0in;
 	margin-bottom:.0001pt;
@@ -243,21 +249,41 @@ div.Section1
 	mso-level-number-position:left;
 	text-indent:-.25in;}
 @list l8
-	{mso-list-id:2004123601;
-	mso-list-type:hybrid;
-	mso-list-template-ids:2035459332 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+	{mso-list-id:1923829381;
+	mso-list-template-ids:559690966;}
 @list l8:level1
 	{mso-level-number-format:bullet;
 	mso-level-text:\F0B7;
 	mso-level-tab-stop:.5in;
 	mso-level-number-position:left;
 	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
 	font-family:Symbol;}
+@list l8:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
 @list l9
+	{mso-list-id:2004123601;
+	mso-list-type:hybrid;
+	mso-list-template-ids:2035459332 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l9:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l10
 	{mso-list-id:2114665119;
 	mso-list-type:hybrid;
 	mso-list-template-ids:1704226536 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
-@list l9:level1
+@list l10:level1
 	{mso-level-number-format:bullet;
 	mso-level-text:\F0B7;
 	mso-level-tab-stop:.5in;
@@ -360,9 +386,10 @@ style='color:black'> </span>License.<o:p></o:p></span></p>
 9.0pt'>Kevin Williams<o:p></o:p></span></p>
 
 <p class=MsoNormal align=right style='text-align:right'><span style='font-size:
-9.0pt'>V-0.2<o:p></o:p></span></p>
+9.0pt'>V-0.3<o:p></o:p></span></p>
 
-<h1>Tuscany RDB DAS Sample (companyweb)</h1>
+<h1><st1:State><st1:place>Tuscany</st1:place></st1:State> RDB DAS Sample (<span
+class=SpellE>companyweb</span>)</h1>
 
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
@@ -407,10 +434,48 @@ a DataSource.</p>
 test database) to an instance of Tomcat as part of our automated sample testing.<span
 style='mso-spacerun:yes'>  </span>This means you can run the
 java/testing/tomcat build (see java/testing/tomcat/<span class=GramE>readme.htm
-)</span><span style='mso-spacerun:yes'>  </span>and then just test the
-application by pointing your browser.<span style='mso-spacerun:yes'> 
-</span>Alternatively, you can deploy the sample to your own Tomcat installation
-by following the instructions below.</p>
+)</span><span style='mso-spacerun:yes'>  </span>and then just access the
+application by pointing your browser to http://localhost:8080/sample-companyweb/.<span
+style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>This sample also comes pre-deployed in a Tomcat instance
+along with the <st1:State><st1:place>Tuscany</st1:place></st1:State> binary
+distribution.<span style='mso-spacerun:yes'>  </span>When starting with this,
+you just</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo11;tab-stops:list .5in'>Change the directory to
+     &nbsp;<b>apache-tomcat-5.5.17\bin</b><o:p></o:p></li>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l8 level2 lfo11;tab-stops:list 1.0in'><span
+      style='mso-bidi-font-weight:bold'>If you start Tomcat from some other
+      location then it will not find the canned database</span></li>
+ </ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo11;tab-stops:list .5in'>Execute: <code><span
+     style='font-size:10.0pt'>startup</span></code><code><span
+     style='mso-ansi-font-size:12.0pt;mso-bidi-font-size:12.0pt;font-family:
+     "Times New Roman"'><o:p></o:p></span></code></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo11;tab-stops:list .5in'>Point your browser to http://localhost:8080/sample-companyweb/</li>
+</ul>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'>Alternatively, you can deploy the
+sample to your own Tomcat installation by following the instructions below.<span
+style='mso-spacerun:yes'>  </span>These instructions assume that you have
+downloaded the <st1:State><st1:place>Tuscany</st1:place></st1:State> source and
+run our maven build.<span style='mso-spacerun:yes'>  </span><a
+href="https://svn.apache.org/repos/asf/incubator/tuscany/java/BUILDING.txt">https://svn.apache.org/repos/asf/incubator/tuscany/java/BUILDING.txt</a></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
 <h1>Set Up</h1>
 
@@ -541,7 +606,7 @@ name}/</a></p>
 <p class=MsoNormal style='margin-left:1.0in'>NOTE: for the M1 version of <st1:State><st1:place>Tuscany</st1:place></st1:State>
 sample the <span class=SpellE><span class=GramE>url</span></span> is:</p>
 
-<p class=MsoNormal style='margin-left:1.5in'>http://localhost:8080/sample-companyweb/<o:p></o:p></p>
+<p class=MsoNormal style='margin-left:1.5in'>http://localhost:8080/sample-companyweb-incubating-M1/<o:p></o:p></p>
 
 <p class=MsoNormal><sub><o:p>&nbsp;</o:p></sub></p>
 
@@ -672,7 +737,7 @@ Step #4<o:p></o:p></span></p>
 Step #5<o:p></o:p></span></p>
 
 <ul style='margin-top:0in' type=disc>
- <li class=MsoNormal style='mso-list:l9 level1 lfo10;tab-stops:list .5in'><span
+ <li class=MsoNormal style='mso-list:l10 level1 lfo10;tab-stops:list .5in'><span
      style='font-size:10.0pt'>sample-<span class=SpellE>companyweb-xxx.war</span>
      - {build directory root}/java/samples/<span class=SpellE>das/companyweb/target</span><o:p></o:p></span></li>
 </ul>
