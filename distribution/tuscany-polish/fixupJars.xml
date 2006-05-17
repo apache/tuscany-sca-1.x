@@ -41,6 +41,10 @@
 			</fileset>
 			<fileset dir="../../..">
 				<include name="STATUS" />
+				<include name="PROPOSAL.txt" />
+			</fileset>
+			<fileset dir="..">
+				<include name="NOTICE" />
 			</fileset>
 		</copy>		
 		<zip destfile="${target.dir}/../tuscany-incubating-M1.zip">

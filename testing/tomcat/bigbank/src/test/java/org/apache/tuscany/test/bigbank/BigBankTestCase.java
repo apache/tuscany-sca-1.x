@@ -32,7 +32,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class BigBankTestCase extends TestCase {
     // public static final String testUrl = "http://localhost:8080/tuscany-samples-bigbank-webclient";
-    public static final String testUrl = "http://localhost:8080/sample-bigbank-webclient-incubating-M1/";
+    public static final String testUrl = "http://localhost:8080/sample-bigbank-webclient/";
 
     public void testBigBankDefault() throws Exception {
         System.err.println("Running: testcase:");

@@ -1,7 +1,7 @@
 Apache Tuscany M1 build (May, 2006)
 ===================================
 
-http://incubator.apache.org/tuscany/
+http://incubator.apache.org/tuscany
 
 Tuscany is an effort undergoing incubation at the Apache Software Foundation
 (ASF), sponsored by the Web Services PMC.
@@ -17,13 +17,15 @@ endorsed by the ASF.
 
 Documentation
 -------------
-Documentation can be found TBD...
+Documentation can be found at http://incubator.apache.org/tuscany/documentation
 
 
 Getting Started
 ---------------
 
-TBD...
+To get started with Tuscany, try the SCA and DAS technology samples in the
+samples/ directory. More complete sample scenarios can be found in the
+sampleapps directory.
 
 
 Support
@@ -35,7 +37,7 @@ or in the JIRA issue tracker.
 Mailing list subscription:
     tuscany-dev-subscribe@ws.apache.org
 
-Jira:
+JIRA:
     http://issues.apache.org/jira/browse/Tuscany
 
 

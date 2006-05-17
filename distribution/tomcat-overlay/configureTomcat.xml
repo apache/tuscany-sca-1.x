@@ -201,7 +201,7 @@
 		<!-- just use unix for now -->
 	</target>
 
-	<target name="prepareTomcat" depends='tuscany.tomcat.unzipWindows,tuscany.tomcat.unzipUnix,tuscany.tomcat.unzipMac,tuscany.tomcat.fixup,tuscany.deploy.samples,tuscany.deploy.interop,tuscany.deploy.das.standalone' description='Unzip tomcat, fix it up, and deploy samples'>
+	<target name="prepareTomcat" depends='tuscany.tomcat.unzipWindows,tuscany.tomcat.unzipUnix,tuscany.tomcat.unzipMac,tuscany.tomcat.fixup,tuscany.deploy.samples,tuscany.deploy.das.standalone' description='Unzip tomcat, fix it up, and deploy samples'>
 		<dirname property='tuscany.acceptance.tc.dir.full' file="${tuscany.acceptance.tc.dir}/bin" />
 		<echo level="info" message="Tomcat fixed up here:  ${tuscany.acceptance.tc.dir.full}" />
 
@@ -273,18 +273,14 @@
 			<fileset dir="${tuscany.acceptance.samples.dir}">
 				<include name="**/*.war" />
 			</fileset>
+                        <chainedmapper>
+                                <flattenmapper/>
+                                <globmapper from="*-incubating-M1.war" to="*.war"/>
+                        </chainedmapper>
 		</copy>
 	</target>
 
 
-	<target name="tuscany.deploy.interop" description='Deploy tuscany interop test wars to tomcat webapps.'>
-		<copy todir="${tuscany.acceptance.tc.dir}/webapps" flatten='true'>
-			<fileset dir="${tuscany.acceptance.interop.dir}">
-				<include name="**/*.war" />
-			</fileset>
-		</copy>
-	</target>
-	
     <!-- DAS standalone target -->
     <target name="tuscany.deploy.das.standalone" description='Deploy DAS stand alone sample to tomcat.'>
 
