@@ -17,15 +17,17 @@ endorsed by the ASF.
 
 Documentation
 -------------
-Documentation can be found at http://incubator.apache.org/tuscany/documentation
+Documentation can be found at http://incubator.apache.org/tuscany/documentation.
+Javadoc can be found in the Tuscany binary distribution in the /javadoc
+directory.
 
 
 Getting Started
 ---------------
 
-To get started with Tuscany, try the SCA and DAS technology samples in the
-samples/ directory. More complete sample scenarios can be found in the
-sampleapps directory.
+To get started with Tuscany, try the SCA and DAS basic technology samples in the
+/samples directory. More complete sample applications can be found in the
+/sampleapps directory.
 
 
 Support
