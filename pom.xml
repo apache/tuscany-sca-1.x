@@ -95,13 +95,6 @@
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
-            <resource>
-                <directory>.</directory>
-                <includes>
-                    <include>README.txt</include>
-                    <include>LICENSE.txt</include>
-                </includes>
-            </resource>
         </resources>
 
         <testResources>
@@ -279,6 +272,16 @@
                         </executions>
                     </plugin>
                 </plugins>
+
+                <resources>
+                    <resource>
+                        <directory>.</directory>
+                        <includes>
+                            <include>README.txt</include>
+                            <include>LICENSE.txt</include>
+                        </includes>
+                    </resource>
+                </resources>
             </build>
         </profile>
     </profiles>
