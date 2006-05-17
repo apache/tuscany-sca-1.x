@@ -263,6 +263,10 @@
                         <fileset dir="${tuscany.acceptance.samples.dir}">
                                 <include name="**/*.war" />
                         </fileset>
+                        <chainedmapper>
+                                <flattenmapper/>
+                                <globmapper from="*-incubating-M1.war" to="*.war"/>
+                        </chainedmapper>
                 </copy>
         </target>
 
@@ -272,6 +276,10 @@
                         <fileset dir="${tuscany.acceptance.interop.dir}">
                                 <include name="**/*.war" />
                         </fileset>
+                        <chainedmapper>
+                                <flattenmapper/>
+                                <globmapper from="*-incubating-M1.war" to="*.war"/>
+                        </chainedmapper>
                 </copy>
         </target>
 
