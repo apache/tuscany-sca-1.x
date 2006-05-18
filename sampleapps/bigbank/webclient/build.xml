@@ -20,6 +20,10 @@
         <fileset dir="${mainDir}/lib">
             <include name="tuscany-runtime-incubating-M1.jar"/>
         </fileset>
+        <fileset dir="${mainDir}/apache-tomcat-5.5.17/common/lib">
+            <include name="servlet-api.jar"/>
+            <include name="jsp-api.jar"/>
+        </fileset>
     </path>
     <path id="java.classpath">
         <fileset dir="${mainDir}/lib">
@@ -27,13 +31,24 @@
         </fileset>
         <pathelement path="target/sample-bigbank-webclient.jar"/>
     </path>
+    <path id="tools.classpath">
+        <fileset dir="${mainDir}/lib">
+            <include name="tuscany-runtime-incubating-M1.jar"/>
+        </fileset>
+        <fileset dir="${mainDir}/lib/tools">
+            <include name="tuscany-tools-incubating-M1.jar"/>
+        </fileset>
+    </path>
 
-  <target name="init">
-    <mkdir dir="target/classes"/>
-  </target>
+    <target name="init">
+      <mkdir dir="target/classes"/>
+    </target>
 
-    <target name="compile" depends="init">
-      <javac srcdir="src/main/java" destdir="target/classes" debug="on" source="1.5" target="1.5">
+    <target name="compile" depends="init, xsd2sdo, wsdl2java">
+      <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
+        <src path="target/sdo-source"/>
+        <src path="target/wsdl2java-source"/>
+        <src path="src/main/java"/>
         <classpath refid="javac.classpath"/>
       </javac>
       <copy todir="target/classes">
@@ -42,6 +57,24 @@
       <war destfile="target/sample-bigbank-webclient.war" webxml="src/main/webapp/WEB-INF/web.xml">
         <classes dir="target/classes"/>
       </war>
+    </target>
+
+    <target name="xsd2sdo">
+      <java classname="org.apache.tuscany.sdo.generate.XSD2JavaGenerator" fork="yes">
+        <arg value="-targetDirectory"/>
+        <arg value="target/sdo-source"/>
+        <arg value="src/main/resources/wsdl/AccountService.wsdl"/>
+        <classpath refid="tools.classpath"/>
+      </java>
+    </target>
+
+    <target name="wsdl2java">
+      <java classname="org.apache.tuscany.tools.wsdl2java.generate.WSDL2JavaGenerator" fork="yes">
+        <arg value="-targetDirectory"/>
+        <arg value="target/wsdl2java-source"/>
+        <arg value="src/main/resources/wsdl/AccountService.wsdl"/>
+        <classpath refid="tools.classpath"/>
+      </java>
     </target>
 
     <target name="clean">

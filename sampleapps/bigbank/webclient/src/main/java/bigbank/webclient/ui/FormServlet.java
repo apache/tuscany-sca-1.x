@@ -108,7 +108,7 @@ public class FormServlet extends HttpServlet {
 
                 String symbol = req.getParameter("symbol").trim().toUpperCase();
                 int quantity = Integer.parseInt(req.getParameter("quantity"));
-                StockSummary stockSummry = AccountFactory.eINSTANCE.createStockSummary();
+                StockSummary stockSummry = AccountFactory.INSTANCE.createStockSummary();
                 stockSummry.setSymbol(symbol);
                 stockSummry.setQuantity(quantity);
                 accountServices.purchaseStock(profileServices.getId(), stockSummry);
@@ -136,7 +136,7 @@ public class FormServlet extends HttpServlet {
 
     private void createAccount(HttpServletRequest pReq, HttpServletResponse pResp, AccountService accountServices) throws ServletException {
         try {
-            CustomerProfileData customerProfileData = AccountFactory.eINSTANCE.createCustomerProfileData();
+            CustomerProfileData customerProfileData = AccountFactory.INSTANCE.createCustomerProfileData();
             customerProfileData.setFirstName(pReq.getParameter("firstName"));
             customerProfileData.setLastName(pReq.getParameter("lastName"));
             customerProfileData.setAddress(pReq.getParameter("address"));

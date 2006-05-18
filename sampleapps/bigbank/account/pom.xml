@@ -85,7 +85,6 @@
                             <schemaDir>${basedir}/src/main/resources/wsdl</schemaDir>
                             <noNotification>true</noNotification>
                             <noContainer>true</noContainer>
-                            <noInterfaces>true</noInterfaces>
                             <noUnsettable>true</noUnsettable>
                         </configuration>
                         <goals>

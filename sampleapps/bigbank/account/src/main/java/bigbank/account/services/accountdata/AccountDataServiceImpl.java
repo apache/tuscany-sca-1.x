@@ -36,7 +36,7 @@ public class AccountDataServiceImpl implements AccountDataService {
     }
 
     public AccountReport getAccountReport(int customerID) {
-        final AccountFactory accountFactory = AccountFactory.eINSTANCE;
+        final AccountFactory accountFactory = AccountFactory.INSTANCE;
         AccountReport accountReport = accountFactory.createAccountReport();
         List accounts = accountReport.getAccountSummaries();
 

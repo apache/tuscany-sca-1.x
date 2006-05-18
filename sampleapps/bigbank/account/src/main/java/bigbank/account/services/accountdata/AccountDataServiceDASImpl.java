@@ -187,7 +187,7 @@ public class AccountDataServiceDASImpl implements AccountDataService {
 
     public AccountReport getAccountReport(final int customerID) throws RemoteException {
         try {
-            final AccountFactory accountFactory = AccountFactory.eINSTANCE;
+            final AccountFactory accountFactory = AccountFactory.INSTANCE;
             final AccountReport accountReport = accountFactory.createAccountReport();
             InputStream mapping = createConfigStream();
 
