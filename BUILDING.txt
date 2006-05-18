@@ -8,8 +8,6 @@ Initial Setup
 
 2) Install Maven:
 Download Maven 2.0.4 (download from http://maven.apache.org/download.html).
-Set the env variable MVN_HOME to point at your Maven installation.
-Add $MVN_HOME/bin to your path.
 
 
 
