@@ -58,57 +58,14 @@
             <artifactId>tuscany-container-java</artifactId>
             <version>${pom.version}</version>
         </dependency>
-        <!--
         <dependency>
-            <groupId>org.apache.tuscany</groupId>
-            <artifactId>tuscany-tomcat</artifactId>
+            <groupId>org.apache.tuscany.das</groupId>
+            <artifactId>tuscany-das-rdb</artifactId>
             <version>${pom.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.tuscany.sca.bindings</groupId>
-                    <artifactId>tuscany-binding-axis2</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-        -->
     </dependencies>
     <build>
         <plugins>
-
-            <!-- 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>dependency-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack-javadoc</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.osoa</groupId>
-                                    <artifactId>sca-api</artifactId>
-                                    <version>${project.version}</version>
-                                    <classifier>javadoc</classifier>
-                                    <outputDirectory>${basedir}/../target/tuscany-dist/javadoc/sca</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>commonj</groupId>
-                                    <artifactId>sdo-api</artifactId>
-                                    <version>${project.version}</version>
-                                    <classifier>javadoc</classifier>
-                                    <outputDirectory>${basedir}/../target/tuscany-dist/javadoc/sdo</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-             -->
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
