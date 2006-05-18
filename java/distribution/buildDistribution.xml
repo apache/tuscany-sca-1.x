@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *  Copyright (c) 2005-2006 The Apache Software Foundation or its licensors, as applicable.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ -->
+<project name="project" default="createDistribution">
+
+	<condition property="isSample">
+		<and>
+			<contains string="${project.groupId}" substring=".samples" />
+			<or>
+				<equals arg1="${project.packaging}" arg2="jar" />
+				<equals arg1="${project.packaging}" arg2="war" />
+			</or>
+		</and>
+	</condition>
+
+	<condition property="isJar">
+		<and>
+			<not>
+				<contains string="${project.groupId}" substring=".samples" />
+			</not>
+			<equals arg1="${project.packaging}" arg2="jar" />
+		</and>
+	</condition>
+
+	<condition property="isFirstTime">
+		<and>
+			<equals arg1="${project.groupId}" arg2="org.osoa" />
+			<equals arg1="${project.artifactId}" arg2="spec" />
+		</and>
+	</condition>
+
+	<target name="createDistribution" depends="copyJavadoc" />
+
+	<target name="copySample" if="isSample" description="Copy the sample code to the Tuscany distribution folder">
+		<property name="target.folder" value="${dist.folder}/samples/${project.artifactId}" />
+		<delete dir="${target.folder}" />
+		<copy todir="${target.folder}">
+			<fileset dir="${project.basedir}" includes="readme.htm, pom.xml">
+				<include name="src/main/**" />
+				<include name="target/${project.artifactId}-${project.version}.${project.packaging}" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="copyJavadoc" if="isJar" description="Copy the javadoc to the Tuscany distribution folder">
+		<copy todir="${dist.folder}/javadoc/${project.artifactId}">
+			<fileset dir="${project.basedir}/target/site/apidocs">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="cleanDistribution" depends="cleanJavadoc, cleanBuild" />
+
+	<target name="cleanJavadoc" if="isJar">
+		<delete file="${dist.folder}/lib/${project.artifactId}-${project.version}.${project.packaging}" quiet="true" />
+		<delete file="${dist.folder}/javadoc/${project.artifactId}-${project.version}-javadoc.${project.packaging}" quiet="true" />
+		<delete dir="${dist.folder}/javadoc/${project.artifactId}" quiet="true" />
+	</target>
+
+	<target name="cleanSample" if="isSample">
+		<delete dir="${dist.folder}/samples/${project.artifactId}" quiet="true" />
+	</target>
+
+	<target name="cleanBuild" if="isFirstTime">
+		<delete dir="${dist.folder}" quiet="true" />
+	</target>
+
+</project>
+

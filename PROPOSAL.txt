@@ -1,0 +1,238 @@
+Apache Tuscany Proposal
+
+RATIONALE
+=========
+
+Tuscany provides multiple language implementations of the Service Component
+Architecture (SCA) specifications and related technologies such as SDO (links
+to these specifications are in the "Initial Source" section of this proposal).
+
+Its overall goal is to simplify the implementation of services and the
+composition of heterogeneous service networks by building infrastructure
+bridging the gaps between language-specific application component
+implementation technologies (e.g. Java EE, BPEL, Spring, etc) using SOA
+concepts/design approaches (e.g. web services, loosely coupled asynchronous
+messaging, ESBs, etc).
+
+The seed code for the project will consist of in-progress C++ and Java
+implementations of several SCA specifications that we intend to continue
+development on in conjuction with other Apache communities. More information on
+the scope of the seed code can be found in subsequent sections of this
+proposal.
+
+CRITERIA
+========
+
+Meritocracy:
+
+The Tuscany committers recognize the desirability of running the project as a
+meritocracy; indeed, the scope of the project is so broad that we find it hard
+to envision success any other way. One of the lessons taken from the historic
+development of middleware is that specifications developed in isolation from
+real usable code or amongst a narrowly restricted list of contributors often do
+not see widespread adoption. We are eager to engage other members of the
+community and operate to the standard of meritocracy that Apache emphasizes.
+
+Community:
+
+Tuscany is not based on an existing open source community, but the contributors
+involved have experience participating in and building other open source
+communities. A primary objective of the project is to build a vibrant community
+of users and active contributors.
+
+Core Developers:
+
+Most of the initial committers are members of BEA and IBM development teams. 4
+are committers on other Apache projects.
+
+Alignment:
+
+An initial implementation has been written in Java and has already been
+integrated with Apache Tomcat as a deployment platform; it is expected that
+this implementation will soon be integrated with other Java middleware
+environments including Apache Geronimo and ObjectWeb Celtix. This
+implementation makes extensive use of projects from the Apache Web Services
+community, including Axis and associated tools; future implementation of
+policies will increase the collaboration with other web service projects.
+
+Another implementation has also been written in C++ and has been integrated
+with Apache HTTPD and the Axis C++ project.
+
+The scope of the project is broader than just Java and C++, and some
+development has started on component containers for other programming languages
+including BPEL and PHP.
+
+As a broad goal is to present a SOA development model that mediates over a
+variety of middleware technologies, there is potential synergy with many other
+Apache projects including:
+
+    * Customized component/application packaging and deployment on Geronimo
+    * Data access integration with Beehive controls
+    * XML model representation and parsing using XMLBeans
+    * Language/platform neutral messaging infrastructure using Synapse
+    * OSGi packaging and deployment on Felix
+
+AVOIDING THE WARNING SIGNS
+==========================
+
+Orphaned products:
+
+The initial code submission is based on active code developed collaboratively
+by BEA and IBM who believe that its continued evolution in an open community
+will lead to a stronger, more widely accepted foundation for development of
+SOA-based applications.
+
+Inexperience with open source:
+
+Several of the committers have experience working on open source projects and
+are committers on other Apache projects. The seed materials have been
+co-developed in an environment that is structurally similar to open source
+communities (for example, design decisions made over mailing lists based on
+technical merit).
+
+Homogenous developers:
+
+The current list of committers includes developers from several different
+companies who are geographically distributed across the U.S., Europe, and Asia.
+They are experienced with working in a distributed environment, and with
+resolving technical differences outside the scope of a common employer.
+
+Reliance on salaried developers:
+
+Most of the initial developers are paid by their employers to contribute to
+this project; however, this includes three independent employers with track
+records for ongoing investment in open source communities (including Apache
+and Eclipse).
+
+No ties to other Apache products:
+
+As described in the Alignment section, this framework already has ties to many
+Apache products. The initial codebase is already licensed under the Apache
+License 2.0.
+
+A fascination with the Apache brand:
+
+The committers are intent on developing a strong open source community around
+frameworks that treat SOA-centric design in a first-class manner. We believe
+that the Apache Software Foundation's emphasis on community development makes
+it the most suitable choice for such a project.
+
+SCOPE OF SUBPROJECTS
+====================
+
+The initial contributors envision an active community of related projects
+sharing a common model for SOA applications but targeting specific technical
+areas of that model.
+
+Tuscany will be seeded with several projects based on donated material (see
+the next section):
+
+    * an assembly model defining a mechanism for composing SOA applications
+    * a Java implementation running on top of Tomcat and Axis
+    * a Java implementation of SDO2 and a data access subsystem
+    * a C++ implementation running on top of Apache HTTPD and Axis C++
+    * a C++ implementation of SDO2
+
+To assist in community building the committers have identified several key
+technology areas that will allow new contributors to actively engage in the
+project. These include:
+
+    * transition web service integration to Axis2
+    * integration with Axis2 policy implementations for security, transactions,
+      reliable messaging
+    * support heterogeneous components written in C/C++, BPEL, PHP and other
+      languages
+    * support callbacks, allowing a component to call back to the service that
+      invoked it
+    * support asynchronous calls using JMS
+    * support typesafe SDOs in the C++ implementation of SDO2
+
+These initial projects are intended merely as starting points and should not
+be taken as bounding the scope of the Tuscany project as a whole. Some other
+potential projects may include:
+
+    * Integration with existing development frameworks (such as JEE5/EJB3 or
+      Spring).
+    * Integration with rich middleware frameworks (such as Celtix or
+      ServiceMix).
+    * Frameworks for providing service-oriented data access to a variety of
+      existing resources.
+    * Richer tooling support for SOA-based applications, especially in the
+      areas of services composition, monitoring and policy administration.
+
+INITIAL SOURCE
+==============
+
+A group of vendors are developing a set of specifications relating to the
+design and composition of systems using SOA, collectively called Service
+Component Architecture (SCA). In progress versions are available at:
+
+    * http://dev2dev.bea.com/pub/a/2005/11/sca.html
+    * http://www.ibm.com/developerworks/library/specification/ws-sca/
+    * http://www.iona.com/devcenter/sca/
+    * http://oracle.com/technology/webservices/sca
+    * https://www.sdn.sap.com/
+    * http://www.sybase.com/sca
+
+The initial contributors have been developing Java and C++ code bases (already
+licensed under the Apache License 2.0) which implement aspects of these
+specifications, and intend to donate it to Apache. A snapshot of this code has
+been uploaded to JIRA and is is available at:
+
+    * http://issues.apache.org/jira/browse/INCUBATOR-8
+
+Although the Tuscany project expects to bootstrap using these materials and in
+the case of specifications, to provide feedback that will be incorporated into
+their ongoing development, we expect and encourage the open source community to
+take the project in new directions not envisioned by them.
+
+ASF resources to be created
+mailing list(s)
+
+    * tuscany-dev@ws.apache.org
+    * tuscany-commits@ws.apache.org
+
+Subversion repository
+
+    * https://svn.apache.org/repos/asf/incubator/tuscany
+
+Jira
+
+    * Tuscany (TUSCANY)
+
+INITIAL COMMITTERS
+==================
+
+    * Jeremy Boynes
+    * Frank Budinsky
+    * Don Cai
+    * Jean-Sebastien Delfino
+    * Mike Edwards
+    * Padmapriya Illindala
+    * Jim Marino
+    * Geir Magnusson Jr.
+    * Eddie O'Neil
+    * Radu Preotiuc-Pietro
+    * Rick Rineholt
+    * Pete Robbins
+    * Michael Rowley
+    * Edward Slattery
+    * Ken Tam
+    * Alexandre Vasseur
+    * Kevin Williams
+
+APACHE SPONSOR
+==============
+
+The WS PMC has voted to accept this project into the WS project upon successful
+incubation.
+
+Champion
+
+    * Geir Magnusson Jr.
+
+Mentors:
+
+    * Sam Ruby
+    * Davanum Srinivas (Dims)
+

@@ -1,0 +1,23 @@
+Building tuscany/java
+=====================
+
+Initial Setup
+-------------
+
+1) Install J2SE 5.0 SDK (1.5.0_06-b05 works)
+
+2) Install Maven:
+Download Maven 2.0.4 (download from http://maven.apache.org/download.html).
+
+
+
+Building
+--------
+
+1) Change to the top level directory of the Tuscany Java project (tuscany/java) or at top level of your source distribution.
+2) Execute: mvn
+
+Note: Depending on the load of remote Mavan 2.0 repositories you may have to execute mvn several time until required
+      dependencies are all located in your local maven repository.  After you have completed a full successful build you 
+      can use "mvn -o" which is much faster.
+

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *  Copyright (c) 2005-2006 The Apache Software Foundation or its licensors, as applicable.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ -->
+<project>
+    <!-- to keep separation between project and spec we do not extend the Tuscany project POM -->
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.osoa</groupId>
+    <artifactId>spec</artifactId>
+    <packaging>pom</packaging>
+    <name>OSOA Specification API jars</name>
+    <version>incubating-M1</version>
+
+    <prerequisites>
+        <maven>2.0</maven>
+    </prerequisites>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <repositories>
+        <repository>
+            <id>ibiblio</id>
+            <name>ibiblio</name>
+            <url>http://www.ibiblio.org/maven2</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+       <!--
+        <snapshotRepository>
+           <id>maven-snapshot-repository</id>
+           <name>Apache SNAPSHOT Repository</name>
+           <url>scpexe://cvs.apache.org/www/cvs.apache.org/maven-snapshot-repository</url>
+        </snapshotRepository>
+        -->
+        <repository>
+            <id>maven-test-repository</id>
+            <name>Test Repository</name>
+            <url>scp://people.apache.org/home/jsdelfino/public_html/maven2</url>
+        </repository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:svn:http://svn.apache.org/repos/asf/incubator/tuscany/java/spec</connection>
+        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/incubator/tuscany/java/spec</developerConnection>
+        <url>http://svn.apache.org/viewcvs.cgi/incubator/tuscany/java/spec</url>
+    </scm>
+
+    <modules>
+        <module>sdo</module>
+        <module>sca</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                    <resources>
+                        <resource>
+                            <directory>src/main/resources</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+        <defaultGoal>install</defaultGoal>
+
+        <extensions>
+          <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+             <artifactId>wagon-ssh-external</artifactId>
+             <version>1.0-alpha-5</version>
+          </extension>
+          <extension>
+             <groupId>org.apache.maven.wagon</groupId>
+             <artifactId>wagon-ftp</artifactId>
+             <version>1.0-alpha-6</version>
+          </extension>
+
+        </extensions>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jxr-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <profiles>
+        <profile>
+            <id>distribution</id>
+
+            <activation>
+                <property>
+                    <name>tuscany.home</name>
+                </property>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>1.5</source>
+                            <target>1.5</target>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+			<version>2.0</version>
+                        <executions>
+                            <execution>
+                                <id>package</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>javadoc</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+				<links>
+					<link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+				</links>
+				<offlineLinks>
+					<offlineLink>
+						<url>../sca-api</url>
+						<location>${tuscany.home}/spec/sca/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../sdo-api</url>
+						<location>${tuscany.home}/spec/sdo/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-common</url>
+						<location>${tuscany.home}/sca/common/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-model</url>
+						<location>${tuscany.home}/sca/model/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-core</url>
+						<location>${tuscany.home}/sca/core/target/site/apidocs</location>
+					</offlineLink>
+					<offlineLink>
+						<url>../tuscany-databinding-sdo</url>
+						<location>${tuscany.home}/sca/databinding/sdo/target/site/apidocs</location>
+					</offlineLink>
+				</offlineLinks>
+                            <!--
+                            <outputDirectory>${tuscany.home}/distribution/build/javadoc/${project.artifactId}</outputDirectory>
+                            -->
+                            <attach>true</attach>
+                            <quiet>true</quiet>
+                            <bottom>-</bottom>
+                            <header>${project.name}</header>
+                            <footer>${project.name}</footer>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>create-dist</id>
+                                <phase>install</phase>
+                                <configuration>
+                                    <tasks>
+                                        <ant inheritRefs="true"
+                                            antfile="${tuscany.home}/distribution/buildDistribution.xml" dir="${tuscany.home}"
+                                            target="createDistribution">
+                                            <property name="dist.folder"
+                                                value="${tuscany.home}/distribution/build" />
+                                            <property
+                                                name="project.packaging" value="${project.packaging}" />
+                                            <property
+                                                name="project.groupId" value="${project.groupId}" />
+                                            <property
+                                                name="project.artifactId" value="${project.artifactId}" />
+                                            <property
+                                                name="project.version" value="${project.version}" />
+                                            <property
+                                                name="project.basedir" value="${basedir}" />
+                                        </ant>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>clean-dist</id>
+                                <phase>clean</phase>
+                                <configuration>
+                                    <tasks>
+                                        <ant inheritRefs="true"
+                                            antfile="${tuscany.home}/distribution/buildDistribution.xml" dir="${tuscany.home}"
+                                            target="cleanDistribution">
+                                            <property name="dist.folder"
+                                                value="${tuscany.home}/distribution/build" />
+                                            <property
+                                                name="project.packaging" value="${project.packaging}" />
+                                            <property
+                                                name="project.groupId" value="${project.groupId}" />
+                                            <property
+                                                name="project.artifactId" value="${project.artifactId}" />
+                                            <property
+                                                name="project.version" value="${project.version}" />
+                                            <property
+                                                name="project.basedir" value="${basedir}" />
+                                        </ant>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><!-- Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<script type="text/javascript">
+function expandImage(img,height,width) {
+window.open(img,"Image","menubar=no,resizable=no,status=no,toolbar=no,location=no,height=" + height + ",width=" + width);
+}
+function goURL(url) {
+window.location = url;
+}
+</script><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><meta http-equiv="Content-Style-Type" content="text/css"><title>Tuscany BigBank Sample Application</title><style type="text/css" media="all">
+@import url("../../../../css/maven-base.css");
+@import url("../../../../css/maven-theme.css");
+@import url("../../../../css/site.css");
+</style><link rel="stylesheet" href="./css/print.css" type="text/css" media="print"></head>
+<body><a><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven --><!-- end maven -->
+</a><h2>Tuscany
+BigBank Sample Application</h2>
+<h3>Overview</h3>
+<p>The Tuscany BigBank&nbsp;sample application&nbsp;
+shows using the Tuscany SCA runtime to build a&nbsp; financial
+application.</p><h3>Location</h3>This
+sample is located&nbsp;in the&nbsp;<a href=".">sampleapps\bigbank</a>
+directory. There are two subdirectories in that for the two modules <a href="account" target="_blank">account</a> and <a href="webclient" target="_blank">webclient.</a>
+<h3>Setup</h3>This Setup section is not required if you are
+working from a binary distribution. Set up your server as described in
+the <a href="../../GettingStarted.htm" target="_blank">Tomcat
+Setup</a>. &nbsp;If you are building the sample from source you need to deploy the war files produced in <span style="font-weight: bold;">sampleapps\bigbank\account\target</span> and <span style="font-weight: bold;">sampleapps\bigbank\webclient\target</span>&nbsp;
+your webapp directory.<br>
+<h3>Running</h3>
+Once you've started your web server, use your web browser to view the
+following URL <a href="http://localhost:8080/sample-bigbank-webclient/" target="_blank">http://localhost:8080/sample-bigbank-webclient/</a><br>You can either use an already supplied account with <span style="font-weight: bold;">Login</span> as <span style="color: rgb(204, 0, 0); font-weight: bold;">test</span><span style="font-weight: bold;"> </span>and <span style="font-weight: bold;">Password</span> as <span style="color: rgb(204, 0, 0); font-weight: bold;">password, </span>or you can &nbsp;create a new account.<br>The
+demo is first configured to use a local mock stock quote service that
+returns random stock data. &nbsp;If you want to use an actual stock
+quote provider follow these steps:<br><ul><li>Stop your server by issuing in the <span style="font-weight: bold;">apache-tomcat-5.5.17\bin</span> directory</li><li>Issue <span style="font-weight: bold;">shutdown </span>command to stop your web application server<span style="font-weight: bold;">.</span></li><li><span style="font-weight: bold;">Change the directory to <span style="font-weight: bold;">apache-tomcat-5.5.17\webapps\sample-bigbank-account-incubating-M1\WEB-INF\classes</span></span></li><li>Copy the file<span style="font-weight: bold;"><span style="font-weight: bold;"> WebservicexService_stockquote.fragment </span></span>to<span style="font-weight: bold;"><span style="font-weight: bold;"> sca.fragment</span></span></li><li>Change to the directory &nbsp;<span style="font-weight: bold;">apache-tomcat-5.5.17\bin&nbsp;</span></li><li><span style="font-weight: bold;"></span> issue<span style="font-weight: bold;"> startup &nbsp;</span>command to start up the server<span style="font-weight: bold;">.</span></li></ul>The
+sample should now be using the real stock quote provider. The
+"sca.fragment" file is loaded and added to the sca.module at runtime.<br><h3>Introduction</h3>This
+example illustrates using Tuscany runtime in building
+a financial application&nbsp;using SCA programing model.
+&nbsp;The following key concepts are covered:
+<ul><li>&nbsp;<b><i>Component
+implementations</i></b>. that provide web based&nbsp;
+HTML&nbsp;user interface </li><li><b><i>Component
+implementations</i></b> that provide <b><i>local
+services</i></b> in Java. Local services implement internal
+application business logic such as tracking user state and are not
+exposed remotely. </li><li><b><i>Component
+implementations</i></b> that have <b><i>configuration
+properties</i></b> and <b><i>service references</i></b>
+to other services </li><li><b><i>Components</i></b>
+that use and <b><i>configure</i></b> <b><i>the
+properties and references</i></b> of component
+implementations </li><li><b><i>Entry points</i></b>
+to publish remotable services via a <b><i>Web Service
+binding</i></b>. </li><li><b><i>External
+services</i></b> to consume remotable services via a <b><i>Web
+Service binding</i></b> </li><li>Assembling
+implementation, components, entry points and external service into <b><i>modules</i></b>.
+</li><li>Creating a module and all of its artifacts as part
+of a <b><i>web application</i></b> to show a
+front-end access to SCA services<span style="font-style: italic;"><span style="font-weight: bold;"></span></span></li><li><span style="font-style: italic;"><span style="font-weight: bold;"><span style="font-style: italic;"><span style="font-weight: bold;"></span></span></span></span>The
+use of Data Access services to persist and retrieve Service Data
+Objects from Apache Derby.</li><li style="text-align: left;">The
+use of &nbsp;existing Web services in SCA.</li></ul>BigBank
+sample provides the following user services: account balance,&nbsp;making deposits and withdrawals&nbsp;
+to purchase and sell stock, and to view current stock value.<br>The
+sample is organized into two SCA modules: webclient and account. The
+webclient module functionality is to provide user information and
+obtain user input. The account module is is used to retrieve and store
+user information, account information, current stock information and
+the purchasing and selling of stock. The two modules interact via web
+services through SCA exterenalService and entryPoint.<br><br><div style="text-align: center;">
+<img style="width: 381px; height: 169px;" alt="Overview of modules." title="Overview of modules." src="docs/modualoverview.png" align="middle"><h4>Webclient</h4><br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="1" cellspacing="0" width="100%"><tbody><tr><td align="left" valign="top" width="*"><a href="javascript:expandImage('docs/Show.Image.html?url=webclientfiles.png',800,500)"><img style="width: 262px; height: 360px;" alt="Webclient files" title="Click to expand" src="docs/webclientfiles.png"></a>&nbsp;<br><div style="text-align: center;"><small><span style="font-style: italic;">click to enlarge</span></small></div></td><td style="text-align: left;" align="left" valign="top" width="80%"><table style="text-align: left; width: 100%;" border="0" cellpadding="1" cellspacing="0"><tbody><tr><td style="text-align: center;" colspan="2"><span style="font-weight: bold; text-decoration: underline;">Java source files implementing SCA components and interfaces.</span></td><td></td></tr><tr><td style="width: 10%;">AccountServiceComponentImpl.java</td><td>Implements
+the account service.</td></tr><tr><td>AccountLoginServiceImpl.java</td><td>Implements
+the Logiin service.</td></tr><tr><td>LoginService.java</td><td>Interface
+for a services provided by a login&nbsp; service component.</td></tr><tr><td>ProfileService.java</td><td>Interface
+for a service provided by a profile component.</td></tr><tr><td>ProfileServiceImpl.java</td><td>Implements
+the profile component.</td></tr><tr><td>SimpleLoginServiceImpl.java</td><td>A
+simple in memory login service.</td></tr><tr><td style="text-align: center;" colspan="2"><span style="font-weight: bold; text-decoration: underline;">Java source files implementing Web HTML interface.</span></td><td></td></tr><tr><td>AccountStatusTag.java</td><td>Implements
+a jsp tag that&nbsp;displays the account information</td></tr><tr><td>StockStatusTag.java</td><td>Implements
+a jsp tag that displays the stock information.</td></tr><tr><td>LoginBarrierTag.java</td><td>Implements
+a jsp tag that ensures the user is logged in.</td></tr><tr><td>ServiceTag.java</td><td>Places
+an SCA service in the JSP page context.</td></tr><tr><td>FormServlet.java</td><td>Process
+user input and uses the AccountService component.</td></tr><tr><td>LoginServlet.java</td><td>Processes
+logging in and logout.</td></tr><tr><td style="text-align: center;" colspan="2"><span style="font-weight: bold; text-decoration: underline;">Files that will be loaded as resources along classpath.</span></td><td></td></tr><tr><td>sca.module</td><td>SCA&nbsp; module.&nbsp;</td></tr><tr><td>sca.subsystem</td><td>SCA
+subsystem.</td></tr><tr><td>AccountService.wsdl</td><td>WSDL
+that &nbsp;defines the account service.</td></tr><tr><td>bigbank-tags.tld</td><td>Defines
+the tag libs for the user interface.</td></tr></tbody></table></td></tr></tbody></table>
+<!-- account --><h4>Account</h4>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="1" cellspacing="0" width="100%"><tbody><tr><td align="left" valign="top" width="*"><a href="javascript:expandImage('docs/Show.Image.html?url=accountfiles.png',550,500)"><img style="width: 262px; height: 360px;" alt="Webclient files" title="Click to expand" src="docs/accountfiles.png"></a>&nbsp;<br><div style="text-align: center;"><small><span style="font-style: italic;">click to enlarge</span></small></div></td><td style="text-align: left;" align="left" valign="top" width="80%"><table style="text-align: left; width: 100%;" border="0" cellpadding="1" cellspacing="0"><tbody><tr><td style="text-align: center;" colspan="2"><span style="font-weight: bold; text-decoration: underline;">Java source files implementing SCA components and interfaces.</span></td><td></td></tr><tr><td style="width: 10%;">AccountServiceImpl.java</td><td>Implements
+the account service component.</td></tr><tr><td>AccountDataService.java</td><td>Interface defined for component implementing &nbsp;an account's data service.</td></tr><tr><td>AccountDataServiceDASImpl.java</td><td>A Data Access Service (DAS) implementation of of the Account Data Service.</td></tr><tr><td>AccountDataServiceImpl.java</td><td>A Data Service implementation not using DAS.</td></tr><tr><td>AccountDBInit.java</td><td>A utility to just create the database and it table and fill in some initial data.</td></tr><tr><td>StockQuote.java</td><td>A class to hold the StockQuote information.</td></tr><tr><td>StockQuoteService.java</td><td>Interface defined for a component implementing a stock quote service.</td></tr><tr><td>StockQuoteServiceImpl.java</td><td>Implements a fake stock quote service.</td></tr><tr><td>StockQuoteWebservicexServiceImpl.java</td><td>Implements an actual stock quote service.</td></tr><tr><td style="text-align: center;" colspan="2"><span style="font-weight: bold; text-decoration: underline;">Files that will be loaded as resources along classpath.</span></td><td></td></tr><tr><td>AccountService.wsdl</td><td>WSDL
+that &nbsp;defines the account service</td></tr><tr><td>stockquotes.webservicex.wsdl</td><td>Actual stock quote service.</td></tr><tr><td>DasAccountConfiguration.xml</td><td>Provides any needed configuration info including datasource properties, table definitions,</td></tr><tr><td>sca.module</td><td>SCA module.</td></tr><tr><td>sca.fragrment</td><td>Loaded and combined with the existing SCA module.</td></tr><tr><td>sca.subsystem</td><td>Processes
+logging in and logout.</td></tr></tbody></table></td></tr></tbody></table>
+</div></body></html>

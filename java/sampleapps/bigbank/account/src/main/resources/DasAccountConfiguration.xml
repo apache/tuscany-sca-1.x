@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ASCII"?>
+<!--
+  Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ -->
+<Config xsi:noNamespaceSchemaLocation="http:///org.apache.tuscany.das.rdb/config.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <Table name="CUSTOMERS" propertyName="CustomerProfileData">
+    <!-- Column name="firstName" primaryKey="true"/ -->
+    <Column name="FIRSTNAME"/>
+    <Column name="LASTNAME"/> 
+    <Column name="ADDRESS"/> 
+    <Column name="EMAIL"/>
+     <Column name="LOGINID"/> 
+     <Column name="PASSWORD"/> 
+      <Column name="ID"/> 
+  </Table>
+  
+  <Table name="ACCOUNTS" propertyName="AccountSummary">
+    <!-- Column name="firstName" primaryKey="true"/ -->
+    <Column name="ACCOUNTNUMBER"/>
+    <Column name="BALANCE"/> 
+  </Table>
+
+
+
+  <Table name="STOCKS" propertyName="StockSummary" >
+    <Column name="ID"/>
+    <Column name="Symbol"/>
+    <Column name="quantity"/>
+    <Column name="purchasePrice"/>
+    <Column name="PURCHASEDATE" converterClassName="bigbank.account.services.accountdata.AccountDataServiceDASImpl$DateConverter"/>
+  </Table>
+
+	
+  <Command name="update balance"
+        SQL="update ACCOUNTS set BALANCE = :BALANCE where ACCOUNTNUMBER = :ACCOUNTNUMBER"
+        kind="Update">
+        <Parameter name=":BALANCE"/>
+        <Parameter name=":ACCOUNTNUMBER"/>
+   </Command>
+    
+    
+    <Command name="all stocks" SQL="select * from stocks"  kind="Select"/>
+    <Command name="all customers" SQL="select  from CUSTOMERS"  kind="Select"/>
+    <Command name="stockbylotSelect" SQL="select quantity  from STOCKS  WHERE purchaseLotNumber = :PURCHASELOTNUMBER"  kind="Select" >
+    	<Parameter name=":PURCHASELOTNUMBER"/>
+    </Command>
+    <Command name="stockbylot" SQL="update STOCKS set quantity = :QUANTITY WHERE purchaseLotNumber = :PURCHASELOTNUMBER"  kind="Update" >
+        <Parameter name=":QUANTITY"/>
+        <Parameter name=":PURCHASELOTNUMBER"/>
+    </Command>
+	
+</Config>

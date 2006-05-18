@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
+<HTML>
+<HEAD>
+   <META CONTENT="text/html; charset=iso-8859-1" HTTP-EQUIV="Content-Type">
+   <META CONTENT="text/css" HTTP-EQUIV="Content-Style-Type">
+   <META CONTENT="text/html; charset=ISO-8859-1" HTTP-EQUIV="Content-Type">
+   <STYLE MEDIA="all" TYPE="text/css">
+@import url("javadoc/css/maven-base.css");
+@import url("javadoc/css/maven-theme.css");
+@import url("javadoc/css/site.css");
+   </STYLE> 
+   <LINK HREF="javadoc/css/print.css" MEDIA="print" REL="stylesheet"
+         TYPE="text/css">
+   <TITLE>Tuscany - Getting Started</TITLE>
+</HEAD>
+<BODY>
+<DIV ID="bodyColumn"> 
+   <DIV ID="contentBox"> 
+      <DIV CLASS="section"> 
+         <H2>Tuscany - Getting Started - Milestone release 1</H2> 
+
+         <P>This page describes what is needed to install and run Tuscany
+         SCA, SDO and DAS for Java.<BR>If you haven't already done so, the first
+         step is to download the Milestone release 1 of apache Tuscany from our
+         <A HREF="http://incubator.apache.org/tuscany/download.html" target='_blank'>download  page</A>.
+         </P>
+      </DIV>
+      <DIV CLASS="section"> 
+         <H2>System Requirements</H2> 
+
+         <P>In order to run the Tuscany there are some
+         minimum&nbsp;requirements:</P> 
+         <TABLE CLASS="bodyTable">
+            <TBODY>
+            <TR CLASS="a">
+               <TD><B>Software</B></TD>
+               <TD><B>Download Link</B></TD>
+            </TR>
+            <TR CLASS="b">
+               <TD>Operating systems: 
+                  <UL>
+                     <LI>Windows XP SP2</LI> 
+                     <LI>Linux</LI> 
+                  </UL>
+               </TD>
+               <TD> 
+               </TD>
+            </TR>
+            <TR CLASS="a">
+               <TD>JDK 5.0</TD>
+               <TD> 
+                  <A HREF="http://java.sun.com/j2se/1.5.0/download.jsp"
+                     TARGET="_blank">http://java.sun.com/j2se/1.5.0/download.jsp</A>
+                  
+               </TD>
+            </TR>
+            <TR>
+               <TD COLSPAN="2" STYLE="text-align: center;"><SMALL>&nbsp;<SPAN STYLE="font-style: italic;">Optionally:
+                  One of the following if you wish to build the
+                  samples&nbsp;yourself...</SPAN></SMALL></TD>
+               <TD></TD>
+            </TR>
+            <TR CLASS="a">
+               <TD> Apache Maven 2.0.4 <SMALL><SPAN STYLE="font-style: italic;">(version
+                  or later)</SPAN><SMALLER><I><BR></I> 
+                  </SMALLER></SMALL></TD>
+               <TD> 
+                  <A HREF="http://maven.apache.org/download.html"
+                     TARGET="_blank">http://maven.apache.org/download.html</A>
+                  
+               </TD>
+            </TR>
+            <TR CLASS="b">
+               <TD>Apache Ant 1.6.5 (<SMALL><SPAN STYLE="font-style: italic;">version
+                  or later)</SPAN></SMALL></TD>
+               <TD><A HREF="http://ant.apache.org/bindownload.cgi"
+                      TARGET="_blank">http://ant.apache.org/bindownload.cgi</A></TD>
+            </TR>
+            </TBODY>
+         </TABLE>
+      </DIV><A NAME="setup JDK 5.0"></A> 
+      <DIV CLASS="section"> 
+         <H2>Building Samples</H2> 
+
+         <P>The samples are already built and ready to run. However if you
+         want to build them yourself you can:&nbsp;<BR>For example to build
+         the helloworld sample:</P>
+
+         <P>Using Maven:</P> 
+         <DIV STYLE="text-align: left; margin-left: 80px;">
+         <P><I><B>Note</b>:Using Maven the first build will require connection to the internet to download required dependiences to your local Maven repository.  Occassionally, these
+         remote repository can become over burdened resulting in failure to complete the build. If this happens restart the build again. Once a complete build is achieved you can use
+         the <B>-o</B> option on the mvn command to do offline builds.</I></P>
+         </DIV>
+         <UL>
+            <LI>Change to the directory: samples/sca/helloworld directory</LI>
+            
+            <LI>Issue the&nbsp;command: <CODE>mvn</CODE>&nbsp;</LI> 
+         </UL>
+         <DIV STYLE="text-align: left; margin-left: 80px;">
+<PRE> - OR -</PRE>
+         </DIV>
+
+         <P>Using Ant:</P> 
+         <UL>
+            <LI>Change to the directory: samples/sca/helloworld directory</LI>
+            <LI>Issue the&nbsp;command: <CODE>ant</CODE>&nbsp;</LI>
+         </UL>
+      </DIV>
+      <DIV CLASS="section"> 
+         <H2>Starting the Server</H2> 
+
+         <P>Some of the samples require the Tuscany embedded Tomcat server
+         to be started.</P> 
+         <UL>
+            <LI>Change the directory to apache-tomcat-5.5.17\bin</LI> 
+            <LI>Issue the&nbsp;command: <CODE>startup</CODE></LI> 
+            <LI>To later stop the server&nbsp;Issue the&nbsp;command: <CODE>shutdown</CODE></LI>
+            
+         </UL>
+      </DIV>
+      <DIV CLASS="section"> 
+         <H2>Samples</H2> 
+         <TABLE CLASS="bodyTable">
+            <CAPTION STYLE="text-decoration: underline;">Tuscany samples
+            and applications</CAPTION> 
+            <TBODY>
+            <TR CLASS="a">
+               <TD STYLE="vertical-align: top; white-space: nowrap;"><SPAN STYLE="text-decoration: underline;"></SPAN><A HREF="samples/sca/readme.htm">SCA Technology samples</A> 
+               </TD>
+               <TD>Simple samples that emphasizes &nbsp;how to to use
+                  Service Component Architecture technology.<BR> 
+               </TD>
+            </TR>
+            <TR CLASS="b">
+               <TD><A HREF="samples/das/companyweb/readme.htm">DAS Technology samples</A></TD>
+               <TD>Simple samples that&nbsp;emphasizes how to use Data
+                  Access Services.</TD>
+            </TR>
+            <TR CLASS="a">
+               <TD STYLE="vertical-align: top; white-space: nowrap;"> 
+                  <A HREF="sampleapps/readme.htm">Sample applications</A></TD>
+               <TD>Sample business applications that show&nbsp; SCA and SDO.</TD>
+            </TR>
+            </TBODY>
+         </TABLE>
+         <BR> 
+      </DIV>
+      <DIV CLASS="section"> 
+         <H2>Getting Help</H2> 
+
+         <P>First place to look is at the Tuscany FAQ at 
+         <A HREF="http://incubator.apache.org/tuscany/faq.html"
+            TARGET="_blank">http://incubator.apache.org/tuscany/faq.html</A> </P>
+
+         <P>Any problem with this release can be reported to the Tuscany 
+         <A HREF="http://incubator.apache.org/tuscany/mail-lists.html"
+            TARGET="_blank">mailing lists</A> or create a JIRA issue at&nbsp;<A HREF="http://issues.apache.org/jira/browse/Tuscany"
+                                                                                TARGET="_blank">http://issues.apache.org/jira/browse/Tuscany</A>.</P>
+         
+
+         <P></P>
+
+         <P></P>
+
+         <P></P>
+
+         <P>&nbsp;</P> 
+
+         <P>&nbsp;</P> 
+
+         <P>&nbsp;</P> 
+         <TABLE CLASS="bodyTable">
+            <TBODY>
+            <TR CLASS="a">
+               <TD> 
+
+                  <P>Thank you for your interest in Tuscany.</P> <STRONG><EM>-The
+                  Tuscany Development Team</EM></STRONG> 
+
+                  <P></P>
+               </TD>
+            </TR>
+            </TBODY>
+         </TABLE>
+
+         <P></P>
+      </DIV>
+   </DIV>
+</DIV>
+</BODY>
+</HTML>

@@ -1,0 +1,111 @@
+/**
+ *
+ *  Copyright 2005 The Apache Software Foundation or its licensors, as applicable.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.apache.tuscany.das.rdb.impl;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import org.apache.tuscany.das.rdb.ApplyChangesCommand;
+import org.apache.tuscany.das.rdb.Command;
+import org.apache.tuscany.das.rdb.config.Config;
+import org.apache.tuscany.das.rdb.config.ConnectionProperties;
+import org.apache.tuscany.das.rdb.config.wrapper.MappingWrapper;
+import org.apache.tuscany.das.rdb.util.DebugUtil;
+
+import commonj.sdo.DataObject;
+import commonj.sdo.Type;
+
+/**
+ * 
+ */
+public class ApplyChangesCommandImpl extends BaseCommandImpl implements ApplyChangesCommand {
+
+    private static final boolean debug = false;
+
+    private ChangeSummarizer summarizer = new ChangeSummarizer();
+
+    public ApplyChangesCommandImpl() {
+    }
+
+    public ApplyChangesCommandImpl(Config config){
+    	this.configWrapper = new MappingWrapper(config); 
+        if (config.getConnectionProperties() != null)
+            setConnection(config.getConnectionProperties());
+    }
+    
+    public ApplyChangesCommandImpl(Config config, Connection connection){
+        this.configWrapper = new MappingWrapper(config); 
+        setConnection(connection);
+    }
+    
+	public void setConnection(ConnectionImpl connection) {
+		summarizer.setConnection(connection);
+	}
+
+    public void setConnection(ConnectionProperties c) {
+        try {
+            Connection connection = null;
+            Class.forName(c.getDriverClassName());
+            if (c.getDriverUserName() == null)
+                connection = DriverManager.getConnection(c.getDriverURL());
+            else
+                connection = DriverManager.getConnection(c.getDriverURL(), c.getDriverUserName(), c.getDriverPassword());
+            connection.setAutoCommit(false);
+            setConnection(connection);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void addCreateCommand(Type type, Command cmd) {
+        summarizer.addCreateCommand(type, cmd);        
+    }
+
+    public void addUpdateCommand(Type type, Command cmd) {      
+        summarizer.addUpdateCommand(type, cmd);        
+    }
+
+    public void addDeleteCommand(Type type, Command cmd) {
+        summarizer.addDeleteCommand(type, cmd);       
+    }
+
+    public void execute(DataObject root) {
+        DebugUtil.debugln(getClass(), debug, "Executing ApplyChangesCmd");
+
+        if (summarizer.getConnection() == null)
+            throw new RuntimeException("A connection must be provided");
+
+        if (!root.equals(root.getDataGraph().getRootObject()))
+            throw new RuntimeException("'root' argument must be the root of the datagraph");
+        
+        summarizer.setMapping(configWrapper);
+        
+        Changes changes = summarizer.loadChanges(root);
+
+        boolean success = false;
+        try {
+            changes.execute();
+            success = true;
+        } finally {
+            if (success)
+                summarizer.getConnection().cleanUp();
+            else
+                summarizer.getConnection().errorCleanUp();
+        }
+    }
+
+}
