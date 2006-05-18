@@ -24,9 +24,6 @@
         <fileSet>
             <directory>../sampleapps</directory>
             <outputDirectory>sampleapps</outputDirectory>
-            <includes>
-                <include>bigbank/**/*</include>
-            </includes>
             <excludes>
                 <exclude>**/src/test/**/*</exclude>
                 <exclude>**/src/test</exclude>
