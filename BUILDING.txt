@@ -11,15 +11,15 @@ Download Maven 2.0.4 (download from http://maven.apache.org/download.html).
 Set the env variable MVN_HOME to point at your Maven installation.
 Add $MVN_HOME/bin to your path.
 
-3) Install Ant:
-Download Ant 1.6.5 (download from http://ant.apache.org/bindownload.cgi).
-Set the env variable ANT_HOME to point at your Ant installation.
-Add $ANT_HOME/bin to your path.
 
 
 Building
 --------
 
-1) Make sure you are in the tuscany/java directory
-2) mvn
+1) Change to the top level directory of the Tuscany Java project (tuscany/java) or at top level of your source distribution.
+2) Execute: mvn
+
+Note: Depending on the load of remote Mavan 2.0 repositories you may have to execute mvn several time until required
+      dependencies are all located in your local maven repository.  After you have completed a full successful build you 
+      can use "mvn -o" which is much faster.
 
