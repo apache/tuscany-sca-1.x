@@ -28,8 +28,11 @@
                 <include>bigbank/**/*</include>
             </includes>
             <excludes>
+                <exclude>**/src/test/**/*</exclude>
+                <exclude>**/src/test</exclude>
                 <exclude>**/target</exclude>
                 <exclude>**/target/**/*</exclude>
+                <exclude>**/target/site/**/*</exclude>
                 <exclude>**/build</exclude>
                 <exclude>**/build/**/*</exclude>
                 <exclude>**/.settings/**/*</exclude>
@@ -47,7 +50,6 @@
             <directory>../sampleapps</directory>
             <outputDirectory>sampleapps</outputDirectory>
             <includes>
-                <include>pom.xml</include>
                 <include>**/target/*.jar</include>
                 <include>**/target/*.war</include>
             </includes>
@@ -57,13 +59,11 @@
             <directory>../samples</directory>
             <outputDirectory>samples</outputDirectory>
             <excludes>
-                <exclude>pom.xml</exclude>
-                <!-- 
                 <exclude>**/src/test/**/*</exclude>
                 <exclude>**/src/test</exclude>
-                 -->
                 <exclude>**/target/**/*</exclude>
                 <exclude>**/target</exclude>
+                <exclude>**/target/site/**/*</exclude>
                 <exclude>**/build</exclude>
                 <exclude>**/build/**/*</exclude>
                 <exclude>**/.settings</exclude>
@@ -82,7 +82,6 @@
             <directory>../samples</directory>
             <outputDirectory>samples</outputDirectory>
             <includes>
-                <include>pom.xml</include>
                 <include>**/target/*.jar</include>
                 <include>**/target/*.war</include>
             </includes>

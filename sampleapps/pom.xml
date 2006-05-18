@@ -15,12 +15,6 @@
  *  limitations under the License.
  -->
 <project>
-    <parent>
-        <groupId>org.apache.tuscany</groupId>
-        <artifactId>tuscany-project</artifactId>
-        <version>incubating-M1</version>
-    </parent>
-
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.sampleapps</groupId>
     <artifactId>tuscany-sampleapps</artifactId>
