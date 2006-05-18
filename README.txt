@@ -17,9 +17,9 @@ endorsed by the ASF.
 
 Getting Started
 ---------------
-Documentation can be found GettingStarted.htm 
-Javadoc can be found in the Tuscany binary distribution in the javadoc
-directory.
+Documentation describing the system requirements and the steps to set up the
+Tuscany runtime and run the Tuscany basic technology samples can be found in
+GettingStarted.htm. Javadoc can be found in in the javadoc directory.
 
 
 Thank you for using Tuscany!
