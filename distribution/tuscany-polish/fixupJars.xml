@@ -39,8 +39,8 @@
 				<include name="tuscany-databinding-sdo/**/*" />
 			</fileset>
 		</copy>
-		<copy todir="${target.dir}/docs">
-			<fileset dir="../../docs">
+		<copy todir="${target.dir}/javadoc"> <!-- Style sheets are bing hdden here. -->
+			<fileset dir="../../javadoc">
 				<include name="**/*" />
 			</fileset>
 		</copy>
@@ -54,6 +54,7 @@
 				<include name="README.txt" />
 				<include name="LICENSE.txt" />
 				<include name="NOTICE" />
+				<include name="GettingStarted.htm" />
 			</fileset>
 			<fileset dir="../../..">
 				<include name="STATUS" />
