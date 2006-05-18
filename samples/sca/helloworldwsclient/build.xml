@@ -31,7 +31,7 @@
         <fileset dir="${mainDir}/lib/axis2">
             <include name="tuscany-axis2-incubating-M1.jar"/>
         </fileset>
-        <pathelement path="target/sample-helloworld.jar"/>
+        <pathelement path="target/sample-helloworldwsclient.jar"/>
     </path>
 
   <target name="init">
@@ -45,14 +45,14 @@
       <copy todir="target/classes">
         <fileset dir="src/main/resources"/>
       </copy>
-      <jar destfile="target/sample-helloworld.jar">
+      <jar destfile="target/sample-helloworldwsclient.jar">
         <fileset dir="target/classes"/>
       </jar>
     </target>
 
     <target name="clean">
       <delete quiet="true" includeemptydirs="true">
-        <fileset dir="target" excludes="sample-helloworld-incubating-M1.jar"/>
+        <fileset dir="target" excludes="sample-helloworldwsclient-incubating-M1.jar"/>
       </delete>
     </target>
 </project>

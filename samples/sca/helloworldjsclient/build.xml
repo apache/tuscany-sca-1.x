@@ -43,7 +43,7 @@
 
     <target name="clean">
       <delete quiet="true" includeemptydirs="true">
-        <fileset dir="target" excludes="sample-helloworldjsclient-incubating-M1.jar"/>
+        <fileset dir="target" excludes="sample-helloworldjsclient-incubating-M1.war"/>
       </delete>
     </target>
 </project>

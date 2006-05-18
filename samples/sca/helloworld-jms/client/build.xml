@@ -31,7 +31,7 @@
         <fileset dir="${mainDir}/lib/celtix">
             <include name="tuscany-celtix-incubating-M1.jar"/>
         </fileset>
-        <pathelement path="target/sample-helloworld-jms-client.jar"/>
+        <pathelement path="target/sample-helloworldjms-client.jar"/>
     </path>
 
   <target name="init">
@@ -45,14 +45,14 @@
       <copy todir="target/classes">
         <fileset dir="src/main/resources"/>
       </copy>
-      <jar destfile="target/sample-helloworld-jms-client.jar">
+      <jar destfile="target/sample-helloworldjms-client.jar">
         <fileset dir="target/classes"/>
       </jar>
     </target>
 
     <target name="clean">
       <delete quiet="true" includeemptydirs="true">
-        <fileset dir="target" excludes="sample-helloworld-jms-client-incubating-M1.jar"/>
+        <fileset dir="target" excludes="sample-helloworldjms-client-incubating-M1.jar"/>
       </delete>
     </target>
 </project>
