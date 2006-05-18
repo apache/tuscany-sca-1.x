@@ -46,7 +46,7 @@
 
     <target name="clean">
       <delete quiet="true" includeemptydirs="true">
-        <fileset dir="target" excludes="sample-bigbank-account-incubating-M1.jar"/>
+        <fileset dir="target" excludes="sample-bigbank-account-incubating-M1.war"/>
       </delete>
     </target>
 </project>
