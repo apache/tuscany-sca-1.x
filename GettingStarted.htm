@@ -1,123 +1,159 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head>
-<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
-<meta content="text/css" http-equiv="Content-Style-Type">
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <style type="text/css" media="all">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
+<HTML>
+<HEAD>
+   <META CONTENT="text/html; charset=iso-8859-1" HTTP-EQUIV="Content-Type">
+   <META CONTENT="text/css" HTTP-EQUIV="Content-Style-Type">
+   <META CONTENT="text/html; charset=ISO-8859-1" HTTP-EQUIV="Content-Type">
+   <STYLE MEDIA="all" TYPE="text/css">
       @import url("javadoc/css/maven-base.css");
       @import url("javadoc/css/maven-theme.css");
       @import url("javadoc/css/site.css");
-    </style>
-    <link rel="stylesheet" href="javadoc/css/print.css" type="text/css" media="print">
-<title>Tuscany - Getting Started</title></head>
-<body>
+   </STYLE> 
+   <LINK HREF="javadoc/css/print.css" MEDIA="print" REL="stylesheet"
+         TYPE="text/css">
+   <TITLE>Tuscany - Getting Started</TITLE>
+</HEAD>
+<BODY>
+<DIV ID="bodyColumn"> 
+   <DIV ID="contentBox"> 
+      <DIV CLASS="section">
+         <H2>Installation</H2> 
 
-    <div id="bodyColumn">
-      <div id="contentBox">
-        
+         <P>This page describes what is needed to install and run Tuscany
+         SCA, SDO and DAS for Java.<BR>If you haven't already, the first
+         step is to download the latest release of apache Tuscany from our 
+         <A HREF="download.html">download</A> page. </P>
+      </DIV>
+      <DIV CLASS="section">
+         <H2>System Requirements</H2> 
 
-                
-        
-        
+         <P>In order to run the Tuscany there are some
+         minimum&nbsp;requirements:</P> 
+         <TABLE CLASS="bodyTable">
+            <TBODY>
+            <TR CLASS="a">
+               <TD><B>Software</B></TD>
+               <TD><B>Download Link</B></TD>
+            </TR>
+            <TR CLASS="b">
+               <TD>Operating systems: 
+                  <UL>
+                     <LI>Windows XP SP2</LI> 
+                     <LI>Linux </LI>
+                  </UL>
+               </TD>
+               <TD> 
+               </TD>
+               <TD></TD>
+            </TR>
+            <TR CLASS="a">
+               <TD>JDK 5.0</TD>
+               <TD> 
+                  <A HREF="http://java.sun.com/j2se/1.5.0/download.jsp"
+                     TARGET="_blank">http://java.sun.com/j2se/1.5.0/download.jsp</A>
+                  
+               </TD>
+            </TR>
+            <TR CLASS="b">
+               <TD> Apache Maven 2.0.4<BR> <SMALL><SMALLER><I>(Optional:
+                  Only if you want to build the samples yourself)</I> 
+                  </SMALLER></SMALL></TD>
+               <TD> 
+                  <A HREF="http://maven.apache.org/download.html"
+                     TARGET="_blank">http://maven.apache.org/download.html</A>
+                  
+               </TD>
+            </TR>
+            </TBODY>
+         </TABLE>
+      </DIV><A NAME="setup JDK 5.0"></A> 
+      <DIV CLASS="section">
+         <H2>Building Samples</H2> 
 
-        <div class="section"><h2>Installation</h2>
-        
+         <P>The samples are already built and ready to run. However if you
+         want to build them yourself you can using Maven.<BR>For example to
+         build the helloworld sample:</P> 
+         <UL>
+            <LI>Change to the directory: samples/sca/helloworld directory</LI>
+            <LI>Issue the&nbsp;command: mvn 
+            <BR></LI>
+         </UL>
+<PRE>                </PRE>
+      </DIV>
+      <DIV CLASS="section">
+         <H2>Starting the Server</H2> 
 
-        <p>This page describes what is needed to install and run Tuscany SCA, SDO and DAS for Java.<br>If you haven't already, the first step is to download the latest release of apache Tuscany from our <a href="download.html">downloads</a> page.
-        </p>
+         <P>Some of the samples require the Tuscany embedded Tomcat server
+         to be started.</P>
+         <UL>
+            <LI>Change the directory to apache-tomcat-5.5.17\bin</LI>
+            <LI>Issue the&nbsp;command: <CODE>startup</CODE></LI>
+            <LI>To later stop the server&nbsp;Issue the&nbsp;command: <CODE>shutdown</CODE></LI>
+         </UL>
+      </DIV>
+      <DIV CLASS="section">
+         <H2>Samples</H2> 
+         <TABLE CLASS="bodyTable">
+            <CAPTION STYLE="text-decoration: underline;">Tuscany samples
+            and applications</CAPTION>
+            <TBODY>
+            <TR CLASS="a">
+               <TD STYLE="vertical-align: top; white-space: nowrap;"><SPAN STYLE="text-decoration: underline;"></SPAN><A HREF="samples/sca/readme.htm">SCA Technology samples</A> 
+               </TD>
+               <TD>Simple samples that emphasizes &nbsp;how to to use
+                  Service Component Architecture technology.<BR> 
+               </TD>
+            </TR>
+            <TR CLASS="b">
+               <TD><A HREF="samples/das/companyweb/readme.htm">DAS Technology samples</A></TD>
+               <TD>Simple samples that&nbsp;emphasizes how to use Data
+                  Access Services.</TD>
+            </TR>
+            <TR CLASS="a">
+               <TD STYLE="vertical-align: top; white-space: nowrap;"> 
+                  <A HREF="sampleapps/readme.htm">Sample applications</A></TD>
+               <TD>Sample business applications that show&nbsp; SCA and SDO.</TD>
+            </TR>
+            </TBODY>
+         </TABLE>
+         <BR> 
+      </DIV>
+      <DIV CLASS="section">
+         <H2>Getting Help</H2> 
 
-        </div>
+         <P>Any problem with this release can be reported to the Tuscany 
+         <A HREF="http://incubator.apache.org/tuscany/mail-lists.html"
+            TARGET="_blank">mailing lists</A> or create a JIRA issue at&nbsp;<A HREF="http://issues.apache.org/jira/browse/Tuscany"
+                                                                                TARGET="_blank">http://issues.apache.org/jira/browse/Tuscany</A>.</P>
 
-        <div class="section"><h2>System Requirements</h2>
-                <p>In order to run the Tuscany there are some minimum&nbsp;requirements:</p>
-                        <table class="bodyTable">
-                                <tbody>
-                                        <tr class="a"> 
-                                                <td><b>Software</b></td>
-                                                <td><b>Download Link</b></td>
-                                        </tr>
-                                        <tr class="b">
-                                                <td>Operating systems:
-                                                <ul>
-                                                        <li>Windows XP SP2</li>
-                                                        <li>Linux </li>
-                                                </ul>
-                                                </td><td>
-                                        </td>
-                                        <td></td>
-                                        </tr>
-                                        <tr class="a">
-                                                <td>JDK 5.0</td>
-                                                <td>
-                                                        <a href="http://java.sun.com/j2se/1.5.0/download.jsp" target="_blank">http://java.sun.com/j2se/1.5.0/download.jsp</a>
-                                                </td>
-                                        </tr>
-                                        <tr class="b"> 
-                                        <td> Apache Maven 2.0.4<br> <small><smaller><i>(Optional: Only if you want to build the samples yourself)</i>  </smaller></small></td>
-                                        
-                                         <td>               <a href="http://maven.apache.org/download.html" target="_blank">http://maven.apache.org/download.html</a>
-                                        </td>
-                                </tr> 
-                                </tbody>
-                        </table>
-        </div>
+         <P></P>
 
-        
-        <a name="setup JDK 5.0"></a>
+         <P></P>
 
+         <P></P>
 
+         <P>&nbsp;</P> 
 
-        <div class="section"><h2>Building Samples</h2>
-        <p>The samples are already built and ready to run. However if you want to build them yourself you can using Maven.<br>For example to build the helloworld sample:</p>
-         <ul><li>Change to the directory: samples/sca/helloworld directory</li><li> Issue the&nbsp;command: mvn <br></li></ul><pre>                </pre>
-        
-</div>
+         <P>&nbsp;</P> 
 
+         <P>&nbsp;</P> 
+         <TABLE CLASS="bodyTable">
+            <TBODY>
+            <TR CLASS="a">
+               <TD> 
 
-<div class="section"><h2>Starting the Server</h2>
-<p>Some of the samples require the Tuscany embedded Tomcat server to be started.</p><ul><li>
- Change the directory to apache-tomcat-5.5.17\bin</li><li> Issue the&nbsp;command: <code>startup</code></li><li>To later stop the server&nbsp;Issue the&nbsp;command: <code>shutdown</code></li></ul>
-</div>
+                  <P>Thank you for your interest in Tuscany.</P> <STRONG><EM>-The
+                  Tuscany Development Team</EM></STRONG>
 
-        <div class="section"><h2>Samples</h2>
+                  <P></P>
+               </TD>
+            </TR>
+            </TBODY>
+         </TABLE>
 
-<table class="bodyTable"><caption style="text-decoration: underline;">Tuscany
-samples and applications</caption><tbody>
-<tr class="a"><td style="vertical-align: top; white-space: nowrap;"><span style="text-decoration: underline;"></span><a href="samples/sca/readme.htm">SCA Technology samples</a>
-</td>
-<td>Simple samples that emphasizes &nbsp;how to to
-use Service Component Architecture technology.<br>
-</td></tr>
-<tr class="b"><td><a href="samples/das/companyweb/readme.htm">DAS Technology
-samples</a></td><td>Simple samples
-that&nbsp;emphasizes how to use Data Access Services.</td></tr>
-<tr class="a"><td style="vertical-align: top; white-space: nowrap;">
-<a href="sampleapps/readme.htm">Sample
-applications</a></td>
-<td>Sample business applications that show&nbsp; SCA
-and SDO.</td></tr></tbody>
-</table><br>
-
-</div>
-
-<div class="section"><h2>Getting Help</h2>
-<p>Any problem with this release can be reported to the Tuscany <a href="http://incubator.apache.org/tuscany/mail-lists.html" target="_blank">mailing lists</a> 
-or create a JIRA issue at&nbsp;<a href="http://issues.apache.org/jira/browse/Tuscany" target="_blank">http://issues.apache.org/jira/browse/Tuscany</a>.</p><p></p><p></p><p>
-</p><p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-                        <table class="bodyTable">
-                                <tbody>
-                                        <tr class="a"> 
-<td>
-<p>Thank you for your interest in Tuscany.</p>
-<strong><em>-The Tuscany Development Team</em></strong><p>
-</p></td>
-</tr>
-                                </tbody>
-                        </table>
-
-<p></p></div>
-</div>
-</div>
-</body></html>
+         <P></P>
+      </DIV>
+   </DIV>
+</DIV>
+</BODY>
+</HTML> 
