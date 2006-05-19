@@ -56,25 +56,31 @@ public class AccountServiceImpl implements AccountService {
         AccountServiceImpl.tsformatXSDDateTime.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
-    private float currencyConversion = 1.0f; 
+    private float currencyConversion = 0.0f; 
     private String currency= "USD";
 
     @Property
     public void setCurrency(final String currency) {
-        this.currency= currency == null ? this.currency:  currency.trim();
-
-        if ("USD".equals(this.currency))
-            currencyConversion= 1.0f;
-        else if ("EURO".equals(this.currency))
-            currencyConversion= 0.8f;
-        else{
-            try {
-                currencyConversion = Float.parseFloat(this.currency);
-            } catch (Exception e) {
+        this.currency= currency;
+    }
+    float getCurrencyConversion(){
+        if(currencyConversion == 0.0F){
+            if ("USD".equals(this.currency))
                 currencyConversion= 1.0f;
-            }            
-           
+            else if ("EURO".equals(this.currency))
+                currencyConversion= 0.8f;
+            else{
+                try {
+                    currencyConversion = Float.parseFloat(this.currency);
+                } catch (Exception e) {
+                    currencyConversion= 1.0f;
+                }            
+               
+            }
+
+            
         }
+        return currencyConversion;
         
     }
 
@@ -163,13 +169,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private float fromUSDollarToCurrency(float value) {
-        return value * currencyConversion ;
+        return value * getCurrencyConversion() ;
 
    
     }
     private float toUSDollarfromCurrency(float value) {
 
-        return  value /currencyConversion ; 
+        return  value /getCurrencyConversion() ; 
     }
     
 
