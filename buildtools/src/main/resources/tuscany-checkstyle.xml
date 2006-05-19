@@ -28,6 +28,10 @@ lengths, if/try depths, etc...
 -->
 
 <module name="Checker">
+    <property name="severity"
+             value="${checkstyle.severity}"
+             default="warning"/>
+
     <!-- Checks whether files end with a new line.                        -->
     <!-- See http://checkstyle.sf.net/config_misc.html#NewlineAtEndOfFile -->
     <!--
@@ -120,7 +124,9 @@ lengths, if/try depths, etc...
         <module name="EmptyForIteratorPad"/>
         <module name="EmptyForInitializerPad"/>
         <module name="MethodParamPad"/>
-        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceAfter">
+            <property name="tokens" value="ARRAY_INIT,BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS"/>
+        </module>
         <module name="NoWhitespaceBefore"/>
         <module name="OperatorWrap"/>
         <module name="ParenPad"/>

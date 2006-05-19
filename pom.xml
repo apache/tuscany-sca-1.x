@@ -14,7 +14,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  -->
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany</groupId>
     <artifactId>tuscany-project</artifactId>
@@ -57,6 +60,7 @@
     </repositories>
 
     <modules>
+        <module>buildtools</module>
         <module>spec</module>
         <module>sdo</module>
         <module>das</module>
@@ -124,6 +128,43 @@
                 <version>1.0-alpha-5</version>
             </extension>
         </extensions>
+
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.tuscany</groupId>
+                            <artifactId>tuscany-buildtools</artifactId>
+                            <version>${pom.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <id>process-sources</id>
+                            <phase>process-sources</phase>
+                            <configuration>
+                                <configLocation>tuscany-checkstyle.xml</configLocation>
+                                <consoleOutput>true</consoleOutput>
+                                <failsOnError>true</failsOnError>
+                                <linkXRef>false</linkXRef>
+                                <sourceDirectory>${basedir}/src</sourceDirectory>
+                                <propertyExpansion>
+                                ${checkstyle.properties}
+                                </propertyExpansion>
+                            </configuration>
+                            <goals>
+                                <goal>checkstyle</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
     </build>
 
 
@@ -145,7 +186,40 @@
         </plugins>
     </reporting>
 
+
     <profiles>
+        <profile>
+            <!-- basic profile with no checks or anything... -->
+            <id>basic</id>
+        </profile>
+
+        <profile>
+            <id>sourcecheck</id>
+            <!--
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            -->
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>1.5</source>
+                            <target>1.5</target>
+                            <showDeprecation>true</showDeprecation>
+                            <compilerArgument>-Xlint:unchecked,deprecation,fallthrough,finally</compilerArgument>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
         <profile>
             <id>distribution</id>
 
