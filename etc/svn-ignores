@@ -7,6 +7,7 @@ target
 maven.log
 velocity.log*
 junit*.properties
+surefire*.properties
 .settings
 .deployables
 .wtpmodules
