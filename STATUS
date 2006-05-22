@@ -21,6 +21,8 @@ None
 OTHER NEWS
 ==========
 
+2006-05-21 Vote to publish Milestone 1 release
+
 2006-05-02 Vote to add Dan Kulp as a new committer
 
 2006-01-05 Contribution of Java implementation by BEA and IBM committed
@@ -28,7 +30,7 @@ OTHER NEWS
 
 RELEASE STATUS
 ==============
-None
+2006-05-21 Milestone 1 release
 
 REFERENCES
 ==========
@@ -55,3 +57,4 @@ Committers
     edwardsmj   Mike Edwards
     robbinspg   Pete Robbins
     rineholt    Rick Rineholt
+

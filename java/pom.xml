@@ -90,6 +90,18 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Implementation-Vendor-Id>org.apache</Implementation-Vendor-Id>
+                            <Implementation-URL>http://incubator.apache.org/tuscany/</Implementation-URL>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
         </plugins>
 
         <resources>
@@ -157,14 +169,6 @@
 
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <source>1.5</source>
-                            <target>1.5</target>
-                        </configuration>
-                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
@@ -280,15 +284,6 @@
                     </plugin>
                 </plugins>
 
-                <resources>
-                    <resource>
-                        <directory>.</directory>
-                        <includes>
-                            <include>README.txt</include>
-                            <include>LICENSE.txt</include>
-                        </includes>
-                    </resource>
-                </resources>
             </build>
         </profile>
     </profiles>
