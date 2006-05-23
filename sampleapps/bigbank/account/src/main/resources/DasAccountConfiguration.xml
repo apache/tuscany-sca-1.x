@@ -44,6 +44,26 @@
   </Table>
 
 	
+  <Table name="ACCTLOG" propertyName="AccountLogEntry">
+    <Column name="logSeqNo"/>
+    <Column name="ID"/> 
+    <Column name="ACCOUNTNUMBER"/>
+    <Column name="ACTIONTYPE"/>
+    <Column name="AMOUNT"/> 
+  </Table>
+
+
+
+  <Table name="STOCKLOG" propertyName="StockLogEntry" >
+    <Column name="logSeqNo"/>
+    <Column name="ID"/>
+    <Column name="Symbol"/>
+    <Column name="quantity"/>
+    <Column name="actionType"/>
+    <Column name="purchaseLotNumber"/>
+  </Table>
+
+	
   <Command name="update balance"
         SQL="update ACCOUNTS set BALANCE = :BALANCE where ACCOUNTNUMBER = :ACCOUNTNUMBER"
         kind="Update">

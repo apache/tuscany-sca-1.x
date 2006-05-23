@@ -36,7 +36,7 @@
             <v:currency>USD</v:currency>
         </properties>
         <references>
-            <v:accountDataService>AccountDataServiceComponent</v:accountDataService>
+            <v:accountDataService>AccountLoggerDataServiceComponent</v:accountDataService>
             <v:stockQuoteService>StockQuoteServiceComponent</v:stockQuoteService>
         </references>
     </component>
@@ -51,5 +51,17 @@
         <interface.wsdl interface="http://www.webserviceX.NET/#wsdl.interface(StockQuoteSoap)"/>
         <binding.ws port="http://www.webserviceX.NET/#wsdl.endpoint(StockQuote/StockQuoteSoap)"/>
     </externalService>
+
+    <component name="AccountLoggerDataServiceComponent">
+        <implementation.java class="bigbank.account.services.accountlogger.AccountLoggerDataServiceImpl"/>
+        <references>
+            <v:accountDataService>AccountDataServiceComponent</v:accountDataService>
+            <v:accountLoggerService>AccountLoggerServiceComponent</v:accountLoggerService>
+        </references>
+    </component>
+
+    <component name="AccountLoggerServiceComponent">
+        <implementation.java class="bigbank.account.services.accountlogger.AccountLoggerServiceImpl"/>
+    </component>
 
 </module>

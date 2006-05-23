@@ -129,6 +129,11 @@
         </FORM>   
         </sca:stockStatus>
        </table>
+       
+       <hr/>
+       <FORM method="post" action='accountLog.jsp'>
+       Account and Stock Logs: &nbsp;&nbsp;&nbsp;&nbsp;<INPUT type="submit" name='Logs' value="Logs"><br/>
+       </FORM>   
 
        
     </body>

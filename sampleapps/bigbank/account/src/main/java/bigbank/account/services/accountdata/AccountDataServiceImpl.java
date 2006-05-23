@@ -22,6 +22,7 @@ import java.util.List;
 import org.osoa.sca.annotations.Service;
 
 import com.bigbank.account.AccountFactory;
+import com.bigbank.account.AccountLog;
 import com.bigbank.account.AccountReport;
 import com.bigbank.account.AccountSummary;
 import com.bigbank.account.CustomerProfileData;
@@ -95,5 +96,9 @@ public class AccountDataServiceImpl implements AccountDataService {
     public float withdraw(String param16, float param17) throws RemoteException {
         // TODO Auto-generated method stub
         return 0;
+    }
+    
+    public AccountLog getAccountLog(final int customerID) throws RemoteException {
+        throw new RemoteException("This method should not be called");
     }
 }

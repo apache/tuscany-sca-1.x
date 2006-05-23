@@ -35,6 +35,8 @@
             <xsd:element name="customerProfileData" type="account:CustomerProfileData" maxOccurs="unbounded" minOccurs="0" />
             <xsd:element name="StockSummaries" type="account:StockSummary" maxOccurs="unbounded" minOccurs="0" />
             <xsd:element name="AccountSummaries" type="account:AccountSummary" maxOccurs="unbounded" minOccurs="0" />
+            <xsd:element name="StockLogEntries" type="account:StockLogEntry" maxOccurs="unbounded" minOccurs="0" />
+            <xsd:element name="AccountLogEntries" type="account:AccountLogEntry" maxOccurs="unbounded" minOccurs="0" />
         </xsd:sequence>
 	</xsd:complexType>
 			
@@ -201,6 +203,50 @@
 				
 			</xsd:element>
 
+			<xsd:element name="getAccountLog">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="customerID"
+							type="xsd:int" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="getAccountLogResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="accountLog"
+							type="account:AccountLog" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:complexType name="AccountLog">
+				<xsd:sequence>
+					<xsd:element name="accountLogEntries"
+						type="account:AccountLogEntry" maxOccurs="unbounded" />
+					<xsd:element name="stockLogEntries"
+						type="account:StockLogEntry" maxOccurs="unbounded" />
+						
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="AccountLogEntry">
+				<xsd:attribute name="logSeqNo" type="xsd:int" />
+				<xsd:attribute name="id" type="xsd:int" />
+				<xsd:attribute name="accountNumber" type="xsd:string" />
+				<xsd:attribute name="actionType" type="xsd:string" />
+				<xsd:attribute name="amount" type="xsd:float" />
+			</xsd:complexType>
+
+			<xsd:complexType name="StockLogEntry">
+				<xsd:attribute name="logSeqNo" type="xsd:int" />
+				<xsd:attribute name="id" type="xsd:int" />
+				<xsd:attribute name="symbol" type="xsd:string" />
+				<xsd:attribute name="quantity" type="xsd:int" />
+				<xsd:attribute name="actionType" type="xsd:string" />
+				<xsd:attribute name="purchaseLotNumber" type="xsd:int" />
+			</xsd:complexType>
+
 		</xsd:schema>
 	</wsdl:types>
 	<wsdl:message name="getAccountReportRequest">
@@ -261,6 +307,16 @@
 		<wsdl:part element="account:createAccountResponse" name="createAccountResponse" />
 	</wsdl:message>
 
+	<wsdl:message name="getAccountLogRequest">
+		<wsdl:part element="account:getAccountLog"
+			name="getAccountLogRequest" />
+	</wsdl:message>
+	
+	<wsdl:message name="getAccountLogResponse">
+		<wsdl:part element="account:getAccountLogResponse"
+			name="getAccountLogResponse" />
+	</wsdl:message>
+
 	<wsdl:portType name="AccountService">
 		<wsdl:operation name="getAccountReport">
 			<wsdl:input message="account:getAccountReportRequest" />
@@ -296,6 +352,11 @@
 		<wsdl:operation name="createAccount">
 			<wsdl:input message="account:createAccountRequest" />
 			<wsdl:output message="account:createAccountResponse" />
+		</wsdl:operation>
+
+		<wsdl:operation name="getAccountLog">
+			<wsdl:input message="account:getAccountLogRequest" />
+			<wsdl:output message="account:getAccountLogResponse" />
 		</wsdl:operation>
 
 	</wsdl:portType>
@@ -373,6 +434,17 @@
 		<wsdl:operation name="createAccount">
 			<soap:operation
 				soapAction="http://www.bigbank.com/account/createAccount" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="getAccountLog">
+			<soap:operation
+				soapAction="http://www.bigbank.com/account/getAccountLog" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>

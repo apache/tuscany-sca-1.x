@@ -20,7 +20,9 @@ import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,8 +48,8 @@ import com.bigbank.account.StockSummary;
 import commonj.sdo.DataObject;
 import commonj.sdo.helper.TypeHelper;
 
-@Service(AccountDataService.class)
-public class AccountDataServiceDASImpl implements AccountDataService {
+@Service(CustomerIdService.class)
+public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO fix this!
 
     static public String dbDirectory = null;
 
@@ -290,7 +292,7 @@ public class AccountDataServiceDASImpl implements AccountDataService {
 
                     stock.setQuantity(newQuatity);
                 }
-
+                return stock;
             }
 
             return null;
@@ -393,5 +395,42 @@ public class AccountDataServiceDASImpl implements AccountDataService {
 
         }
 
+    }
+
+    public int getCustomerIdByPurchaseLotNumber(int purchaseLotNumber) throws RemoteException {
+        
+        return queryCustomerId("select id from stocks where purchaseLotNumber = " + purchaseLotNumber);
+    }
+    
+    public int getCustomerIdByAccount(String account) throws RemoteException {
+        
+        return queryCustomerId("select id from accounts where accountNumber = '" + account + "'");
+    }
+    
+    private int queryCustomerId(String query) throws RemoteException {
+        
+        try {
+            Connection conn = getConnection();
+
+            Statement s = conn.createStatement();
+            
+            ResultSet rs = s.executeQuery(query);
+            int id = -1;
+            if (rs.next()) {
+                id = rs.getInt("id");
+            }
+
+            conn.commit();
+
+            rs.close();
+            s.close();
+            conn.close();
+
+            return id;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RemoteException(e.getClass().getName() ,e);
+        }        
     }
 }

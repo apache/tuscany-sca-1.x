@@ -73,5 +73,11 @@ public interface AccountDataService  {
      public com.bigbank.account.AccountReport getAccountReport(
      int param19) throws java.rmi.RemoteException;
     
+     /**
+      * Auto generated method signatures
+      * @param param0
+      */
+      public com.bigbank.account.AccountLog getAccountLog(
+      int param0) throws java.rmi.RemoteException;
 
    }

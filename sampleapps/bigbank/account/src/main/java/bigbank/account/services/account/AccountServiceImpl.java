@@ -34,6 +34,7 @@ import bigbank.account.services.accountdata.AccountDataService;
 import bigbank.account.services.stockquote.StockQuote;
 import bigbank.account.services.stockquote.StockQuoteService;
 
+import com.bigbank.account.AccountLog;
 import com.bigbank.account.AccountReport;
 import com.bigbank.account.AccountService;
 import com.bigbank.account.AccountSummary;
@@ -263,4 +264,9 @@ public class AccountServiceImpl implements AccountService {
             throw new RemoteException(e.getClass() + " " + e.getMessage(), e);
         }
     }
+    
+    public AccountLog getAccountLog(final int customerID) throws RemoteException {
+        return accountDataService.getAccountLog(customerID);
+    }
+    
 }

@@ -22,6 +22,7 @@ import org.osoa.sca.ServiceUnavailableException;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
+import com.bigbank.account.AccountLog;
 import com.bigbank.account.AccountReport;
 import com.bigbank.account.AccountService;
 import com.bigbank.account.CustomerProfileData;
@@ -102,5 +103,14 @@ public class AccountServiceComponentImpl implements AccountService {
 
         return accountService.createAccount(customerProfile, createSavings, createCheckings);
     }
+    
+    public AccountLog getAccountLog(int customerID) throws RemoteException {
+        try {
+            return accountService.getAccountLog(customerID);
+        } catch (Exception e) {
+            throw new ServiceUnavailableException(e);
+        }
+    }
+
 
 }

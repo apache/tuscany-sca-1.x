@@ -44,6 +44,7 @@ import org.apache.tuscany.sdo.util.SDOUtil;
 
 import bigbank.account.services.account.AccountServiceImpl;
 import bigbank.account.services.accountdata.AccountDataServiceDASImpl;
+import bigbank.account.services.accountlogger.AccountLoggerServiceImpl;
 
 import com.bigbank.account.AccountFactory;
 import com.bigbank.account.AccountSummary;
@@ -103,6 +104,7 @@ public class AccountDBInit extends HttpServlet {
     public static void  createDB(final String location) throws Exception {
         Connection conn = null;
         AccountDataServiceDASImpl.dbDirectory = location;
+        AccountLoggerServiceImpl.dbDirectory = location;   // TODO get rid of this (isilval)
         Exception processessingException = null;
         try {
             conn = createConnection(location);
@@ -177,13 +179,15 @@ public class AccountDBInit extends HttpServlet {
         
         
         Statement s = conn.createStatement();
-        s
-                .execute("create table customers(firstName varchar(80) NOT NULL, lastName varchar(80), address varchar(180),email varchar(40),loginID varchar(80) NOT NULL UNIQUE, password varchar(80), id int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY)");
+        s.execute("create table customers(firstName varchar(80) NOT NULL, lastName varchar(80), address varchar(180),email varchar(40),loginID varchar(80) NOT NULL UNIQUE, password varchar(80), id int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY)");
 
         s.execute("create table accounts(id int NOT NULL, accountNumber varchar(80) NOT NULL UNIQUE, accountType varchar(80), balance real )");
 
-        s
-                .execute("create table stocks(id int NOT NULL, Symbol varchar(8) NOT NULL, quantity int NOT NULL, purchasePrice real NOT NULL, purchaseDate TIMESTAMP, purchaseLotNumber int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY  )");
+        s.execute("create table stocks(id int NOT NULL, Symbol varchar(8) NOT NULL, quantity int NOT NULL, purchasePrice real NOT NULL, purchaseDate TIMESTAMP, purchaseLotNumber int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY  )");
+        
+        s.execute("create table acctLog (logSeqNo int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY, id int NOT NULL, accountNumber varchar(80) NOT NULL, actionType varchar(32) NOT NULL, amount real )");
+
+        s.execute("create table stockLog (logSeqNo int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY, id int NOT NULL, Symbol varchar(8) NOT NULL, quantity int NOT NULL, actionType varchar(32) NOT NULL, purchaseLotNumber int NOT NULL )");
 
         s.close();
     }
