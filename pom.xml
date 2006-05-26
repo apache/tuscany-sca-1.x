@@ -35,7 +35,7 @@
     </organization>
 
     <prerequisites>
-        <maven>2.0</maven>
+        <maven>2.0.4</maven>
     </prerequisites>
 
     <issueManagement>
