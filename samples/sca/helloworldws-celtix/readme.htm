@@ -18,11 +18,11 @@
     <p>
     The Tuscany hello world Celtix Web service sample shows using the Tuscany SCA runtime as a standalone web service.
     </p>
-    <h3>Location</h3> This sample is located &nbsp;in the samples\sca\helloworldws-celtix 
+    <h3>Location</h3> This sample is located &nbsp;in the samples\sca\helloworldws-celtix
     directory.<br>
 
 
-    <h3>Setup</h3>This sample depends on the Tuscany runtime, Celtix, and the sample jar, 
+    <h3>Setup</h3>This sample depends on the Tuscany runtime, Celtix, and the sample jar,
 
     <span style="font-weight: bold;">
     sample-helloworldws-celtix-incubating-M1.jar
@@ -52,7 +52,7 @@
    +---resources
      &brvbar;   sca.module
      +---wsdl
-            helloworld.wsdl 
+            helloworld.wsdl
                 </pre>
             </td>
         </tr>
@@ -77,9 +77,9 @@
         </tr>
         <tr>
             <td style="vertical-align: top; height: 62px;">sca.module</td>
-            <td style="height: 62px;">Defines the SCA module, entryPoint and component. 
-            Defines for the HelloWorldServiceComponent component and the Java class that 
-            implements the component For the entryPoint it defines WSDL for the service, the 
+            <td style="height: 62px;">Defines the SCA module, entryPoint and component.
+            Defines for the HelloWorldServiceComponent component and the Java class that
+            implements the component For the entryPoint it defines WSDL for the service, the
             Java interface provided by the service, and wires the service to the&nbsp;HelloWorldServiceComponent</td>
         </tr>
         <tr>
@@ -88,5 +88,39 @@
         </tr>
         </tbody>
     </table>
+
+    <h3>Instrumentation</h3>
+    You can instrument Celtix runtime using Celtix management facilities.
+    Information in the Celtix configuration file is used to configure the behavior of Celtix management facilities.
+    When JMX is enabled, Celtix instrumentation info is exported through the JMX MBeanServer. To enable JMX (
+    JMX is disabled in Celtix by default), you need to pass in a Celtix configuration file by running the sample using command below:
+    <br>
+    <br>
+
+    In the directory samples/sca/helloworldws-celtix use the JDK 1.5 java command to run the class helloworld.HelloWorldServer
+
+    <pre>Linux: java -Dceltix.config.file=file:///&lt;Tuscany-installation-dir&gt;/samples/sca/helloworldws-celtix/server.xml -cp ../../../lib/tuscany-runtime-incubating-M1.jar:../../../lib/celtix/tuscany-celtix-incubating-M1.jar:target/sample-helloworldws-celtix-incubating-M1.jar helloworld.HelloWorldServer</pre>
+    <pre>Windows: java -Dceltix.config.file=file:///&lt;Tuscany-installation-dir&gt;/samples/sca/helloworldws-celtix/server.xml -cp ../../../lib/tuscany-runtime-incubating-M1.jar;../../../lib/celtix/tuscany-celtix-incubating-M1.jar;target/sample-helloworldws-celtix-incubating-M1.jar helloworld.HelloWorldServer</pre>
+
+&lt;Tuscany-installation-dir&gt; is the location where Tuscany installed.
+    <br>
+    <br>
+
+You can use jconsole, which comes with JDK1.5, to explore the Celtix managed components:
+
+  <pre>jconsole</pre>
+
+  The server JMX Service URL is:
+    <pre>service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi/server</pre>
+
+
+NOTE: Enter the JMX service URL as above, leave the username and password empty in this sample.
+    <br>
+    <br>
+
+Further information about Celtix instrumentation can be found from Celtix "Using Celtix Management" manual and Celtix management sample.
+
+
+<br>
     </body>
 </html>
