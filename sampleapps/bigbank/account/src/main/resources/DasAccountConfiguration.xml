@@ -16,51 +16,51 @@
  -->
 <Config xsi:noNamespaceSchemaLocation="http:///org.apache.tuscany.das.rdb/config.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   
-  <Table name="CUSTOMERS" propertyName="CustomerProfileData">
+  <Table tableName="CUSTOMERS" typeName="CustomerProfileData">
     <!-- Column name="firstName" primaryKey="true"/ -->
-    <Column name="FIRSTNAME"/>
-    <Column name="LASTNAME"/> 
-    <Column name="ADDRESS"/> 
-    <Column name="EMAIL"/>
-     <Column name="LOGINID"/> 
-     <Column name="PASSWORD"/> 
-      <Column name="ID"/> 
+    <Column columnName="FIRSTNAME"/>
+    <Column columnName="LASTNAME"/> 
+    <Column columnName="ADDRESS"/> 
+    <Column columnName="EMAIL"/>
+     <Column columnName="LOGINID"/> 
+     <Column columnName="PASSWORD"/> 
+      <Column columnName="ID"/> 
   </Table>
   
-  <Table name="ACCOUNTS" propertyName="AccountSummary">
+  <Table tableName="ACCOUNTS" typeName="AccountSummary">
     <!-- Column name="firstName" primaryKey="true"/ -->
-    <Column name="ACCOUNTNUMBER"/>
-    <Column name="BALANCE"/> 
+    <Column columnName="ACCOUNTNUMBER"/>
+    <Column columnName="BALANCE"/> 
   </Table>
 
 
 
-  <Table name="STOCKS" propertyName="StockSummary" >
-    <Column name="ID"/>
-    <Column name="Symbol"/>
-    <Column name="quantity"/>
-    <Column name="purchasePrice"/>
-    <Column name="PURCHASEDATE" converterClassName="bigbank.account.services.accountdata.AccountDataServiceDASImpl$DateConverter"/>
+  <Table tableName="STOCKS" typeName="StockSummary" >
+    <Column columnName="ID"/>
+    <Column columnName="Symbol"/>
+    <Column columnName="quantity"/>
+    <Column columnName="purchasePrice"/>
+    <Column columnName="PURCHASEDATE" converterClassName="bigbank.account.services.accountdata.AccountDataServiceDASImpl$DateConverter"/>
   </Table>
 
 	
-  <Table name="ACCTLOG" propertyName="AccountLogEntry">
-    <Column name="logSeqNo"/>
-    <Column name="ID"/> 
-    <Column name="ACCOUNTNUMBER"/>
-    <Column name="ACTIONTYPE"/>
-    <Column name="AMOUNT"/> 
+  <Table tableName="ACCTLOG" typeName="AccountLogEntry">
+    <Column columnName="logSeqNo"/>
+    <Column columnName="ID"/> 
+    <Column columnName="ACCOUNTNUMBER"/>
+    <Column columnName="ACTIONTYPE"/>
+    <Column columnName="AMOUNT"/> 
   </Table>
 
 
 
-  <Table name="STOCKLOG" propertyName="StockLogEntry" >
-    <Column name="logSeqNo"/>
-    <Column name="ID"/>
-    <Column name="Symbol"/>
-    <Column name="quantity"/>
-    <Column name="actionType"/>
-    <Column name="purchaseLotNumber"/>
+  <Table tableName="STOCKLOG" typeName="StockLogEntry" >
+    <Column columnName="logSeqNo"/>
+    <Column columnName="ID"/>
+    <Column columnName="Symbol"/>
+    <Column columnName="quantity"/>
+    <Column columnName="actionType"/>
+    <Column columnName="purchaseLotNumber"/>
   </Table>
 
 	

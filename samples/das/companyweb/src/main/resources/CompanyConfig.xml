@@ -14,7 +14,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  -->
-<Config xsi:noNamespaceSchemaLocation="http:///org.apache.tuscany.das.rdb/config.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Config xsi:noNamespaceSchemaLocation="http:///org.apache.tuscany.das.rdb/config.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    dataSource="java:comp/env/jdbc/dastest">
     
     <Command name="all companies" SQL="select * from COMPANY" kind="Select"/>
     
@@ -24,20 +25,13 @@
 
     <Command name="company by id with departments" SQL="select * from COMPANY left outer join DEPARTMENT on COMPANY.ID = DEPARTMENT.COMPANYID where COMPANY.ID = :ID" kind="Select"/>
 	
-
-	   <ConnectionProperties dataSource="java:comp/env/jdbc/dastest"/>
  
-
-<!--
-    <ConnectionProperties driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
-        driverURL="jdbc:derby:dastest"/>
---> 
-    <Table name="COMPANY">
-        <Column name="ID" primaryKey="true" generated="true"/>
+    <Table tableName="COMPANY">
+        <Column columnName="ID" primaryKey="true" generated="true"/>
     </Table>
     
-	<Table name="DEPARTMENT">
-		<Column name="ID" primaryKey="true" generated="true"/>
+	<Table tableName="DEPARTMENT">
+		<Column columnName="ID" primaryKey="true" generated="true"/>
 	</Table>
 	
 	<Relationship name="departments" primaryKeyTable="COMPANY" foreignKeyTable="DEPARTMENT" many="true">
