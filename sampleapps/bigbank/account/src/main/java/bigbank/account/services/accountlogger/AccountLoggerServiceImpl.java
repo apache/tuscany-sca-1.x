@@ -21,11 +21,11 @@ import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
 import org.apache.tuscany.das.rdb.Command;
+import org.apache.tuscany.das.rdb.DAS;
 import org.osoa.sca.annotations.Service;
 
 import com.bigbank.account.AccountFactory;
@@ -52,8 +52,8 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
     protected static final String protocol = "jdbc:derby:";
 
     public void logDeposit(int id, String account, float amount) throws RemoteException {
-        
-        Command insert = Command.FACTORY.createCommand("insert into acctLog (id, accountNumber, actionType, amount) values (?,?,?,?)");
+        DAS das = DAS.FACTORY.createDAS();
+        Command insert = das.createCommand("insert into acctLog (id, accountNumber, actionType, amount) values (?,?,?,?)");
         insert.setParameterValue(1, new Integer(id));
         insert.setParameterValue(2, account);
         insert.setParameterValue(3, ACCT_ACTION_TYPE_DEPOSIT);
@@ -67,8 +67,8 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
     }
     
     public void logWithdrawal(int id, String account, float amount) throws RemoteException {
-        
-        Command insert = Command.FACTORY.createCommand("insert into acctLog (id, accountNumber, actionType, amount) values (?,?,?,?)");
+        DAS das = DAS.FACTORY.createDAS();
+        Command insert = das.createCommand("insert into acctLog (id, accountNumber, actionType, amount) values (?,?,?,?)");
         insert.setParameterValue(1, new Integer(id));
         insert.setParameterValue(2, account);
         insert.setParameterValue(3, ACCT_ACTION_TYPE_WITHDRAW);
@@ -82,8 +82,8 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
     }
     
     public void logPurchaseStock(int id, StockSummary stock) throws RemoteException {
-        
-        Command insert = Command.FACTORY.createCommand("insert into stockLog (id, Symbol, quantity, actionType, purchaseLotNumber) values (?,?,?,?,?)");
+        DAS das = DAS.FACTORY.createDAS();
+        Command insert = das.createCommand("insert into stockLog (id, Symbol, quantity, actionType, purchaseLotNumber) values (?,?,?,?,?)");
         insert.setParameterValue(1, new Integer(id));
         insert.setParameterValue(2, stock.getSymbol());
         insert.setParameterValue(3, new Integer(stock.getQuantity()));
@@ -101,7 +101,8 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
     public void logSellStock(int id, StockSummary stock, int quantity) throws RemoteException {
         
         String symbol = ((stock.getSymbol()!=null)?stock.getSymbol():"null");
-        Command insert = Command.FACTORY.createCommand("insert into stockLog (id, Symbol, quantity, actionType, purchaseLotNumber) values (?,?,?,?,?)");
+        DAS das = DAS.FACTORY.createDAS();
+        Command insert = das.createCommand("insert into stockLog (id, Symbol, quantity, actionType, purchaseLotNumber) values (?,?,?,?,?)");
         insert.setParameterValue(1, new Integer(id));
         insert.setParameterValue(2, symbol);
         insert.setParameterValue(3, new Integer(quantity));
@@ -180,7 +181,8 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
             final AccountLog accountLog = accountFactory.createAccountLog();
             InputStream mapping = createConfigStream();
 
-            Command select = Command.FACTORY.createCommand("SELECT logSeqNo, accountNumber, actionType, amount FROM acctLog where id = :id", mapping);
+            DAS das = DAS.FACTORY.createDAS(mapping);
+            Command select = das.createCommand("SELECT logSeqNo, accountNumber, actionType, amount FROM acctLog where id = :id");
             Connection conn = getConnection();
             select.setConnection(conn);
             select.setParameterValue("id", customerID);
@@ -189,8 +191,8 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
             DataGraphRoot root = (DataGraphRoot) select.executeQuery();
             accountLog.getAccountLogEntries().addAll(root.getAccountLogEntries());
 
-            select = Command.FACTORY.createCommand(
-                    "SELECT logSeqNo, Symbol, quantity, actionType, purchaseLotNumber  FROM stockLog where id = :id", createConfigStream());
+            select = das.createCommand(
+                    "SELECT logSeqNo, Symbol, quantity, actionType, purchaseLotNumber  FROM stockLog where id = :id");
             select.setConnection(conn);
             select.setParameterValue("id", customerID);
             select.setDataObjectModel(helper.getType(DataGraphRoot.class));

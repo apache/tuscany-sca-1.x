@@ -31,10 +31,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.TimeZone;
 
-import org.apache.tuscany.das.rdb.ApplyChangesCommand;
 import org.apache.tuscany.das.rdb.Command;
-import org.apache.tuscany.das.rdb.CommandGroup;
 import org.apache.tuscany.das.rdb.Converter;
+import org.apache.tuscany.das.rdb.DAS;
 import org.osoa.sca.annotations.Service;
 
 import bigbank.account.services.account.AccountServiceImpl;
@@ -66,8 +65,9 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
 
         try {
             InputStream mapping = createConfigStream();
-            Command select = Command.FACTORY.createCommand(
-                    "SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID", mapping);
+            DAS das = DAS.FACTORY.createDAS(mapping);
+            Command select = das.createCommand(
+                    "SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID");
             Connection conn = getConnection();
             select.setConnection(conn);
             select.setParameterValue("loginID", logonID);
@@ -100,8 +100,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
 
         InputStream mapping = createConfigStream();
 
-        Command select = Command.FACTORY.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID",
-                mapping);
+        DAS das = DAS.FACTORY.createDAS(mapping);
+        Command select = das.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID");
         Connection conn = getConnection();
         select.setConnection(conn);
         select.setParameterValue("loginID", logonID);
@@ -122,7 +122,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             throws RemoteException {
 
         try {
-            Command insert = Command.FACTORY.createCommand("insert into customers (firstName,lastName,address,email, loginID, password  ) values ('"
+        	DAS das = DAS.FACTORY.createDAS();
+            Command insert = das.createCommand("insert into customers (firstName,lastName,address,email, loginID, password  ) values ('"
                     + customerProfile.getFirstName() + "', '" + customerProfile.getLastName() + "', '" + customerProfile.getAddress() + "', '"
                     + customerProfile.getEmail() + "', '" + customerProfile.getLoginID() + "', '" + customerProfile.getPassword() + "')");
             insert.setConnection(getConnection());
@@ -130,14 +131,14 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             CustomerProfileData ret = getCustomerProfile(customerProfile.getLoginID());
             String cid = ret.getId() + "";
             if (createSavings) {
-                insert = Command.FACTORY.createCommand("insert into accounts (id,accountNumber, accountType, balance  ) values (" + cid + ", '"
+                insert = das.createCommand("insert into accounts (id,accountNumber, accountType, balance  ) values (" + cid + ", '"
                         + AccountServiceImpl.SAVINGS_ACCOUNT_PREFIX + cid + "', '" + AccountServiceImpl.ACCOUNT_TYPE_SAVINGS + "', " + 1.0F + ")");
                 insert.setConnection(getConnection());
                 insert.execute();
 
             }
             if (createCheckings) {
-                insert = Command.FACTORY.createCommand("insert into accounts (id,accountNumber, accountType, balance  ) values (" + cid + ", '"
+                insert = das.createCommand("insert into accounts (id,accountNumber, accountType, balance  ) values (" + cid + ", '"
                         + AccountServiceImpl.CHECKING_ACCOUNT_PREFIX + cid + "', '" + AccountServiceImpl.ACCOUNT_TYPE_CHECKINGS + "', " + 1.0F + ")");
                 insert.setConnection(getConnection());
                 insert.execute();
@@ -155,9 +156,9 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
     public CustomerProfileData createAccountNOTWORKING(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings)
             throws RemoteException {
         try {
-            CommandGroup commandGroup = CommandGroup.FACTORY.createCommandGroup(createConfigStream());
-            commandGroup.setConnection(getConnection());
-            Command read = commandGroup.getCommand("all customers");
+        	DAS das = DAS.FACTORY.createDAS(createConfigStream());            
+            das.setConnection(getConnection());
+            Command read = das.getCommand("all customers");
 
             // select.setDataObjectModel();
             TypeHelper helper = TypeHelper.INSTANCE;
@@ -175,8 +176,7 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             customer.set("loginID", customerProfile.getLoginID());
             customer.set("password", customerProfile.getPassword());
 
-            ApplyChangesCommand apply = commandGroup.getApplyChangesCommand();
-            apply.execute(root);
+            das.applyChanges(root);
             return getCustomerProfile(customerProfile.getLoginID());
 
         } catch (Exception e) {
@@ -193,7 +193,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             final AccountReport accountReport = accountFactory.createAccountReport();
             InputStream mapping = createConfigStream();
 
-            Command select = Command.FACTORY.createCommand("SELECT accountNumber, accountType, balance FROM accounts where id = :id", mapping);
+            DAS das = DAS.FACTORY.createDAS(mapping);
+            Command select = das.createCommand("SELECT accountNumber, accountType, balance FROM accounts where id = :id");
             Connection conn = getConnection();
             select.setConnection(conn);
             select.setParameterValue("id", customerID);
@@ -204,7 +205,7 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
 
             // Get Stocks
 
-            select = Command.FACTORY.createCommand(
+            select = das.createCommand(
                     "SELECT Symbol, quantity, purchasePrice, purchaseDate, purchaseLotNumber  FROM stocks where id = :id", createConfigStream());
             select.setConnection(conn);
             select.setParameterValue("id", customerID);
@@ -234,9 +235,11 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
     public float deposit(String account, float ammount) throws RemoteException {
 
         try {
-            Command select = Command.FACTORY.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = :accountNumber",
-                    createConfigStream());
-            Connection conn = getConnection();
+        	DAS das = DAS.FACTORY.createDAS(createConfigStream());
+        	Connection conn = getConnection();
+            das.setConnection(conn);
+
+            Command select = das.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = :accountNumber");
             select.setConnection(conn);
             select.setParameterValue("accountNumber", account);
             TypeHelper helper = TypeHelper.INSTANCE;
@@ -247,15 +250,14 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             float newbalance = accountData.getBalance() + ammount;
             accountData.setBalance(newbalance);
             // update department set companyid = ? where department.name = ?
-            CommandGroup commandGroup = CommandGroup.FACTORY.createCommandGroup(createConfigStream());
-            commandGroup.setConnection(conn);
-            Command update = commandGroup.getCommand("update balance");
+            
+            Command update = das.getCommand("update balance");           
             update.setParameterValue("BALANCE", new Float(newbalance));
             update.setParameterValue("ACCOUNTNUMBER", account);
             update.execute();
             conn.close();
             return newbalance;
-        } catch (Exception e) {
+        } catch (Exception e) {        
             throw new RemoteException(e.getClass().getName(), e);
         }
 
@@ -263,10 +265,10 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
 
     public StockSummary sellStock(int purchaseLotNumber, int quantity) throws RemoteException {
         try {
-            CommandGroup commandGroup = CommandGroup.FACTORY.createCommandGroup(createConfigStream());
-            commandGroup.setConnection(getConnection());
+            DAS das = DAS.FACTORY.createDAS(createConfigStream());
+            das.setConnection(getConnection());
 
-            Command read = commandGroup.getCommand("stockbylotSelect");
+            Command read = das.getCommand("stockbylotSelect");
             TypeHelper helper = TypeHelper.INSTANCE;
             read.setDataObjectModel(helper.getType(DataGraphRoot.class));
             read.setParameterValue("PURCHASELOTNUMBER", purchaseLotNumber);// autoboxing :-)
@@ -277,14 +279,14 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
                 int newQuatity = Math.max(stock.getQuantity() - quantity, 0);
                 if (newQuatity < 1) {
 
-                    Command delete = Command.FACTORY.createCommand("DELETE FROM STOCKS WHERE PURCHASELOTNUMBER = ?");
+                    Command delete = das.createCommand("DELETE FROM STOCKS WHERE PURCHASELOTNUMBER = ?");
                     delete.setParameterValue(1, purchaseLotNumber);
                     delete.setConnection(getConnection());
                     delete.execute();
 
                 } else {
 
-                    Command update = commandGroup.getCommand("stockbylot");
+                    Command update = das.getCommand("stockbylot");
 
                     update.setParameterValue("QUANTITY", newQuatity);
                     update.setParameterValue("PURCHASELOTNUMBER", purchaseLotNumber);
@@ -304,8 +306,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
     public StockSummary purchaseStock(int id, StockSummary stock) throws RemoteException {
 
         try {
-
-            Command insert = Command.FACTORY
+        	DAS das = DAS.FACTORY.createDAS();
+            Command insert = das
                     .createCommand("insert into stocks (id, symbol, quantity, purchasePrice, purchaseDate) values (?,?,?,?,?)");
             insert.setParameterValue(1, new Integer(id));
             insert.setParameterValue(2, stock.getSymbol());

@@ -35,10 +35,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import org.apache.tuscany.das.rdb.ApplyChangesCommand;
 import org.apache.tuscany.das.rdb.Command;
-import org.apache.tuscany.das.rdb.CommandGroup;
 import org.apache.tuscany.das.rdb.Converter;
+import org.apache.tuscany.das.rdb.DAS;
 import org.apache.tuscany.das.rdb.config.ConfigFactory;
 import org.apache.tuscany.sdo.util.SDOUtil;
 
@@ -290,9 +289,9 @@ public class AccountDBInit extends HttpServlet {
     protected void testStrockPurchaseThroughDAS(purchaseStock sp) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
             SQLException {
 
-        CommandGroup commandGroup = CommandGroup.FACTORY.createCommandGroup(createConfigStream());
-        commandGroup.setConnection(createConnection());
-        Command read = commandGroup.getCommand("all stocks");
+        DAS das = DAS.FACTORY.createDAS(createConfigStream());
+        das.setConnection(createConnection());
+        Command read = das.getCommand("all stocks");
 
         DataObject root = read.executeQuery();
 
@@ -304,9 +303,7 @@ public class AccountDBInit extends HttpServlet {
         stockPurchase.set("PURCHASEPRICE", new Float(11.00));
         stockPurchase.set("PURCHASEDATE", new Date());
 
-        ApplyChangesCommand apply = commandGroup.getApplyChangesCommand();
-
-        apply.execute(root);
+        das.applyChanges(root);
 
 
 
@@ -315,8 +312,8 @@ public class AccountDBInit extends HttpServlet {
     public CustomerProfileData testgetCustomerByLoginIDThroughDASRead(final String logonID) throws Exception {
 
         InputStream mapping = createConfigStream();
-
-        Command select = Command.FACTORY.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID",
+        DAS das = DAS.FACTORY.createDAS(mapping);
+        Command select = das.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID",
                 mapping);
         Connection conn = createConnection();
         select.setConnection(conn);
@@ -398,10 +395,10 @@ public class AccountDBInit extends HttpServlet {
 
     public void testWithdrawThroughDAS(withdraw wd) throws Exception {
 
-        Command select = Command.FACTORY.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = :accountNumber",
-                createConfigStream());
+    	DAS das = DAS.FACTORY.createDAS(createConfigStream());
+        Command select = das.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = :accountNumber");
         Connection conn = createConnection();
-        select.setConnection(conn);
+        das.setConnection(conn);
         select.setParameterValue("accountNumber", wd.getAccountNumber());
         TypeHelper helper = TypeHelper.INSTANCE;
 
@@ -415,9 +412,8 @@ public class AccountDBInit extends HttpServlet {
         account.setBalance(newbalance);
         // update department set companyid = ? where department.name = ?
 
-        CommandGroup commandGroup = CommandGroup.FACTORY.createCommandGroup(createConfigStream());
-        commandGroup.setConnection(conn);
-        Command update = commandGroup.getCommand("update balance");
+       
+        Command update = das.getCommand("update balance");
         update.setParameterValue("BALANCE", new Float(newbalance));
         update.setParameterValue("ACCOUNTNUMBER", wd.getAccountNumber());
 
