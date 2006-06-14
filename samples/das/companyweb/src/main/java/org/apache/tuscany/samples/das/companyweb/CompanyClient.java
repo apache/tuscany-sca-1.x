@@ -22,9 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.tuscany.das.rdb.ApplyChangesCommand;
 import org.apache.tuscany.das.rdb.Command;
-import org.apache.tuscany.das.rdb.CommandGroup;
+import org.apache.tuscany.das.rdb.DAS;
 
 import commonj.sdo.DataObject;
 
@@ -32,11 +31,11 @@ public class CompanyClient {
 
     private Random generator = new Random();
 
-    private CommandGroup commandGroup = CommandGroup.FACTORY.createCommandGroup(getConfig("CompanyConfig.xml"));
+    private DAS das = DAS.FACTORY.createDAS(getConfig("CompanyConfig.xml"));
 
     public final List getCompanies() {
 
-        Command read = commandGroup.getCommand("all companies");
+        Command read = das.getCommand("all companies");
         DataObject root = read.executeQuery();
         return root.getList("COMPANY");
 
@@ -44,20 +43,20 @@ public class CompanyClient {
 
     public final List getCompaniesWithDepartments() {
 
-        Command read = commandGroup.getCommand("all companies and departments");
+        Command read = das.getCommand("all companies and departments");
         DataObject root = read.executeQuery();
         return root.getList("COMPANY");
     }
 
     public final List getDepartmentsForCompany(int id) {
-        Command read = commandGroup.getCommand("all departments for company");
+        Command read = das.getCommand("all departments for company");
         read.setParameterValue("ID", new Integer(id));
         DataObject root = read.executeQuery();
         return root.getList("COMPANY");
     }
 
     public final void addDepartmentToFirstCompany() {
-        Command read = commandGroup.getCommand("all companies and departments");
+        Command read = das.getCommand("all companies and departments");
         DataObject root = read.executeQuery();
         DataObject firstCustomer = root.getDataObject("COMPANY[1]");
 
@@ -65,8 +64,7 @@ public class CompanyClient {
         newDepartment.setString("NAME", "Default Name");
         firstCustomer.getList("departments").add(newDepartment);
 
-        ApplyChangesCommand apply = commandGroup.getApplyChangesCommand();
-        apply.execute(root);
+        das.applyChanges(root);
 
     }
 
@@ -74,13 +72,13 @@ public class CompanyClient {
 
         // This section gets the ID of the first Company just so I can
         // demonstrate a parameterized command next
-        Command readAll = commandGroup.getCommand("all companies and departments");
+        Command readAll = das.getCommand("all companies and departments");
         DataObject root = readAll.executeQuery();
         int idOfFirstCustomer = root.getInt("COMPANY[1]/ID");
         System.out.println("ID of first company is: " + idOfFirstCustomer);
 
         // Read a specific company based on the known ID
-        Command readCust = commandGroup.getCommand("company by id with departments");
+        Command readCust = das.getCommand("company by id with departments");
         readCust.setParameterValue("ID", new Integer(idOfFirstCustomer));
         root = readCust.executeQuery();
 
@@ -101,8 +99,7 @@ public class CompanyClient {
             department.delete();
         }
 
-        ApplyChangesCommand apply = commandGroup.getApplyChangesCommand();
-        apply.execute(root);
+        das.applyChanges(root);
 
     }
 
@@ -110,13 +107,13 @@ public class CompanyClient {
 
         // This section gets the ID of the first Company just so I can
         // demonstrate a parameterized command next
-        Command readAll = commandGroup.getCommand("all companies and departments");
+        Command readAll = das.getCommand("all companies and departments");
         DataObject root = readAll.executeQuery();
         int idOfFirstCustomer = root.getInt("COMPANY[1]/ID");
         System.out.println("ID of first company is: " + idOfFirstCustomer);
 
         // Read a specific company based on the known ID
-        Command readCust = commandGroup.getCommand("company by id with departments");
+        Command readCust = das.getCommand("company by id with departments");
         readCust.setParameterValue("ID", new Integer(idOfFirstCustomer));
         root = readCust.executeQuery();
 
@@ -129,15 +126,13 @@ public class CompanyClient {
             System.out.println("Modifying department: " + department.getString("NAME"));
             department.setString("NAME", getRandomDepartmentName());
         }
-
-        ApplyChangesCommand apply = commandGroup.getApplyChangesCommand();
-        apply.execute(root);
+        das.applyChanges(root);
 
     }
     
     
     public void releaseResources() {
-        commandGroup.releaseResources();
+        das.releaseResources();
     }
 
     // Utilities
