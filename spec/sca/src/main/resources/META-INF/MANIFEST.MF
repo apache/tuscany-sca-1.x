@@ -1,8 +1,16 @@
 Manifest-Version: 1.0
+Extension-Name: sca-api
+Specification-Title: SCA API
+Specification-Vendor: Apache Software Foundation
+Implementation-Vendor: Apache Software Foundation
+Implementation-Vendor-Id: org.apache
+Implementation-Title: sca-api
+Implementation-Version: incubating-M1
 Bundle-ManifestVersion: 2
-Bundle-Name: SCA APIs
+Bundle-Name: SDO API
 Bundle-SymbolicName: org.apache.tuscany.sca.spec
 Bundle-Version: 1.0.0
-Bundle-Localization: plugin
-Bundle-Vendor: Apache
-Export-Package: org.osoa.sca, org.osoa.sca.annotations, org.osoa.sca.model
+Bundle-Vendor: Apache Software Foundation
+Export-Package: org.osoa.sca,
+ org.osoa.sca.annotations,
+ org.osoa.sca.model

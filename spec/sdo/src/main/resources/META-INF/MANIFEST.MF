@@ -1,10 +1,16 @@
 Manifest-Version: 1.0
+Extension-Name: sdo-api
+Specification-Title: SDO API
+Specification-Vendor: Apache Software Foundation
+Implementation-Vendor: Apache Software Foundation
+Implementation-Vendor-Id: org.apache
+Implementation-Title: sdo-api
+Implementation-Version: incubating-M1
 Bundle-ManifestVersion: 2
-Bundle-Name: SDO CommonJ APIs
+Bundle-Name: SDO API
 Bundle-SymbolicName: org.apache.tuscany.sdo.spec
 Bundle-Version: 1.0.0
-Bundle-Localization: plugin
-Bundle-Vendor: Apache
+Bundle-Vendor: Apache Software Foundation
 Export-Package: commonj.sdo,
  commonj.sdo.helper,
  commonj.sdo.impl

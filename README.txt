@@ -19,7 +19,7 @@ Getting Started
 ---------------
 Documentation describing the system requirements and the steps to set up the
 Tuscany runtime and run the Tuscany basic technology samples can be found in
-GettingStarted.htm. Javadoc can be found in in the javadoc directory.
+GettingStarted.htm. Javadoc can be found in the javadoc directory.
 
 
 Thank you for using Tuscany!
