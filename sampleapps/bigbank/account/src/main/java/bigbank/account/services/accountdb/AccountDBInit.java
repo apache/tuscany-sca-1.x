@@ -53,7 +53,6 @@ import com.bigbank.account.StockSummary;
 import com.bigbank.account.purchaseStock;
 import com.bigbank.account.withdraw;
 import commonj.sdo.DataObject;
-import commonj.sdo.helper.TypeHelper;
 
 public class AccountDBInit extends HttpServlet {
 
@@ -289,8 +288,7 @@ public class AccountDBInit extends HttpServlet {
     protected void testStrockPurchaseThroughDAS(purchaseStock sp) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
             SQLException {
 
-        DAS das = DAS.FACTORY.createDAS(createConfigStream());
-        das.setConnection(createConnection());
+        DAS das = DAS.FACTORY.createDAS(createConfigStream(), createConnection());      
         Command read = das.getCommand("all stocks");
 
         DataObject root = read.executeQuery();
@@ -312,15 +310,11 @@ public class AccountDBInit extends HttpServlet {
     public CustomerProfileData testgetCustomerByLoginIDThroughDASRead(final String logonID) throws Exception {
 
         InputStream mapping = createConfigStream();
-        DAS das = DAS.FACTORY.createDAS(mapping);
-        Command select = das.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID",
-                mapping);
         Connection conn = createConnection();
-        select.setConnection(conn);
-        select.setParameterValue("loginID", logonID);
-        TypeHelper helper = TypeHelper.INSTANCE;
-
-        select.setDataObjectModel(helper.getType(DataGraphRoot.class));
+        DAS das = DAS.FACTORY.createDAS(mapping, conn);
+        Command select = das.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID");
+              
+        select.setParameterValue("loginID", logonID); 
 
         DataGraphRoot root = (DataGraphRoot) select.executeQuery();
         conn.close();
@@ -395,14 +389,11 @@ public class AccountDBInit extends HttpServlet {
 
     public void testWithdrawThroughDAS(withdraw wd) throws Exception {
 
-    	DAS das = DAS.FACTORY.createDAS(createConfigStream());
+    	Connection conn = createConnection();
+    	DAS das = DAS.FACTORY.createDAS(createConfigStream(), conn);
         Command select = das.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = :accountNumber");
-        Connection conn = createConnection();
-        das.setConnection(conn);
-        select.setParameterValue("accountNumber", wd.getAccountNumber());
-        TypeHelper helper = TypeHelper.INSTANCE;
-
-        select.setDataObjectModel(helper.getType(DataGraphRoot.class));
+              
+        select.setParameterValue("accountNumber", wd.getAccountNumber()); 
 
         DataGraphRoot root = (DataGraphRoot) select.executeQuery();
 

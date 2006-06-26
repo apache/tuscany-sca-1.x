@@ -45,7 +45,6 @@ import com.bigbank.account.CustomerProfileData;
 import com.bigbank.account.DataGraphRoot;
 import com.bigbank.account.StockSummary;
 import commonj.sdo.DataObject;
-import commonj.sdo.helper.TypeHelper;
 
 @Service(CustomerIdService.class)
 public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO fix this!
@@ -65,15 +64,13 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
 
         try {
             InputStream mapping = createConfigStream();
-            DAS das = DAS.FACTORY.createDAS(mapping);
+            Connection conn = getConnection();
+            DAS das = DAS.FACTORY.createDAS(mapping, conn);
+            
             Command select = das.createCommand(
                     "SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID");
-            Connection conn = getConnection();
-            select.setConnection(conn);
-            select.setParameterValue("loginID", logonID);
-            TypeHelper helper = TypeHelper.INSTANCE;
-
-            select.setDataObjectModel(helper.getType(DataGraphRoot.class));
+                 
+            select.setParameterValue("loginID", logonID);       
 
             DataGraphRoot root = (DataGraphRoot) select.executeQuery();
             conn.close();
@@ -100,15 +97,12 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
 
         InputStream mapping = createConfigStream();
 
-        DAS das = DAS.FACTORY.createDAS(mapping);
-        Command select = das.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID");
         Connection conn = getConnection();
-        select.setConnection(conn);
-        select.setParameterValue("loginID", logonID);
-        TypeHelper helper = TypeHelper.INSTANCE;
-
-        select.setDataObjectModel(helper.getType(DataGraphRoot.class));
-
+        DAS das = DAS.FACTORY.createDAS(mapping, conn);
+        Command select = das.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID");
+             
+        select.setParameterValue("loginID", logonID);     
+     
         DataGraphRoot root = (DataGraphRoot) select.executeQuery();
         conn.close();
 
@@ -122,25 +116,23 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             throws RemoteException {
 
         try {
-        	DAS das = DAS.FACTORY.createDAS();
+        	DAS das = DAS.FACTORY.createDAS(getConnection());
             Command insert = das.createCommand("insert into customers (firstName,lastName,address,email, loginID, password  ) values ('"
                     + customerProfile.getFirstName() + "', '" + customerProfile.getLastName() + "', '" + customerProfile.getAddress() + "', '"
                     + customerProfile.getEmail() + "', '" + customerProfile.getLoginID() + "', '" + customerProfile.getPassword() + "')");
-            insert.setConnection(getConnection());
+          
             insert.execute();
             CustomerProfileData ret = getCustomerProfile(customerProfile.getLoginID());
             String cid = ret.getId() + "";
             if (createSavings) {
                 insert = das.createCommand("insert into accounts (id,accountNumber, accountType, balance  ) values (" + cid + ", '"
-                        + AccountServiceImpl.SAVINGS_ACCOUNT_PREFIX + cid + "', '" + AccountServiceImpl.ACCOUNT_TYPE_SAVINGS + "', " + 1.0F + ")");
-                insert.setConnection(getConnection());
+                        + AccountServiceImpl.SAVINGS_ACCOUNT_PREFIX + cid + "', '" + AccountServiceImpl.ACCOUNT_TYPE_SAVINGS + "', " + 1.0F + ")");             
                 insert.execute();
 
             }
             if (createCheckings) {
                 insert = das.createCommand("insert into accounts (id,accountNumber, accountType, balance  ) values (" + cid + ", '"
-                        + AccountServiceImpl.CHECKING_ACCOUNT_PREFIX + cid + "', '" + AccountServiceImpl.ACCOUNT_TYPE_CHECKINGS + "', " + 1.0F + ")");
-                insert.setConnection(getConnection());
+                        + AccountServiceImpl.CHECKING_ACCOUNT_PREFIX + cid + "', '" + AccountServiceImpl.ACCOUNT_TYPE_CHECKINGS + "', " + 1.0F + ")");           
                 insert.execute();
 
             }
@@ -156,13 +148,10 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
     public CustomerProfileData createAccountNOTWORKING(CustomerProfileData customerProfile, boolean createSavings, boolean createCheckings)
             throws RemoteException {
         try {
-        	DAS das = DAS.FACTORY.createDAS(createConfigStream());            
-            das.setConnection(getConnection());
+        	DAS das = DAS.FACTORY.createDAS(createConfigStream(), getConnection());                      
             Command read = das.getCommand("all customers");
 
-            // select.setDataObjectModel();
-            TypeHelper helper = TypeHelper.INSTANCE;
-            read.setDataObjectModel(helper.getType(DataGraphRoot.class));
+            // select.setDataObjectModel();                 
             DataObject root = read.executeQuery();
 
             // Create a new stockPurchase
@@ -193,23 +182,20 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             final AccountReport accountReport = accountFactory.createAccountReport();
             InputStream mapping = createConfigStream();
 
-            DAS das = DAS.FACTORY.createDAS(mapping);
-            Command select = das.createCommand("SELECT accountNumber, accountType, balance FROM accounts where id = :id");
             Connection conn = getConnection();
-            select.setConnection(conn);
+            DAS das = DAS.FACTORY.createDAS(mapping, conn);
+          
+            Command select = das.createCommand("SELECT accountNumber, accountType, balance FROM accounts where id = :id");                 
             select.setParameterValue("id", customerID);
-            TypeHelper helper = TypeHelper.INSTANCE;
-            select.setDataObjectModel(helper.getType(DataGraphRoot.class));
+             
             DataGraphRoot root = (DataGraphRoot) select.executeQuery();
             accountReport.getAccountSummaries().addAll(root.getAccountSummaries());
 
             // Get Stocks
 
             select = das.createCommand(
-                    "SELECT Symbol, quantity, purchasePrice, purchaseDate, purchaseLotNumber  FROM stocks where id = :id", createConfigStream());
-            select.setConnection(conn);
-            select.setParameterValue("id", customerID);
-            select.setDataObjectModel(helper.getType(DataGraphRoot.class));
+                    "SELECT Symbol, quantity, purchasePrice, purchaseDate, purchaseLotNumber  FROM stocks where id = :id");           
+            select.setParameterValue("id", customerID);            
 
             // select.addConverter("STOCKS.PURCHASEDATE", DateConverter.class.getName());
 
@@ -235,15 +221,12 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
     public float deposit(String account, float ammount) throws RemoteException {
 
         try {
-        	DAS das = DAS.FACTORY.createDAS(createConfigStream());
         	Connection conn = getConnection();
-            das.setConnection(conn);
+        	DAS das = DAS.FACTORY.createDAS(createConfigStream(), conn);        
 
-            Command select = das.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = :accountNumber");
-            select.setConnection(conn);
+            Command select = das.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = :accountNumber");         
             select.setParameterValue("accountNumber", account);
-            TypeHelper helper = TypeHelper.INSTANCE;
-            select.setDataObjectModel(helper.getType(DataGraphRoot.class));
+                      
             DataGraphRoot root = (DataGraphRoot) select.executeQuery();
             Collection accounts = root.getAccountSummaries();
             AccountSummary accountData = (AccountSummary) accounts.iterator().next();
@@ -265,12 +248,9 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
 
     public StockSummary sellStock(int purchaseLotNumber, int quantity) throws RemoteException {
         try {
-            DAS das = DAS.FACTORY.createDAS(createConfigStream());
-            das.setConnection(getConnection());
+            DAS das = DAS.FACTORY.createDAS(createConfigStream(), getConnection());          
 
-            Command read = das.getCommand("stockbylotSelect");
-            TypeHelper helper = TypeHelper.INSTANCE;
-            read.setDataObjectModel(helper.getType(DataGraphRoot.class));
+            Command read = das.getCommand("stockbylotSelect");          
             read.setParameterValue("PURCHASELOTNUMBER", purchaseLotNumber);// autoboxing :-)
             DataGraphRoot root = (DataGraphRoot) read.executeQuery();
             List stocks = root.getStockSummaries();
@@ -280,8 +260,7 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
                 if (newQuatity < 1) {
 
                     Command delete = das.createCommand("DELETE FROM STOCKS WHERE PURCHASELOTNUMBER = ?");
-                    delete.setParameterValue(1, purchaseLotNumber);
-                    delete.setConnection(getConnection());
+                    delete.setParameterValue(1, purchaseLotNumber);                   
                     delete.execute();
 
                 } else {
@@ -306,7 +285,7 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
     public StockSummary purchaseStock(int id, StockSummary stock) throws RemoteException {
 
         try {
-        	DAS das = DAS.FACTORY.createDAS();
+        	DAS das = DAS.FACTORY.createDAS(getConnection());
             Command insert = das
                     .createCommand("insert into stocks (id, symbol, quantity, purchasePrice, purchaseDate) values (?,?,?,?,?)");
             insert.setParameterValue(1, new Integer(id));
@@ -314,8 +293,7 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             insert.setParameterValue(3, stock.getQuantity());
             insert.setParameterValue(4, stock.getPurchasePrice());
             insert.setParameterValue(5, DateConverter.INSTANCE.getColumnValue(stock.getPurchaseDate()));
-
-            insert.setConnection(getConnection());
+        
             insert.execute();
 
             return stock;
