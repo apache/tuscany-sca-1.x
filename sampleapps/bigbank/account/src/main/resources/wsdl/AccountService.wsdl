@@ -29,8 +29,7 @@
 			> <!-- xmlns:sdojava="commonj.sdo/java" sdojava:package="org.apache.tuscany.samples.bigbank.account" -->
 			
 			
-	<xsd:complexType name="DataGraphRoot">		<!-- This was added temporarily for DAS 
-	                                                 changes are on the way to lift this requirement -->
+<!--	<xsd:complexType name="DataGraphRoot">	
 	 	<xsd:sequence>
             <xsd:element name="customerProfileData" type="account:CustomerProfileData" maxOccurs="unbounded" minOccurs="0" />
             <xsd:element name="StockSummaries" type="account:StockSummary" maxOccurs="unbounded" minOccurs="0" />
@@ -38,7 +37,7 @@
             <xsd:element name="StockLogEntries" type="account:StockLogEntry" maxOccurs="unbounded" minOccurs="0" />
             <xsd:element name="AccountLogEntries" type="account:AccountLogEntry" maxOccurs="unbounded" minOccurs="0" />
         </xsd:sequence>
-	</xsd:complexType>
+	</xsd:complexType>-->
 			
 
 			<xsd:element name="getAccountReport">

@@ -30,8 +30,8 @@ import org.osoa.sca.annotations.Service;
 
 import com.bigbank.account.AccountFactory;
 import com.bigbank.account.AccountLog;
-import com.bigbank.account.DataGraphRoot;
 import com.bigbank.account.StockSummary;
+import commonj.sdo.DataObject;
 
 /**
  * This class implements the Account Logger service component.
@@ -182,14 +182,14 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
                       
             select.setParameterValue("id", customerID);
         
-            DataGraphRoot root = (DataGraphRoot) select.executeQuery();
-            accountLog.getAccountLogEntries().addAll(root.getAccountLogEntries());
+            DataObject root = select.executeQuery();
+            accountLog.getAccountLogEntries().addAll(root.getList("AccountLogEntry"));
 
             select = das.createCommand(
                     "SELECT logSeqNo, Symbol, quantity, actionType, purchaseLotNumber  FROM stockLog where id = :id");          
             select.setParameterValue("id", customerID);       
-            root = (DataGraphRoot) select.executeQuery();
-            accountLog.getStockLogEntries().addAll(root.getStockLogEntries());
+            root =  select.executeQuery();
+            accountLog.getStockLogEntries().addAll(root.getList("StockLogEntry"));
 
             conn.close();
 

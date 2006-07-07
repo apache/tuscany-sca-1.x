@@ -42,7 +42,6 @@ import com.bigbank.account.AccountFactory;
 import com.bigbank.account.AccountReport;
 import com.bigbank.account.AccountSummary;
 import com.bigbank.account.CustomerProfileData;
-import com.bigbank.account.DataGraphRoot;
 import com.bigbank.account.StockSummary;
 import commonj.sdo.DataObject;
 
@@ -72,10 +71,10 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
                  
             select.setParameterValue("loginID", logonID);       
 
-            DataGraphRoot root = (DataGraphRoot) select.executeQuery();
+            DataObject root = select.executeQuery();
             conn.close();
 
-            Collection customers = root.getCustomerProfileData();
+            Collection customers = root.getList("CustomerProfileData");
             CustomerProfileData customerProfileData = (CustomerProfileData) customers.iterator().next();
             
             
@@ -103,10 +102,10 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
              
         select.setParameterValue("loginID", logonID);     
      
-        DataGraphRoot root = (DataGraphRoot) select.executeQuery();
+        DataObject root = select.executeQuery();
         conn.close();
 
-        Collection customers = root.getCustomerProfileData();
+        Collection customers = root.getList("CustomerProfileData");
         CustomerProfileData customerProfileData = (CustomerProfileData) customers.iterator().next();
         return customerProfileData;
 
@@ -188,8 +187,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             Command select = das.createCommand("SELECT accountNumber, accountType, balance FROM accounts where id = :id");                 
             select.setParameterValue("id", customerID);
              
-            DataGraphRoot root = (DataGraphRoot) select.executeQuery();
-            accountReport.getAccountSummaries().addAll(root.getAccountSummaries());
+            DataObject root = select.executeQuery();
+            accountReport.getAccountSummaries().addAll(root.getList("AccountSummary"));
 
             // Get Stocks
 
@@ -199,8 +198,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
 
             // select.addConverter("STOCKS.PURCHASEDATE", DateConverter.class.getName());
 
-            root = (DataGraphRoot) select.executeQuery();
-            accountReport.getStockSummaries().addAll(root.getStockSummaries());
+            root = (DataObject) select.executeQuery();
+            accountReport.getStockSummaries().addAll(root.getList("StockSummary"));
 
             conn.close();
 
@@ -227,8 +226,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             Command select = das.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = :accountNumber");         
             select.setParameterValue("accountNumber", account);
                       
-            DataGraphRoot root = (DataGraphRoot) select.executeQuery();
-            Collection accounts = root.getAccountSummaries();
+            DataObject root = select.executeQuery();
+            Collection accounts = root.getList("AccountSummary");
             AccountSummary accountData = (AccountSummary) accounts.iterator().next();
             float newbalance = accountData.getBalance() + ammount;
             accountData.setBalance(newbalance);
@@ -252,8 +251,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
 
             Command read = das.getCommand("stockbylotSelect");          
             read.setParameterValue("PURCHASELOTNUMBER", purchaseLotNumber);// autoboxing :-)
-            DataGraphRoot root = (DataGraphRoot) read.executeQuery();
-            List stocks = root.getStockSummaries();
+            DataObject root =  read.executeQuery();
+            List stocks = root.getList("StockSummary");
             if (null != stocks && !stocks.isEmpty()) {
                 StockSummary stock = (StockSummary) stocks.get(0);
                 int newQuatity = Math.max(stock.getQuantity() - quantity, 0);

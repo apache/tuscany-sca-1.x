@@ -48,7 +48,6 @@ import bigbank.account.services.accountlogger.AccountLoggerServiceImpl;
 import com.bigbank.account.AccountFactory;
 import com.bigbank.account.AccountSummary;
 import com.bigbank.account.CustomerProfileData;
-import com.bigbank.account.DataGraphRoot;
 import com.bigbank.account.StockSummary;
 import com.bigbank.account.purchaseStock;
 import com.bigbank.account.withdraw;
@@ -316,10 +315,10 @@ public class AccountDBInit extends HttpServlet {
               
         select.setParameterValue("loginID", logonID); 
 
-        DataGraphRoot root = (DataGraphRoot) select.executeQuery();
+        DataObject root = select.executeQuery();
         conn.close();
 
-        Collection customers = root.getCustomerProfileData();
+        Collection customers = root.getList("CustomerProfileData");
         CustomerProfileData customerProfileData = (CustomerProfileData) customers.iterator().next();
         System.out.println(customerProfileData);
         System.out.flush();
@@ -395,9 +394,9 @@ public class AccountDBInit extends HttpServlet {
               
         select.setParameterValue("accountNumber", wd.getAccountNumber()); 
 
-        DataGraphRoot root = (DataGraphRoot) select.executeQuery();
+        DataObject root = select.executeQuery();
 
-        Collection accounts = root.getAccountSummaries();
+        Collection accounts = root.getList("AccountSummary");
         AccountSummary account = (AccountSummary) accounts.iterator().next();
         float newbalance = account.getBalance() - wd.getAmount();
         account.setBalance(newbalance);
