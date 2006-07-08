@@ -66,21 +66,17 @@
 
 	
   <Command name="update balance"
-        SQL="update ACCOUNTS set BALANCE = :BALANCE where ACCOUNTNUMBER = :ACCOUNTNUMBER"
+        SQL="update ACCOUNTS set BALANCE = ? where ACCOUNTNUMBER = ?"
         kind="Update">
-        <Parameter name=":BALANCE"/>
-        <Parameter name=":ACCOUNTNUMBER"/>
    </Command>
     
     
     <Command name="all stocks" SQL="select * from stocks"  kind="Select"/>
     <Command name="all customers" SQL="select  from CUSTOMERS"  kind="Select"/>
-    <Command name="stockbylotSelect" SQL="select quantity  from STOCKS  WHERE purchaseLotNumber = :PURCHASELOTNUMBER"  kind="Select" >
+    <Command name="stockbylotSelect" SQL="select quantity  from STOCKS  WHERE purchaseLotNumber = ?"  kind="Select" >
     	<Parameter name=":PURCHASELOTNUMBER"/>
     </Command>
-    <Command name="stockbylot" SQL="update STOCKS set quantity = :QUANTITY WHERE purchaseLotNumber = :PURCHASELOTNUMBER"  kind="Update" >
-        <Parameter name=":QUANTITY"/>
-        <Parameter name=":PURCHASELOTNUMBER"/>
+    <Command name="stockbylot" SQL="update STOCKS set quantity = ? WHERE purchaseLotNumber = ?"  kind="Update" >
     </Command>
 	
 </Config>

@@ -53,10 +53,10 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
     public void logDeposit(int id, String account, float amount) throws RemoteException {
         DAS das = DAS.FACTORY.createDAS(getConnection());
         Command insert = das.createCommand("insert into acctLog (id, accountNumber, actionType, amount) values (?,?,?,?)");
-        insert.setParameterValue(1, new Integer(id));
-        insert.setParameterValue(2, account);
-        insert.setParameterValue(3, ACCT_ACTION_TYPE_DEPOSIT);
-        insert.setParameterValue(4, new Float(amount));
+        insert.setParameter(1, new Integer(id));
+        insert.setParameter(2, account);
+        insert.setParameter(3, ACCT_ACTION_TYPE_DEPOSIT);
+        insert.setParameter(4, new Float(amount));
      
         insert.execute();
 /*
@@ -67,10 +67,10 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
     public void logWithdrawal(int id, String account, float amount) throws RemoteException {
         DAS das = DAS.FACTORY.createDAS(getConnection());
         Command insert = das.createCommand("insert into acctLog (id, accountNumber, actionType, amount) values (?,?,?,?)");
-        insert.setParameterValue(1, new Integer(id));
-        insert.setParameterValue(2, account);
-        insert.setParameterValue(3, ACCT_ACTION_TYPE_WITHDRAW);
-        insert.setParameterValue(4, new Float(amount));
+        insert.setParameter(1, new Integer(id));
+        insert.setParameter(2, account);
+        insert.setParameter(3, ACCT_ACTION_TYPE_WITHDRAW);
+        insert.setParameter(4, new Float(amount));
     
         insert.execute();
         /*
@@ -81,11 +81,11 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
     public void logPurchaseStock(int id, StockSummary stock) throws RemoteException {
         DAS das = DAS.FACTORY.createDAS(getConnection());
         Command insert = das.createCommand("insert into stockLog (id, Symbol, quantity, actionType, purchaseLotNumber) values (?,?,?,?,?)");
-        insert.setParameterValue(1, new Integer(id));
-        insert.setParameterValue(2, stock.getSymbol());
-        insert.setParameterValue(3, new Integer(stock.getQuantity()));
-        insert.setParameterValue(4, STOCK_ACTION_TYPE_PURCHASE);
-        insert.setParameterValue(5, new Integer(stock.getPurchaseLotNumber()));
+        insert.setParameter(1, new Integer(id));
+        insert.setParameter(2, stock.getSymbol());
+        insert.setParameter(3, new Integer(stock.getQuantity()));
+        insert.setParameter(4, STOCK_ACTION_TYPE_PURCHASE);
+        insert.setParameter(5, new Integer(stock.getPurchaseLotNumber()));
        
         insert.execute();
         /*
@@ -99,11 +99,11 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
         String symbol = ((stock.getSymbol()!=null)?stock.getSymbol():"null");
         DAS das = DAS.FACTORY.createDAS(getConnection());
         Command insert = das.createCommand("insert into stockLog (id, Symbol, quantity, actionType, purchaseLotNumber) values (?,?,?,?,?)");
-        insert.setParameterValue(1, new Integer(id));
-        insert.setParameterValue(2, symbol);
-        insert.setParameterValue(3, new Integer(quantity));
-        insert.setParameterValue(4, STOCK_ACTION_TYPE_SELL);
-        insert.setParameterValue(5, new Integer(stock.getPurchaseLotNumber()));
+        insert.setParameter(1, new Integer(id));
+        insert.setParameter(2, symbol);
+        insert.setParameter(3, new Integer(quantity));
+        insert.setParameter(4, STOCK_ACTION_TYPE_SELL);
+        insert.setParameter(5, new Integer(stock.getPurchaseLotNumber()));
       
         insert.execute();
         /*
@@ -178,16 +178,16 @@ public class AccountLoggerServiceImpl implements AccountLoggerService {
 
             Connection conn = getConnection();
             DAS das = DAS.FACTORY.createDAS(mapping, conn);
-            Command select = das.createCommand("SELECT logSeqNo, accountNumber, actionType, amount FROM acctLog where id = :id");
+            Command select = das.createCommand("SELECT logSeqNo, accountNumber, actionType, amount FROM acctLog where id = ?");
                       
-            select.setParameterValue("id", customerID);
+            select.setParameter(1, customerID);
         
             DataObject root = select.executeQuery();
             accountLog.getAccountLogEntries().addAll(root.getList("AccountLogEntry"));
 
             select = das.createCommand(
-                    "SELECT logSeqNo, Symbol, quantity, actionType, purchaseLotNumber  FROM stockLog where id = :id");          
-            select.setParameterValue("id", customerID);       
+                    "SELECT logSeqNo, Symbol, quantity, actionType, purchaseLotNumber  FROM stockLog where id = ?");          
+            select.setParameter(1, customerID);       
             root =  select.executeQuery();
             accountLog.getStockLogEntries().addAll(root.getList("StockLogEntry"));
 

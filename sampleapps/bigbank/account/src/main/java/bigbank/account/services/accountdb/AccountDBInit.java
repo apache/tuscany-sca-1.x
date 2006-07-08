@@ -311,9 +311,9 @@ public class AccountDBInit extends HttpServlet {
         InputStream mapping = createConfigStream();
         Connection conn = createConnection();
         DAS das = DAS.FACTORY.createDAS(mapping, conn);
-        Command select = das.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID");
+        Command select = das.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = ?");
               
-        select.setParameterValue("loginID", logonID); 
+        select.setParameter(1, logonID); 
 
         DataObject root = select.executeQuery();
         conn.close();
@@ -390,9 +390,9 @@ public class AccountDBInit extends HttpServlet {
 
     	Connection conn = createConnection();
     	DAS das = DAS.FACTORY.createDAS(createConfigStream(), conn);
-        Command select = das.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = :accountNumber");
+        Command select = das.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = ?");
               
-        select.setParameterValue("accountNumber", wd.getAccountNumber()); 
+        select.setParameter(1, wd.getAccountNumber()); 
 
         DataObject root = select.executeQuery();
 
@@ -404,8 +404,8 @@ public class AccountDBInit extends HttpServlet {
 
        
         Command update = das.getCommand("update balance");
-        update.setParameterValue("BALANCE", new Float(newbalance));
-        update.setParameterValue("ACCOUNTNUMBER", wd.getAccountNumber());
+        update.setParameter(1, new Float(newbalance));
+        update.setParameter(2, wd.getAccountNumber());
 
         update.execute();
         conn.close();

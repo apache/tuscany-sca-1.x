@@ -67,9 +67,9 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             DAS das = DAS.FACTORY.createDAS(mapping, conn);
             
             Command select = das.createCommand(
-                    "SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID");
+                    "SELECT firstName, lastName, loginID, password, id FROM customers where loginID = ?");
                  
-            select.setParameterValue("loginID", logonID);       
+            select.setParameter(1, logonID);       
 
             DataObject root = select.executeQuery();
             conn.close();
@@ -98,9 +98,9 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
 
         Connection conn = getConnection();
         DAS das = DAS.FACTORY.createDAS(mapping, conn);
-        Command select = das.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = :loginID");
+        Command select = das.createCommand("SELECT firstName, lastName, loginID, password, id FROM customers where loginID = ?");
              
-        select.setParameterValue("loginID", logonID);     
+        select.setParameter(1, logonID);     
      
         DataObject root = select.executeQuery();
         conn.close();
@@ -184,8 +184,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             Connection conn = getConnection();
             DAS das = DAS.FACTORY.createDAS(mapping, conn);
           
-            Command select = das.createCommand("SELECT accountNumber, accountType, balance FROM accounts where id = :id");                 
-            select.setParameterValue("id", customerID);
+            Command select = das.createCommand("SELECT accountNumber, accountType, balance FROM accounts where id = ?");                 
+            select.setParameter(1, customerID);
              
             DataObject root = select.executeQuery();
             accountReport.getAccountSummaries().addAll(root.getList("AccountSummary"));
@@ -193,8 +193,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             // Get Stocks
 
             select = das.createCommand(
-                    "SELECT Symbol, quantity, purchasePrice, purchaseDate, purchaseLotNumber  FROM stocks where id = :id");           
-            select.setParameterValue("id", customerID);            
+                    "SELECT Symbol, quantity, purchasePrice, purchaseDate, purchaseLotNumber  FROM stocks where id = ?");           
+            select.setParameter(1, customerID);            
 
             // select.addConverter("STOCKS.PURCHASEDATE", DateConverter.class.getName());
 
@@ -223,8 +223,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
         	Connection conn = getConnection();
         	DAS das = DAS.FACTORY.createDAS(createConfigStream(), conn);        
 
-            Command select = das.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = :accountNumber");         
-            select.setParameterValue("accountNumber", account);
+            Command select = das.createCommand("SELECT accountNumber, balance FROM accounts where accountNumber = ?");         
+            select.setParameter(1, account);
                       
             DataObject root = select.executeQuery();
             Collection accounts = root.getList("AccountSummary");
@@ -234,8 +234,8 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             // update department set companyid = ? where department.name = ?
             
             Command update = das.getCommand("update balance");           
-            update.setParameterValue("BALANCE", new Float(newbalance));
-            update.setParameterValue("ACCOUNTNUMBER", account);
+            update.setParameter(1, new Float(newbalance));
+            update.setParameter(2, account);
             update.execute();
             conn.close();
             return newbalance;
@@ -250,7 +250,7 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
             DAS das = DAS.FACTORY.createDAS(createConfigStream(), getConnection());          
 
             Command read = das.getCommand("stockbylotSelect");          
-            read.setParameterValue("PURCHASELOTNUMBER", purchaseLotNumber);// autoboxing :-)
+            read.setParameter(1, purchaseLotNumber);// autoboxing :-)
             DataObject root =  read.executeQuery();
             List stocks = root.getList("StockSummary");
             if (null != stocks && !stocks.isEmpty()) {
@@ -259,15 +259,15 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
                 if (newQuatity < 1) {
 
                     Command delete = das.createCommand("DELETE FROM STOCKS WHERE PURCHASELOTNUMBER = ?");
-                    delete.setParameterValue(1, purchaseLotNumber);                   
+                    delete.setParameter(1, purchaseLotNumber);                   
                     delete.execute();
 
                 } else {
 
                     Command update = das.getCommand("stockbylot");
 
-                    update.setParameterValue("QUANTITY", newQuatity);
-                    update.setParameterValue("PURCHASELOTNUMBER", purchaseLotNumber);
+                    update.setParameter(1, newQuatity);
+                    update.setParameter(2, purchaseLotNumber);
                     update.execute();
 
                     stock.setQuantity(newQuatity);
@@ -287,11 +287,11 @@ public class AccountDataServiceDASImpl implements CustomerIdService {  // TODO f
         	DAS das = DAS.FACTORY.createDAS(getConnection());
             Command insert = das
                     .createCommand("insert into stocks (id, symbol, quantity, purchasePrice, purchaseDate) values (?,?,?,?,?)");
-            insert.setParameterValue(1, new Integer(id));
-            insert.setParameterValue(2, stock.getSymbol());
-            insert.setParameterValue(3, stock.getQuantity());
-            insert.setParameterValue(4, stock.getPurchasePrice());
-            insert.setParameterValue(5, DateConverter.INSTANCE.getColumnValue(stock.getPurchaseDate()));
+            insert.setParameter(1, new Integer(id));
+            insert.setParameter(2, stock.getSymbol());
+            insert.setParameter(3, stock.getQuantity());
+            insert.setParameter(4, stock.getPurchasePrice());
+            insert.setParameter(5, DateConverter.INSTANCE.getColumnValue(stock.getPurchaseDate()));
         
             insert.execute();
 
