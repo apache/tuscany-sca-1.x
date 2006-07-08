@@ -50,7 +50,7 @@ public class CompanyClient {
 
     public final List getDepartmentsForCompany(int id) {
         Command read = das.getCommand("all departments for company");
-        read.setParameterValue("ID", new Integer(id));
+        read.setParameter(1, new Integer(id));
         DataObject root = read.executeQuery();
         return root.getList("COMPANY");
     }
@@ -79,7 +79,7 @@ public class CompanyClient {
 
         // Read a specific company based on the known ID
         Command readCust = das.getCommand("company by id with departments");
-        readCust.setParameterValue("ID", new Integer(idOfFirstCustomer));
+        readCust.setParameter(1, new Integer(idOfFirstCustomer));
         root = readCust.executeQuery();
 
         // Delete all the comany's departments from the graph
@@ -114,7 +114,7 @@ public class CompanyClient {
 
         // Read a specific company based on the known ID
         Command readCust = das.getCommand("company by id with departments");
-        readCust.setParameterValue("ID", new Integer(idOfFirstCustomer));
+        readCust.setParameter(1, new Integer(idOfFirstCustomer));
         root = readCust.executeQuery();
 
         // Modify all the comany's department names
