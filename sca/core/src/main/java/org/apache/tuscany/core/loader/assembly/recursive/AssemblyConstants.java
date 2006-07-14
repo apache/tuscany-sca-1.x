@@ -35,9 +35,7 @@ public final class AssemblyConstants {
     public static final QName COMPOSITE = new QName(SCA_NAMESPACE, "composite");
     public static final QName MODULE_FRAGMENT = new QName(SCA_NAMESPACE, "moduleFragment");
     public static final QName PROPERTY = new QName(SCA_NAMESPACE, "property");
-    public static final QName PROPERTIES = new QName(SCA_NAMESPACE, "properties");
     public static final QName REFERENCE = new QName(SCA_NAMESPACE, "reference");
-    public static final QName REFERENCES = new QName(SCA_NAMESPACE, "references");
     public static final QName SERVICE = new QName(SCA_NAMESPACE, "service");
     public static final QName WIRE = new QName(SCA_NAMESPACE, "wire");
     public static final QName WIRE_SOURCE = new QName(SCA_NAMESPACE, "source.uri");

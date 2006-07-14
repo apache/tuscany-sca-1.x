@@ -19,8 +19,8 @@ package org.apache.tuscany.core.loader.assembly.recursive;
 import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
 import static org.apache.tuscany.core.loader.assembly.recursive.AssemblyConstants.COMPONENT;
-import static org.apache.tuscany.core.loader.assembly.recursive.AssemblyConstants.PROPERTIES;
-import static org.apache.tuscany.core.loader.assembly.recursive.AssemblyConstants.REFERENCES;
+import static org.apache.tuscany.core.loader.assembly.recursive.AssemblyConstants.PROPERTY;
+import static org.apache.tuscany.core.loader.assembly.recursive.AssemblyConstants.REFERENCE;
 
 import java.util.List;
 
@@ -73,10 +73,10 @@ public class ComponentLoader extends AbstractLoader {
             switch (reader.next()) {
                 case START_ELEMENT:
                     QName name = reader.getName();
-                    if (PROPERTIES.equals(name)) {
-                        loadProperties(reader, loaderContext.getResourceLoader(), component);
-                    } else if (REFERENCES.equals(name)) {
-                        loadReferences(reader, component);
+                    if (PROPERTY.equals(name)) {
+                        loadProperty(reader, loaderContext.getResourceLoader(), component);
+                    } else if (REFERENCE.equals(name)) {
+                        loadReference(reader, component);
                     } else {
                         AssemblyObject o = registry.load(reader, loaderContext);
                         if (o instanceof Implementation) {
@@ -84,8 +84,8 @@ public class ComponentLoader extends AbstractLoader {
                             impl.initialize(registry.getContext());
                             component.setImplementation(impl);
                         }
+                        reader.next();
                     }
-                    reader.next();
                     break;
                 case END_ELEMENT:
                     List<Property> props = component.getImplementation().getComponentType().getProperties();
@@ -103,46 +103,40 @@ public class ComponentLoader extends AbstractLoader {
         }
     }
 
-    protected void loadProperties(XMLStreamReader reader, ResourceLoader resourceLoader, Component<?> component) throws XMLStreamException, ConfigurationLoadException {
+    protected void loadProperty(XMLStreamReader reader, ResourceLoader resourceLoader, Component<?> component) throws XMLStreamException, ConfigurationLoadException {
         ComponentType componentType = component.getImplementation().getComponentType();
         List<ConfiguredProperty> configuredProperties = component.getConfiguredProperties();
 
-        while (true) {
-            switch (reader.next()) {
-                case START_ELEMENT:
-                    String name = reader.getLocalName();
-                    Property property = componentType.getProperty(name);
-                    if (property == null) {
-                        throw new ConfigurationLoadException(name);
-                    }
-                    OverrideOption override = StAXUtil.overrideOption(reader.getAttributeValue(null, "override"), OverrideOption.NO);
+        String name = reader.getLocalName();
+        Property property = componentType.getProperty(name);
+        if (property == null) {
+            throw new ConfigurationLoadException(name);
+        }
+        OverrideOption override = StAXUtil.overrideOption(reader.getAttributeValue(null, "override"), OverrideOption.NO);
 
 // get a factory for the property
-                    StAXPropertyFactory<?> propertyFactory;
-                    String factoryName = reader.getAttributeValue(null, "factory");
-                    if (factoryName == null) {
-                        propertyFactory = defaultPropertyFactory;
-                    } else {
-                        propertyFactory = getPropertyFactory(factoryName, resourceLoader);
-                    }
-
-                    // create the property value
-                    // FIXME to support complex types we probably should store the factory in the ConfiguredProperty
-                    // FIXME instead of the value as the value may be mutable and should not be shared between instances
-                    ObjectFactory<?> objectFactory = propertyFactory.createObjectFactory(reader, property);
-                    Object value = objectFactory.getInstance();
-
-                    // create the configured property definition
-                    ConfiguredProperty configuredProperty = factory.createConfiguredProperty();
-                    configuredProperty.setName(name);
-                    configuredProperty.setValue(value);
-                    configuredProperty.setOverrideOption(override);
-                    configuredProperties.add(configuredProperty);
-                    break;
-                case END_ELEMENT:
-                    return;
-            }
+        StAXPropertyFactory<?> propertyFactory;
+        String factoryName = reader.getAttributeValue(null, "factory");
+        if (factoryName == null) {
+            propertyFactory = defaultPropertyFactory;
+        } else {
+            propertyFactory = getPropertyFactory(factoryName, resourceLoader);
         }
+
+        // create the property value
+        // FIXME to support complex types we probably should store the factory in the ConfiguredProperty
+        // FIXME instead of the value as the value may be mutable and should not be shared between instances
+        ObjectFactory<?> objectFactory = propertyFactory.createObjectFactory(reader, property);
+        Object value = objectFactory.getInstance();
+
+        // create the configured property definition
+        ConfiguredProperty configuredProperty = factory.createConfiguredProperty();
+        configuredProperty.setName(name);
+        configuredProperty.setValue(value);
+        configuredProperty.setOverrideOption(override);
+        configuredProperties.add(configuredProperty);
+        
+        reader.next();
     }
 
     protected StAXPropertyFactory<?> getPropertyFactory(String factoryName, ResourceLoader resourceLoader) throws InvalidPropertyFactoryException {
@@ -169,26 +163,19 @@ public class ComponentLoader extends AbstractLoader {
         }
     }
 
-    protected void loadReferences(XMLStreamReader reader, Component<?> component) throws XMLStreamException {
+    protected void loadReference(XMLStreamReader reader, Component<?> component) throws XMLStreamException {
         List<ConfiguredReference> configuredReferences = component.getConfiguredReferences();
-        while (true) {
-            switch (reader.next()) {
-                case START_ELEMENT:
-                    String name = reader.getAttributeValue(null, "name");
-                    String uri = reader.getElementText();
+        String name = reader.getAttributeValue(null, "name");
+        String uri = reader.getElementText();
 
-                    ConfiguredReference configuredReference = component.getConfiguredReference(name);
-                    if (configuredReference == null) {
-                        configuredReference = factory.createConfiguredReference();
-                        configuredReference.setName(name);
-                        configuredReferences.add(configuredReference);
-                    }
-
-                    configuredReference.getTargets().add(uri);
-                    break;
-                case END_ELEMENT:
-                    return;
-            }
+        ConfiguredReference configuredReference = component.getConfiguredReference(name);
+        if (configuredReference == null) {
+            configuredReference = factory.createConfiguredReference();
+            configuredReference.setName(name);
+            configuredReferences.add(configuredReference);
         }
+
+        configuredReference.getTargets().add(uri);
+        reader.next();
     }
 }
