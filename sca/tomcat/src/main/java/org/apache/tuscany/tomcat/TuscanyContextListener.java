@@ -29,6 +29,7 @@ import org.apache.tuscany.common.resource.ResourceLoader;
 import org.apache.tuscany.common.resource.impl.ResourceLoaderImpl;
 import org.apache.tuscany.core.client.BootstrapHelper;
 import org.apache.tuscany.core.config.ConfigurationException;
+import org.apache.tuscany.core.config.ConfigurationLoadException;
 import org.apache.tuscany.core.config.ModuleComponentConfigurationLoader;
 import org.apache.tuscany.core.context.CompositeContext;
 import org.apache.tuscany.core.context.EventException;
@@ -72,7 +73,7 @@ public class TuscanyContextListener implements LifecycleListener {
 
     private void startContext(Context ctx) {
         ClassLoader appLoader = ctx.getLoader().getClassLoader();
-        if (appLoader.getResource("sca.module") == null) {
+        if (appLoader.getResource("sca.module") == null && (appLoader.getResource("webapp.composite") == null)) {
             return;
         }
 
@@ -122,7 +123,17 @@ public class TuscanyContextListener implements LifecycleListener {
             ModuleComponentConfigurationLoader loader = BootstrapHelper.getConfigurationLoader(runtime.getSystemContext(), modelContext);
 
             // Load the SCDL configuration of the application module
-            ModuleComponent moduleComponent = loader.loadModuleComponent(ctx.getName(), ctx.getPath());
+            ModuleComponent moduleComponent;
+            try {
+                moduleComponent = loader.loadModuleComponent(ctx.getName(), ctx.getPath());
+            } catch (ConfigurationLoadException e) {
+                
+                //FIXME This is a temporary tweak to allow both 0.9 sca.module file and new composite files
+                // to be loaded, if an sca.module file could not be found, look for a webapp.composite
+                // In the longer term we'll have to choose a fixed name for the webapp's main composite
+                // file, or define a way to configure that name
+                moduleComponent = loader.loadModuleComponent(ctx.getName(), "webapp");
+            }
 
             // Register it under the root application context
             CompositeContext rootContext = runtime.getRootContext();
