@@ -38,6 +38,7 @@ import org.osoa.sca.annotations.Scope;
 @Scope("MODULE")
 public class WebServiceBindingLoader implements StAXElementLoader<WebServiceBinding> {
     public static final QName BINDING_WS = new QName("http://www.osoa.org/xmlns/sca/0.9", "binding.ws");
+    public static final QName BINDING_WS_RECURSIVE = new QName("http://www.osoa.org/xmlns/sca/1.0", "binding.ws");
 
     private static final WebServiceAssemblyFactory WS_FACTORY = new WebServiceAssemblyFactoryImpl();
 
@@ -51,6 +52,7 @@ public class WebServiceBindingLoader implements StAXElementLoader<WebServiceBind
     @Init(eager = true)
     public void start() {
         registry.registerLoader(BINDING_WS, this);
+        registry.registerLoader(BINDING_WS_RECURSIVE, this);
     }
 
     @Destroy
