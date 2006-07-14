@@ -14,52 +14,42 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package calculator;
-
-import junit.framework.TestCase;
+package helloworld;
 
 import org.apache.tuscany.core.client.TuscanyRuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
- * This shows how to test the HelloWorld service component.
+ * This client program shows how to create an SCA runtime, start it,
+ * locate the HelloWorld service and invoke it.
  */
-public class CalculatorTestCase extends TestCase {
-    
-    private TuscanyRuntime tuscany;
-    
-    protected void setUp() throws Exception {
-        super.setUp();
+public class HelloWorldClient {
+
+    public static final void main(String[] args) throws Exception {
         
-        // Create a Tuscany runtime for the sample component
-        tuscany = new TuscanyRuntime("CalculatorSample", "calculator");
+        // Create a Tuscany runtime
+        TuscanyRuntime tuscany = new TuscanyRuntime("HelloWorldSample", "helloworld");
 
         // Start the Tuscany runtime and associate it with this thread
         tuscany.start();
-    }
-    
-    public void testCalculator() throws Exception {
 
         // Get the SCA composite context.
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
 
-        // Locate the Calculator service
-        CalculatorService calculatorService = compositeContext.locateService(CalculatorService.class, "CalculatorServiceComponent");
+        // Locate the HelloWorld service
+        HelloWorldService helloworldService = (HelloWorldService) compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
         
-        // Calculate
-        assertEquals(calculatorService.add(3, 2), 5.0);
-        assertEquals(calculatorService.subtract(3, 2), 1.0);
-        assertEquals(calculatorService.multiply(3, 2), 6.0);
-        assertEquals(calculatorService.divide(3, 2), 1.5);
+        // Invoke the HelloWorld service
+        String value = helloworldService.getGreetings("World");
+        
+        System.out.println(value);
+        System.out.flush();
 
-    }
-    
-    protected void tearDown() throws Exception {
-        
-        // Stop the Tuscany runtime
+        // Disassociate the runtime from this thread
         tuscany.stop();
-        
-        super.tearDown();
+
+        // Shut down the runtime
+        tuscany.shutdown();
     }
 }

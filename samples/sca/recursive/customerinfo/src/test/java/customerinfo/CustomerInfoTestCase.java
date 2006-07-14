@@ -14,7 +14,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package calculator;
+package customerinfo;
+
+import java.lang.reflect.Method;
 
 import junit.framework.TestCase;
 
@@ -22,43 +24,50 @@ import org.apache.tuscany.core.client.TuscanyRuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
+import commonj.sdo.DataObject;
+
 /**
- * This shows how to test the HelloWorld service component.
+ * This shows how to test the CustomerInfo service component.
  */
-public class CalculatorTestCase extends TestCase {
+public class CustomerInfoTestCase extends TestCase {
     
     private TuscanyRuntime tuscany;
     
     protected void setUp() throws Exception {
         super.setUp();
         
-        // Create a Tuscany runtime for the sample component
-        tuscany = new TuscanyRuntime("CalculatorSample", "calculator");
+        // Create a Tuscany runtime
+        tuscany = new TuscanyRuntime("CustomerInfoSample", "customerinfo");
 
         // Start the Tuscany runtime and associate it with this thread
         tuscany.start();
     }
     
-    public void testCalculator() throws Exception {
+    public void testCustomerInfo() throws Exception {
 
         // Get the SCA composite context.
-        CompositeContext compositeContext = CurrentCompositeContext.getContext();
+        CompositeContext moduleContext = CurrentCompositeContext.getContext();
 
-        // Locate the Calculator service
-        CalculatorService calculatorService = compositeContext.locateService(CalculatorService.class, "CalculatorServiceComponent");
+        // Locate the CustomerInfo service
+        Object customerInfoService = moduleContext.locateService(Object.class, "CustomerInfoServiceComponent");
         
-        // Calculate
-        assertEquals(calculatorService.add(3, 2), 5.0);
-        assertEquals(calculatorService.subtract(3, 2), 1.0);
-        assertEquals(calculatorService.multiply(3, 2), 6.0);
-        assertEquals(calculatorService.divide(3, 2), 1.5);
-
+        // Invoke the CustomerInfo service
+        Method getCustomerInfo = customerInfoService.getClass().getMethod("getCustomerInfo", new Class[] {String.class});
+        DataObject customer = (DataObject)getCustomerInfo.invoke(customerInfoService, "12345");
+        
+        assertEquals("12345", customer.getString("customerID"));
+        assertEquals("Jane", customer.getString("firstName"));
+        assertEquals("Doe", customer.getString("lastName"));
+        
     }
     
     protected void tearDown() throws Exception {
         
         // Stop the Tuscany runtime
         tuscany.stop();
+        
+        // Shutdown the runtime
+        tuscany.shutdown();
         
         super.tearDown();
     }

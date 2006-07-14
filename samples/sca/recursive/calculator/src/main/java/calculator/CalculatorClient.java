@@ -28,8 +28,8 @@ public class CalculatorClient {
 
     public static final void main(String[] args) throws Exception {
         
-        // Create a Tuscany runtime for the sample component
-        TuscanyRuntime tuscany = new TuscanyRuntime("CalculatorComponent", "calculator");
+        // Create a Tuscany runtime
+        TuscanyRuntime tuscany = new TuscanyRuntime("CalculatorSample", "calculator");
 
         // Start the Tuscany runtime and associate it with this thread
         tuscany.start();
