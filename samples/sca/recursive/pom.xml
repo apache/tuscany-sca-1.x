@@ -30,16 +30,16 @@
 
     <modules>
         <module>helloworld</module>
-<!--
         <module>helloworldweb</module>
--->
         <module>calculator</module>
         <module>customerinfo</module>
 <!--
         <module>helloworldws</module>
         <module>helloworldws-celtix</module>
         <module>helloworldwsclient</module>
+-->
         <module>supplychain</module>
+<!--
         <module>helloworldjsonrpc</module>
         <module>helloworld-jms</module>
         <module>helloworlde4xws</module>
