@@ -38,7 +38,7 @@ import org.apache.tuscany.core.system.annotation.Autowire;
  *
  * @version $Rev$ $Date$
  */
-public class CompositeContextImpl extends AbstractCompositeContext implements ModuleContext {
+public class CompositeContextImpl extends AbstractCompositeContext implements ModuleContext, org.osoa.sca.CompositeContext {
 
     @Autowire
     public void setScopeStrategy(ScopeStrategy scopeStrategy) {
@@ -85,6 +85,10 @@ public class CompositeContextImpl extends AbstractCompositeContext implements Mo
             e.addContextName(getName());
             throw new ServiceNotFoundException(e);
         }
+    }
+    
+    public <T> T locateService(Class<T> serviceInterface, String serviceName) {
+        return (T)locateService(serviceName);
     }
 
     public ServiceReference createServiceReference(String serviceName) {

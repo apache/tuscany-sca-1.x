@@ -97,7 +97,14 @@ public abstract class AbstractModuleComponentConfigurationLoader implements Modu
     }
 
     public ModuleComponent loadModuleComponent(String name, String uri) throws ConfigurationLoadException {
-        ModuleComponent mc = loadModuleComponent(SCA_MODULE_FILE_NAME, SCA_FRAGMENT_FILE_NAME, name, uri);
+        ModuleComponent mc;
+        try {
+            mc = loadModuleComponent(SCA_MODULE_FILE_NAME, SCA_FRAGMENT_FILE_NAME, name, uri);
+        } catch (ConfigurationLoadException e) {
+            //JSD HACK, need a better way to specify the composite to load in the future
+            // for now use the URI as the composite name
+            mc = loadModuleComponent(uri+".composite", SCA_FRAGMENT_FILE_NAME, name, uri);
+        }
         //JFM HACK
         mc.getImplementation().setImplementationClass(CompositeContextImpl.class);
         mc.getImplementation().setComponentType(getCompositeComponentType());

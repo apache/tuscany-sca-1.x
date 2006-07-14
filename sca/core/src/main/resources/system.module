@@ -90,4 +90,57 @@
         <tuscany:implementation.system class="org.apache.tuscany.core.async.builder.AsyncPolicyBuilder"/>
     </component>
 
+	<!-- Recursive assembly model loaders -->
+	
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.ComponentTypeLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.ComponentTypeLoader"/>
+    </component>
+    
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.CompositeLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.CompositeLoader"/>
+    </component>
+    
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.ComponentLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.ComponentLoader"/>
+    </component>
+    
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.CompositeReferenceLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.CompositeReferenceLoader"/>
+    </component>
+
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.CompositeServiceLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.CompositeServiceLoader"/>
+    </component>
+    
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.ImportWSDLLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.ImportWSDLLoader"/>
+    </component>
+
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.InterfaceWSDLLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.InterfaceWSDLLoader"/>
+    </component>
+
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.InterfaceJavaLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.InterfaceJavaLoader"/>
+    </component>
+    
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.PropertyLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.PropertyLoader"/>
+    </component>
+
+	<!--
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.ReferenceLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.ReferenceLoader"/>
+    </component>
+    -->
+
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.WireLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.WireLoader"/>
+    </component>
+
+	<!--
+    <component name="org.apache.tuscany.core.loader.assembly.recursive.ServiceLoader">
+        <tuscany:implementation.system class="org.apache.tuscany.core.loader.assembly.recursive.ServiceLoader"/>
+    </component>
+    -->
 </module>

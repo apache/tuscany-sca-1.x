@@ -34,6 +34,7 @@ import org.apache.tuscany.core.loader.assembly.AssemblyConstants;
 import org.apache.tuscany.model.assembly.AssemblyContext;
 import org.apache.tuscany.model.assembly.AssemblyObject;
 import org.apache.tuscany.sdo.util.SDOUtil;
+import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Scope;
 
 /**
@@ -44,13 +45,20 @@ import org.osoa.sca.annotations.Scope;
 @Scope("MODULE")
 public class ImportSDOLoader extends AbstractLoader {
     public static final QName IMPORT_SDO = new QName(AssemblyConstants.SCA_NAMESPACE, "import.sdo");
+    public static final QName IMPORT_SDO_RECURSIVE = new QName(org.apache.tuscany.core.loader.assembly.recursive.AssemblyConstants.SCA_NAMESPACE, "import.sdo");
 
+    @Init(eager = true)
+    public void start() {
+        registry.registerLoader(IMPORT_SDO, this);
+        registry.registerLoader(IMPORT_SDO_RECURSIVE, this);
+    }
+    
     public QName getXMLType() {
         return IMPORT_SDO;
     }
 
     public AssemblyObject load(XMLStreamReader reader, LoaderContext loaderContext) throws XMLStreamException, ConfigurationLoadException {
-        assert IMPORT_SDO.equals(reader.getName());
+        assert (IMPORT_SDO.equals(reader.getName()) || IMPORT_SDO_RECURSIVE.equals(reader.getName()));
         importFactory(reader, loaderContext);
         importWSDLOrXSD(reader, loaderContext);
         StAXUtil.skipToEndElement(reader);

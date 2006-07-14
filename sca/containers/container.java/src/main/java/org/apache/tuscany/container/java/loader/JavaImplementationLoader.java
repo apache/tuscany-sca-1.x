@@ -49,6 +49,7 @@ import org.osoa.sca.annotations.Scope;
 @Scope("MODULE")
 public class JavaImplementationLoader implements StAXElementLoader<JavaImplementation> {
     public static final QName IMPLEMENTATION_JAVA = new QName("http://www.osoa.org/xmlns/sca/0.9", "implementation.java");
+    public static final QName IMPLEMENTATION_JAVA_RECURSIVE = new QName("http://www.osoa.org/xmlns/sca/1.0", "implementation.java");
 
     private StAXLoaderRegistry registry;
     private XMLInputFactory xmlFactory;
@@ -76,11 +77,13 @@ public class JavaImplementationLoader implements StAXElementLoader<JavaImplement
     @Init(eager = true)
     public void start() {
         registry.registerLoader(IMPLEMENTATION_JAVA, this);
+        registry.registerLoader(IMPLEMENTATION_JAVA_RECURSIVE, this);
     }
 
     @Destroy
     public void stop() {
         registry.unregisterLoader(IMPLEMENTATION_JAVA, this);
+        registry.unregisterLoader(IMPLEMENTATION_JAVA_RECURSIVE, this);
     }
 
     public JavaImplementation load(XMLStreamReader reader, LoaderContext loaderContext) throws XMLStreamException, ConfigurationLoadException {
