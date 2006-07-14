@@ -23,8 +23,8 @@
              import="helloworld.HelloWorldService"
              import="java.io.PrintWriter"
              import="java.io.StringWriter"
-             import="org.osoa.sca.CurrentModuleContext"
-             import="org.osoa.sca.ModuleContext"
+             import="org.osoa.sca.CurrentCompositeContext"
+             import="org.osoa.sca.CompositeContext"
             %>
     <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <META name="GENERATOR" content="IBM Software Development Platform">
@@ -35,7 +35,7 @@
 </HEAD>
 
 <BODY>
-<H2>Tuscany HelloWorld Web Application Sample</H2>
+<H2>Tuscany HelloWorld Web Application Sample - uses the new assembly model</H2>
 
 <P>&nbsp;</P>
 
@@ -50,8 +50,8 @@
 <%
     try {
         if (null != name) {
-            ModuleContext moduleContext = CurrentModuleContext.getContext();
-            HelloWorldService helloworldService = (HelloWorldService) moduleContext.locateService("HelloWorldServiceComponent");
+            CompositeContext compositeContext = CurrentCompositeContext.getContext();
+            HelloWorldService helloworldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
             String value = helloworldService.getGreetings(name);
 %>
 <HR>

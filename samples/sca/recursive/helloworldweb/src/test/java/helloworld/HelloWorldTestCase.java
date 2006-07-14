@@ -33,7 +33,7 @@ public class HelloWorldTestCase extends TestCase {
         super.setUp();
         
         // Create a Tuscany runtime
-        tuscany = new TuscanyRuntime("HelloWorldWebSample", "helloworldweb");
+        tuscany = new TuscanyRuntime("HelloWorldWebSample", "webapp");
 
         // Start the Tuscany runtime and associate it with this thread
         tuscany.start();
