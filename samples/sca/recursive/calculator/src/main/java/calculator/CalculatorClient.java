@@ -28,13 +28,13 @@ public class CalculatorClient {
 
     public static final void main(String[] args) throws Exception {
         
-        // Create a Tuscany runtime for the sample module component
-        TuscanyRuntime tuscany = new TuscanyRuntime("CalculatorModuleComponent", "http://calculator");
+        // Create a Tuscany runtime for the sample component
+        TuscanyRuntime tuscany = new TuscanyRuntime("CalculatorComponent", "calculator");
 
         // Start the Tuscany runtime and associate it with this thread
         tuscany.start();
 
-        // Get the SCA module context.
+        // Get the SCA composite context.
         CompositeContext moduleContext = CurrentCompositeContext.getContext();
         
         // Locate the Calculator service

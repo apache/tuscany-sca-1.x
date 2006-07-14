@@ -19,8 +19,8 @@ package calculator;
 import junit.framework.TestCase;
 
 import org.apache.tuscany.core.client.TuscanyRuntime;
-import org.osoa.sca.CurrentModuleContext;
-import org.osoa.sca.ModuleContext;
+import org.osoa.sca.CompositeContext;
+import org.osoa.sca.CurrentCompositeContext;
 
 /**
  * This shows how to test the HelloWorld service component.
@@ -32,8 +32,8 @@ public class CalculatorTestCase extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         
-        // Create a Tuscany runtime for the sample module component
-        tuscany = new TuscanyRuntime("CalculatorModuleComponent", "http://calculator");
+        // Create a Tuscany runtime for the sample component
+        tuscany = new TuscanyRuntime("CalculatorComponent", "calculator");
 
         // Start the Tuscany runtime and associate it with this thread
         tuscany.start();
@@ -41,11 +41,11 @@ public class CalculatorTestCase extends TestCase {
     
     public void testCalculator() throws Exception {
 
-        // Get the SCA module context.
-        ModuleContext moduleContext = CurrentModuleContext.getContext();
+        // Get the SCA composite context.
+        CompositeContext compositeContext = CurrentCompositeContext.getContext();
 
         // Locate the Calculator service
-        CalculatorService calculatorService = (CalculatorService) moduleContext.locateService("CalculatorServiceComponent");
+        CalculatorService calculatorService = compositeContext.locateService(CalculatorService.class, "CalculatorServiceComponent");
         
         // Calculate
         assertEquals(calculatorService.add(3, 2), 5.0);
