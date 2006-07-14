@@ -19,12 +19,10 @@
         
     <component name="CalculatorServiceComponent">
         <implementation.java class="calculator.CalculatorServiceImpl"/>
-        <references>
-        	<reference name="addService">AddServiceComponent</reference>
-        	<reference name="subtractService">SubtractServiceComponent</reference>
-        	<reference name="multiplyService">MultiplyServiceComponent</reference>
-        	<reference name="divideService">DivideServiceComponent</reference>
-        </references>
+    	<reference name="addService">AddServiceComponent</reference>
+    	<reference name="subtractService">SubtractServiceComponent</reference>
+    	<reference name="multiplyService">MultiplyServiceComponent</reference>
+    	<reference name="divideService">DivideServiceComponent</reference>
     </component>
 
     <component name="AddServiceComponent">
