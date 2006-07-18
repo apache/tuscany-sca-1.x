@@ -14,8 +14,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  -->
-<Config xsi:noNamespaceSchemaLocation="http:///org.apache.tuscany.das.rdb/config.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    dataSource="java:comp/env/jdbc/dastest">
+<Config xsi:noNamespaceSchemaLocation="http:///org.apache.tuscany.das.rdb/config.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <ConnectionInfo dataSource="java:comp/env/jdbc/dastest"/>
     
     <Command name="all companies" SQL="select * from COMPANY" kind="Select"/>
     
