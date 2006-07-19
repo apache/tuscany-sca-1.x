@@ -11,20 +11,13 @@ import java.lang.reflect.Method;
 public class MethodEventInvoker<T> implements EventInvoker<T> {
     private final Method method;
 
-    //----------------------------------
-    // Constructors
-    //----------------------------------
-
     /**
      * Intantiates an  invoker for the given method
      */
     public MethodEventInvoker(Method method) {
+        assert method != null;
         this.method = method;
     }
-
-    //----------------------------------
-    // Methods
-    //----------------------------------
 
     public void invokeEvent(T instance) throws ObjectCallbackException {
         try {
@@ -32,7 +25,7 @@ public class MethodEventInvoker<T> implements EventInvoker<T> {
         } catch (IllegalAccessException e) {
             throw new AssertionError("Method is not accessible [" + method + "]");
         } catch (InvocationTargetException e) {
-            throw new ObjectCallbackException("Exception thrown by callback method [" + method + "]", e);
+            throw new ObjectCallbackException("Exception thrown by callback method [" + method + "]", e.getCause());
         }
     }
 

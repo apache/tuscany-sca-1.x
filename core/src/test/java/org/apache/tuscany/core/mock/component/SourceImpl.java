@@ -17,16 +17,15 @@ import java.util.List;
 
 /**
  * Mock system component implementation used in wiring tests
- * 
+ *
  * @version $Rev$ $Date$
  */
 public class SourceImpl implements Source {
 
     private Target target;
-    
     private List<Target> targets;
-
     private List<Target> targetsThroughField;
+    private Target[] targetsArray;
 
     public void setTarget(Target target) {
         this.target = target;
@@ -48,8 +47,6 @@ public class SourceImpl implements Source {
         return targetsThroughField;
     }
 
-    private Target[] targetsArray;
-    
     public Target[] getArrayOfTargets() {
         return targetsArray;
     }
