@@ -43,13 +43,15 @@ public class TuscanyJava2WSDLTestCase extends TestCase {
 		super.tearDown();
 	}
 
+   
 	/**
 	 * Simple WSDL generation test.
 	 */
 	public void testSimpleWSDLGeneration() {
 		String[] arguments = new String[] { "-cn",
 				"org.apache.tuscany.tools.java2wsdl.generate.CustomerValue",
-				"-o", "target/java2wsdl-source", };
+				"-o", "target/java2wsdl-source"
+                };
 
 		Java2WSDL.main(arguments);
 
@@ -62,7 +64,8 @@ public class TuscanyJava2WSDLTestCase extends TestCase {
 	 */
 	public void testWsdlGeneration2() {
 
-		String[] arguments = new String[] {
+		String[] arguments = new String[] 
+        {
 				"-cn",
 				"org.apache.tuscany.tools.java2wsdl.generate.CustomerWithAccount",
 				"-o", "target/java2wsdl-source", };
@@ -72,11 +75,28 @@ public class TuscanyJava2WSDLTestCase extends TestCase {
 		assertTrue(file.exists() && file.isFile());
 	}
 
+    public void testWsdlGeneration_SDO_Static()
+    {
+        //tests for SDOs where XSD exist.  Hence no XSDs must be generated
+        String[] arguments = new String[] {
+                "-cn",
+                "org.soapinterop.CreditScoreDocLit",
+                "-o", "target/java2wsdl-source", 
+                "-ixsd", "[http://www.example.org/creditscore/doclit/," +
+                "http://www.example.org/creditscore/doclit/xsd]"};
+        Java2WSDL.main(arguments);
+
+        File file = new File("target/java2wsdl-source/CreditScoreDocLit.wsdl");
+        assertTrue(file.exists() && file.isFile());
+    }
+    
+    
+    
 	/**
 	 * Test WSDL generation from a java interface and then generate the java
 	 * interface using the generated WSDL.
 	 */
-	public void testRoundTrip() {
+	public void _testRoundTrip() {
 		// TODO implement round trip
 		// this should re-generate java interfaces from the generated wsdl
 		// and compile (?) the generated java code.

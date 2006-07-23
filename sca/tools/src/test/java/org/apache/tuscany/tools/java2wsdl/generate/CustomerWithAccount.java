@@ -16,6 +16,9 @@
  */
 package org.apache.tuscany.tools.java2wsdl.generate;
 
+import org.apache.tuscany.tools.java2wsdl.generate.account.Account;
+import org.apache.tuscany.tools.java2wsdl.generate.customer.Customer;
+
 public class CustomerWithAccount {
 
 	private Customer customer = new Customer();

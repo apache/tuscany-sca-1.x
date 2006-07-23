@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
@@ -35,12 +36,13 @@ import org.apache.axiom.om.OMNode;
 import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.ws.commons.schema.XmlSchema;
 import org.apache.ws.java2wsdl.Java2WSDLConstants;
-import org.apache.ws.java2wsdl.utils.TypeTable;
 import org.codehaus.jam.JMethod;
 
 public class TuscanyJava2OMBuilder implements Java2WSDLConstants {
 
-    private TypeTable typeTable = null;
+    private TuscanyTypeTable typeTable = null;
+    
+    private Map sdoAnnotationMap = null;
 
     private static int prefixCount = 1;
 
@@ -55,6 +57,10 @@ public class TuscanyJava2OMBuilder implements Java2WSDLConstants {
     private String targetNamespace;
 
     private String targetNamespacePrefix;
+    
+    private String schemaTargetNamespace;
+
+    private String schemaTargetNamespacePrefix;
 
     private OMNamespace ns1;
 
@@ -77,12 +83,19 @@ public class TuscanyJava2OMBuilder implements Java2WSDLConstants {
     private String locationURL;
 
     public TuscanyJava2OMBuilder(JMethod[] method, Collection schemaCollection,
-                          TypeTable typeTab, String serviceName, String targetNamespace,
+                          String schemaTargNs, String schemaTargNsPfx,
+                          TuscanyTypeTable typeTab, Map sdoAnnoMap,
+                          String serviceName, String targetNamespace,
                           String targetNamespacePrefix, String style, String use,
                           String locationURL) {
         this.method = method;
         this.schemaCollection = schemaCollection;
         this.typeTable = typeTab;
+        sdoAnnotationMap = sdoAnnoMap;
+        schemaTargetNamespace = schemaTargNs;
+        schemaTargetNamespacePrefix = schemaTargNsPfx;
+        
+        
         if (style == null) {
             this.style = DOCUMNT;
         } else {
@@ -151,14 +164,20 @@ public class TuscanyJava2OMBuilder implements Java2WSDLConstants {
         writer.write("<xmlSchemas>");
         writeSchemas(writer);
         writer.write("</xmlSchemas>");
+        
         XMLStreamReader xmlReader = XMLInputFactory.newInstance()
                 .createXMLStreamReader(
                         new ByteArrayInputStream(writer.toString().getBytes()));
 
         StAXOMBuilder staxOMBuilders = new StAXOMBuilder(fac, xmlReader);
-        Iterator iterator = staxOMBuilders.getDocumentElement()
-                .getChildElements();
-        while (iterator.hasNext()) {
+        OMElement documentElement = staxOMBuilders.getDocumentElement();
+
+        SDOAnnotationsDecorator decorator = new SDOAnnotationsDecorator();
+        decorator.decorateWithAnnotations(sdoAnnotationMap, documentElement);
+        
+        Iterator iterator = documentElement.getChildElements();
+        while (iterator.hasNext()) 
+        {
             wsdlTypes.addChild((OMNode) iterator.next());
         }
         defintions.addChild(wsdlTypes);
@@ -186,10 +205,18 @@ public class TuscanyJava2OMBuilder implements Java2WSDLConstants {
         QName messagePartType = null;
         for (int i = 0; i < method.length; i++) {
             JMethod jmethod = method[i];
-
+            //Request Message
+            OMElement requestMessge = fac.createOMElement(
+                    MESSAGE_LOCAL_NAME, wsdl);
+            requestMessge.addAttribute(ATTRIBUTE_NAME, jmethod
+                    .getSimpleName()
+                    + MESSAGE_SUFFIX, null);
+            definitions.addChild(requestMessge);
+            
             // only if a type for the message part has already been defined
-            if ((messagePartType = typeTable.getComplexSchemaType(jmethod
-                    .getSimpleName())) != null) {
+            if ((messagePartType = 
+                    typeTable.getComplexSchemaTypeName(schemaTargetNamespace, jmethod.getSimpleName())) != null) 
+            {
                 namespaceURI = messagePartType.getNamespaceURI();
                 // avoid duplicate namespaces
                 if ((namespacePrefix = (String) namespaceMap.get(namespaceURI)) == null) {
@@ -197,27 +224,20 @@ public class TuscanyJava2OMBuilder implements Java2WSDLConstants {
                     namespaceMap.put(namespaceURI, namespacePrefix);
                 }
 
-            //Request Message
-                OMElement requestMessge = fac.createOMElement(
-                        MESSAGE_LOCAL_NAME, wsdl);
-                requestMessge.addAttribute(ATTRIBUTE_NAME, jmethod
-                        .getSimpleName()
-                        + MESSAGE_SUFFIX, null);
-                definitions.addChild(requestMessge);
-                OMElement requestPart = fac.createOMElement(
-                        PART_ATTRIBUTE_NAME, wsdl);
-            requestMessge.addChild(requestPart);
-            requestPart.addAttribute(ATTRIBUTE_NAME, "part1", null);
+                
+                OMElement requestPart = fac.createOMElement(PART_ATTRIBUTE_NAME, wsdl);
+                requestMessge.addChild(requestPart);
+                requestPart.addAttribute(ATTRIBUTE_NAME, "part1", null);
 
-            requestPart.addAttribute(ELEMENT_ATTRIBUTE_NAME,
-                        namespacePrefix + COLON_SEPARATOR
-                                + jmethod.getSimpleName(), null);
+                requestPart.addAttribute(ELEMENT_ATTRIBUTE_NAME,
+                                            namespacePrefix + COLON_SEPARATOR
+                                            + jmethod.getSimpleName(), null);
             }
 
             // only if a type for the message part has already been defined
-            if ((messagePartType = typeTable.getComplexSchemaType(jmethod
-                    .getSimpleName()
-                    + RESPONSE)) != null) {
+            if ((messagePartType = 
+                    typeTable.getComplexSchemaTypeName(schemaTargetNamespace,jmethod.getSimpleName()+ RESPONSE)) != null) 
+            {
                 namespaceURI = messagePartType.getNamespaceURI();
                 if ((namespacePrefix = (String) namespaceMap.get(namespaceURI)) == null) {
                     namespacePrefix = generatePrefix();

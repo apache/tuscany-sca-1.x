@@ -16,6 +16,8 @@
  */
 package org.apache.tuscany.tools.java2wsdl.generate;
 
+import org.apache.tuscany.tools.java2wsdl.generate.customer.Customer;
+
 public class CustomerValue {
 
 	public int getValue(String custId, String stockSymbol) {
@@ -26,7 +28,9 @@ public class CustomerValue {
 		return new Customer();
 	}
 
-	/*
-	 * private String privateOperation() { return ""; }
-	 */
+	public String noArgsServiceMethod()
+    {
+      return new String();   
+    }
+	
 }

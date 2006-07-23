@@ -17,14 +17,17 @@
 package org.apache.tuscany.tools.java2wsdl.generate;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Map;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.ws.java2wsdl.Java2WSDLConstants;
 import org.apache.ws.java2wsdl.Java2WSDLUtils;
-import org.apache.ws.java2wsdl.SchemaGenerator;
 
-public class TuscanyJava2WSDLBuilder {
+public class TuscanyJava2WSDLBuilder implements Java2WSDLConstants
+{
 
     private OutputStream out;
     private String className;
@@ -34,18 +37,30 @@ public class TuscanyJava2WSDLBuilder {
     private String serviceName = null;
 
     //these apply for the WSDL
+    private GenerationParameters genParams = null;
     private String targetNamespace = null;
     private String targetNamespacePrefix = null;
 
+    private String attrFormDefault = null;
+    private String elementFormDefault = null;
     private String schemaTargetNamespace = null;
     private String schemaTargetNamespacePrefix = null;
     private String style = Java2WSDLConstants.DOCUMNT;
     private String use = Java2WSDLConstants.LITERAL;
     private String locationUri = Java2WSDLConstants.DEFAULT_LOCATION_URL;
+    private Map schemaLocationMap = null;
     
     private OMElement wsdlDocument = null;
 
-    public String getSchemaTargetNamespace() {
+    public String getSchemaTargetNamespace() throws Exception
+    {
+        if (schemaTargetNamespace == null
+                || schemaTargetNamespace.trim().equals("")) 
+        {
+            this.schemaTargetNamespace = Java2WSDLUtils
+                    .schemaNamespaceFromClassName(className,classLoader).toString();
+        }
+        
         return schemaTargetNamespace;
     }
 
@@ -73,11 +88,19 @@ public class TuscanyJava2WSDLBuilder {
         this.use = use;
     }
 
-    public void setSchemaTargetNamespace(String schemaTargetNamespace) {
+    public void setSchemaTargetNamespace(String schemaTargetNamespace) 
+    {
         this.schemaTargetNamespace = schemaTargetNamespace;
     }
 
-    public String getSchemaTargetNamespacePrefix() {
+    public String getSchemaTargetNamespacePrefix() 
+    {
+        if (schemaTargetNamespacePrefix == null
+                || schemaTargetNamespacePrefix.trim().equals("")) 
+        {
+            this.schemaTargetNamespacePrefix = SCHEMA_NAMESPACE_PRFIX;
+        }
+        
         return schemaTargetNamespacePrefix;
     }
 
@@ -137,12 +160,29 @@ public class TuscanyJava2WSDLBuilder {
      */
     public void buildWSDL() throws Exception 
     {
-        SchemaGenerator sg = new SchemaGenerator(classLoader, className,
-                schemaTargetNamespace, schemaTargetNamespacePrefix);
-        Collection schemaCollection = sg.generateSchema();
-        TuscanyJava2OMBuilder java2OMBuilder = new TuscanyJava2OMBuilder(sg.getMethods(),
+        ArrayList excludeOpeartion = new ArrayList();
+        excludeOpeartion.add("init");
+        excludeOpeartion.add("setOperationContext");
+        excludeOpeartion.add("destroy");
+        
+        TuscanySchemaGenerator typesGenerator = 
+            new TuscanySchemaGenerator(classLoader, 
+                                        className,
+                                        getSchemaTargetNamespace(), 
+                                        getSchemaTargetNamespacePrefix(),
+                                        getSchemaLocationMap());
+        typesGenerator.setExcludeMethods(excludeOpeartion);
+        typesGenerator.setAttrFormDefault(getAttrFormDefault());
+        typesGenerator.setElementFormDefault(getElementFormDefault());
+        
+        Collection schemaCollection = typesGenerator.buildWSDLTypes();
+        
+        TuscanyJava2OMBuilder java2OMBuilder = new TuscanyJava2OMBuilder(typesGenerator.getMethods(),
         		schemaCollection,
-        		sg.getTypeTable(),
+                getSchemaTargetNamespace(),
+                getSchemaTargetNamespacePrefix(),
+                typesGenerator.getTypeTable(),
+                typesGenerator.getSdoAnnoMap(),
                 serviceName == null ? Java2WSDLUtils.getSimpleClassName(className) : serviceName,
                 targetNamespace == null ? Java2WSDLUtils.namespaceFromClassName(className, classLoader).toString():targetNamespace,
                 targetNamespacePrefix,
@@ -161,5 +201,35 @@ public class TuscanyJava2WSDLBuilder {
 	{
 		this.wsdlDocument = wsdlDocument;
 	}
+
+    public Map getSchemaLocationMap() 
+    {
+        if ( schemaLocationMap == null )
+        {
+            schemaLocationMap = new Hashtable();
+            
+        }
+        return schemaLocationMap;
+    }
+
+    public void setSchemaLocationMap(Map schemaLocationMap) {
+        this.schemaLocationMap = schemaLocationMap;
+    }
+    
+    public String getAttrFormDefault() {
+        return attrFormDefault;
+    }
+
+    public void setAttrFormDefault(String attrFormDefault) {
+        this.attrFormDefault = attrFormDefault;
+    }
+
+    public String getElementFormDefault() {
+        return elementFormDefault;
+    }
+
+    public void setElementFormDefault(String elementFormDefault) {
+        this.elementFormDefault = elementFormDefault;
+    }
 }
 

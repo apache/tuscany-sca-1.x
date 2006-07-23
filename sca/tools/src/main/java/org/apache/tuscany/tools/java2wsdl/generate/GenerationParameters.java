@@ -23,7 +23,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.apache.ws.java2wsdl.Java2WSDLConstants;
 import org.apache.ws.java2wsdl.Java2WSDLUtils;
@@ -35,14 +37,17 @@ import org.apache.ws.java2wsdl.utils.Java2WSDLCommandLineOption;
  * target location etc.
  *
  */
-public class GenerationParameters 
+public class GenerationParameters implements TuscanyJava2WSDLConstants
 {
 	public static final String WSDL_FILENAME_SUFFIX = ".wsdl";
-	
+    public static final String XSD_IMPORT_DELIMITER = "[,]";
+    
 	private Map cmdLineOptions = null; 
 	private FileOutputStream outputFileStream = null;
 	private String sourceClassName = null;
 	
+    private String attrFormDefault = null;
+    private String elementFormDefault = null;
 	private String targetNamespace = null;
 	private String targetNamespacePrefix = null;
 	private String schemaTargetNamespace = null;
@@ -52,6 +57,7 @@ public class GenerationParameters
 	private String style = null;
 	private String use = null;
 	private String locationUri = null;
+    private Map schemaLocationMap = null;
 	
 	public GenerationParameters(Map cmdLineOptions) throws Exception
 	{
@@ -64,6 +70,7 @@ public class GenerationParameters
 		initializeSourceClassName();
 		resolveFileOutputStream();
 		resolveClassLoader4InputClasspath();
+        loadSchemaLocationMap();
 		initializeOtherParams();
 	}
 	
@@ -86,7 +93,7 @@ public class GenerationParameters
 	protected void initializeSourceClassName() throws Exception
 	{
 		Java2WSDLCommandLineOption option = 
-			loadOption(Java2WSDLConstants.CLASSNAME_OPTION, Java2WSDLConstants.CLASSNAME_OPTION_LONG);
+			loadOption(CLASSNAME_OPTION, CLASSNAME_OPTION_LONG);
         sourceClassName = option == null ? null : option.getOptionValue();
 
         if (sourceClassName == null || sourceClassName.equals("")) {
@@ -100,8 +107,8 @@ public class GenerationParameters
 	protected void resolveFileOutputStream() throws Exception
 	{
 		File outputFolder;
-		Java2WSDLCommandLineOption  option = loadOption(Java2WSDLConstants.OUTPUT_LOCATION_OPTION,
-	            Java2WSDLConstants.OUTPUT_LOCATION_OPTION_LONG);
+		Java2WSDLCommandLineOption  option = loadOption(OUTPUT_LOCATION_OPTION,
+	            OUTPUT_LOCATION_OPTION_LONG);
 	    String outputFolderName = option == null ? System.getProperty("user.dir") : option.getOptionValue();
 
 	    outputFolder = new File(outputFolderName);
@@ -111,8 +118,8 @@ public class GenerationParameters
 	        throw new Exception("The specified location " + outputFolderName + "is not a folder");
 	    }
 	    
-	    option = loadOption(Java2WSDLConstants.OUTPUT_FILENAME_OPTION,
-                Java2WSDLConstants.OUTPUT_FILENAME_OPTION_LONG);
+	    option = loadOption(OUTPUT_FILENAME_OPTION,
+                OUTPUT_FILENAME_OPTION_LONG);
         String outputFileName = option == null ? null : option.getOptionValue();
         //derive a file name from the class name if the filename is not specified
         if (outputFileName == null) 
@@ -135,11 +142,38 @@ public class GenerationParameters
             throw new Exception(e);
         }
 	}
+    
+    protected void addToSchemaLocationMap(String optionValue) throws Exception
+    {
+        //option value will be of the form [namespace, schemalocation]
+        //hence we take the two substrings starting after '[' and upto ',' and
+        //starting after ',' and upto ']'
+        getSchemaLocationMap().put(optionValue.substring(1, optionValue.indexOf(COMMA)),
+                                optionValue.substring(optionValue.indexOf(COMMA) + 1, optionValue.length() - 1)); 
+        
+        
+    }
+    
+    protected void loadSchemaLocationMap() throws Exception
+    {
+        Java2WSDLCommandLineOption option = loadOption(IMPORT_XSD_OPTION, IMPORT_XSD_OPTION_LONG);
+                
+        if (option != null) 
+        {
+            ArrayList optionValues = option.getOptionValues();
+            
+            for ( int count = 0 ; count < optionValues.size() ; ++count )
+            {
+                addToSchemaLocationMap(((String)optionValues.get(count)).trim());
+            }
+        }
+    }
 	
 	protected void resolveClassLoader4InputClasspath() throws Exception 
 	{
-		Java2WSDLCommandLineOption option = null;
-		
+        Java2WSDLCommandLineOption option = 
+            loadOption(CLASSPATH_OPTION, CLASSPATH_OPTION_LONG);
+        		
 		if (option != null) {
             ArrayList optionValues = option.getOptionValues();
             URL[] urls = new URL[optionValues.size()];
@@ -169,36 +203,42 @@ public class GenerationParameters
 	protected void initializeOtherParams()
 	{
 //		set the other parameters to the builder
-		Java2WSDLCommandLineOption option = loadOption(Java2WSDLConstants.SCHEMA_TARGET_NAMESPACE_OPTION,
-                Java2WSDLConstants.SCHEMA_TARGET_NAMESPACE_OPTION_LONG);
+		Java2WSDLCommandLineOption option = loadOption(SCHEMA_TARGET_NAMESPACE_OPTION,
+                SCHEMA_TARGET_NAMESPACE_OPTION_LONG);
    		schemaTargetNamespace = (option == null) ? null : option.getOptionValue();
 		         
-		option = loadOption(Java2WSDLConstants.SCHEMA_TARGET_NAMESPACE_PREFIX_OPTION,
-                Java2WSDLConstants.SCHEMA_TARGET_NAMESPACE_PREFIX_OPTION_LONG);
+		option = loadOption(SCHEMA_TARGET_NAMESPACE_PREFIX_OPTION,
+                SCHEMA_TARGET_NAMESPACE_PREFIX_OPTION_LONG);
 		schemaTargetNamespacePrefix = (option == null) ? null : option.getOptionValue();
 
-		option = loadOption(Java2WSDLConstants.TARGET_NAMESPACE_OPTION,
-                Java2WSDLConstants.TARGET_NAMESPACE_OPTION_LONG);
+		option = loadOption(TARGET_NAMESPACE_OPTION,
+                TARGET_NAMESPACE_OPTION_LONG);
 		targetNamespace = (option == null) ? null : option.getOptionValue();
 
-		option  = loadOption(Java2WSDLConstants.TARGET_NAMESPACE_PREFIX_OPTION,
-                Java2WSDLConstants.TARGET_NAMESPACE_PREFIX_OPTION_LONG);
+		option  = loadOption(TARGET_NAMESPACE_PREFIX_OPTION,
+                TARGET_NAMESPACE_PREFIX_OPTION_LONG);
 		targetNamespacePrefix = (option == null) ? null : option.getOptionValue();
 		
-		option = loadOption(Java2WSDLConstants.SERVICE_NAME_OPTION,
-                Java2WSDLConstants.SERVICE_NAME_OPTION_LONG);
+		option = loadOption(SERVICE_NAME_OPTION,
+                SERVICE_NAME_OPTION_LONG);
 		serviceName = (option == null) ? Java2WSDLUtils.getSimpleClassName(sourceClassName) : option.getOptionValue();
 
-		option = loadOption(Java2WSDLConstants.STYLE_OPTION,Java2WSDLConstants.STYLE_OPTION);
+		option = loadOption(STYLE_OPTION,STYLE_OPTION);
 		style = (option == null) ? null : option.getOptionValue();
         
         
-        option  = loadOption(Java2WSDLConstants.LOCATION_OPTION,
-        		Java2WSDLConstants.LOCATION_OPTION);
+        option  = loadOption(LOCATION_OPTION,
+        		LOCATION_OPTION);
         locationUri = (option == null) ? null : option.getOptionValue();
         
-        option = loadOption(Java2WSDLConstants.USE_OPTION,Java2WSDLConstants.USE_OPTION);
+        option = loadOption(USE_OPTION,USE_OPTION);
         use = (option == null) ? null : option.getOptionValue();
+        
+        option = loadOption(ATTR_FORM_DEFAULT_OPTION, ATTR_FORM_DEFAULT_OPTION_LONG);
+        attrFormDefault = (option == null) ? null : option.getOptionValue();
+        
+        option = loadOption(ELEMENT_FORM_DEFAULT_OPTION,ELEMENT_FORM_DEFAULT_OPTION_LONG);
+        elementFormDefault = option == null ? null : option.getOptionValue();
 	}
 	
 	public ClassLoader getClassLoader()
@@ -310,5 +350,34 @@ public class GenerationParameters
 	{
 		this.use = use;
 	}
+
+    public Map getSchemaLocationMap() 
+    {
+        if ( schemaLocationMap == null )
+        {
+            schemaLocationMap = new Hashtable();
+        }
+        return schemaLocationMap;
+    }
+
+    public void setSchemaLocationMap(Map schemaLocationMap) {
+        this.schemaLocationMap = schemaLocationMap;
+    }
+
+    public String getAttrFormDefault() {
+        return attrFormDefault;
+    }
+
+    public void setAttrFormDefault(String attrFormDefault) {
+        this.attrFormDefault = attrFormDefault;
+    }
+
+    public String getElementFormDefault() {
+        return elementFormDefault;
+    }
+
+    public void setElementFormDefault(String elementFormDefault) {
+        this.elementFormDefault = elementFormDefault;
+    }
 }
 	

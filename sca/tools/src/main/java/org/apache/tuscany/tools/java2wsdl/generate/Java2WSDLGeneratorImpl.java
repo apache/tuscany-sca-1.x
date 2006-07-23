@@ -47,7 +47,7 @@ import org.apache.ws.java2wsdl.Java2WSDLUtils;
  * it. These will be removed as and when the Axis2 code is fixed.
  * 
  */
-public class Java2WSDLGeneratorImpl implements Java2WSDLGenerator 
+public class Java2WSDLGeneratorImpl implements Java2WSDLGenerator, TuscanyJava2WSDLConstants
 {
 	private List<WSDLGenListener> genPhaseListeners = new Vector<WSDLGenListener>();
 	private GenerationParameters genParams = null;
@@ -102,6 +102,7 @@ public class Java2WSDLGeneratorImpl implements Java2WSDLGenerator
         java2WsdlBuilder.setTargetNamespacePrefix(genParams.getTargetNamespacePrefix());
         java2WsdlBuilder.setServiceName(genParams.getServiceName() == null ? 
         		Java2WSDLUtils.getSimpleClassName(genParams.getSourceClassName()) : genParams.getServiceName());
+        java2WsdlBuilder.setSchemaLocationMap(genParams.getSchemaLocationMap());
 
         if (genParams.getStyle() != null) 
         {
@@ -115,6 +116,16 @@ public class Java2WSDLGeneratorImpl implements Java2WSDLGenerator
         if (genParams.getUse() != null) 
         {
             java2WsdlBuilder.setUse(genParams.getUse());
+        }
+        
+        if ( genParams.getAttrFormDefault() == null )
+        {
+            java2WsdlBuilder.setAttrFormDefault(FORM_DEFAULT_QUALIFIED);
+        }
+        
+        if ( genParams.getElementFormDefault() == null )
+        {
+            java2WsdlBuilder.setElementFormDefault(FORM_DEFAULT_UNQUALIFIED);
         }
 	}
         
