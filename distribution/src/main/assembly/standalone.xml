@@ -74,6 +74,50 @@
             </excludes>
             <fileMode>644</fileMode>
         </dependencySet>
+
+        <!-- contributed extensions -->
+        <dependencySet>
+            <outputDirectory>contrib</outputDirectory>
+            <scope>compile</scope>
+            <includes>
+                <include>org.apache.tuscany.sca.services.bindings:axis2</include>
+                <include>org.apache.tuscany.sca.services.bindings:rmi</include>
+                <include>org.apache.tuscany.sca.services.containers:javascript</include>
+                <include>org.apache.tuscany.sca.services.containers:ruby</include>
+                <include>org.apache.tuscany.sca.services.containers:spring</include>
+                <include>org.apache.tuscany.sca.services.databinding:databinding-sdo</include>
+            </includes>
+            <excludes>
+                <exclude>org.apache.tuscany.sca.kernel:tuscany-spi</exclude>
+                <!-- dependencies from binding.axis2 -->
+                <exclude>axis2:axis2-kernel</exclude>
+                <exclude>org.apache.ws.commons.axiom:axiom-api</exclude>
+                <exclude>org.apache.ws.commons.axiom:axiom-impl</exclude>
+                <exclude>org.apache.ws.commons.schema:XmlSchema</exclude>
+                <exclude>incubator-woden:woden</exclude>
+                <exclude>wsdl4j:wsdl4j</exclude>
+                <exclude>org.apache.tuscany.sca.services.idl:wsdl</exclude>
+
+                <!-- dependencies from binding.rmi -->
+                <exclude>cglib:cglib-nodep</exclude>
+
+                <!-- dependencies from container.javascript -->
+                <exclude>rhino:js</exclude>
+                <exclude>xmlbeans:xbean</exclude>
+
+                <!-- dependencies from container.ruby -->
+                <exclude>org.jruby:jruby</exclude>
+
+                <!-- dependencies from container.spring -->
+                <exclude>org.springframework:spring</exclude>
+                <exclude>org.apache.tuscany.sca.runtime:webapp</exclude>
+
+                <!-- dependencies from databinding.sdo -->
+                <exclude>org.apache.tuscany.sdo:tuscany-sdo-impl</exclude>
+
+            </excludes>
+            <fileMode>644</fileMode>
+        </dependencySet>
     </dependencySets>
 </assembly>
 
