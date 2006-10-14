@@ -62,6 +62,7 @@
     </repositories>
 
     <dependencies>
+        <!-- dependencies for base distribution -->
         <dependency>
             <groupId>org.apache.tuscany.sca.runtime</groupId>
             <artifactId>standalone-host</artifactId>
@@ -80,6 +81,38 @@
         <dependency>
             <groupId>org.apache.tuscany.sca.services</groupId>
             <artifactId>maven</artifactId>
+            <version>${sca.version}</version>
+        </dependency>
+
+        <!-- dependencies for contributed extensions -->
+        <dependency>
+            <groupId>org.apache.tuscany.sca.services.bindings</groupId>
+            <artifactId>axis2</artifactId>
+            <version>${sca.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca.services.bindings</groupId>
+            <artifactId>rmi</artifactId>
+            <version>${sca.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca.services.containers</groupId>
+            <artifactId>javascript</artifactId>
+            <version>${sca.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca.services.containers</groupId>
+            <artifactId>ruby</artifactId>
+            <version>${sca.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca.services.containers</groupId>
+            <artifactId>spring</artifactId>
+            <version>${sca.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca.services.databinding</groupId>
+            <artifactId>databinding-sdo</artifactId>
             <version>${sca.version}</version>
         </dependency>
     </dependencies>
