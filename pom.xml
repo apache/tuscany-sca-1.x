@@ -69,6 +69,7 @@
         <module>commands</module>
         <module>tools</module>
         <module>plugins</module>
+        <module>distribution</module>
     </modules>
 
     <dependencyManagement>
