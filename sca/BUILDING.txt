@@ -1,0 +1,29 @@
+Building Tuscany SCA
+====================
+
+Building this distribution requires a Maven 2.0.4 which can be downloaded from
+   http://maven.apache.org/download.html
+
+Maven automatically downloads project dependencies from remote repositories
+so a live internet connection is required the first time a build is run.
+For details of which repositories are used please consult pom.xml in this
+directory or in specific modules. Commonly used repositories are:
+   http://people.apache.org/repo/m2-incubating-repository/
+   http://download.eclipse.org/tools/emf/maven2
+   https://maven-repository.dev.java.net/nonav/repository
+
+Due to load on these servers you may experience occasional download failures.
+If these should occur simply rerun the build.
+
+The build generates a binary distribution intended for download from a
+distribution server and a number of other artifacts intended for distribution
+through the Maven repository system. Those include Maven plugins that can be
+used to build SCA applications intended to run on Apache Tuscany.
+
+
+Building
+--------
+To perform a default build run mvn from this directory. This build installs
+all module files in your local Maven repository (located by default in
+${user.home}/.m2/repository ) ready for deployment to a remote repository.
+It also assembles a binary distribution in the distribution module.
