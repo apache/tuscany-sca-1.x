@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany</groupId>
         <artifactId>parent</artifactId>
-        <version>1-incubator-SNAPSHOT</version>
+        <version>1-incubator</version>
     </parent>
     <groupId>org.apache.tuscany.sca</groupId>
     <artifactId>parent</artifactId>
@@ -86,7 +86,7 @@
             <dependency>
                 <groupId>org.osoa</groupId>
                 <artifactId>sca-api-r0.95</artifactId>
-                <version>1.0-incubator-M2-SNAPSHOT</version>
+                <version>1.0-incubator-M2</version>
                 <scope>compile</scope>
             </dependency>
             <!-- javax.servlet API -->
@@ -114,7 +114,7 @@
             <dependency>
                 <groupId>org.apache.tuscany</groupId>
                 <artifactId>commonj-api_r1.1</artifactId>
-                <version>1.0-incubator-M2-SNAPSHOT</version>
+                <version>1.0-incubator-M2</version>
                 <scope>compile</scope>
             </dependency>
             <!-- java.xml.stream API -->
@@ -211,7 +211,7 @@
                         <dependency>
                             <groupId>org.apache.tuscany</groupId>
                             <artifactId>buildtools</artifactId>
-                            <version>${pom.version}</version>
+                            <version>1.0-incubator-M2</version>
                         </dependency>
                     </dependencies>
                     <executions>
