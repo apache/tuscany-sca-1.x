@@ -54,6 +54,8 @@
             <outputDirectory>lib</outputDirectory>
             <includes>
                 <include>org.osoa:sca-api</include>
+                <include>org.apache.tuscany.sca.kernel:tuscany-api</include>
+                <include>org.apache.tuscany.sca.kernel:tuscany-host-api</include>
                 <include>org.apache.tuscany.sca.runtime:standalone</include>
             </includes>
             <excludes>
@@ -65,9 +67,13 @@
         <!-- libraries needed to boot the runtime -->
         <dependencySet>
             <outputDirectory>boot</outputDirectory>
+            <scope>runtime</scope>
             <includes>
                 <include>org.apache.tuscany.sca.runtime:standalone-host</include>
+                <include>org.apache.tuscany.sca.kernel:core</include>
+                <include>org.apache.tuscany.sca.kernel:tuscany-spi</include>
                 <include>org.apache.tuscany.sca.services:maven</include>
+                <include>woodstox:wstx-asl</include>
             </includes>
             <excludes>
                 <exclude>junit:junit</exclude>
