@@ -36,7 +36,7 @@ import commonj.sdo.helper.XMLHelper;
 public class DataObject2String extends TransformerExtension<DataObject, String> implements
         PullTransformer<DataObject, String> {
 
-    private static final String TUSCANY_SDO = "http://tuscany.apache.org/xmlns/sdo/1.0-SNAPSHOT";
+    private static final String TUSCANY_SDO = "http://incubator.apache.org/tuscany/xmlns/sdo/1.0-incubator-M2";
 
     public String transform(DataObject source, TransformationContext context) {
         try {
