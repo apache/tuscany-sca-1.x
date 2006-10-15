@@ -40,7 +40,7 @@ import org.apache.tuscany.spi.annotation.Autowire;
  */
 public class SystemBindingLoader extends LoaderExtension<SystemBinding> {
     public static final QName SYSTEM_BINDING =
-        new QName("http://tuscany.apache.org/xmlns/system/1.0-SNAPSHOT", "binding.system");
+        new QName("http://incubator.apache.org/tuscany/xmlns/system/1.0-incubator-M2", "binding.system");
 
     @Constructor({"registry"})
     public SystemBindingLoader(@Autowire LoaderRegistry registry) {

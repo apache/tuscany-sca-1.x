@@ -40,7 +40,7 @@ import org.apache.tuscany.spi.annotation.Autowire;
  */
 public class SystemImplementationLoader extends LoaderExtension<SystemImplementation> {
     public static final QName SYSTEM_IMPLEMENTATION =
-        new QName("http://tuscany.apache.org/xmlns/system/1.0-SNAPSHOT", "implementation.system");
+        new QName("http://incubator.apache.org/tuscany/xmlns/system/1.0-incubator-M2", "implementation.system");
 
     @Constructor({"registry"})
     public SystemImplementationLoader(@Autowire LoaderRegistry registry) {
