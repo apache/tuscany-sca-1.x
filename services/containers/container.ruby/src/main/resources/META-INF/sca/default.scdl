@@ -21,9 +21,15 @@
     Ruby configuration for the launcher environment.
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           xmlns:system="http://tuscany.apache.org/xmlns/system/1.0-SNAPSHOT"
+           xmlns:system="http://incubator.apache.org/tuscany/xmlns/system/1.0-incubator-M2"
 
            name="org.apache.tuscany.launcher.RubyImplementation">
+
+    <dependency xmlns="http://incubator.apache.org/tuscany/xmlns/1.0-incubator-M2">
+        <group>org.apache.tuscany.sca.services.containers</group>
+        <name>ruby</name>
+        <version>1.0-incubator-M2-SNAPSHOT</version>
+    </dependency>
 
     <component name="ruby.implementationLoader">
         <system:implementation.system class="org.apache.tuscany.container.ruby.RubyImplementationLoader"/>
