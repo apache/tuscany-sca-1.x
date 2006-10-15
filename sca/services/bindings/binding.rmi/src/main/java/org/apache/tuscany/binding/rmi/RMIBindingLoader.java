@@ -38,7 +38,7 @@ import org.apache.tuscany.spi.loader.LoaderUtil;
 @Scope("MODULE")
 public class RMIBindingLoader extends LoaderExtension<RMIBinding> {
     public static final QName BINDING_RMI = new QName(
-        "http://tuscany.apache.org/xmlns/binding/rmi/1.0-SNAPSHOT", "binding.rmi");
+        "http://incubator.apache.org/tuscany/xmlns/binding/rmi/1.0-incubator-M2", "binding.rmi");
 
     public RMIBindingLoader(@Autowire LoaderRegistry registry) {
         super(registry);
