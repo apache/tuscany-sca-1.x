@@ -19,16 +19,16 @@
 -->
 <!-- Axis2 based WebService binding extension -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           xmlns:system="http://tuscany.apache.org/xmlns/system/1.0-SNAPSHOT"
+           xmlns:system="http://incubator.apache.org/tuscany/xmlns/system/1.0-incubator-M2"
            name="org.apache.tuscany.binding.axis2.WebServiceBinding">
 
-    <dependency xmlns="http://tuscany.apache.org/xmlns/1.0-SNAPSHOT">
+    <dependency xmlns="http://incubator.apache.org/tuscany/xmlns/1.0-incubator-M2">
         <group>org.apache.tuscany.sca.services.bindings</group>
         <name>axis2</name>
         <version>1.0-incubator-M2-SNAPSHOT</version>
     </dependency>
     
-    <dependency xmlns="http://tuscany.apache.org/xmlns/1.0-SNAPSHOT">
+    <dependency xmlns="http://incubator.apache.org/tuscany/xmlns/1.0-incubator-M2">
         <group>org.apache.tuscany.sca.services.databinding</group>
         <name>databinding-axiom</name>
         <version>1.0-incubator-M2-SNAPSHOT</version>
