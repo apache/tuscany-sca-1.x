@@ -7,7 +7,7 @@ All connections between the components are local and are defined using Java inte
 Building
 --------
 
-To build the sample using Maven use:
+To build and install the sample using Maven use:
 $ mvn install
 
 This will build the sample, package a JAR file for the composite and install it in your
