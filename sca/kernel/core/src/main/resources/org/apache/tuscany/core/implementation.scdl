@@ -23,7 +23,7 @@
     $Rev$ $Date$
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           xmlns:system="http://tuscany.apache.org/xmlns/system/1.0-SNAPSHOT"
+           xmlns:system="http://incubator.apache.org/tuscany/xmlns/system/1.0-incubator-M2"
            name="org.apache.tuscany.core.Implementation">
 
     <!-- Foundation implementation processors -->
