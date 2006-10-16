@@ -38,7 +38,7 @@ import org.osoa.sca.annotations.Constructor;
  */
 public class DataTypeLoader extends LoaderExtension<DataType> {
     public static final QName DATA_BINDING =
-        new QName("http://tuscany.apache.org/xmlns/sca/databinding/1.0", "databinding");
+        new QName("http://incubator.apache.org/tuscany/xmlns/databinding/1.0-incubator-M2", "databinding");
 
     @Constructor({"registry"})
     public DataTypeLoader(@Autowire LoaderRegistry registry) {
