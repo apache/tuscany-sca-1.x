@@ -37,7 +37,7 @@ Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 	<context-param>
 	     <param-name>tuscany.online</param-name>
-	     <param-value>false</param-value>
+	     <param-value>true</param-value>
 	</context-param>
 
 
