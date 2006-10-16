@@ -33,7 +33,16 @@
                 <include>NOTICE.txt</include>
             </includes>
         </fileSet>
+
+        <!-- empty fileSet to create the extensions directory -->
+        <fileSet>
+            <outputDirectory>extensions</outputDirectory>
+            <includes>
+                <include>extensions.scdl</include>
+            </includes>
+        </fileSet>
     </fileSets>
+
 
     <dependencySets>
         <!-- include commands in bin directory (without versions) -->
