@@ -42,7 +42,8 @@ import org.osoa.sca.annotations.Constructor;
  * Loader for handling JavaScript <js:implementation.js> elements.
  */
 public class JavaScriptImplementationLoader extends LoaderExtension<JavaScriptImplementation> {
-    private static final QName IMPLEMENTATION_JAVASCRIPT = new QName("http://tuscany.apache.org/xmlns/js/1.0", "implementation.js");
+    private static final QName IMPLEMENTATION_JAVASCRIPT = 
+    	new QName("http://incubator.apache.org/tuscany/xmlns/container/js/1.0-incubator-M2", "implementation.js");
 
     @Constructor({"registry"})
     public JavaScriptImplementationLoader(@Autowire LoaderRegistry registry) {
