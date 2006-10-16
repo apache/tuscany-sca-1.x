@@ -23,7 +23,7 @@
     
     
     
-      <dbsdo:import.sdo xmlns:dbsdo="http://tuscany.apache.org/xmlns/sca/databinding/sdo/1.0" factory="com.bigbank.account.AccountFactory"/> 
+      <dbsdo:import.sdo xmlns:dbsdo="http://incubator.apache.org/tuscany/xmlns/databinding/sdo/1.0-incubator-M2" factory="com.bigbank.account.AccountFactory"/> 
     
       <component name="LoginServiceComponent">
         <implementation.java class="bigbank.webclient.services.profile.AccountLoginServiceImpl"/>
