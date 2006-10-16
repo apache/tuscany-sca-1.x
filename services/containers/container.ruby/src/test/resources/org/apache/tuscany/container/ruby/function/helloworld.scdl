@@ -18,7 +18,7 @@
  * under the License.
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           xmlns:rb="http://tuscany.apache.org/xmlns/rb/1.0"
+           xmlns:rb="http://incubator.apache.org/tuscany/xmlns/container/rb/1.0-incubator-M2"
 
            name="HelloWorldComposite">
 

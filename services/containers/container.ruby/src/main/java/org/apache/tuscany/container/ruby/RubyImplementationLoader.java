@@ -43,7 +43,7 @@ import org.osoa.sca.annotations.Constructor;
  */
 public class RubyImplementationLoader extends LoaderExtension<RubyImplementation> {
     private static final QName IMPLEMENTATION_RUBY = new QName(
-            "http://tuscany.apache.org/xmlns/rb/1.0", "implementation.rb");
+            "http://incubator.apache.org/tuscany/xmlns/container/rb/1.0-incubator-M2", "implementation.rb");
 
     @Constructor({"registry"})
     public RubyImplementationLoader(@Autowire
