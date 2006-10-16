@@ -18,7 +18,7 @@
  * under the License.    
  -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           xmlns:groovy="http://tuscany.apache.org/xmlns/groovy/1.0"
+           xmlns:groovy="http://incubator.apache.org/tuscany/xmlns/container/groovy/1.0-incubator-M2"
            name="groovy.test">
 
     <component name="Greeting">
