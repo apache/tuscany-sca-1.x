@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    * Licensed to the Apache Software Foundation (ASF) under one
+    * or more contributor license agreements.  See the NOTICE file
+    * distributed with this work for additional information
+    * regarding copyright ownership.  The ASF licenses this file
+    * to you under the Apache License, Version 2.0 (the
+    * "License"); you may not use this file except in compliance
+    * with the License.  You may obtain a copy of the License at
+    * 
+    *   http://www.apache.org/licenses/LICENSE-2.0
+    * 
+    * Unless required by applicable law or agreed to in writing,
+    * software distributed under the License is distributed on an
+    * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    * KIND, either express or implied.  See the License for the
+    * specific language governing permissions and limitations
+    * under the License.    
+-->
+<project>
+    <parent>
+        <groupId>org.apache.tuscany.sca.samples</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0-incubator-M2-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>sample-helloworldws</artifactId>
+    <packaging>war</packaging>
+    <name>Tuscany HelloWorld Web Service Sample</name>
+    <description>A sample HelloWorld Web Service.</description>
+
+    <properties>
+        <ws.type>axis2</ws.type>
+    </properties>
+
+    <dependencies>
+    
+        <!-- SCA API dependencies -->
+        <dependency>
+            <groupId>org.osoa</groupId>
+            <artifactId>sca-api-r0.95</artifactId>
+            <version>${scaVersion}</version>
+            <scope>compile</scope>
+        </dependency>
+        
+        <!-- Tuscany API dependencies -->
+        <dependency>
+            <groupId>org.apache.tuscany.sca.kernel</groupId>
+            <artifactId>tuscany-api</artifactId>
+            <version>${scaVersion}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- SDO API dependencies  -->
+        <dependency>
+            <groupId>commonj</groupId>
+            <artifactId>sdo-api-r2.0.1</artifactId>
+            <version>${scaVersion}</version>
+            <scope>compile</scope>
+        </dependency>
+        
+        <!-- SDO's XXXHelper.INSTANCE pattern requires the implementation -->
+        <dependency>
+            <groupId>org.apache.tuscany.sdo</groupId>
+            <artifactId>tuscany-sdo-impl</artifactId>
+            <version>${scaVersion}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- SDO's XMLStreamHelper requires StAX API and impl (it's not pulled by 
+        tuscany-sdo-impl because the maven dependency scope is provided -->
+        <dependency>
+            <groupId>stax</groupId>
+            <artifactId>stax-api</artifactId>
+            <version>1.0.1</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>woodstox</groupId>
+            <artifactId>wstx-asl</artifactId>
+            <version>3.0.1</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- runtime is need for webapp integration to include jar -->
+        <dependency>
+            <groupId>org.apache.tuscany.sca.runtime</groupId>
+            <artifactId>webapp</artifactId>
+            <version>${scaVersion}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Unit testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+        <finalName>sample-helloworldws</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tuscany.sca.plugins</groupId>
+                <artifactId>tuscany-war-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>tuscany-war</id>
+                        <goals>
+                            <goal>tuscany-war</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Set to true to embed external jars for extensions in the WAR -->
+                    <!-- Set to false to leave external jars for extensions to be resolved from maven repository -->
+                    <loadExtensionDependencies>false</loadExtensionDependencies>
+                    <extensions>
+                        <dependency>
+                            <groupId>org.apache.tuscany.sca.services.bindings</groupId>
+                            <artifactId>axis2</artifactId>
+                            <version>${scaVersion}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.tuscany.sca.services.databinding</groupId>
+                            <artifactId>databinding-sdo</artifactId>
+                            <version>${scaVersion}</version>
+                        </dependency>
+                    </extensions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
