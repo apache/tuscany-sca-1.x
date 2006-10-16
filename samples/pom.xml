@@ -38,6 +38,10 @@
         <specVersion>0.95</specVersion>
     </properties>
 
+    <modules>
+      <module>applications\bigbank</module>
+    </modules>
+
     <build>
         <plugins>
             <plugin>
