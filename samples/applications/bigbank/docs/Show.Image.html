@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <style type="text/css">
+      #image {
+        text-align:center;
+      }
+      #close {
+        text-align:center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="image">
+    <script language="javascript">
+      var search = document.location.search;
+      var url = search.substring(5,search.length);
+      document.write("<img src='" + url + "' alt='" + url + "'/>");
+    </script>
+    </div>
+    <div id="close"><a href="javascript:window.close()">Close Window</a></div>
+  </body>
+</html>
