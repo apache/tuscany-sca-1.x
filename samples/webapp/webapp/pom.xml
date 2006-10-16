@@ -43,7 +43,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>sample-webapp</finalName>
+        <finalName>${artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.tuscany.sca.plugins</groupId>
