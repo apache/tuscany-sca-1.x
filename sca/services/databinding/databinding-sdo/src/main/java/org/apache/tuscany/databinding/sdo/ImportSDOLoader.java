@@ -48,7 +48,7 @@ import commonj.sdo.helper.XSDHelper;
  */
 public class ImportSDOLoader extends LoaderExtension {
     public static final QName IMPORT_SDO =
-            new QName("http://tuscany.apache.org/xmlns/sca/databinding/sdo/1.0", "import.sdo");
+            new QName("http://incubator.apache.org/tuscany/xmlns/databinding/sdo/1.0-incubator-M2", "import.sdo");
 
     @Constructor( { "registry" })
     public ImportSDOLoader(@Autowire LoaderRegistry registry) {
