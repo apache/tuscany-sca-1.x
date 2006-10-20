@@ -66,6 +66,10 @@
                 <include>org.apache.tuscany.sca.kernel:tuscany-api</include>
                 <include>org.apache.tuscany.sca.kernel:tuscany-host-api</include>
                 <include>org.apache.tuscany.sca.runtime:standalone</include>
+                
+                <!-- TUSCANY-871 -->
+                <include>org.apache.tuscany.sdo:tuscany-sdo-impl</include>
+                
             </includes>
             <excludes>
                 <exclude>org.apache.tuscany.sca.runtime:standalone-host</exclude>
