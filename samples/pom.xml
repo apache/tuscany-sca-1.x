@@ -40,8 +40,8 @@
 
     <modules>
       <module>applications/bigbank</module>
-      <module>webapp\helloworldws-async</module>
-      <module>standalone\helloworldwsclient-async</module>
+      <module>webapp/helloworldws-async</module>
+      <module>standalone/helloworldwsclient-async</module>
 
     </modules>
 
