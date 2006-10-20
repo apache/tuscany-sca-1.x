@@ -39,7 +39,8 @@
     </properties>
 
     <modules>
-      <module>applications\bigbank</module>
+      <module>applications/bigbank</module>
+      <module>webapp/helloworldws-async</module>
     </modules>
 
     <build>
