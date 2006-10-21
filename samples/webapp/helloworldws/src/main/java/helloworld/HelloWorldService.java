@@ -25,7 +25,7 @@ import org.osoa.sca.annotations.Service;
 import commonj.sdo.DataObject;
 
 /**
- * This is the business interface of the HelloWorld greetings service.
+ * This is the business interface of the HelloWorld Greetings Service.
  */
 @Remotable
 @Service
@@ -34,8 +34,6 @@ public interface HelloWorldService {
     public String getGreetings(String name);
     @DataType(name="commonj.sdo.DataObject")
     public String getGreetings1(DataObject name);
-    
-    public double getNumber(double seed);
 
 }
 
