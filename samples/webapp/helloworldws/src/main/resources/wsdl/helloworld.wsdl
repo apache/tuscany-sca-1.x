@@ -17,26 +17,12 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<wsdl:definitions targetNamespace="http://helloworld" xmlns:tns="http://helloworld" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<wsdl:definitions targetNamespace="http://helloworld" xmlns:tns="http://helloworld" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	name="helloworld">
 
     <wsdl:types>
         <schema elementFormDefault="qualified" targetNamespace="http://helloworld" xmlns="http://www.w3.org/2001/XMLSchema">
-			<element name="getNumber">
-                <complexType>
-                    <sequence>
-                        <element name="seed" type="xsd:double"/>
-                    </sequence>
-                </complexType>
-            </element>
-
-            <element name="getNumberResponse">
-                <complexType>
-                    <sequence>
-                        <element name="getNumberReturn" type="xsd:double"/>
-                    </sequence>
-                </complexType>
-            </element>
 
             <element name="getGreetings">
                 <complexType>
@@ -81,14 +67,6 @@
         </schema>
     </wsdl:types>
 
-	<wsdl:message name="getNumberRequest">
-        <wsdl:part element="tns:getNumber" name="parameters"/>
-    </wsdl:message>
-
-    <wsdl:message name="getNumberResponse">
-        <wsdl:part element="tns:getNumberResponse" name="parameters"/>
-    </wsdl:message>
-    
     <wsdl:message name="getGreetingsRequest">
         <wsdl:part element="tns:getGreetings" name="parameters"/>
     </wsdl:message>
@@ -106,10 +84,6 @@
     </wsdl:message>
 
     <wsdl:portType name="HelloWorld">
-    	<wsdl:operation name="getNumber">
-            <wsdl:input message="tns:getNumberRequest" name="getNumberRequest"/>
-            <wsdl:output message="tns:getNumberResponse" name="getNumberResponse"/>
-        </wsdl:operation>
         <wsdl:operation name="getGreetings">
             <wsdl:input message="tns:getGreetingsRequest" name="getGreetingsRequest"/>
             <wsdl:output message="tns:getGreetingsResponse" name="getGreetingsResponse"/>
@@ -122,15 +96,6 @@
 
     <wsdl:binding name="HelloWorldSoapBinding" type="tns:HelloWorld">
         <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="getNumber">
-            <wsdlsoap:operation soapAction=""/>
-            <wsdl:input name="getNumberRequest">
-                <wsdlsoap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output name="getNumberResponse">
-                <wsdlsoap:body use="literal"/>
-            </wsdl:output>
-        </wsdl:operation>
         <wsdl:operation name="getGreetings">
             <wsdlsoap:operation soapAction=""/>
             <wsdl:input name="getGreetingsRequest">
