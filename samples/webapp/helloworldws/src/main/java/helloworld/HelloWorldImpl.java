@@ -23,7 +23,7 @@ import org.osoa.sca.annotations.Service;
 import commonj.sdo.DataObject;
 
 /**
- * This class implements the HelloWorld service.
+ * This class implements the HelloWorld Service.
  */
 @Service(HelloWorldService.class)
 public class HelloWorldImpl implements HelloWorldService {
@@ -38,7 +38,4 @@ public class HelloWorldImpl implements HelloWorldService {
         return "Hello " + firstName + " " + lastName;
     }
 
-    public double getNumber(double seed) {
-    	return 100.25 + seed;
-    }
 }
