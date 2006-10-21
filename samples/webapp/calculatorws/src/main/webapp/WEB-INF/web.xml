@@ -1,4 +1,5 @@
-/*
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -15,30 +16,27 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
- */
-package helloworld;
+-->
 
-import org.osoa.sca.annotations.Service;
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web
+Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
 
-import commonj.sdo.DataObject;
+  <display-name>Tuscany Calculator Web Service Sample</display-name>
 
-/**
- * This class implements the HelloWorld service.
- */
-@Service(HelloWorldService.class)
-public class HelloWorldImpl implements HelloWorldService {
+  <listener>
+     <listener-class>org.apache.tuscany.runtime.webapp.TuscanyContextListener</listener-class>
+  </listener>
 
-    public String getGreetings(String name) {
-        return "Hello " + name;
-    }
+  <servlet>
+     <servlet-name>TuscanyServlet</servlet-name>
+     <display-name>Tuscany Servlet</display-name>
+     <servlet-class>org.apache.tuscany.runtime.webapp.TuscanyServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+     <servlet-name>TuscanyServlet</servlet-name>
+     <url-pattern>/services/*</url-pattern>
+  </servlet-mapping>
 
-    public String getGreetings1(DataObject name) {
-        String firstName = name.getString("firstName");
-        String lastName = name.getString("lastName");
-        return "Hello " + firstName + " " + lastName;
-    }
-
-    public double getNumber(double seed) {
-    	return 100.25 + seed;
-    }
-}
+</web-app>

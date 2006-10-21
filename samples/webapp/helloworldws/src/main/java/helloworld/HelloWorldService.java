@@ -34,6 +34,8 @@ public interface HelloWorldService {
     public String getGreetings(String name);
     @DataType(name="commonj.sdo.DataObject")
     public String getGreetings1(DataObject name);
+    
+    public double getNumber(double seed);
 
 }
 

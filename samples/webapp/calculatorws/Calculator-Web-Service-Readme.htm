@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><!-- Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><meta http-equiv="Content-Style-Type" content="text/css"><title>Tuscany
+Hello World Web Service Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven -->
+<style type="text/css" media="all">
+@import url("../../../../css/maven-base.css");
+@import url("../../../../css/maven-theme.css");
+@import url("../../../../css/site.css");
+</style><link rel="stylesheet" href="./css/print.css" type="text/css" media="print"><!-- end maven --></head>
+<body>
+<H1>Tuscany Calculator-Combo - A Simple SCA Assembly that hosts calculator functions as  WebServices</H1>
+<H2>Overview</H2>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD width="100%" valign="top" align="left"> This sample is an assembly  of Calculator functions implemented in Java and exposed as Web Services. The primary objective of developing this sample is to support the Calculator-Combo sample.<BR>
+			<BR>
+			To test this sample you might have to either run the Calculator-Combo sample after running this sample or you might right your won SCA Application that refereences the services of this sample</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<H2>Location</H2>
+<P>This  sample is  located in the following path of the samples source distribution: -<BR>
+&lt;source disb&gt;/samples/webapp/calculatorws<BR>
+<BR>
+After you build the sample source the deployable 'war' can be found in the '<I>target'
+</I>directory of the the project as:: <BR>
+&lt;source disb&gt;/samples/webapp/calculatorws/target/sample-calculatorws.war<BR>
+<BR>
+f there is a binary distribution of the samples available then you may just about lookup for the deployable unit (jar) in the distribution.</P><H2>Setup</H2>
+<P>1) Install the Apache Tomcat Server (latest release) and copy the <I>sample-calculatorws.war</I> into the WebApps directory of the Tomcat Installation.</P><H2>Running</H2>
+<P> Start the Apache Tomcat Server and ensure that the Calculator WebService is deployed and is running.
+<BR>
+<BR>
+To test this sample completely, run the Calculator-Combo sample after running this sample. For details on setting up and running the Calculator-Combo sample look at the Calculator-Combo-Readme.htm
+there.</P><H2>Code Overview</H2>
+The source files are physically organized as shown below:<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td>
+<pre>
+<B><U></U></B><B><U>Calculator WebService</U></B>
++---main<BR>    +---java<BR>    |   +---calculator
+<I>               &lt;Interfaces and Implementations for Calculator Functions&gt;
+
+</I> 
+    +---resources
+        +---wsdl
+               calculator.wsdl
+    +---webapp
+        +---WEB-INF
+               default.scdl
+               web.xml</pre></td></tr></tbody></table>
+<P><B>Calculator WebService Sample (WebApp Deployment)</B></P><TABLE border="1">
+	<TBODY>
+		<TR>
+			<TD width="230" valign="top">default.scdl</TD>
+			<TD width="396" valign="top">Defines an assembly of calculator
+			funtions implemented in Java and exposed as a WebService using the Axis2 binding.</TD>
+		</TR>
+		<TR>
+			<TD width="230">AddService.java<BR>
+			AddServiceImpl.java<BR>
+			DivideService.java<BR>
+			DivideServiceImpl.java<BR>
+			MathService.java<BR>
+			MathServiceImpl.java<BR>
+			MultiplyService.java<BR>
+			MultiplyServiceImpl.java<BR>
+			SubtractService.java<BR>
+			SubtractServiceImpl.java</TD>
+			<TD width="396">Java Interfaces and Java Implementations for various calculator
+			functions.</TD>
+		</TR>
+		<TR>
+			<TD width="230">CalculatorService.java<BR>
+			CalculatorServiceImpl.java</TD>
+			<TD width="396">Defines the coarse grained Calculator Interface and
+			Implementation. This calculator implementation delegates function
+			requests to other granular implemenations listed above.</TD>
+		</TR>
+		<TR>
+			<TD width="230">calculator.wsdl</TD>
+			<TD width="396">Defines the Calculator service using WSDL to enable the CalculatorServiceImpl to be exposed as a Axis2 WebService</TD>
+		</TR>
+		<TR>
+			<TD width="230">web.xml</TD>
+			<TD width="396">The Web App. descriptor for the Web App. deployment of the Tuscany Runtime.</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<P></P></body></html>

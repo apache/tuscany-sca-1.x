@@ -16,29 +16,18 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package helloworld;
+package calculator;
 
-import org.osoa.sca.annotations.Service;
-
-import commonj.sdo.DataObject;
+import org.osoa.sca.annotations.Scope;
 
 /**
- * This class implements the HelloWorld service.
+ * An implementation of the Divide service.
  */
-@Service(HelloWorldService.class)
-public class HelloWorldImpl implements HelloWorldService {
+@Scope("MODULE")
+public class MathServiceImpl implements MathService {
 
-    public String getGreetings(String name) {
-        return "Hello " + name;
+    public double sqrt(double n1) {
+        return java.lang.Math.sqrt(n1);
     }
 
-    public String getGreetings1(DataObject name) {
-        String firstName = name.getString("firstName");
-        String lastName = name.getString("lastName");
-        return "Hello " + firstName + " " + lastName;
-    }
-
-    public double getNumber(double seed) {
-    	return 100.25 + seed;
-    }
 }

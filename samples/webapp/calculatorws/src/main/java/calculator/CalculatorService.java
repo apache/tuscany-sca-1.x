@@ -16,29 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package helloworld;
+package calculator;
 
+import org.osoa.sca.annotations.Remotable;
 import org.osoa.sca.annotations.Service;
 
-import commonj.sdo.DataObject;
 
 /**
- * This class implements the HelloWorld service.
+ * The Calculator service interface.
  */
-@Service(HelloWorldService.class)
-public class HelloWorldImpl implements HelloWorldService {
+@Remotable
+@Service
+public interface CalculatorService {
 
-    public String getGreetings(String name) {
-        return "Hello " + name;
-    }
+    double add(double n1, double n2);
 
-    public String getGreetings1(DataObject name) {
-        String firstName = name.getString("firstName");
-        String lastName = name.getString("lastName");
-        return "Hello " + firstName + " " + lastName;
-    }
+    double subtract(double n1, double n2);
 
-    public double getNumber(double seed) {
-    	return 100.25 + seed;
-    }
+    double multiply(double n1, double n2);
+
+    double divide(double n1, double n2);
+    
+    double sqrt (double n);
+
 }
