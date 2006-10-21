@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><!-- Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><meta http-equiv="Content-Style-Type" content="text/css"><title>Tuscany
+Hello World Web Service Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven -->
+<style type="text/css" media="all">
+@import url("../../../../css/maven-base.css");
+@import url("../../../../css/maven-theme.css");
+@import url("../../../../css/site.css");
+</style><link rel="stylesheet" href="./css/print.css" type="text/css" media="print"><!-- end maven --></head>
+<body>
+<H1>Tuscany Calculator-Combo - A Simple SCA Assembly involving Java, JavaScript, Ruby, RMI and WebServices</H1>
+<H2>Overview</H2>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD width="100%" valign="top" align="left"> The objective of this sample is to provide simple demonstration of an SCA application assembly involving different implementation and binding technlogies. <BR>This sample is an SCA Standalone Calculator Application called &quot;Calculator Combo&quot;  assembling Calculator  functions implemented in Java, JavaScript and Ruby and references to the external RMI and WebService implementations of the Calculator funtions. Besides, this assembly also includes a component that is implemented as a Composite and there is also a simple demonstration of property configuration of components.
+			
+			<BR>
+			<BR>This sample depends on two other samples which are :-
+			<BR>
+			i) The CalculatorRmiService  SCA Standalone Assembly which assembles  Calculator functions implemented in Java and exposing the Calculator as RMI Services<BR>
+			ii) The  Calculator WebService  that  assembles Calculator functions  implemented in Java and exposing  them as WebServices
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<H2>Location</H2>
+<P>The samples are located in the following paths of the samples source distribution: -<BR> - Calculator WebService : &lt;source disb&gt;/samples/webapp/calculatorws<BR>- Calculator RMIService : &lt;source disb&gt;/samples/standalone/calculatorRMIService<BR>
+- Calculator Combo : &lt;source disb&gt;/samples/standalone/calculator-combo<BR>
+<BR>After you build the samples source the deployable units (jars / wars) for these can be found in the '<I>target' </I>directory of the respective projects as follows: <BR>- Calculator WebService : &lt;source disb&gt;/samples/webapp/calculatorws/target/sample-calculatorws.war<BR>
+- Calculator RMIService : &lt;source disb&gt;/samples/standalone/calculatorRMIService/target/sample-calculator-rmiService.jar<BR>
+- Calculator Combo : &lt;source disb&gt;/samples/standalone/calculator-combo/target/sample-calculator-combo.jar</P>
+<P>If there is a binary distribution of the samples available then you may just about lookup for these deployable units (jars / wars) in the distribution.<BR>
+</P><H2>Setup</H2>
+<P>1) Download the Tuscany SCA Standalone Host distribution. The standalone distribution comes in two forms: -<I>distribution-1.0-incubator-M2-bin.zip </I> and <I>distribution-1.0-incubator-M2-bin.tar.gz. </I>Choose the one that best suits your platform.<BR>
+<BR>2) Extract the contents of this archive file into a local directory say <I>&lt;tuscany
+samples&gt;</I>. This will create the following subdirectories with contents in each: -<BR>
+<I><BR>
+&lt;tuscany samples&gt;</I>/boot<I> <BR>&lt;tuscany samples&gt;</I>/bin<BR>
+<I>&lt;tuscany samples&gt;</I>/lib
+<BR><I>&lt;tuscany samples&gt;</I>/extensions<BR><I>&lt;tuscany samples&gt;</I>/contrib</P>
+<P>3) Since our Calculator-Combo sample requires the JavaScript, Ruby, Axis2, RMI extensions, copy the binary archives (jars) of these extesions into the &quot;<I>extensions&quot; </I>subdirectory. The binaries for these extensions are provided in the &quot;<I>contrib&quot; </I>sub-directory. Alternatively, if you have built the Tuscany Java SCA from a source distribution, then these binaries can be found in the &quot;<I>target&quot; </I>directories of the respective projects and also in the Local Maven Repository in the path <I>org/apache/tuscany/sca/services/bindings/* and <I>org/apache/tuscany/sca/services/containers/*.</I></I><BR>
+<BR>5) Create a sub-directory called 'calcCombo' under <I>&lt;tuscany
+samples&gt;</I> and copy the <I>sample-calculator-combo.jar</I> into this directory.<BR>
+<BR>6) Again, create another sub-directory called 'calcRmi' under <I>&lt;tuscany
+samples&gt;</I> and copy the <I>sample-calculator-rmiService.jar</I> into this directory.<BR>
+<BR>7) Install the Apache Tomcat Server (latest release) and copy the <I>sample-calculatorws.war</I> into the WebApps directory of the Tomcat Installation.</P><H2>Running</H2>
+<P>1) Start the Apache Tomcat Server and ensure that the Calculator WebService is deployed and is running.
+</P>
+<P>2) Open up a commandline window and go to the 
+directory <I>&lt;tuscany samples&gt;</I>. First run the Calculator RMI Service Sample as follows : -<BR>
+<BR>
+<FONT color="purple"><I>&lt;tuscany samples&gt;</I></FONT><FONT color="navy">java -jar
+bin/launcher.jar
+calcRmi/sample-calculator-rmiService.jar</FONT><BR>
+<BR>
+This command starts an SCA Standalone Runtime deploying the component assembly specified in the default.scdl. It then invokes the main method of the CalculatorRMIServer class that holds the runtime running, until the 'Enter' key is pressed.  <BR>
+<BR>
+On running the Calculator RMI Service sample the console will display ....<BR>
+<BR>
+<FONT color="green"> </FONT><FONT color="green" face="Courier New">**********************************************<BR>
+Calculator Rmi Service
+Started and Running...<BR>
+***********************************************<BR>
+Hit ENTER to exit</FONT><BR>
+<BR>In addition to this, whenever a client invokes this RMI Service, the console displays a message about the service method invoked.
+<BR><BR>
+3) Open up another commandline window and go to the 
+directory <I>&lt;tuscany samples&gt;</I>. Here, run the Calculator Combo sample as follows : -<BR>
+<FONT color="purple"><I>&lt;tuscany samples&gt;</I></FONT><FONT color="navy">java -jar
+bin/launcher.jar
+calcCombo/sample-calculator-combo.jar</FONT><BR><BR>
+This command starts an SCA Standalone Runtime deploying the component assembly specified in the default.scdl. It then invokes the main method of the CalculatorClient class which locates the various calculator services and invokes methods over them. It is worth noting the fact the immaterial of the technology that a calculator service is implemented over, the client programming model for locating the services and invoking methods over them is uniform.</P><P>On
+running the Calculator sample the console will display the following: -<FONT
+	size="+1"><BR></FONT><FONT face="Courier New" color="green" size="+0">***************************************<BR>
+Starting the Calculator Combo sample!!!<BR>
+***************************************<BR>
+Invoking Java Implementation ...<BR>
+3 + 2 = 5.0<BR>
+Invoking Ruby Implementation ...<BR>
+3 - 2 = 1.0<BR>
+Invoking over RMI Reference...<BR>
+3 * 2 = 6.0<BR>
+Invoking WebService Implementation ...<BR>
+3 / 2 = 1.5<BR>
+Invoking Scientific Calculator Composite Implementation ...<BR>
+.....Invoking Java Implementation ...<BR>
+.....Average of 1,2,3,4,5,6,7,8,9 = 5.0<BR>
+.....Invoking JavaScript Implementation ...<BR>
+.....Square Root of 81 = 9.0<BR>
+.....Invoking Java Implementation configued for Property ...<BR>
+.....Sine 90 Degrees = 1.0<BR>
+.....Cos 90 Degrees = 6.123233995736766E-17<BR>
+.....Tan 90 Degrees = 1.633123935319537E16</FONT><BR>
+<BR>
+<BR>
+Thus   we see the Calculator Combo demonstrating the assembly of different technologies to provide a wholesome Calculator Service to the external world.<BR>
+<BR>
+Now press 'Enter' key in the console running the Calculator RMI Service sample to shut down that server.</P>
+<H2>Code Overview</H2>
+The source files are physically organized as shown below:<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td>
+<pre>
+<B><U></U></B><B><U>Calculator Combo</U></B>
++---main<BR>    +---java<BR>    |   +---calculator
+<I>               &lt;Interfaces and Implementations for Calculator Functions&gt;
+
+</I>            +---client
+                   CalculatorClient.java
+    +---resources
+        +---wsdl
+               calculator.wsdl
+    +---webapp
+        +---WEB-INF
+               default.scdl
+               web.xml</pre></td></tr></tbody></table>
+<B> <BR></B><P><B>Calculator Combo Sample (Standalone Deployment)</B></P><TABLE border="1">
+	<TBODY>
+		<TR>
+			<TD width="230" valign="top">default.scdl</TD>
+			<TD width="396" valign="top">- Defines an assembly of calculator
+			functions implemented in Java and exposed as a WebService using the
+			Axis2 binding.<BR>- Defines a SciCalculatorComponent that is implemented by an SCA Composite defined in  sci_calc.scdl </TD>
+		</TR>
+		<TR>
+			<TD width="230" valign="top">sci_calc.scdl</TD>
+			<TD width="396" valign="top">- Defines an assembley of advanced calculator functions implemented in Java<BR>- Uses a property configuration called 'trig-metric' that configures the metric that is  used when invoking trignometric functions (sin, cos, tan)</TD>
+		</TR>
+		<TR>
+			<TD width="230">AddService.java<BR>
+			AddServiceImpl.java<BR>
+			DivideService.java<BR>MathService.java<BR>
+			MathServiceImpl.java<BR>
+			MultiplyService.java<BR>
+			MultiplyServiceImpl.java<BR>
+			SubtractService.java<BR>
+			SubtractServiceImpl.java</TD>
+			<TD width="396">Java Interfaces and Java Implementations for various calculator
+			functions. <I>
+			</I></TD>
+		</TR>
+		<TR>
+			<TD width="230">CalculatorService.java<BR>
+			CalculatorServiceImpl.java</TD>
+			<TD width="396">- Defines the coarse grained Calculator Interface and
+			Implementation. This calculator implementation delegates function
+			requests to other granular implemenations listed above. <BR>- Holds a reference to the RMI Calculator Service which is invoked to provide the 'multiply' function</TD>
+		</TR>
+		<TR>
+			<TD width="230">DivideServiceImpl.java</TD>
+			<TD width="396">- Provides an implementation for the DivideService and is called by the CalculatorService to provide the 'divide' function<BR>- Holds a reference to the Calculator WebService which is invoked to provide the 'divide' function.</TD>
+		</TR>
+		<TR>
+			<TD width="230">SciCalculatorService<BR>SciCalculatorService
+			</TD>
+			<TD width="396">Java Interface and Implementation for advanced functions of the calculator (avg, sqrt, sin, cos, tan, ...)</TD>
+		</TR>
+		<TR>
+			<TD width="230">SqrtService.java</TD>
+			<TD width="396">Provides an interface defintion for the JavaScript ComponentType definition of the square-root service</TD>
+		</TR>
+		<TR>
+			<TD width="230">calculator.wsdl</TD>
+			<TD width="396">- Defines the Calculator service using WSDL to enable
+			the CalculatorServiceImpl to be exposed as a Axis2 WebService<BR>- This wsdl is required to establish the client binding to the Calculator WebService
+			</TD>
+		</TR>
+		<TR>
+			<TD width="230">Sqrt.componentType</TD>
+			<TD width="396">Provides the component type information (component type sidefile) for the JavaScript implementation of the Square-Root service</TD>
+		</TR>
+		<TR>
+			<TD width="230">Sqrt.js</TD>
+			<TD width="396">A JavaScript implementation for the square-root function</TD>
+		</TR>
+		<TR>
+			<TD width="230">SubtractImpl.componentType</TD>
+			<TD width="396">Provides the component type information (component type sidefile) for the Ruby implementation of the Subtract service</TD>
+		</TR>
+		<TR>
+			<TD width="230">SubtractImpl.rb</TD>
+			<TD width="396">A Ruby implementation for the Subtract function</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<P><B></B></P>
+</body></html>

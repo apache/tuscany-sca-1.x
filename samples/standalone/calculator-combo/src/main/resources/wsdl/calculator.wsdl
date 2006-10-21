@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.    
+-->
+<wsdl:definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns1="http://calculator/xsd" xmlns:axis2ns1="http://calculator" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://calculator">
+    <wsdl:types>
+        <xs:schema xmlns:ns="http://calculator/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://calculator/xsd">
+            <xs:element name="add">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="param0" type="xs:double" />
+                        <xs:element name="param1" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="divide">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="param0" type="xs:double" />
+                        <xs:element name="param1" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="divideResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="multiply">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="param0" type="xs:double" />
+                        <xs:element name="param1" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="multiplyResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="subtract">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="param0" type="xs:double" />
+                        <xs:element name="param1" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="subtractResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sqrt">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="param0" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sqrtResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" type="xs:double" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="addMessage">
+        <wsdl:part name="part1" element="ns1:add" />
+    </wsdl:message>
+    <wsdl:message name="addResponseMessage">
+        <wsdl:part name="part1" element="ns1:addResponse" />
+    </wsdl:message>
+    <wsdl:message name="divideMessage">
+        <wsdl:part name="part1" element="ns1:divide" />
+    </wsdl:message>
+    <wsdl:message name="divideResponseMessage">
+        <wsdl:part name="part1" element="ns1:divideResponse" />
+    </wsdl:message>
+    <wsdl:message name="multiplyMessage">
+        <wsdl:part name="part1" element="ns1:multiply" />
+    </wsdl:message>
+    <wsdl:message name="multiplyResponseMessage">
+        <wsdl:part name="part1" element="ns1:multiplyResponse" />
+    </wsdl:message>
+    <wsdl:message name="subtractMessage">
+        <wsdl:part name="part1" element="ns1:subtract" />
+    </wsdl:message>
+    <wsdl:message name="subtractResponseMessage">
+        <wsdl:part name="part1" element="ns1:subtractResponse" />
+    </wsdl:message>
+    <wsdl:message name="sqrtMessage">
+        <wsdl:part name="part1" element="ns1:sqrt" />
+    </wsdl:message>
+    <wsdl:message name="sqrtResponseMessage">
+        <wsdl:part name="part1" element="ns1:sqrtResponse" />
+    </wsdl:message>
+    <wsdl:portType name="Calculator">
+        <wsdl:operation name="add">
+            <wsdl:input message="axis2ns1:addMessage" />
+            <wsdl:output message="axis2ns1:addResponseMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="divide">
+            <wsdl:input message="axis2ns1:divideMessage" />
+            <wsdl:output message="axis2ns1:divideResponseMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="multiply">
+            <wsdl:input message="axis2ns1:multiplyMessage" />
+            <wsdl:output message="axis2ns1:multiplyResponseMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="subtract">
+            <wsdl:input message="axis2ns1:subtractMessage" />
+            <wsdl:output message="axis2ns1:subtractResponseMessage" />
+        </wsdl:operation>
+        <wsdl:operation name="sqrt">
+            <wsdl:input message="axis2ns1:sqrtMessage" />
+            <wsdl:output message="axis2ns1:sqrtResponseMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CalculatorServiceSOAP11Binding" type="axis2ns1:Calculator">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="add">
+            <soap:operation soapAction="urn:add" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="divide">
+            <soap:operation soapAction="urn:divide" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="multiply">
+            <soap:operation soapAction="urn:multiply" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="subtract">
+            <soap:operation soapAction="urn:subtract" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sqrt">
+            <soap:operation soapAction="urn:sqrt" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="CalculatorServiceSOAP12Binding" type="axis2ns1:Calculator">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="add">
+            <soap12:operation soapAction="urn:add" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" namespace="http://calculator" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" namespace="http://calculator" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="divide">
+            <soap12:operation soapAction="urn:divide" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" namespace="http://calculator" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" namespace="http://calculator" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="multiply">
+            <soap12:operation soapAction="urn:multiply" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" namespace="http://calculator" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" namespace="http://calculator" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="subtract">
+            <soap12:operation soapAction="urn:subtract" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" namespace="http://calculator" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" namespace="http://calculator" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sqrt">
+            <soap:operation soapAction="urn:sqrt" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://calculator" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CalculatorService">
+        <wsdl:port name="CalculatorServiceSOAP11port" binding="axis2ns1:CalculatorServiceSOAP11Binding">
+            <soap:address location="http://localhost:8080/sample-calculatorws/services/CalculatorWebService" />
+        </wsdl:port>
+        <wsdl:port name="CalculatorServiceSOAP12port" binding="axis2ns1:CalculatorServiceSOAP12Binding">
+            <soap12:address location="http://localhost:8080/sample-calculatorws/services/CalculatorWebService" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
