@@ -360,7 +360,7 @@ window.location = url;
                 </tr>
 
                 <tr>
-                  <td>web.xml</td>
+                  <td><a href="#Web.xml">web.xml</a></td>
 
                   <td></td>
 
@@ -398,7 +398,7 @@ window.location = url;
                 </tr>
 
                 <tr>
-                  <td><a href="#Building">pom.xml</a></td>
+                  <td><a href="#pom.xml">pom.xml</a></td>
 
                   <td></td>
 
@@ -576,7 +576,7 @@ window.location = url;
                 </tr>
 
                 <tr>
-                  <td>web.xml</td>
+                  <td><a href="#Web.xml">web.xml</a></td>
 
                   <td></td>
 
@@ -614,7 +614,7 @@ window.location = url;
                 </tr>
 
                 <tr>
-                  <td><a href="#Building">pom.xml</a></td>
+                  <td><a href="#pom.xml">pom.xml</a></td>
 
                   <td></td>
 
@@ -635,10 +635,11 @@ window.location = url;
   <code>&nbsp;mvn package<br>
   <br></code>
 
-  <h4>Pom.xml</h4>The directions to build the each module is
-  located in each module's directory in the maven file pom.xml
-  &nbsp;The application use Java 1.5 and thus in the build
-  &nbsp;plugin section needs the following compiler directives:<br>
+  <h4><a name="pom.xml" id="pom.xml"></a>Pom.xml</h4>The directions
+  for maven&nbsp; how&nbsp; to build the each module is located in
+  each module's directory in the&nbsp;pom.xml file. &nbsp;The
+  application uses Java 1.5 and thus in the build &nbsp;plugin
+  section needs the following compiler directives:<br>
   &nbsp;&nbsp;<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &lt;plugin&gt;<br>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -659,8 +660,12 @@ window.location = url;
   &lt;/configuration&gt;<br>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &lt;/plugin&gt;</code><br>
-  Both modules uses three maven plugins: tuscany-sdo-plugin,
-  org.apache.tuscany.sca.plugins, and tuscany-war-plugin.
+  Both webclient and account uses three maven
+  plugins:&nbsp;<code style=
+  "font-weight: bold;">tuscany-sdo-plugin</code>,&nbsp;<code style=
+  "font-weight: bold;">tuscany-plugin-wsdl2java</code>,
+  and&nbsp;<code style=
+  "font-weight: bold;">tuscany-war-plugin</code>.
   The&nbsp;tuscany-sdo-plugin is provided by Tuscany 's SDO project
   while the other two are provided by the Tuscany SCA project.<br>
   <br>
@@ -681,8 +686,60 @@ window.location = url;
   used to add both the tuscany runtime and any Tuscany&nbsp;
   extensions requied by the application.<br>
   <br>
+
+  <h3>Application code</h3><br>
+
+  <h4><a name="Web.xml" id="Web.xml"></a>Web.xml</h4>The web.xml
+  file in each module adds necessary "hooks" to initate and
+  maintain the Tuscany SCA runtime in a web application host.<br>
+  &nbsp;<br>
+
+  <table style="text-align: left; width: 100%;" border="1"
+  cellpadding="2" cellspacing="2">
+    <tbody>
+      <tr>
+        <td>
+          <pre>
+<small>&lt;listener&gt;<br>
+   &lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanyContextListener&lt;/listener-class&gt;<br>
+&lt;/listener&gt;</small>
+</pre>
+        </td>
+
+        <td>This class initializes the Tuscany runtime when the
+        applications is started and helps finalize the Tuscany
+        runtime when the application has ended.</td>
+      </tr>
+
+      <tr>
+        <td>
+          <pre>
+<small>&lt;servlet&gt;<br>
+  &lt;servlet-name&gt;TuscanyServlet&lt;/servlet-name&gt;<br>
+  &lt;display-name&gt;Tuscany Servlet&lt;/display-name&gt;<br>
+  &lt;servlet-class&gt;org.apache.tuscany.runtime.webapp.TuscanyServlet&lt;/servlet-class&gt;<br>
+&lt;/servlet&gt;</small>
+</pre>
+        </td>
+
+        <td>This class provides the web applications servlet
+        interface to SCA components. &nbsp;The Axis websevices
+        binding extension requires this.</td>
+      </tr>
+
+      <tr>
+        <td>
+          <pre>
+<small>&lt;listener&gt;<br>
+ &lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanySessionListener&lt;/listener-class&gt;<br>
+&lt;/listener&gt;</small>
+</pre>
+        </td>
+
+        <td>This listener helps provide SCA session support .</td>
+      </tr>
+    </tbody>
+  </table><br>
   <br>
-  <br>
-  <code><br></code><br>
 </body>
 </html>
