@@ -13,10 +13,7 @@ BigBank Sample Application</title> <style type="text/css" media="all">
 @import url("../../../../css/maven-theme.css");
 @import url("../../../../css/site.css");
 </style> <link rel="stylesheet" href="./css/print.css" type="text/css" media="print"></head>
-
-
-  <body>
-<!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven --><!-- end maven --><h2>Tuscany
+<body><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven --><!-- end maven --><h2>Tuscany
 BigBank Sample Application</h2> <h3>Overview</h3> <p>The
 Tuscany BigBank&nbsp;sample application&nbsp; shows using the
 Tuscany SCA runtime to build a&nbsp; financial application. There
@@ -108,7 +105,7 @@ services through SCA references and services.<br> <br> <div style="text-align: c
 <div style="text-align: center;"> <small><span style="font-style: italic;">click to enlarge</span></small>
 </div> </td> <td style="text-align: left;" align="left" valign="top" width="80%"> <table style="text-align: left; width: 100%;" border="0" cellpadding="1" cellspacing="0"> <tbody> <tr><td style="text-align: center;" colspan="2"><span style="font-weight: bold; text-decoration: underline;"> Java
 source files implementing SCA components and interfaces.</span></td>
-<td> </td> </tr> <tr> <td style="width: 10%;"> AccountServiceComponentImpl.java</td>
+</tr> <tr> <td style="width: 10%;">AccountServiceComponentImpl.java</td>
 <td>Implements the account service.</td> </tr> <tr>
 <td>AccountLoginServiceImpl.java</td> <td>Implements
 the Logiin service.</td> </tr> <tr> <td>LoginService.java</td>
@@ -119,8 +116,8 @@ service component.</td> </tr> <tr> <td>ProfileService.java</td>
 the profile component.</td> </tr> <tr> <td>SimpleLoginServiceImpl.java</td>
 <td>A simple in memory login service.</td> </tr> <tr>
 <td style="text-align: center;" colspan="2"><span style="font-weight: bold; text-decoration: underline;"> Java
-source files implementing Web HTML interface.</span></td> <td>
-</td> </tr> <tr> <td>AccountStatusTag.java</td>
+source files implementing Web HTML interface.</span></td> </tr>
+<tr> <td>AccountStatusTag.java</td>
 <td>Implements a jsp tag that&nbsp;displays the account
 information</td> </tr> <tr> <td>StockStatusTag.java</td>
 <td>Implements a jsp tag that displays the stock information.</td>
@@ -132,19 +129,27 @@ in the JSP page context.</td> </tr> <tr> <td>FormServlet.java</td>
 </tr> <tr> <td>LoginServlet.java</td> <td>Processes
 logging in and logout.</td> </tr> <tr> <td style="text-align: center;" colspan="2"><span style="font-weight: bold; text-decoration: underline;">
 Files that will be loaded as resources along classpath.</span></td>
-<td> </td> </tr> <tr> <td>sca.module</td>
-<td>SCA&nbsp; module.&nbsp;</td> </tr> <tr>
-<td>sca.subsystem</td> <td>SCA subsystem.</td>
-</tr> <tr> <td>AccountService.wsdl</td> <td>WSDL
+</tr> <tr> <td>AccountService.wsdl</td>
+<td>WSDL
 that &nbsp;defines the account service.</td> </tr> <tr>
 <td>bigbank-tags.tld</td> <td>Defines the tag libs
-for the user interface.</td> </tr> </tbody> </table>
-</td> </tr> </tbody> </table><!-- account --><h4>Account</h4>
+for the user interface.</td> </tr><tr align="center"><td colspan="2"><span style="font-weight: bold; text-decoration: underline;">
+Files located in WEB-INF directory.</span></td></tr><tr><td>default.scdl</td><td>Application's
+SCA SCDL file.</td></tr><tr><td>web.xml</td><td>Application's
+web.xml file.</td></tr>
+<tr align="center"><td colspan="2"><span style="font-weight: bold; text-decoration: underline;">Generated
+Files.</span></td></tr><tr><td>sdo source</td><td>Generated
+SDO. Created by tuscany-sdo-plugin maven plugin.</td></tr><tr><td>wsdl2java-source</td><td>Generated
+SDO interface. Created by tuscany-plugin-wsdl2java maven
+&nbsp;plugin.</td></tr>
+<tr align="center"><td colspan="2"><span style="font-weight: bold; text-decoration: underline;">Build files.</span></td></tr><tr><td>pom.xml</td><td>Maven build file.</td></tr>
+</tbody> </table></td> </tr> </tbody> </table><!-- account --><h4>Account</h4>
 <table style="text-align: left; width: 100%;" border="0" cellpadding="1" cellspacing="0" width="100%"> <tbody><tr><td align="left" valign="top" width="*"><a href="javascript:expandImage('docs/Show.Image.html?url=accountfiles.png',550,500)"><img style="width: 262px; height: 360px;" alt="Webclient files" title="Click to expand" src="docs/accountfiles.png"></a>&nbsp;<br>
 <div style="text-align: center;"> <small><span style="font-style: italic;">click to enlarge</span></small>
 </div> </td> <td style="text-align: left;" align="left" valign="top" width="80%"> <table style="text-align: left; width: 100%;" border="0" cellpadding="1" cellspacing="0"> <tbody> <tr><td style="text-align: center;" colspan="2"><span style="font-weight: bold; text-decoration: underline;"> Java
 source files implementing SCA components and interfaces.</span></td>
-<td> </td> </tr> <tr> <td style="width: 10%;"> AccountServiceImpl.java</td> <td>Implements
+</tr> <tr> <td style="width: 10%;">AccountServiceImpl.java</td>
+<td>Implements
 the account service component.</td> </tr> <tr> <td>AccountDataService.java</td>
 <td>Interface defined for component implementing &nbsp;an
 account's data service.</td> </tr> <tr> <td>AccountDataServiceDASImpl.java</td>
@@ -162,7 +167,7 @@ a fake stock quote service.</td> </tr> <tr> <td>StockQuoteWebservicexServiceImpl
 <td>Implements an actual stock quote service.</td> </tr>
 <tr> <td style="text-align: center;" colspan="2"><span style="font-weight: bold; text-decoration: underline;">Files
 that will be loaded as resources along classpath.</span></td>
-<td> </td> </tr> <tr> <td>AccountService.wsdl</td>
+</tr> <tr> <td>AccountService.wsdl</td>
 <td>WSDL that &nbsp;defines the account service</td> </tr>
 <tr> <td>stockquotes.webservicex.wsdl</td> <td>Actual
 stock quote service.</td> </tr> <tr> <td>DasAccountConfiguration.xml</td>
