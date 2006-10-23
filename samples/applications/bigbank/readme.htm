@@ -757,7 +757,7 @@ window.location = url;
   &nbsp;The Tuscany System SCDL can also be overridden with another
   context-param element with the name <code><span style=
   "font-weight: bold;">tuscany.systemScdlPath</span></code>.<br>
-  The SCDL &nbsp;that defines the BigBank application is defined by
+  The SCDL&nbsp; used by the BigBank application is defined by
   <a href=
   "http://www.osoa.org/download/attachments/35/SCA_AssemblyModel_V096.pdf?version=1"
   target="_blank">SCA Assembly Model V0.96</a> , <a href=
@@ -766,5 +766,17 @@ window.location = url;
   (V0.95)</a> &nbsp;and the <a href=
   "http://www.osoa.org/download/attachments/35/SCA_WebServiceBindings_V096-draft1.pdf?version=3"
   target="_blank">SCA Web Service bindings</a> specifications.<br>
+  There is one extension to SCDL used by BigBank that is specific
+  to Tuscany that is used by SDO databinding extension.
+  &nbsp;The&nbsp;<code>import.sdo</code> element in the SCDL
+  specifies which&nbsp; SDO factories to register the SDO types.
+  &nbsp;In the case of BigBank the factory is the class generated
+  by the&nbsp;<code style=
+  "font-weight: bold;">tuscany-sdo-plugin</code> maven plugin. An
+  example of this follows:<br>
+  <pre>
+  <code>&lt;dbsdo:import.sdo xmlns:dbsdo="http://incubator.apache.org/tuscany/xmlns/databinding/sdo/1.0-incubator-M2"  <br>
+     factory="com.bigbank.account.AccountFactory"/&gt; </code>
+</pre><br>
 </body>
 </html>
