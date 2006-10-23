@@ -398,7 +398,7 @@ window.location = url;
                 </tr>
 
                 <tr>
-                  <td>pom.xml</td>
+                  <td><a href="#Building">pom.xml</a></td>
 
                   <td></td>
 
@@ -614,7 +614,7 @@ window.location = url;
                 </tr>
 
                 <tr>
-                  <td>pom.xml</td>
+                  <td><a href="#Building">pom.xml</a></td>
 
                   <td></td>
 
@@ -629,9 +629,60 @@ window.location = url;
   </div><br>
   <br>
 
-  <h3>Building</h3>This sample can be built from the bigbank
-  directory using Maven 2.0.4:<br>
-  <code>&nbsp;mvn package</code><br>
+  <h3><a name="Building" id="Building"></a>Building</h3>This sample
+  can be built from the bigbank directory using Maven 2.0.4 with
+  the following command:<br>
+  <code>&nbsp;mvn package<br>
+  <br></code>
+
+  <h4>Pom.xml</h4>The directions to build the each module is
+  located in each module's directory in the maven file pom.xml
+  &nbsp;The application use Java 1.5 and thus in the build
+  &nbsp;plugin section needs the following compiler directives:<br>
+  &nbsp;&nbsp;<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &lt;plugin&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &lt;configuration&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &lt;source&gt;<span style=
+  "color: rgb(255, 0, 0); font-weight: bold;">1.5</span>&lt;/source&gt;<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &lt;target&gt;<span style=
+  "color: rgb(255, 0, 0); font-weight: bold;">1.5</span>&lt;/target&gt;<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &lt;/configuration&gt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &lt;/plugin&gt;</code><br>
+  Both modules uses three maven plugins: tuscany-sdo-plugin,
+  org.apache.tuscany.sca.plugins, and tuscany-war-plugin.
+  The&nbsp;tuscany-sdo-plugin is provided by Tuscany 's SDO project
+  while the other two are provided by the Tuscany SCA project.<br>
   <br>
+  The <code style="font-weight: bold;">tuscany-sdo-plugin</code>
+  &nbsp;references the WSDL's schema and generates all the files
+  located in target/sdo_source directory. &nbsp;The application
+  uses these classes as a databinding instead of having to deal
+  directly with XML that &nbsp;represents form as defined in the
+  WSDL's schema.<br>
+  <br>
+  The <code style=
+  "font-weight: bold;">tuscany-plugin-wsdl2java</code> plugin
+  generates a Java interface in the target/wsdl2java-source
+  directory that is used to define the inteface (prottype) in the
+  wsdl.<br>
+  <br>
+  The <code style="font-weight: bold;">tuscany-war-plugin</code> is
+  used to add both the tuscany runtime and any Tuscany&nbsp;
+  extensions requied by the application.<br>
+  <br>
+  <br>
+  <br>
+  <code><br></code><br>
 </body>
 </html>
