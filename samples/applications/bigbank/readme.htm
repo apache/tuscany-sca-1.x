@@ -6,7 +6,6 @@
   "HTML Tidy for Windows (vers 1st July 2004), see www.w3.org"
   name="generator">
   <!-- * Licensed to the Apache Software Foundation (ASF) under one * or more contributor license agreements. See the NOTICE file * distributed with this work for additional information * regarding copyright ownership. The ASF licenses this file * to you under the Apache License, Version 2.0 (the * "License"); you may not use this file except in compliance * with the License. You may obtain a copy of the License at * * http://www.apache.org/licenses/LICENSE-2.0 * * Unless required by applicable law or agreed to in writing, * software distributed under the License is distributed on an * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY * KIND, either express or implied. See the License for the * specific language governing permissions and limitations * under the License. --><!-- Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
-
 <script type="text/javascript">
 function expandImage(img,height,width) {
 window.open(img,"Image","menubar=no,resizable=no,status=no,toolbar=no,location=no,height=" + height + ",width=" + width);
@@ -113,8 +112,8 @@ window.location = url;
     "font-weight: bold;">apache-tomcat-5.5.17\bin&nbsp;</span></li>
 
     <li>issue <span style="font-weight: bold;">startup
-    &nbsp;</span> command to start up the serverin the <span style=
-    "font-style: italic;">&lt;tomcat dir&gt;</span>\bin
+    &nbsp;</span> command to start up the server in the
+    <span style="font-style: italic;">&lt;tomcat dir&gt;</span>\bin
     directory<span style="font-weight: bold;">.</span></li>
   </ul>The sample should now be using the real stock quote
   provider.&nbsp;<br>
@@ -221,7 +220,7 @@ window.location = url;
 
                   <td></td>
 
-                  <td>Implements the Logiin service.</td>
+                  <td>Implements the Login service.</td>
                 </tr>
 
                 <tr>
@@ -683,11 +682,11 @@ window.location = url;
   wsdl.<br>
   <br>
   The <code style="font-weight: bold;">tuscany-war-plugin</code> is
-  used to add both the tuscany runtime and any Tuscany&nbsp;
-  extensions requied by the application.<br>
+  used to add both the Tuscany runtime and any Tuscany&nbsp;
+  extensions required by the application.<br>
   <br>
 
-  <h3>Application code</h3><br>
+  <h3>Application</h3>
 
   <h4><a name="Web.xml" id="Web.xml"></a>Web.xml</h4>The web.xml
   file in each module adds necessary "hooks" to initate and
@@ -701,7 +700,9 @@ window.location = url;
         <td>
           <pre>
 <small>&lt;listener&gt;<br>
-   &lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanyContextListener&lt;/listener-class&gt;<br>
+<br>
+&lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanyContextListener&lt;/listener-class&gt;<br>
+<br>
 &lt;/listener&gt;</small>
 </pre>
         </td>
@@ -715,9 +716,13 @@ window.location = url;
         <td>
           <pre>
 <small>&lt;servlet&gt;<br>
-  &lt;servlet-name&gt;TuscanyServlet&lt;/servlet-name&gt;<br>
-  &lt;display-name&gt;Tuscany Servlet&lt;/display-name&gt;<br>
-  &lt;servlet-class&gt;org.apache.tuscany.runtime.webapp.TuscanyServlet&lt;/servlet-class&gt;<br>
+<br>
+&lt;servlet-name&gt;TuscanyServlet&lt;/servlet-name&gt;<br>
+<br>
+&lt;display-name&gt;Tuscany Servlet&lt;/display-name&gt;<br>
+<br>
+&lt;servlet-class&gt;org.apache.tuscany.runtime.webapp.TuscanyServlet&lt;/servlet-class&gt;<br>
+<br>
 &lt;/servlet&gt;</small>
 </pre>
         </td>
@@ -731,7 +736,9 @@ window.location = url;
         <td>
           <pre>
 <small>&lt;listener&gt;<br>
- &lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanySessionListener&lt;/listener-class&gt;<br>
+<br>
+&lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanySessionListener&lt;/listener-class&gt;<br>
+<br>
 &lt;/listener&gt;</small>
 </pre>
         </td>
@@ -740,6 +747,24 @@ window.location = url;
       </tr>
     </tbody>
   </table><br>
-  <br>
+
+  <h4>SCDL</h4>Each module's SCA application SCDL is located in the
+  web application&nbsp; WEB-INF/default.scdl file. &nbsp;This is
+  the default location, but within the web.xml it is possible to
+  override this with a context-param element &nbsp;with the name
+  <code><span style=
+  "font-weight: bold;">tuscany.applicationScdlPath</span></code>.
+  &nbsp;The Tuscany System SCDL can also be overridden with another
+  context-param element with the name <code><span style=
+  "font-weight: bold;">tuscany.systemScdlPath</span></code>.<br>
+  The SCDL &nbsp;that defines the BigBank application is defined by
+  <a href=
+  "http://www.osoa.org/download/attachments/35/SCA_AssemblyModel_V096.pdf?version=1"
+  target="_blank">SCA Assembly Model V0.96</a> , <a href=
+  "http://www.osoa.org/download/attachments/35/SCA_ClientAndImplementationModelforJava_v0.95.pdf?version=3"
+  target="_blank">SCA Client and Implementation Model for Java
+  (V0.95)</a> &nbsp;and the <a href=
+  "http://www.osoa.org/download/attachments/35/SCA_WebServiceBindings_V096-draft1.pdf?version=3"
+  target="_blank">SCA Web Service bindings</a> specifications.<br>
 </body>
 </html>
