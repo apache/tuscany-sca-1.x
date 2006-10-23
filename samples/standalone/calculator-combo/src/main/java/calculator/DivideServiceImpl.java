@@ -30,7 +30,6 @@ public class DivideServiceImpl implements DivideService {
     @Reference
     protected CalculatorService calculatorWebService;
 
-    
     public double divide(double n1, double n2) {
         return calculatorWebService.divide(n1, n2);
     }

@@ -50,7 +50,7 @@
     
     <reference name="CalculatorRmiService">
         <interface.java interface="calculator.CalculatorService"/>
-        <rmi:binding.rmi host="localhost" port="1099" serviceName="rmiCalculator"/>
+        <rmi:binding.rmi host="localhost" port="9999" serviceName="rmiCalculator"/>
     </reference>
     
     <!--component name="MultiplyServiceComponent">

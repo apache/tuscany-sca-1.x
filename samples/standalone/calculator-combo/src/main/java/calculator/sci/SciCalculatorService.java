@@ -19,8 +19,7 @@
 package calculator.sci;
 
 /**
- * @author administrator
- *
+ * Scientific calculator
  */
 public interface SciCalculatorService {
     public abstract double average(double ad[]);

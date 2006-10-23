@@ -49,6 +49,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.tuscany.sca.services.databinding</groupId>
+            <artifactId>databinding-sdo</artifactId>
+            <version>${scaVersion}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.tuscany.sca.services.containers</groupId>
             <artifactId>javascript</artifactId>
             <version>${scaVersion}</version>

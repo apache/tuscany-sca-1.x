@@ -21,27 +21,26 @@ package calculator;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 
-
 /**
  * An implementation of the Calculator service.
  */
 @Scope("MODULE")
 public class CalculatorServiceImpl implements CalculatorService {
 
-	@Reference
+    @Reference
     protected AddService addService;
-	
-	@Reference
+
+    @Reference
     protected SubtractService subtractService;
-	
-	@Reference
+
+    @Reference
     protected MultiplyService multiplyService;
-	
-	@Reference
+
+    @Reference
     protected DivideService divideService;
-	
-	@Reference
-     protected CalculatorService rmiCalculatorService;
+
+    @Reference
+    protected CalculatorService rmiCalculatorService;
 
     public double add(double n1, double n2) {
         return addService.add(n1, n2);
@@ -58,6 +57,5 @@ public class CalculatorServiceImpl implements CalculatorService {
     public double divide(double n1, double n2) {
         return divideService.divide(n1, n2);
     }
-
 
 }

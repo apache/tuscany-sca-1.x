@@ -21,34 +21,25 @@ package calculator.sci;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
 
-/**
- * @author administrator
- *
- */
 public class SciCalculatorServiceImpl implements SciCalculatorService {
 
     public static final String RADIANS = "RADIANS";
     public static final String DEGREES = "DEGREES";
-    
+
     @Reference
     protected SqrtService sqrtService;
-    
-    
+
     private String trig_metric;
 
-    
-    public SciCalculatorServiceImpl()
-    {
+    public SciCalculatorServiceImpl() {
     }
 
-    public double average(double values[])
-    {
+    public double average(double values[]) {
         double sum = 0.0D;
         int count = 0;
         double arr$[] = values;
         int len$ = arr$.length;
-        for(int i$ = 0; i$ < len$; i$++)
-        {
+        for (int i$ = 0; i$ < len$; i$++) {
             double aValue = arr$[i$];
             sum += aValue;
             count++;
@@ -57,40 +48,34 @@ public class SciCalculatorServiceImpl implements SciCalculatorService {
         return sum / (double)count;
     }
 
-    public double sqrt(double n)
-    {
+    public double sqrt(double n) {
         return sqrtService.sqrt(n);
     }
 
-    public double sin(double angle)
-    {
-        if(trig_metric.equalsIgnoreCase("DEGREES"))
+    public double sin(double angle) {
+        if (trig_metric.equalsIgnoreCase("DEGREES"))
             angle = Math.toRadians(angle);
         return Math.sin(angle);
     }
 
-    public double cos(double angle)
-    {
-        if(trig_metric.equalsIgnoreCase("DEGREES"))
+    public double cos(double angle) {
+        if (trig_metric.equalsIgnoreCase("DEGREES"))
             angle = Math.toRadians(angle);
         return Math.cos(angle);
     }
 
-    public double tan(double angle)
-    {
-        if(trig_metric.equalsIgnoreCase("DEGREES"))
+    public double tan(double angle) {
+        if (trig_metric.equalsIgnoreCase("DEGREES"))
             angle = Math.toRadians(angle);
         return Math.tan(angle);
     }
 
-    public String getTrig_metric()
-    {
+    public String getTrig_metric() {
         return trig_metric;
     }
 
     @Property
-    public void setTrig_metric(String trig_metric)
-    {
+    public void setTrig_metric(String trig_metric) {
         this.trig_metric = trig_metric;
     }
 

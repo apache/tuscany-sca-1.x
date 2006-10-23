@@ -19,8 +19,7 @@
 package calculator.sci;
 
 /**
- * @author administrator
- *
+ * Interface to calculate the square root
  */
 public interface SqrtService {
     public abstract double sqrt(double d);
