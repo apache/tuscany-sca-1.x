@@ -118,9 +118,9 @@ window.location = url;
   </ul>The sample should now be using the real stock quote
   provider.&nbsp;<br>
 
-  <h3>Introduction</h3>This example illustrates using Tuscany
-  runtime in building a financial application&nbsp;using SCA
-  programing model. &nbsp;The following key concepts are covered:
+  <h3>Overview</h3>This example illustrates using Tuscany runtime
+  in building a financial Web application&nbsp;using SCA programing
+  model. &nbsp;The following key concepts are covered:
 
   <ul>
     <li><b><i>Component implementations</i></b>. that provide web
@@ -351,7 +351,7 @@ window.location = url;
                 </tr>
 
                 <tr>
-                  <td>default.scdl</td>
+                  <td><a href="#SCDL">default.scdl</a></td>
 
                   <td></td>
 
@@ -377,7 +377,9 @@ window.location = url;
 
                   <td></td>
 
-                  <td>Generated SDO. Created by tuscany-sdo-plugin
+                  <td>Generated SDO. Created by <a href=
+                  "#tuscany-sdo-plugin"><code><span style=
+                  "font-weight: bold;">tuscany-sdo-plugin</span></code></a>
                   maven plugin.</td>
                 </tr>
 
@@ -386,8 +388,10 @@ window.location = url;
 
                   <td></td>
 
-                  <td>Generated SDO interface. Created by
-                  tuscany-plugin-wsdl2java maven &nbsp;plugin.</td>
+                  <td>Generated SDO interface. Created by <a href=
+                  "#tuscany-plugin-wsdl2java"><code><span style=
+                  "font-weight: bold;">tuscany-plugin-wsdl2java</span></code></a>
+                  maven &nbsp;plugin.</td>
                 </tr>
 
                 <tr align="center">
@@ -547,11 +551,12 @@ window.location = url;
 
                   <td></td>
 
-                  <td>Actual stock quote service.</td>
+                  <td>Actual stock quote service WSDL.</td>
                 </tr>
 
                 <tr>
-                  <td>DasAccountConfiguration.xml</td>
+                  <td><a href=
+                  "#DAS_">DasAccountConfiguration.xml</a></td>
 
                   <td></td>
 
@@ -567,7 +572,7 @@ window.location = url;
                 </tr>
 
                 <tr>
-                  <td>default.scdl</td>
+                  <td><a href="#SCDL">default.scdl</a></td>
 
                   <td></td>
 
@@ -593,7 +598,9 @@ window.location = url;
 
                   <td></td>
 
-                  <td>Generated SDO. Created by tuscany-sdo-plugin
+                  <td>Generated SDO. Created by&nbsp;<a href=
+                  "#tuscany-sdo-plugin"><code><span style=
+                  "font-weight: bold;">tuscany-sdo-plugin</span></code></a>
                   maven plugin.</td>
                 </tr>
 
@@ -602,8 +609,11 @@ window.location = url;
 
                   <td></td>
 
-                  <td>Generated SDO interface. Created by
-                  tuscany-plugin-wsdl2java maven &nbsp;plugin.</td>
+                  <td>Generated SDO interface. Created
+                  by&nbsp;<a href=
+                  "#tuscany-plugin-wsdl2java"><code><span style=
+                  "font-weight: bold;">tuscany-plugin-wsdl2java</span></code></a>
+                  maven &nbsp;plugin.</td>
                 </tr>
 
                 <tr align="center">
@@ -668,16 +678,18 @@ window.location = url;
   The&nbsp;tuscany-sdo-plugin is provided by Tuscany 's SDO project
   while the other two are provided by the Tuscany SCA project.<br>
   <br>
-  The <code style="font-weight: bold;">tuscany-sdo-plugin</code>
+  The <code style="font-weight: bold;"><a name="tuscany-sdo-plugin"
+  id="tuscany-sdo-plugin"></a>tuscany-sdo-plugin</code>
   &nbsp;references the WSDL's schema and generates all the files
   located in target/sdo_source directory. &nbsp;The application
   uses these classes as a databinding instead of having to deal
   directly with XML that &nbsp;represents form as defined in the
   WSDL's schema.<br>
   <br>
-  The <code style=
-  "font-weight: bold;">tuscany-plugin-wsdl2java</code> plugin
-  generates a Java interface in the target/wsdl2java-source
+  The <code style="font-weight: bold;"><a name=
+  "tuscany-plugin-wsdl2java" id=
+  "tuscany-plugin-wsdl2java"></a>tuscany-plugin-wsdl2java</code>
+  plugin generates a Java interface in the target/wsdl2java-source
   directory that is used to define the inteface (prottype) in the
   wsdl.<br>
   <br>
@@ -748,11 +760,11 @@ window.location = url;
     </tbody>
   </table><br>
 
-  <h4>SCDL</h4>Each module's SCA application SCDL is located in the
-  web application&nbsp; WEB-INF/default.scdl file. &nbsp;This is
-  the default location, but within the web.xml it is possible to
-  override this with a context-param element &nbsp;with the name
-  <code><span style=
+  <h4><a name="SCDL" id="SCDL"></a>SCDL</h4>Each module's SCA
+  application SCDL is located in the web application&nbsp;
+  WEB-INF/default.scdl file. &nbsp;This is the default location,
+  but within the web.xml it is possible to override this with a
+  context-param element &nbsp;with the name <code><span style=
   "font-weight: bold;">tuscany.applicationScdlPath</span></code>.
   &nbsp;The Tuscany System SCDL can also be overridden with another
   context-param element with the name <code><span style=
@@ -777,6 +789,9 @@ window.location = url;
   <pre>
   <code>&lt;dbsdo:import.sdo xmlns:dbsdo="http://incubator.apache.org/tuscany/xmlns/databinding/sdo/1.0-incubator-M2"  <br>
      factory="com.bigbank.account.AccountFactory"/&gt; </code>
-</pre><br>
+</pre>
+
+  <h3><a name="DAS_" id="DAS_"></a><span style=
+  "font-family: monospace;">DAS</span></h3>
 </body>
 </html>
