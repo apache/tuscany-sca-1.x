@@ -695,13 +695,24 @@ window.location = url;
   <br>
   The <code style="font-weight: bold;">tuscany-war-plugin</code> is
   used to add both the Tuscany runtime and any Tuscany&nbsp;
-  extensions required by the application.<br>
+  extensions required by the application in the war file.. Looking
+  at the pom.xml and search for &nbsp;"<code style=
+  "font-weight: bold;">tuscany-war-plugin"</code> you'll find the
+  plugin. &nbsp;Which extension you want loaded are specified in
+  the <code><span style=
+  "font-weight: bold;">extensions</span></code> section. The format
+  for this&nbsp; closely follows Maven's artifact naming. &nbsp;The
+  boolean <code><span style=
+  "font-weight: bold;">loadExtensionDependencies</span></code>
+  option if true will &nbsp;resolve all dependencies for each
+  extension listed here and also include them in the war file.
+  &nbsp;<br>
   <br>
 
   <h3>Application</h3>
 
   <h4><a name="Web.xml" id="Web.xml"></a>Web.xml</h4>The web.xml
-  file in each module adds necessary "hooks" to initate and
+  file in each module adds necessary "hooks" to initiate and
   maintain the Tuscany SCA runtime in a web application host.<br>
   &nbsp;<br>
 
@@ -759,6 +770,15 @@ window.location = url;
       </tr>
     </tbody>
   </table><br>
+  The web application can be run in offline or online when
+  resolving dependencies required by the application or it's
+  required extensions. This is configured in the web.xml with the
+  context-param element with a parameter name <code><span style=
+  "font-weight: bold;">tuscany.online</span></code>. If&nbsp; not
+  specified or set to true, dependencies are resolved by searching
+  the local war repository, the local Maven repository, and remote
+  repositories. If specified and set to false, the remote
+  repositories will not be searched.<br>
 
   <h4><a name="SCDL" id="SCDL"></a>SCDL</h4>Each module's SCA
   application SCDL is located in the web application&nbsp;
@@ -788,7 +808,7 @@ window.location = url;
   example of this follows:<br>
   <pre>
   <code>&lt;dbsdo:import.sdo xmlns:dbsdo="http://incubator.apache.org/tuscany/xmlns/databinding/sdo/1.0-incubator-M2"  <br>
-     factory="com.bigbank.account.AccountFactory"/&gt; </code>
+   factory="com.bigbank.account.AccountFactory"/&gt; </code>
 </pre>
 
   <h3><a name="DAS_" id="DAS_"></a><span style=
