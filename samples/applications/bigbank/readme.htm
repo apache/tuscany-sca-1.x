@@ -724,7 +724,11 @@ window.location = url;
           <pre>
 <small>&lt;listener&gt;<br>
 <br>
+<br>
+<br>
 &lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanyContextListener&lt;/listener-class&gt;<br>
+<br>
+<br>
 <br>
 &lt;/listener&gt;</small>
 </pre>
@@ -740,11 +744,19 @@ window.location = url;
           <pre>
 <small>&lt;servlet&gt;<br>
 <br>
+<br>
+<br>
 &lt;servlet-name&gt;TuscanyServlet&lt;/servlet-name&gt;<br>
+<br>
+<br>
 <br>
 &lt;display-name&gt;Tuscany Servlet&lt;/display-name&gt;<br>
 <br>
+<br>
+<br>
 &lt;servlet-class&gt;org.apache.tuscany.runtime.webapp.TuscanyServlet&lt;/servlet-class&gt;<br>
+<br>
+<br>
 <br>
 &lt;/servlet&gt;</small>
 </pre>
@@ -760,7 +772,11 @@ window.location = url;
           <pre>
 <small>&lt;listener&gt;<br>
 <br>
+<br>
+<br>
 &lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanySessionListener&lt;/listener-class&gt;<br>
+<br>
+<br>
 <br>
 &lt;/listener&gt;</small>
 </pre>
@@ -807,9 +823,24 @@ window.location = url;
   "font-weight: bold;">tuscany-sdo-plugin</code> maven plugin. An
   example of this follows:<br>
   <pre>
-  <code>&lt;dbsdo:import.sdo xmlns:dbsdo="http://incubator.apache.org/tuscany/xmlns/databinding/sdo/1.0-incubator-M2"  <br>
-   factory="com.bigbank.account.AccountFactory"/&gt; </code>
+ <code>&lt;dbsdo:import.sdo xmlns:dbsdo="http://incubator.apache.org/tuscany/xmlns/databinding/sdo/1.0-incubator-M2" <br>
+ factory="com.bigbank.account.AccountFactory"/&gt; <br>
+<br></code>
 </pre>
+
+  <h4>Code</h4>The Java code  for the most part just implements the
+  Web interface and the SCA components necessary to implement the
+  business logic. The code uses Java 5.0 annotations as documented
+  by the  <a href=
+  "http://www.osoa.org/download/attachments/35/SCA_ClientAndImplementationModelforJava_v0.95.pdf?version=3"
+  target="_blank">SCA Client and Implementation Model for Java
+  (V0.95)</a> specifications.  The samples uses one annotation that
+  is an Tuscany extension that is used by the databinding framework
+  to identify that the components expect to SDO s for complex data
+  types. An example of this is seen in the AccountService interface
+  which has the  <code style=
+  "font-weight: bold;">@DataType(name="commonj.sdo.DataObject")</code>
+  annotation.
 
   <h3><a name="DAS_" id="DAS_"></a><span style=
   "font-family: monospace;">DAS</span></h3>
