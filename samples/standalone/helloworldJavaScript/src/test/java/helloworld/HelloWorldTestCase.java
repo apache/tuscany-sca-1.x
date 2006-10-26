@@ -27,13 +27,14 @@ import org.osoa.sca.CurrentCompositeContext;
 /**
  * This shows how to test the HelloWorld service component.
  */
-public class HelloWorldRunner extends SCATestCase {
+public class HelloWorldTestCase extends SCATestCase {
 
     private HelloWorldService helloWorldService;
 
     protected void setUp() throws Exception {
         URL scdl = getClass().getClassLoader().getResource("META-INF/sca/js.system.scdl");
         addExtension("JavaScriptContainer", scdl);
+        setApplicationSCDL(HelloWorldService.class, "META-INF/sca/default.scdl");
         super.setUp();
 
         CompositeContext context = CurrentCompositeContext.getContext();

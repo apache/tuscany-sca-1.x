@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sample-helloworld-javascript</artifactId>
     <packaging>jar</packaging>
-    <name>Tuscany JavaScript helloworld Sample</name>
+    <name>Tuscany JavaScript Helloworld Sample</name>
     <description>A helloworld sample using a single SCA JavaScript component</description>
 
     <dependencies>

@@ -42,7 +42,7 @@
       <module>applications/bigbank</module>
       <module>webapp/helloworldws-async</module>
       <module>standalone/helloworldwsclient-async</module>
-
+      <module>standalone/helloworldJavaScript</module>
     </modules>
 
     <build>

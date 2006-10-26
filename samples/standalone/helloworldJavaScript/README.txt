@@ -1,5 +1,5 @@
-Simple Calculator Sample
-========================
+Simple Helloworld Sample using a JavaScript component
+=====================================================
 
 This sample illustrates the use of an extension to support other implementation types.
 In this sample the component is implemented using a JavaScript script.
@@ -7,8 +7,8 @@ In this sample the component is implemented using a JavaScript script.
 Building
 --------
 
-To build and install the sample using Maven use:
-$ mvn install
+To build the sample using Maven use:
+$ mvn
 
 This will build the sample, package a JAR file for the composite and install it in your
 local maven repository for use by other samples.
