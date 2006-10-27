@@ -175,6 +175,12 @@ window.location = url;
     "docs/modualoverview.png" align="middle">
 
     <h4>Webclient</h4><br>
+    <a href=
+    "javascript:expandImage('docs/Show.Image.html?url=webclientmodule.png',1000,1100)">
+    <img style="width: 300px; height: 200px;" alt="Webclient files"
+    title="Click to expand" src="docs/webclientmodule.png"></a><br>
+
+    <p>&nbsp;</p>
 
     <table style="text-align: left; width: 100%;" border="0"
     cellpadding="1" cellspacing="0" width="100%">
@@ -182,7 +188,7 @@ window.location = url;
         <tr>
           <td align="left" valign="top" width="*">
             <a href=
-            "javascript:expandImage('docs/Show.Image.html?url=webclientfiles.png',800,500)">
+            "javascript:expandImage('docs/Show.Image.html?url=webclientfiles.png',850,500)">
             <img style="width: 262px; height: 360px;" alt=
             "Webclient files" title="Click to expand" src=
             "docs/webclientfiles.png"></a>&nbsp;<br>
@@ -416,7 +422,13 @@ window.location = url;
 
     <p>&nbsp;</p><!-- account -->
 
-    <h4>Account</h4>
+    <h4>Account</h4><br>
+    <a href=
+    "javascript:expandImage('docs/Show.Image.html?url=accountmodule.png',830,1400)">
+    <img style="width: 300px; height: 200px;" alt="Account module"
+    title="Click to expand" src="docs/accountmodule.png"></a><br>
+
+    <p>&nbsp;</p>
 
     <table style="text-align: left; width: 100%;" border="0"
     cellpadding="1" cellspacing="0" width="100%">
@@ -424,7 +436,7 @@ window.location = url;
         <tr>
           <td align="left" valign="top" width="*">
             <a href=
-            "javascript:expandImage('docs/Show.Image.html?url=accountfiles.png',550,500)">
+            "javascript:expandImage('docs/Show.Image.html?url=accountfiles.png',850,500)">
             <img style="width: 262px; height: 360px;" alt=
             "Webclient files" title="Click to expand" src=
             "docs/accountfiles.png"></a>&nbsp;<br>
@@ -726,7 +738,15 @@ window.location = url;
 <br>
 <br>
 <br>
+<br>
+<br>
+<br>
+<br>
 &lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanyContextListener&lt;/listener-class&gt;<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>
@@ -746,7 +766,15 @@ window.location = url;
 <br>
 <br>
 <br>
+<br>
+<br>
+<br>
+<br>
 &lt;servlet-name&gt;TuscanyServlet&lt;/servlet-name&gt;<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>
@@ -754,7 +782,15 @@ window.location = url;
 <br>
 <br>
 <br>
+<br>
+<br>
+<br>
+<br>
 &lt;servlet-class&gt;org.apache.tuscany.runtime.webapp.TuscanyServlet&lt;/servlet-class&gt;<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>
@@ -774,7 +810,15 @@ window.location = url;
 <br>
 <br>
 <br>
+<br>
+<br>
+<br>
+<br>
 &lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanySessionListener&lt;/listener-class&gt;<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>
@@ -824,21 +868,23 @@ window.location = url;
   example of this follows:<br>
   <pre>
  <code>&lt;dbsdo:import.sdo xmlns:dbsdo="http://incubator.apache.org/tuscany/xmlns/databinding/sdo/1.0-incubator-M2" <br>
- factory="com.bigbank.account.AccountFactory"/&gt; <br>
-<br></code>
+<br>
+factory="com.bigbank.account.AccountFactory"/&gt; <br>
+<br>
+<br></code><br>
 </pre>
 
-  <h4>Code</h4>The Java code  for the most part just implements the
+  <h4>Code</h4>The Java code for the most part just implements the
   Web interface and the SCA components necessary to implement the
   business logic. The code uses Java 5.0 annotations as documented
-  by the  <a href=
+  by the <a href=
   "http://www.osoa.org/download/attachments/35/SCA_ClientAndImplementationModelforJava_v0.95.pdf?version=3"
   target="_blank">SCA Client and Implementation Model for Java
-  (V0.95)</a> specifications.  The samples uses one annotation that
+  (V0.95)</a> specifications. The samples uses one annotation that
   is an Tuscany extension that is used by the databinding framework
   to identify that the components expect to SDO s for complex data
   types. An example of this is seen in the AccountService interface
-  which has the  <code style=
+  which has the <code style=
   "font-weight: bold;">@DataType(name="commonj.sdo.DataObject")</code>
   annotation.
 
