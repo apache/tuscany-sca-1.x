@@ -33,13 +33,13 @@
         <dependency>
             <groupId>org.apache.tuscany.samples.sca</groupId>
             <artifactId>sample-calculator</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca.runtime</groupId>
             <artifactId>webapp</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
         </dependency>
     </dependencies>
     <build>

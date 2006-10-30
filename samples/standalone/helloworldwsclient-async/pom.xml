@@ -36,7 +36,7 @@
         <dependency>
             <groupId>commonj</groupId>
             <artifactId>sdo-api-r2.0.1</artifactId>
-            <version>${scaVersion}</version>
+            <version>${sdoVersion}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -48,40 +48,40 @@
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
             <artifactId>tuscany-api</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>provided</scope> 
         </dependency>    
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
             <artifactId>core</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.services.bindings</groupId>
             <artifactId>axis2</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>test</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca.services.databinding</groupId>
             <artifactId>databinding-sdo</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca.services.databinding</groupId>
             <artifactId>databinding-axiom</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>test</scope>
         </dependency>
                         

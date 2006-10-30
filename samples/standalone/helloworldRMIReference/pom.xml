@@ -41,7 +41,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca.services.bindings</groupId>
             <artifactId>rmi</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

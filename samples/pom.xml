@@ -32,7 +32,8 @@
     <description>Parent POM for SCA Samples.</description>
 
     <properties>
-        <scaVersion>1.0-incubator-M2-SNAPSHOT</scaVersion>
+        <scaVersion>1.0-incubator-M2</scaVersion>
+        <scaImplVersion>1.0-incubator-M2-SNAPSHOT</scaImplVersion>
         <sdoVersion>1.0-incubator-M2</sdoVersion>
         <dasVersion>1.0-incubator-M2-SNAPSHOT</dasVersion>
         <specVersion>0.95</specVersion>

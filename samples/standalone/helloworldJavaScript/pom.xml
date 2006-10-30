@@ -32,16 +32,18 @@
     <dependencies>
         <dependency>
             <groupId>org.osoa</groupId>
-            <artifactId>sca-api-r0.95</artifactId>
+            <artifactId>sca-api-r${specVersion}</artifactId>
+            <version>${scaVersion}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
+            <version>${scaImplVersion}</version>
             <artifactId>test</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.services.containers</groupId>
             <artifactId>javascript</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

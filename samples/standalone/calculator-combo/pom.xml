@@ -39,37 +39,37 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>test</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.services.bindings</groupId>
             <artifactId>rmi</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.services.databinding</groupId>
             <artifactId>databinding-sdo</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.services.containers</groupId>
             <artifactId>javascript</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>provided</scope>
         </dependency>
        <dependency>
             <groupId>org.apache.tuscany.sca.services.containers</groupId>
             <artifactId>ruby</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>provided</scope>
         </dependency> 
         <dependency>
             <groupId>org.apache.tuscany.sca.services.bindings</groupId>
             <artifactId>axis2</artifactId>
-            <version>${scaVersion}</version>
+            <version>${scaImplVersion}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
