@@ -57,7 +57,7 @@
                         <artifactItem>
                             <groupId>org.apache.tuscany.sca</groupId>
                             <artifactId>distribution</artifactId>
-                            <version>${scaVersion}</version>
+                            <version>${scaImplVersion}</version>
                             <classifier>bin</classifier>
                             <type>zip</type>
                         </artifactItem>
@@ -87,7 +87,7 @@
             <dependency>
                 <groupId>org.apache.tuscany.sca</groupId>
                 <artifactId>test</artifactId>
-                <version>${scaVersion}</version>
+                <version>${scaImplVersion}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
