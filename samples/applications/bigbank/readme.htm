@@ -889,6 +889,33 @@ factory="com.bigbank.account.AccountFactory"/&gt; <br>
   annotation.
 
   <h3><a name="DAS_" id="DAS_"></a><span style=
-  "font-family: monospace;">DAS</span></h3>
+  "font-family: monospace;">RDB DAS</span></h3>
+
+   The Relational Database DAS (RDB DAS) is used in this sample to access relational data in terms
+   of SDOs.  All the code pertaining to this usage is contained to two one files: 
+   AccountDataServiceDASImpl.java and DasAccountConfiguration.xml.  The java file provides code that 
+   instantiates and invokes the DAS and the XML file provides RDB DAS configuration.
+
+   <br>The sample demonstrates a few of the RDB DAS capabilities including:
+
+   <ul>
+
+   <li>reading a graph of SDOs based on a select query provided inline </li>
+   <li>reading a graph of SDOs based on a named select query defined in the config file </li>
+   <li>executing a named command to manually insert data</li>
+   <li>leveraging SDO Change Summary to by utilizing the DAS "applyChanges" method to flush graph modifications </li>
+   <li>utilizing the DAS column-converter framework </li>
+   <li>using the column/property name mapping (aliasing)</li>
+
+   </ul>
+
+   This sample does not currently demonstrate a few other key DAS features including Object relationships, optimistic 
+   concurrency control, and the use of convention over configuration.  User level documentation for the RDB DAS can
+   be found in the <a href=
+  "http://wiki.apache.org/ws/Tuscany/TuscanyJava/DAS_Java_Overview/RDBDAS_Java_User_Guide"target="_blank">RDBDAS User's Guide</a>.
+
+   <br><br>
+   This sample uses the RDB DAS as a utility.  A future version of this sample will access the DAS as an SCA service.
+
 </body>
 </html>
