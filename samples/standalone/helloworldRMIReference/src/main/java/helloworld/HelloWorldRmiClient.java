@@ -36,7 +36,9 @@ public class HelloWorldRmiClient {
                         
             CompositeContext context = CurrentCompositeContext.getContext();
             HelloWorldService helloWorldService = context.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
+            System.out.println("***********************************************************");
             System.out.println(helloWorldService.sayHello("SCA RMI Client"));
+            System.out.println("***********************************************************");
         } catch ( Exception e ) {
             e.printStackTrace();
         }
