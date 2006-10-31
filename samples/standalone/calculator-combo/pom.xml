@@ -74,7 +74,7 @@
         </dependency>
     </dependencies>
     <build>
-        <defaultGoal>install</defaultGoal>
+        <defaultGoal>package</defaultGoal>
         <finalName>${artifactId}</finalName>
         <plugins>
             <plugin>

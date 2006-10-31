@@ -101,7 +101,7 @@
     </dependencies>
 
     <build>
-        <defaultGoal>install</defaultGoal>
+        <defaultGoal>package</defaultGoal>
         <finalName>sample-helloworldws</finalName>
         <plugins>
             <plugin>

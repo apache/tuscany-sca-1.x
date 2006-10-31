@@ -78,7 +78,7 @@
     </dependencies>
     
     <build>
-        <defaultGoal>install</defaultGoal>
+        <defaultGoal>package</defaultGoal>
         <finalName>sample-helloworldws-async-1.0-incubator-M2-SNAPSHOT</finalName>
         <plugins>
             <plugin>
