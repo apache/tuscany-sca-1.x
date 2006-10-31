@@ -29,6 +29,7 @@ public class HelloWorldImpl implements HelloWorldService
 
     public String sayHello(String name)  
     {
+    	System.out.println("Saying hello to - " + name);
         return "Hello " + name + " - from the SCA RMI Service";
     }
 }

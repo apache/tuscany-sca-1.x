@@ -26,10 +26,14 @@ public class HelloWorldRmiServer {
     
     public static void main(String[] args) {
         try {
-            System.out.println("Service Started and Running...");
+        	System.out.println("***********************************************************");
+            System.out.println("Helloworld RMI Service Started and Running...");
+            System.out.println("***********************************************************");
             System.out.println("Hit ENTER to exit");
             System.in.read();
+            System.out.println("***********************************************************");
             System.out.println("Server Stopped!");
+            System.out.println("***********************************************************");
             System.exit(0);
         } catch ( Exception e ) {
             e.printStackTrace();

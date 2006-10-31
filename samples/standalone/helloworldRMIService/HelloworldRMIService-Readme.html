@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><!--  * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.    
+  -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><meta http-equiv="Content-Style-Type" content="text/css"><title>Tuscany
+Hello World Web Service Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven -->
+<style type="text/css" media="all">
+@import url("../../../../css/maven-base.css");
+@import url("../../../../css/maven-theme.css");
+@import url("../../../../css/site.css");
+</style><link rel="stylesheet" href="./css/print.css" type="text/css" media="print"><!-- end maven --></head>
+<body>
+<H1>Tuscany HelloWorld - RMI Service Sample</H1>
+<H2>Overview</H2>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD width="100%" valign="top" align="left">The RMI Service sample demonstrates how the Tuscany Runtime can be used to host service components as RMI Services without the need to make any modifications to the service interfaces.</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<H2>Location</H2>
+<P>The source for this sample is located &nbsp;in the paths - <I>samples/standalone/helloworldRMIService</I> <I></I>
+ of the source
+distribution.<BR>
+<BR>If there is binary distribution available for these samples, then you may find these samples packaged as <I>sample-helloworld-rmiService.jar.</I></P>
+<H2>Building &amp; Running the HelloWorldRMIService Sample Source</H2>
+<P>If you are working with a source distribution, then you must first build the source of this sample. <BR>- Ensure that you have Java 5 installed on your system.<BR>- Next, you must have Maven 2.0.4 installed on your system. Look up
+http://maven.apache.org/download.html for downloading and installing
+Maven.</P>
+<H3>Building the HelloWorldRMIService Sample</H3>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD valign="top"></TD>
+			<TD valign="top">Having installed Maven, open a command line console and switch over to the directory on your local
+system, where you have extracted the source.<BR>- 
+			  Now switch futher into
+the subdirectory <I>samples/standalone/helloworldRMIService. </I>Within
+this directory execute the following command<TABLE border="0">
+				<TBODY>
+					<TR>
+						<TD><FONT color="purple">&gt;</FONT></TD>
+						<TD><FONT color="purple" face="Courier New">mvn install</FONT></TD>
+					</TR>
+				</TBODY>
+			</TABLE>This will build the <I>helloworldRMIService</I> sample, package a JAR file for the composite and install it in your local maven repository for use by other samples..</TD>
+			<TD></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<H3>Setting up Tuscany Standalone Runtime </H3>
+<P>To run these samples you need the Tuscany Standalone Runtime. This is
+available as a distribution that can be conveniently unpacked and setup
+in the samples directory itself. For this, do the following: -</P>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD valign="top" align="right">i) </TD>
+			<TD>From the directory <I>samples/standalone/helloworldRMIService</I>
+ execute the following command<TABLE border="0">
+				<TBODY>
+					<TR>
+						<TD><FONT color="purple">&gt;</FONT></TD>
+						<TD><FONT color="purple" face="Courier New">mvn dependency:unpack</FONT></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			This will unpack the Tuscany Standalone Runtime Distribution to the <I>target/distribution </I>sub-directory within the present working directory - <I>samples/standalone/helloworldRMIService</I></TD>
+		</TR>
+		<TR>
+			<TD valign="top">ii)</TD>
+			<TD>Since this sample would require the RMI Binding Extension of Tuscany you must copy the RMI Extension JAR from the <I>contrib </I>sub-directory into the <I>extensions </I>directory of the distribution. ie. execute the following from the 
+			<I>samples/standalone/helloworldRMIService </I>sub-directory: -
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TD valign="top"><FONT color="purple">&gt;</FONT></TD>
+						<TD><FONT color="purple" face="Courier New">copy target/distribution/contrib/rmi-1.0-incubator-M2.jar <FONT
+							color="purple" face="Courier New">target/distribution/extensions/rmi-1.0-incubator-M2.jar</FONT></FONT></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			<I>Note</I> :  <I>If you are working with SNAPSHOTs versions of
+			Tuscany Extensions then the file <B>rmi-1.0-incubator-M2.jar</B> in
+			the above command must be substituted with <B>rmi-1.0-incubator-M2-SNAPSHOT.jar</B></I></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<H3><BR>
+Running the HelloWorldRMIService Sample</H3>
+<P>Now that the sample source has been built and the Tuscany Standalone Runtime setup, you may run the HelloWorldRMIService sample as follows: -</P>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD valign="top">i) </TD>
+			<TD>Switch to the <I>samples/standalone/helloworldRMIService/target/distribution </I>sub-directory and execute the following command: <TABLE>
+				<TBODY>
+					<TR>
+						<TD><FONT color="purple">&gt;</FONT></TD>
+						<TD><FONT color="purple" face="Courier New">java -jar bin\launcher.jar ..\sample-helloworld-rmiService.jar</FONT></TD>
+					</TR>
+				</TBODY>
+			</TABLE></TD>
+		</TR>
+		<TR>
+			<TD valign="top">ii)</TD>
+			<TD>You will initially observe messages that relate to resolution of dependencies required to run this sample and finlly see the following message on your console<BR>
+			<FONT face="Courier New" color="green">***********************************************************<BR>
+			Helloworld RMI Service Started and Running...<BR>
+			***********************************************************<BR>
+			Hit ENTER to exit</FONT><FONT color="green"></FONT></TD>
+		</TR>
+		<TR>
+			<TD valign="top">iii)</TD>
+			<TD>This message indicates that the HelloWorldRMIServer has been successfully started and is running. </TD>
+		</TR>
+		<TR>
+			<TD valign="top">iv)</TD>
+			<TD>For every client invocation, you will see a message <FONT
+				color="green">&quot;Saying Hello to - &lt;name&gt;&quot;</FONT> that is displayed</TD>
+		</TR>
+		<TR>
+			<TD valign="top">v)</TD>
+			<TD>Pressing the 'Enter' key will stop the RMI Server and the Tuscany Standalone Runtime, ending this sample with the following message<BR>
+			<FONT color="green" face="Courier New">***********************************************************<BR>
+			Server Stopped!<BR>
+			*********************************************************** </FONT></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<H3><BR>
+Trying the HelloWorldRMIService Sample</H3>
+<P>With the HelloWorldRMIService started up and running you may try it out by writing your own RMI Client that can invoke the HelloWorldRMIService. The details of the  hostname, port and server name which your client should look up is as follows: -</P>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD align="right">host =</TD>
+			<TD>&quot;localhost&quot;</TD>
+		</TR>
+		<TR>
+			<TD align="right">port =</TD>
+			<TD>&quot;1099&quot;</TD>
+		</TR>
+		<TR>
+			<TD align="right">server name =</TD>
+			<TD>&quot;HelloWorldRemoteService&quot;</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<P><I>Note: You are free to modify any of the above (host, port, server
+name) by making corresponding modifications to the default.scdl file of
+the HelloWorldRMIService sample and then running this sample.</I></P>
+<P><B><I><FONT color="maroon" size="+1">Note : You may also try the HelloWorldRMIService
+Sample by running the HelloWorldRMIReference Sample.</FONT></I></B><BR>
+</P><H2>Code Overview</H2>
+The source files are physically organized as shown below:<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td>
+<pre>
+<B><U>RMI Service Sample</U></B>
++---main<br>    +---java<br>    |   +---helloworld
+                       HelloWorldService.java
+                       HelloWorldImpl.java
+                       HelloWorldRmiServer.java
+    +---resources
+        +----META-INF
+             +----sca
+                     default.scdl</pre></td></tr></tbody></table>
+<B> <BR>RMI Service Sample</B>
+<TABLE border="1">
+	<TBODY>
+		<TR>
+			<TD width="230" valign="top">default.scdl</TD>
+			<TD width="396" valign="top">Defines the assembly of the Helloworld Server Application with the  HelloWorldImpl component defined to be hosted as an RMI Service under the covers of the SCA Runtime. You will never notice any APIs in java.rmi.*</TD>
+		</TR>
+		<TR>
+			<TD width="230">HelloWorldService.java</TD>
+			<TD width="396">Defines a HelloWorld service interface</TD>
+		</TR>
+		<TR>
+			<TD width="230">HelloWorldImpl.java</TD>
+			<TD width="396">Implements the HelloWorldService interface</TD>
+		</TR>
+		<TR>
+			<TD width="230">HelloWorldRmiServer.java</TD>
+			<TD width="396">Launches the Standalone Tuscany Runtime with the RMI Server SCA Application loaded and running</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+
+<P></P></p></body></html>
