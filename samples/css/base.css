@@ -3,3 +3,8 @@
   body { margin: 0px;
     padding: 3px 0px 5px 20px;
     }
+
+  code { color: rgb(153, 51, 153);
+    font-weight: bold;
+    }
+
