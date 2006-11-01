@@ -1,11 +1,24 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-
+<!--
+    * Licensed to the Apache Software Foundation (ASF) under one
+    * or more contributor license agreements.  See the NOTICE file
+    * distributed with this work for additional information
+    * regarding copyright ownership.  The ASF licenses this file
+    * to you under the Apache License, Version 2.0 (the
+    * "License"); you may not use this file except in compliance
+    * with the License.  You may obtain a copy of the License at
+    *
+    *   http://www.apache.org/licenses/LICENSE-2.0
+    *
+    * Unless required by applicable law or agreed to in writing,
+    * software distributed under the License is distributed on an
+    * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    * KIND, either express or implied.  See the License for the
+    * specific language governing permissions and limitations
+    * under the License.
+-->
 <html>
 <head>
-  <meta content=
-  "HTML Tidy for Windows (vers 1st July 2004), see www.w3.org"
-  name="generator">
-  <!-- * Licensed to the Apache Software Foundation (ASF) under one * or more contributor license agreements. See the NOTICE file * distributed with this work for additional information * regarding copyright ownership. The ASF licenses this file * to you under the Apache License, Version 2.0 (the * "License"); you may not use this file except in compliance * with the License. You may obtain a copy of the License at * * http://www.apache.org/licenses/LICENSE-2.0 * * Unless required by applicable law or agreed to in writing, * software distributed under the License is distributed on an * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY * KIND, either express or implied. See the License for the * specific language governing permissions and limitations * under the License. --><!-- Copyright (c) 2005 The Apache Software Foundation or its licensors, as applicable. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
 <script type="text/javascript">
 function expandImage(img,height,width) {
 window.open(img,"Image","menubar=no,resizable=no,status=no,toolbar=no,location=no,height=" + height + ",width=" + width);
@@ -19,22 +32,16 @@ window.location = url;
   <meta http-equiv="Content-Style-Type" content="text/css">
 
   <title>Tuscany BigBank Sample Application</title>
+  <link rel="stylesheet" href="../../css/base.css" type="text/css">
 <style type="text/css" media="all">
-@import url("../../../../css/maven-base.css");
-@import url("../../../../css/maven-theme.css");
-@import url("../../../../css/site.css");
 </style>
-  <link rel="stylesheet" href="./css/print.css" type="text/css"
-  media="print">
 </head>
 
 <body>
-  <!-- LINK rel="stylesheet" href="ait.css" type="text/css" -->
-  <!-- maven --><!-- end maven -->
 
-  <h2>Tuscany BigBank Sample Application</h2>
+  <h3>Tuscany BigBank Sample Application</h3>
 
-  <h3>Overview</h3>
+  <h4>Overview</h4>
 
   <p>The Tuscany BigBank&nbsp;sample application&nbsp; shows using
   the Tuscany SCA runtime to build a&nbsp; financial application.
@@ -42,31 +49,34 @@ window.location = url;
   interface and account provides the back-end business services.
   These are deployed as separate web applications</p>
 
-  <h3>Location</h3>This sample is located&nbsp;in the&nbsp;
+  <h4>Location</h4>
+  <p>This sample is located&nbsp;in the&nbsp;
   <a href=".">sampleapps\bigbank</a> directory. There are two
   subdirectories in that for the two modules <a href="account"
   target="_blank">account</a> and <a href="webclient" target=
-  "_blank">webclient.</a>
+  "_blank">webclient.</a></p>
 
-  <h3>Setup</h3>If you have enabled remote deployment in Tomcat by
+  <h4>Setup</h4>
+  <p>If you have enabled remote deployment in Tomcat by
   adding the line:<br>
   <code>&nbsp; &lt;user username="admin" password=""
   roles="manager"/&gt;</code><br>
   into&nbsp; <span style="font-style: italic;">&lt;tomcat
   dir&gt;</span>\conf\tomcat-users.xml&nbsp; you can deploy the
   WARs to Tomcat using the tomcat-maven-plugin:<br>
-  <code>mvn tomcat:deploy</code><br>
-  <br>
-  Alternatively you can copy the WAR files to Tomcat's&nbsp;
+  <code>mvn tomcat:deploy</code></p>
+  <p>Alternatively you can copy the WAR files to Tomcat's&nbsp;
   webapps directory.<br>
-  copy account/target/sample-bigbank-account.war <span style=
-  "font-style: italic;">&lt;tomcat dir&gt;</span>/webapps/.<br>
-  copy&nbsp;
+  
+  <code>copy account/target/sample-bigbank-account.war <span style=
+  "font-style: italic;">&lt;tomcat dir&gt;</span>/webapps/</code><br>
+  <code>copy&nbsp;
   webclient/target/sample-bigbank-webclient.war&nbsp;<span style=
-  "font-style: italic;">&lt;tomcat dir&gt;</span>/webapps/.<br>
-  <br>
+  "font-style: italic;">&lt;tomcat dir&gt;</span>/webapps/</code><br>
+  </p>
 
-  <h3>Running</h3>Once you've started your web server, use your web
+  <h4>Running</h4>
+  <p>Once you've started your web server, use your web
   browser to view the following URL <a href=
   "http://localhost:8080/sample-bigbank-webclient/" target=
   "_blank">http://localhost:8080/sample-bigbank-webclient/</a><br>
@@ -78,7 +88,7 @@ window.location = url;
   you can &nbsp;create a new account.<br>
   The demo is first configured to use a local mock stock quote
   service that returns random stock data. &nbsp;If you want to use
-  an actual stock quote provider follow these steps:<br>
+  an actual stock quote provider follow these steps:</p>
 
   <ul>
     <li>Stop your server by issuing in the&nbsp; <span style=
@@ -115,12 +125,13 @@ window.location = url;
     &nbsp;</span> command to start up the server in the
     <span style="font-style: italic;">&lt;tomcat dir&gt;</span>\bin
     directory<span style="font-weight: bold;">.</span></li>
-  </ul>The sample should now be using the real stock quote
-  provider.&nbsp;<br>
+  </ul>
+  <p>The sample should now be using the real stock quote
+  provider.&nbsp;</p>
 
-  <h3>Overview</h3>This example illustrates using Tuscany runtime
+  <h4>Summary</h4><p>This example illustrates using Tuscany runtime
   in building a financial Web application&nbsp;using SCA programing
-  model. &nbsp;The following key concepts are covered:
+  model. &nbsp;The following key concepts are covered:</p>
 
   <ul>
     <li><b><i>Component implementations</i></b>. that provide web
@@ -157,7 +168,7 @@ window.location = url;
 
     <li style="text-align: left;">The use of &nbsp;existing Web
     services in&nbsp; SCA.</li>
-  </ul>BigBank sample provides the following user services: account
+  </ul><p>BigBank sample provides the following user services: account
   balance,&nbsp;making deposits and withdrawals&nbsp; to purchase
   and sell stock, and to view current stock value.<br>
   The sample is organized into two SCA modules: webclient and
@@ -166,7 +177,7 @@ window.location = url;
   retrieve and store user information, account information, current
   stock information and the purchasing and selling of stock. The
   two modules interact via web services through SCA references and
-  services.<br>
+  services.</p>
   <br>
 
   <div style="text-align: center;">
@@ -174,7 +185,7 @@ window.location = url;
     "Overview of modules." title="Overview of modules." src=
     "docs/modualoverview.png" align="middle">
 
-    <h4>Webclient</h4><br>
+    <h5>Webclient</h5><br>
     <a href=
     "javascript:expandImage('docs/Show.Image.html?url=webclientmodule.png',1000,1100)">
     <img style="width: 300px; height: 200px;" alt="Webclient files"
@@ -422,7 +433,7 @@ window.location = url;
 
     <p>&nbsp;</p><!-- account -->
 
-    <h4>Account</h4><br>
+    <h5>Account</h5><br>
     <a href=
     "javascript:expandImage('docs/Show.Image.html?url=accountmodule.png',830,1400)">
     <img style="width: 300px; height: 200px;" alt="Account module"
@@ -650,17 +661,20 @@ window.location = url;
   </div><br>
   <br>
 
-  <h3><a name="Building" id="Building"></a>Building</h3>This sample
+  <h4><a name="Building" id="Building"></a>Building</h4>
+  <p>This sample
   can be built from the bigbank directory using Maven 2.0.4 with
-  the following command:<br>
-  <code>&nbsp;mvn package<br>
-  <br></code>
+  the following command:</p>
+  <p>
+  <code>&nbsp;mvn<br></code>
+  </p>
 
-  <h4><a name="pom.xml" id="pom.xml"></a>Pom.xml</h4>The directions
+  <h5><a name="pom.xml" id="pom.xml"></a>Pom.xml</h5>
+  <p>The directions
   for maven&nbsp; how&nbsp; to build the each module is located in
   each module's directory in the&nbsp;pom.xml file. &nbsp;The
   application uses Java 1.5 and thus in the build &nbsp;plugin
-  section needs the following compiler directives:<br>
+  section needs the following compiler directives:</p>
   &nbsp;&nbsp;<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &lt;plugin&gt;<br>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -681,31 +695,28 @@ window.location = url;
   &lt;/configuration&gt;<br>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &lt;/plugin&gt;</code><br>
-  Both webclient and account uses three maven
+  <p>Both webclient and account uses three maven
   plugins:&nbsp;<code style=
   "font-weight: bold;">tuscany-sdo-plugin</code>,&nbsp;<code style=
   "font-weight: bold;">tuscany-plugin-wsdl2java</code>,
   and&nbsp;<code style=
   "font-weight: bold;">tuscany-war-plugin</code>.
   The&nbsp;tuscany-sdo-plugin is provided by Tuscany 's SDO project
-  while the other two are provided by the Tuscany SCA project.<br>
-  <br>
-  The <code style="font-weight: bold;"><a name="tuscany-sdo-plugin"
+  while the other two are provided by the Tuscany SCA project.</p>
+  <p>The <code style="font-weight: bold;"><a name="tuscany-sdo-plugin"
   id="tuscany-sdo-plugin"></a>tuscany-sdo-plugin</code>
   &nbsp;references the WSDL's schema and generates all the files
   located in target/sdo_source directory. &nbsp;The application
   uses these classes as a databinding instead of having to deal
   directly with XML that &nbsp;represents form as defined in the
-  WSDL's schema.<br>
-  <br>
-  The <code style="font-weight: bold;"><a name=
+  WSDL's schema.</p>
+  <p>The <code style="font-weight: bold;"><a name=
   "tuscany-plugin-wsdl2java" id=
   "tuscany-plugin-wsdl2java"></a>tuscany-plugin-wsdl2java</code>
   plugin generates a Java interface in the target/wsdl2java-source
   directory that is used to define the inteface (prottype) in the
-  wsdl.<br>
-  <br>
-  The <code style="font-weight: bold;">tuscany-war-plugin</code> is
+  wsdl.</p>
+  <p>The <code style="font-weight: bold;">tuscany-war-plugin</code> is
   used to add both the Tuscany runtime and any Tuscany&nbsp;
   extensions required by the application in the war file.. Looking
   at the pom.xml and search for &nbsp;"<code style=
@@ -721,12 +732,12 @@ window.location = url;
   &nbsp;<br>
   <br>
 
-  <h3>Application</h3>
+  <h4>Application</h4>
 
-  <h4><a name="Web.xml" id="Web.xml"></a>Web.xml</h4>The web.xml
+  <h5><a name="Web.xml" id="Web.xml"></a>Web.xml</h5><p>The web.xml
   file in each module adds necessary "hooks" to initiate and
   maintain the Tuscany SCA runtime in a web application host.<br>
-  &nbsp;<br>
+  &nbsp;</p>
 
   <table style="text-align: left; width: 100%;" border="1"
   cellpadding="2" cellspacing="2">
@@ -735,21 +746,7 @@ window.location = url;
         <td>
           <pre>
 <small>&lt;listener&gt;<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 &lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanyContextListener&lt;/listener-class&gt;<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 &lt;/listener&gt;</small>
 </pre>
         </td>
@@ -763,37 +760,9 @@ window.location = url;
         <td>
           <pre>
 <small>&lt;servlet&gt;<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 &lt;servlet-name&gt;TuscanyServlet&lt;/servlet-name&gt;<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 &lt;display-name&gt;Tuscany Servlet&lt;/display-name&gt;<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 &lt;servlet-class&gt;org.apache.tuscany.runtime.webapp.TuscanyServlet&lt;/servlet-class&gt;<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 &lt;/servlet&gt;</small>
 </pre>
         </td>
@@ -807,21 +776,7 @@ window.location = url;
         <td>
           <pre>
 <small>&lt;listener&gt;<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 &lt;listener-class&gt;org.apache.tuscany.runtime.webapp.TuscanySessionListener&lt;/listener-class&gt;<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 &lt;/listener&gt;</small>
 </pre>
         </td>
@@ -830,7 +785,7 @@ window.location = url;
       </tr>
     </tbody>
   </table><br>
-  The web application can be run in offline or online when
+  <p>The web application can be run in offline or online when
   resolving dependencies required by the application or it's
   required extensions. This is configured in the web.xml with the
   context-param element with a parameter name <code><span style=
@@ -838,9 +793,10 @@ window.location = url;
   specified or set to true, dependencies are resolved by searching
   the local war repository, the local Maven repository, and remote
   repositories. If specified and set to false, the remote
-  repositories will not be searched.<br>
+  repositories will not be searched.</p>
 
-  <h4><a name="SCDL" id="SCDL"></a>SCDL</h4>Each module's SCA
+  <h5><a name="SCDL" id="SCDL"></a>SCDL</h5>
+  <p>Each module's SCA
   application SCDL is located in the web application&nbsp;
   WEB-INF/default.scdl file. &nbsp;This is the default location,
   but within the web.xml it is possible to override this with a
@@ -865,16 +821,14 @@ window.location = url;
   &nbsp;In the case of BigBank the factory is the class generated
   by the&nbsp;<code style=
   "font-weight: bold;">tuscany-sdo-plugin</code> maven plugin. An
-  example of this follows:<br>
+  example of this follows:</p>
   <pre>
- <code>&lt;dbsdo:import.sdo xmlns:dbsdo="http://incubator.apache.org/tuscany/xmlns/databinding/sdo/1.0-incubator-M2" <br>
-<br>
+ <code>&lt;dbsdo:import.sdo xmlns:dbsdo="http://incubator.apache.org/tuscany/xmlns/databinding/sdo/1.0-incubator-M2"
 factory="com.bigbank.account.AccountFactory"/&gt; <br>
-<br>
-<br></code><br>
+</code>
 </pre>
 
-  <h4>Code</h4>The Java code for the most part just implements the
+  <h5>Code</h5><p>The Java code for the most part just implements the
   Web interface and the SCA components necessary to implement the
   business logic. The code uses Java 5.0 annotations as documented
   by the <a href=
@@ -886,17 +840,17 @@ factory="com.bigbank.account.AccountFactory"/&gt; <br>
   types. An example of this is seen in the AccountService interface
   which has the <code style=
   "font-weight: bold;">@DataType(name="commonj.sdo.DataObject")</code>
-  annotation.
+  annotation.</p>
 
-  <h3><a name="DAS_" id="DAS_"></a><span style=
-  "font-family: monospace;">RDB DAS</span></h3>
+  <h4><a name="DAS_" id="DAS_"></a><span style=
+  "font-family: monospace;">RDB DAS</span></h4>
 
-   The Relational Database DAS (RDB DAS) is used in this sample to access relational data in terms
+   <p>The Relational Database DAS (RDB DAS) is used in this sample to access relational data in terms
    of SDOs.  All the code pertaining to this usage is contained to two one files: 
    AccountDataServiceDASImpl.java and DasAccountConfiguration.xml.  The java file provides code that 
-   instantiates and invokes the DAS and the XML file provides RDB DAS configuration.
+   instantiates and invokes the DAS and the XML file provides RDB DAS configuration.</p>
 
-   <br>The sample demonstrates a few of the RDB DAS capabilities including:
+   <p>The sample demonstrates a few of the RDB DAS capabilities including:</p>
 
    <ul>
 
@@ -909,13 +863,13 @@ factory="com.bigbank.account.AccountFactory"/&gt; <br>
 
    </ul>
 
-   This sample does not currently demonstrate a few other key DAS features including Object relationships, optimistic 
+   <p>This sample does not currently demonstrate a few other key DAS features including Object relationships, optimistic 
    concurrency control, and the use of convention over configuration.  User level documentation for the RDB DAS can
    be found in the <a href=
   "http://wiki.apache.org/ws/Tuscany/TuscanyJava/DAS_Java_Overview/RDBDAS_Java_User_Guide"target="_blank">RDBDAS User's Guide</a>.
-
-   <br><br>
-   This sample uses the RDB DAS as a utility.  A future version of this sample will access the DAS as an SCA service.
+  </p>
+   <p>This sample uses the RDB DAS as a utility.  A future version of this sample will access the DAS as an SCA service.
+   </p>
 
 </body>
 </html>
