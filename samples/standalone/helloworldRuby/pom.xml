@@ -33,17 +33,18 @@
         <dependency>
             <groupId>org.osoa</groupId>
             <artifactId>sca-api-r0.95</artifactId>
-            <version>1.0-incubator-M2</version>
+            <version>${scaVersion}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
+            <version>${scaImplVersion}</version>
             <artifactId>test</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.services.containers</groupId>
             <artifactId>ruby</artifactId>
-            <version>1.0-incubator-M2-SNAPSHOT</version>
-            <scope>compile</scope>
+            <version>${scaImplVersion}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
