@@ -30,13 +30,18 @@
 </head>
 
 <body>
-  <h3>Tuscany Greeter OneWay Webservice Client Sample</h3>
+  <h3>Tuscany Greeter One-Way Client Sample</h3>
 
   <h4>Overview</h4>
 
-  <p>This sample shows using the Tuscany SCA
-  runtime in a J2SE environment &nbsp;loading a component that
-  implements a one way web service call.</p>
+  <p>The Tuscany Greeter One-Way client sample shows using the Tuscany SCA
+  runtime in a J2SE environment &nbsp;loading a component client that
+  performs an asynchronous one-way web service call.
+  The client uses a one-way (asynchronous) interface
+  that is supported by the web services binding (binding.ws) that
+  it specifies. The component definition is given implicitly by
+  the Java code and the use of the <code>@OneWay</code> annotation.</p>
+  </p>
 
   <h4>Location</h4>
 
@@ -119,6 +124,6 @@
 
   <p>The sample when run should simply display to the standard
   output:<br>
-  <samp>Hello World</samp></p>
+  <samp>Hello John</samp></p>
 </body>
 </html>

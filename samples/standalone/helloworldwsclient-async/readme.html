@@ -34,9 +34,10 @@
 
   <h4>Overview</h4>
 
-  <p>The Tuscany helloworld sample shows using the Tuscany SCA
-  runtime in a J2SE environment &nbsp;loading a component that
-  implements asynchronous web service call.</p>
+  <p>The Tuscany helloworld sample shows using the Tuscany SCA runtime in a J2SE environment &nbsp;loading a component client that
+     performs an asynchronous web service call with callback. The client uses a bi-directional (asynchronous) interface
+     that is supported by the web services binding (binding.ws) that it specifies. The component definition is given 
+     implicitly by the Java code and the use of the <code>@Callback</code> annotation.</p>
 
   <h4>Location</h4>
 
@@ -73,7 +74,7 @@
 
   <p>This sample depends on the <a href=
   "../../webapp/helloworldws-async/readme.html" target=
-  "_blank">Tuscany Hello World WS sample</a> already running to
+  "_blank">Tuscany Hello World Async WS sample</a> already running to
   execute successfully</p>
 
   <p>Set up the Tuscany standalone runtime environment using the
@@ -125,6 +126,6 @@
 
   <p>The sample when run should simply display to the standard
   output:<br>
-  <samp>Hello World</samp></p>
+  <samp>Hello John</samp></p>
 </body>
 </html>
