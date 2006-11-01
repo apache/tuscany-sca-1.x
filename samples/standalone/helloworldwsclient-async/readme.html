@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><!--
+<!--
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -17,51 +17,114 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
   <meta http-equiv="Content-Style-Type" content="text/css">
 
-  
-  
-  <title>Tuscany Hello World Async Client Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><link rel="stylesheet" href="../../css/base.css" type="text/css"></head>
-
-
+  <title>Tuscany Hello World Async Client Sample</title>
+  <!-- LINK rel="stylesheet" href="ait.css" type="text/css" -->
+  <link rel="stylesheet" href="../../css/base.css" type="text/css">
+</head>
 
 <body>
-  <h2>Tuscany Hello World Async Client Sample</h2>
+  <h3>Tuscany Hello World Async Client Sample</h3>
 
-  <h3>Overview</h3>
+  <h4>Overview</h4>
 
   <p>The Tuscany helloworld sample shows using the Tuscany SCA
   runtime in a J2SE environment &nbsp;loading a component that
   implements asynchronous web service call.</p>
 
-  <h3>Location</h3>This sample is located &nbsp;in the
+  <h4>Location</h4>
+
+  <p>This sample is located &nbsp;in the
   samples\standalone\helloworldwsclient-async directory. All the
   following commands should be issued while working in the sample
-  directory.<br>
-  <br>
+  directory.</p>
 
-  <h3>Building</h3>Obtain &nbsp;<a href="http://java.sun.com/javase/downloads/index.jsp" target="_blank">JDK 5.0</a> and <a href="http://maven.apache.org/download.html" target="_blank">Maven
-  2.0.4</a> and set up according to their documentation.<br>
-  To build issue :<br>
-  <pre><code>mvn</code>
+  <h4>Prerequisites</h4>
+
+  <p>Obtain the following prerequisites and install according to
+  their documentation.</p>
+
+  <ul>
+    <li><a href="http://java.sun.com/javase/downloads/index.jsp"
+    target="_blank">JDK 5.0</a></li>
+
+    <li><a href="http://maven.apache.org/download.html" target=
+    "_blank">Maven 2.0.4</a></li>
+  </ul>
+
+  <h4>Building</h4>
+
+  <p>To build the sample&nbsp; issue :</p>
+  <pre>
+<code>mvn<br></code>
 </pre>
 
-  <h3>Setup</h3>This sample depends on the <a href="..%5C..%5Cwebapp%5Chelloworldws-async%5Creadme.html" target="_blank">Tuscany Hello World WS sample</a> already running to
-  execute successfully<br>
-  Set up the standalone runtime environment using the
-  following:<br>
-  <pre><code>mvn dependency:unpack </code>
+  <p>The result after executing is in the <span style=
+  "font-weight: bold;">target</span> subdirectory the <span style=
+  "font-weight: bold;">sample-helloworldwsclient-async-1.0-incubator-M2.jar</span></p>
+
+  <h4>Setup</h4>
+
+  <p>This sample depends on the <a href=
+  "../../webapp/helloworldws-async/readme.html" target=
+  "_blank">Tuscany Hello World WS sample</a> already running to
+  execute successfully</p>
+
+  <p>Set up the Tuscany standalone runtime environment using the
+  following command:</p>
+  <pre>
+<code>mvn dependency:unpack <br></code>
 </pre>
 
-  <h3>Running</h3>
-  <p>Execute the following command: (<span style="font-style: italic;">cut and paste to command line</span>)</p>
-  <pre><code>java -jar target\distribution\bin\launcher.jar target\sample-helloworldwsclient-async-1.0-incubator-M2.jar</code>
+  <p>After completion there should be a <span style=
+  "font-weight: bold;">target\distribution</span> subdirectory
+  created that has the Tuscany standalone runtime.</p>
+
+  <p>Each sample  can require one or more  Tuscany  runtime
+  extensions. For this sample copy from <span style=
+  "font-weight: bold;">target\distribution\contrib</span> to the
+  <span style=
+  "font-weight: bold;">target\distribution\extensions</span>
+  directory the following extensions:</p>
+
+  <table style="text-align: left;" class="extensiontable" border=
+  "1" cellpadding="2" cellspacing="2">
+    <tbody>
+      <tr>
+        <td class="extensiontable">axis2-1.0-incubator-M2.jar</td>
+
+        <td class="extensiontable" align="undefined" valign=
+        "undefined">Axis webservices binding</td>
+      </tr>
+
+      <tr>
+        <td class="extensiontable" align="undefined" valign=
+        "undefined">databinding-sdo-1.0-incubator-M2.jar</td>
+
+        <td class="extensiontable" align="undefined" valign=
+        "undefined">SDO data biinding.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>Running</h4>
+
+  <p>Execute the following command: (<span style=
+  "font-style: italic;">cut and paste to command line</span>)</p>
+  <pre>
+<code>java -jar target/distribution/bin/launcher.jar target/sample-helloworldwsclient-async-1.0-incubator-M2.jar</code>
 </pre>
 
-  <h3>Results</h3>
+  <h4>Results</h4>
 
   <p>The sample when run should simply display to the standard
   output:<br>
-  <code>Hello World</code></p>
-</body></html>
+  <samp>Hello World</samp></p>
+</body>
+</html>

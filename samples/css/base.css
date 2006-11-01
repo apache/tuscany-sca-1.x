@@ -8,8 +8,22 @@
     font-weight: bold;
     }
 
-  h2 { text-align: center;
+  h3 { text-align: center;
     text-decoration: underline;
     padding-bottom: 30px;
+    font-size: 150%;
+    }
+
+  p { padding-left: 1em;
+    }
+
+  pre { padding-left: 2em;
+    }
+
+  table.extensiontable { margin-left: 10em;
+    margin-right: 10em;
+    }
+
+  h4 { font-size: 110%;
     }
 

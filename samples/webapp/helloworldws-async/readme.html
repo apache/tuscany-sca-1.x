@@ -32,51 +32,79 @@
   <!-- LINK rel="stylesheet" href="ait.css" type="text/css" -->
   <!-- maven --><!-- end maven -->
 
-  <h2>Tuscany Hello World Async Sample</h2>
+  <h3>Tuscany Hello World Async Sample</h3>
 
-  <h3>Overview</h3>
+  <h4>Overview</h4>
 
   <p>The Tuscany Tuscany Hello World Aysnc sample application&nbsp;
   shows using the Tuscany SCA runtime in a web service application.
   The service is executed asynchronisely.</p>
 
-  <h3>Location</h3>This sample is located&nbsp;in the&nbsp;
-  <a href=".">samples\webapp\helloworldws-async</a>
-  directory.&nbsp;
+  <h4>Location</h4>
 
-  <h3>Building</h3>Obtain &nbsp;<a href=
-  "http://java.sun.com/javase/downloads/index.jsp" target=
-  "_blank">JDK 5.0</a> and <a href=
-  "http://maven.apache.org/download.html" target="_blank">Maven
-  2.0.4</a> and set up according to their documentation.<br>
-  To build issue :<br>
+  <p>This sample is located&nbsp;in the&nbsp; <a href=
+  ".">samples\webapp\helloworldws-async</a> directory. &nbsp;All
+  the following commands should be issued while working in the
+  sample directory.&nbsp;</p>
+
+  <h4>Prerequisites</h4>
+
+  <p>Obtain the following prerequisites and install according to
+  their documentation.</p>
+
+  <ul>
+    <li><a href="http://java.sun.com/javase/downloads/index.jsp"
+    target="_blank">JDK 5.0</a></li>
+
+    <li><a href="http://maven.apache.org/download.html" target=
+    "_blank">Maven 2.0.4</a></li>
+
+    <li><a href="http://tomcat.apache.org/download-55.cgi" target=
+    "_blank">Apache Tomcat 5.xx</a> latest version binary core
+    distribution.&nbsp;</li>
+  </ul>
+
+  <h4>Building</h4>
+
+  <p>To build the sample issue :</p>
   <pre>
-<code>mvn package</code><br>
+<code>mvn</code>
 </pre>
 
-  <h3>Setup</h3>Obtain <a href=
-  "http://tomcat.apache.org/download-55.cgi" target="_blank">Apache
-  Tomcat 5.xx</a> latest version binary core distribution. and
-  unpack.<br>
-  <br>
-  If you have enabled remote deployment in Tomcat by adding the
-  line:<br>
-  <code>  &lt;user username="admin" password=""
-  roles="manager"/&gt;</code><br>
-  into  <span style="font-style: italic;">&lt;tomcat
-  dir&gt;</span>\conf\tomcat-users.xml  you can deploy the WARs to
-  Tomcat using the tomcat-maven-plugin:<br>
-  <code>mvn tomcat:deploy</code><br>
-  <br>
-  Alternatively you can copy the WAR files to Tomcat's  webapps
-  directory.<br>
-  copy target/*.war <span style="font-style: italic;">&lt;tomcat
-  dir&gt;</span>/webapps/.<br>
+  <p>This should result in the creation of the war file
+  <span style="font-weight: bold;">target\sample-helloworldws-async-1.0-incubator-M2.war</span></p>
 
-  <h3>Running</h3>Once you've started your web server, following
-  the directions in <a href=
+  <h4>Setup</h4>
+
+  <p>If you have enabled remote deployment in Tomcat by adding the
+  line:</p>
+
+  <p><code>&lt;user username="admin" password=""
+  roles="manager"/&gt;</code></p>
+
+  <p>into <span style="font-style: italic;">&lt;tomcat
+  dir&gt;</span>\conf\tomcat-users.xml you can deploy the WARs to
+  Tomcat using the tomcat-maven-plugin:</p>
+
+  <p><code>mvn tomcat:deploy</code></p>
+
+  <p>Alternatively you can copy the WAR files to Tomcat's webapps
+  directory. Copy <span style=
+  "font-weight: bold;">target\sample-helloworldws-async-1.0-incubator-M2.war</span>
+  <span style="font-style: italic;">&lt;tomcat
+  dir&gt;</span>/webapps/.</p>
+
+  <h4>Running</h4>
+
+  <p>Start the tomcat server by issuing the following command ind
+  the <span style="font-style: italic;">&lt;tomcat
+  dir&gt;</span>\bin directory:</p>
+
+  <p><code>starup</code></p>
+
+  <p>Once you've started your web server, following the directions
+  in <a href=
   "../../standalone/helloworldwsclient-async/readme.html" target=
-  "_blank">client side demo</a> to execute the service.<br>
-  <br>
+  "_blank">client side demo</a> to execute the service.</p><br>
 </body>
 </html>
