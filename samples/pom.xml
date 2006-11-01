@@ -41,23 +41,24 @@
 
     <modules>
       <module>applications/bigbank</module>
-      <module>webapp/helloworldws-async</module>
-      <module>standalone/helloworldwsclient-async</module>
-      <module>standalone/helloworldJavaScript</module>
       <module>standalone/calculator</module>
       <module>standalone/calculator-combo</module>
       <module>standalone/calculatorRMIService</module>
       <module>standalone/greeterwsclient-oneway</module>
+      <module>standalone/helloworldJavaScript</module>
       <module>standalone/helloworldRMIReference</module>
       <module>standalone/helloworldRMIService</module>
       <module>standalone/helloworldRuby</module>
       <module>standalone/helloworldwsclient</module>
+      <module>standalone/helloworldwsclient-async</module>
       <module>standalone/inner.composite</module>
       <module>standalone/simplecallback</module>
       <module>standalone/supplychain</module>
       <module>webapp/calculatorws</module>
       <module>webapp/greeterws-oneway</module>
+      <module>webapp/helloworldjsonrpc</module>
       <module>webapp/helloworldws</module>
+      <module>webapp/helloworldws-async</module>
       <module>webapp/webapp</module>
     </modules>
 
