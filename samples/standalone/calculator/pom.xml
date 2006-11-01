@@ -41,7 +41,7 @@
     </dependencies>
 
     <build>
-        <defaultGoal>package</defaultGoal>
+        <defaultGoal>install</defaultGoal> <!-- requires install as this sample is also used by the webapp sample -->
         <finalName>${artifactId}</finalName>
         <plugins>
             <plugin>
