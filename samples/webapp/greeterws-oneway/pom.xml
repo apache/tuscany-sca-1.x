@@ -55,7 +55,7 @@
     </dependencies>
     
     <build>
-        <finalName>sample-greeterws-oneway-1.0-incubator-M2-SNAPSHOT</finalName>
+        <finalName>sample-greeterws-oneway-1.0-incubator-M2</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.tuscany.sca.plugins</groupId>

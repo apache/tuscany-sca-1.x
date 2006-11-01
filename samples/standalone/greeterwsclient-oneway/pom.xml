@@ -86,6 +86,7 @@
     </dependencies>
     
      <build>
+        <finalName>sample-greeterwsclient-oneway-1.0-incubator-M2</finalName>
         <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
