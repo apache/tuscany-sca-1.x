@@ -68,11 +68,36 @@ window.location = url;
   <p>Alternatively you can copy the WAR files to Tomcat's&nbsp;
   webapps directory.<br>
   
-  <code>copy account/target/sample-bigbank-account.war <span style=
-  "font-style: italic;">&lt;tomcat dir&gt;</span>/webapps/</code><br>
+  <code>copy account\target\sample-bigbank-account.war <span style=
+  "font-style: italic;">&lt;tomcat dir&gt;</span>\webapps</code><br>
   <code>copy&nbsp;
-  webclient/target/sample-bigbank-webclient.war&nbsp;<span style=
-  "font-style: italic;">&lt;tomcat dir&gt;</span>/webapps/</code><br>
+  webclient\target\sample-bigbank-webclient.war&nbsp;<span style=
+  "font-style: italic;">&lt;tomcat dir&gt;</span>\webapps</code><br>
+  </p>
+
+  <h4>Prerequisites</h4>
+
+  <p>Obtain the following prerequisites and install according to
+  their documentation.</p>
+
+  <ul>
+    <li><a href="http://java.sun.com/javase/downloads/index.jsp"
+    target="_blank">JDK 5.0</a></li>
+
+    <li><a href="http://maven.apache.org/download.html" target=
+    "_blank">Maven 2.0.4</a></li>
+
+    <li><a href="http://tomcat.apache.org/download-55.cgi" target=
+    "_blank">Apache Tomcat 5.xx</a> latest version binary core
+    distribution.&nbsp;</li>
+  </ul>
+
+  <h4><a name="Building" id="Building"></a>Building</h4>
+  <p>This sample
+  can be built from the bigbank directory using Maven 2.0.4 with
+  the following command:</p>
+  <p>
+  <code>&nbsp;mvn<br></code>
   </p>
 
   <h4>Running</h4>
@@ -661,13 +686,6 @@ window.location = url;
   </div><br>
   <br>
 
-  <h4><a name="Building" id="Building"></a>Building</h4>
-  <p>This sample
-  can be built from the bigbank directory using Maven 2.0.4 with
-  the following command:</p>
-  <p>
-  <code>&nbsp;mvn<br></code>
-  </p>
 
   <h5><a name="pom.xml" id="pom.xml"></a>Pom.xml</h5>
   <p>The directions
