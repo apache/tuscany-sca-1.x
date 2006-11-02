@@ -103,6 +103,7 @@
             <plugin>
                 <groupId>org.apache.tuscany.sca.plugins</groupId>
                 <artifactId>tuscany-war-plugin</artifactId>
+                <version>${scaImplVersion}</version>
                 <executions>
                     <execution>
                         <id>tuscany-war</id>
