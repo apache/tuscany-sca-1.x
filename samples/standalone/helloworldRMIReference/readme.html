@@ -17,15 +17,15 @@
  * under the License.    
   -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><meta http-equiv="Content-Style-Type" content="text/css"><title>Tuscany
-Hello World Web Service Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven -->
+Hello World RMI Reference Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven -->
 <style type="text/css" media="all">
 @import url("../../../../css/maven-base.css");
 @import url("../../../../css/maven-theme.css");
 @import url("../../../../css/site.css");
 </style><link rel="stylesheet" href="./css/print.css" type="text/css" media="print"><!-- end maven --></head>
 <body>
-<H1>Tuscany HelloWorld - RMI Reference Sample</H1>
-<H2>Overview</H2>
+<H3>Tuscany HelloWorld - RMI Reference Sample</H3>
+<H3>Overview</H3>
 <TABLE border="0">
 	<TBODY>
 		<TR>
@@ -33,17 +33,17 @@ Hello World Web Service Sample</title><!-- LINK rel="stylesheet" href="ait.css" 
 		</TR>
 	</TBODY>
 </TABLE>
-<H2>Location</H2>
-<P>The source for this sample is located &nbsp;in the paths - <I>samples/standalone/helloworldRMIReference</I> <I></I>
+<H3>Location</H3>
+<P>The source for this sample is located &nbsp;in the paths - <I>samples\standalone\helloworldRMIReference</I> <I></I>
  of the source
 distribution.<BR>
 <BR>If there is binary distribution available for these samples, then you may find these samples packaged as <I></I><I>sample-helloworld-rmiReference.jar.</I>
 </P>
-<H2>Building &amp; Running the HelloWorldRMIReference Sample Source</H2>
+<H3>Building &amp; Running the HelloWorldRMIReference Sample Source</H3>
 <P>If you are working with a source distribution, then you must first build the source of this sample. <BR>- Ensure that you have Java 5 installed on your system.<BR>- Next, you must have Maven 2.0.4 installed on your system. Look up
 http://maven.apache.org/download.html for downloading and installing
 Maven.</P>
-<H3>Building the HelloWorldRMIReference Sample</H3>
+<H4>Building the HelloWorldRMIReference Sample</H4>
 <TABLE border="0">
 	<TBODY>
 		<TR>
@@ -51,19 +51,19 @@ Maven.</P>
 			<TD valign="top">Having installed Maven, , open a command line console and switch over to the directory on your local
 system, where you have extracted the source.<BR>- 
 			Now switch futher into
-the subdirectory <I>samples/standalone/helloworldRMIReference. </I>In this directory execute the following command<TABLE border="0">
+the subdirectory <I>samples\standalone\helloworldRMIReference. </I>In this directory execute the following command<TABLE border="0">
 				<TBODY>
 					<TR>
 						<TD><FONT color="purple">&gt;</FONT></TD>
-						<TD><FONT color="purple" face="Courier New">mvn install</FONT></TD>
+						<TD><FONT color="purple" face="Courier New">mvn</FONT></TD>
 					</TR>
 				</TBODY>
-			</TABLE>This will build the <I>helloworldRMIReference</I> sample, package a JAR file for the composite and install it in your local maven repository for use by other samples..</TD>
+			</TABLE>This will build the <I>helloworldRMIReference</I> sample, package a JAR file for the composite and make this available in sub-directory <I>samples\standalone\helloworldRMIReference\target</I></TD>
 			<TD></TD>
 		</TR>
 	</TBODY>
 </TABLE>
-<H3>Setting up Tuscany Standalone Runtime </H3>
+<H4>Setting up Tuscany Standalone Runtime </H4>
 <P>To run these samples you need the Tuscany Standalone Runtime. This is
 available as a distribution that can be conveniently unpacked and setup
 in the samples directory itself. For this, do the following: -</P>
@@ -71,7 +71,7 @@ in the samples directory itself. For this, do the following: -</P>
 	<TBODY>
 		<TR>
 			<TD valign="top" align="right">i) </TD>
-			<TD>From the directory <I>samples/standalone/helloworldRMIReference</I>
+			<TD>From the directory <I>samples\standalone\helloworldRMIReference</I>
  execute the following command<TABLE border="0">
 				<TBODY>
 					<TR>
@@ -80,18 +80,18 @@ in the samples directory itself. For this, do the following: -</P>
 					</TR>
 				</TBODY>
 			</TABLE>
-			This will unpack the Tuscany Standalone Runtime Distribution to the <I>target/distribution </I>sub-directory within the present working directory - <I>samples/standalone/helloworldRMIReference</I></TD>
+			This will unpack the Tuscany Standalone Runtime Distribution to the <I>target\distribution </I>sub-directory within the present working directory - <I>samples\standalone\helloworldRMIReference</I></TD>
 		</TR>
 		<TR>
 			<TD valign="top">ii)</TD>
 			<TD>Since this sample would require the RMI Binding Extension of Tuscany you must copy the RMI Extension JAR from the <I>contrib </I>sub-directory into the <I>extensions </I>directory of the distribution. ie. execute the following from the 
-			<I>samples/standalone/helloworldRMIReference </I>sub-directory: -
+			<I>samples\standalone\helloworldRMIReference </I>sub-directory: -
 			<TABLE>
 				<TBODY>
 					<TR>
 						<TD valign="top"><FONT color="purple">&gt;</FONT></TD>
-						<TD><FONT color="purple" face="Courier New">copy target/distribution/contrib/rmi-1.0-incubator-M2.jar <FONT
-							color="purple" face="Courier New">target/distribution/extensions/rmi-1.0-incubator-M2.jar</FONT></FONT></TD>
+						<TD><FONT color="purple" face="Courier New">copy target\distribution\contrib\rmi-1.0-incubator-M2.jar <FONT
+							color="purple" face="Courier New">target\distribution\extensions\rmi-1.0-incubator-M2.jar</FONT></FONT></TD>
 					</TR>
 				</TBODY>
 			</TABLE>
@@ -101,8 +101,8 @@ in the samples directory itself. For this, do the following: -</P>
 		</TR>
 	</TBODY>
 </TABLE>
-<H3><BR>
-Running the HelloWorldRMIReference Sample</H3>
+<H4><BR>
+Running the HelloWorldRMIReference Sample</H4>
 <P>Now that the sample source has been built and the Tuscany Standalone Runtime setup, you may run the HelloWorldRMIReference sample as follows: -</P>
 <TABLE border="0">
 	<TBODY>
@@ -112,7 +112,7 @@ Running the HelloWorldRMIReference Sample</H3>
 		</TR>
 		<TR>
 			<TD valign="top">ii)</TD>
-			<TD>Switch to the <I>samples/standalone/helloworldRMIReference/target/distribution
+			<TD>Switch to the <I>samples\standalone\helloworldRMIReference\target\distribution
 			</I>sub-directory and execute the following command: <TABLE>
 				<TBODY>
 					<TR>
@@ -171,7 +171,7 @@ HelloWorldRMIReference Sample by creating your own RMI Server with the following
 default.scdl file of the HelloWorldRMIReference sample and then running this
 sample.</FONT></I></P>
 <P><B><I><FONT color="maroon" size="+1"></FONT></I></B>
-</P><H2>Code Overview</H2>
+</P><H3>Code Overview</H3>
 The source files are physically organized as shown below:<br>
 <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td>
 <pre>
@@ -183,8 +183,10 @@ The source files are physically organized as shown below:<br>
     +---resources
         +----META-INF
              +----sca
-                     default.scdl</pre></td></tr></tbody></table><P><BR>
-<B>RMI Reference Sample</B></P><TABLE border="1">
+                     default.scdl</pre></td></tr></tbody></table>
+<H4><BR>
+<B>RMI Reference Sample</B></H4>
+<TABLE border="1">
 	<TBODY>
 		<TR>
 			<TD width="230" valign="top">default.scdl</TD>
