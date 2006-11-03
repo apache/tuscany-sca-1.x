@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    * Licensed to the Apache Software Foundation (ASF) under one
+    * or more contributor license agreements.  See the NOTICE file
+    * distributed with this work for additional information
+    * regarding copyright ownership.  The ASF licenses this file
+    * to you under the Apache License, Version 2.0 (the
+    * "License"); you may not use this file except in compliance
+    * with the License.  You may obtain a copy of the License at
+    * 
+    *   http://www.apache.org/licenses/LICENSE-2.0
+    * 
+    * Unless required by applicable law or agreed to in writing,
+    * software distributed under the License is distributed on an
+    * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    * KIND, either express or implied.  See the License for the
+    * specific language governing permissions and limitations
+    * under the License.    
+-->
+<project name="project" default="install">
+
+    <property name="prefix" value="tuscany-incubator-M2"/>
+
+    <patternset id="exclusionList">
+        <exclude name="**/distribution" />
+        <exclude name="**/target" />
+        <exclude name="**/target/**/*" />
+        <exclude name="**/.svn" />
+        <exclude name="**/.svn/**/*" />
+        <exclude name="**/build" />
+        <exclude name="**/build/**/*" />
+        <exclude name="**/.settings/**/*" />
+        <exclude name="**/.classpath" />
+        <exclude name="**/.project" />
+        <exclude name="**/.wtpmodules" />
+        <exclude name="**/surefire*" />
+        <exclude name="**/cobertura.ser" />
+        <exclude name="**/bin/*" />
+        <exclude name="**/var/journal" />
+        <exclude name="**/build.out*" />
+        <exclude name="**/apache-tomcat-*.zip" />
+        <exclude name="**/apache-tomcat-*.tar.gz" />
+    </patternset>
+
+    <target name="install" depends="source, sample, javadoc" />
+
+    <target name="javadoc">
+
+	<delete dir="target/javadoc" quiet="true"/>
+
+        <unzip dest="target/javadoc/api">
+            <fileset dir="../kernel/api">
+                <include name="target/*javadoc.jar"/>
+            </fileset>
+        </unzip>
+        <unzip dest="target/javadoc/host-api">
+            <fileset dir="../kernel/host-api">
+                <include name="target/*javadoc.jar"/>
+            </fileset>
+        </unzip>
+        <unzip dest="target/javadoc/spi">
+            <fileset dir="../kernel/spi">
+                <include name="target/*javadoc.jar"/>
+            </fileset>
+        </unzip>
+
+        <zip destfile="target/${prefix}-javadoc.zip">
+            <zipfileset dir="target/javadoc" />
+        </zip>
+        <tar destfile="target/${prefix}-javadoc.tar" longfile="gnu">
+            <tarfileset dir="target/javadoc" />
+        </tar>
+        <gzip zipfile="target/${prefix}-javadoc.tar.gz" src="target/${prefix}-javadoc.tar" />
+	<delete file="target/${prefix}-javadoc.tar" />
+    </target>
+
+
+    <target name="source">
+
+        <zip destfile="target/${prefix}-src.zip">
+            <zipfileset dir="../..">
+                <patternset refid="exclusionList" />
+            </zipfileset>
+        </zip>
+        <tar destfile="target/${prefix}-src.tar" longfile="gnu">
+            <tarfileset dir="../..">
+                <patternset refid="exclusionList" />
+            </tarfileset>
+        </tar>
+        <gzip zipfile="target/${prefix}-src.tar.gz" src="target/${prefix}-src.tar" />
+	<delete file="target/${prefix}-src.tar" />
+
+    </target>
+
+    <target name="sample">
+
+        <zip destfile="target/${prefix}-sample-src.zip">
+            <zipfileset dir="../../samples">
+                <patternset refid="exclusionList" />
+            </zipfileset>
+        </zip>
+        <tar destfile="target/${prefix}-sample-src.tar" longfile="gnu">
+            <tarfileset dir="../../samples">
+                <patternset refid="exclusionList" />
+            </tarfileset>
+        </tar>
+        <gzip zipfile="target/${prefix}-sample-src.tar.gz" src="target/${prefix}-sample-src.tar" />
+	<delete file="target/${prefix}-sample-src.tar" />
+
+    </target>
+
+</project>
