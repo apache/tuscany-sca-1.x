@@ -35,7 +35,7 @@
         <scaVersion>1.0-incubator-M2</scaVersion>
         <scaImplVersion>1.0-incubator-M2-SNAPSHOT</scaImplVersion>
         <sdoVersion>1.0-incubator-M2</sdoVersion>
-        <dasVersion>1.0-incubator-M2-SNAPSHOT</dasVersion>
+        <dasVersion>1.0-incubator-M2</dasVersion>
         <specVersion>0.95</specVersion>
     </properties>
 
