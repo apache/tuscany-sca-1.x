@@ -19,7 +19,7 @@
 -->
 <project name="project" default="install">
 
-    <property name="prefix" value="tuscany-incubator-M2"/>
+    <property name="prefix" value="tuscany-sca-1.0-incubator-M2"/>
 
     <patternset id="exclusionList">
         <exclude name="**/distribution" />
@@ -65,10 +65,10 @@
         </unzip>
 
         <zip destfile="target/${prefix}-javadoc.zip">
-            <zipfileset dir="target/javadoc" />
+            <zipfileset dir="target/javadoc" prefix="javadoc"/>
         </zip>
         <tar destfile="target/${prefix}-javadoc.tar" longfile="gnu">
-            <tarfileset dir="target/javadoc" />
+            <tarfileset dir="target/javadoc" prefix="javadoc"/>
         </tar>
         <gzip zipfile="target/${prefix}-javadoc.tar.gz" src="target/${prefix}-javadoc.tar" />
 	<delete file="target/${prefix}-javadoc.tar" />
@@ -78,12 +78,12 @@
     <target name="source">
 
         <zip destfile="target/${prefix}-src.zip">
-            <zipfileset dir="../..">
+            <zipfileset dir="../.." prefix="src">
                 <patternset refid="exclusionList" />
             </zipfileset>
         </zip>
         <tar destfile="target/${prefix}-src.tar" longfile="gnu">
-            <tarfileset dir="../..">
+            <tarfileset dir="../.." prefix="src">
                 <patternset refid="exclusionList" />
             </tarfileset>
         </tar>
@@ -95,12 +95,12 @@
     <target name="sample">
 
         <zip destfile="target/${prefix}-sample-src.zip">
-            <zipfileset dir="../../samples">
+            <zipfileset dir="../../samples" prefix="samples">
                 <patternset refid="exclusionList" />
             </zipfileset>
         </zip>
         <tar destfile="target/${prefix}-sample-src.tar" longfile="gnu">
-            <tarfileset dir="../../samples">
+            <tarfileset dir="../../samples" prefix="samples">
                 <patternset refid="exclusionList" />
             </tarfileset>
         </tar>
