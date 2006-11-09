@@ -24,7 +24,6 @@ import org.apache.tuscany.api.annotation.DataType;
 import org.osoa.sca.annotations.Remotable;
 
 @Remotable
-@DataType(name = "commonj.sdo.DataObject")
 public interface LoginService {
 
     static final int SUCCESS = 1;

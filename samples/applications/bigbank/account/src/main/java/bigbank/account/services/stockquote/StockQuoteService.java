@@ -24,7 +24,6 @@ import java.util.Map;
 /**
  * This is the business interface of the HelloWorld service component.
  */
-// @DataType(name="commonj.sdo.DataObject")
 public interface StockQuoteService {
 
     public Map getQuotes(String[] symbols) throws RemoteException;
