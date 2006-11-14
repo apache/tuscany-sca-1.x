@@ -19,15 +19,16 @@
 -->
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><meta http-equiv="Content-Style-Type" content="text/css"><title>Tuscany
-Hello World Web Service Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven -->
+Calculator-Combo Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven -->
 <style type="text/css" media="all">
 @import url("../../../../css/maven-base.css");
 @import url("../../../../css/maven-theme.css");
 @import url("../../../../css/site.css");
 </style><link rel="stylesheet" href="./css/print.css" type="text/css" media="print"><!-- end maven --></head>
 <body>
-<H1>Tuscany Calculator-Combo - A Simple SCA Assembly involving Java, JavaScript, Ruby, RMI and WebServices</H1>
-<H2>Overview</H2>
+<H3>Tuscany Calculator-Combo - A Simple SCA Assembly involving Java,
+JavaScript, Ruby, RMI and WebServices</H3>
+<H3>Overview</H3>
 <TABLE border="0">
 	<TBODY>
 		<TR>
@@ -42,81 +43,166 @@ Hello World Web Service Sample</title><!-- LINK rel="stylesheet" href="ait.css" 
 		</TR>
 	</TBODY>
 </TABLE>
-<H2>Location</H2>
-<P>The samples are located in the following paths of the samples source distribution: -<BR> - Calculator WebService : &lt;source disb&gt;/samples/webapp/calculatorws<BR>- Calculator RMIService : &lt;source disb&gt;/samples/standalone/calculatorRMIService<BR>
-- Calculator Combo : &lt;source disb&gt;/samples/standalone/calculator-combo<BR>
-<BR>After you build the samples source the deployable units (jars / wars) for these can be found in the '<I>target' </I>directory of the respective projects as follows: <BR>- Calculator WebService : &lt;source disb&gt;/samples/webapp/calculatorws/target/sample-calculatorws.war<BR>
-- Calculator RMIService : &lt;source disb&gt;/samples/standalone/calculatorRMIService/target/sample-calculator-rmiService.jar<BR>
-- Calculator Combo : &lt;source disb&gt;/samples/standalone/calculator-combo/target/sample-calculator-combo.jar</P>
-<P>If there is a binary distribution of the samples available then you may just about lookup for these deployable units (jars / wars) in the distribution.<BR>
-</P><H2>Setup</H2>
-<P>1) Download the Tuscany SCA Standalone Host distribution. The standalone distribution comes in two forms: -<I>distribution-1.0-incubator-M2-bin.zip </I> and <I>distribution-1.0-incubator-M2-bin.tar.gz. </I>Choose the one that best suits your platform.<BR>
-<BR>2) Extract the contents of this archive file into a local directory say <I>&lt;tuscany
-samples&gt;</I>. This will create the following subdirectories with contents in each: -<BR>
-<I><BR>
-&lt;tuscany samples&gt;</I>/boot<I> <BR>&lt;tuscany samples&gt;</I>/bin<BR>
-<I>&lt;tuscany samples&gt;</I>/lib
-<BR><I>&lt;tuscany samples&gt;</I>/extensions<BR><I>&lt;tuscany samples&gt;</I>/contrib</P>
-<P>3) Since our Calculator-Combo sample requires the JavaScript, Ruby, Axis2, RMI extensions, copy the binary archives (jars) of these extesions into the &quot;<I>extensions&quot; </I>subdirectory. The binaries for these extensions are provided in the &quot;<I>contrib&quot; </I>sub-directory. Alternatively, if you have built the Tuscany Java SCA from a source distribution, then these binaries can be found in the &quot;<I>target&quot; </I>directories of the respective projects and also in the Local Maven Repository in the path <I>org/apache/tuscany/sca/services/bindings/* and <I>org/apache/tuscany/sca/services/containers/*.</I></I><BR>
-<BR>5) Create a sub-directory called 'calcCombo' under <I>&lt;tuscany
-samples&gt;</I> and copy the <I>sample-calculator-combo.jar</I> into this directory.<BR>
-<BR>6) Again, create another sub-directory called 'calcRmi' under <I>&lt;tuscany
-samples&gt;</I> and copy the <I>sample-calculator-rmiService.jar</I> into this directory.<BR>
-<BR>7) Install the Apache Tomcat Server (latest release) and copy the <I>sample-calculatorws.war</I> into the WebApps directory of the Tomcat Installation.</P><H2>Running</H2>
-<P>1) Start the Apache Tomcat Server and ensure that the Calculator WebService is deployed and is running.
+<H3>Location</H3>
+<P>The source for this sample is located &nbsp;in the paths -  <I>samples\standalone\calculator-combo</I>
+ of the source
+distribution.<BR>
+<BR>
+If there is binary distribution available for these samples, then you may find these samples packaged as <I>sample-calculator-combo.jar.</I></P>
+<H3>Building &amp; Running the Calculator-Combo Sample Source</H3>
+<P>If you are working with a source distribution, then you must first
+build the source of this sample. <BR>
+- Ensure that you have Java 5 installed on your system.<BR>
+- Next, you must have Maven 2.0.4 installed on your system. Look up
+http://maven.apache.org/download.html for downloading and installing
+Maven.</P>
+<H4>Building the Calculator-Combo Sample</H4>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD valign="top"></TD>
+			<TD valign="top">Having installed Maven, open a command line console
+			and switch over to the directory on your local system, where you have
+			extracted the source.<BR>
+			- Now switch futher into the subdirectory <I>samples\standalone\calcualtor-combo.
+			</I>Within this directory execute the following command
+			<TABLE border="0">
+				<TBODY>
+					<TR>
+						<TD><FONT color="purple">&gt;</FONT></TD>
+						<TD><FONT color="purple" face="Courier New">mvn</FONT></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			This will build the <I>calculator-combo</I> sample, package a JAR
+			file for the composite and make it available in the sub-directory <I>samples\standalone\calculator-combo/target</I></TD>
+			<TD></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<H4><BR>
+Setting up Tuscany Standalone Runtime </H4>
+<P>To run these samples you need the Tuscany Standalone Runtime. This is
+available as a distribution that can be conveniently unpacked and setup
+in the samples directory itself. For this, do the following: -</P>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD valign="top" align="right">i)</TD>
+			<TD>From the directory <I>samples\standalone\calculator-combo</I>
+			execute the following command
+			<TABLE border="0">
+				<TBODY>
+					<TR>
+						<TD><FONT color="purple">&gt;</FONT></TD>
+						<TD><FONT color="purple" face="Courier New">mvn dependency:unpack</FONT></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			This will unpack the Tuscany Standalone Runtime Distribution to the <I>target\distribution
+			</I>sub-directory within the present working directory - <I>samples\standalone\calculator-combo</I></TD>
+		</TR>
+		<TR>
+			<TD valign="top">ii)</TD>
+			<TD>This sample would require the following extensions of Tuscany : -<BR>RMI Binding Extension, JavaSCript Container Extension, Axis2 Binding Extension, Ruby Container Extension. <BR>The jar files of all of these extensions have to copied from the the <I>contrib </I>sub-directory
+			into the <I>extensions </I>directory of the distribution. ie. execute
+			the following from the <I>samples\standalone\calculator-combo </I>sub-directory:
+			-
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TD valign="top"><FONT color="purple">&gt;</FONT></TD>
+						<TD><FONT color="purple" face="Courier New">copy
+						target\distribution\contrib\rmi-1.0-incubator-M2.jar <FONT
+							color="purple" face="Courier New">target\distribution\extensions\rmi-1.0-incubator-M2.jar</FONT></FONT></TD>
+					</TR>
+					<TR>
+						<TD valign="top"><FONT color="purple">&gt;</FONT></TD><TD><FONT color="purple" face="Courier New">copy
+						target\distribution\contrib\axis2-1.0-incubator-M2.jar <FONT color="purple" face="Courier New">target\distribution\extensions\axis2-1.0-incubator-M2.jar</FONT></FONT></TD>
+						
+					</TR>
+					<TR>
+						<TD valign="top"><FONT color="purple">&gt;</FONT></TD><TD><FONT color="purple" face="Courier New">copy
+						target\distribution\contrib\javascript-1.0-incubator-M2.jar <FONT color="purple" face="Courier New">target\distribution\extensions\javascript-1.0-incubator-M2.jar</FONT></FONT></TD>
+						
+					</TR>
+					<TR>
+						<TD valign="top"><FONT color="purple">&gt;</FONT></TD><TD><FONT color="purple" face="Courier New">copy
+						target\distribution\contrib\ruby-1.0-incubator-M2.jar <FONT color="purple" face="Courier New">target\distribution\extensions\ruby-1.0-incubator-M2.jar</FONT></FONT></TD>
+						
+					</TR>
+					<TR>
+						<TD valign="top"><FONT color="purple">&gt;</FONT></TD>
+						<TD><FONT color="purple" face="Courier New">copy
+						target\distribution\contrib\databinding-sdo-1.0-incubator-M2.jar <FONT
+							color="purple" face="Courier New">target\distribution\extensions\databinding-sdo-1.0-incubator-M2.jar</FONT></FONT></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			<I>Note</I> : <I>If you are working with SNAPSHOTs versions of
+			Tuscany Extensions then the files in the above commands must be substituted with the corresponding SNAPSHOT versions. For example <B>rmi-1.0-incubator-M2.jar</B> in
+			the above command must be substituted with <B>rmi-1.0-incubator-M2-SNAPSHOT.jar</B></I></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<H4>Running the Calculator-Combo Sample
+</H4>
+<P>Now that the sample source has been built and the Tuscany Standalone
+Runtime setup, you may run the Calculator-Combo sample as follows: -</P>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD valign="top">i)</TD>
+			<TD>Ensure that the Calculator-RMIService Sample and the Calculator WebService samples are running. You can find them under <I>samples\standalone\calcualtorRMIService </I>and <I>samples\webapp\calcualtorws</I> directories of the samples source distribution respectively. Details pertaining to building and running these samples can be found in the respective readme.html files under each of them.</TD>
+		</TR>
+		<TR>
+			<TD valign="top">ii)</TD><TD>Switch to the <I>samples\standalone\calculator-combo\target\distribution
+			</I>sub-directory and execute the following command:
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TD><FONT color="purple">&gt;</FONT></TD>
+						<TD><FONT color="purple" face="Courier New">java -jar
+						bin\launcher.jar ..\sample-calculator-combo.jar</FONT></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			</TD>
+			
+		</TR>
+		<TR>
+			<TD valign="top">iii)</TD>
+			<TD>You will initially observe messages that relate to resolution of
+			dependencies required to run this sample and finlly see the following
+			message on your console<BR>
+			<FONT color="green" face="Courier New"></FONT><FONT
+				face="Courier New" color="green" size="+0">***************************************<BR>
+			Starting the Calculator Combo sample!!!<BR>
+			***************************************<BR>
+			Invoking Java Implementation ...<BR>
+			3 + 2 = 5.0<BR>
+			Invoking Ruby Implementation ...<BR>
+			3 - 2 = 1.0<BR>
+			Invoking over RMI Reference...<BR>
+			3 * 2 = 6.0<BR>
+			Invoking WebService Implementation ...<BR>
+			3 / 2 = 1.5<BR>
+			Invoking Scientific Calculator Composite Implementation ...<BR>
+			.....Invoking Java Implementation ...<BR>
+			.....Average of 1,2,3,4,5,6,7,8,9 = 5.0<BR>
+			.....Invoking JavaScript Implementation ...<BR>
+			.....Square Root of 81 = 9.0<BR>
+			.....Invoking Java Implementation configued for Property ...<BR>
+			.....Sine 90 Degrees = 1.0<BR>
+			.....Cos 90 Degrees = 6.123233995736766E-17<BR>
+			.....Tan 90 Degrees = 1.633123935319537E16</FONT><FONT color="green"></FONT></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<P>Thus   we see the Calculator Combo demonstrating the assembly of different technologies to provide a wholesome Calculator Service to the external world.<BR>
+</P><H2>Code Overview</H2>
+<P>The source files are physically organized as shown below:<BR>
 </P>
-<P>2) Open up a commandline window and go to the 
-directory <I>&lt;tuscany samples&gt;</I>. First run the Calculator RMI Service Sample as follows : -<BR>
-<BR>
-<FONT color="purple"><I>&lt;tuscany samples&gt;</I></FONT><FONT color="navy">java -jar
-bin/launcher.jar
-calcRmi/sample-calculator-rmiService.jar</FONT><BR>
-<BR>
-This command starts an SCA Standalone Runtime deploying the component assembly specified in the default.scdl. It then invokes the main method of the CalculatorRMIServer class that holds the runtime running, until the 'Enter' key is pressed.  <BR>
-<BR>
-On running the Calculator RMI Service sample the console will display ....<BR>
-<BR>
-<FONT color="green"> </FONT><FONT color="green" face="Courier New">**********************************************<BR>
-Calculator Rmi Service
-Started and Running...<BR>
-***********************************************<BR>
-Hit ENTER to exit</FONT><BR>
-<BR>In addition to this, whenever a client invokes this RMI Service, the console displays a message about the service method invoked.
-<BR><BR>
-3) Open up another commandline window and go to the 
-directory <I>&lt;tuscany samples&gt;</I>. Here, run the Calculator Combo sample as follows : -<BR>
-<FONT color="purple"><I>&lt;tuscany samples&gt;</I></FONT><FONT color="navy">java -jar
-bin/launcher.jar
-calcCombo/sample-calculator-combo.jar</FONT><BR><BR>
-This command starts an SCA Standalone Runtime deploying the component assembly specified in the default.scdl. It then invokes the main method of the CalculatorClient class which locates the various calculator services and invokes methods over them. It is worth noting the fact the immaterial of the technology that a calculator service is implemented over, the client programming model for locating the services and invoking methods over them is uniform.</P><P>On
-running the Calculator sample the console will display the following: -<FONT
-	size="+1"><BR></FONT><FONT face="Courier New" color="green" size="+0">***************************************<BR>
-Starting the Calculator Combo sample!!!<BR>
-***************************************<BR>
-Invoking Java Implementation ...<BR>
-3 + 2 = 5.0<BR>
-Invoking Ruby Implementation ...<BR>
-3 - 2 = 1.0<BR>
-Invoking over RMI Reference...<BR>
-3 * 2 = 6.0<BR>
-Invoking WebService Implementation ...<BR>
-3 / 2 = 1.5<BR>
-Invoking Scientific Calculator Composite Implementation ...<BR>
-.....Invoking Java Implementation ...<BR>
-.....Average of 1,2,3,4,5,6,7,8,9 = 5.0<BR>
-.....Invoking JavaScript Implementation ...<BR>
-.....Square Root of 81 = 9.0<BR>
-.....Invoking Java Implementation configued for Property ...<BR>
-.....Sine 90 Degrees = 1.0<BR>
-.....Cos 90 Degrees = 6.123233995736766E-17<BR>
-.....Tan 90 Degrees = 1.633123935319537E16</FONT><BR>
-<BR>
-<BR>
-Thus   we see the Calculator Combo demonstrating the assembly of different technologies to provide a wholesome Calculator Service to the external world.<BR>
-<BR>
-Now press 'Enter' key in the console running the Calculator RMI Service sample to shut down that server.</P>
-<H2>Code Overview</H2>
-The source files are physically organized as shown below:<br>
 <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td>
 <pre>
 <B><U></U></B><B><U>Calculator Combo</U></B>
@@ -132,7 +218,9 @@ The source files are physically organized as shown below:<br>
         +---WEB-INF
                default.scdl
                web.xml</pre></td></tr></tbody></table>
-<B> <BR></B><P><B>Calculator Combo Sample (Standalone Deployment)</B></P><TABLE border="1">
+<P><B> <BR>
+</B></P>
+<P><B>Calculator Combo Sample (Standalone Deployment)</B></P><TABLE border="1">
 	<TBODY>
 		<TR>
 			<TD width="230" valign="top">default.scdl</TD>
