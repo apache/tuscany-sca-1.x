@@ -20,27 +20,7 @@
 <project name="project" default="install">
 
     <property name="prefix" value="tuscany-sca-1.0-incubator-M2"/>
-
-    <patternset id="exclusionList">
-        <exclude name="**/distribution" />
-        <exclude name="**/target" />
-        <exclude name="**/target/**/*" />
-        <exclude name="**/.svn" />
-        <exclude name="**/.svn/**/*" />
-        <exclude name="**/build" />
-        <exclude name="**/build/**/*" />
-        <exclude name="**/.settings/**/*" />
-        <exclude name="**/.classpath" />
-        <exclude name="**/.project" />
-        <exclude name="**/.wtpmodules" />
-        <exclude name="**/surefire*" />
-        <exclude name="**/cobertura.ser" />
-        <exclude name="**/bin/*" />
-        <exclude name="**/var/journal" />
-        <exclude name="**/build.out*" />
-        <exclude name="**/apache-tomcat-*.zip" />
-        <exclude name="**/apache-tomcat-*.tar.gz" />
-    </patternset>
+    <property name="url" value="http://svn.apache.org/repos/asf/incubator/tuscany/branches/sca-java-M2"/>
 
     <target name="install" depends="source, sample, javadoc" />
 
@@ -83,17 +63,26 @@
     </target>
 
 
-    <target name="source">
+    <target name="source" depends="sample">
+
+	<delete dir="target/source/zip/sca" quiet="true"/>
+	<exec executable="svn">
+            <arg line="export --native-eol CRLF ${url}/sca target/source/zip/sca"/>
+        </exec>
 
         <zip destfile="target/${prefix}-src.zip">
-            <zipfileset dir="../.." prefix="src">
-                <patternset refid="exclusionList" />
-            </zipfileset>
+            <zipfileset dir="target/source/zip/sca" prefix="src/sca"/>
+            <zipfileset dir="target/source/zip/samples" prefix="src/samples"/>
         </zip>
+
+	<delete dir="target/source/gz/sca" quiet="true"/>
+	<exec executable="svn">
+            <arg line="export --native-eol LF ${url}/sca target/source/gz/sca"/>
+        </exec>
+
         <tar destfile="target/${prefix}-src.tar" longfile="gnu">
-            <tarfileset dir="../.." prefix="src">
-                <patternset refid="exclusionList" />
-            </tarfileset>
+            <tarfileset dir="target/source/gz/sca" prefix="src/sca"/>
+            <tarfileset dir="target/source/gz/samples" prefix="src/samples"/>
         </tar>
         <gzip zipfile="target/${prefix}-src.tar.gz" src="target/${prefix}-src.tar" />
 	<delete file="target/${prefix}-src.tar" />
@@ -102,15 +91,22 @@
 
     <target name="sample">
 
+	<delete dir="target/source/zip/samples" quiet="true"/>
+	<exec executable="svn">
+            <arg line="export --native-eol CRLF ${url}/samples target/source/zip/samples"/>
+        </exec>
+
         <zip destfile="target/${prefix}-sample-src.zip">
-            <zipfileset dir="../../samples" prefix="samples">
-                <patternset refid="exclusionList" />
-            </zipfileset>
+            <zipfileset dir="target/source/zip/samples" prefix="src/samples"/>
         </zip>
+
+	<delete dir="target/source/gz/samples" quiet="true"/>
+	<exec executable="svn">
+            <arg line="export --native-eol LF ${url}/samples target/source/gz/samples"/>
+        </exec>
+
         <tar destfile="target/${prefix}-sample-src.tar" longfile="gnu">
-            <tarfileset dir="../../samples" prefix="samples">
-                <patternset refid="exclusionList" />
-            </tarfileset>
+            <tarfileset dir="target/source/gz/samples" prefix="src/samples"/>
         </tar>
         <gzip zipfile="target/${prefix}-sample-src.tar.gz" src="target/${prefix}-sample-src.tar" />
 	<delete file="target/${prefix}-sample-src.tar" />

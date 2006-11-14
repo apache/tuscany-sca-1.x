@@ -154,25 +154,6 @@
                     </descriptors>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>build-distro</id>
-                        <phase>install</phase>
-                        <configuration>
-                            <tasks>
-                                <ant inheritRefs="true" antfile="build.xml" dir="${basedir}" target="install">
-                                </ant>
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
 </project>
