@@ -102,7 +102,7 @@
     <!-- service for resolving artifacts using Maven repositories -->
     <component name="artifactRepository">
         <system:implementation.system class="org.apache.tuscany.services.maven.MavenArtifactRepository"/>
-        <property name="remoteRepoUrl">http://repo1.maven.org/maven2/,http://people.apache.org/repo/m2-snapshot-repository,http://people.apache.org/repo/m2-incubating-repository/,http://people.apache.org/repo/m1-snapshot-repository/</property>
+        <property name="remoteRepoUrl">http://repo1.maven.org/maven2,http://people.apache.org/repo/m2-incubating-repository,http://people.apache.org/repo/m1-ibiblio-rsync-repository</property>
     </component>
 
     <!-- WorkScheduler service -->
