@@ -19,15 +19,15 @@
 -->
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><meta http-equiv="Content-Style-Type" content="text/css"><title>Tuscany
-Hello World Web Service Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven -->
+Calculator Web Service Sample</title><!-- LINK rel="stylesheet" href="ait.css" type="text/css" --><!-- maven -->
 <style type="text/css" media="all">
 @import url("../../../../css/maven-base.css");
 @import url("../../../../css/maven-theme.css");
 @import url("../../../../css/site.css");
 </style><link rel="stylesheet" href="./css/print.css" type="text/css" media="print"><!-- end maven --></head>
 <body>
-<H1>Tuscany Calculator-Combo - A Simple SCA Assembly that hosts calculator functions as  WebServices</H1>
-<H2>Overview</H2>
+<H3>Tuscany Calculator-Combo - A Simple SCA Assembly that hosts calculator functions as  WebServices</H3>
+<H3>Overview</H3>
 <TABLE border="0">
 	<TBODY>
 		<TR>
@@ -37,22 +37,67 @@ Hello World Web Service Sample</title><!-- LINK rel="stylesheet" href="ait.css" 
 		</TR>
 	</TBODY>
 </TABLE>
-<H2>Location</H2>
-<P>This  sample is  located in the following path of the samples source distribution: -<BR>
-&lt;source disb&gt;/samples/webapp/calculatorws<BR>
+<H3>Location</H3>
+<P>The source for this sample is located &nbsp;in the paths -  <I>samples\webapp\calculatorws</I>
+ of the source
+distribution.<BR>
 <BR>
-After you build the sample source the deployable 'war' can be found in the '<I>target'
-</I>directory of the the project as:: <BR>
-&lt;source disb&gt;/samples/webapp/calculatorws/target/sample-calculatorws.war<BR>
+If there is binary distribution available for these samples, then you may find these samples packaged as <I>sample-calculatorws.war.</I><BR></P>
+<H3>Building &amp; Running the CalculatorWS Sample Source</H3>
+<P>If you are working with a source distribution, then you must first
+build the source of this sample. <BR>
+- Ensure that you have Java 5 installed on your system.<BR>
+- Next, you must have Maven 2.0.4 installed on your system. Look up
+http://maven.apache.org/download.html for downloading and installing
+Maven.<BR>
+ - Install the Apache Tomcat Server (latest release). Look up http://tomcat.apache.org/ for more information on releases and downloads.<BR></P>
+<H4>Building the CalculatorWS Sample</H4>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD valign="top"></TD>
+			<TD valign="top">Having installed Maven, open a command line console
+			and switch over to the directory on your local system, where you have
+			extracted the source.<BR>
+			- Now switch futher into the subdirectory <I>samples\webapp\calculatorws.
+			</I>Within this directory execute the following command
+			<TABLE border="0">
+				<TBODY>
+					<TR>
+						<TD><FONT color="purple">&gt;</FONT></TD>
+						<TD><FONT color="purple" face="Courier New">mvn</FONT></TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+			This will build the <I>calculatorws</I> sample, package a WAR file for the composite and make it available in the sub-directory <I>samples\webapp\calculatorws\target</I></TD>
+			<TD></TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<H4>Running the CalculatorWS Sample </H4>
+<P>Now that the sample source has been built and Tomcat setup, you may run the Calculator WebService sample as follows: -
+</P>
+<TABLE border="0">
+	<TBODY>
+		<TR>
+			<TD valign="top">i)</TD>
+			<TD>Copy the <I>sample-calculatorws.war</I> located in the <I>samples\webapp\calculatorws\target</I> into the WebApps directory of the Tomcat Installation.
+			</TD>
+		</TR>
+		<TR>
+			<TD valign="top">ii)</TD>
+			<TD>Ensure that the Calculator Web Application is up and running.</TD>
+		</TR>
+	</TBODY>
+</TABLE><H4><BR>
+Trying the CalculatorWS Sample</H4>
+<P>To test this sample completely, run the Calculator-Combo sample after running this sample. For details on setting up and running the Calculator-Combo sample look at the readme.html
+under that sample.<BR>
 <BR>
-If there is a binary distribution of the samples available then you may just about look for the sample-calculatorws.war in the distribution.</P><H2>Setup</H2>
-<P>1) Install the Apache Tomcat Server (latest release) and copy the <I>sample-calculatorws.war</I> into the WebApps directory of the Tomcat Installation.</P><H2>Running</H2>
-<P> Start the Apache Tomcat Server and ensure that the Calculator WebService is deployed and is running.
-<BR>
-<BR>
-To test this sample completely, run the Calculator-Combo sample after running this sample. For details on setting up and running the Calculator-Combo sample look at the Calculator-Combo-Readme.htm
-there.</P><H2>Code Overview</H2>
-The source files are physically organized as shown below:<br>
+</P>
+<H2>Code Overview</H2>
+<P>The source files are physically organized as shown below:<BR>
+</P>
 <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td>
 <pre>
 <B><U></U></B><B><U>Calculator WebService</U></B>
