@@ -22,15 +22,33 @@
     <property name="prefix" value="tuscany-sca-1.0-incubator-M2"/>
     <property name="url" value="http://svn.apache.org/repos/asf/incubator/tuscany"/>
 
-    <target name="install" depends="source, sample, javadoc" />
+    <target name="clean">
+	<delete dir="target/javadoc" quiet="true"/>
+	<delete dir="target/source" quiet="true"/>
+	<delete dir="target" quiet="true">
+            <include name="*.zip"/>
+            <include name="*.tar.gz"/>
+        </delete>
+    </target>
 
-    <target name="javadoc" depends="spec">
+    <target name="install" depends="spec.sca, spec.commonj, source, sample, javadoc" />
+
+    <target name="javadoc" depends="spec.sca">
 
 	<delete dir="target/javadoc" quiet="true"/>
 
         <javadoc packagenames="org.osoa.*" sourcepath="target/source/zip/spec/sca/src/main/java"
                defaultexcludes="yes"
-               destdir="target/javadoc/spec"
+               destdir="target/javadoc/spec/sca"
+               author="true"
+               version="true"
+               use="true">
+            <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+        </javadoc>
+
+        <javadoc packagenames="commonj.*" sourcepath="target/source/zip/spec/commonj/src/main/java"
+               defaultexcludes="yes"
+               destdir="target/javadoc/spec/commonj"
                author="true"
                version="true"
                use="true">
@@ -71,27 +89,62 @@
 	<delete file="target/${prefix}-javadoc.tar" />
     </target>
 
-    <target name="spec">
+    <target name="spec.sca">
+	<property name="archive.prefix.sca" value="target/${prefix}-spec-sca-src"/>
+	<property name="target.zip.sca" value="target/source/zip/spec/sca"/>
+	<property name="target.gz.sca" value="target/source/gz/spec/sca"/>
 
-	<delete dir="target/source/zip/spec" quiet="true"/>
+	<delete dir="${target.zip.sca}" quiet="true"/>
 	<exec executable="svn">
-            <arg line="export --native-eol CRLF ${url}/tags/java/spec/sca/1.0-incubator-M2 target/source/zip/spec/sca"/>
-        </exec>
-	<exec executable="svn">
-            <arg line="export --native-eol CRLF ${url}/tags/java/spec/commonj/1.0-incubator-M2 target/source/zip/spec/commonj"/>
+            <arg line="export --native-eol CRLF ${url}/tags/java/spec/sca/1.0-incubator-M2 ${target.zip.sca}"/>
         </exec>
 
-	<delete dir="target/source/gz/spec" quiet="true"/>
+        <zip destfile="${archive.prefix.sca}.zip">
+            <zipfileset dir="${target.zip.sca}" prefix="src/spec/sca"/>
+        </zip>
+
+	<delete dir="${target.gz.sca}" quiet="true"/>
 	<exec executable="svn">
-            <arg line="export --native-eol LF ${url}/tags/java/spec/sca/1.0-incubator-M2 target/source/gz/spec/sca"/>
+            <arg line="export --native-eol LF ${url}/tags/java/spec/sca/1.0-incubator-M2 ${target.gz.sca}"/>
         </exec>
-	<exec executable="svn">
-            <arg line="export --native-eol LF ${url}/tags/java/spec/commonj/1.0-incubator-M2 target/source/gz/spec/commonj"/>
-        </exec>
+
+        <tar destfile="${archive.prefix.sca}.tar" longfile="gnu">
+            <tarfileset dir="${target.gz.sca}" prefix="src/spec/sca"/>
+        </tar>
+        <gzip zipfile="${archive.prefix.sca}.tar.gz" src="${archive.prefix.sca}.tar" />
+	<delete file="${archive.prefix.sca}.tar" />
 
     </target>
 
-    <target name="source" depends="spec, sample">
+    <target name="spec.commonj">
+	<property name="archive.prefix.commonj" value="target/${prefix}-spec-commonj-src"/>
+	<property name="target.zip.commonj" value="target/source/zip/spec/commonj"/>
+	<property name="target.gz.commonj" value="target/source/gz/spec/commonj"/>
+
+	<delete dir="${target.zip.commonj}" quiet="true"/>
+	<exec executable="svn">
+            <arg line="export --native-eol CRLF ${url}/tags/java/spec/commonj/1.0-incubator-M2 ${target.zip.commonj}"/>
+        </exec>
+
+        <zip destfile="${archive.prefix.commonj}.zip">
+            <zipfileset dir="${target.zip.commonj}" prefix="src/spec/commonj"/>
+        </zip>
+
+	<delete dir="${target.gz.commonj}" quiet="true"/>
+	<exec executable="svn">
+            <arg line="export --native-eol LF ${url}/tags/java/spec/commonj/1.0-incubator-M2 ${target.gz.commonj}"/>
+        </exec>
+
+        <tar destfile="${archive.prefix.commonj}.tar" longfile="gnu">
+            <tarfileset dir="${target.gz.commonj}" prefix="src/spec/commonj"/>
+        </tar>
+        <gzip zipfile="${archive.prefix.commonj}.tar.gz" src="${archive.prefix.commonj}.tar" />
+	<delete file="${archive.prefix.commonj}.tar" />
+
+    </target>
+
+
+    <target name="source" depends="sample">
 
 	<delete dir="target/source/zip/sca" quiet="true"/>
 	<exec executable="svn">
@@ -99,7 +152,6 @@
         </exec>
 
         <zip destfile="target/${prefix}-src.zip">
-            <zipfileset dir="target/source/zip/spec" prefix="src/spec"/>
             <zipfileset dir="target/source/zip/sca" prefix="src/sca"/>
             <zipfileset dir="target/source/zip/samples" prefix="src/samples"/>
         </zip>
@@ -110,7 +162,6 @@
         </exec>
 
         <tar destfile="target/${prefix}-src.tar" longfile="gnu">
-            <tarfileset dir="target/source/gz/spec" prefix="src/spec"/>
             <tarfileset dir="target/source/gz/sca" prefix="src/sca"/>
             <tarfileset dir="target/source/gz/samples" prefix="src/samples"/>
         </tar>
