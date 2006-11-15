@@ -20,13 +20,22 @@
 <project name="project" default="install">
 
     <property name="prefix" value="tuscany-sca-1.0-incubator-M2"/>
-    <property name="url" value="http://svn.apache.org/repos/asf/incubator/tuscany/branches/sca-java-M2"/>
+    <property name="url" value="http://svn.apache.org/repos/asf/incubator/tuscany"/>
 
     <target name="install" depends="source, sample, javadoc" />
 
-    <target name="javadoc">
+    <target name="javadoc" depends="spec">
 
 	<delete dir="target/javadoc" quiet="true"/>
+
+        <javadoc packagenames="org.osoa.*" sourcepath="target/source/zip/spec/src/main/java"
+               defaultexcludes="yes"
+               destdir="target/javadoc/spec"
+               author="true"
+               version="true"
+               use="true">
+            <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+        </javadoc>
 
         <unzip dest="target/javadoc/api">
             <fileset dir="../kernel/api">
@@ -62,25 +71,40 @@
 	<delete file="target/${prefix}-javadoc.tar" />
     </target>
 
+    <target name="spec">
 
-    <target name="source" depends="sample">
+	<delete dir="target/source/zip/spec" quiet="true"/>
+	<exec executable="svn">
+            <arg line="export --native-eol CRLF ${url}/tags/java/spec/sca/1.0-incubator-M2 target/source/zip/spec"/>
+        </exec>
+
+	<delete dir="target/source/gz/spec" quiet="true"/>
+	<exec executable="svn">
+            <arg line="export --native-eol LF ${url}/tags/java/spec/sca/1.0-incubator-M2 target/source/gz/spec"/>
+        </exec>
+
+    </target>
+
+    <target name="source" depends="spec, sample">
 
 	<delete dir="target/source/zip/sca" quiet="true"/>
 	<exec executable="svn">
-            <arg line="export --native-eol CRLF ${url}/sca target/source/zip/sca"/>
+            <arg line="export --native-eol CRLF ${url}/branches/sca-java-M2/sca target/source/zip/sca"/>
         </exec>
 
         <zip destfile="target/${prefix}-src.zip">
+            <zipfileset dir="target/source/zip/spec" prefix="src/spec"/>
             <zipfileset dir="target/source/zip/sca" prefix="src/sca"/>
             <zipfileset dir="target/source/zip/samples" prefix="src/samples"/>
         </zip>
 
 	<delete dir="target/source/gz/sca" quiet="true"/>
 	<exec executable="svn">
-            <arg line="export --native-eol LF ${url}/sca target/source/gz/sca"/>
+            <arg line="export --native-eol LF ${url}/branches/sca-java-M2/sca target/source/gz/sca"/>
         </exec>
 
         <tar destfile="target/${prefix}-src.tar" longfile="gnu">
+            <tarfileset dir="target/source/gz/spec" prefix="src/spec"/>
             <tarfileset dir="target/source/gz/sca" prefix="src/sca"/>
             <tarfileset dir="target/source/gz/samples" prefix="src/samples"/>
         </tar>
@@ -93,7 +117,7 @@
 
 	<delete dir="target/source/zip/samples" quiet="true"/>
 	<exec executable="svn">
-            <arg line="export --native-eol CRLF ${url}/samples target/source/zip/samples"/>
+            <arg line="export --native-eol CRLF ${url}/branches/sca-java-M2/samples target/source/zip/samples"/>
         </exec>
 
         <zip destfile="target/${prefix}-sample-src.zip">
@@ -102,7 +126,7 @@
 
 	<delete dir="target/source/gz/samples" quiet="true"/>
 	<exec executable="svn">
-            <arg line="export --native-eol LF ${url}/samples target/source/gz/samples"/>
+            <arg line="export --native-eol LF ${url}/branches/sca-java-M2/samples target/source/gz/samples"/>
         </exec>
 
         <tar destfile="target/${prefix}-sample-src.tar" longfile="gnu">
