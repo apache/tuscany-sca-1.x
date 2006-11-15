@@ -28,7 +28,7 @@
 
 	<delete dir="target/javadoc" quiet="true"/>
 
-        <javadoc packagenames="org.osoa.*" sourcepath="target/source/zip/spec/src/main/java"
+        <javadoc packagenames="org.osoa.*" sourcepath="target/source/zip/spec/sca/src/main/java"
                defaultexcludes="yes"
                destdir="target/javadoc/spec"
                author="true"
@@ -75,12 +75,18 @@
 
 	<delete dir="target/source/zip/spec" quiet="true"/>
 	<exec executable="svn">
-            <arg line="export --native-eol CRLF ${url}/tags/java/spec/sca/1.0-incubator-M2 target/source/zip/spec"/>
+            <arg line="export --native-eol CRLF ${url}/tags/java/spec/sca/1.0-incubator-M2 target/source/zip/spec/sca"/>
+        </exec>
+	<exec executable="svn">
+            <arg line="export --native-eol CRLF ${url}/tags/java/spec/commonj/1.0-incubator-M2 target/source/zip/spec/commonj"/>
         </exec>
 
 	<delete dir="target/source/gz/spec" quiet="true"/>
 	<exec executable="svn">
-            <arg line="export --native-eol LF ${url}/tags/java/spec/sca/1.0-incubator-M2 target/source/gz/spec"/>
+            <arg line="export --native-eol LF ${url}/tags/java/spec/sca/1.0-incubator-M2 target/source/gz/spec/sca"/>
+        </exec>
+	<exec executable="svn">
+            <arg line="export --native-eol LF ${url}/tags/java/spec/commonj/1.0-incubator-M2 target/source/gz/spec/commonj"/>
         </exec>
 
     </target>
