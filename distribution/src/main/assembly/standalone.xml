@@ -25,23 +25,24 @@
         <format>tar.gz</format>
     </formats>
 
-    <fileSets>
+    <files>
         <!-- include legal and other files -->
-        <fileSet>
-            <includes>
-                <include>LICENSE.txt</include>
-                <include>NOTICE.txt</include>
-            </includes>
-        </fileSet>
+        <file>
+            <source>LICENSE.txt</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        <file>
+            <source>NOTICE.txt</source>
+            <outputDirectory>/</outputDirectory>
+            <filtered>true</filtered>
+        </file>
 
-        <!-- empty fileSet to create the extensions directory -->
-        <fileSet>
-            <outputDirectory>extensions</outputDirectory>
-            <includes>
-                <include>extensions.scdl</include>
-            </includes>
-        </fileSet>
-    </fileSets>
+        <!-- marker to create the extensions directory -->
+        <file>
+            <source>extensions.scdl</source>
+            <outputDirectory>/extensions</outputDirectory>
+        </file>
+    </files>
 
 
     <dependencySets>
