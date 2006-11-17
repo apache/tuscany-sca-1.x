@@ -28,15 +28,6 @@
     <name>Apache Tuscany Binding for Axis2</name>
     <description>Implementation of the SCA Web Services binding using Axis2.</description>
 
-    <repositories>
-        <repository>
-            <id>apache.ws</id>
-            <name>Apache WebServices Repository</name>
-            <url>http://ws.zones.apache.org/repository/</url>
-            <layout>legacy</layout>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca.services.idl</groupId>
@@ -76,7 +67,7 @@
         </dependency>
 
         <dependency>
-            <groupId>incubator-woden</groupId>
+            <groupId>org.apache.woden</groupId>
             <artifactId>woden</artifactId>
             <version>1.0.0M6</version>
             <scope>runtime</scope>
@@ -95,7 +86,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.neethi</groupId>
+            <groupId>org.apache.ws.commons.neethi</groupId>
             <artifactId>neethi</artifactId>
             <version>2.0</version>
             <scope>runtime</scope>
