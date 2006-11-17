@@ -87,6 +87,7 @@
                 <include>org.apache.tuscany.sca.kernel:core</include>
                 <include>org.apache.tuscany.sca.kernel:tuscany-spi</include>
                 <include>org.apache.tuscany.sca.services:maven</include>
+                <include>stax:stax-api</include>
                 <include>woodstox:wstx-asl</include>
                 <include>javax.servlet:servlet-api</include>
             </includes>
