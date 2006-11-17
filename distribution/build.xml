@@ -144,7 +144,7 @@
     </target>
 
 
-    <target name="source" depends="sample">
+    <target name="source">
 
 	<delete dir="target/source/zip/sca" quiet="true"/>
 	<exec executable="svn">
@@ -153,7 +153,6 @@
 
         <zip destfile="target/${prefix}-src.zip">
             <zipfileset dir="target/source/zip/sca" prefix="src/sca"/>
-            <zipfileset dir="target/source/zip/samples" prefix="src/samples"/>
         </zip>
 
 	<delete dir="target/source/gz/sca" quiet="true"/>
@@ -163,7 +162,6 @@
 
         <tar destfile="target/${prefix}-src.tar" longfile="gnu">
             <tarfileset dir="target/source/gz/sca" prefix="src/sca"/>
-            <tarfileset dir="target/source/gz/samples" prefix="src/samples"/>
         </tar>
         <gzip zipfile="target/${prefix}-src.tar.gz" src="target/${prefix}-src.tar" />
 	<delete file="target/${prefix}-src.tar" />
