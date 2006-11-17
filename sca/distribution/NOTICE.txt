@@ -60,6 +60,11 @@ The Apache Software Foundation (http://www.apache.org/).
 
  */
 
+-------------------------------------------------------------------------------
+* boot/classworlds-1.1.jar
+-------------------------------------------------------------------------------
+
+
 ----- NOTICE from LICENSE.txt file in jsch-0.1.24 distribution ----------------
 
 JSch 0.0.* was released under the GNU LGPL license.  Later, we have switched
@@ -93,6 +98,11 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+-------------------------------------------------------------------------------
+* boot/jsch-0.1.24.jar
+-------------------------------------------------------------------------------
+
+
 ----- NOTICE from Codehaus for Plexus Project ---------------------------------
 
  The MIT License
@@ -122,6 +132,13 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Some portions of Plexus are also distributed under other BSD-style licenses
 including the Apache License Version 2.0
 
+-------------------------------------------------------------------------------
+* boot/plexus-container-default-1.0-alpha-9.jar
+* boot/plexus-interactivity-api-1.0-alpha-4.jar
+* boot/plexus-utils-1.1.jar
+-------------------------------------------------------------------------------
+
+
 ----- NOTICE from StAX project at http://svn.codehaus.org/stax/trunk/dev/README-API.txt
 
 These files together comprise the API for JSR 173 (Streaming API for XML Specification), including its API classes and interfaces.
@@ -138,6 +155,11 @@ Your right to use the listed files, whether together or individually, is governe
 
 Please see the javadoc for information on how to get started.
 
+-------------------------------------------------------------------------------
+* boot/stax-api-1.0.1.jar
+-------------------------------------------------------------------------------
+
+
 ----- NOTICE from wstx-asl-3.0.1.jar ------------------------------------------
 
 This product currently only contains code developed by authors
@@ -149,8 +171,12 @@ classes.
 For additional credits (generally to people who reported problems)
 see CREDITS file.
 
+-------------------------------------------------------------------------------
+* boot/wstx-asl-3.0.1.jar
+-------------------------------------------------------------------------------
 
------ NOTICE for sca-api-r0.95-1.0-incubator-M2.jar--------------------------
+
+----- NOTICE for sdo-api-r2.0.1-1.0-incubator-M2.jar--------------------------
 
 License for the Service Data Objects JavaDoc and Interface Definition files.
 
@@ -180,13 +206,8 @@ JavaDoc and Interface Definition Files will at all times remain with the Authors
 
 No other rights are granted by implication, estoppel or otherwise.
 
------ NOTICE for codegen-2.2.1.jar ------------------------------------------
------ NOTICE for codegen-ecore-2.2.1.jar ------------------------------------
------ NOTICE for common-2.2.1.jar -------------------------------------------
------ NOTICE for ecore-2.2.1.jar --------------------------------------------
------ NOTICE for ecore-change-2.2.1.jar -------------------------------------
------ NOTICE for ecore-xmi-2.2.1.jar ----------------------------------------
------ NOTICE for xsd-2.2.1.jar  ---------------------------------------------
+
+---- NOTICE for EMF jars --------------------------
 
 Eclipse Public License - v 1.0
 
@@ -275,6 +296,13 @@ Everyone is permitted to copy and distribute copies of this Agreement, but in or
 
 This Agreement is governed by the laws of the State of New York and the intellectual property laws of the United States of America. No party to this Agreement will bring a legal action under this Agreement more than one year after the cause of action arose. Each party waives its rights to a jury trial in any resulting litigation.
 
+-------------------------------------------------------------------------------
+* lib/common-2.2.1.jar
+* lib/ecore-2.2.1.jar
+* lib/ecore-change-2.2.1.jar
+* lib/ecore-xmi-2.2.1.jar
+* lib/xsd-2.2.1.jar
+-------------------------------------------------------------------------------
 
 
 ----- NOTICE for js-1.6R2.jar  ---------------------------------------------
