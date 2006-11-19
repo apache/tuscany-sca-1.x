@@ -28,6 +28,21 @@
     <name>Apache Tuscany Data Binding for SDO</name>
     <description>Data Binding based on SDO.</description>
 
+    <!-- include incubator repo as a plugin repo -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>apache.incubator</id>
+            <name>Apache Incubator Repository</name>
+            <url>http://people.apache.org/repo/m2-incubating-repository/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
