@@ -16,21 +16,3 @@ Unless otherwise indicated, all distribution made available by the Apache Softwa
 is provided to you under the terms and conditions of the Apache License Version 2.0 ("AL").
 A copy of the AL is provided with this distribution as the LICENSE.txt file present in the
 root directory, and is also available at http://www.apache.org/licenses/.
-
-The terms and conditions governing the distribution may refer to the AL or other license
-agreements, notices or terms and conditions. Some of these other license agreements may
-include (but are not limited to):
-
- - Open Service Oriented Architecture organisation (http://osoa.org).See LICENCE.txt file
-     sca-api-r0.95-1.0-incubator-M2.jar
-
- - Eclipse Public License Version 1.0 (available at http://www.eclipse.org/legal/epl-v10.html)
-    codegen-2.2.1.jar codegen-ecore-2.2.1.jar common-2.2.1.jar ecore-2.2.1.jar
-    ecore-change-2.2.1.jar ecore-xmi-2.2.1.jar xsd-2.2.1.jar 
-
- - Netscape Public License Version 1.1 (available at  http://www.mozilla.org/MPL/NPL-1.1.html)
-   js-1.6R2.jar
-
-It is your obligation to read and accept all such terms and conditions prior to use of the
-distribution. If term or condition is provided, please contact the Apache Software Foundation
-to determine what terms and conditions govern that particular distribution.
