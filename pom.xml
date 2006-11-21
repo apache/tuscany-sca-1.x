@@ -28,10 +28,10 @@
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <name>Tuscany SCA Implementation Project</name>
-    <version>1.0-incubator-M2-SNAPSHOT</version>
+    <version>1.0-incubator-M2</version>
     <properties>
-        <sca.version>1.0-incubator-M2-SNAPSHOT</sca.version>
-        <scaKernelVersion>1.0-incubator-M2-SNAPSHOT</scaKernelVersion>
+        <sca.version>1.0-incubator-M2</sca.version>
+        <scaKernelVersion>1.0-incubator-M2</scaKernelVersion>
         <axis2Version>1.1</axis2Version>
     </properties>
 

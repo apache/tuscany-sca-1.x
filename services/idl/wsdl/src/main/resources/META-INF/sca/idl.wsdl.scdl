@@ -30,7 +30,7 @@
     <dependency xmlns="http://incubator.apache.org/tuscany/xmlns/1.0-incubator-M2">
         <group>org.apache.tuscany.sca.services.idl</group>
         <name>wsdl</name>
-        <version>1.0-incubator-M2-SNAPSHOT</version>
+        <version>1.0-incubator-M2</version>
     </dependency>
 
     <component name="interface.wsdl.Loader">

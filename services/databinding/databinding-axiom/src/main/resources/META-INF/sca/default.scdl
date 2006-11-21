@@ -23,7 +23,7 @@
     <dependency xmlns="http://incubator.apache.org/tuscany/xmlns/1.0-incubator-M2">
         <group>org.apache.tuscany.sca.services.databinding</group>
         <name>databinding-axiom</name>
-        <version>1.0-incubator-M2-SNAPSHOT</version>
+        <version>1.0-incubator-M2</version>
     </dependency>
 
     <component name="databinding.axiom">

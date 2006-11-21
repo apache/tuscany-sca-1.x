@@ -31,13 +31,13 @@
     <dependency xmlns="http://incubator.apache.org/tuscany/xmlns/1.0-incubator-M2">
         <group>org.apache.tuscany.sca.services.bindings</group>
         <name>rmi</name>
-        <version>1.0-incubator-M2-SNAPSHOT</version>
+        <version>1.0-incubator-M2</version>
     </dependency>
     
     <dependency xmlns="http://incubator.apache.org/tuscany/xmlns/1.0-incubator-M2">
         <group>org.apache.tuscany.sca.kernel</group>
         <name>tuscany-api</name>
-        <version>1.0-incubator-M2-SNAPSHOT</version>
+        <version>1.0-incubator-M2</version>
     </dependency>
     
     <component name="binding.rmi.bindingLoader">
