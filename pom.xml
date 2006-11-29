@@ -172,7 +172,7 @@
 
             <!-- Woden implementation -->
             <dependency>
-                <groupId>org.apache.woden</groupId>
+                <groupId>incubator-woden</groupId>
                 <artifactId>woden</artifactId>
                 <version>1.0.0M6</version>
                 <scope>compile</scope>
