@@ -94,7 +94,6 @@
       <module>standalone/supplychain</module>
       <module>webapp/calculatorws</module>
       <module>webapp/greeterws-oneway</module>
-      <module>webapp/helloworldjsonrpc</module>
       <module>webapp/helloworldws</module>
       <module>webapp/helloworldws-async</module>
       <module>webapp/webapp</module>
