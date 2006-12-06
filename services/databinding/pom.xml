@@ -31,12 +31,30 @@
     <packaging>pom</packaging>
     <name>Tuscany SCA Data Bindings</name>
 
-    <modules>
-        <module>databinding-axiom</module>
-        <module>databinding-castor</module>
-        <module>databinding-jaxb</module>
-        <module>databinding-sdo</module>
-        <module>databinding-xmlbeans</module>
-        <module>databinding-test</module>
-    </modules>
+    <profiles>
+       <profile>
+          <id>full</id>
+          <activation>
+             <activeByDefault>true</activeByDefault>
+          </activation>
+          <modules>
+             <module>databinding-axiom</module>
+             <module>databinding-castor</module>
+             <module>databinding-jaxb</module>
+             <module>databinding-sdo</module>
+             <module>databinding-xmlbeans</module>
+             <module>databinding-test</module>
+          </modules>
+       </profile>
+       <profile>
+          <id>release</id>
+          <activation>
+             <activeByDefault>false</activeByDefault>
+          </activation>
+             <modules>
+                <module>databinding-axiom</module>
+                <module>databinding-sdo</module>
+            </modules>
+       </profile>
+    </profiles>
 </project>

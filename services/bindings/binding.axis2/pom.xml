@@ -28,6 +28,19 @@
     <name>Apache Tuscany Binding for Axis2</name>
     <description>Implementation of the SCA Web Services binding using Axis2.</description>
 
+    <repositories>
+        <!-- ws zones repos is for woden -->
+        <repository>
+            <id>apache.ws.zones</id>
+            <name>Apache WS zones Repository</name>
+            <url>http://ws.zones.apache.org/repository/</url>
+            <layout>legacy</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca.services.idl</groupId>
@@ -67,7 +80,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.woden</groupId>
+            <groupId>incubator-woden</groupId>
             <artifactId>woden</artifactId>
             <version>1.0.0M6</version>
             <scope>runtime</scope>

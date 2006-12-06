@@ -55,11 +55,30 @@
         </repository>
     </repositories>
 
-    <modules>
-        <module>container.groovy</module>
-        <module>container.javascript</module>
-        <module>container.ruby</module>
-        <module>container.spring</module>
-    </modules>
+    <profiles>
+        <profile>
+            <id>full</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>container.groovy</module>
+                <module>container.javascript</module>
+                <module>container.ruby</module>
+                <module>container.spring</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>release</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <modules>
+                <module>container.javascript</module>
+                <module>container.ruby</module>
+                <module>container.spring</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>
