@@ -41,7 +41,7 @@ public class Dependency {
         new Dependency[] {
                           new Dependency("org.apache.tuscany.sca.runtime.standalone",
                                          "standalone-host",
-                                         "1.0-incubator-SNAPSHOT"),
+                                         "0.1-pre-spec-SNAPSHOT"),
                           // HACK to force servlet-api
                           new Dependency("javax.servlet", "servlet-api", "2.4")};
 
