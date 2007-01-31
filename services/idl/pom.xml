@@ -19,15 +19,15 @@
 -->
 <project>
     <parent>
-        <groupId>org.apache.tuscany.sca</groupId>
+        <groupId>org.apache.tuscany.sca.services</groupId>
         <artifactId>parent</artifactId>
         <version>0.1-pre-spec-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.tuscany.sca.services</groupId>
+    <groupId>org.apache.tuscany.sca.services.idl</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Services</name>
+    <name>Tuscany SCA Interface Definition Languages</name>
 
     <!-- definition of repositories where the parent pom can be found -->
     <repositories>
@@ -56,8 +56,6 @@
     </repositories>
 
     <modules>
-        <module>idl</module>
-        <module>maven</module>
-        <module>management</module>
+        <module>wsdl</module>
     </modules>
 </project>
