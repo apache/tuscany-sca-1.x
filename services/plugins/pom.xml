@@ -7,15 +7,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
 -->
 <project>
     <parent>
@@ -23,11 +23,12 @@
         <artifactId>parent</artifactId>
         <version>0.1-pre-spec-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.tuscany.sca.services</groupId>
+    <groupId>org.apache.tuscany.sca.plugins</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Services</name>
+    <name>Tuscany SCA Maven Plugins</name>
 
     <!-- definition of repositories where the parent pom can be found -->
     <repositories>
@@ -56,9 +57,6 @@
     </repositories>
 
     <modules>
-        <module>idl</module>
-        <module>maven</module>
-        <module>management</module>
-        <module>plugins</module>
+        <module>plugin.itest</module>
     </modules>
 </project>
