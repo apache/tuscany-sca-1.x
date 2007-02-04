@@ -60,5 +60,6 @@
         <module>maven</module>
         <module>management</module>
         <module>plugins</module>
+        <module>databinding</module>
     </modules>
 </project>
