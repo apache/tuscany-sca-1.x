@@ -41,4 +41,8 @@
     <build>
         <defaultGoal>install</defaultGoal>
     </build>
+
+    <modules>
+                <module>sca-api-r1.0</module>
+    </modules>
 </project>
