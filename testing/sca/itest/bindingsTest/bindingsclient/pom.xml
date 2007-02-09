@@ -40,8 +40,7 @@
         </dependency>
         <dependency>
             <groupId>org.osoa</groupId>
-            <artifactId>sca-api-r0.95</artifactId>
-            <version>1.0-incubator-SNAPSHOT</version>
+            <artifactId>sca-api-r${scaSpecVersion}</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -19,6 +19,12 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.apache.tuscany.testing</groupId>
+        <artifactId>sca-itest</artifactId>
+        <version>1.0-incubator-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.testing.bindingstest</groupId>
     <artifactId>iTest-Bindings-bindingsutility</artifactId>
@@ -36,8 +42,7 @@
         </dependency>
         <dependency>
             <groupId>org.osoa</groupId>
-            <artifactId>sca-api-r0.95</artifactId>
-            <version>1.0-incubator-SNAPSHOT</version>
+            <artifactId>sca-api-r${scaSpecVersion}</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>

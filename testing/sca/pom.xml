@@ -30,6 +30,7 @@
     <packaging>pom</packaging>
     <name>Tuscany SCA tests</name>
     <properties>
+        <scaKernelVersion>0.1-pre-spec-SNAPSHOT</scaKernelVersion>
         <sca.version>1.0-incubator-SNAPSHOT</sca.version>
         <sdo.version>1.0-incubator-SNAPSHOT</sdo.version>
         <testing.version>1.0-incubator-SNAPSHOT</testing.version>

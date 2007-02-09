@@ -28,12 +28,12 @@
     <artifactId>exceptionTests</artifactId>
     <version>SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Test Suite for SCA Spec APIs</name>
+    <name>Test Suite Exception Handling</name>
 
     <dependencies>
         <dependency>
             <groupId>org.osoa</groupId>
-            <artifactId>sca-api-r0.95</artifactId>
+            <artifactId>sca-api-r${scaSpecVersion}</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

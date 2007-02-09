@@ -48,21 +48,12 @@
                 <module>buildtools</module>
                 <module>spec</module>
                 <module>sca</module>
+                <module>testing/sca</module>
                 <module>samples</module>
                 <module>sampleapps</module>
                 <module>testing/sca</module>
             </modules>
         </profile>
 
-        <!-- profile to build sca -->
-        <profile>
-            <id>sca</id>
-            <modules>
-                <module>pom/parent</module>
-                <module>buildtools</module>
-                <module>spec</module>
-                <module>sca</module>
-            </modules>
-        </profile>
     </profiles>
 </project>

@@ -30,13 +30,13 @@ import org.osoa.sca.annotations.Scope;
 public class ExceptionHandlerImpl implements ExceptionHandler {
     static final String INIT = "INIT";
 
-    public ExceptionThrower exceptionThrower;
+    private ExceptionThrower exceptionThrower;
 
-    private String theGood = null;
+    private String theGood;
 
-    private Checked theBad = null;
+    private Checked theBad;
 
-    private UnChecked theUgly = null;
+    private UnChecked theUgly;
 
     /*
      * (non-Javadoc)
@@ -84,7 +84,7 @@ public class ExceptionHandlerImpl implements ExceptionHandler {
             assert false : "Got wrong exception '" + e.getClass().getName();
             assert result == INIT;
         } catch (UnChecked e) {
-           theUgly = e;
+            theUgly = e;
 
         } catch (Throwable t) {
             // This is not good.
