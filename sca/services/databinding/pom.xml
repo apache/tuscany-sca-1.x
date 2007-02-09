@@ -32,10 +32,10 @@
     <name>Tuscany SCA Data Bindings</name>
 
     <modules>
-        <module>databinding-castor</module>
+        <!-- <module>databinding-castor</module> -->
         <module>databinding-jaxb</module>
         <module>databinding-sdo</module>
-        <module>databinding-xmlbeans</module>
+        <!-- <module>databinding-xmlbeans</module> -->
         <!-- module>databinding-test</module -->
     </modules>
 </project>

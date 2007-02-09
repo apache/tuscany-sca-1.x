@@ -39,7 +39,7 @@
     <profiles>
         <!-- default profile that builds everything -->
         <profile>
-            <id>all</id>
+            <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
