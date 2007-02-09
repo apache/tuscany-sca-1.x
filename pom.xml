@@ -40,6 +40,9 @@
         <!-- default profile that builds everything -->
         <profile>
             <id>all</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <modules>
                 <module>pom/parent</module>
                 <module>buildtools</module>
@@ -47,8 +50,7 @@
                 <module>sca</module>
                 <module>samples</module>
                 <module>sampleapps</module>
-                <module>distribution</module>
-                <module>sampleapps</module>
+                <module>testing/sca</module>
             </modules>
         </profile>
 
@@ -57,11 +59,9 @@
             <id>sca</id>
             <modules>
                 <module>pom/parent</module>
-                <module>spec</module>
                 <module>buildtools</module>
+                <module>spec</module>
                 <module>sca</module>
-                <module>samples</module>
-                <module>sampleapps</module>
             </modules>
         </profile>
     </profiles>
