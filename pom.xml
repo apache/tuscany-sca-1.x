@@ -51,7 +51,6 @@
                 <module>testing/sca</module>
                 <module>samples</module>
                 <module>sampleapps</module>
-                <module>testing/sca</module>
             </modules>
         </profile>
 
