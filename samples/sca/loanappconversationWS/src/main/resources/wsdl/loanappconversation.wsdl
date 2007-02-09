@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.    
+-->
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:loanservice="http://www.loanappconversation.com/loanservice"
+	targetNamespace="http://www.loanappconversation.com/loanservice"
+	name="LoanService">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.loanappconversation.com/loanservice"
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:loanservice="http://www.loanappconversation.com/loanservice"
+			>
+			
+
+			<xsd:element name="apply">
+				<xsd:complexType>
+					<xsd:sequence>
+					<xsd:element name="customerName"
+						type="xsd:string" />
+					<xsd:element name="loanAmount"
+						type="xsd:float"  />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="applyResponse">
+			  <xsd:complexType/>
+            </xsd:element>
+<!--
+			<xsd:complexType name="LoanApplication">
+				<xsd:sequence>
+					<xsd:element name="customerName"
+						type="xsd:string"  />
+					<xsd:element name="loanAmount"
+						type="xsd:float" />
+				</xsd:sequence>
+			</xsd:complexType>
+-->
+			
+			<xsd:element name="lockCurrentRate">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="termInYears" type="xsd:int" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+
+			<xsd:element name="lockCurrentRateResponse">
+			  <xsd:complexType/>
+            </xsd:element>
+
+			<xsd:element name="cancelApplication">
+			  <xsd:complexType/>
+            </xsd:element>
+            
+			<xsd:element name="getLoanStatus">
+			  <xsd:complexType/>
+            </xsd:element>
+			<xsd:element name="getLoanStatusResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="getLoanStatusReturn" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="display">
+			  <xsd:complexType/>
+            </xsd:element>
+			
+
+			<xsd:element name="displayResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="displayReturn"
+							type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+
+			<xsd:element name="close">
+			  <xsd:complexType/>
+            </xsd:element>
+
+			<xsd:element name="closeResponse">
+			  <xsd:complexType/>
+            </xsd:element>
+
+
+		</xsd:schema>
+	</wsdl:types>
+	
+	
+	<wsdl:message name="applyRequest">
+		<wsdl:part element="loanservice:apply"
+			name="applyRequest" />
+	</wsdl:message>
+	<wsdl:message name="applyResponse">
+		<wsdl:part element="loanservice:applyResponse"
+			name="applyResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="lockCurrentRateRequest">
+		<wsdl:part element="loanservice:lockCurrentRate"
+			name="lockCurrentRate" />
+	</wsdl:message>
+	<wsdl:message name="lockCurrentRateResponse">
+		<wsdl:part element="loanservice:lockCurrentRateResponse"
+			name="lockCurrentRateResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="cancelApplicationRequest">
+		<wsdl:part element="loanservice:cancelApplication" name="cancelApplicationRequest" />
+	</wsdl:message>
+	
+	<wsdl:message name="getLoanStatusRequest">
+		<wsdl:part element="loanservice:getLoanStatus" name="getLoanStatusRequest" />
+	</wsdl:message>
+
+	<wsdl:message name="getLoanStatusResponse">
+		<wsdl:part element="loanservice:getLoanStatusResponse"
+			name="getLoanStatusResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="displayRequest">
+		<wsdl:part element="loanservice:display"
+			name="displayRequest" />
+	</wsdl:message>
+
+	<wsdl:message name="displayResponse">
+		<wsdl:part element="loanservice:displayResponse"
+			name="displayResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="closeRequest">
+		<wsdl:part element="loanservice:close" name="closeRequest" />
+	</wsdl:message>
+	
+	<wsdl:message name="closeResponse">
+		<wsdl:part element="loanservice:close" name="closeResponse" />
+	</wsdl:message>
+
+
+	<wsdl:portType name="LoanService">
+		<wsdl:operation name="apply">
+			<wsdl:input message="loanservice:applyRequest" />
+			<wsdl:output message="loanservice:applyResponse" />
+		</wsdl:operation>
+
+		<wsdl:operation name="lockCurrentRate">
+			<wsdl:input message="loanservice:lockCurrentRateRequest" />
+			<wsdl:output message="loanservice:lockCurrentRateResponse" />
+		</wsdl:operation>
+
+		<wsdl:operation name="cancelApplication">
+			<wsdl:input message="loanservice:cancelApplicationRequest" />
+		</wsdl:operation>
+
+		<wsdl:operation name="getLoanStatus">
+			<wsdl:input message="loanservice:getLoanStatusRequest" />
+			<wsdl:output message="loanservice:getLoanStatusResponse" />
+		</wsdl:operation>
+
+		<wsdl:operation name="display">
+			<wsdl:input message="loanservice:displayRequest" />
+			<wsdl:output message="loanservice:displayResponse" />
+		</wsdl:operation>
+
+		<wsdl:operation name="close">
+			<wsdl:input message="loanservice:closeRequest" />
+			<wsdl:output message="loanservice:closeResponse" />
+		</wsdl:operation>
+
+	</wsdl:portType>
+
+
+	<wsdl:binding name="LoanServiceSOAP" type="loanservice:LoanService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="apply">
+			<soap:operation
+				soapAction="http://www.loanappconversation.com/loanservice/apply" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="lockCurrentRate">
+			<soap:operation
+				soapAction="http://www.loanappconversation.com/loanservice/lockCurrentRate" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="cancelApplication">
+			<soap:operation
+				soapAction="http://www.loanappconversation.com/loanservice/cancelApplication" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+
+		<wsdl:operation name="getLoanStatus">
+			<soap:operation
+				soapAction="http://www.loanappconversation.com/loanservice/getLoanStatus" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="display">
+			<soap:operation
+				soapAction="http://www.loanappconversation.com/loanservice/display" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="close">
+			<soap:operation
+				soapAction="http://www.loanappconversation.com/loanservice/close" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+
+
+	</wsdl:binding>
+	<wsdl:service name="LoanService">
+		<wsdl:port binding="loanservice:LoanServiceSOAP"
+			name="LoanServiceSOAP">
+			<soap:address
+				location="http://localhost:8080/sample-loanappconversationWS/services/LoanService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
