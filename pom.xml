@@ -44,29 +44,11 @@
                 <module>pom/parent</module>
                 <module>buildtools</module>
                 <module>spec</module>
-                <module>sdo</module>
-                <module>das</module>
                 <module>sca</module>
                 <module>samples</module>
                 <module>sampleapps</module>
                 <module>distribution</module>
                 <module>sampleapps</module>
-            </modules>
-        </profile>
-
-        <!-- profile to build sdo -->
-        <profile>
-            <id>sdo</id>
-            <modules>
-                <module>sdo</module>
-            </modules>
-        </profile>
-
-        <!-- profile to build das -->
-        <profile>
-            <id>das</id>
-            <modules>
-                <module>das</module>
             </modules>
         </profile>
 
@@ -80,7 +62,6 @@
                 <module>sca</module>
                 <module>samples</module>
                 <module>sampleapps</module>
-                <!-- module>distribution</module -->
             </modules>
         </profile>
     </profiles>
