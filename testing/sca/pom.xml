@@ -33,6 +33,7 @@
         <sca.version>1.0-incubator-SNAPSHOT</sca.version>
         <sdo.version>1.0-incubator-SNAPSHOT</sdo.version>
         <testing.version>1.0-incubator-SNAPSHOT</testing.version>
+        <scaSpecVersion>1.0</scaSpecVersion>
     </properties>
 
     <modules>
