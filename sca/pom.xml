@@ -35,6 +35,16 @@
         <axis2Version>1.1.1</axis2Version>
     </properties>
 
+    <modules>
+        <module>extensions</module>
+        <module>kernel</module>
+        <module>plugins</module>
+        <module>runtime</module>
+        <module>services</module>
+        <module>test</module>
+    </modules>
+
+
     <!-- definition of repositories where the parent pom can be found -->
     <repositories>
         <repository>
