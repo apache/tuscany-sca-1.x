@@ -42,13 +42,13 @@
         <dependency>
             <groupId>org.osoa</groupId>
             <artifactId>sca-api-r${scaSpecVersion}</artifactId>
-            <version>1.0-incubator-SNAPSHOT</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>commonj</groupId>
             <artifactId>sdo-api-r2.1</artifactId>
-            <version>1.0-incubator-SNAPSHOT</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -56,7 +56,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sdo</groupId>
             <artifactId>tuscany-sdo-impl</artifactId>
-            <version>1.0-incubator-SNAPSHOT</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -76,7 +76,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
             <artifactId>webapp-api</artifactId>
-               <version>0.1-pre-spec-SNAPSHOT</version>
+               <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>
@@ -96,7 +96,7 @@
             <plugin>
                 <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
                 <artifactId>tuscany-war-plugin</artifactId>
-                <version>0.1-pre-spec-SNAPSHOT</version>
+                <version>0.1-integration-incubating-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <id>tuscany-war</id>
@@ -114,12 +114,12 @@
                         <dependency>
                             <groupId>org.apache.tuscany.sca.services.databinding</groupId>
                             <artifactId>databinding-sdo</artifactId>
-                            <version>1.0-incubator-SNAPSHOT</version>
+                            <version>0.1-integration-incubating-SNAPSHOT</version>
                         </dependency>
                         <dependency>
                             <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
                             <artifactId>tuscany-axis2</artifactId>
-                            <version>1.0-incubator-SNAPSHOT</version>
+                            <version>0.1-integration-incubating-SNAPSHOT</version>
                         </dependency>
                     </extensions>
 

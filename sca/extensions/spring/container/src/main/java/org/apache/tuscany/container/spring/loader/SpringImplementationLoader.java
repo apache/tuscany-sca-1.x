@@ -42,8 +42,8 @@ import org.apache.tuscany.spi.extension.LoaderExtension;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
 import org.apache.tuscany.spi.loader.MissingResourceException;
-import org.apache.tuscany.spi.model.BoundReferenceDefinition;
-import org.apache.tuscany.spi.model.BoundServiceDefinition;
+import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.model.ModelObject;
 
 import org.apache.tuscany.container.spring.model.SpringComponentType;
@@ -95,8 +95,8 @@ public class SpringImplementationLoader extends LoaderExtension<SpringImplementa
                 case START_ELEMENT:
                     QName qname = reader.getName();
                     if (SERVICE_ELEMENT.equals(qname)) {
-                        BoundServiceDefinition service =
-                            (BoundServiceDefinition) registry.load(parent, null, reader, deploymentContext);
+                        ServiceDefinition service =
+                            (ServiceDefinition) registry.load(parent, null, reader, deploymentContext);
                         if (!type.isExposeAllBeans()) {
                             String name = service.getName();
                             if (!type.getServiceDeclarations().containsKey(name)) {
@@ -105,8 +105,8 @@ public class SpringImplementationLoader extends LoaderExtension<SpringImplementa
                         }
                         type.getDeclaredServices().put(service.getName(), service);
                     } else if (REFERENCE_ELEMENT.equals(qname)) {
-                        BoundReferenceDefinition reference =
-                            (BoundReferenceDefinition) registry.load(parent, null, reader, deploymentContext);
+                        ReferenceDefinition reference =
+                            (ReferenceDefinition) registry.load(parent, null, reader, deploymentContext);
                         type.getDeclaredReferences().put(reference.getName(), reference);
                     }
                     break;

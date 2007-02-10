@@ -29,8 +29,8 @@ import org.apache.tuscany.spi.component.ServiceBinding;
 import org.apache.tuscany.spi.component.Reference;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.ComponentBuilderExtension;
-import org.apache.tuscany.spi.model.BoundReferenceDefinition;
-import org.apache.tuscany.spi.model.BoundServiceDefinition;
+import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.wire.InboundInvocationChain;
@@ -61,7 +61,7 @@ public class SpringCompositeBuilder extends ComponentBuilderExtension<SpringImpl
         // We need to set the target invoker as opposed to having the connector do it since the
         // Spring context is "opaque" to the wiring fabric. In other words, the Spring context does not expose
         // its beans as SCA components to the connector to wire the serviceBindings to
-        for (BoundServiceDefinition serviceDefinition : componentType.getServices().values()) {
+        for (ServiceDefinition serviceDefinition : componentType.getServices().values()) {
             // call back into builder registry to handle building of serviceBindings
             Service service = builderRegistry.build(parent, serviceDefinition, deploymentContext);
             for (ServiceBinding binding : service.getServiceBindings()) {
@@ -83,7 +83,7 @@ public class SpringCompositeBuilder extends ComponentBuilderExtension<SpringImpl
                 throw new BuilderInstantiationException("Error registering service", e);
             }
         }
-        for (BoundReferenceDefinition referenceDefinition : componentType.getReferences().values()) {
+        for (ReferenceDefinition referenceDefinition : componentType.getReferences().values()) {
             // call back into builder registry to handle building of references
             Reference reference = builderRegistry.build(parent, referenceDefinition, deploymentContext);
             connector.connect(reference);

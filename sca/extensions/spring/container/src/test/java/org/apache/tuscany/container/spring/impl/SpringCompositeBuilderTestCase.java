@@ -30,7 +30,7 @@ import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.component.Service;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.ServiceBindingExtension;
-import org.apache.tuscany.spi.model.BoundServiceDefinition;
+import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.wire.InboundWire;
@@ -87,7 +87,7 @@ public class SpringCompositeBuilderTestCase extends TestCase {
         // Configure the mock builder registry
         BuilderRegistry registry = createMock(BuilderRegistry.class);
         expect(registry.build(isA(CompositeComponent.class),
-            isA(BoundServiceDefinition.class),
+            isA(ServiceDefinition.class),
             isA(DeploymentContext.class))).andStubReturn(service);
         replay(registry);
 
@@ -115,7 +115,7 @@ public class SpringCompositeBuilderTestCase extends TestCase {
 
     private SpringComponentType<Property<?>> createComponentType() {
         SpringComponentType<Property<?>> componentType = new SpringComponentType<Property<?>>();
-        BoundServiceDefinition serviceDefinition = new BoundServiceDefinition();
+        ServiceDefinition serviceDefinition = new ServiceDefinition();
         serviceDefinition.setName("fooService");
         serviceDefinition.addBinding(new TestBindingDefinition());
         try {

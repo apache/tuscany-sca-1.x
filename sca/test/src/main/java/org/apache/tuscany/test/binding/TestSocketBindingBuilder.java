@@ -5,8 +5,8 @@ import org.apache.tuscany.spi.component.ReferenceBinding;
 import org.apache.tuscany.spi.component.ServiceBinding;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.BindingBuilderExtension;
-import org.apache.tuscany.spi.model.BoundReferenceDefinition;
-import org.apache.tuscany.spi.model.BoundServiceDefinition;
+import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.ServiceDefinition;
 
 /**
  * @version $Rev$ $Date$
@@ -14,7 +14,7 @@ import org.apache.tuscany.spi.model.BoundServiceDefinition;
 public class TestSocketBindingBuilder extends BindingBuilderExtension<TestSocketBindingDefinition> {
 
     public ServiceBinding build(CompositeComponent parent,
-                                BoundServiceDefinition definition,
+                                ServiceDefinition definition,
                                 TestSocketBindingDefinition bindingDefinition,
                                 DeploymentContext ctx) {
         int port = bindingDefinition.getPort();
@@ -22,7 +22,7 @@ public class TestSocketBindingBuilder extends BindingBuilderExtension<TestSocket
     }
 
     public ReferenceBinding build(CompositeComponent parent,
-                                  BoundReferenceDefinition definition,
+                                  ReferenceDefinition definition,
                                   TestSocketBindingDefinition bindingDefinition,
                                   DeploymentContext ctx) {
         String name = definition.getName();

@@ -24,7 +24,7 @@ import org.apache.tuscany.spi.component.ServiceBinding;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.BindingBuilderExtension;
 import org.apache.tuscany.spi.host.ServletHost;
-import org.apache.tuscany.spi.model.BoundServiceDefinition;
+import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.wire.WireService;
 
 /**
@@ -58,7 +58,7 @@ public class JSONRPCBindingBuilder extends BindingBuilderExtension<JSONRPCBindin
 
     @SuppressWarnings("unchecked")
     public ServiceBinding build(CompositeComponent parent,
-                                BoundServiceDefinition serviceDefinition,
+                                ServiceDefinition serviceDefinition,
                                 JSONRPCBindingDefinition bindingDefinition, DeploymentContext deploymentContext) {
         return new JSONRPCServiceBinding(serviceDefinition.getName(), parent, this.wireService, servletHost);
     }

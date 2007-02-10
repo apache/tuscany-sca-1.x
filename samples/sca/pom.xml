@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.apache.tuscany.samples</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0-incubator-SNAPSHOT</version>
+        <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -31,13 +31,13 @@
     <name>Tuscany SCA Samples</name>
 
     <properties>
-        <tuscanyVersion>1.0-incubator-SNAPSHOT</tuscanyVersion>
+        <tuscanyVersion>0.1-integration-incubating-SNAPSHOT</tuscanyVersion>
         <specVersion>0.95</specVersion>
 
-        <scaVersion>1.0-incubator-SNAPSHOT</scaVersion>
-        <scaImplVersion>1.0-incubator-SNAPSHOT</scaImplVersion>
-        <sdoVersion>1.0-incubator-SNAPSHOT</sdoVersion>
-        <dasVersion>1.0-incubator-SNAPSHOT</dasVersion>
+        <scaVersion>0.1-integration-incubating-SNAPSHOT</scaVersion>
+        <scaImplVersion>0.1-integration-incubating-SNAPSHOT</scaImplVersion>
+        <sdoVersion>0.1-integration-incubating-SNAPSHOT</sdoVersion>
+        <dasVersion>0.1-integration-incubating-SNAPSHOT</dasVersion>
     </properties>
 
     <!-- definition of repositories where the parent pom can be found -->
@@ -84,7 +84,7 @@
             <dependency>
                 <groupId>org.osoa</groupId>
                 <artifactId>sca-api-r${specVersion}</artifactId>
-                <version>1.0-incubator-SNAPSHOT</version>
+                <version>0.1-integration-incubating-SNAPSHOT</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>

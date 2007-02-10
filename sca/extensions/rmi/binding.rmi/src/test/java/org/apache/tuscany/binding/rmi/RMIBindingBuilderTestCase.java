@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tuscany.spi.model.BindingDefinition;
-import org.apache.tuscany.spi.model.BoundReferenceDefinition;
+import org.apache.tuscany.spi.model.ReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceContract;
 
 import junit.framework.TestCase;
@@ -36,7 +36,7 @@ public class RMIBindingBuilderTestCase extends TestCase {
 
     public void testBuildService() {
         RMIBindingBuilder builder = new RMIBindingBuilder(null);
-        BoundReferenceDefinition def = createMock(BoundReferenceDefinition.class);
+        ReferenceDefinition def = createMock(ReferenceDefinition.class);
         expect(def.getName()).andReturn("petra");
         RMIBindingDefinition binding = new RMIBindingDefinition();
         List<BindingDefinition> bindings = new ArrayList<BindingDefinition>();

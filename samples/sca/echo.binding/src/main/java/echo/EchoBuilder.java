@@ -24,8 +24,8 @@ import org.apache.tuscany.spi.component.ReferenceBinding;
 import org.apache.tuscany.spi.component.ServiceBinding;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.BindingBuilderExtension;
-import org.apache.tuscany.spi.model.BoundReferenceDefinition;
-import org.apache.tuscany.spi.model.BoundServiceDefinition;
+import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.ServiceDefinition;
 
 /**
  * @version $Rev$ $Date$
@@ -33,14 +33,14 @@ import org.apache.tuscany.spi.model.BoundServiceDefinition;
 public class EchoBuilder extends BindingBuilderExtension<EchoBinding> {
 
     public ServiceBinding build(CompositeComponent parent,
-                                BoundServiceDefinition boundServiceDefinition,
+                                ServiceDefinition boundServiceDefinition,
                                 EchoBinding bindingDefinition,
                                 DeploymentContext deploymentContext) throws BuilderException {
         return new EchoService(boundServiceDefinition.getName(), parent);
     }
 
     public ReferenceBinding build(CompositeComponent parent,
-                                  BoundReferenceDefinition boundReferenceDefinition,
+                                  ReferenceDefinition boundReferenceDefinition,
                                   EchoBinding bindingDefinition,
                                   DeploymentContext deploymentContext) throws BuilderException {
         return new EchoReference(boundReferenceDefinition.getName(), parent);

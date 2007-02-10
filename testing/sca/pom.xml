@@ -26,14 +26,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.testing</groupId>
     <artifactId>tuscany-testing-sca</artifactId>
-    <version>1.0-incubator-SNAPSHOT</version>
+    <version>0.1-integration-incubating-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Tuscany SCA tests</name>
     <properties>
-        <scaKernelVersion>1.0-incubator-SNAPSHOT</scaKernelVersion>
-        <sca.version>1.0-incubator-SNAPSHOT</sca.version>
+        <sca.version>0.1-integration-incubating-SNAPSHOT</sca.version>
+        <testing.version>0.1-integration-incubating-SNAPSHOT</testing.version>
+        <scaKernelVersion>0.1-integration-incubating-SNAPSHOT</scaKernelVersion>
         <sdo.version>1.0-incubator-SNAPSHOT</sdo.version>
-        <testing.version>1.0-incubator-SNAPSHOT</testing.version>
+        <testing.version>0.1-integration-incubating-SNAPSHOT</testing.version>
         <scaSpecVersion>1.0</scaSpecVersion>
     </properties>
 

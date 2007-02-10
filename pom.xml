@@ -24,7 +24,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany</groupId>
     <artifactId>tuscany-project</artifactId>
-    <version>1.0-incubator-SNAPSHOT</version>
+    <version>0.1-integration-incubating-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Tuscany Project</name>
     <url>http://incubator.apache.org/tuscany/</url>

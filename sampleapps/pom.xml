@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.sampleapps</groupId>
     <artifactId>tuscany-sampleapps</artifactId>
-    <version>1.0-incubator-SNAPSHOT</version>
+    <version>0.1-integration-incubating-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Tuscany Scenario Samples</name>
 
@@ -35,12 +35,12 @@
     </prerequisites>
     
     <properties>
-        <sca.version>1.0-incubator-SNAPSHOT</sca.version>
+        <sca.version>0.1-integration-incubating-SNAPSHOT</sca.version>
         <sdo.version>1.0-incubator-SNAPSHOT</sdo.version>
-        <scaKernelVersion>1.0-incubator-SNAPSHOT</scaKernelVersion>
+        <scaKernelVersion>0.1-integration-incubating-SNAPSHOT</scaKernelVersion>
         <axis2Version>1.1.1</axis2Version>
         <dasVersion>1.0-incubator-SNAPSHOT</dasVersion>
-        <tuscanyVersion>1.0-incubator-SNAPSHOT</tuscanyVersion>
+        <tuscanyVersion>0.1-integration-incubating-SNAPSHOT</tuscanyVersion>
         <specVersion>0.95</specVersion>
     </properties>
 

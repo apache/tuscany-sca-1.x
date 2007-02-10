@@ -26,8 +26,8 @@ import org.apache.tuscany.spi.component.ReferenceBinding;
 import org.apache.tuscany.spi.component.ServiceBinding;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.BindingBuilderExtension;
-import org.apache.tuscany.spi.model.BoundReferenceDefinition;
-import org.apache.tuscany.spi.model.BoundServiceDefinition;
+import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.ServiceDefinition;
 
 import org.apache.tuscany.host.rmi.RMIHost;
 
@@ -52,7 +52,7 @@ public class RMIBindingBuilder extends BindingBuilderExtension<RMIBindingDefinit
 
     @SuppressWarnings({"unchecked"})
     public ServiceBinding build(CompositeComponent parent,
-                                BoundServiceDefinition boundServiceDefinition,
+                                ServiceDefinition boundServiceDefinition,
                                 RMIBindingDefinition bindingDefinition,
                                 DeploymentContext deploymentContext) {
 
@@ -69,7 +69,7 @@ public class RMIBindingBuilder extends BindingBuilderExtension<RMIBindingDefinit
     }
 
     public ReferenceBinding build(CompositeComponent parent,
-                                  BoundReferenceDefinition boundReferenceDefinition,
+                                  ReferenceDefinition boundReferenceDefinition,
                                   RMIBindingDefinition bindingDefinition,
                                   DeploymentContext deploymentContext) {
         String name = boundReferenceDefinition.getName();

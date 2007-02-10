@@ -48,7 +48,7 @@ public interface Builder {
                                                   DeploymentContext context) throws BuilderException;
 
     /**
-     * Builds a <code>Service</code> and its bindings from a <code>BoundServiceDefinition</code>
+     * Builds a <code>Service</code> and its bindings from a <code>ServiceDefinition</code>
      *
      * @param parent     the composite that will be the parent of the newly built service
      * @param definition the service definition as parsed from an SCA assembly
@@ -60,7 +60,7 @@ public interface Builder {
         throws BuilderException;
 
     /**
-     * Builds a <code>Reference</code> and its bindings from a <code>BoundReferenceDefinition</code>
+     * Builds a <code>Reference</code> and its bindings from a <code>ReferenceDefinition</code>
      *
      * @param parent     the composite that will be the parent of the newly built reference
      * @param definition the reference definition as parsed from an SCA assembly

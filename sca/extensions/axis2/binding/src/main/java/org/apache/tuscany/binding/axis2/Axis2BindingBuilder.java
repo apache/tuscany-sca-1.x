@@ -21,6 +21,12 @@ package org.apache.tuscany.binding.axis2;
 import javax.wsdl.Port;
 import javax.wsdl.PortType;
 
+import org.apache.axiom.om.OMElement;
+import org.apache.axis2.AxisFault;
+import org.apache.axis2.context.ConfigurationContext;
+import org.apache.tuscany.binding.axis2.util.TuscanyAxisConfigurator;
+import org.apache.tuscany.idl.wsdl.InterfaceWSDLIntrospector;
+import org.apache.tuscany.idl.wsdl.WSDLServiceContract;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.builder.BuilderConfigException;
 import org.apache.tuscany.spi.component.CompositeComponent;
@@ -31,17 +37,10 @@ import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.BindingBuilderExtension;
 import org.apache.tuscany.spi.host.ServletHost;
 import org.apache.tuscany.spi.idl.InvalidServiceContractException;
-import org.apache.tuscany.spi.model.BoundReferenceDefinition;
-import org.apache.tuscany.spi.model.BoundServiceDefinition;
+import org.apache.tuscany.spi.model.ReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceContract;
+import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.wire.IncompatibleServiceContractException;
-
-import org.apache.axiom.om.OMElement;
-import org.apache.axis2.AxisFault;
-import org.apache.axis2.context.ConfigurationContext;
-import org.apache.tuscany.binding.axis2.util.TuscanyAxisConfigurator;
-import org.apache.tuscany.idl.wsdl.InterfaceWSDLIntrospector;
-import org.apache.tuscany.idl.wsdl.WSDLServiceContract;
 
 /**
  * Builds a {@link org.osoa.sca.annotations.Service} or {@link org.apache.tuscany.spi.component.ReferenceBinding} configured
@@ -86,7 +85,7 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
     @SuppressWarnings("unchecked")
     public ServiceBinding build(
         CompositeComponent parent,
-        BoundServiceDefinition serviceDefinition,
+        ServiceDefinition serviceDefinition,
         WebServiceBindingDefinition wsBinding, DeploymentContext deploymentContext) {
 
         try {
@@ -136,7 +135,7 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
     @SuppressWarnings("unchecked")
     public ReferenceBinding build(
         CompositeComponent parent,
-        BoundReferenceDefinition boundReferenceDefinition,
+        ReferenceDefinition boundReferenceDefinition,
         WebServiceBindingDefinition wsBinding,
         DeploymentContext deploymentContext) {
 

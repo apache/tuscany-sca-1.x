@@ -41,18 +41,19 @@
         <dependency>
             <groupId>org.osoa</groupId>
             <artifactId>sca-api-r${scaSpecVersion}</artifactId>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>commonj</groupId>
             <artifactId>sdo-api-r2.1</artifactId>
-            <version>1.0-incubator-SNAPSHOT</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
             <artifactId>tuscany-axis2</artifactId>
-            <version>1.0-incubator-SNAPSHOT</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.testing.bindingstest</groupId>
@@ -71,7 +72,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>test</artifactId>
-            <version>0.1-pre-spec-SNAPSHOT</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -169,12 +170,12 @@
                                 <dependency>
                                     <groupId>org.apache.tuscany.sca.services.databinding</groupId>
                                     <artifactId>databinding-sdo</artifactId>
-                                    <version>1.0-incubator-SNAPSHOT</version>
+                                    <version>0.1-integration-incubating-SNAPSHOT</version>
                                 </dependency>
                                 <dependency>
                                     <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
                                     <artifactId>tuscany-axis2</artifactId>
-                                    <version>1.0-incubator-SNAPSHOT</version>
+                                    <version>0.1-integration-incubating-SNAPSHOT</version>
                                 </dependency>
                             </extensions>
                         </configuration>

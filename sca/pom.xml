@@ -28,10 +28,10 @@
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <name>Tuscany SCA Implementation Project</name>
-    <version>1.0-incubator-SNAPSHOT</version>
+    <version>0.1-integration-incubating-SNAPSHOT</version>
     <properties>
-        <sca.version>1.0-incubator-SNAPSHOT</sca.version>
-        <scaKernelVersion>1.0-incubator-SNAPSHOT</scaKernelVersion>
+        <sca.version>0.1-integration-incubating-SNAPSHOT</sca.version>
+        <scaKernelVersion>0.1-integration-incubating-SNAPSHOT</scaKernelVersion>
         <axis2Version>1.1.1</axis2Version>
     </properties>
 
@@ -97,7 +97,7 @@
             <dependency>
                 <groupId>org.osoa</groupId>
                 <artifactId>sca-api-r0.95</artifactId>
-                <version>1.0-incubator-SNAPSHOT</version>
+                <version>0.1-integration-incubating-SNAPSHOT</version>
                 <scope>compile</scope>
             </dependency>
             <!-- javax.servlet API -->

@@ -28,7 +28,7 @@
     <artifactId>sca-api-r${specVersion}</artifactId>
     <name>SCA API Version 0.95</name>
     <description>API classes for the Service Component Architecture</description>
-    <version>1.0-incubator-SNAPSHOT</version>
+    <version>0.1-integration-incubating-SNAPSHOT</version>
     <packaging>osgi-bundle</packaging>
 
     <properties>

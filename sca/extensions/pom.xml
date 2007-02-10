@@ -21,22 +21,22 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>parent</artifactId>
-        <version>0.1-pre-spec-SNAPSHOT</version>
+        <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.sca.extensions</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0-incubator-SNAPSHOT</version>
+    <version>0.1-integration-incubating-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Tuscany SCA Extensions</name>
 
     <properties>
-        <extensionVersion>1.0-incubator-SNAPSHOT</extensionVersion>
-        <scaKernelVersion>0.1-pre-spec-SNAPSHOT</scaKernelVersion>
-        <scaImplVersion>0.1-pre-spec-SNAPSHOT</scaImplVersion>
+        <extensionVersion>0.1-integration-incubating-SNAPSHOT</extensionVersion>
+        <scaKernelVersion>0.1-integration-incubating-SNAPSHOT</scaKernelVersion>
+        <scaImplVersion>0.1-integration-incubating-SNAPSHOT</scaImplVersion>
         <specVersion>0.95</specVersion>
-        <scaVersion>1.0-incubator-SNAPSHOT</scaVersion>
+        <scaVersion>0.1-integration-incubating-SNAPSHOT</scaVersion>
         <sdoVersion>1.0-incubator-SNAPSHOT</sdoVersion>
     </properties>
 

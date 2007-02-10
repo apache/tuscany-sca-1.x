@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.apache.tuscany.samples.sca</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0-incubator-SNAPSHOT</version>
+        <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sample-helloworldws-async</artifactId>
@@ -37,7 +37,7 @@
         <dependency>
             <groupId>org.osoa</groupId>
             <artifactId>sca-api-r0.95</artifactId>
-            <version>1.0-incubator-SNAPSHOT</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>commonj</groupId>
             <artifactId>sdo-api-r2.1</artifactId>
-            <version>1.0-incubator-SNAPSHOT</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>        
         <dependency>
@@ -117,7 +117,7 @@
     </dependencies>
     
     <build>
-        <finalName>sample-helloworldws-async-1.0-incubator-SNAPSHOT</finalName>
+        <finalName>sample-helloworldws-async-0.1-integration-incubating-SNAPSHOT</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>

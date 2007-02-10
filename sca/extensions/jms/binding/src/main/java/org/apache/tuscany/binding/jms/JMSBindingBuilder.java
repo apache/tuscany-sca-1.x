@@ -25,8 +25,8 @@ import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.component.ServiceBinding;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.BindingBuilderExtension;
-import org.apache.tuscany.spi.model.BoundReferenceDefinition;
-import org.apache.tuscany.spi.model.BoundServiceDefinition;
+import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.model.ServiceContract;
 
 import org.apache.axiom.om.OMElement;
@@ -50,7 +50,7 @@ public class JMSBindingBuilder extends BindingBuilderExtension<JMSBindingDefinit
     }
 
     public ServiceBinding build(CompositeComponent parent,
-                                BoundServiceDefinition serviceDefinition,
+                                ServiceDefinition serviceDefinition,
                                 JMSBindingDefinition jmsBinding,
                                 DeploymentContext deploymentContext) {
 
@@ -75,7 +75,7 @@ public class JMSBindingBuilder extends BindingBuilderExtension<JMSBindingDefinit
     }
 
     public JMSReferenceBinding build(CompositeComponent parent,
-                                     BoundReferenceDefinition referenceDefinition,
+                                     ReferenceDefinition referenceDefinition,
                                      JMSBindingDefinition jmsBinding,
                                      DeploymentContext deploymentContext) {
 

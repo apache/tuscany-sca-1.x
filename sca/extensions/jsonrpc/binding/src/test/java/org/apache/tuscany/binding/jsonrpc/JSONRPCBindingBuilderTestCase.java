@@ -40,11 +40,11 @@ public class JSONRPCBindingBuilderTestCase extends TestCase {
     }
 
     @SuppressWarnings("unchecked")
-    public void testBuildCompositeComponentBoundServiceDefinitionOfJSONRPCBindingDeploymentContext() {
+    public void testBuildCompositeComponentServiceDefinitionOfJSONRPCBindingDeploymentContext() {
 //        JSONRPCBindingBuilder bindingBuilder = new JSONRPCBindingBuilder();
 //        CompositeComponent mockParent = createMock(CompositeComponent.class);
 //        replay(mockParent);
-//        BoundServiceDefinition mockServiceDefinition = createMock((new BoundServiceDefinition()).getClass());
+//        ServiceDefinition mockServiceDefinition = createMock((new ServiceDefinition()).getClass());
 //        JavaInterfaceProcessorRegistry registry = new JavaInterfaceProcessorRegistryImpl();
 //        try {
 //            ServiceContract<?> contract = registry.introspect(JSONRPCServiceBinding.class);

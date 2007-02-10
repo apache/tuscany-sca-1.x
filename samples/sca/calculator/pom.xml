@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.apache.tuscany.samples.sca</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0-incubator-SNAPSHOT</version>
+        <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sample-calculator</artifactId>
@@ -37,7 +37,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>test</artifactId>
-				<version>0.1-pre-spec-SNAPSHOT</version>
+				<version>0.1-integration-incubating-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

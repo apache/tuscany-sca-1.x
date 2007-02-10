@@ -23,7 +23,7 @@
     <artifactId>spec</artifactId>
     <packaging>pom</packaging>
     <name>OSOA Specification API jars</name>
-    <version>1.0-incubator-SNAPSHOT</version>
+    <version>0.1-integration-incubating-SNAPSHOT</version>
 
     <distributionManagement>
         <repository>
