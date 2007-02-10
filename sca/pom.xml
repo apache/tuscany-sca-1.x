@@ -36,12 +36,14 @@
     </properties>
 
     <modules>
-        <module>extensions</module>
         <module>kernel</module>
-        <module>plugins</module>
-        <module>runtime</module>
         <module>services</module>
         <module>test</module>
+        <module>plugins</module>
+<!--
+        <module>extensions</module>
+        <module>runtime</module>
+-->
     </modules>
 
 
