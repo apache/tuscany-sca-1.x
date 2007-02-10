@@ -24,7 +24,7 @@
         <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>wsdl</artifactId>
+    <artifactId>tuscany-wsdl</artifactId>
     <packaging>jar</packaging>
     <name>Apache Tuscany WSDL</name>
     <description>Tuscany WSDL Support.</description>

@@ -33,13 +33,13 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>tuscany-core</artifactId>
             <version>${pom.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>test</artifactId>
+            <artifactId>tuscany-test</artifactId>
             <version>${tuscanyVersion}</version>
             <scope>test</scope>
         </dependency>

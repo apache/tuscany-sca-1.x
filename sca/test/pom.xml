@@ -24,14 +24,14 @@
         <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>test</artifactId>
+    <artifactId>tuscany-test</artifactId>
     <name>Apache Tuscany Test Framework</name>
     <description>Tuscany Testcase Framework</description>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>tuscany-core</artifactId>
             <version>0.1-integration-incubating-SNAPSHOT</version>
         </dependency>
         <dependency>

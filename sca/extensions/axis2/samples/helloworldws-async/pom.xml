@@ -55,7 +55,7 @@
         </dependency>        
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>tuscany-core</artifactId>
             <version>${pom.version}</version>
             <scope>runtime</scope> <!-- runtime is need for webapp integration to include jar -->
         </dependency>

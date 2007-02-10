@@ -46,7 +46,7 @@
         
         <dependency>
             <groupId>org.apache.tuscany.sca.services.idl</groupId>
-            <artifactId>wsdl</artifactId>
+            <artifactId>tuscany-wsdl</artifactId>
              <version>${sca.version}</version>
             <scope>runtime</scope> <!-- runtime is need for webapp integration to include jar -->
         </dependency>

@@ -110,7 +110,7 @@
 
             <dependency>
                <groupId>org.apache.tuscany.sca</groupId>
-               <artifactId>test</artifactId>
+               <artifactId>tuscany-test</artifactId>
                <version>${scaKernelVersion}</version>
                <scope>test</scope>
             </dependency>
@@ -138,7 +138,7 @@
 
             <dependency>
                <groupId>org.apache.tuscany.sca.services.idl</groupId>
-               <artifactId>wsdl</artifactId>
+               <artifactId>tuscany-wsdl</artifactId>
                <version>${scaKernelVersion}</version>
                <scope>compile</scope>
             </dependency>

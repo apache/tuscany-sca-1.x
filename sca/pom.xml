@@ -90,7 +90,7 @@
             <!-- Tuscany Kernel Modules -->
             <dependency>
                 <groupId>org.apache.tuscany.sca.kernel</groupId>
-                <artifactId>core</artifactId>
+                <artifactId>tuscany-core</artifactId>
                 <version>${scaKernelVersion}</version>
                 <scope>compile</scope>
             </dependency>

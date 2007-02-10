@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>test</artifactId>
+            <artifactId>tuscany-test</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.extensions.javascript</groupId>

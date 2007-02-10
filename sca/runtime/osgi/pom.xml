@@ -36,7 +36,7 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>tuscany-core</artifactId>
             <version>${sca.version}</version>
             <scope>compile</scope>
         </dependency>
@@ -48,7 +48,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>test</artifactId>
+            <artifactId>tuscany-test</artifactId>
             <version>${sca.version}</version>
             <scope>test</scope>
         </dependency>

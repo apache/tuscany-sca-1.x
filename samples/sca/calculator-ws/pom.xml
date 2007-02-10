@@ -60,7 +60,7 @@
                     <extensions>
                         <dependency>
                             <groupId>org.apache.tuscany.sca.services.idl</groupId>
-                            <artifactId>wsdl</artifactId>
+                            <artifactId>tuscany-wsdl</artifactId>
                             <version>${tuscanyVersion}</version>
                         </dependency>
                         <dependency>

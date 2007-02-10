@@ -100,7 +100,7 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.tuscany.sca</groupId>
-                <artifactId>test</artifactId>
+                <artifactId>tuscany-test</artifactId>
                 <version>${scaImplVersion}</version>
                 <scope>test</scope>
             </dependency>

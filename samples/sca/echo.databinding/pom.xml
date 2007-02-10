@@ -38,7 +38,7 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>test</artifactId>
+            <artifactId>tuscany-test</artifactId>
             <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
@@ -52,7 +52,7 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca.services.idl</groupId>
-            <artifactId>wsdl</artifactId>
+            <artifactId>tuscany-wsdl</artifactId>
             <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

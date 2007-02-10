@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>test</artifactId>
+            <artifactId>tuscany-test</artifactId>
 				<version>0.1-integration-incubating-SNAPSHOT</version>
         </dependency>
     </dependencies>

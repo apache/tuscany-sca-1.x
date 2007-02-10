@@ -54,14 +54,14 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>tuscany-core</artifactId>
 				<version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca.services.idl</groupId>
-            <artifactId>wsdl</artifactId>
+            <artifactId>tuscany-wsdl</artifactId>
             <version>${sca.version}</version>
             <scope>compile</scope>
         </dependency>
