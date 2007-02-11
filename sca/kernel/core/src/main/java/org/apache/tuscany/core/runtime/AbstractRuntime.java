@@ -42,6 +42,7 @@ import org.apache.tuscany.spi.component.TargetResolutionException;
 import org.apache.tuscany.spi.deployer.Deployer;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.model.ComponentDefinition;
+import org.apache.tuscany.spi.model.CompositeImplementation;
 import org.apache.tuscany.spi.services.management.TuscanyManagementService;
 import org.apache.tuscany.spi.wire.WireService;
 
@@ -262,4 +263,19 @@ public abstract class AbstractRuntime implements TuscanyRuntime {
 
         return (CompositeComponent) deployer.deploy(parent, definition);
     }
+
+    protected CompositeComponent deployApplicationScdl(Deployer deployer,
+			CompositeComponent parent, String name, URL applicationScdl,
+			ClassLoader applicationClassLoader) throws LoaderException,
+			BuilderException, ComponentException {
+
+		CompositeImplementation impl = new CompositeImplementation();
+		impl.setScdlLocation(applicationScdl);
+		impl.setClassLoader(applicationClassLoader);
+		ComponentDefinition<CompositeImplementation> definition = new ComponentDefinition<CompositeImplementation>(
+				name, impl);
+
+		return (CompositeComponent) deployer.deploy(parent, definition);
+	}
+
 }
