@@ -49,7 +49,9 @@
                 <module>spec</module>
                 <module>sca</module>
                 <module>sca/extensions</module>
+<!--
                 <module>testing/sca</module>
+-->
                 <module>samples</module>
                 <module>sampleapps</module>
             </modules>
