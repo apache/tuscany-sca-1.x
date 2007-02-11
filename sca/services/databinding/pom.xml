@@ -29,7 +29,7 @@
     <groupId>org.apache.tuscany.sca.services.databinding</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Data Bindings</name>
+    <name>Apache Tuscany SCA Data Bindings</name>
 
     <modules>
         <!-- <module>databinding-castor</module> -->

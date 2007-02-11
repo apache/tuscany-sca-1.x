@@ -27,7 +27,7 @@
     <groupId>org.apache.tuscany.sca</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Implementation Project</name>
+    <name>Apache Tuscany SCA Implementation Project</name>
     <version>0.1-integration-incubating-SNAPSHOT</version>
     <properties>
         <sca.version>0.1-integration-incubating-SNAPSHOT</sca.version>

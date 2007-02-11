@@ -28,7 +28,7 @@
     <artifactId>sca-itest</artifactId>
     <version>0.1-integration-incubating-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Integration Test Suite</name>
+    <name>Apache Tuscany SCA Integration Test Suite</name>
 
 
     <modules>

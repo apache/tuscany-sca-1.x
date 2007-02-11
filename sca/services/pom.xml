@@ -27,7 +27,7 @@
     <groupId>org.apache.tuscany.sca.services</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Services</name>
+    <name>Apache Tuscany SCA Services</name>
 
     <!-- definition of repositories where the parent pom can be found -->
     <repositories>

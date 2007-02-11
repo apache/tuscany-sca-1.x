@@ -116,7 +116,7 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.tuscany.sca.plugins</groupId>
+                <groupId>org.apache.tuscany.sca.extensions.axis2.plugins</groupId>
                 <artifactId>tuscany-plugin-wsdl2java</artifactId>
                 <version>${scaKernelVersion}</version>
                 <executions>

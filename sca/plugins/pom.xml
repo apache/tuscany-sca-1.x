@@ -28,7 +28,7 @@
     <groupId>org.apache.tuscany.sca.plugins</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Maven Plugins</name>
+    <name>Apache Tuscany SCA Maven Plugins</name>
 
     <!-- definition of repositories where the parent pom can be found -->
     <repositories>

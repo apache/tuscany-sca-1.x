@@ -28,7 +28,7 @@
     <artifactId>tuscany-testing-sca</artifactId>
     <version>0.1-integration-incubating-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Tuscany SCA tests</name>
+    <name>Apache Tuscany SCA tests</name>
     <properties>
         <sca.version>0.1-integration-incubating-SNAPSHOT</sca.version>
         <testing.version>0.1-integration-incubating-SNAPSHOT</testing.version>

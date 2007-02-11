@@ -27,7 +27,7 @@
     <groupId>org.apache.tuscany.sca.services.idl</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Interface Definition Languages</name>
+    <name>Apache Tuscany SCA Interface Definition Languages</name>
 
     <!-- definition of repositories where the parent pom can be found -->
     <repositories>

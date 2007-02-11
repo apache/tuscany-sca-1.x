@@ -29,7 +29,7 @@
     <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Extensions for Axis2</name>
+    <name>Apache Tuscany SCA Extensions for Axis2</name>
 
     <repositories>
         <repository>

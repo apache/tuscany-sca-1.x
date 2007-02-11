@@ -28,7 +28,7 @@
     <groupId>org.apache.tuscany.samples.sca</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Samples</name>
+    <name>Apache Tuscany SCA Samples</name>
 
     <properties>
         <tuscanyVersion>0.1-integration-incubating-SNAPSHOT</tuscanyVersion>

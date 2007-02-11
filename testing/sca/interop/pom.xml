@@ -24,7 +24,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tuscany-testing-sca-interop</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Interop Testing</name>
+    <name>Apache Tuscany SCA Interop Testing</name>
 
     <modules>
         <module>clients</module>

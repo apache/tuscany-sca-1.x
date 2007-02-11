@@ -27,7 +27,7 @@
     <groupId>org.apache.tuscany.sca.services.persistence</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Persistence Services</name>
+    <name>Apache Tuscany SCA Persistence Services</name>
 
     <!-- definition of repositories where the parent pom can be found -->
     <repositories>

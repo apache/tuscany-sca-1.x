@@ -29,13 +29,13 @@
     <artifactId>parent</artifactId>
     <version>0.1-integration-incubating-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Tuscany SCA Extensions</name>
+    <name>Apache Tuscany SCA Extensions</name>
 
     <properties>
         <extensionVersion>0.1-integration-incubating-SNAPSHOT</extensionVersion>
         <scaKernelVersion>0.1-integration-incubating-SNAPSHOT</scaKernelVersion>
         <scaImplVersion>0.1-integration-incubating-SNAPSHOT</scaImplVersion>
-        <specVersion>0.95</specVersion>
+        <specVersion>1.0</specVersion>
         <scaVersion>0.1-integration-incubating-SNAPSHOT</scaVersion>
         <sdoVersion>1.0-incubator-SNAPSHOT</sdoVersion>
     </properties>
@@ -68,6 +68,7 @@
 
     <modules>
         <module>axis2</module>
+<!--
         <module>groovy</module>
         <module>javascript</module>
         <module>jms</module>
@@ -75,6 +76,7 @@
         <module>rmi</module>
         <module>ruby</module>
         <module>spring</module>
+-->
     </modules>
 
     <dependencyManagement>

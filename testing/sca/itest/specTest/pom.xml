@@ -34,7 +34,7 @@
         <dependency>
             <groupId>org.osoa</groupId>
             <artifactId>sca-api-r${scaSpecVersion}</artifactId>
-            <version>${scaSpecVersion}</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
