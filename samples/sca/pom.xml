@@ -32,7 +32,7 @@
 
     <properties>
         <tuscanyVersion>0.1-integration-incubating-SNAPSHOT</tuscanyVersion>
-        <specVersion>0.95</specVersion>
+        <specVersion>1.0</specVersion>
 
         <scaVersion>0.1-integration-incubating-SNAPSHOT</scaVersion>
         <scaImplVersion>0.1-integration-incubating-SNAPSHOT</scaImplVersion>
@@ -68,15 +68,19 @@
 
     <modules>
         <module>calculator</module>
+<!--
         <module>webapp</module>
-        <!-- module>echo.databinding</module -->
+        <module>echo.databinding</module>
+-->
         <module>supplychain</module>
         <module>bigbank</module>
         <module>echo.binding</module>
         <module>inner.composite</module>
         <module>loanappconversation</module>
+<!--
         <module>loanappconversationWS</module>
         <module>loanappconversationWSClient</module>
+-->
     </modules>
 
     <dependencyManagement>

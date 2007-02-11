@@ -41,7 +41,7 @@
         <axis2Version>1.1.1</axis2Version>
         <dasVersion>1.0-incubator-SNAPSHOT</dasVersion>
         <tuscanyVersion>0.1-integration-incubating-SNAPSHOT</tuscanyVersion>
-        <specVersion>0.95</specVersion>
+        <specVersion>1.0</specVersion>
     </properties>
 
     <!-- definition of repositories where the parent pom can be found -->
@@ -183,7 +183,9 @@
         </pluginManagement>
     </build>
     <modules>
+<!--
         <module>bigbank</module>
         <module>das.pojo.service</module>
+-->
     </modules>
 </project>

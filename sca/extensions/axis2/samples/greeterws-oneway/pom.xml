@@ -36,7 +36,7 @@
     <dependencies>
         <dependency>
             <groupId>org.osoa</groupId>
-            <artifactId>sca-api-r0.95</artifactId>
+            <artifactId>sca-api-r1.0</artifactId>
             <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

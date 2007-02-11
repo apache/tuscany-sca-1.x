@@ -46,7 +46,7 @@
 
    
     <component name="MyServiceInRecursive">
-        <implementation.composite scdlLocation="MyServiceInComposite.scdl"/>
+        <implementation.composite scdlLocation="myServiceInComposite.scdl"/>
     </component>
     
     

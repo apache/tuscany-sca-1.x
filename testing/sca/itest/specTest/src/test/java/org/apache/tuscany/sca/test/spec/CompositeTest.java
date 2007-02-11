@@ -77,7 +77,7 @@ public class CompositeTest extends TestCase {
     private void display(RequestContext context) {
         System.out.println("\tService name:" + context.getServiceName());
         System.out.println("\tSecurity subject:" + context.getSecuritySubject());
-        System.out.println("\tService reference:" + context.getServiceReference());
+        //System.out.println("\tService reference:" + (Object)context.getServiceReference());
 
     }
 

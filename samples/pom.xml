@@ -36,7 +36,7 @@
         <scaKernelVersion>0.1-integration-incubating-SNAPSHOT</scaKernelVersion>
         <axis2Version>1.1.1</axis2Version>
         <tuscanyVersion>0.1-integration-incubating-SNAPSHOT</tuscanyVersion>
-        <specVersion>0.95</specVersion>
+        <specVersion>1.0</specVersion>
     </properties>
 
     <!-- definition of repositories where the parent pom can be found -->

@@ -44,7 +44,6 @@
 
     <modules>
        <module>commonj</module>
-       <module>sca-api-r0.95</module>
        <module>sca-api-r1.0</module>
     </modules>
 </project>

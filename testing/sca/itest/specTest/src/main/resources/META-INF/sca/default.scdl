@@ -26,8 +26,8 @@
     <include name="mySimpleServiceInRecursive" scdlLocation="mySimpleServiceInRecursive.scdl"/>
     <include name="myServiceInRecursive" scdlLocation="myServiceInRecursive.scdl"/>
     <include name="mySimpleServiceInRecursive2" scdlLocation="mySimpleServiceInRecursive2.scdl"/>
-    <include name="MyTotalServiceInRecursive" scdlLocation="MyTotalServiceInRecursive.scdl"/>
-    <include name="MyTotalServiceInRecursiveForReferenceOverride" scdlLocation="MyTotalServiceInRecursiveForReferenceOverride.scdl"/>
+    <include name="MyTotalServiceInRecursive" scdlLocation="myTotalServiceInRecursive.scdl"/>
+    <include name="MyTotalServiceInRecursiveForReferenceOverride" scdlLocation="myTotalServiceInRecursiveForReferenceOverride.scdl"/>
     
     
 </composite>

@@ -34,7 +34,7 @@
 
         <dependency>
             <groupId>org.osoa</groupId>
-            <artifactId>sca-api-r0.95</artifactId>
+            <artifactId>sca-api-r1.0</artifactId>
         </dependency>
 
         <dependency>

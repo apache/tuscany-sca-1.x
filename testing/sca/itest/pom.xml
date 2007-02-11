@@ -35,13 +35,17 @@
         <module>specTest</module>
         <module>propertyTest</module>
         <module>bindingsTest</module>
+<!--
 	<module>callBackAPITest</module>
+-->
 	<module>callBackBasicTest</module>
 	<module>callBackCTypeTest</module>
 	<module>callBackIDTest</module>
 	<module>callBackSetCallbackTest</module>
 	<module>callBackSetCallbackConvTest</module>
+<!--
 	<module>conversationsTest</module>
+-->
     </modules>
 
     <dependencyManagement>
