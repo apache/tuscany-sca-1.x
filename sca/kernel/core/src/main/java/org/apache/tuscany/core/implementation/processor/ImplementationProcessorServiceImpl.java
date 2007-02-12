@@ -66,7 +66,7 @@ public class ImplementationProcessorServiceImpl implements ImplementationProcess
 
     public JavaMappedService createService(Class<?> interfaze) throws InvalidServiceContractException {
         JavaMappedService service = new JavaMappedService();
-        service.setName(interfaze.getName());
+        service.setName(interfaze.getSimpleName());
         service.setRemotable(interfaze.getAnnotation(Remotable.class) != null);
         ServiceContract<?> contract = registry.introspect(interfaze);
         service.setServiceContract(contract);
