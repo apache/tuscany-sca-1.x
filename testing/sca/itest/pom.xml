@@ -32,19 +32,24 @@
 
 
     <modules>
+        <module>exceptionTests</module>
+        <module>bindingsTest</module> 
+
+	<module>callBackBasicTest</module>
+
+<!--
+        <module>exceptionXbindingTest</module>
         <module>specTest</module>
         <module>propertyTest</module>
-        <module>bindingsTest</module>
-<!--
-	<module>callBackAPITest</module>
--->
-	<module>callBackBasicTest</module>
+
+
 	<module>callBackCTypeTest</module>
+	<module>callBackAPITest</module>
 	<module>callBackIDTest</module>
 	<module>callBackSetCallbackTest</module>
 	<module>callBackSetCallbackConvTest</module>
-<!--
 	<module>conversationsTest</module>
+
 -->
     </modules>
 

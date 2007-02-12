@@ -30,12 +30,16 @@
     <packaging>pom</packaging>
     <name>Apache Tuscany SCA tests</name>
     <properties>
+        <testing.version>0.1-integration-incubating-SNAPSHOT</testing.version>
+        
         <sca.version>0.1-integration-incubating-SNAPSHOT</sca.version>
-        <testing.version>0.1-integration-incubating-SNAPSHOT</testing.version>
-        <scaKernelVersion>0.1-integration-incubating-SNAPSHOT</scaKernelVersion>
-        <sdo.version>1.0-incubator-SNAPSHOT</sdo.version>
-        <testing.version>0.1-integration-incubating-SNAPSHOT</testing.version>
         <scaSpecVersion>1.0</scaSpecVersion>
+
+        <scaKernelVersion>0.1-integration-incubating-SNAPSHOT</scaKernelVersion>
+
+        <sdo.version>1.0-incubator-SNAPSHOT</sdo.version>
+        <specVersionSDO>2.1</specVersionSDO>
+
     </properties>
 
     <modules>
