@@ -35,16 +35,6 @@
         <axis2Version>1.1.1</axis2Version>
     </properties>
 
-    <modules>
-        <module>kernel</module>
-        <module>services</module>
-        <module>test</module>
-        <module>plugins</module>
-        <module>extensions</module>
-        <module>runtime</module>
-    </modules>
-
-
     <!-- definition of repositories where the parent pom can be found -->
     <repositories>
         <repository>
@@ -327,4 +317,39 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>kernel</module>
+                <module>services</module>
+                <module>test</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>all</id>
+            <modules>
+                <module>kernel</module>
+                <module>services</module>
+                <module>test</module>
+                <module>plugins</module>
+                <module>runtime</module>
+                <module>extensions</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>extensions</id>
+            <modules>
+                <module>extensions</module>
+            </modules>
+        </profile>
+
+    </profiles>
+
 </project>

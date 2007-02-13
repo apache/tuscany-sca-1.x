@@ -37,12 +37,24 @@
     </build>
 
     <profiles>
-        <!-- default profile that builds everything -->
+        <!-- default profile -->
         <profile>
             <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <modules>
+                <module>pom/parent</module>
+                <module>buildtools</module>
+                <module>spec</module>
+                <module>sca</module>
+                <module>testing/sca</module>
+                <module>samples</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>all</id>
             <modules>
                 <module>pom/parent</module>
                 <module>buildtools</module>
