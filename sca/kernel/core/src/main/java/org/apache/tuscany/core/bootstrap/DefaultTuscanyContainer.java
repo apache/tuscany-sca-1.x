@@ -89,7 +89,9 @@ public class DefaultTuscanyContainer extends TuscanyContainer {
 
             if (applicationSCDL == null) {
                 applicationSCDL = cl.getResource(TuscanyContainer.APPLICATION_SCDL);
-                throw new RuntimeException("application SCDL not found: " + applicationSCDL);
+                if (applicationSCDL == null) {
+                    throw new RuntimeException("application SCDL not found: " + TuscanyContainer.APPLICATION_SCDL);
+                }
             }
             component = launcher.bootApplication("application", applicationSCDL);
             component.start();
