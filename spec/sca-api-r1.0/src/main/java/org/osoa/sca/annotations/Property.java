@@ -41,9 +41,9 @@ public @interface Property {
     public String name() default "";
 
     /**
-     * Indicates if a value must be specified.
+     * Indicates if property can have a default value
      */
-    public String override() default "may";
+    public String noDefault() default "false";
 
     /**
      * The XML Type in a QName format
