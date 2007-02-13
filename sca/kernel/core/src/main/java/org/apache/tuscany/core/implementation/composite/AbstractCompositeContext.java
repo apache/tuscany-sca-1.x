@@ -59,7 +59,7 @@ public abstract class AbstractCompositeContext implements CompositeContext {
     public <T> T locateService(Class<T> serviceInterface, String serviceName) throws ServiceRuntimeException {
         QualifiedName qName = new QualifiedName(serviceName);
         if (qName.getPortName() == null) {
-            String name = serviceInterface.getName();
+            String name = serviceInterface.getSimpleName();
             qName = new QualifiedName(qName.getPartName(), name);
         }
         SCAObject child = composite.getChild(qName.getPartName());
