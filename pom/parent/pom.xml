@@ -137,14 +137,6 @@
             <properties>
                 <notice.dir>src/main/resources</notice.dir>
             </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-eclipse-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>sourcecheck</id>
