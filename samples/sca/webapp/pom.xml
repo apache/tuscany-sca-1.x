@@ -32,7 +32,7 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.samples.sca</groupId>
-            <artifactId>sample-calculator</artifactId>
+            <artifactId>tuscany-sample-calculator</artifactId>
             <version>${tuscanyVersion}</version>
         </dependency>
 
