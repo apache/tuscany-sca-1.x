@@ -34,8 +34,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.osoa</groupId>
-            <artifactId>sca-api-r${scaSpecVersion}</artifactId>
+            <groupId>org.apache.tuscany.sca.kernel</groupId>
+            <artifactId>tuscany-core</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -43,20 +43,4 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.tuscany.sca.plugins</groupId>
-                <artifactId>tuscany-itest-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>

@@ -1,10 +1,12 @@
 package org.apache.tuscany.sca.test;
 
 import junit.framework.TestCase;
+
+import org.apache.tuscany.api.TuscanyContainer;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.annotations.Reference;
 
-public class CallBackBasicITest extends TestCase  {
+public class CallBackBasicTestCase extends TestCase  {
 
     private CallBackBasicClient aCallBackClient;
 	
@@ -14,9 +16,18 @@ public class CallBackBasicITest extends TestCase  {
 
     protected void setUp() throws Exception {
       super.setUp();
+      
+      TuscanyContainer.start();
+      
       aCallBackClient = CurrentCompositeContext.getContext().locateService(CallBackBasicClient.class, "CallBackBasicClient");
     }
    
+    @Override
+    protected void tearDown() throws Exception {
+    	TuscanyContainer.stop();
+    	
+    	super.tearDown();
+    }
        
    
 }

@@ -20,10 +20,11 @@ package org.apache.tuscany.sca.test.exceptions;
 
 import junit.framework.TestCase;
 
+import org.apache.tuscany.api.TuscanyContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
-public class IntraCompositeTest extends TestCase {
+public class IntraCompositeTestCase extends TestCase {
     private ExceptionHandler exceptionHandler;
 
     private CompositeContext context;
@@ -40,10 +41,21 @@ public class IntraCompositeTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
+    	
         super.setUp();
+        
+        TuscanyContainer.start();
+        
         context = CurrentCompositeContext.getContext();
         assertNotNull(context);
         exceptionHandler = context.locateService(ExceptionHandler.class, "main");
         assertNotNull(context);
+    }
+    
+    @Override
+    protected void tearDown() throws Exception {
+    	TuscanyContainer.stop();
+    	
+    	super.tearDown();
     }
 }
