@@ -32,7 +32,7 @@ public class HelloWorldTestCase extends SCATestCase {
     private HelloWorldService helloWorldService;
 
     protected void setUp() throws Exception {
-        URL scdl = getClass().getClassLoader().getResource("META-INF/sca/js.system.scdl");
+        URL scdl = getClass().getClassLoader().getResource("META-INF/sca/container.javascript.scdl");
         addExtension("JavaScriptContainer", scdl);
         setApplicationSCDL(HelloWorldService.class, "META-INF/sca/default.scdl");
         super.setUp();

@@ -33,8 +33,8 @@ import org.osoa.sca.ComponentContext;
  * The Tuscany container
  */
 public abstract class TuscanyContainer {
-    public static final String SYSTEM_SCDL = "META-INF/tuscany/system.scdl";
-    public static final String EXTENSION_SCDL = "META-INF/sca/extension.scdl";
+    public static final String SYSTEM_SCDL = "META-INF/tuscany/system.composite";
+    public static final String EXTENSION_SCDL = "META-INF/sca/extension.composite";
     public static final String APPLICATION_SCDL = "META-INF/sca/application.composite";
 
     private static TuscanyContainer instance;
@@ -82,7 +82,7 @@ public abstract class TuscanyContainer {
      * 
      * @return
      */
-    private synchronized static TuscanyContainer newInstance(final ClassLoader classLoader) {
+    private static TuscanyContainer newInstance(final ClassLoader classLoader) {
 
         try {
             final String name = TuscanyContainer.class.getName();
@@ -110,7 +110,7 @@ public abstract class TuscanyContainer {
      * 
      * @return The instance
      */
-    private static TuscanyContainer getInstance() {
+    public synchronized static TuscanyContainer getInstance() {
         if (instance != null) {
             return instance;
         }

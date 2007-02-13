@@ -53,7 +53,7 @@ import org.osoa.sca.CurrentCompositeContext;
  */
 @SuppressWarnings("deprecation")
 public class DefaultTuscanyContainer extends TuscanyContainer {
-    protected CompositeComponent component;
+    private CompositeComponent component;
     private CompositeContextImpl context;
     private LauncherImpl launcher;
     private MonitorFactory monitorFactory;
@@ -76,8 +76,8 @@ public class DefaultTuscanyContainer extends TuscanyContainer {
                 Enumeration<URL> urls = cl.getResources(TuscanyContainer.EXTENSION_SCDL);
                 exts = Collections.list(urls).toArray(new URL[0]);
             }
-            for (int i=0;i<exts.length;i++) {
-                deployExtension(composite, "tuscany.extension." + (i++), exts[i]);
+            for (int i = 0; i < exts.length; i++) {
+                deployExtension(composite, "tuscany.extension." + i, exts[i]);
             }
 
             SCAObject wireServiceComponent = composite.getSystemChild(ComponentNames.TUSCANY_WIRE_SERVICE);
@@ -140,5 +140,9 @@ public class DefaultTuscanyContainer extends TuscanyContainer {
     protected ComponentContext getContext(String componentName) {
         // TODO
         return null;
+    }
+
+    public CompositeComponent getCompsiteComponent() {
+        return component;
     }
 }

@@ -32,7 +32,7 @@ public class HelloWorldTestCase extends SCATestCase {
     private HelloWorldService helloWorldService;
 
     protected void setUp() throws Exception {
-        URL scdl = getClass().getClassLoader().getResource("META-INF/sca/ruby.system.scdl");
+        URL scdl = getClass().getClassLoader().getResource("META-INF/sca/container.ruby.scdl");
         addExtension("RubyContainer", scdl);
         setApplicationSCDL(HelloWorldService.class, "META-INF/sca/default.scdl");
         super.setUp();

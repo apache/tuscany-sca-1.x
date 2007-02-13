@@ -41,7 +41,7 @@ public class HelloWorldTestCase extends SCATestCase {
     private CompositeContext context;
 
     protected void setUp() throws Exception {
-        URL base = getClass().getResource("/META-INF/sca/js.system.scdl");
+        URL base = getClass().getResource("/META-INF/sca/container.javascript.scdl");
         addExtension("JavaScriptContainer", new URL(base, "default.scdl"));
         setApplicationSCDL(getClass().getResource("helloworld.scdl"));
         super.setUp();

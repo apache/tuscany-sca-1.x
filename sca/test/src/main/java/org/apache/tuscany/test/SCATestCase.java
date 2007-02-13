@@ -26,6 +26,8 @@ import java.util.Map;
 import junit.framework.TestCase;
 
 import org.apache.tuscany.api.TuscanyContainer;
+import org.apache.tuscany.core.bootstrap.DefaultTuscanyContainer;
+import org.apache.tuscany.spi.component.CompositeComponent;
 
 /**
  * Base class for JUnit tests that want to run in an SCA client environment.
@@ -35,10 +37,13 @@ import org.apache.tuscany.api.TuscanyContainer;
 public abstract class SCATestCase extends TestCase {
     private Map<String, URL> extensions = new HashMap<String, URL>();
     private URL applicationSCDL;
+    protected CompositeComponent component;
 
     protected void setUp() throws Exception {
         super.setUp();
         TuscanyContainer.start(null, extensions.values().toArray(new URL[0]), applicationSCDL);
+        // FIXME: How to expose the composite component?
+        this.component = ((DefaultTuscanyContainer)TuscanyContainer.getInstance()).getCompsiteComponent();
     }
 
     /**

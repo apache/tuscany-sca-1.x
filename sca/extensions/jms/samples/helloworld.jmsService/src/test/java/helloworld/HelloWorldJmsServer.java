@@ -46,7 +46,7 @@ public class HelloWorldJmsServer extends SCATestCase{
     protected void setUp() throws Exception {
         startBroker();
         setApplicationSCDL(HelloWorldService.class, "META-INF/sca/default.scdl");
-        addExtension("jms.binding", getClass().getClassLoader().getResource("META-INF/sca/jms.system.scdl"));
+        addExtension("jms.binding", getClass().getClassLoader().getResource("META-INF/sca/binding.jms.scdl"));
         addExtension("idl.wsdl", getClass().getClassLoader().getResource("META-INF/sca/idl.wsdl.scdl"));
         addExtension("databinding.axiom", getClass().getResource("/META-INF/sca/databinding.axiom.scdl"));
         super.setUp();
