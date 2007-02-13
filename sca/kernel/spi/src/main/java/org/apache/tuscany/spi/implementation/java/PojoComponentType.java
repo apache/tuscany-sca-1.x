@@ -20,7 +20,9 @@ package org.apache.tuscany.spi.implementation.java;
 
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.tuscany.spi.model.ComponentType;
@@ -41,6 +43,7 @@ public class PojoComponentType<S extends ServiceDefinition, R extends ReferenceD
     private Method destroyMethod;
     private final Map<String, Resource> resources = new HashMap<String, Resource>();
     private Member conversationIDMember;
+    private List<String> passByReferenceMethods = new ArrayList<String>();
 
     /**
      * Returns the constructor used to instantiate implementation instances
@@ -107,4 +110,12 @@ public class PojoComponentType<S extends ServiceDefinition, R extends ReferenceD
     public void setConversationIDMember(Member conversationIDMember) {
         this.conversationIDMember = conversationIDMember;
     }
+
+	public List<String> getPassByReferenceMethods() {
+		return passByReferenceMethods;
+	}
+
+	public void setPassByReferenceMethods(List<String> passByReferenceMethods) {
+		this.passByReferenceMethods = passByReferenceMethods;
+	}
 }

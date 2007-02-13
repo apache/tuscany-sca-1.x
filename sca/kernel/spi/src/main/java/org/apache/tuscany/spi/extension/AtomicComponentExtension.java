@@ -62,6 +62,7 @@ public abstract class AtomicComponentExtension extends AbstractComponentExtensio
     private final long maxIdleTime;
     private final long maxAge;
     private boolean allowsPassByReference;
+    private List<String> passByReferenceMethods;
 
     protected AtomicComponentExtension(String name,
                                        CompositeComponent parent,
@@ -212,5 +213,13 @@ public abstract class AtomicComponentExtension extends AbstractComponentExtensio
                 chain.prepare();
             }
         }
+    }
+
+    public List<String> getPassByReferenceMethods() {
+        return passByReferenceMethods;
+    }
+
+    public void setPassByReferenceMethods(List<String> passByReferenceMethods) {
+        this.passByReferenceMethods = passByReferenceMethods;
     }
 }
