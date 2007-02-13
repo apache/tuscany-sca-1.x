@@ -138,29 +138,44 @@ public abstract class AbstractPropertyProcessor<A extends Annotation> extends Im
         Class[] params = constructor.getParameterTypes();
         Map<String, JavaMappedProperty<?>> properties = type.getProperties();
         Annotation[][] annotations = constructor.getParameterAnnotations();
+        
         for (int i = 0; i < params.length; i++) {
             Class<?> param = params[i];
             Annotation[] paramAnnotations = annotations[i];
+            JavaMappedProperty<?> property = null;
+            DataType propertyDataBinding = null;
+            A monitorAnnot = null;
+            String name = null;
             for (Annotation annotation : paramAnnotations) {
                 if (annotation.annotationType().equals(annotationClass)) {
                     if (definition == null) {
                         definition = new ConstructorDefinition<T>(constructor);
                         type.setConstructorDefinition(definition);
                     }
-                    A monitorAnnot = annotationClass.cast(annotation);
-                    String name = getName(monitorAnnot);
+                    monitorAnnot = annotationClass.cast(annotation);
+                    name = getName(monitorAnnot);
                     if (name == null || name.length() == 0) {
                         name = param.getName();
                     }
                     
                     Class<?> baseType = getBaseType(param, constructor.getGenericParameterTypes()[i]);
-                    JavaMappedProperty<?> property = createProperty(name, baseType, constructor);
+                    //JavaMappedProperty<?> property = createProperty(name, baseType, constructor);
+                    property = createProperty(name, baseType, constructor);
                     if (param.isArray() || Collection.class.isAssignableFrom(param)) {
                         property.setMany(true);
                     }
-                    initProperty(property, monitorAnnot, parent, context);
-                    properties.put(name, property);
-                    service.addName(definition.getInjectionNames(), i, name);
+                } else if (annotation.annotationType().equals(DataType.class)) {
+                	//if there is databinding information capture it
+                	propertyDataBinding = DataType.class.cast(annotation);
+                }
+            }
+            //if there has been a property annotation then a property would have been created
+            if (property != null) {
+            	initProperty(property, monitorAnnot, parent, context);
+                properties.put(name, property);
+                service.addName(definition.getInjectionNames(), i, name);
+                if (propertyDataBinding != null) {
+                    property.getExtensions().put(DataBinding.class.getName(), propertyDataBinding.name());
                 }
             }
         }

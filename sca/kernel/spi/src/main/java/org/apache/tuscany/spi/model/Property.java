@@ -35,7 +35,7 @@ public class Property<T> extends ModelObject {
     private QName xmlType;
     private Class<T> javaType;
     private boolean many;
-    private OverrideOptions override;
+    private boolean noDefault;
     private Document defaultValue;
 
     public Property() {
@@ -87,12 +87,12 @@ public class Property<T> extends ModelObject {
         this.many = many;
     }
 
-    public OverrideOptions getOverride() {
-        return override;
+    public boolean isNoDefault() {
+        return noDefault;
     }
 
-    public void setOverride(OverrideOptions override) {
-        this.override = override;
+    public void setNoDefault(boolean noDefault) {
+        this.noDefault = noDefault;
     }
 
     public Document getDefaultValue() {
