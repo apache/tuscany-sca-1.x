@@ -23,6 +23,7 @@ package org.osoa.sca;
  * A ServiceReference represents a client's perspective of a reference to another service.
  *
  * @version $Rev$ $Date$
+ * @param <B> the Java interface associated with this reference
  */
 public interface ServiceReference<B> extends CallableReference<B> {
     /**

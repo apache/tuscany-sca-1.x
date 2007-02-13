@@ -4,6 +4,7 @@ package org.osoa.sca;
  * Common superclass for references that can be passed between components.
  * 
  * @version $Rev$ $Date$
+ * @param <B> the Java interface associated with this reference
  */
 public interface CallableReference<B> {
     /**

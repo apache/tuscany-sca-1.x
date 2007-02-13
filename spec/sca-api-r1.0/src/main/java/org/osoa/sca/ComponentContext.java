@@ -13,9 +13,13 @@ public interface ComponentContext {
 
     /**
      * Cast a type-safe reference to a CallableReference.
-     * Converts a type-safe reference to an equivalent CallableReference.
+     * Converts a type-safe reference to an equivalent CallableReference; if the target refers to a service
+     * then a ServiceReference will be returned, if the target refers to a callback then a CallableReference
+     * will be returned.
      *
      * @param target a reference proxy provided by the SCA runtime
+     * @param <B> the Java type of the business interface for the reference
+     * @param <R> the type of reference to be returned
      * @return a CallableReference equivalent for the proxy
      * @throws IllegalArgumentException if the supplied instance is not a reference supplied by the SCA runtime
      */
@@ -26,6 +30,7 @@ public interface ComponentContext {
      *
      * @param businessInterface the interface that will be used to invoke the service
      * @param referenceName the name of the reference
+     * @param <B> the Java type of the business interface for the reference
      * @return an object that implements the business interface
      */
     <B> B getService(Class<B> businessInterface, String referenceName);
@@ -35,6 +40,7 @@ public interface ComponentContext {
      *
      * @param businessInterface the interface that will be used to invoke the service
      * @param referenceName the name of the reference
+     * @param <B> the Java type of the business interface for the reference
      * @return a ServiceReference for the designated reference
      */
     <B> ServiceReference<B> getServiceReference(Class<B> businessInterface, String referenceName);
@@ -44,6 +50,7 @@ public interface ComponentContext {
      *
      * @param type the Java type to be returned for the property
      * @param propertyName the name of the property whose value should be returned
+     * @param <B> the Java type of the property
      * @return the property value
      */
     <B> B getProperty(Class<B> type, String propertyName);
@@ -52,6 +59,7 @@ public interface ComponentContext {
      * Returns a ServiceReference that can be used to invoke this component over the default service.
      *
      * @param businessInterface the interface that will be used to invoke the service
+     * @param <B> the Java type of the business interface for the reference
      * @return a ServiceReference that will invoke this component
      */
     <B> ServiceReference<B> createSelfReference(Class<B> businessInterface);
@@ -61,6 +69,7 @@ public interface ComponentContext {
      *
      * @param businessInterface the interface that will be used to invoke the service
      * @param serviceName the name of the service to invoke
+     * @param <B> the Java type of the business interface for the reference
      * @return a ServiceReference that will invoke this component
      */
     <B> ServiceReference<B> createSelfReference(Class<B> businessInterface, String serviceName);

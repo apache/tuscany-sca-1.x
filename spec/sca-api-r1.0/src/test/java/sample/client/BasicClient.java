@@ -3,6 +3,7 @@ package sample.client;
 import org.osoa.sca.ComponentContext;
 import org.osoa.sca.ServiceReference;
 import org.osoa.sca.CallableReference;
+import org.osoa.sca.RequestContext;
 import sample.HelloService;
 import sample.HelloCallback;
 
@@ -11,6 +12,7 @@ import sample.HelloCallback;
  */
 public class BasicClient {
     private ComponentContext context;
+    private RequestContext request;
 
     public void useComponentDirectly() {
         HelloService helloService = context.getService(HelloService.class, "helloService");
@@ -41,5 +43,11 @@ public class BasicClient {
     public void castCallback() {
         HelloCallback callback = null;
         CallableReference<HelloCallback> cb = context.cast(callback);
+    }
+
+    public void getCallback() {
+        ServiceReference<HelloService> sr = request.getServiceReference();
+        CallableReference<HelloCallback> cb = request.getCallbackReference();
+        HelloCallback callback = request.getCallback();
     }
 }
