@@ -41,13 +41,12 @@ public @interface Property {
     public String name() default "";
 
     /**
-     * Indicates if property can have a default value
+     * Indicates if property requires to be injected
      */
-    public String noDefault() default "false";
+    public String required() default "false";
 
     /**
      * The XML Type in a QName format
      */
     public String xmlType() default "";
-
-}
+  }
