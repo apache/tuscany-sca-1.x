@@ -20,6 +20,7 @@
 package org.apache.tuscany.core.databinding.impl;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -80,14 +81,15 @@ public class PassByValueWirePostProcessorTestCase extends TestCase {
         inChainsMap.put(operation1, inChain);
 
         AtomicComponentExtension componentExtn = new FooComponent();
+        componentExtn.setPassByReferenceMethods(new ArrayList<String>());
 
         Map<Operation<?>, OutboundInvocationChain> outChainsMap =
             new Hashtable<Operation<?>, OutboundInvocationChain>();
         OutboundInvocationChainImpl outChain = new OutboundInvocationChainImpl(operation1);
         outChainsMap.put(operation1, outChain);
 
-        expect(inboundWire.getContainer()).andReturn(componentExtn).times(2);
-        expect(outboundWire.getContainer()).andReturn(componentExtn).times(2);
+        expect(inboundWire.getContainer()).andReturn(componentExtn).anyTimes();
+        expect(outboundWire.getContainer()).andReturn(componentExtn).anyTimes();
         expect(inboundWire.getServiceContract()).andReturn(serviceContract);
         expect(inboundWire.getInvocationChains()).andReturn(inChainsMap);
         expect(outboundWire.getServiceContract()).andReturn(serviceContract).times(2);
@@ -125,6 +127,7 @@ public class PassByValueWirePostProcessorTestCase extends TestCase {
 
         AtomicComponentExtension componentExtn = new FooComponent();
         componentExtn.setAllowsPassByReference(true);
+        componentExtn.setPassByReferenceMethods(new ArrayList<String>());
 
 
         Map<Operation<?>, OutboundInvocationChain> outChainsMap =
@@ -132,11 +135,57 @@ public class PassByValueWirePostProcessorTestCase extends TestCase {
         OutboundInvocationChainImpl outChain = new OutboundInvocationChainImpl(operation1);
         outChainsMap.put(operation1, outChain);
 
-        expect(inboundWire.getContainer()).andReturn(componentExtn).times(2);
-        expect(outboundWire.getContainer()).andReturn(componentExtn).times(2);
+        expect(inboundWire.getContainer()).andReturn(componentExtn).anyTimes();
+        expect(outboundWire.getContainer()).andReturn(componentExtn).anyTimes();
         expect(inboundWire.getServiceContract()).andReturn(serviceContract);
         expect(inboundWire.getInvocationChains()).andReturn(inChainsMap);
-        expect(outboundWire.getServiceContract()).andReturn(serviceContract).times(2);
+        expect(outboundWire.getServiceContract()).andReturn(serviceContract).anyTimes();
+        expect(outboundWire.getInvocationChains()).andReturn(outChainsMap).times(2);
+
+        Interceptor inInterceptor = createMock(Interceptor.class);
+        Interceptor outInterceptor = createMock(Interceptor.class);
+        inChain.addInterceptor(0, inInterceptor);
+        outChain.addInterceptor(0, outInterceptor);
+        outChain.addInterceptor(new SynchronousBridgingInterceptor(inChain.getHeadInterceptor()));
+
+        EasyMock.replay(inboundWire, outboundWire);
+        processor.process(outboundWire, inboundWire);
+
+        assertEquals(false, inChain.getHeadInterceptor() instanceof PassByValueInterceptor);
+        assertEquals(false,
+            outChain.getTailInterceptor().getNext() instanceof PassByValueInterceptor);
+        assertEquals(true, outChain.getTailInterceptor().getNext().equals(
+            inChain.getHeadInterceptor()));
+    }
+    
+    public void testProcessExclusionOfInterceptorWhenAllowsPassByReferenceAtMethod() {
+        InboundWire inboundWire = createMock(InboundWire.class);
+        OutboundWire outboundWire = createMock(OutboundWire.class);
+
+        ServiceContract<Type> serviceContract = new JavaServiceContract(null);
+        serviceContract.setRemotable(true);
+        Map<Operation<?>, InboundInvocationChain> inChainsMap =
+            new Hashtable<Operation<?>, InboundInvocationChain>();
+
+        Operation<?> operation1 = new Operation<Type>("testMethod", null, null, null);
+        InboundInvocationChainImpl inChain = new InboundInvocationChainImpl(operation1);
+        inChainsMap.put(operation1, inChain);
+
+        AtomicComponentExtension componentExtn = new FooComponent();
+        componentExtn.setPassByReferenceMethods(new ArrayList<String>());
+        componentExtn.getPassByReferenceMethods().add("testMethod");
+
+
+        Map<Operation<?>, OutboundInvocationChain> outChainsMap =
+            new Hashtable<Operation<?>, OutboundInvocationChain>();
+        OutboundInvocationChainImpl outChain = new OutboundInvocationChainImpl(operation1);
+        outChainsMap.put(operation1, outChain);
+
+        expect(inboundWire.getContainer()).andReturn(componentExtn).anyTimes();
+        expect(outboundWire.getContainer()).andReturn(componentExtn).anyTimes();
+        expect(inboundWire.getServiceContract()).andReturn(serviceContract);
+        expect(inboundWire.getInvocationChains()).andReturn(inChainsMap);
+        expect(outboundWire.getServiceContract()).andReturn(serviceContract).anyTimes();
         expect(outboundWire.getInvocationChains()).andReturn(outChainsMap).times(2);
 
         Interceptor inInterceptor = createMock(Interceptor.class);

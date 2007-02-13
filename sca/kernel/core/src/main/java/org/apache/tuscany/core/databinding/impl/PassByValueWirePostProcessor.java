@@ -49,7 +49,6 @@ public class PassByValueWirePostProcessor extends WirePostProcessorExtension {
 
     public PassByValueWirePostProcessor() {
         super();
-
     }
 
     /**
@@ -67,21 +66,31 @@ public class PassByValueWirePostProcessor extends WirePostProcessorExtension {
         Operation<?> sourceOperation;
         DataBinding[] argsDataBindings;
         DataBinding resultDataBinding;
+        AtomicComponentExtension targetComponent;
 
-        boolean allowsPassByReference = false;
+        boolean implAllowsPassByReference = false;
+        boolean methodAllowsPassByReference = false;
         if (target.getContainer() instanceof AtomicComponentExtension) {
-            allowsPassByReference =
+            implAllowsPassByReference =
                 ((AtomicComponentExtension) target.getContainer()).isAllowsPassByReference();
         }
-        if (target.getServiceContract().isRemotable()
-            && !allowsPassByReference) {
-            Map<Operation<?>, InboundInvocationChain> chains = target.getInvocationChains();
-            for (Map.Entry<Operation<?>, InboundInvocationChain> entry : chains.entrySet()) {
-                targetOperation = entry.getKey();
+        
+        Map<Operation<?>, InboundInvocationChain> chains = target.getInvocationChains();
+        for (Map.Entry<Operation<?>, InboundInvocationChain> entry : chains.entrySet()) {
+            targetOperation = entry.getKey();
+            methodAllowsPassByReference = false;
+            
+            if (target.getContainer() instanceof AtomicComponentExtension) {
+                methodAllowsPassByReference =
+                    ((AtomicComponentExtension) target.getContainer()).
+                    getPassByReferenceMethods().contains(targetOperation.getName());
+            }
+            
+            if (target.getServiceContract().isRemotable()
+                && (!implAllowsPassByReference && !methodAllowsPassByReference)) { 
                 sourceOperation =
                     getSourceOperation(source.getInvocationChains().keySet(), targetOperation.getName());
-                
-
+   
                 if (null != sourceOperation) {
                     argsDataBindings = resolveArgsDataBindings(targetOperation);
                     resultDataBinding = resolveResultDataBinding(targetOperation);
@@ -100,38 +109,47 @@ public class PassByValueWirePostProcessor extends WirePostProcessorExtension {
 
         // Check if there's a callback
         Map callbackOperations = source.getServiceContract().getCallbackOperations();
-        allowsPassByReference = false;
-        if (source.getContainer() instanceof AtomicComponentExtension) {
-            allowsPassByReference =
-                ((AtomicComponentExtension) source.getContainer()).isAllowsPassByReference();
-        }
-
-        if (source.getServiceContract().isRemotable()
-            && !allowsPassByReference
-            && callbackOperations != null
-            && !callbackOperations.isEmpty()) {
+        implAllowsPassByReference = false;
+        
+        if (callbackOperations != null && !callbackOperations.isEmpty()) {
+            if (source.getContainer() instanceof AtomicComponentExtension) {
+                implAllowsPassByReference =
+                    ((AtomicComponentExtension) source.getContainer()).isAllowsPassByReference();
+            }
+        
             Object targetAddress = source.getContainer().getName();
             Map<Operation<?>, InboundInvocationChain> callbackChains = source.getTargetCallbackInvocationChains();
             for (Map.Entry<Operation<?>, InboundInvocationChain> entry : callbackChains.entrySet()) {
                 targetOperation = entry.getKey();
-                sourceOperation =
-                    getSourceOperation(target.getSourceCallbackInvocationChains(targetAddress).keySet(),
-                        targetOperation.getName());
-
-                argsDataBindings = resolveArgsDataBindings(targetOperation);
-                resultDataBinding = resolveResultDataBinding(targetOperation);
-
-                passByValueInterceptor = new PassByValueInterceptor();
-                passByValueInterceptor.setDataBinding(getDataBinding(targetOperation));
-                passByValueInterceptor.setArgsDataBindings(argsDataBindings);
-                passByValueInterceptor.setResultDataBinding(resultDataBinding);
-
-                entry.getValue().addInterceptor(0, passByValueInterceptor);
-                tailInterceptor =
-                    target.getSourceCallbackInvocationChains(targetAddress).get(sourceOperation)
-                        .getTailInterceptor();
-                if (tailInterceptor != null) {
-                    tailInterceptor.setNext(passByValueInterceptor);
+                methodAllowsPassByReference = false;
+                
+                if (source.getContainer() instanceof AtomicComponentExtension) {
+                    methodAllowsPassByReference =
+                        ((AtomicComponentExtension) source.getContainer()).
+                        getPassByReferenceMethods().contains(targetOperation.getName());
+                }
+                
+                if (source.getServiceContract().isRemotable()
+                    && (!implAllowsPassByReference && !methodAllowsPassByReference)) {
+                    sourceOperation =
+                        getSourceOperation(target.getSourceCallbackInvocationChains(targetAddress).keySet(),
+                            targetOperation.getName());
+    
+                    argsDataBindings = resolveArgsDataBindings(targetOperation);
+                    resultDataBinding = resolveResultDataBinding(targetOperation);
+    
+                    passByValueInterceptor = new PassByValueInterceptor();
+                    passByValueInterceptor.setDataBinding(getDataBinding(targetOperation));
+                    passByValueInterceptor.setArgsDataBindings(argsDataBindings);
+                    passByValueInterceptor.setResultDataBinding(resultDataBinding);
+    
+                    entry.getValue().addInterceptor(0, passByValueInterceptor);
+                    tailInterceptor =
+                        target.getSourceCallbackInvocationChains(targetAddress).get(sourceOperation)
+                            .getTailInterceptor();
+                    if (tailInterceptor != null) {
+                        tailInterceptor.setNext(passByValueInterceptor);
+                    }
                 }
             }
         }

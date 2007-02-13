@@ -135,7 +135,10 @@ public class JavaComponentBuilder extends ComponentBuilderExtension<JavaImplemen
         handleCallbackSites(componentType, configuration);
 
         // FIXME JFM  this should be refactored to be by operation
+        // as per the Java C&I @AllowsPassByReference can be at the class level (applying to all methods in 
+        //...the class or at the method level applying only to the specific method
         component.setAllowsPassByReference(componentType.isAllowsPassByReference());
+        component.setPassByReferenceMethods(componentType.getPassByReferenceMethods());
 
         if (componentType.getConversationIDMember() != null) {
             component.addConversationIDFactory(componentType.getConversationIDMember());

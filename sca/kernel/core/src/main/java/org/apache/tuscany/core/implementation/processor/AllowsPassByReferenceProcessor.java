@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.core.implementation.processor;
 
+import java.lang.reflect.Method;
+
 import org.osoa.sca.annotations.AllowsPassByReference;
 
 import org.apache.tuscany.spi.component.CompositeComponent;
@@ -31,15 +33,15 @@ import org.apache.tuscany.spi.implementation.java.ProcessingException;
 
 /**
  * Processes {@link AllowsPassByReference} on an implementation
- *
+ * 
  * @version $Rev: 479093 $ $Date: 2006-11-25 12:34:41 +0530 (Sat, 25 Nov 2006) $
  */
 public class AllowsPassByReferenceProcessor extends ImplementationProcessorExtension {
 
-    public <T> void visitClass(CompositeComponent parent, Class<T> clazz,
+    public <T> void visitClass(CompositeComponent parent,
+                               Class<T> clazz,
                                PojoComponentType<JavaMappedService, JavaMappedReference, JavaMappedProperty<?>> type,
-                               DeploymentContext context)
-        throws ProcessingException {
+                               DeploymentContext context) throws ProcessingException {
         AllowsPassByReference annotation = clazz.getAnnotation(AllowsPassByReference.class);
         if (annotation != null) {
             type.setAllowsPassByReference(true);
@@ -47,5 +49,15 @@ public class AllowsPassByReferenceProcessor extends ImplementationProcessorExten
             type.setAllowsPassByReference(false);
         }
 
+    }
+
+    public void visitMethod(CompositeComponent parent, Method method,
+            PojoComponentType<JavaMappedService, JavaMappedReference, JavaMappedProperty<?>> type,
+            DeploymentContext context)throws ProcessingException {
+        
+        AllowsPassByReference annotation = method.getAnnotation(AllowsPassByReference.class);
+        if (annotation != null) {
+            type.getPassByReferenceMethods().add(method.getName());
+        }
     }
 }
