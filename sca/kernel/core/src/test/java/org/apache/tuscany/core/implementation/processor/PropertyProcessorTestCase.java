@@ -21,26 +21,23 @@ package org.apache.tuscany.core.implementation.processor;
 import java.util.Collection;
 import java.util.List;
 
-import org.osoa.sca.annotations.Property;
+import junit.framework.TestCase;
 
+import org.apache.tuscany.core.idl.java.JavaInterfaceProcessorRegistryImpl;
 import org.apache.tuscany.spi.implementation.java.DuplicatePropertyException;
 import org.apache.tuscany.spi.implementation.java.IllegalPropertyException;
 import org.apache.tuscany.spi.implementation.java.JavaMappedProperty;
 import org.apache.tuscany.spi.implementation.java.JavaMappedReference;
 import org.apache.tuscany.spi.implementation.java.JavaMappedService;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
-import org.apache.tuscany.spi.model.OverrideOptions;
-import static org.apache.tuscany.spi.model.OverrideOptions.MUST;
-
-import junit.framework.TestCase;
-import org.apache.tuscany.core.idl.java.JavaInterfaceProcessorRegistryImpl;
+import org.osoa.sca.annotations.Property;
 
 /**
  * @version $Rev$ $Date$
  */
 public class PropertyProcessorTestCase extends TestCase {
 
-    PojoComponentType<JavaMappedService, JavaMappedReference, JavaMappedProperty<?>> type;
+	PojoComponentType<JavaMappedService, JavaMappedReference, JavaMappedProperty<?>> type;
     PropertyProcessor processor;
 
     public void testMethodAnnotation() throws Exception {
@@ -52,7 +49,6 @@ public class PropertyProcessorTestCase extends TestCase {
         processor.visitMethod(null, Foo.class.getMethod("setFooRequired", String.class), type, null);
         JavaMappedProperty prop = type.getProperties().get("fooRequired");
         assertNotNull(prop);
-        assertEquals(prop.getOverride(), MUST);
     }
 
     public void testMethodName() throws Exception {
@@ -69,7 +65,6 @@ public class PropertyProcessorTestCase extends TestCase {
         processor.visitField(null, Foo.class.getDeclaredField("bazRequired"), type, null);
         JavaMappedProperty prop = type.getProperties().get("bazRequired");
         assertNotNull(prop);
-        assertEquals(prop.getOverride(), OverrideOptions.MUST);
     }
 
     public void testFieldName() throws Exception {
@@ -117,7 +112,7 @@ public class PropertyProcessorTestCase extends TestCase {
 
         @Property
         protected String baz;
-        @Property(override = "must")
+        @Property(required = "true")
         protected String bazRequired;
         @Property(name = "theBaz")
         protected String bazField;
@@ -126,7 +121,7 @@ public class PropertyProcessorTestCase extends TestCase {
         public void setFoo(String string) {
         }
 
-        @Property(override = "must")
+        @Property(required = "true")
         public void setFooRequired(String string) {
         }
 
@@ -206,5 +201,4 @@ public class PropertyProcessorTestCase extends TestCase {
         assertSame(String.class, prop.getJavaType());
         assertTrue(prop.isMany());
     }
-
 }

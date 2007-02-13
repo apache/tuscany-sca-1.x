@@ -57,8 +57,7 @@ public class PropertyProcessor extends AbstractPropertyProcessor<Property> {
                                     Property annotation,
                                     CompositeComponent parent,
                                     DeploymentContext context) {
-        property.setOverride(OverrideOptions.valueOf(annotation.override().toUpperCase()));
-        String xmlType = annotation.xmlType();
+    	String xmlType = annotation.xmlType();
         if (xmlType != null && xmlType.length() != 0) {
             property.setXmlType(QName.valueOf(annotation.xmlType()));
         } else {

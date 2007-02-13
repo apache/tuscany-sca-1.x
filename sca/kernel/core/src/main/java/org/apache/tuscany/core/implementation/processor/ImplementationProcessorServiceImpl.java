@@ -312,7 +312,7 @@ public class ImplementationProcessorServiceImpl implements ImplementationProcess
             throw new DuplicatePropertyException(name);
         }
         property.setName(name);
-        property.setOverride(OverrideOptions.valueOf(propAnnot.override().toUpperCase()));
+        property.setNoDefault(Boolean.parseBoolean(propAnnot.required()));
 
         String xmlType = propAnnot.xmlType();
         if (xmlType != null && xmlType.length() != 0) {

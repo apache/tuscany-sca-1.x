@@ -35,7 +35,6 @@ import javax.xml.stream.XMLStreamReader;
 
 import org.apache.tuscany.core.binding.local.LocalBindingDefinition;
 import org.apache.tuscany.core.implementation.system.model.SystemImplementation;
-import org.apache.tuscany.core.property.SimplePropertyObjectFactory;
 import org.apache.tuscany.spi.ObjectFactory;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.component.CompositeComponent;
@@ -48,9 +47,8 @@ import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
 import org.apache.tuscany.spi.loader.LoaderUtil;
 import org.apache.tuscany.spi.loader.MissingImplementationException;
-import org.apache.tuscany.spi.loader.MissingMustOverridePropertyException;
+import org.apache.tuscany.spi.loader.MissingPropertyValueException;
 import org.apache.tuscany.spi.loader.MissingReferenceException;
-import org.apache.tuscany.spi.loader.NotOverridablePropertyException;
 import org.apache.tuscany.spi.loader.PropertyObjectFactory;
 import org.apache.tuscany.spi.loader.ReferenceMultiplicityViolationException;
 import org.apache.tuscany.spi.loader.UndefinedPropertyException;
@@ -63,7 +61,6 @@ import org.apache.tuscany.spi.model.CompositeComponentType;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.ModelObject;
 import org.apache.tuscany.spi.model.Multiplicity;
-import org.apache.tuscany.spi.model.OverrideOptions;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.model.PropertyValue;
 import org.apache.tuscany.spi.model.ReferenceDefinition;
@@ -192,9 +189,8 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
         Property<Type> property = (Property<Type>) componentType.getProperties().get(name);
         if (property == null) {
             throw new UndefinedPropertyException(name);
-        } else if (OverrideOptions.NO.equals(property.getOverride())) {
-            throw new NotOverridablePropertyException(name);
         }
+        
         PropertyValue<Type> propertyValue;
         String source = reader.getAttributeValue(null, PROPERTY_SOURCE_ATTR);
         String file = reader.getAttributeValue(null, PROPERTY_FILE_ATTR);
@@ -273,7 +269,7 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
 
     @SuppressWarnings("unchecked")
     protected void populatePropertyValues(ComponentDefinition<Implementation<?>> componentDefinition)
-        throws MissingMustOverridePropertyException {
+        throws LoaderException, MissingPropertyValueException {
         ComponentType componentType = componentDefinition.getImplementation().getComponentType();
         if (componentType != null) {
             Map<String, Property<?>> properties = componentType.getProperties();
@@ -281,14 +277,16 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
 
             for (Property<?> aProperty : properties.values()) {
                 if (propertyValues.get(aProperty.getName()) == null) {
-                    if (aProperty.getOverride() == OverrideOptions.MUST) {
-                        throw new MissingMustOverridePropertyException(aProperty.getName());
+                    if (aProperty.isNoDefault()) {
+                        throw new MissingPropertyValueException(aProperty.getName());
                     } else if (aProperty.getDefaultValue() != null) {
                         PropertyValue propertyValue = new PropertyValue();
                         propertyValue.setName(aProperty.getName());
                         propertyValue.setValue(aProperty.getDefaultValue());
-                        propertyValue.setValueFactory(new SimplePropertyObjectFactory(aProperty,
-                            propertyValue.getValue()));
+                        propertyValue.setValueFactory(
+                          propertyFactory.createObjectFactory(aProperty, propertyValue));
+                        /*propertyValue.setValueFactory(new SimplePropertyObjectFactory(aProperty,
+                            propertyValue.getValue()));*/
                         propertyValues.put(aProperty.getName(), propertyValue);
                     }
                 }

@@ -442,7 +442,7 @@ public class HeuristicPojoProcessor extends ImplementationProcessorExtension {
         JavaMappedProperty<T> property = new JavaMappedProperty<T>();
         property.setName(name);
         property.setMember(member);
-        property.setOverride(OverrideOptions.MAY);
+        property.setNoDefault(false);
         property.setJavaType(paramType);
         TypeInfo xmlType = typeMapper.getXMLType(paramType);
         if (xmlType != null) {

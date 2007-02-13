@@ -20,20 +20,19 @@ package org.apache.tuscany.core.loader;
 
 import javax.xml.stream.XMLStreamException;
 
+import junit.framework.TestCase;
+
+import org.apache.tuscany.core.implementation.java.JavaImplementation;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
-import org.apache.tuscany.spi.loader.MissingMustOverridePropertyException;
+import org.apache.tuscany.spi.loader.MissingPropertyValueException;
 import org.apache.tuscany.spi.loader.PropertyObjectFactory;
 import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.Implementation;
-import org.apache.tuscany.spi.model.OverrideOptions;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.model.ReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
-
-import junit.framework.TestCase;
-import org.apache.tuscany.core.implementation.java.JavaImplementation;
 import org.easymock.EasyMock;
 
 /**
@@ -47,18 +46,25 @@ public class ComponentLoaderPropertyTestCase extends TestCase {
      * Verifies that an optional property not cofigured in an assembly will avoid having a PropertyValue created for it
      * so that the runtime does not erroneously inject null values
      */
-    public void testOptionalPropertyNotConfigured() throws LoaderException, XMLStreamException {
+    public void testMissingPropertyValueException() throws LoaderException, XMLStreamException {
         PojoComponentType<?, ?, Property<?>> type =
             new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
         Property property = new Property();
         property.setName("name");
-        property.setOverride(OverrideOptions.MAY);
+        property.setNoDefault(true);
         type.add(property);
+        
         JavaImplementation impl = new JavaImplementation(null, type);
         impl.setComponentType(type);
         ComponentDefinition<Implementation<?>> defn = new ComponentDefinition<Implementation<?>>(impl);
-        loader.populatePropertyValues(defn);
         assertTrue(defn.getPropertyValues().isEmpty());
+        try {
+        	loader.populatePropertyValues(defn);
+        	fail();
+        } catch (Exception e) {
+        	assertTrue(e instanceof MissingPropertyValueException);
+        }
+        
     }
 
     protected void setUp() throws Exception {
@@ -76,7 +82,7 @@ public class ComponentLoaderPropertyTestCase extends TestCase {
 
         @Override
         public void populatePropertyValues(ComponentDefinition<Implementation<?>> componentDefinition)
-            throws MissingMustOverridePropertyException {
+        throws MissingPropertyValueException, LoaderException {
             super.populatePropertyValues(componentDefinition);
         }
     }
