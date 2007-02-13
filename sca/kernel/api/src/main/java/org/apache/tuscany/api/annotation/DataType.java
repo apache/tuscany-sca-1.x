@@ -20,6 +20,7 @@ package org.apache.tuscany.api.annotation;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.ElementType.FIELD;
 import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
@@ -29,7 +30,7 @@ import java.lang.annotation.Target;
  *
  * @version $Rev$ $Date$
  */
-@Target({TYPE, METHOD})
+@Target({TYPE, METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface DataType {
 
