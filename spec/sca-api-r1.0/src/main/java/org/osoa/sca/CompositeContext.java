@@ -20,6 +20,8 @@ package org.osoa.sca;
 
 
 /**
+ * @deprecated
+ * 
  * Interface used by SCA Components to access their context
  *
  * @version $Rev$ $Date$

@@ -19,6 +19,8 @@
 package org.osoa.sca;
 
 /**
+ * @deprecated
+ * 
  * Class providing access to the current CompositeComponent.
  *
  * @version $Rev$ $Date$
