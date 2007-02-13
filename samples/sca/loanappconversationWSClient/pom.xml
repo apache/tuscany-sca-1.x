@@ -24,7 +24,7 @@
         <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-loanappconversationWSClient</artifactId>
+    <artifactId>tuscany-sample-loanappconversationWSClient</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany Loan App Conversation WS Client</name>
     <description>A sample implementation conversation WS client.</description>

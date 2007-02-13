@@ -24,7 +24,7 @@
         <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-simplecallback</artifactId>
+    <artifactId>tuscany-sample-simplecallback</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany Simple Callback Sample</name>
     <description>A sample implementation of a simple callback application.</description>

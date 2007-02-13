@@ -24,7 +24,7 @@
         <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-webapp</artifactId>
+    <artifactId>tuscany-sample-webapp</artifactId>
     <packaging>war</packaging>
     <name>Apache Tuscany Simple WebApp Sample</name>
     <description>A sample WebApplication showing how to include a Tuscany runtime.</description>

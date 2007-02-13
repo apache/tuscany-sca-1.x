@@ -24,7 +24,7 @@
         <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-supplychain</artifactId>
+    <artifactId>tuscany-sample-supplychain</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany Supply Chain Sample</name>
     <description>A sample implementation of an asynchronous supply chain application.</description>
