@@ -20,17 +20,19 @@ package org.apache.tuscany.sca.test.spec;
 
 import java.util.Date;
 
+import org.apache.tuscany.api.TuscanyContainer;
 import org.apache.tuscany.sca.test.spec.MyListService;
 import org.apache.tuscany.sca.test.spec.MyListServiceByYear;
 import org.apache.tuscany.sca.test.spec.MyService;
 import org.apache.tuscany.sca.test.spec.MyServiceByDate;
+import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.RequestContext;
 
 import junit.framework.TestCase;
 
-public class ComponentTest extends TestCase {
+public class ComponentTest extends SCATestCase {
     private MyService myService;
     private MyServiceByDate myServiceByDate;
     private MyListService myListService;
@@ -96,6 +98,7 @@ public class ComponentTest extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
+        TuscanyContainer.start();
         context = CurrentCompositeContext.getContext();
         myService = context.locateService(MyService.class, "MyService");
         myServiceByDate = context.locateService(MyServiceByDate.class, "MyServiceByDate");
@@ -103,5 +106,11 @@ public class ComponentTest extends TestCase {
         myListServiceByYear = context.locateService(MyListServiceByYear.class, "MyListServiceByYear");
         myNCService = context.locateService(MyService.class, "MyNCService");
         myListServiceFor2006 = context.locateService(MyListService.class, "MyListServiceFor2006");
+    }
+    
+    @Override
+    protected void tearDown() throws Exception {
+    	TuscanyContainer.stop();
+    	super.tearDown();
     }
 }

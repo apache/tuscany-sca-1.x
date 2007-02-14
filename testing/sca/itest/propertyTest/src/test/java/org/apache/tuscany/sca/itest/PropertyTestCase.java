@@ -21,9 +21,10 @@ package org.apache.tuscany.sca.itest;
 
 import junit.framework.TestCase;
 
+import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CurrentCompositeContext;
 
-public class PropertyITest extends TestCase {
+public class PropertyTestCase extends SCATestCase {
     private ABComponent abService;
     private CDComponent cdService;  
     private ABCDComponent abcdService;

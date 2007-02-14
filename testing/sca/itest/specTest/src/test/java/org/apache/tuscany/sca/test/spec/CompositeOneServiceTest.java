@@ -21,11 +21,12 @@ package org.apache.tuscany.sca.test.spec;
 import junit.framework.TestCase;
 
 import org.apache.tuscany.sca.test.spec.MyService;
+import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.RequestContext;
 
-public class CompositeOneServiceTest extends TestCase {
+public class CompositeOneServiceTest extends SCATestCase {
     private MyService myService;
     private CompositeContext context;
 

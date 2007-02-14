@@ -24,13 +24,14 @@ import org.apache.tuscany.sca.test.spec.MyListService;
 import org.apache.tuscany.sca.test.spec.MyListServiceByYear;
 import org.apache.tuscany.sca.test.spec.MyService;
 import org.apache.tuscany.sca.test.spec.MyServiceByDate;
+import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.RequestContext;
 
 import junit.framework.TestCase;
 
-public class CompositeTest extends TestCase {
+public class CompositeTest extends SCATestCase {
     private MyService myService;
     private MyServiceByDate myServiceByDate;
     private MyListService myListService;

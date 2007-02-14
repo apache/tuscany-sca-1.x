@@ -32,15 +32,4 @@
     <packaging>jar</packaging>
     <name>Test Suite for SCA Callback Basic</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.tuscany.sca.kernel</groupId>
-            <artifactId>tuscany-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
 </project>

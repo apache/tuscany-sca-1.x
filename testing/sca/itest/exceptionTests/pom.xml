@@ -29,15 +29,4 @@
     <packaging>jar</packaging>
     <name>Test Suite Exception Handling</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.tuscany.sca.kernel</groupId>
-            <artifactId>tuscany-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-    </dependencies>
-
 </project>

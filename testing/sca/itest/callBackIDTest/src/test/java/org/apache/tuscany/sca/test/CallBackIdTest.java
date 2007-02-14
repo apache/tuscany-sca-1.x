@@ -1,10 +1,12 @@
 package org.apache.tuscany.sca.test;
 
 import junit.framework.TestCase;
+
+import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.annotations.Reference;
 
-public class CallBackIdITest extends TestCase  {
+public class CallBackIdTest extends SCATestCase  {
 
     private CallBackIdClient aCallBackClient;
 	

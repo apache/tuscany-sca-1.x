@@ -32,25 +32,17 @@
 
 
     <modules>
-        <module>exceptionTests</module>
-        <module>bindingsTest</module> 
-
-	<module>callBackBasicTest</module>
-
-<!--
-        <module>exceptionXbindingTest</module>
         <module>specTest</module>
         <module>propertyTest</module>
-
-
+        <module>exceptionTests</module>
+        <module>bindingsTest</module> 
+	<module>callBackBasicTest</module>
 	<module>callBackCTypeTest</module>
 	<module>callBackAPITest</module>
 	<module>callBackIDTest</module>
 	<module>callBackSetCallbackTest</module>
 	<module>callBackSetCallbackConvTest</module>
 	<module>conversationsTest</module>
-
--->
     </modules>
 
     <dependencyManagement>
@@ -62,8 +54,8 @@
                 <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>org.apache.tuscany.sca.kernel</groupId>
-                <artifactId>tuscany-core</artifactId>
+                <groupId>org.apache.tuscany.sca</groupId>
+                <artifactId>tuscany-test</artifactId>
                 <version>0.1-integration-incubating-SNAPSHOT</version>
                 <scope>compile</scope>
             </dependency>
@@ -75,5 +67,16 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

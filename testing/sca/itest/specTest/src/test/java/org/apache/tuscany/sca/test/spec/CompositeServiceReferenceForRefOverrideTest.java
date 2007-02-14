@@ -21,12 +21,13 @@ package org.apache.tuscany.sca.test.spec;
 import java.util.Date;
 
 import org.apache.tuscany.sca.test.spec.MyTotalService;
+import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 import junit.framework.TestCase;
 
-public class CompositeServiceReferenceForRefOverrideTest extends TestCase {
+public class CompositeServiceReferenceForRefOverrideTest extends SCATestCase {
     private MyTotalService myService1;
     private MyTotalService myService2;
     private MyTotalService myService3;

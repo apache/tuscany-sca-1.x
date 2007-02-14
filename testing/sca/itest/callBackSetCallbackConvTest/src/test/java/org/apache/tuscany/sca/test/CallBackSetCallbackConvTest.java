@@ -16,38 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.test.exceptions;
+package org.apache.tuscany.sca.test;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.TuscanyContainer;
 import org.apache.tuscany.test.SCATestCase;
-import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
-public class IntraCompositeTestCase extends SCATestCase {
-    private ExceptionHandler exceptionHandler;
+public class CallBackSetCallbackConvTest extends SCATestCase {
 
-    private CompositeContext context;
+    private CallBackSetCallbackConvClient aCallBackClient;
 
-    public void testALL() {
-        exceptionHandler.testing();
-        assertEquals(ExceptionThrower.SO_THEY_SAY, exceptionHandler.getTheGood() );
-        assertNotNull(exceptionHandler.getTheBad());
-        assertEquals( Checked.class, exceptionHandler.getTheBad().getClass());
-        assertNotNull(exceptionHandler.getTheUgly());
-        assertEquals( UnChecked.class, exceptionHandler.getTheUgly().getClass());
-
+    public void testCallBackSetCallback() {
+        aCallBackClient.run();
     }
 
-    @Override
     protected void setUp() throws Exception {
         super.setUp();
-
-        context = CurrentCompositeContext.getContext();
-        assertNotNull(context);
-        exceptionHandler = context.locateService(ExceptionHandler.class, "main");
-        assertNotNull(context);
+        aCallBackClient =
+            CurrentCompositeContext.getContext().locateService(CallBackSetCallbackConvClient.class,
+                                                               "CallBackSetCallbackConvClient");
     }
-    
+
 }

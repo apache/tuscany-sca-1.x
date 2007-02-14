@@ -20,12 +20,13 @@ package org.apache.tuscany.sca.test.spec;
 
 import org.apache.tuscany.sca.test.spec.MyListService;
 import org.apache.tuscany.sca.test.spec.MyListServiceByYear;
+import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 import junit.framework.TestCase;
 
-public class ComponentServiceReferenceListTest extends TestCase {
+public class ComponentServiceReferenceListTest extends SCATestCase {
     private MyListService myListService;
     private MyListServiceByYear myListServiceByYear;
 

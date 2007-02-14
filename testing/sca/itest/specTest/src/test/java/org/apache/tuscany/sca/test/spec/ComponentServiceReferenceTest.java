@@ -21,13 +21,14 @@ package org.apache.tuscany.sca.test.spec;
 import java.util.Date;
 
 import org.apache.tuscany.sca.test.spec.MyTotalService;
+import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.RequestContext;
 
 import junit.framework.TestCase;
 
-public class ComponentServiceReferenceTest extends TestCase {
+public class ComponentServiceReferenceTest extends SCATestCase {
     private MyTotalService myService;
     private CompositeContext context;
 
