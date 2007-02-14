@@ -39,14 +39,30 @@
             <layout>legacy</layout>
         </repository>
     </repositories>
-
-    <modules>
-        <module>binding</module>
-        <module>databinding</module>
-        <module>tools</module>
-        <module>plugins</module>
-        <module>samples</module>
-    </modules>
+    
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+              <module>databinding</module>
+              <module>tools</module>
+              <module>plugins</module>
+          </modules>
+        </profile>
+        <profile>
+            <id>all</id>
+          <modules>
+              <module>binding</module>
+              <module>databinding</module>
+              <module>tools</module>
+              <module>plugins</module>
+              <module>samples</module>
+          </modules>
+        </profile>
+      </profiles>
 
     <dependencyManagement>
         <dependencies>
