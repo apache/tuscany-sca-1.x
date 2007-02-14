@@ -35,7 +35,7 @@
         <module>specTest</module>
         <module>propertyTest</module>
         <module>exceptionTests</module>
-        <!-- module>exceptionXbindingTest</module -->
+        <module>exceptionXbindingTest</module>
         <!--         <module>bindingsTest</module>  THESE REFERENE WAR PLUGIN!  -->
 	<module>callBackBasicTest</module>
 	<module>callBackCTypeTest</module>
