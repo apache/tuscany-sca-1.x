@@ -19,14 +19,12 @@
 package org.apache.tuscany.core.implementation.java;
 
 import java.net.URL;
-import java.util.Iterator;
 
 import org.apache.tuscany.core.util.JavaIntrospectionHelper;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.ComponentTypeLoaderExtension;
-import org.apache.tuscany.spi.idl.java.JavaServiceContract;
 import org.apache.tuscany.spi.implementation.java.IntrospectionRegistry;
 import org.apache.tuscany.spi.implementation.java.Introspector;
 import org.apache.tuscany.spi.implementation.java.JavaMappedProperty;
@@ -61,24 +59,17 @@ public class JavaComponentTypeLoader extends ComponentTypeLoaderExtension<JavaIm
                      JavaImplementation implementation,
                      DeploymentContext deploymentContext) throws LoaderException {
         Class<?> implClass = implementation.getImplementationClass();
+        PojoComponentType componentType = loadByIntrospection(parent, implementation, deploymentContext);
         URL resource = implClass.getResource(JavaIntrospectionHelper.getBaseName(implClass) + ".componentType");
-        PojoComponentType componentType;
-        if (resource == null) {
-            componentType = loadByIntrospection(parent, implementation, deploymentContext);
-        } else {
-            componentType = loadFromSidefile(parent, resource, deploymentContext);
-
-            // TODO: TUSCANY-1111, add in reqd bits missing from sidefile
-            PojoComponentType tempComponentType = loadByIntrospection(parent, implementation, deploymentContext);
-            componentType.setConstructorDefinition(tempComponentType.getConstructorDefinition());
-            componentType.setImplementationScope(tempComponentType.getImplementationScope());
-
-            Iterator it = tempComponentType.getServices().values().iterator();
-            for (Object o : componentType.getServices().values()) {
+        if (resource != null) {
+            // FIXME: How to merge the component type loaded from the file into the PojoComponentType 
+            PojoComponentType type = loadFromSidefile(parent, resource, deploymentContext);
+            
+            for (Object o : type.getServices().values()) {
                 ServiceDefinition sd = (ServiceDefinition) o;
-                if (!(sd.getServiceContract() instanceof JavaServiceContract)) {
-                    ServiceDefinition ts = (ServiceDefinition)it.next();
-                    sd.getServiceContract().setInterfaceClass(ts.getServiceContract().getInterfaceClass());
+                ServiceDefinition javaService = (ServiceDefinition) componentType.getServices().get(sd.getName());
+                if(javaService!=null) {
+                    javaService.setServiceContract(sd.getServiceContract());
                 }
             }
         }
