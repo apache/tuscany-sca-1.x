@@ -97,59 +97,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.tuscany.sca.plugins</groupId>
-				<artifactId>tuscany-itest-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>start</id>
-						<goals>
-							<goal>start</goal>
-						</goals>
-						<configuration>
-							<applicationScdl>file:///${basedir}/src/main/resources/META-INF/sca/default.scdl                         </applicationScdl>
-							<extensions>
-								<dependency>
-									<groupId>org.apache.tuscany.sca.services.databinding</groupId>
-									<artifactId>databinding-sdo</artifactId>
-									<version>${scaKernelVersion}</version>
-								</dependency>
-								<dependency>
-									<groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
-									<artifactId>tuscany-axis2</artifactId>
-									<version>${scaKernelVersion}</version>
-								</dependency>
-							</extensions>
-						</configuration>
-					</execution>
-					<execution>
-						<id>test</id>
-						<goals>
-							<goal>test</goal>
-						</goals>
-						<configuration>
-							<includes>
-								<include>**/*Test.java</include>
-							</includes>
-						</configuration>
-					</execution>
-					<execution>
-						<id>stop</id>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>**/*Test.java</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
 			<!-- Sun's JAX-WS Generation -->
 			
 			<plugin>
@@ -215,20 +162,6 @@
                 </executions>
             </plugin>
 
-<!--
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-					<includes>
-						<include>src/**/*.java</include>
-						<include>src-jaxws/**/*.java</include>
-					</includes>
-				</configuration>
-			</plugin>
--->			
-		</plugins>
+	</plugins>
 	</build>
 </project>

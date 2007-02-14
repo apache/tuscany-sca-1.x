@@ -35,6 +35,7 @@
         <module>specTest</module>
         <module>propertyTest</module>
         <module>exceptionTests</module>
+        <module>exceptionXbindingTest</module>
         <module>bindingsTest</module> 
 	<module>callBackBasicTest</module>
 	<module>callBackCTypeTest</module>

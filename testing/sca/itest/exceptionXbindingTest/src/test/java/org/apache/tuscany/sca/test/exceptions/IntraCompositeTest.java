@@ -21,10 +21,11 @@ package org.apache.tuscany.sca.test.exceptions;
 import junit.framework.TestCase;
 
 import org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDO;
+import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
-public class IntraCompositeTest extends TestCase {
+public class IntraCompositeTest extends SCATestCase {
     private StockTraderSDO exceptionHandler;
 
     private CompositeContext context;
