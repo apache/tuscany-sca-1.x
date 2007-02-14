@@ -35,7 +35,7 @@
         <module>specTest</module>
         <module>propertyTest</module>
         <module>exceptionTests</module>
-        <module>exceptionXbindingTest</module>
+        <!-- module>exceptionXbindingTest</module -->
         <module>bindingsTest</module> 
 	<module>callBackBasicTest</module>
 	<module>callBackCTypeTest</module>
@@ -44,6 +44,7 @@
 	<module>callBackSetCallbackTest</module>
 	<module>callBackSetCallbackConvTest</module>
 	<module>conversationsTest</module>
+	<module>wsdl</module>
     </modules>
 
     <dependencyManagement>
