@@ -18,6 +18,7 @@
  */
 package calculator;
 
+import org.apache.tuscany.api.TuscanyContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -27,6 +28,8 @@ import org.osoa.sca.CurrentCompositeContext;
  */
 public class CalculatorClient {
     public static void main(String[] args) throws Exception {
+    	
+    	TuscanyContainer.start();
 
         CompositeContext context = CurrentCompositeContext.getContext();
         CalculatorService calculatorService =
@@ -38,5 +41,6 @@ public class CalculatorClient {
         System.out.println("3 * 2=" + calculatorService.multiply(3, 2));
         System.out.println("3 / 2=" + calculatorService.divide(3, 2));
 
+        TuscanyContainer.stop();
     }
 }

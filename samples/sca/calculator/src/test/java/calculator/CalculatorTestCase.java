@@ -31,7 +31,6 @@ public class CalculatorTestCase extends SCATestCase {
     private CalculatorService calculatorService;
 
     protected void setUp() throws Exception {
-        setApplicationSCDL(CalculatorService.class, "META-INF/sca/default.scdl");
         super.setUp();
 
         CompositeContext context = CurrentCompositeContext.getContext();
