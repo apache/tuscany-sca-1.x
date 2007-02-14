@@ -30,15 +30,25 @@ import java.util.Map;
 import org.apache.tuscany.host.deployment.ContributionService;
 import org.apache.tuscany.host.deployment.DeploymentException;
 import org.apache.tuscany.host.deployment.UnsupportedContentTypeException;
+import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.deployer.ContributionProcessor;
 import org.apache.tuscany.spi.deployer.ContributionProcessorRegistry;
+import org.apache.tuscany.spi.deployer.ContributionRepository;
+import org.osoa.sca.annotations.EagerInit;
 
 /**
  * @version $Rev$ $Date$
  */
+@EagerInit
 public class ContributionServiceImpl implements ContributionService, ContributionProcessorRegistry {
     private Map<String, ContributionProcessor> registry = new HashMap<String, ContributionProcessor>();
+    private final ContributionRepository repository;
 
+    public ContributionServiceImpl(@Autowire ContributionRepository repository) {
+        super();
+        this.repository = repository;
+    }
+    
     public void register(ContributionProcessor processor) {
         registry.put(processor.getContentType(), processor);
     }
@@ -83,17 +93,20 @@ public class ContributionServiceImpl implements ContributionService, Contributio
         if (contentType == null) {
             throw new IllegalArgumentException("contentType was null");
         }
+        
+        URI uri = URI.create("sca://contribution/"+System.currentTimeMillis());
+        repository.store(uri, contribution);
 
         ContributionProcessor processor = registry.get(contentType);
         if (processor == null) {
             throw new UnsupportedContentTypeException(contentType, source.toString());
         }
         
-        return null;
+        return uri;
     }
 
     public void remove(URI contribution) throws DeploymentException {
-        // TODO Auto-generated method stub
+        repository.remove(contribution);
     }
 
     public <T> T resolve(URI contribution, Class<T> definitionType, String namespace, String name) {

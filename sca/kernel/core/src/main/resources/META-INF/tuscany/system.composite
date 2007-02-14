@@ -157,4 +157,13 @@
         <system:implementation.system class="org.apache.tuscany.core.binding.local.LocalBindingBuilder" />
     </component>
 
+    <!-- Contribution Service -->
+    <component name="contrbutionService">
+        <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContributionServiceImpl" />
+    </component>
+    <component name="contrbutionRepository">
+        <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContributionRepositoryImpl" />
+        <property name="repository">target/repository</property>
+    </component>
+
 </composite>
