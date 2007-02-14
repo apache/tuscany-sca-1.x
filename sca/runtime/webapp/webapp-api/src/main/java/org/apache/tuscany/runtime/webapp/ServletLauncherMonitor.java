@@ -27,7 +27,7 @@ import org.apache.tuscany.api.annotation.LogLevel;
  */
 public interface ServletLauncherMonitor {
 
-    @LogLevel("DEBUG")
+    @LogLevel("FINER")
     void deployExtension(String path);
 
 }

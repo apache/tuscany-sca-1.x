@@ -26,27 +26,27 @@ import org.apache.tuscany.api.annotation.LogLevel;
  * @version $Rev$ $Date$
  */
 public class MockMonitor implements StoreMonitor {
-    @LogLevel("DEBUG")
+    @LogLevel("FINER")
     public void start(String msg) {
 
     }
 
-    @LogLevel("DEBUG")
+    @LogLevel("FINER")
     public void stop(String msg) {
 
     }
 
-    @LogLevel("DEBUG")
+    @LogLevel("FINER")
     public void beginRecover() {
 
     }
 
-    @LogLevel("DEBUG")
+    @LogLevel("FINER")
     public void endRecover() {
 
     }
 
-    @LogLevel("DEBUG")
+    @LogLevel("FINER")
     public void recover(Object recordId) {
 
     }

@@ -32,7 +32,7 @@ public interface StoreMonitor {
      *
      * @param msg
      */
-    @LogLevel("DEBUG")
+    @LogLevel("FINER")
     void start(String msg);
 
     /**
@@ -40,19 +40,19 @@ public interface StoreMonitor {
      *
      * @param msg
      */
-    @LogLevel("DEBUG")
+    @LogLevel("FINER")
     void stop(String msg);
 
     /**
      * Fired when recovery is started
      */
-    @LogLevel("DEBUG")
+    @LogLevel("FINER")
     void beginRecover();
 
     /**
      * Fired when recovery is completed
      */
-    @LogLevel("DEBUG")
+    @LogLevel("FINER")
     void endRecover();
 
     /**
@@ -60,7 +60,7 @@ public interface StoreMonitor {
      *
      * @param recordId the id of the record being recovered
      */
-    @LogLevel("DEBUG")
+    @LogLevel("FINER")
     void recover(Object recordId);
 
     /**
