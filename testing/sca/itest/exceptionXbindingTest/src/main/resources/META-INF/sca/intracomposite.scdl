@@ -21,7 +21,7 @@
 	   xmlns:foo="http://foo" 
            name="intracomposite">
    
-    <component name="main">
+    <component name="stockTraderSDOComponent">
         <implementation.java class="org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDO"/>
         <reference name="exchangeJaxb">exchangeJaxbComponent</reference>
     </component>
