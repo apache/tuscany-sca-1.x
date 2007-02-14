@@ -70,8 +70,8 @@
         <module>calculator</module>
 <!--
         <module>webapp</module>
-        <module>echo.databinding</module>
 -->
+        <module>echo.databinding</module>
         <module>supplychain</module>
         <module>bigbank</module>
         <module>echo.binding</module>
