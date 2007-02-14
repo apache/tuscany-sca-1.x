@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
+import org.apache.tuscany.spi.model.ServiceContract;
 
 /**
  * Contains methods for mapping between an operation in a {@link org.apache.tuscany.spi.model.ServiceContract} and a
@@ -74,9 +75,12 @@ public final class JavaIDLUtils {
      * @return true if the operation matches, false if does not
      */
     private static <T> boolean match(Operation<T> operation, Method method) {
-        // TODO: TUSCANY-1111, comparing different IDLs fail so use simple name matching
-        if (operation.getServiceContract() != null && !(operation.getServiceContract() instanceof JavaServiceContract)) {
-            return operation.getName().equals(method.getName());   
+        // TODO: TUSCANY-1111, comparing different IDLs fail so use simple name
+        // matching
+        ServiceContract<T> contract = operation.getServiceContract();
+        if (contract != null && contract.isRemotable()) {
+            // No method overloading for remotable interfaces
+            return operation.getName().equals(method.getName());
         }
         Class<?>[] params = method.getParameterTypes();
         DataType<List<DataType<T>>> inputType = operation.getInputType();
