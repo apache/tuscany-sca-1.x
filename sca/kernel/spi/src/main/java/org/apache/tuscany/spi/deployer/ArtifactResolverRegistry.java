@@ -16,21 +16,30 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
+
 package org.apache.tuscany.spi.deployer;
 
+
 /**
+ * Registry for artifact resolvers
+ * 
  * @version $Rev$ $Date$
  */
-public interface ContributionProcessorRegistry {
+public interface ArtifactResolverRegistry extends ArtifactResolver {
     /**
-     * Register a ContributionProcessor using the content type as the key
-     * @param processor
+     * Register a resolver by the type of artifacts. For example, you can 
+     * register a resolver to resolve WSDL model objects and other resolver
+     * for java classes
+     * 
+     * @param modelClass The java type of the model object
+     * @param resolver The resolver 
      */
-    void register(ContributionProcessor processor);
-    
+    void registerResolver(Class<?> modelClass, ArtifactResolver resolver);
+
     /**
-     * Unregister a ContributionProcessor by content type
-     * @param contentType
+     * Unregister all resolvers for the given model class
+     * 
+     * @param modelClass
      */
-    void unregister(String contentType);
+    void unregisterResolver(Class<?> modelClass);
 }

@@ -16,21 +16,35 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.spi.deployer;
+
+package org.apache.tuscany.spi.model;
+
+import java.net.URI;
 
 /**
+ * The representation of an import for the contribution
+ * 
  * @version $Rev$ $Date$
  */
-public interface ContributionProcessorRegistry {
-    /**
-     * Register a ContributionProcessor using the content type as the key
-     * @param processor
-     */
-    void register(ContributionProcessor processor);
+public class ContributionImport extends ModelObject {
+    private String namespace; // The namespace to be imported
+    private URI location; // Optional location to hint the where it should be imported
     
-    /**
-     * Unregister a ContributionProcessor by content type
-     * @param contentType
-     */
-    void unregister(String contentType);
+    // TODO: We might need the field to point to the imported artifact/model
+
+    public URI getLocation() {
+        return location;
+    }
+
+    public void setLocation(URI location) {
+        this.location = location;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
+    }
 }
