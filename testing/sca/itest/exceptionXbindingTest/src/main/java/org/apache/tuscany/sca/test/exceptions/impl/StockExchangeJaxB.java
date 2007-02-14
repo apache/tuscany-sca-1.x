@@ -23,19 +23,20 @@ import org.apache.tuscany.sca.test.exceptions.impl.jaxb.InvalidSymbolFault;
 import org.apache.tuscany.sca.test.exceptions.impl.jaxb.InvalidSymbolFault_Exception;
 import org.apache.tuscany.sca.test.exceptions.impl.jaxb.MarketClosedFault;
 import org.apache.tuscany.sca.test.exceptions.impl.jaxb.ObjectFactory;
-import org.apache.tuscany.sca.test.exceptions.impl.jaxb.StockExceptionTest;
 import org.apache.tuscany.sca.test.exceptions.impl.jaxb.StockOffer;
+import org.osoa.sca.annotations.Service;
 
 /**
  * 
  */
-public class StockExchangeJaxB implements StockExceptionTest {
+@Service(StockExceptionTestJAXB.class)
+public class StockExchangeJaxB implements StockExceptionTestJAXB {
 
     /**
      * 
      */
     public StockExchangeJaxB() {
-        // TODO Auto-generated constructor stub
+      
     }
 
     /* (non-Javadoc)
