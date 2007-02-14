@@ -22,6 +22,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
+import org.apache.tuscany.core.implementation.PojoConfiguration;
+import org.apache.tuscany.core.injection.MethodEventInvoker;
+import org.apache.tuscany.core.injection.PojoObjectFactory;
+import org.apache.tuscany.core.injection.ResourceObjectFactory;
 import org.apache.tuscany.spi.ObjectFactory;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.builder.BuilderConfigException;
@@ -37,12 +41,8 @@ import org.apache.tuscany.spi.implementation.java.JavaMappedService;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.implementation.java.Resource;
 import org.apache.tuscany.spi.model.ComponentDefinition;
+import org.apache.tuscany.spi.model.ComponentType;
 import org.apache.tuscany.spi.model.PropertyValue;
-
-import org.apache.tuscany.core.implementation.PojoConfiguration;
-import org.apache.tuscany.core.injection.MethodEventInvoker;
-import org.apache.tuscany.core.injection.PojoObjectFactory;
-import org.apache.tuscany.core.injection.ResourceObjectFactory;
 
 /**
  * Builds a Java-based atomic context from a component definition
@@ -147,14 +147,16 @@ public class JavaComponentBuilder extends ComponentBuilderExtension<JavaImplemen
         return component;
     }
 
-    private void handleCallbackSites(
-        PojoComponentType<JavaMappedService, JavaMappedReference, JavaMappedProperty<?>> componentType,
-        PojoConfiguration configuration) {
-        for (JavaMappedService service : componentType.getServices().values()) {
-            // setup callback injection sites
-            if (service.getCallbackReferenceName() != null) {
-                // Only if there is a callback reference in the service
-                configuration.addCallbackSite(service.getCallbackReferenceName(), service.getCallbackMember());
+    private void handleCallbackSites(ComponentType componentType, PojoConfiguration configuration) {
+        for (Object sd : componentType.getServices().values()) {
+            // TODO: TUSCANY-1111, if using componentType side file with wsdl idl then may not get JavaMappedService  
+            if (sd instanceof JavaMappedService) {
+                JavaMappedService service = (JavaMappedService) sd;
+                // setup callback injection sites
+                if (service.getCallbackReferenceName() != null) {
+                    // Only if there is a callback reference in the service
+                    configuration.addCallbackSite(service.getCallbackReferenceName(), service.getCallbackMember());
+                }
             }
         }
     }

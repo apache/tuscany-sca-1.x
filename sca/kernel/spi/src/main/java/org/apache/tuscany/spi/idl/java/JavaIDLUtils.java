@@ -74,6 +74,10 @@ public final class JavaIDLUtils {
      * @return true if the operation matches, false if does not
      */
     private static <T> boolean match(Operation<T> operation, Method method) {
+        // TODO: TUSCANY-1111, comparing different IDLs fail so use simple name matching
+        if (operation.getServiceContract() != null && !(operation.getServiceContract() instanceof JavaServiceContract)) {
+            return operation.getName().equals(method.getName());   
+        }
         Class<?>[] params = method.getParameterTypes();
         DataType<List<DataType<T>>> inputType = operation.getInputType();
         List<DataType<T>> types = inputType.getLogical();

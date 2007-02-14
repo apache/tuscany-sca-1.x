@@ -19,13 +19,14 @@
 package org.apache.tuscany.core.implementation.java;
 
 import java.net.URL;
+import java.util.Iterator;
 
-import org.osoa.sca.annotations.Constructor;
-
+import org.apache.tuscany.core.util.JavaIntrospectionHelper;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.ComponentTypeLoaderExtension;
+import org.apache.tuscany.spi.idl.java.JavaServiceContract;
 import org.apache.tuscany.spi.implementation.java.IntrospectionRegistry;
 import org.apache.tuscany.spi.implementation.java.Introspector;
 import org.apache.tuscany.spi.implementation.java.JavaMappedProperty;
@@ -35,8 +36,8 @@ import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.implementation.java.ProcessingException;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
-
-import org.apache.tuscany.core.util.JavaIntrospectionHelper;
+import org.apache.tuscany.spi.model.ServiceDefinition;
+import org.osoa.sca.annotations.Constructor;
 
 /**
  * @version $Rev$ $Date$
@@ -66,6 +67,20 @@ public class JavaComponentTypeLoader extends ComponentTypeLoaderExtension<JavaIm
             componentType = loadByIntrospection(parent, implementation, deploymentContext);
         } else {
             componentType = loadFromSidefile(parent, resource, deploymentContext);
+
+            // TODO: TUSCANY-1111, add in reqd bits missing from sidefile
+            PojoComponentType tempComponentType = loadByIntrospection(parent, implementation, deploymentContext);
+            componentType.setConstructorDefinition(tempComponentType.getConstructorDefinition());
+            componentType.setImplementationScope(tempComponentType.getImplementationScope());
+
+            Iterator it = tempComponentType.getServices().values().iterator();
+            for (Object o : componentType.getServices().values()) {
+                ServiceDefinition sd = (ServiceDefinition) o;
+                if (!(sd.getServiceContract() instanceof JavaServiceContract)) {
+                    ServiceDefinition ts = (ServiceDefinition)it.next();
+                    sd.getServiceContract().setInterfaceClass(ts.getServiceContract().getInterfaceClass());
+                }
+            }
         }
         implementation.setComponentType(componentType);
     }

@@ -219,9 +219,10 @@ public abstract class WireServiceExtension implements WireService {
             // Shortcut for performance
             return;
         }
-        if (source.isRemotable() != target.isRemotable()) {
-            throw new IncompatibleServiceContractException("Remotable settings do not match", source, target);
-        }
+// TODO: TUSCANY-1111, this test fails when wiring java to wsdl
+//        if (source.isRemotable() != target.isRemotable()) {
+//            throw new IncompatibleServiceContractException("Remotable settings do not match", source, target);
+//        }
         if (source.getInteractionScope() != target.getInteractionScope()) {
             throw new IncompatibleServiceContractException("Interaction scopes settings do not match", source, target);
         }

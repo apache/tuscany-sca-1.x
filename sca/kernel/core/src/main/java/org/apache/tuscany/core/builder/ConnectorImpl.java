@@ -144,7 +144,16 @@ public class ConnectorImpl implements Connector {
         // match outbound to inbound chains
         for (OutboundInvocationChain outboundChain : sourceWire.getInvocationChains().values()) {
             Operation<?> operation = outboundChain.getOperation();
-            InboundInvocationChain inboundChain = targetChains.get(operation);
+            
+            // TODO: TUSCANY-1111, can't use targetChains.get with different IDLs so use simple name matching
+            // InboundInvocationChain inboundChain = targetChains.get(operation);
+            InboundInvocationChain inboundChain = null; // = targetChains.get(operation);
+            for (InboundInvocationChain ic: targetChains.values()) {
+                if (ic.getOperation().getName().equals(operation.getName())) {
+                    inboundChain = ic;
+                    break;
+                }
+            }
             if (inboundChain == null) {
                 throw new IncompatibleInterfacesException(sourceWire, targetWire);
             }

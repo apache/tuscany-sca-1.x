@@ -279,6 +279,11 @@ public class Operation<T> extends ModelObject implements Cloneable {
         if (isMappable()) {
             return true;
         }
+        
+        // TODO: TUSCANY-1111, currently comparing different IDLs fail
+        if (contract != null && !(contract.getClass().equals(operation.getServiceContract().getClass()))) {
+            return true;
+        }
 
         if (faultTypes == null && operation.faultTypes != null) {
             return false;
