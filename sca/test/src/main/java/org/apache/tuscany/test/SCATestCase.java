@@ -41,7 +41,8 @@ public abstract class SCATestCase extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        TuscanyContainer.start(null, extensions.values().toArray(new URL[0]), applicationSCDL);
+        TuscanyContainer.start(null, extensions == null || extensions.isEmpty() ? null :
+                               extensions.values().toArray(new URL[0]), applicationSCDL);
         // FIXME: How to expose the composite component?
         this.component = ((DefaultTuscanyContainer)TuscanyContainer.getInstance()).getCompsiteComponent();
     }
