@@ -68,7 +68,7 @@ public interface StoreMonitor {
      *
      * @param e the error
      */
-    @LogLevel("ERROR")
+    @LogLevel("SEVERE")
     void error(Throwable e);
 
 }

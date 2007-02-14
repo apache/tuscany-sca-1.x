@@ -51,7 +51,7 @@ public class MockMonitor implements StoreMonitor {
 
     }
 
-    @LogLevel("ERROR")
+    @LogLevel("SEVERE")
     public void error(Throwable e) {
 
     }
