@@ -62,7 +62,7 @@ public class JavaComponentTypeLoader extends ComponentTypeLoaderExtension<JavaIm
         PojoComponentType componentType = loadByIntrospection(parent, implementation, deploymentContext);
         URL resource = implClass.getResource(JavaIntrospectionHelper.getBaseName(implClass) + ".componentType");
         if (resource != null) {
-            // FIXME: How to merge the component type loaded from the file into the PojoComponentType 
+            // TODO: TUSCANY-1111, How to merge the component type loaded from the file into the PojoComponentType 
             PojoComponentType type = loadFromSidefile(parent, resource, deploymentContext);
             
             for (Object o : type.getServices().values()) {
