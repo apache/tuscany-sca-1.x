@@ -38,6 +38,11 @@
 	</repositories>
 	<dependencies>
 		<dependency>
+			<groupId>org.osoa</groupId>
+			<artifactId>sca-api-r${scaSpecVersion}</artifactId>
+		</dependency>
+		<!-- Required extensions -->
+		<dependency>
 			<groupId>org.apache.tuscany.sca.services.databinding</groupId>
 			<artifactId>databinding-sdo</artifactId>
 			<version>${scaKernelVersion}</version>
@@ -48,9 +53,11 @@
 			<version>${scaKernelVersion}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.osoa</groupId>
-			<artifactId>sca-api-r${scaSpecVersion}</artifactId>
+			<groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
+			<artifactId>databinding-axiom</artifactId>
+			<version>${scaKernelVersion}</version>
 		</dependency>
+		<!-- End of Required extensions -->
 		<!-- sun's jax-ws -->
 		<dependency>
 			<groupId>com.sun.xml.ws</groupId>
@@ -98,7 +105,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
 			<!-- Sun's JAX-WS Generation -->
-			
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
@@ -125,43 +131,40 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-		
 			<!-- SDO Generation -->
-	
 			<plugin>
-                <groupId>org.apache.tuscany.sdo</groupId>
-                <artifactId>tuscany-sdo-plugin</artifactId>
-                <version>${sdo.version}</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <schemaFile>${basedir}/src/main/resources/wsdl.sdo/StockExceptionTest.wsdl</schemaFile>
-                            <noNotification>true</noNotification>
-                            <noContainer>true</noContainer>
-                            <noUnsettable>true</noUnsettable>
-                        </configuration>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.tuscany.sca.extensions.axis2.plugins</groupId>
-                <artifactId>tuscany-plugin-wsdl2java</artifactId>
-                <version>${scaKernelVersion}</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <wsdlFile>${basedir}/src/main/resources/wsdl.sdo/StockExceptionTest.wsdl</wsdlFile>
-                        </configuration>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-	</plugins>
+				<groupId>org.apache.tuscany.sdo</groupId>
+				<artifactId>tuscany-sdo-plugin</artifactId>
+				<version>${sdo.version}</version>
+				<executions>
+					<execution>
+						<configuration>
+							<schemaFile>${basedir}/src/main/resources/wsdl.sdo/StockExceptionTest.wsdl</schemaFile>
+							<noNotification>true</noNotification>
+							<noContainer>true</noContainer>
+							<noUnsettable>true</noUnsettable>
+						</configuration>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tuscany.sca.extensions.axis2.plugins</groupId>
+				<artifactId>tuscany-plugin-wsdl2java</artifactId>
+				<version>${scaKernelVersion}</version>
+				<executions>
+					<execution>
+						<configuration>
+							<wsdlFile>${basedir}/src/main/resources/wsdl.sdo/StockExceptionTest.wsdl</wsdlFile>
+						</configuration>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 </project>

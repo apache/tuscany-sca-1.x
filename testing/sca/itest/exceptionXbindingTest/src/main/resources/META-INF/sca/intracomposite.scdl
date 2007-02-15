@@ -22,7 +22,7 @@
            name="intracomposite">
    
     <component name="stockTraderSDOComponent">
-        <implementation.java class="org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDO"/>
+        <implementation.java class="org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDOImpl"/>
         <reference name="exchangeJaxb">exchangeJaxbComponent</reference>
     </component>
     

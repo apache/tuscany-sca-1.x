@@ -21,17 +21,18 @@ package org.apache.tuscany.sca.test.exceptions;
 import junit.framework.TestCase;
 
 import org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDO;
+import org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDOImpl;
 import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 public class IntraCompositeTest extends SCATestCase {
-    private StockTraderSDO exceptionHandler;
+    private StockTraderSDO stockTrader;
 
     private CompositeContext context;
 
     public void testALL() {
-        exceptionHandler.tradingTest();
+        stockTrader.tradingTest();
  
     }
 
@@ -40,7 +41,9 @@ public class IntraCompositeTest extends SCATestCase {
         super.setUp();
         context = CurrentCompositeContext.getContext();
         assertNotNull(context);
-        exceptionHandler = context.locateService(StockTraderSDO.class, "stockTraderSDOComponent");
+        stockTrader = context.locateService(StockTraderSDO.class, "stockTraderSDOComponent" );
+             
+
         assertNotNull(context);
     }
 }

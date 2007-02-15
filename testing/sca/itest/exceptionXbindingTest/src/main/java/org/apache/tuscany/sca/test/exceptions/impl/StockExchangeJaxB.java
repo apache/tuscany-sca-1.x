@@ -43,6 +43,8 @@ public class StockExchangeJaxB implements StockExceptionTestJAXB {
      * @see org.apache.tuscany.sca.test.exceptions.impl.jaxb.StockExceptionTest#stockQuoteOffer(org.apache.tuscany.sca.test.exceptions.impl.jaxb.StockOffer)
      */
     public StockOffer stockQuoteOffer(StockOffer input) throws InvalidSymbolFault_Exception, MarketClosedFault {
+
+        System.out.println("stockQuoteOffer '" + input +"'");
         
        String symbol= input.getSymbol();
        if("IBM".equals(symbol)){
