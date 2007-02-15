@@ -46,7 +46,7 @@ public class DataObject2XMLStreamReader extends TransformerExtension<DataObject,
             XMLStreamHelper streamHelper = SDOUtil.createXMLStreamHelper(helperContext.getTypeHelper());
             Object logicalType = context.getSourceDataType().getLogical();
             QName elementName =
-                    (logicalType instanceof QName) ? (QName) logicalType : new QName("commonj.sdo", "dataObject");
+                    (logicalType instanceof QName) ? (QName) logicalType : SDODataBinding.ROOT_ELEMENT;
             XMLHelper xmlHelper = helperContext.getXMLHelper();
             XMLDocument document =
                     xmlHelper.createDocument(source, elementName.getNamespaceURI(), elementName.getLocalPart());

@@ -32,7 +32,6 @@ import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
 
 public class JAXBContextHelper {
-    private static final QName JAXB_ELEMENT = new QName("http://jaxb", "element");
     // TODO: Do we need to set them for source and target?
     public static final String JAXB_CLASSES = "jaxb.classes";
 
@@ -85,7 +84,7 @@ public class JAXBContextHelper {
         } else {
             Object logical = dataType.getLogical();
             if (!(logical instanceof QName)) {
-                logical = JAXB_ELEMENT;
+                logical = JAXBDataBinding.ROOT_ELEMENT;
             }
             return new JAXBElement((QName)logical, (Class)dataType.getPhysical(), value);
         }

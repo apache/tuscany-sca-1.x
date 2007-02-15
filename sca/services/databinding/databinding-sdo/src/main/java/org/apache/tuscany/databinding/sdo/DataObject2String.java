@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.databinding.sdo;
 
+import static org.apache.tuscany.databinding.sdo.SDODataBinding.ROOT_ELEMENT;
+
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.databinding.PullTransformer;
@@ -33,9 +35,7 @@ import commonj.sdo.helper.XMLHelper;
 
 @Service(Transformer.class)
 public class DataObject2String extends TransformerExtension<DataObject, String> implements
-        PullTransformer<DataObject, String> {
-
-    private static final String TUSCANY_SDO = "http://tuscany.apache.org/xmlns/sdo/1.0-SNAPSHOT";
+    PullTransformer<DataObject, String> {
 
     public String transform(DataObject source, TransformationContext context) {
         try {
@@ -43,10 +43,10 @@ public class DataObject2String extends TransformerExtension<DataObject, String> 
             XMLHelper xmlHelper = helperContext.getXMLHelper();
             Object logicalType = context.getSourceDataType().getLogical();
             if (logicalType instanceof QName) {
-                QName elementName = (QName) logicalType;
+                QName elementName = (QName)logicalType;
                 return xmlHelper.save(source, elementName.getNamespaceURI(), elementName.getLocalPart());
             } else {
-                return xmlHelper.save(source, TUSCANY_SDO, "dataObject");
+                return xmlHelper.save(source, ROOT_ELEMENT.getNamespaceURI(), ROOT_ELEMENT.getLocalPart());
             }
         } catch (Exception e) {
             throw new TransformationException(e);
