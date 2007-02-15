@@ -19,6 +19,7 @@
 package org.apache.tuscany.core.implementation.java;
 
 import java.net.URL;
+import java.util.Iterator;
 
 import org.apache.tuscany.core.util.JavaIntrospectionHelper;
 import org.apache.tuscany.spi.annotation.Autowire;
@@ -34,6 +35,7 @@ import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.implementation.java.ProcessingException;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
+import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.osoa.sca.annotations.Constructor;
 
@@ -63,14 +65,18 @@ public class JavaComponentTypeLoader extends ComponentTypeLoaderExtension<JavaIm
         URL resource = implClass.getResource(JavaIntrospectionHelper.getBaseName(implClass) + ".componentType");
         if (resource != null) {
             // TODO: TUSCANY-1111, How to merge the component type loaded from the file into the PojoComponentType 
-            PojoComponentType type = loadFromSidefile(parent, resource, deploymentContext);
-            
-            for (Object o : type.getServices().values()) {
-                ServiceDefinition sd = (ServiceDefinition) o;
-                ServiceDefinition javaService = (ServiceDefinition) componentType.getServices().get(sd.getName());
-                if(javaService!=null) {
-                    javaService.setServiceContract(sd.getServiceContract());
-                }
+            PojoComponentType sideFileCT = loadFromSidefile(parent, resource, deploymentContext);
+
+            // TODO: TUSCANY-1111, hack to get the sidefile defined WSDLServiceContract used
+            // only works with a single service
+            Iterator it = componentType.getServices().values().iterator();
+            for (Object o : sideFileCT.getServices().values()) {
+                ServiceDefinition sideFileSD = (ServiceDefinition) o;
+                ServiceDefinition actualSD = (ServiceDefinition)it.next();
+                ServiceContract<?> newServiceContract = sideFileSD.getServiceContract();
+                // TODO: TUSCANY-1111, runtime requires interfaceClass but currently there's no way of gen'ing that from WSDL
+                newServiceContract.setInterfaceClass(actualSD.getServiceContract().getInterfaceClass());
+                actualSD.setServiceContract(newServiceContract);
             }
         }
         implementation.setComponentType(componentType);
