@@ -40,8 +40,8 @@ import org.w3c.dom.Document;
  * JAXB DataBinding
  */
 public class JAXBDataBinding extends DataBindingExtension {
-    public static final String NAMESPACE = "http://tuscany.apache.org/xmlns/sca/databinding/jaxb/1.0";
-    public static final QName ROOT_ELEMENT = new QName(NAMESPACE, "root");
+    public static final String ROOT_NAMESPACE = "http://tuscany.apache.org/xmlns/sca/databinding/jaxb/1.0";
+    public static final QName ROOT_ELEMENT = new QName(ROOT_NAMESPACE, "root");
 
     public static final String NAME = JAXBElement.class.getName();
 

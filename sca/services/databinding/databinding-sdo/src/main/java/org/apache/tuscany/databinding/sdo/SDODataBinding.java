@@ -37,8 +37,8 @@ import commonj.sdo.helper.XSDHelper;
  * @version $Reve$ $Date$
  */
 public class SDODataBinding extends DataBindingExtension {
-    public static final String NAMESPACE = "http://tuscany.apache.org/xmlns/sca/databinding/sdo/1.0";
-    public static final QName ROOT_ELEMENT = new QName(NAMESPACE, "root");
+    public static final String ROOT_NAMESPACE = "commonj.sdo";
+    public static final QName ROOT_ELEMENT = new QName(ROOT_NAMESPACE, "dataObject");
     
     private WrapperHandler<Object> wrapperHandler;
 
