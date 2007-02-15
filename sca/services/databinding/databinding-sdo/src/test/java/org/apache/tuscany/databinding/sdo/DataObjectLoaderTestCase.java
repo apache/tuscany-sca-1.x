@@ -41,13 +41,21 @@ public class DataObjectLoaderTestCase extends TestCase {
 
     private QName name = new QName("http://www.osoa.org/xmlns/mock/0.9", "implementation.mock");
 
-    private String xml = "<module name=\"m\" xmlns=\"http://www.osoa.org/xmlns/sca/0.9\" xmlns:mock=\"http://www.osoa.org/xmlns/mock/0.9\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"  xsi:schemaLocation=\"http://www.osoa.org/xmlns/mock/0.9 sca-implementation-mock.xsd http://www.osoa.org/xmlns/sca/0.9 sca-core.xsd \"><component name=\"c\"><mock:implementation.mock myAttr=\"helloworld.HelloWorldImpl\" /></component></module>";
+    private String xml =
+        "<module name=\"m\" xmlns=\"http://www.osoa.org/xmlns/sca/0.9\" " 
+            + "xmlns:mock=\"http://www.osoa.org/xmlns/mock/0.9\" "
+            + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"  "
+            + "xsi:schemaLocation=\"http://www.osoa.org/xmlns/mock/0.9 "
+            + "sca-implementation-mock.xsd http://www.osoa.org/xmlns/sca/0.9 sca-core.xsd \">"
+            + "<component name=\"c\"><mock:implementation.mock myAttr=\"helloworld.HelloWorldImpl\" />"
+            + "</component></module>";
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         URL url = getClass().getClassLoader().getResource("model/sca-implementation-mock.xsd");
-        // URL url = getClass().getClassLoader().getResource("model/sca-core.xsd");
+        // URL url =
+        // getClass().getClassLoader().getResource("model/sca-core.xsd");
         xsdHelper.define(url.openStream(), url.toExternalForm());
     }
 
@@ -59,8 +67,10 @@ public class DataObjectLoaderTestCase extends TestCase {
             event = reader.nextTag();
         }
         DataObjectLoader loader = new DataObjectLoader(name);
-        DeploymentContext context = new RootDeploymentContext(getClass().getClassLoader(), inputFactory, new CompositeScopeContainer(null), null);
-        ModelDataObject modelObject = (ModelDataObject) loader.load(null, null, reader, context);
+        DeploymentContext context =
+            new RootDeploymentContext(getClass().getClassLoader(), inputFactory, new CompositeScopeContainer(null),
+                                      null);
+        ModelDataObject modelObject = (ModelDataObject)loader.load(null, null, reader, context);
         Assert.assertNotNull(modelObject.getDataObject());
         Assert.assertTrue(modelObject.getDataObject().getString("myAttr").equals("helloworld.HelloWorldImpl"));
     }

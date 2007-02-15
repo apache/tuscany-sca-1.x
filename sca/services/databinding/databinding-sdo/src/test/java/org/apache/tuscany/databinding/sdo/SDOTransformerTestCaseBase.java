@@ -37,10 +37,9 @@ import commonj.sdo.DataObject;
  * The base class for SDO-related test cases
  */
 public abstract class SDOTransformerTestCaseBase extends TestCase {
+    protected static final QName ORDER_QNAME = new QName("http://www.example.com/IPO", "purchaseOrder");
+
     protected String binding = DataObject.class.getName();
-
-    protected static final QName orderQName = new QName("http://www.example.com/IPO", "purchaseOrder");
-
     protected TransformationContext context;
     protected TransformationContext reversedContext; 
     protected DataObject dataObject;
