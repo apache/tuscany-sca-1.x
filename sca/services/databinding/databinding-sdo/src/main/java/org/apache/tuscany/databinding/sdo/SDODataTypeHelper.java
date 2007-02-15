@@ -20,12 +20,12 @@
 package org.apache.tuscany.databinding.sdo;
 
 import org.apache.tuscany.databinding.sdo.ImportSDOLoader.SDOType;
-import org.apache.tuscany.sdo.util.SDOUtil;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 
 import commonj.sdo.helper.HelperContext;
+import commonj.sdo.impl.HelperProvider;
 
 /**
  * Helper class to get TypeHelper from the context
@@ -36,7 +36,7 @@ public final class SDODataTypeHelper {
 
     public static HelperContext getHelperContext(TransformationContext context) {
         if (context == null || context.getMetadata() == null) {
-            return SDOUtil.createHelperContext();
+            return getDefaultHelperContext();
         }
         HelperContext helperContext = null;
         CompositeComponent composite = (CompositeComponent)context.getMetadata().get(CompositeComponent.class);
@@ -47,7 +47,7 @@ public final class SDODataTypeHelper {
             }
         }
         if (helperContext == null) {
-            return SDOUtil.createHelperContext();
+            return getDefaultHelperContext();
         } else {
             return helperContext;
         }
@@ -58,15 +58,20 @@ public final class SDODataTypeHelper {
         if (deploymentContext != null && deploymentContext.getParent() != null) {
             helperContext = (HelperContext)deploymentContext.getParent().getExtension(HelperContext.class.getName());
             if (helperContext == null) {
-                helperContext = SDOUtil.createHelperContext();
+                helperContext = getDefaultHelperContext();
                 deploymentContext.getParent().putExtension(HelperContext.class.getName(), helperContext);
             }
         }
 
         if (helperContext == null) {
-            helperContext = SDOUtil.createHelperContext();
+            helperContext = getDefaultHelperContext();
         }
         
         return helperContext;
+    }
+    
+    protected static HelperContext getDefaultHelperContext() {
+        // SDOUtil.createHelperContext();
+        return HelperProvider.getDefaultContext();
     }
 }

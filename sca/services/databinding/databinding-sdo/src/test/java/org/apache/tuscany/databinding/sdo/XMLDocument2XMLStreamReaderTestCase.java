@@ -28,9 +28,7 @@ import junit.framework.Assert;
 import org.apache.tuscany.spi.model.DataType;
 
 import com.example.ipo.sdo.PurchaseOrderType;
-
 import commonj.sdo.helper.XMLDocument;
-import commonj.sdo.helper.XMLHelper;
 
 /**
  * 
@@ -49,7 +47,9 @@ public class XMLDocument2XMLStreamReaderTestCase extends SDOTransformerTestCaseB
 
     public final void testTransform() throws XMLStreamException {
         XMLDocument document =
-                XMLHelper.INSTANCE.createDocument(dataObject, ORDER_QNAME.getNamespaceURI(), ORDER_QNAME.getLocalPart());
+            helperContext.getXMLHelper().createDocument(dataObject,
+                                                        ORDER_QNAME.getNamespaceURI(),
+                                                        ORDER_QNAME.getLocalPart());
         XMLStreamReader reader = new XMLDocument2XMLStreamReader().transform(document, context);
         XMLDocument document2 = new XMLStreamReader2XMLDocument().transform(reader, reversedContext);
         Assert.assertEquals(ORDER_QNAME.getNamespaceURI(), document2.getRootElementURI());

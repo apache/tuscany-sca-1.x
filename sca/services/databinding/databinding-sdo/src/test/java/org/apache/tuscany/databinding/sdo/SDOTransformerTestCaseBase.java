@@ -24,7 +24,6 @@ import javax.xml.namespace.QName;
 import junit.framework.TestCase;
 
 import org.apache.tuscany.core.databinding.impl.TransformationContextImpl;
-import org.apache.tuscany.sdo.util.SDOUtil;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.model.DataType;
 
@@ -32,6 +31,8 @@ import com.example.ipo.sdo.PurchaseOrderType;
 import com.example.ipo.sdo.SdoFactory;
 import com.example.ipo.sdo.USAddress;
 import commonj.sdo.DataObject;
+import commonj.sdo.helper.HelperContext;
+import commonj.sdo.impl.HelperProvider;
 
 /**
  * The base class for SDO-related test cases
@@ -39,6 +40,7 @@ import commonj.sdo.DataObject;
 public abstract class SDOTransformerTestCaseBase extends TestCase {
     protected static final QName ORDER_QNAME = new QName("http://www.example.com/IPO", "purchaseOrder");
 
+    protected HelperContext helperContext;
     protected String binding = DataObject.class.getName();
     protected TransformationContext context;
     protected TransformationContext reversedContext; 
@@ -49,7 +51,9 @@ public abstract class SDOTransformerTestCaseBase extends TestCase {
      */
     protected void setUp() throws Exception {
         super.setUp();
-        SDOUtil.registerStaticTypes(SdoFactory.class);
+        helperContext = HelperProvider.getDefaultContext();
+        SdoFactory.INSTANCE.register(helperContext);
+        
         context = new TransformationContextImpl();
         context.setSourceDataType(getSourceDataType());
         context.setTargetDataType(getTargetDataType());
