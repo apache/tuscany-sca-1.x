@@ -23,6 +23,7 @@ import java.beans.Introspector;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,14 +31,18 @@ import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
+import org.apache.tuscany.spi.databinding.extension.DOMHelper;
 import org.apache.tuscany.spi.databinding.extension.DataBindingExtension;
 import org.apache.tuscany.spi.model.DataType;
+import org.w3c.dom.Document;
 
 /**
  * JAXB DataBinding
  */
 public class JAXBDataBinding extends DataBindingExtension {
-    
+    private static final String NAMESPACE = "http://tuscany.apache.org/xmlns/sca/databinding/jaxb/1.0";
+    private static final QName ROOT_ELEMENT = new QName(NAMESPACE, "root");
+
     public static final String NAME = JAXBElement.class.getName();
 
     @Override
@@ -45,12 +50,12 @@ public class JAXBDataBinding extends DataBindingExtension {
         if (JAXBElement.class.isAssignableFrom(javaType)) {
             Type type = javaType.getGenericSuperclass();
             if (type instanceof ParameterizedType) {
-                ParameterizedType parameterizedType = ((ParameterizedType) type);
+                ParameterizedType parameterizedType = ((ParameterizedType)type);
                 Type rawType = parameterizedType.getRawType();
                 if (rawType == JAXBElement.class) {
                     Type actualType = parameterizedType.getActualTypeArguments()[0];
                     if (actualType instanceof Class) {
-                        return introspect((Class<?>) actualType);
+                        return introspect((Class<?>)actualType);
                     }
                 }
             }
@@ -74,7 +79,8 @@ public class JAXBDataBinding extends DataBindingExtension {
                 if (rootElement != null) {
                     namespace = rootElement.namespace();
                 } else {
-                    // FIXME: The namespace should be from the referencing property
+                    // FIXME: The namespace should be from the referencing
+                    // property
                     namespace = null;
                 }
             } else if (typeNamespace.equals("##default")) {
@@ -104,6 +110,28 @@ public class JAXBDataBinding extends DataBindingExtension {
 
     public JAXBDataBinding() {
         super(NAME, JAXBElement.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Object copy(Object arg) {
+        try {
+            boolean isElement = false;
+            Class cls = arg.getClass();
+            if (arg instanceof JAXBElement) {
+                isElement = true;
+                cls = ((JAXBElement)arg).getDeclaredType();
+            } else {
+                arg = new JAXBElement(ROOT_ELEMENT, cls, arg);
+            }
+            JAXBContext context = JAXBContext.newInstance(cls);
+            Document doc = DOMHelper.newDocument();
+            context.createMarshaller().marshal(arg, doc);
+            JAXBElement<?> element = context.createUnmarshaller().unmarshal(doc, cls);
+            return isElement ? element : element.getValue();
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
 }

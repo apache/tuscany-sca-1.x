@@ -27,6 +27,7 @@ import junit.framework.TestCase;
 
 import org.apache.tuscany.spi.model.DataType;
 
+import com.example.ipo.jaxb.ObjectFactory;
 import com.example.ipo.jaxb.PurchaseOrderType;
 import com.example.ipo.jaxb.USAddress;
 import com.example.ipo.jaxb.USState;
@@ -46,7 +47,8 @@ public class JAXBDataBindingTestCase extends TestCase {
     }
 
     /**
-     * Test method for {@link org.apache.tuscany.databinding.jaxb.JAXBDataBinding#introspect(java.lang.Class)}.
+     * Test method for
+     * {@link org.apache.tuscany.databinding.jaxb.JAXBDataBinding#introspect(java.lang.Class)}.
      */
     public final void testIntrospect() {
         DataType<?> dataType = binding.introspect(JAXBElement.class);
@@ -80,4 +82,33 @@ public class JAXBDataBindingTestCase extends TestCase {
 
     }
 
+    @SuppressWarnings("unchecked")
+    public void testCopy() {
+        ObjectFactory factory = new ObjectFactory();
+        PurchaseOrderType poType = factory.createPurchaseOrderType();
+        JAXBElement<PurchaseOrderType> po = factory.createPurchaseOrder(poType);
+        JAXBElement<PurchaseOrderType> copy = (JAXBElement<PurchaseOrderType>)binding.copy(po);
+        assertEquals(new QName("http://www.example.com/IPO", "purchaseOrder"), copy.getName());
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testCopyNonElement() {
+        ObjectFactory factory = new ObjectFactory();
+        PurchaseOrderType poType = factory.createPurchaseOrderType();
+        poType.setComment("Comment");
+        PurchaseOrderType copy = (PurchaseOrderType)binding.copy(poType);
+        assertTrue(copy instanceof PurchaseOrderType);
+        assertEquals("Comment", ((PurchaseOrderType)copy).getComment());
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testCopyNonRoot() {
+        ObjectFactory factory = new ObjectFactory();
+        USAddress address = factory.createUSAddress();
+        address.setCity("San Jose");
+        USAddress copy = (USAddress)binding.copy(address);
+        assertTrue(copy instanceof USAddress);
+        assertEquals("San Jose", ((USAddress)copy).getCity());
+
+    }
 }
