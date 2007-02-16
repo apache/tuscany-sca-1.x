@@ -66,7 +66,7 @@
     <!--parameters help to tweak the message handling of two main servlets. -->
 
     <!-- If the enableRESTInAxis2MainServlet is true, then Axis2MainServlet will handle both SOAP and REST messages -->
-    <parameter name="enableRESTInAxis2MainServlet" locked="true">false</parameter>
+    <parameter name="enableRESTInAxis2MainServlet" locked="true">true</parameter>
 
     <!-- Following parameter will completely disable REST handling in both the servlets-->
     <parameter name="disableREST" locked="true">false</parameter>

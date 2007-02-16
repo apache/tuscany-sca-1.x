@@ -66,7 +66,7 @@ public class JettyServiceImplTestCase extends TestCase {
      * Verifies requests are properly routed according to the servlet mapping
      */
     public void testRegisterServletMapping() throws Exception {
-        JettyServiceImpl service = new JettyServiceImpl(monitor);
+        JettyServiceImpl service = new JettyServiceImpl(monitor, null);
         service.setHttpPort(HTTP_PORT);
         service.init();
         TestServlet servlet = new TestServlet();
@@ -114,7 +114,7 @@ public class JettyServiceImplTestCase extends TestCase {
     }
 
     public void testRestart() throws Exception {
-        JettyServiceImpl service = new JettyServiceImpl(monitor);
+        JettyServiceImpl service = new JettyServiceImpl(monitor, null);
         service.setHttpPort(HTTP_PORT);
         service.init();
         service.destroy();
@@ -123,7 +123,7 @@ public class JettyServiceImplTestCase extends TestCase {
     }
 
     public void testNoMappings() throws Exception {
-        JettyServiceImpl service = new JettyServiceImpl(monitor);
+        JettyServiceImpl service = new JettyServiceImpl(monitor, null);
         service.setHttpPort(HTTP_PORT);
         service.init();
         Socket client = new Socket("127.0.0.1", HTTP_PORT);

@@ -17,25 +17,18 @@
     * specific language governing permissions and limitations
     * under the License.    
 -->
-<project>
-    <parent>
-        <groupId>org.apache.tuscany.sca.extensions.axis2.samples</groupId>
-        <artifactId>parent</artifactId>
-        <version>0.1-integration-incubating-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance"
+    name="helloworldws">
+    
+    <service name="HelloWorldWebService">
+        <interface.java class="helloworld.HelloWorldService" />
+        <!-- interface.wsdl interface="http://helloworld#wsdl.interface(HelloWorld)" wsdli:wsdlLocation="http://helloworld wsdl/helloworld.wsdl" / -->
+        <binding.ws endpoint="http://helloworld#wsdl.endpoint(HelloWorldService/HelloWorldSoapPort)" location="wsdl/helloworld.wsdl" />
+        <reference>HelloWorldServiceComponent</reference>
+    </service>
 
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-helloworldws</artifactId>
-    <packaging>war</packaging>
-    <name>Tuscany HelloWorld Web Service Sample</name>
-    <description>A sample HelloWorld Web Service.</description>
+    <component name="HelloWorldServiceComponent">
+        <implementation.java class="helloworld.HelloWorldImpl" />
+    </component>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.tuscany.sca.services</groupId>
-            <artifactId>http-jetty</artifactId>
-        </dependency>        
-    </dependencies>
-
-</project>
+</composite>

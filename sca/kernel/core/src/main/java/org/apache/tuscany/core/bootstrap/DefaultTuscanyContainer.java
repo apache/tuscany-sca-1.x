@@ -20,11 +20,10 @@ package org.apache.tuscany.core.bootstrap;
 
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.apache.tuscany.api.TuscanyContainer;
 import org.apache.tuscany.api.TuscanyException;
@@ -75,12 +74,17 @@ public class DefaultTuscanyContainer extends TuscanyContainer {
 
         try {
             CompositeComponent composite = launcher.bootRuntime(system, monitorFactory);
-            Set<URL> extensions = new HashSet<URL>();
-            if (exts != null) {
-                extensions.addAll(Arrays.asList(exts));
-            }
-            Enumeration<URL> urls = cl.getResources(TuscanyContainer.EXTENSION_SCDL);
+            List<URL> extensions = new ArrayList<URL>();
+            Enumeration<URL> urls = cl.getResources(TuscanyContainer.SERVICE_SCDL);
             extensions.addAll(Collections.list(urls));
+            urls = cl.getResources(TuscanyContainer.EXTENSION_SCDL);
+            extensions.addAll(Collections.list(urls));
+            if (exts != null) {
+            	for (URL ext : exts) {
+            		if (!extensions.contains(ext))
+            			extensions.add(ext);
+            	}
+            }
             int i = 0;
             for (URL ext : extensions) {
                 deployExtension(composite, "tuscany.extension." + (i++), ext);

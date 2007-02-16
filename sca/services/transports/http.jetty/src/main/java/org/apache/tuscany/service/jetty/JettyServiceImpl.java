@@ -42,6 +42,7 @@ import org.mortbay.log.Logger;
 import org.mortbay.thread.BoundedThreadPool;
 import org.mortbay.thread.ThreadPool;
 import org.osoa.sca.annotations.Destroy;
+import org.osoa.sca.annotations.EagerInit;
 import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Scope;
@@ -54,6 +55,7 @@ import org.osoa.sca.annotations.Service;
  */
 @Scope("COMPOSITE")
 @Service(ServletHost.class)
+@EagerInit
 public class JettyServiceImpl implements JettyService {
 
     private static final String ROOT = "/";
@@ -93,23 +95,23 @@ public class JettyServiceImpl implements JettyService {
         Logger logger = Log.getLogger(null);
         if (logger instanceof JettyLogger) {
             JettyLogger jettyLogger = (JettyLogger) logger;
-            jettyLogger.setMonitor(monitor);
+            jettyLogger.setMonitor(this.monitor);
             if (debug) {
                 jettyLogger.setDebugEnabled(true);
             }
         }
     }
 
-    public JettyServiceImpl(TransportMonitor monitor) {
-        this.monitor = monitor;
-    }
-
-    public JettyServiceImpl(TransportMonitor monitor,
-                            WorkScheduler scheduler,
-                            Connector connector) {
-        this(monitor, scheduler);
-        this.connector = connector;
-    }
+//    public JettyServiceImpl(TransportMonitor monitor) {
+//        this.monitor = monitor;
+//    }
+//
+//    public JettyServiceImpl(TransportMonitor monitor,
+//                            WorkScheduler scheduler,
+//                            Connector connector) {
+//        this(monitor, scheduler);
+//        this.connector = connector;
+//    }
 
     @Property
     public void setHttpPort(int httpPort) {
@@ -195,7 +197,7 @@ public class JettyServiceImpl implements JettyService {
 
             server.setStopAtShutdown(true);
             server.setSendServerVersion(sendServerVersion);
-            monitor.started();
+            //monitor.started();
             server.start();
             state = STARTED;
         } catch (Exception e) {
@@ -212,7 +214,7 @@ public class JettyServiceImpl implements JettyService {
         }
         server.stop();
         state = STOPPED;
-        monitor.shutdown();
+        //monitor.shutdown();
     }
 
     public void registerMapping(String path, Servlet servlet) {

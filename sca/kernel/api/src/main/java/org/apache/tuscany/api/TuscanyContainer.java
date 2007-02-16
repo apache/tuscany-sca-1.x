@@ -35,6 +35,7 @@ import org.osoa.sca.ComponentContext;
 public abstract class TuscanyContainer {
     public static final String SYSTEM_SCDL = "META-INF/tuscany/system.composite";
     public static final String EXTENSION_SCDL = "META-INF/sca/extension.composite";
+    public static final String SERVICE_SCDL = "META-INF/sca/service.composite";
     public static final String APPLICATION_SCDL = "META-INF/sca/application.composite";
 
     private static TuscanyContainer instance;
