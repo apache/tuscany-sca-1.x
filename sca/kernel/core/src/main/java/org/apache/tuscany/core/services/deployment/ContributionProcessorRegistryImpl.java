@@ -27,53 +27,57 @@ import java.util.Map;
 
 import org.apache.tuscany.host.deployment.DeploymentException;
 import org.apache.tuscany.host.deployment.UnsupportedContentTypeException;
+import org.apache.tuscany.spi.annotation.Autowire;
+import org.apache.tuscany.spi.deployer.ContentTypeDescriber;
 import org.apache.tuscany.spi.deployer.ContributionProcessor;
 import org.apache.tuscany.spi.deployer.ContributionProcessorRegistry;
 import org.apache.tuscany.spi.model.Contribution;
+import org.osoa.sca.annotations.EagerInit;
+import org.osoa.sca.annotations.Service;
 
-public class ContributionProcessorRegistryImpl implements ContributionProcessorRegistry{
+/**
+ * Default implementation of ContributionProcessorRegistry
+ * 
+ * @version $Rev$ $Date$
+ */
+@EagerInit
+@Service(ContributionProcessorRegistry.class)
+public class ContributionProcessorRegistryImpl implements ContributionProcessorRegistry {
     private Map<String, ContributionProcessor> registry = new HashMap<String, ContributionProcessor>();
-    private ContributionContentTypeBuilder contentTypeBuilder = new ContributionContentTypeBuilder();
-    
-    /**
-     * ContributionProcessorregistry impl
-     */
-    
-    /* (non-Javadoc)
-     * @see org.apache.tuscany.spi.deployer.ContributionProcessorRegistry#register(org.apache.tuscany.spi.deployer.ContributionProcessor)
-     */
+    private ContentTypeDescriber contentTypeBuilder;
+
+    public ContributionProcessorRegistryImpl(@Autowire ContentTypeDescriber contentTypeBuilder) {
+        if (contentTypeBuilder == null) {
+            this.contentTypeBuilder = new ContentTypeDescriberImpl();
+        } else {
+            this.contentTypeBuilder = contentTypeBuilder;
+        }
+    }
+
     public void register(String contentType, ContributionProcessor processor) {
         registry.put(contentType, processor);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.tuscany.spi.deployer.ContributionProcessorRegistry#unregister(java.lang.String)
-     */
     public void unregister(String contentType) {
         registry.remove(contentType);
     }
-    
-    /* (non-Javadoc)
-     * @see org.apache.tuscany.spi.deployer.ContributionProcessor#processContent(org.apache.tuscany.spi.model.Contribution, java.net.URI, java.io.InputStream)
-     */
-    public void processContent(Contribution contribution, URL source, InputStream inputStream) throws DeploymentException, IOException{
-        String contentType = this.contentTypeBuilder.resolveContentType(source, null);
-        if(contentType == null) {
+
+    public void processContent(Contribution contribution, URL source, InputStream inputStream)
+        throws DeploymentException, IOException {
+        String contentType = this.contentTypeBuilder.getContentType(source, null);
+        if (contentType == null) {
             throw new UnsupportedContentTypeException("Invalid contentType: null");
         }
-        
-        if(! this.registry.containsKey(contentType)){
+
+        if (!this.registry.containsKey(contentType)) {
             throw new UnsupportedContentTypeException(contentType, source.getPath());
         }
 
         this.registry.get(contentType).processContent(contribution, source, inputStream);
-        
+
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.tuscany.spi.deployer.ContributionProcessor#processModel(org.apache.tuscany.spi.model.Contribution, java.net.URI, java.lang.Object)
-     */
-    public void processModel(Contribution contribution, URL source, Object modelObject) throws DeploymentException, IOException{
-        
+    public void processModel(Contribution contribution, URL source, Object modelObject) throws DeploymentException,
+        IOException {
     }
 }

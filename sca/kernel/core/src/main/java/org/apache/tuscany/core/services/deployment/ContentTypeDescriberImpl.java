@@ -25,79 +25,73 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ContributionContentTypeBuilder {
+import org.apache.commons.io.FilenameUtils;
+import org.apache.tuscany.spi.deployer.ContentTypeDescriber;
+import org.osoa.sca.annotations.EagerInit;
+import org.osoa.sca.annotations.Service;
+
+/**
+ * Implementation of the content describer
+ * 
+ * @version $Rev$ $Date$
+ */
+@EagerInit
+@Service(ContentTypeDescriber.class)
+public class ContentTypeDescriberImpl implements ContentTypeDescriber {
     private final Map<String, String> contentTypeRegistry = new HashMap<String, String>();
 
-    public ContributionContentTypeBuilder() {
-        initializeContentTypeRegistry();
-
+    public ContentTypeDescriberImpl() {
+        super();
+        init();
     }
 
     /**
-     * Initialize contentType registry with know types based on known file extensions
+     * Initialize contentType registry with know types based on known file
+     * extensions
      */
-    protected void initializeContentTypeRegistry() {
+    public void init() {
         contentTypeRegistry.put("SCDL", "application/v.tuscany.scdl");
         contentTypeRegistry.put("WSDL", "application/v.tuscany.wsdl");
     }
 
-    private String getFileExtension(URL resource){
-        String artifactExtension = resource.getPath();
-        
-        if (artifactExtension.lastIndexOf('.') > -1) {
-            artifactExtension = artifactExtension.substring(artifactExtension.lastIndexOf('.') + 1, artifactExtension.length());
-            artifactExtension = artifactExtension.toUpperCase();
-        }else {
-            artifactExtension = null;
-        }
-        
-        return artifactExtension;
-    }
     protected String resolveContentyTypeByExtension(URL resourceURL) {
-        String artifactContentType = null;
-        String artifactExtension = getFileExtension(resourceURL);
-
-        if (artifactExtension != null) {
-            if (contentTypeRegistry.containsKey(artifactExtension)) {
-                artifactContentType = contentTypeRegistry.get(artifactExtension);
-            }
+        String artifactExtension = FilenameUtils.getExtension(resourceURL.getPath());
+        if (artifactExtension == null) {
+            return null;
         }
-
-        return artifactContentType;
+        return contentTypeRegistry.get(artifactExtension.toUpperCase());
     }
 
     /**
-     * Build contentType for a specific resource.
-     * We first check if the file is a supported one (looking into our registry based on resource extension)
-     * If not found, we try to check file contentType 
-     * Or we return defaultContentType provided
+     * Build contentType for a specific resource. We first check if the file is
+     * a supported one (looking into our registry based on resource extension)
+     * If not found, we try to check file contentType Or we return
+     * defaultContentType provided
      * 
      * @param url
      * @param defaultContentType
      * @return
      */
-    public String resolveContentType(URL resourceURL, String defaultContentType) {
+    public String getContentType(URL resourceURL, String defaultContentType) {
         URLConnection connection = null;
         String contentType = defaultContentType;
 
         contentType = resolveContentyTypeByExtension(resourceURL);
-        if(contentType == null){
+        if (contentType == null) {
             try {
                 connection = resourceURL.openConnection();
                 contentType = connection.getContentType();
-                
+
                 if (contentType == null || contentType.equals("content/unknown")) {
                     // here we couldn't figure out from our registry or from URL
                     // return defaultContentType if provided
                     contentType = defaultContentType;
                 }
             } catch (IOException io) {
-                // could not access artifact, just ignore and we will return null contentType
+                // could not access artifact, just ignore and we will return
+                // null contentType
             }
-            
         }
-            
-
         return contentType == null ? defaultContentType : contentType;
     }
 

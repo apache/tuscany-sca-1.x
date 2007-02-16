@@ -158,12 +158,22 @@
     </component>
 
     <!-- Contribution Service -->
-    <component name="contrbutionService">
+    <component name="contributionService">
         <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContributionServiceImpl" />
     </component>
-    <component name="contrbutionRepository">
+    <component name="contributionRepository" initLevel="40">
         <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContributionRepositoryImpl" />
         <property name="repository">target/repository</property>
+    </component>
+
+    <component name="contributionProcessorRepository" initLevel="35">
+        <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContributionProcessorRegistryImpl" />
+    </component>
+    <component name="contentTypeDescriber" initLevel="30">
+        <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContentTypeDescriberImpl" />
+    </component>
+    <component name="jarContributionProcessor">
+        <system:implementation.system class="org.apache.tuscany.core.services.deployment.contribution.JarContributionProcessor" />
     </component>
 
 </composite>

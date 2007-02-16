@@ -29,23 +29,15 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
 import org.apache.tuscany.host.deployment.DeploymentException;
-import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.deployer.ContributionProcessor;
-import org.apache.tuscany.spi.deployer.ContributionProcessorRegistry;
 import org.apache.tuscany.spi.extension.ContributionProcessorExtension;
 import org.apache.tuscany.spi.model.Contribution;
-import org.osoa.sca.annotations.Constructor;
 
 public class JarContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor {
+    public static final String CONTENT_TYPE = "application/x-compressed";
 
-    @Constructor
-    protected JarContributionProcessor(@Autowire ContributionProcessorRegistry registry){
-        super(registry);
-    }
-    
     public String getContentType() {
-        // TODO Auto-generated method stub
-        return null;
+        return CONTENT_TYPE;
     }
 
     /**
@@ -54,7 +46,7 @@ public class JarContributionProcessor extends ContributionProcessorExtension imp
      * @return
      * @throws IOException
      */
-    protected List<URL> getArtifacts( URL rootURL, InputStream sourceInputStream) throws IOException {
+    protected List<URL> getArtifacts(URL rootURL, InputStream sourceInputStream) throws IOException {
         List<URL> artifacts = new ArrayList<URL>();
 
         // Assume the root is a jar file
@@ -69,7 +61,7 @@ public class JarContributionProcessor extends ContributionProcessorExtension imp
                 if (entry.isDirectory()) {
                     continue;
                 }
-                               
+
                 artifacts.add(new URL(rootURL, entry.getName()));
             }
         } finally {
@@ -77,53 +69,53 @@ public class JarContributionProcessor extends ContributionProcessorExtension imp
         }
         return artifacts;
     }
-    
-    private URL forceJarURL(URL sourceURL) throws MalformedURLException{
-        if(sourceURL.toString().startsWith("jar:")){
+
+    private URL forceJarURL(URL sourceURL) throws MalformedURLException {
+        if (sourceURL.toString().startsWith("jar:")) {
             return sourceURL;
-        }else{
+        } else {
             return new URL("jar:" + sourceURL.toString() + "!/");
         }
-            
+
     }
-    
-    public void processContent(Contribution contribution, URL sourceURL, InputStream inputStream) throws DeploymentException, IOException {
-        if(sourceURL == null){
+
+    public void processContent(Contribution contribution, URL sourceURL, InputStream inputStream)
+        throws DeploymentException, IOException {
+        if (sourceURL == null) {
             throw new IllegalArgumentException("Invalid null source uri.");
         }
-        
-        if(inputStream == null){
+
+        if (inputStream == null) {
             throw new IllegalArgumentException("Invalid null source inputstream.");
         }
-        
+
         sourceURL = forceJarURL(sourceURL);
-        
-        ContributionProcessor artifactProcessor = null;
-        for(URL artifactURL : getArtifacts(sourceURL, inputStream)){
-             //FIXME
-             //contribution.addArtifact(artifact)
-            
-            String file = artifactURL.toString();
+
+        for (URL artifactURL : getArtifacts(sourceURL, inputStream)) {
+            // FIXME
+            // contribution.addArtifact(artifact)
+
             URL aURL = new URL(artifactURL.toString());
-            if(aURL.openConnection() != null){
-                String a = "sucess";
+            if (aURL.openConnection() != null) {
+                // TODO
             }
-            
-            //is default jar
+
+            // is default jar
             URL manifestURL = new URL(sourceURL, "!/META-INF/Manifest.mf");
-            if(manifestURL.openConnection() == null){
-                //does not exists
+            if (manifestURL.openConnection() == null) {
+                // does not exists
             }
-            
-            //process each artifact
-            //this.registry.processContent(contribution, artifactURL, inputStream);
-            
+
+            // process each artifact
+            // this.registry.processContent(contribution, artifactURL,
+            // inputStream);
+
         }
-        
 
     }
 
-    public void processModel(Contribution contribution, URL source, Object modelObject) throws DeploymentException, IOException {
+    public void processModel(Contribution contribution, URL source, Object modelObject) throws DeploymentException,
+        IOException {
         // TODO Auto-generated method stub
 
     }

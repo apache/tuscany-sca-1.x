@@ -26,19 +26,22 @@ import org.apache.tuscany.spi.deployer.ContributionProcessorRegistry;
 import org.easymock.EasyMock;
 
 public class JarContributionProcessorTestCase extends TestCase {
-        private static final String JAR_CONTRIBUTION = "/repository/sample-calculator.jar";
-        private ContributionProcessorRegistry mockRegistry;
-    
-        protected void setUp() throws Exception {
-            super.setUp();
-            mockRegistry = EasyMock.createMock(ContributionProcessorRegistry.class);
-        }
-    
-        public final void testProcessJarArtifacts() throws Exception {
-            JarContributionProcessor jarContribution = new JarContributionProcessor(mockRegistry);
-            URL jarURL = getClass().getResource(JarContributionProcessorTestCase.JAR_CONTRIBUTION);
-            jarContribution.processContent(null, jarURL, jarURL.openStream());
-        }
-    
-    
+    private static final String JAR_CONTRIBUTION = "/repository/sample-calculator.jar";
+
+    protected void setUp() throws Exception {
+        super.setUp();
+    }
+
+    public final void testProcessJarArtifacts() throws Exception {
+        JarContributionProcessor jarContribution = new JarContributionProcessor();
+        ContributionProcessorRegistry mockRegistry = EasyMock.createMock(ContributionProcessorRegistry.class);
+        mockRegistry.register(JarContributionProcessor.CONTENT_TYPE, jarContribution);
+        EasyMock.expectLastCall().once();
+        EasyMock.replay(mockRegistry);
+        jarContribution.setContributionProcessorRegistry(mockRegistry);
+        jarContribution.start();
+        EasyMock.verify(mockRegistry);
+        URL jarURL = getClass().getResource(JarContributionProcessorTestCase.JAR_CONTRIBUTION);
+        jarContribution.processContent(null, jarURL, jarURL.openStream());
+    }
 }

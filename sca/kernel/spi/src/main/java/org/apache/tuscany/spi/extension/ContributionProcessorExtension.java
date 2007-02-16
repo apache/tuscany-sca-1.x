@@ -25,8 +25,15 @@ import org.apache.tuscany.spi.deployer.ContributionProcessorRegistry;
 import org.osoa.sca.annotations.Destroy;
 import org.osoa.sca.annotations.EagerInit;
 import org.osoa.sca.annotations.Init;
+import org.osoa.sca.annotations.Service;
 
+/**
+ * The base class for ContributionProcessor implementations
+ * 
+ * @version $Rev$ $Date$
+ */
 @EagerInit
+@Service(ContributionProcessor.class)
 public abstract class ContributionProcessorExtension implements ContributionProcessor {
     /**
      * The ContributionProcessorRegistry that this processor should register with; usually set by injection. This registry may also be used to process
@@ -35,26 +42,23 @@ public abstract class ContributionProcessorExtension implements ContributionProc
     protected ContributionProcessorRegistry registry;
 
     /**
-     * Constructor specifies the registry to register with.
-     * 
-     * @param registry
-     *            the LoaderRegistry this loader should register with
+     * @param registry the registry to set
      */
-    protected ContributionProcessorExtension(@Autowire ContributionProcessorRegistry registry) {
+    @Autowire
+    public void setContributionProcessorRegistry(ContributionProcessorRegistry registry) {
         this.registry = registry;
     }
-
+    
     /**
-     * Initialize the processor. The base implementation registers this loader with the registry as a handler for the XML type returned by
-     * {@link #getXMLType()}. Implementations may override this to register the loader as a handler for multiple XML types.
-     */
+     * Initialize the processor. It registers itself to the registry by content type it supports. 
+     */ 
     @Init
     public void start() {
         registry.register(this.getContentType(), this);
     }
 
     /**
-     * Destroy the loader. The base implementation unregisters the loader from the regsitry based on the type returned by {@link #getXMLType()}.
+     * Destroy the processor. It unregisters itself from the registry. 
      */
     @Destroy
     public void stop() {
