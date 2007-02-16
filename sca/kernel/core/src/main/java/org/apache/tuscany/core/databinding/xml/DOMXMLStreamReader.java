@@ -1239,7 +1239,8 @@ public class DOMXMLStreamReader implements XMLFragmentStreamReader {
                 }
                 continue;
             }
-            QName attrName = new QName(attr.getNamespaceURI(), attr.getLocalName(), attr.getPrefix());
+            String prefix = attr.getPrefix();
+            QName attrName = new QName(attr.getNamespaceURI(), attr.getLocalName(), prefix != null ? prefix : "");
             NameValuePair pair = new NameValuePair(attrName, attr.getValue());
             attributeList.add(pair);
         }
