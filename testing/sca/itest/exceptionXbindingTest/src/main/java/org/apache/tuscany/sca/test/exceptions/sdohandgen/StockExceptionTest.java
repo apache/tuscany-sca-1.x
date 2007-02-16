@@ -24,8 +24,10 @@
  */
 package org.apache.tuscany.sca.test.exceptions.sdohandgen;
 
-import org.osoa.sca.annotations.Remotable;
 import org.apache.tuscany.api.annotation.DataType;
+import org.osoa.sca.annotations.Remotable;
+
+import stockexceptiontestservice.scatesttool.StockOffer;
 
 /*
  * StockExceptionTest java interface
@@ -40,7 +42,7 @@ public interface StockExceptionTest {
      * 
      * @param param0
      */
-    public stockexceptiontestservice.scatesttool.StockOffer stockQuoteOffer(stockexceptiontestservice.scatesttool.StockOffer param0)
+    stockexceptiontestservice.scatesttool.StockOffer stockQuoteOffer(StockOffer param0)
         throws java.rmi.RemoteException, InvalidSymbolSDOException, MarketClosedSDOException;
 
 }

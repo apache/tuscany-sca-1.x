@@ -19,8 +19,17 @@
 
 package org.apache.tuscany.sca.test.exceptions.impl;
 
+import java.rmi.RemoteException;
+
+import org.apache.tuscany.sca.test.exceptions.sdohandgen.InvalidSymbolSDOException;
+import org.apache.tuscany.sca.test.exceptions.sdohandgen.MarketClosedSDOException;
+
+import stockexceptiontestservice.scatesttool.StockOffer;
+
 public interface StockTraderSDO {
 
-    public abstract void tradingTest();
+    StockOffer testTrading() throws RemoteException, InvalidSymbolSDOException, MarketClosedSDOException;
+
+    void testInvalidSymbolSDOException() throws RemoteException, InvalidSymbolSDOException, MarketClosedSDOException;
 
 }

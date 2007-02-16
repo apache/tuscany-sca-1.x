@@ -18,21 +18,54 @@
  */
 package org.apache.tuscany.sca.test.exceptions;
 
-import junit.framework.TestCase;
+import junit.framework.AssertionFailedError;
 
 import org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDO;
-import org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDOImpl;
+import org.apache.tuscany.sca.test.exceptions.sdohandgen.InvalidSymbolSDOException;
 import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
-public class IntraCompositeTest extends SCATestCase {
+import stockexceptiontestservice.scatesttool.InvalidSymbolFault;
+import stockexceptiontestservice.scatesttool.StockOffer;
+
+public class IntraCompositeTestCase extends SCATestCase {
     private StockTraderSDO stockTrader;
 
     private CompositeContext context;
 
-    public void testALL() {
-        stockTrader.tradingTest();
+    public void testTrading() {
+        try {
+            StockOffer sp = stockTrader.testTrading();
+            assertNotNull(sp);
+            assertEquals(99.00F, sp.getPrice());
+            assertEquals("IBM", sp.getSymbol());
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            throw new AssertionFailedError(e + "");
+
+        }
+
+    }
+
+    public void badtestInvalidSymbolSDOException() {
+        try {
+            stockTrader.testInvalidSymbolSDOException();
+            throw new AssertionFailedError("Expected InvalidSymbolSDOException");
+        } catch (InvalidSymbolSDOException e) {
+            InvalidSymbolFault isf = e.getFaultInfo();
+
+            assertNotNull(isf);
+            StockOffer sp = isf.getOffer();
+            assertEquals(99.00F, sp.getPrice());
+            assertEquals("IBM", sp.getSymbol());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionFailedError("Expected InvalidSymbolSDOException" + e);
+
+        }
 
     }
 

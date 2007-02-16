@@ -56,43 +56,30 @@ public class StockTraderSDOImpl implements StockTraderSDO {
      * 
      * @see org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDO#tradingTest()
      */
-    public void tradingTest() {
+    public StockOffer testTrading() throws RemoteException, InvalidSymbolSDOException, MarketClosedSDOException {
         StockOffer stockOffer = ScatesttoolFactory.INSTANCE.createStockOffer();
         stockOffer.setName("IBM");
         stockOffer.setSymbol("IBM");
         stockOffer.setPrice(100.00F); // offer to buy at max $100.00
-        try {
-            StockOffer stockOfferAccepted = exchangeJaxb.stockQuoteOffer(stockOffer);
-            stockOfferAccepted.getPrice(); // the price actually bought.
-        } catch (RemoteException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidSymbolSDOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (MarketClosedSDOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        if (true)
-            return; // lets see if what we know is supported runs first.
+
+        StockOffer stockOfferAccepted = exchangeJaxb.stockQuoteOffer(stockOffer);
+        
+        return stockOfferAccepted;
+
+    }
+
+    public void testInvalidSymbolSDOException() throws RemoteException, InvalidSymbolSDOException, MarketClosedSDOException {
+        StockOffer stockOffer = ScatesttoolFactory.INSTANCE.createStockOffer();
         // set up for a InvalidSymbolSDOException
         stockOffer.setName("");
         stockOffer.setSymbol("");
         stockOffer.setPrice(11.0F); // offer to buy at max $100.00
-        try {
-            StockOffer stockOfferAccepted = exchangeJaxb.stockQuoteOffer(stockOffer);
-            stockOfferAccepted.getPrice(); // the price actually bought.
-        } catch (RemoteException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidSymbolSDOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (MarketClosedSDOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        exchangeJaxb.stockQuoteOffer(stockOffer);
+            
+     }
+
+    public void marketClosedSDOExceptionTest() {
+        StockOffer stockOffer = ScatesttoolFactory.INSTANCE.createStockOffer();
 
         // set up for a MarketClosedSDOException
         stockOffer.setName("CLOSED");
