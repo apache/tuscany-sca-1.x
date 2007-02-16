@@ -148,6 +148,9 @@
     <!-- Logging formatters -->
     <include name="org.apache.tuscany.launcher.Formatters" scdlResource="org/apache/tuscany/core/formatters.scdl" />
 
+    <!-- Deployment -->
+    <include name="org.apache.tuscany.launcher.Deployment" scdlResource="org/apache/tuscany/core/deployment.scdl" />
+
     <!-- the local binding -->
     <component name="localBindingLoader">
         <system:implementation.system class="org.apache.tuscany.core.binding.local.LocalBindingLoader" />
@@ -155,25 +158,6 @@
 
     <component name="localBindingBuilder">
         <system:implementation.system class="org.apache.tuscany.core.binding.local.LocalBindingBuilder" />
-    </component>
-
-    <!-- Contribution Service -->
-    <component name="contributionService">
-        <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContributionServiceImpl" />
-    </component>
-    <component name="contributionRepository" initLevel="40">
-        <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContributionRepositoryImpl" />
-        <property name="repository">target/repository</property>
-    </component>
-
-    <component name="contributionProcessorRepository" initLevel="35">
-        <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContributionProcessorRegistryImpl" />
-    </component>
-    <component name="contentTypeDescriber" initLevel="30">
-        <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContentTypeDescriberImpl" />
-    </component>
-    <component name="jarContributionProcessor">
-        <system:implementation.system class="org.apache.tuscany.core.services.deployment.contribution.JarContributionProcessor" />
     </component>
 
 </composite>
