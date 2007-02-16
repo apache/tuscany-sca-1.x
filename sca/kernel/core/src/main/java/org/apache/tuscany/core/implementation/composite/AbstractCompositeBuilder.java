@@ -12,6 +12,7 @@ import org.apache.tuscany.spi.extension.ComponentBuilderExtension;
 import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.CompositeComponentType;
 import org.apache.tuscany.spi.model.Implementation;
+import org.apache.tuscany.spi.model.Include;
 import org.apache.tuscany.spi.model.ReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
@@ -52,8 +53,16 @@ public abstract class AbstractCompositeBuilder<T extends Implementation<Composit
                 throw new BuilderInstantiationException("Error registering reference", e);
             }
         }
-        component.getExtensions().putAll(componentType.getExtensions());
+        addExtensions(component, componentType);
         return component;
+    }
+    
+    // We need to include all the extensions from the include
+    private void addExtensions(CompositeComponent component, CompositeComponentType<?, ?, ?> componentType) {
+        component.getExtensions().putAll(componentType.getExtensions());
+        for (Include include : componentType.getIncludes().values()) {
+            addExtensions(component, include.getIncluded());
+        }
     }
 
 }
