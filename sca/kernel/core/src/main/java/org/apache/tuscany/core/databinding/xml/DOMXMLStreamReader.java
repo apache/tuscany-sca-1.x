@@ -424,11 +424,17 @@ public class DOMXMLStreamReader implements XMLFragmentStreamReader {
             }
         }
 
-        public int getTextCharacters(int i, char[] chars, int i1, int i2) throws XMLStreamException {
-            // not implemented
-            throw new UnsupportedOperationException();
+        public int getTextCharacters(int sourceStart, char[] target, int targetStart, int length) {
+            char[] source = getTextCharacters();
+            if (sourceStart > source.length)
+                throw new IndexOutOfBoundsException("source start > source length");
+            int sourceLen = source.length - sourceStart;
+            if (length > sourceLen)
+                length = sourceLen;
+            System.arraycopy(source, sourceStart, target, targetStart, length);
+            return sourceLen;
         }
-
+        
         public int getTextLength() {
             if (state == TEXT_STATE) {
                 return value.length();
@@ -995,11 +1001,15 @@ public class DOMXMLStreamReader implements XMLFragmentStreamReader {
         if (state == DELEGATED_STATE) {
             return childReader.getTextCharacters();
         } else if (state == TEXT_STATE) {
-            return properties[currentPropertyIndex - 1].getValue() == null ? new char[0]
-                : ((String) properties[currentPropertyIndex - 1].getValue()).toCharArray();
+            return getTextData();
         } else {
             throw new IllegalStateException();
         }
+    }
+
+    private char[] getTextData() {
+        return properties[currentPropertyIndex - 1].getValue() == null ? new char[0]
+            : ((String) properties[currentPropertyIndex - 1].getValue()).toCharArray();
     }
 
     public int getTextCharacters(int i, char[] chars, int i1, int i2) throws XMLStreamException {
@@ -1017,7 +1027,7 @@ public class DOMXMLStreamReader implements XMLFragmentStreamReader {
         if (state == DELEGATED_STATE) {
             return childReader.getTextLength();
         } else if (state == TEXT_STATE) {
-            return 0; // assume text always starts at 0
+            return getTextData().length;
         } else {
             throw new IllegalStateException();
         }
@@ -1229,7 +1239,7 @@ public class DOMXMLStreamReader implements XMLFragmentStreamReader {
                 }
                 continue;
             }
-            QName attrName = new QName(attr.getNamespaceURI(), attr.getLocalName());
+            QName attrName = new QName(attr.getNamespaceURI(), attr.getLocalName(), attr.getPrefix());
             NameValuePair pair = new NameValuePair(attrName, attr.getValue());
             attributeList.add(pair);
         }
