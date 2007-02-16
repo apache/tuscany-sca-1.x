@@ -33,7 +33,7 @@ public class IntraCompositeTest extends SCATestCase {
 
     public void testALL() {
         stockTrader.tradingTest();
- 
+
     }
 
     @Override
@@ -41,8 +41,7 @@ public class IntraCompositeTest extends SCATestCase {
         super.setUp();
         context = CurrentCompositeContext.getContext();
         assertNotNull(context);
-        stockTrader = context.locateService(StockTraderSDO.class, "stockTraderSDOComponent" );
-             
+        stockTrader = context.locateService(StockTraderSDO.class, "stockTraderSDOComponent");
 
         assertNotNull(context);
     }

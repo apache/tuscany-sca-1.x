@@ -46,13 +46,14 @@ public class StockTraderSDOImpl implements StockTraderSDO {
         // TODO Auto-generated constructor stub
     }
 
- 
     @Reference
     public void setExchangeJaxb(StockExceptionTest exchangeJaxb) {
         this.exchangeJaxb = exchangeJaxb;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDO#tradingTest()
      */
     public void tradingTest() {
@@ -73,7 +74,8 @@ public class StockTraderSDOImpl implements StockTraderSDO {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-if(true) return; //lets see if what we know is supported runs first.
+        if (true)
+            return; // lets see if what we know is supported runs first.
         // set up for a InvalidSymbolSDOException
         stockOffer.setName("");
         stockOffer.setSymbol("");

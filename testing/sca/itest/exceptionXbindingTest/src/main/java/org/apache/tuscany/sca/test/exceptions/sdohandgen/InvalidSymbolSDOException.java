@@ -35,12 +35,12 @@ public class InvalidSymbolSDOException extends Exception {
 
     /**
      * @param message
-     * @param faultInfo 
+     * @param faultInfo
      */
     public InvalidSymbolSDOException(String message, InvalidSymbolFault faultInfo) {
         super(message);
         this.faultInfo = faultInfo;
-        
+
     }
 
     /**
@@ -49,33 +49,29 @@ public class InvalidSymbolSDOException extends Exception {
     public InvalidSymbolSDOException(InvalidSymbolFault faultInfo, Throwable cause) {
         super(cause);
         this.faultInfo = faultInfo;
-        
+
     }
 
     /**
      * @param message
      * @param cause
      */
-    public InvalidSymbolSDOException(String message, InvalidSymbolFault faultInfo,  Throwable cause) {
+    public InvalidSymbolSDOException(String message, InvalidSymbolFault faultInfo, Throwable cause) {
         super(message, cause);
         this.faultInfo = faultInfo;
-       
+
     }
 
-    
-    // ***   Below was hand added ... tooling needs to do this ***/
-    
+    // *** Below was hand added ... tooling needs to do this ***/
+
     /**
      * Java type that goes as soapenv:Fault detail element.
-     * 
      */
     private InvalidSymbolFault faultInfo;
 
-
     /**
-     * 
-     * @return
-     *     returns fault bean: org.apache.tuscany.sca.test.exceptions.impl.jaxb.InvalidSymbolFault
+     * @return returns fault bean:
+     *         org.apache.tuscany.sca.test.exceptions.impl.jaxb.InvalidSymbolFault
      */
     public InvalidSymbolFault getFaultInfo() {
         return faultInfo;

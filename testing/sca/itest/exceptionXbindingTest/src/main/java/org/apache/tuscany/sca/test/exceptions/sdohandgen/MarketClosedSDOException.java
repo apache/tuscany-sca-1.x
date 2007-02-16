@@ -23,19 +23,17 @@ package org.apache.tuscany.sca.test.exceptions.sdohandgen;
  * 
  */
 public class MarketClosedSDOException extends Exception {
-    
+
     /**
      * Java type that goes as soapenv:Fault detail element.
-     * 
      */
     private int faultInfo;
-
 
     /**
      * 
      */
     public MarketClosedSDOException() {
-       
+
     }
 
     /**
@@ -49,7 +47,7 @@ public class MarketClosedSDOException extends Exception {
     /**
      * @param cause
      */
-    public MarketClosedSDOException( int faultInfo, Throwable cause) {
+    public MarketClosedSDOException(int faultInfo, Throwable cause) {
         super(cause);
         this.faultInfo = faultInfo;
     }
@@ -62,11 +60,9 @@ public class MarketClosedSDOException extends Exception {
         super(message, cause);
         this.faultInfo = faultInfo;
     }
-    
+
     /**
-     * 
-     * @return
-     *     returns fault bean: int
+     * @return returns fault bean: int
      */
     public int getFaultInfo() {
         return faultInfo;

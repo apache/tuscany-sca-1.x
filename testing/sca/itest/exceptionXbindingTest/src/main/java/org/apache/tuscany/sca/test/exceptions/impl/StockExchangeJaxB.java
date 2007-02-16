@@ -36,32 +36,34 @@ public class StockExchangeJaxB implements StockExceptionTestJAXB {
      * 
      */
     public StockExchangeJaxB() {
-      
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.tuscany.sca.test.exceptions.impl.jaxb.StockExceptionTest#stockQuoteOffer(org.apache.tuscany.sca.test.exceptions.impl.jaxb.StockOffer)
      */
     public StockOffer stockQuoteOffer(StockOffer input) throws InvalidSymbolFault_Exception, MarketClosedFault {
 
-        System.out.println("stockQuoteOffer '" + input +"'");
-        
-       String symbol= input.getSymbol();
-       if("IBM".equals(symbol)){
-           input.setPrice(99.00F);
-           return input;
-           
-       }
-       if("CLOSED".equals(input.getName())){
-           throw new MarketClosedFault("TO LATE!", 3);
-       }
-       ObjectFactory jaxbOjectFactory = new ObjectFactory();
-       
-       InvalidSymbolFault faultinfo= jaxbOjectFactory.createInvalidSymbolFault();
-       faultinfo.setOffer(input);
-       
-       throw new InvalidSymbolFault_Exception("bad symbol", faultinfo);
-          
+        System.out.println("stockQuoteOffer '" + input + "'");
+
+        String symbol = input.getSymbol();
+        if ("IBM".equals(symbol)) {
+            input.setPrice(99.00F);
+            return input;
+
+        }
+        if ("CLOSED".equals(input.getName())) {
+            throw new MarketClosedFault("TO LATE!", 3);
+        }
+        ObjectFactory jaxbOjectFactory = new ObjectFactory();
+
+        InvalidSymbolFault faultinfo = jaxbOjectFactory.createInvalidSymbolFault();
+        faultinfo.setOffer(input);
+
+        throw new InvalidSymbolFault_Exception("bad symbol", faultinfo);
+
     }
 
 }
