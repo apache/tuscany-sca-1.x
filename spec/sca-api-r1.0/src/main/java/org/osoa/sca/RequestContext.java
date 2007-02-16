@@ -41,23 +41,26 @@ public interface RequestContext {
     String getServiceName();
 
     /**
-     * Returns a ServiceReference for the service that was invoked by the caller.
+     * Returns a CallableReference for the service that was invoked by the caller.
      *
-     * @return a ServiceReference for the service that was invoked by the caller
+     * @param <B> the Java type of the business interface for the reference
+     * @return a CallableReference for the service that was invoked by the caller
      */
-    <B> ServiceReference<B> getServiceReference();
+    <B> CallableReference<B> getServiceReference();
 
     /**
      * Returns a type-safe reference to the callback provided by the caller.
      *
+     * @param <CB> the Java type of the business interface for the callback
      * @return a type-safe reference to the callback provided by the caller
      */
     <CB> CB getCallback();
 
     /**
-     * Returns a CallbackReference to the callback provided by the caller.
+     * Returns a CallableReference to the callback provided by the caller.
      *
-     * @return a CallbackReference to the callback provided by the caller
+     * @param <CB> the Java type of the business interface for the callback
+     * @return a CallableReference to the callback provided by the caller
      */
     <CB> CallableReference<CB> getCallbackReference();
 }

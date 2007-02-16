@@ -46,7 +46,7 @@ public class BasicClient {
     }
 
     public void getCallback() {
-        ServiceReference<HelloService> sr = request.getServiceReference();
+        CallableReference<HelloService> sr = request.getServiceReference();
         CallableReference<HelloCallback> cb = request.getCallbackReference();
         HelloCallback callback = request.getCallback();
     }
