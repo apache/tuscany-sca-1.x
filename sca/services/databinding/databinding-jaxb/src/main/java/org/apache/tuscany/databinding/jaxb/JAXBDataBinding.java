@@ -62,6 +62,12 @@ public class JAXBDataBinding extends DataBindingExtension {
             return new DataType<QName>(getName(), javaType, null);
         }
 
+        QName xmlType = getXmlTypeName(javaType);
+        DataType<QName> dataType = new DataType<QName>(getName(), javaType, xmlType);
+        return dataType;
+    }
+
+    public static QName getXmlTypeName(Class<?> javaType) {
         String namespace = null;
         String name = null;
         Package pkg = javaType.getPackage();
@@ -104,8 +110,7 @@ public class JAXBDataBinding extends DataBindingExtension {
             return null;
         }
         QName xmlType = new QName(namespace, name);
-        DataType<QName> dataType = new DataType<QName>(getName(), javaType, xmlType);
-        return dataType;
+        return xmlType;
     }
 
     public JAXBDataBinding() {
@@ -122,7 +127,7 @@ public class JAXBDataBinding extends DataBindingExtension {
                 isElement = true;
                 cls = ((JAXBElement)arg).getDeclaredType();
             } else {
-                arg = new JAXBElement(ROOT_ELEMENT, cls, arg);
+                arg = new JAXBElement(ROOT_ELEMENT, Object.class, arg);
             }
             JAXBContext context = JAXBContext.newInstance(cls);
             Document doc = DOMHelper.newDocument();

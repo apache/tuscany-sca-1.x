@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.databinding.jaxb;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import javax.xml.bind.JAXBContext;
@@ -40,8 +41,7 @@ public class JAXBContextHelper {
     private JAXBContextHelper() {
     }
 
-    public static JAXBContext createJAXBContext(TransformationContext tContext, boolean source)
-        throws JAXBException {
+    public static JAXBContext createJAXBContext(TransformationContext tContext, boolean source) throws JAXBException {
         if (tContext == null)
             throw new TransformationException("JAXB context is not set for the transformation.");
 
@@ -82,11 +82,16 @@ public class JAXBContextHelper {
         if (value instanceof JAXBElement) {
             return (JAXBElement)value;
         } else {
+            Class type = (Class) dataType.getPhysical();
             Object logical = dataType.getLogical();
             if (!(logical instanceof QName)) {
                 logical = JAXBDataBinding.ROOT_ELEMENT;
+                /**
+                 * Set the declared type to Object.class so that xsi:type will be produced
+                 */
+                type = Object.class;
             }
-            return new JAXBElement((QName)logical, (Class)dataType.getPhysical(), value);
+            return new JAXBElement((QName)logical, type, value);
         }
     }
 
@@ -104,6 +109,25 @@ public class JAXBContextHelper {
             QName root = new QName(element.namespace(), element.name());
             return new JAXBElement(root, (Class)dataType.getPhysical(), value);
         }
+    }
+
+    public static Class<?> getJavaType(DataType<?> dataType) {
+        if (dataType == null) {
+            return null;
+        }
+        Type type = dataType.getPhysical();
+        if (type instanceof Class) {
+            Class cls = (Class)type;
+            if (JAXBElement.class.isAssignableFrom(cls)) {
+                return null;
+            } else {
+                return cls;
+            }
+        } else if (type instanceof ParameterizedType) {
+            ParameterizedType pType = (ParameterizedType)type;
+            return (Class)pType.getRawType();
+        }
+        return null;
     }
 
 }

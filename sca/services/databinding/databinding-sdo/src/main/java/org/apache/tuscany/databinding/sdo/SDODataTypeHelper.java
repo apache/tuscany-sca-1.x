@@ -20,6 +20,7 @@
 package org.apache.tuscany.databinding.sdo;
 
 import org.apache.tuscany.databinding.sdo.ImportSDOLoader.SDOType;
+import org.apache.tuscany.sdo.util.SDOUtil;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
@@ -56,9 +57,10 @@ public final class SDODataTypeHelper {
     public static HelperContext getHelperContext(DeploymentContext deploymentContext) {
         HelperContext helperContext = null;
         if (deploymentContext != null && deploymentContext.getParent() != null) {
+            // HACK: Retrieve the SDO HelperContext from the CompositeComponent extensions
             helperContext = (HelperContext)deploymentContext.getParent().getExtension(HelperContext.class.getName());
             if (helperContext == null) {
-                helperContext = getDefaultHelperContext();
+                helperContext = SDOUtil.createHelperContext();
                 deploymentContext.getParent().putExtension(HelperContext.class.getName(), helperContext);
             }
         }
