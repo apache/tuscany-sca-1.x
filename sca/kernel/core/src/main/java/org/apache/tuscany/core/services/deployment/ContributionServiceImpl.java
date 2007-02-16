@@ -40,24 +40,19 @@ public class ContributionServiceImpl implements ContributionService {
     /**
      * Repository where contributions are stored. Usually set by injection.
      */
-    protected ContributionRepository contributionRepository = null;
+    protected ContributionRepository contributionRepository;
     /**
      * Registry of available processors. Usually set by injection.
      */
-    protected ContributionProcessorRegistry processorRegistry = null;
+    protected ContributionProcessorRegistry processorRegistry;
 
-    public ContributionServiceImpl(@Autowire ContributionRepository repository, @Autowire ContributionProcessorRegistry processorRegistry ) {
+    public ContributionServiceImpl(@Autowire ContributionRepository repository, 
+                                   @Autowire ContributionProcessorRegistry processorRegistry) {
         super();
         this.contributionRepository = repository;
         this.processorRegistry = processorRegistry;
     }
 
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.tuscany.host.deployment.ContributionService#contribute(java.net.URL)
-     */
     public URI contribute(URL contribution) throws DeploymentException, IOException {
         if (contribution == null) {
             throw new IllegalArgumentException("contribution is null");
@@ -78,11 +73,6 @@ public class ContributionServiceImpl implements ContributionService {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.tuscany.host.deployment.ContributionService#contribute(java.net.URI, java.io.InputStream, java.lang.String)
-     */
     public URI contribute(URI source, InputStream contributionStream) throws DeploymentException, IOException {
         if (source == null) {
             throw new IllegalArgumentException("source URI for contribution is null");
@@ -99,19 +89,17 @@ public class ContributionServiceImpl implements ContributionService {
             // start processing valid contribution
             contribution = new Contribution();
             contribution.setUri(new URI("sca://contribution/" + UUID.randomUUID()));
-            
+
             this.processorRegistry.processContent(contribution, storedURL, contributionStream);
 
-            
         } catch (URISyntaxException urie) {
             // FIXME
         }
-        
-        
-        if(contribution == null){
-            //FIXME throw exception
+
+        if (contribution == null) {
+            // FIXME throw exception
         }
-        
+
         return contribution.getUri();
     }
 

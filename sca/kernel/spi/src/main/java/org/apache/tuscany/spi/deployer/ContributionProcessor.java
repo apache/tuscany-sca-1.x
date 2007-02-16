@@ -45,7 +45,8 @@ public interface ContributionProcessor {
      * @throws DeploymentException if there was a problem with the contribution
      * @throws IOException if there was a problem reading the stream
      */
-    void processContent(Contribution contribution, URL source, InputStream inputStream) throws DeploymentException, IOException;
+    void processContent(Contribution contribution, URL source, InputStream inputStream) throws DeploymentException,
+        IOException;
 
     /**
      * Process a contribution from another model object. It will be used for the
@@ -60,5 +61,6 @@ public interface ContributionProcessor {
      * @throws DeploymentException
      * @throws IOException
      */
-    void processModel(Contribution contribution, URL source, Object modelObject) throws DeploymentException, IOException;
+    void processModel(Contribution contribution, URL source, Object modelObject) throws DeploymentException,
+        IOException;
 }

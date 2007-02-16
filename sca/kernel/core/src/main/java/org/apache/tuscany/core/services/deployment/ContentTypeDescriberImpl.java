@@ -49,7 +49,7 @@ public class ContentTypeDescriberImpl implements ContentTypeDescriber {
      * Initialize contentType registry with know types based on known file
      * extensions
      */
-    public void init() {
+    private void init() {
         contentTypeRegistry.put("SCDL", "application/v.tuscany.scdl");
         contentTypeRegistry.put("WSDL", "application/v.tuscany.wsdl");
     }
