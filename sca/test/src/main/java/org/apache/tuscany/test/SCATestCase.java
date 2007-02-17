@@ -25,12 +25,12 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.TuscanyContainer;
-import org.apache.tuscany.core.bootstrap.DefaultTuscanyContainer;
+import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.core.bootstrap.DefaultSCAContainer;
 import org.apache.tuscany.spi.component.CompositeComponent;
 
 /**
- * Base class for JUnit tests that want to run in an SCA client environment.
+ * Base class for JUnit tests that want to run in an SCA environment.
  * 
  * @version $Rev$ $Date$
  */
@@ -41,18 +41,26 @@ public abstract class SCATestCase extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        TuscanyContainer.start(null, extensions == null || extensions.isEmpty() ? null :
+        
+        SCAContainer.start(null, extensions == null || extensions.isEmpty() ? null :
                                extensions.values().toArray(new URL[0]), applicationSCDL);
+
         // FIXME: How to expose the composite component?
-        this.component = ((DefaultTuscanyContainer)TuscanyContainer.getInstance()).getCompsiteComponent();
+        this.component = ((DefaultSCAContainer)SCAContainer.getInstance()).getCompsiteComponent();
     }
 
     /**
-     * A TestCase can use this to overide the default SCDL location of
-     * "META-INF/sca/default.scdl"
+     * A TestCase can use this to override the default SCDL location
      */
     protected void setApplicationSCDL(URL applicationSCDL) {
         this.applicationSCDL = applicationSCDL;
+    }
+
+    /**
+     * A TestCase can use this to override the default SCDL location
+     */
+    protected void setApplicationSCDL(String applicationSCDL) {
+        this.applicationSCDL = SCAContainer.class.getClassLoader().getResource(applicationSCDL);
     }
 
     /**
@@ -96,7 +104,8 @@ public abstract class SCATestCase extends TestCase {
     }
 
     protected void tearDown() throws Exception {
-        TuscanyContainer.stop();
+        SCAContainer.stop();
         super.tearDown();
     }
+
 }

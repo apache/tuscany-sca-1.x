@@ -36,7 +36,6 @@ public class DataBindingIntegrationTestCase extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        setApplicationSCDL(getClass(), "META-INF/sca/default.scdl");
         // addExtension("echo.binding", getClass().getClassLoader().getResource("META-INF/sca/echo.system.scdl"));
         // addExtension("test.extensions", getClass().getClassLoader().getResource("META-INF/tuscany/test-extensions.scdl"));
         super.setUp();

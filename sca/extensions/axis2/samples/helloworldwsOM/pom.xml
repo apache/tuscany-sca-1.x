@@ -27,7 +27,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sample-helloworldwsOM</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>Tuscany HelloWorld Web Service Sample OM</name>
     <description>A sample HelloWorld Web Service OM.</description>
 

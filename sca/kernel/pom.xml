@@ -80,6 +80,14 @@
                 <scope>provided</scope>
             </dependency>
 
+            <!-- javax.resource.spi.Work API -->
+            <dependency>
+                <groupId>org.apache.geronimo.specs</groupId>
+                <artifactId>geronimo-j2ee-connector_1.5_spec</artifactId>
+                <version>1.0.1</version>
+                <scope>provided</scope>
+            </dependency>
+
             <!-- java.xml.stream API -->
             <dependency>
                 <groupId>stax</groupId>

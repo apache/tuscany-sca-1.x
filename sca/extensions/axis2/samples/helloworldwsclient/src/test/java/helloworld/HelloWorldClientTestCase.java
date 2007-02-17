@@ -22,28 +22,43 @@ package helloworld;
 import junit.framework.Assert;
 
 import org.apache.tuscany.test.SCATestCase;
+import org.apache.tuscany.test.SCATestCaseRunner;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
  * Test case for helloworld web service client 
  */
-public class HelloWorldWSClient extends SCATestCase {
+public class HelloWorldClientTestCase extends SCATestCase {
 
     private HelloWorldService helloWorldService;
+    
+    private SCATestCaseRunner server;
 
     @Override
     protected void setUp() throws Exception {
-        addExtension("Axis2Bidning", getClass().getClassLoader().getResource("META-INF/sca/binding.axis2.scdl"));
-        setApplicationSCDL(HelloWorldService.class, "META-INF/sca/default.scdl");
         super.setUp();
+        
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
         helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
+
+        server =  new SCATestCaseRunner(HelloWorldServerTestCase.class);
+        server.setUp();
     }
+    
+//    public void testPingServer() {
+//    	server.run("testPing");
+//    }
 
     public void testWSClient() throws Exception {
         String msg = helloWorldService.getGreetings("Smith");
         Assert.assertEquals("Hello Smith", msg);
+    }
+    
+    @Override
+    protected void tearDown() throws Exception {
+    	super.tearDown();
+    	server.tearDown();
     }
 
 }

@@ -20,7 +20,7 @@ package org.apache.tuscany.sca.test.spec;
 
 import java.util.Date;
 
-import org.apache.tuscany.api.TuscanyContainer;
+import org.apache.tuscany.api.SCAContainer;
 import org.apache.tuscany.sca.test.spec.MyListService;
 import org.apache.tuscany.sca.test.spec.MyListServiceByYear;
 import org.apache.tuscany.sca.test.spec.MyService;
@@ -98,7 +98,7 @@ public class ComponentTest extends SCATestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        TuscanyContainer.start();
+        SCAContainer.start();
         context = CurrentCompositeContext.getContext();
         myService = context.locateService(MyService.class, "MyService");
         myServiceByDate = context.locateService(MyServiceByDate.class, "MyServiceByDate");
@@ -110,7 +110,7 @@ public class ComponentTest extends SCATestCase {
     
     @Override
     protected void tearDown() throws Exception {
-    	TuscanyContainer.stop();
+    	SCAContainer.stop();
     	super.tearDown();
     }
 }

@@ -18,7 +18,7 @@
  */
 package helloworld;
 
-import org.apache.tuscany.api.TuscanyContainer;
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -29,13 +29,13 @@ import org.osoa.sca.CurrentCompositeContext;
 public class HelloWorldClient {
 
     public  final static void main(String[] args) throws Exception {
-    	TuscanyContainer.start();
+    	SCAContainer.start();
     	
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
         HelloWorldService helloWorldService= compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
         String value = helloWorldService.getGreetings("World");
         System.out.println(value);
         
-        TuscanyContainer.stop();
+        SCAContainer.stop();
     }
 }

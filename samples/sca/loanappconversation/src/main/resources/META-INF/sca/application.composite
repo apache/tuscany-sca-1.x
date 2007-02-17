@@ -1,4 +1,5 @@
-/*
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -15,27 +16,16 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
- */
-package bigbank;
+-->
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" name="simplecallback">
 
-import org.osoa.sca.CompositeContext;
-import org.osoa.sca.CurrentCompositeContext;
-
-import org.apache.tuscany.test.SCATestCase;
-import bigbank.account.AccountService;
-
-public class BigBankTestCase extends SCATestCase {
-
-    AccountService accountService;
-
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        CompositeContext context = CurrentCompositeContext.getContext();
-        accountService = context.locateService(AccountService.class, "AccountServiceComponent");
-    }
-
-    public void test() throws Exception {
-        System.out.println("Account summary: " + accountService.getAccountReport("Foo") );
-    }
-}
+    <component name="LoanClientComponent">
+        <implementation.java class="loanappconversation.LoanClientImpl"/>
+        <reference name="loanService">LoanServiceComponent</reference>
+    </component>
+    
+    <component name="LoanServiceComponent">
+        <implementation.java class="loanappconversation.LoanServiceImpl"/>
+    </component>
+    
+</composite>

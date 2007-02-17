@@ -26,6 +26,7 @@ import javax.servlet.Servlet;
 
 import org.apache.tuscany.api.annotation.Monitor;
 import org.apache.tuscany.spi.annotation.Autowire;
+import org.apache.tuscany.spi.component.SCAObjectStartException;
 import org.apache.tuscany.spi.host.ServletHost;
 import org.apache.tuscany.spi.services.work.WorkScheduler;
 import org.mortbay.jetty.Connector;
@@ -102,17 +103,6 @@ public class JettyServiceImpl implements JettyService {
         }
     }
 
-//    public JettyServiceImpl(TransportMonitor monitor) {
-//        this.monitor = monitor;
-//    }
-//
-//    public JettyServiceImpl(TransportMonitor monitor,
-//                            WorkScheduler scheduler,
-//                            Connector connector) {
-//        this(monitor, scheduler);
-//        this.connector = connector;
-//    }
-
     @Property
     public void setHttpPort(int httpPort) {
         this.httpPort = httpPort;
@@ -155,69 +145,75 @@ public class JettyServiceImpl implements JettyService {
 
     @Init
     public void init() throws Exception {
-        try {
-            state = STARTING;
-            server = new Server();
-            if (scheduler == null) {
-                BoundedThreadPool threadPool = new BoundedThreadPool();
-                threadPool.setMaxThreads(100);
-                server.setThreadPool(threadPool);
-            } else {
-                server.setThreadPool(new TuscanyThreadPool());
-            }
-            if (connector == null) {
-                if (https) {
-                    Connector httpConnector = new SelectChannelConnector();
-                    httpConnector.setPort(httpPort);
-                    SslSocketConnector sslConnector = new SslSocketConnector();
-                    sslConnector.setPort(httpsPort);
-                    sslConnector.setKeystore(keystore);
-                    sslConnector.setPassword(certPassword);
-                    sslConnector.setKeyPassword(keyPassword);
-                    server.setConnectors(new Connector[]{httpConnector, sslConnector});
-                } else {
-                    SelectChannelConnector selectConnector = new SelectChannelConnector();
-                    selectConnector.setPort(httpPort);
-                    server.setConnectors(new Connector[]{selectConnector});
-                }
-            } else {
-                connector.setPort(httpPort);
-                server.setConnectors(new Connector[]{connector});
-            }
-
-            ContextHandler contextHandler = new ContextHandler();
-            contextHandler.setContextPath(ROOT);
-            server.setHandler(contextHandler);
-
-            SessionHandler sessionHandler = new SessionHandler();
-            servletHandler = new ServletHandler();
-            sessionHandler.addHandler(servletHandler);
-
-            contextHandler.setHandler(sessionHandler);
-
-            server.setStopAtShutdown(true);
-            server.setSendServerVersion(sendServerVersion);
-            //monitor.started();
-            server.start();
-            state = STARTED;
-        } catch (Exception e) {
-            state = ERROR;
-            throw e;
-        }
+        state = STARTING;
     }
 
     @Destroy
     public void destroy() throws Exception {
-        state = STOPPING;
-        synchronized (joinLock) {
-            joinLock.notifyAll();
-        }
-        server.stop();
-        state = STOPPED;
-        //monitor.shutdown();
+    	if (state == STARTED) {
+	        state = STOPPING;
+	        synchronized (joinLock) {
+	            joinLock.notifyAll();
+	        }
+	        server.stop();
+	        state = STOPPED;
+	        //monitor.shutdown();
+    	}
     }
 
     public void registerMapping(String path, Servlet servlet) {
+    	if (state == STARTING) {
+    		
+            try {
+                server = new Server();
+                if (scheduler == null) {
+                    BoundedThreadPool threadPool = new BoundedThreadPool();
+                    threadPool.setMaxThreads(100);
+                    server.setThreadPool(threadPool);
+                } else {
+                    server.setThreadPool(new TuscanyThreadPool());
+                }
+                if (connector == null) {
+                    if (https) {
+                        Connector httpConnector = new SelectChannelConnector();
+                        httpConnector.setPort(httpPort);
+                        SslSocketConnector sslConnector = new SslSocketConnector();
+                        sslConnector.setPort(httpsPort);
+                        sslConnector.setKeystore(keystore);
+                        sslConnector.setPassword(certPassword);
+                        sslConnector.setKeyPassword(keyPassword);
+                        server.setConnectors(new Connector[]{httpConnector, sslConnector});
+                    } else {
+                        SelectChannelConnector selectConnector = new SelectChannelConnector();
+                        selectConnector.setPort(httpPort);
+                        server.setConnectors(new Connector[]{selectConnector});
+                    }
+                } else {
+                    connector.setPort(httpPort);
+                    server.setConnectors(new Connector[]{connector});
+                }
+
+                ContextHandler contextHandler = new ContextHandler();
+                contextHandler.setContextPath(ROOT);
+                server.setHandler(contextHandler);
+
+                SessionHandler sessionHandler = new SessionHandler();
+                servletHandler = new ServletHandler();
+                sessionHandler.addHandler(servletHandler);
+
+                contextHandler.setHandler(sessionHandler);
+
+                server.setStopAtShutdown(true);
+                server.setSendServerVersion(sendServerVersion);
+                //monitor.started();
+                server.start();
+                state = STARTED;
+            } catch (Exception e) {
+                state = ERROR;
+                throw new SCAObjectStartException(e);
+            }
+    	}
+    	
         ServletHolder holder = new ServletHolder(servlet);
         servletHandler.addServlet(holder);
         ServletMapping mapping = new ServletMapping();

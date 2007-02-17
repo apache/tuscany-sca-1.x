@@ -26,16 +26,25 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-helloworldws</artifactId>
-    <packaging>war</packaging>
+    <artifactId>tuscany-sample-helloworldws</artifactId>
+    <packaging>jar</packaging>
     <name>Tuscany HelloWorld Web Service Sample</name>
     <description>A sample HelloWorld Web Service.</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.tuscany.sca.services</groupId>
-            <artifactId>http-jetty</artifactId>
-        </dependency>        
-    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>helloworld.HelloWorldServer</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

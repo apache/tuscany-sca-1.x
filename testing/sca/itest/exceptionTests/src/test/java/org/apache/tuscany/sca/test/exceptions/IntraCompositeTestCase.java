@@ -20,7 +20,7 @@ package org.apache.tuscany.sca.test.exceptions;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.TuscanyContainer;
+import org.apache.tuscany.api.SCAContainer;
 import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;

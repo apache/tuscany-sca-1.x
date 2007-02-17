@@ -32,13 +32,13 @@ import org.osoa.sca.ComponentContext;
 /**
  * The Tuscany container
  */
-public abstract class TuscanyContainer {
+public abstract class SCAContainer {
     public static final String SYSTEM_SCDL = "META-INF/tuscany/system.composite";
     public static final String EXTENSION_SCDL = "META-INF/sca/extension.composite";
     public static final String SERVICE_SCDL = "META-INF/sca/service.composite";
     public static final String APPLICATION_SCDL = "META-INF/sca/application.composite";
 
-    private static TuscanyContainer instance;
+    private static SCAContainer instance;
 
     /**
      * Read the service name from a configuration file
@@ -77,16 +77,16 @@ public abstract class TuscanyContainer {
      * the name of the implementation class. Otherwise, if the resource
      * "META-INF/services/org.apache.tuscany.api.TuscanyContainer" can be loaded
      * from the supplied classloader. Otherwise, it will use
-     * "org.apache.tuscany.core.bootstrap.DefaultTuscanyContainer" as the default.
+     * "org.apache.tuscany.core.bootstrap.DefaultSCAContainer" as the default.
      * The named class is loaded from the supplied classloader and instantiated
      * using its default (no-arg) constructor.
      * 
      * @return
      */
-    private static TuscanyContainer newInstance(final ClassLoader classLoader) {
+    private static SCAContainer newInstance(final ClassLoader classLoader) {
 
         try {
-            final String name = TuscanyContainer.class.getName();
+            final String name = SCAContainer.class.getName();
             String className = AccessController.doPrivileged(new PrivilegedAction<String>() {
                 public String run() {
                     return System.getProperty(name);
@@ -97,10 +97,10 @@ public abstract class TuscanyContainer {
                 className = getServiceName(classLoader, name);
             }
             if (className == null) {
-                className = "org.apache.tuscany.core.bootstrap.DefaultTuscanyContainer";
+                className = "org.apache.tuscany.core.bootstrap.DefaultSCAContainer";
             }
             Class cls = Class.forName(className, true, classLoader);
-            return (TuscanyContainer)cls.newInstance();
+            return (SCAContainer)cls.newInstance();
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -111,11 +111,11 @@ public abstract class TuscanyContainer {
      * 
      * @return The instance
      */
-    public synchronized static TuscanyContainer getInstance() {
+    public synchronized static SCAContainer getInstance() {
         if (instance != null) {
             return instance;
         }
-        ClassLoader classLoader = TuscanyContainer.class.getClassLoader();
+        ClassLoader classLoader = SCAContainer.class.getClassLoader();
         instance = newInstance(classLoader);
         return instance;
     }
@@ -141,6 +141,32 @@ public abstract class TuscanyContainer {
     public static void start(URL system, URL[] extensions, URL application) {
         try {
             getInstance().startup(system, extensions, application);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
+     * Start the Tuscany container with the given SCDL
+     * 
+     * @param application The URL for the application SCDL
+     */
+    public static void start(URL application) {
+        try {
+            getInstance().startup(null, null, application);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
+     * Start the Tuscany container with the given SCDL
+     * 
+     * @param application The path of the application SCDL
+     */
+    public static void start(String application) {
+        try {
+            getInstance().startup(null, null, SCAContainer.class.getClassLoader().getResource(application));
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }

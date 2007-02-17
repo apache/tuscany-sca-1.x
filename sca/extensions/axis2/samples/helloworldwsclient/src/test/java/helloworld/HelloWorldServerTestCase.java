@@ -16,31 +16,28 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package innercomposite;
+package helloworld;
+
+import java.io.IOException;
+import java.net.Socket;
 
 import org.apache.tuscany.test.SCATestCase;
-import org.osoa.sca.CompositeContext;
-import org.osoa.sca.CurrentCompositeContext;
 
-public class InnerCompositeTestCase extends SCATestCase {
+public class HelloWorldServerTestCase extends SCATestCase {
+	
+	@Override
+	protected void setUp() throws Exception {
+		setApplicationSCDL("META-INF/sca/helloworldws.composite");
+		super.setUp();
+	}
+	
+	public void testPing() throws IOException {
+		new Socket("127.0.0.1", 8080);
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+		super.tearDown();
+	}
 
-    private Source source;
-
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        CompositeContext context = CurrentCompositeContext.getContext();
-        source = context.locateService(Source.class, "SourceComponent/InnerSourceService");
-    }
-
-    public void test() throws Exception {
-        try {
-            System.out.println("Main thread " + Thread.currentThread());
-            source.clientMethod("Client.main");
-            System.out.println("Sleeping ...");
-            Thread.sleep(1000);
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-    }
 }

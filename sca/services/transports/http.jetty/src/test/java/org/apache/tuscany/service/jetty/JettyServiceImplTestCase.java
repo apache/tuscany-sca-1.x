@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -126,11 +127,13 @@ public class JettyServiceImplTestCase extends TestCase {
         JettyServiceImpl service = new JettyServiceImpl(monitor, null);
         service.setHttpPort(HTTP_PORT);
         service.init();
-        Socket client = new Socket("127.0.0.1", HTTP_PORT);
-        OutputStream os = client.getOutputStream();
-        os.write(REQUEST1.getBytes());
-        os.flush();
-        read(client);
+        Exception ex = null;
+        try {
+            new Socket("127.0.0.1", HTTP_PORT);
+        } catch (ConnectException e) {
+        	ex = e;
+        }
+        assertNotNull(ex);
         service.destroy();
     }
 

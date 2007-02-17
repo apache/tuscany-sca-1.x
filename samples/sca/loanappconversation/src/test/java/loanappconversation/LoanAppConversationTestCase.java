@@ -29,7 +29,6 @@ public class LoanAppConversationTestCase extends SCATestCase {
 
     protected void setUp() throws Exception {
         try {
-            setApplicationSCDL(LoanClient.class, "META-INF/sca/default.scdl");
             super.setUp();
     
             CompositeContext context = CurrentCompositeContext.getContext();

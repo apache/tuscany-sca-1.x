@@ -26,14 +26,23 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-helloworldwsclient</artifactId>
+    <artifactId>tuscany-sample-helloworldwsclient</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany HelloWorld Web Service Client Sample</name>
     <description>A sample client for a HelloWorld Web Service.</description>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca.extensions.axis2.samples</groupId>
+            <artifactId>tuscany-sample-helloworldws</artifactId>
+            <scope>test</scope>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
     <build>
-        <finalName>sample-helloworldwsclient</finalName>
-        <defaultGoal>install</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -42,15 +51,11 @@
                     <archive>
                         <manifest>
                             <mainClass>helloworld.HelloWorldClient</mainClass>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>../lib/</classpathPrefix>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
-
 
 </project>

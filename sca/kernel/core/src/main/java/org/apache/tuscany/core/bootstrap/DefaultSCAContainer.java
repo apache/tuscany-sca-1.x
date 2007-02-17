@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.apache.tuscany.api.TuscanyContainer;
+import org.apache.tuscany.api.SCAContainer;
 import org.apache.tuscany.api.TuscanyException;
 import org.apache.tuscany.core.implementation.system.model.SystemCompositeImplementation;
 import org.apache.tuscany.core.launcher.CompositeContextImpl;
@@ -54,7 +54,7 @@ import org.osoa.sca.CurrentCompositeContext;
  * @version $Rev$ $Date$
  */
 @SuppressWarnings("deprecation")
-public class DefaultTuscanyContainer extends TuscanyContainer {
+public class DefaultSCAContainer extends SCAContainer {
     private CompositeComponent component;
     private CompositeContextImpl context;
     private LauncherImpl launcher;
@@ -69,15 +69,15 @@ public class DefaultTuscanyContainer extends TuscanyContainer {
         launcher.setApplicationLoader(cl);
 
         if (system == null) {
-            system = cl.getResource(TuscanyContainer.SYSTEM_SCDL);
+            system = cl.getResource(SCAContainer.SYSTEM_SCDL);
         }
 
         try {
             CompositeComponent composite = launcher.bootRuntime(system, monitorFactory);
             List<URL> extensions = new ArrayList<URL>();
-            Enumeration<URL> urls = cl.getResources(TuscanyContainer.SERVICE_SCDL);
+            Enumeration<URL> urls = cl.getResources(SCAContainer.SERVICE_SCDL);
             extensions.addAll(Collections.list(urls));
-            urls = cl.getResources(TuscanyContainer.EXTENSION_SCDL);
+            urls = cl.getResources(SCAContainer.EXTENSION_SCDL);
             extensions.addAll(Collections.list(urls));
             if (exts != null) {
             	for (URL ext : exts) {
@@ -98,9 +98,9 @@ public class DefaultTuscanyContainer extends TuscanyContainer {
             WireService wireService = (WireService)((AtomicComponent)wireServiceComponent).getTargetInstance();
 
             if (applicationSCDL == null) {
-                applicationSCDL = cl.getResource(TuscanyContainer.APPLICATION_SCDL);
+                applicationSCDL = cl.getResource(SCAContainer.APPLICATION_SCDL);
                 if (applicationSCDL == null) {
-                    throw new RuntimeException("application SCDL not found: " + TuscanyContainer.APPLICATION_SCDL);
+                    throw new RuntimeException("application SCDL not found: " + SCAContainer.APPLICATION_SCDL);
                 }
             }
             component = launcher.bootApplication("application", applicationSCDL);

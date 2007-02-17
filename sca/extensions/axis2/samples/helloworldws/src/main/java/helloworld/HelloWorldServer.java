@@ -1,8 +1,9 @@
-package helloworld.server;
+package helloworld;
+
 
 import java.io.IOException;
 
-import org.apache.tuscany.api.TuscanyContainer;
+import org.apache.tuscany.api.SCAContainer;
 
 public class HelloWorldServer {
 
@@ -11,19 +12,17 @@ public class HelloWorldServer {
 	 */
 	public static void main(String[] args) {
 		
-		TuscanyContainer.start();
+		SCAContainer.start("META-INF/sca/helloworldws.composite");
 		
 		try {
 			System.out.println("HelloWorld server started");
 			System.in.read();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		TuscanyContainer.stop();
-		
-
+		SCAContainer.stop();
+		System.out.println("HelloWorld server stopped");
 	}
 
 }

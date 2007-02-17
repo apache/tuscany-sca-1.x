@@ -37,7 +37,6 @@ public class BootstrapTestCase extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        setApplicationSCDL(Client.class, "META-INF/sca/default.scdl");
         addExtension("echo.binding", getClass().getClassLoader().getResource("META-INF/sca/echo.system.scdl"));
         super.setUp();
         CompositeContext context = CurrentCompositeContext.getContext();
