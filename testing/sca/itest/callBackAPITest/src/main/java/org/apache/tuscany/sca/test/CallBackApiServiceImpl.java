@@ -22,6 +22,7 @@ import org.osoa.sca.annotations.Service;
 import org.osoa.sca.annotations.Context;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.RequestContext;
+import org.osoa.sca.ServiceReference;
 
 @Service(CallBackApiService.class)
 public class CallBackApiServiceImpl implements CallBackApiService {
@@ -67,7 +68,7 @@ public class CallBackApiServiceImpl implements CallBackApiService {
         System.out.println("CallBackApiServiceImpl getting request context");
         RequestContext rc = compositeContext.getRequestContext();
         System.out.println("CallBackApiServiceImpl getting callback from request context");
-        callback = (CallBackApiCallBack)rc.getServiceReference().getCallback();
+        callback = (CallBackApiCallBack) ((ServiceReference) rc.getServiceReference()).getCallback();
         System.out.println("CallBackApiServiceImpl returning callback");
         return callback;
 

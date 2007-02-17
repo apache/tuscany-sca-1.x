@@ -62,7 +62,7 @@ public class CallBackSetCallbackConvServiceImpl implements CallBackSetCallbackCo
         // working.....
         try {
             requestContext = context.getRequestContext();
-            serviceRef = requestContext.getServiceReference();
+            serviceRef = (ServiceReference) requestContext.getServiceReference();
         } catch (Exception ex) {
             System.out.println("CallBackBasicServiceImpl.setCallbackIllegally()  " + ex.toString());
             ex.printStackTrace();
