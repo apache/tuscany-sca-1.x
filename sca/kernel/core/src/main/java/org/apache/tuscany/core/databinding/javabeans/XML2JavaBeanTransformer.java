@@ -51,6 +51,11 @@ public abstract class XML2JavaBeanTransformer<T> extends TransformerExtension<T,
         this.mapper = new SimpleTypeMapperExtension();
     }
 
+    @Override
+    public int getWeight() {
+        return JavaBeansDataBinding.HEAVY_WEIGHT;
+    }
+    
     public Object transform(T source, TransformationContext context) {
         TypeInfo xmlType =
                 (TypeInfo) context.getSourceDataType().getMetadata(TypeInfo.class.getName());

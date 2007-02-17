@@ -32,18 +32,18 @@ import org.w3c.dom.NodeList;
  */
 @Service(Transformer.class)
 public class DOMNode2JavaBeanTransformer extends XML2JavaBeanTransformer<Node> {
-    
-    @Override
-	public Node getRootElement(Node element) throws XML2JavaMapperException {
-    	if ( element instanceof Document ) {
-    		return ((Document)element).getDocumentElement();
-    	} else {
-    		return element;
-    	}
-    		
-	}
 
-	@Override
+    @Override
+    public Node getRootElement(Node element) throws XML2JavaMapperException {
+        if (element instanceof Document) {
+            return ((Document)element).getDocumentElement();
+        } else {
+            return element;
+        }
+
+    }
+
+    @Override
     public List<Node> getChildElements(Node parent) throws XML2JavaMapperException {
         NodeList nodeList = parent.getChildNodes();
         List<Node> nodeArrayList = new ArrayList<Node>(nodeList.getLength());
@@ -62,7 +62,7 @@ public class DOMNode2JavaBeanTransformer extends XML2JavaBeanTransformer<Node> {
     @Override
     public String getText(Node element) throws XML2JavaMapperException {
         if (element instanceof Document) {
-            element = ((Document) element).getDocumentElement();
+            element = ((Document)element).getDocumentElement();
         }
         return element.getTextContent();
     }

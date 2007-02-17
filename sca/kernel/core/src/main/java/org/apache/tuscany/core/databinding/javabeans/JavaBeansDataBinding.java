@@ -28,7 +28,11 @@ import org.osoa.sca.annotations.Service;
  */
 @Service(DataBinding.class)
 public class JavaBeansDataBinding extends DataBindingExtension {
-    
+    /**
+     * Defining a weight to a very high number so that the transformer won't be picked
+     * up by other paths unless it's the only available path
+     */
+    public static final int HEAVY_WEIGHT = 10000;
     public static final String NAME = Object.class.getName();
 
     public JavaBeansDataBinding() {

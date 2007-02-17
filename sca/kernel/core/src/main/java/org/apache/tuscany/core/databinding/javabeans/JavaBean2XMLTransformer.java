@@ -215,6 +215,11 @@ public abstract class JavaBean2XMLTransformer<T> extends TransformerExtension<Ob
         return PREFIX + prefixCount++;
     }
     
+    @Override
+    public int getWeight() {
+        return JavaBeansDataBinding.HEAVY_WEIGHT;
+    }    
+    
     public abstract T createElement(QName qName) throws Java2XMLMapperException;
     public abstract T createText(String textData) throws Java2XMLMapperException;
     public abstract void appendChild(T parentElement, T childElement) throws Java2XMLMapperException;
