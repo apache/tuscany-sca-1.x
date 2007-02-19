@@ -36,6 +36,7 @@ import org.osoa.sca.annotations.Service;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.databinding.DataBindingRegistry;
+import org.apache.tuscany.spi.databinding.ExceptionHandler;
 import org.apache.tuscany.spi.databinding.SimpleTypeMapper;
 import org.apache.tuscany.spi.databinding.WrapperHandler;
 import org.apache.tuscany.spi.model.DataType;
@@ -113,6 +114,10 @@ public abstract class DataBindingExtension implements DataBinding {
      * @see org.apache.tuscany.spi.databinding.DataBinding#getWrapperHandler()
      */
     public WrapperHandler getWrapperHandler() {
+        return null;
+    }
+    
+    public ExceptionHandler getExceptionHandler() {
         return null;
     }
 
