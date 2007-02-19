@@ -42,13 +42,35 @@
 
     </properties>
 
-    <modules>
-        <module>itest</module>
-<!--
-        <module>interop</module>
--->
-    </modules>
+    <profiles>
 
+        <!-- default profile -->
+        <profile>
+            <id>stable</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>itest</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>integration</id>
+            <modules>
+                <module>itest</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>unstable</id>
+            <modules>
+                <module>itest</module>
+                <module>interop</module>
+            </modules>
+        </profile>
+
+    </profiles>
 
     <build>
         <defaultGoal>test</defaultGoal>

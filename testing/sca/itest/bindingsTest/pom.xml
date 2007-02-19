@@ -37,6 +37,6 @@
   <modules>
     <module>bindingscomposite</module>
     <module>bindingsutility</module>
-    <!-- module>bindingsclient</module TODO: test fails -->
+    <module>bindingsclient</module>
   </modules>
 </project>
