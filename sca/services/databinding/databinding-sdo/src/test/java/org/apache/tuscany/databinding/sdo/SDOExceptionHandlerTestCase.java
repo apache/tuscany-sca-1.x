@@ -19,8 +19,6 @@
 
 package org.apache.tuscany.databinding.sdo;
 
-import javax.xml.namespace.QName;
-
 import junit.framework.TestCase;
 
 import org.apache.tuscany.spi.model.DataType;
@@ -37,7 +35,6 @@ public class SDOExceptionHandlerTestCase extends TestCase {
     // FIXME: Tuscany SDO impl uses _._type for anonymouse type, by the SDO
     // spec, it should be same as the
     // enclosing element/attribute name
-    private static final QName ELEMENT = new QName("http://www.example.com/stock", "InvalidSymbolFault_._type");
     private SDOExceptionHandler handler;
 
     /**
@@ -52,7 +49,7 @@ public class SDOExceptionHandlerTestCase extends TestCase {
     public void testGetFaultType() {
         DataType<?> dataType = handler.getFaultType(InvalidSymbolFault_Exception.class);
         assertEquals(InvalidSymbolFault.class, dataType.getPhysical());
-        assertEquals(ELEMENT, dataType.getLogical());
+        assertEquals(InvalidSymbolFault_Exception.FAULT_ELEMENT, dataType.getLogical());
     }
 
     public void testCreate() {
