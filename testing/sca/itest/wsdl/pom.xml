@@ -37,7 +37,7 @@
             <groupId>org.apache.tuscany.sca.services.idl</groupId>
             <artifactId>tuscany-wsdl</artifactId>
             <version>${sca.version}</version>
-            <scope>compile</scope>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 

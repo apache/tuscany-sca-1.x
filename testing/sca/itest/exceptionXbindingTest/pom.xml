@@ -37,10 +37,6 @@
 		</repository>
 	</repositories>
 	<dependencies>
-		<dependency>
-			<groupId>org.osoa</groupId>
-			<artifactId>sca-api-r${scaSpecVersion}</artifactId>
-		</dependency>
 		<!-- Required extensions -->
 		<dependency>
 			<groupId>org.apache.tuscany.sca.services.databinding</groupId>
@@ -92,11 +88,6 @@
 			<version>2.1</version>
 		</dependency>
 		<!-- ENDOF sun's jax-ws -->
-		<!-- junit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

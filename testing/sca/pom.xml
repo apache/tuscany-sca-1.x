@@ -152,21 +152,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.felix.plugins</groupId>
-                    <artifactId>maven-osgi-plugin</artifactId>
-                    <version>0.8.0-SNAPSHOT</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <osgiManifest>
-                            <bundleName>${pom.name}</bundleName>
-                            <bundleDescription>${pom.description}</bundleDescription>
-                            <bundleVendor>${pom.organization.name}</bundleVendor>
-                            <bundleLocalization>plugin</bundleLocalization>
-                        </osgiManifest>
-                    </configuration>
-                </plugin>
-
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clover-plugin</artifactId>
                     <configuration>

@@ -28,23 +28,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.testing.bindingstest</groupId>
     <artifactId>iTest-Bindings-bindingscomposite</artifactId>
-    <packaging>war</packaging>
-    <version>SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>SCA FVT Bindings Test Tool Service Composite</name>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.osoa</groupId>
-            <artifactId>sca-api-r${scaSpecVersion}</artifactId>
-            <version>0.1-integration-incubating-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+
         <dependency>
             <groupId>commonj</groupId>
             <artifactId>sdo-api-r2.1</artifactId>
@@ -59,75 +47,7 @@
             <version>1.0-incubator-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>stax</groupId>
-            <artifactId>stax-api</artifactId>
-            <version>1.0.1</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.woodstox</groupId>
-            <artifactId>wstx-asl</artifactId>
-            <version>3.2.0</version>
-            <scope>runtime</scope>
-        </dependency>
 
-        <!-- runtime is need for webapp integration to include jar -->
-        <dependency>
-            <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
-            <artifactId>webapp-api</artifactId>
-               <version>0.1-integration-incubating-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
-
-    <build>
-        <finalName>testtool</finalName>
-        <defaultGoal>install</defaultGoal>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
-                <artifactId>tuscany-war-plugin</artifactId>
-                <version>0.1-integration-incubating-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <id>tuscany-war</id>
-                        <goals>
-                            <goal>tuscany-war</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- Set to true to embed external jars for extensions in the WAR -->
-                    <!-- Set to false to leave external jars for extensions to be resolved from maven repository -->
-                    <loadExtensionDependencies>false</loadExtensionDependencies>
-
-                    <extensions>
-                        <dependency>
-                            <groupId>org.apache.tuscany.sca.services.databinding</groupId>
-                            <artifactId>databinding-sdo</artifactId>
-                            <version>0.1-integration-incubating-SNAPSHOT</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
-                            <artifactId>tuscany-axis2</artifactId>
-                            <version>0.1-integration-incubating-SNAPSHOT</version>
-                        </dependency>
-                    </extensions>
-
-                </configuration>
-            </plugin>
-
-        </plugins>
-
-    </build>
 
 </project>
