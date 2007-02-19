@@ -30,10 +30,13 @@ public interface ExceptionHandler {
     /**
      * Create an exception to wrap the fault data
      * 
+     * @param exceptionType The DataType for the exception
+     * @param message The error message
      * @param faultInfo The databinding-specific fault data
+     * @param cause The protocol-specific error
      * @return An instance of java exception to represent the fault
      */
-    Exception createException(Object faultInfo);
+    Exception createException(DataType<DataType<?>> exceptionType, String message, Object faultInfo, Throwable cause);
 
     /**
      * Retrieve the fault info from a java exception
