@@ -32,10 +32,22 @@
     <name>Apache Tuscany SCA Data Bindings</name>
 
     <modules>
-        <!-- <module>databinding-castor</module> -->
         <module>databinding-jaxb</module>
         <module>databinding-sdo</module>
-        <!-- <module>databinding-xmlbeans</module> -->
-        <!-- module>databinding-test</module -->
+        <!--
+        <module>databinding-castor</module>
+        <module>databinding-xmlbeans</module>
+        <module>databinding-test</module>
+         -->
     </modules>
+
+    <profiles>
+        <profile>
+            <id>unstable</id>
+            <modules>
+                <module>databinding-xmlbeans</module>
+            </modules>
+        </profile>
+    </profiles>
+
 </project>
