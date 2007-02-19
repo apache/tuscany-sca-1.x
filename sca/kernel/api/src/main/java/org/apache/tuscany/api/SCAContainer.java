@@ -166,7 +166,7 @@ public abstract class SCAContainer {
      */
     public static void start(String application) {
         try {
-            getInstance().startup(null, null, SCAContainer.class.getClassLoader().getResource(application));
+            getInstance().startup(null, null, Thread.currentThread().getContextClassLoader().getResource(application));
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }

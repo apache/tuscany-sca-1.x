@@ -60,7 +60,7 @@ public abstract class SCATestCase extends TestCase {
      * A TestCase can use this to override the default SCDL location
      */
     protected void setApplicationSCDL(String applicationSCDL) {
-        this.applicationSCDL = SCAContainer.class.getClassLoader().getResource(applicationSCDL);
+        this.applicationSCDL = Thread.currentThread().getContextClassLoader().getResource(applicationSCDL);
     }
 
     /**
