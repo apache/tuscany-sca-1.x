@@ -20,6 +20,7 @@
 package org.apache.tuscany.databinding.sdo;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import javax.xml.namespace.QName;
@@ -96,16 +97,23 @@ public class SDOExceptionHandler implements ExceptionHandler {
             return null;
         }
 
-        Type type = helperContext.getTypeHelper().getType(faultBeanClass);
-        if (type != null) {
-            String ns = type.getURI();
-            String name = helperContext.getXSDHelper().getLocalName(type);
-            QName typeInfo = new QName(ns, name);
-            DataType<QName> faultType = new DataType<QName>(faultBeanClass, typeInfo);
-            return faultType;
-        } else {
-            return null;
+        QName typeInfo = null;
+        try {
+            Field field = exceptionType.getField("FAULT_ELEMENT");
+            typeInfo = (QName)field.get(null);
+        } catch (NoSuchFieldException e) {
+            // Fall back to type inspection
+            Type type = helperContext.getTypeHelper().getType(faultBeanClass);
+            if (type != null) {
+                String ns = type.getURI();
+                String name = helperContext.getXSDHelper().getLocalName(type);
+                typeInfo = new QName(ns, name);
+            }
+        } catch (Throwable e) {
+            // Ignore
         }
+        DataType<QName> faultType = new DataType<QName>(faultBeanClass, typeInfo);
+        return faultType;
 
     }
 

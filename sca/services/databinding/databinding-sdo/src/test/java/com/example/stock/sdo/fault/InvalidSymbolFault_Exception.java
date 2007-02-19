@@ -19,6 +19,8 @@
 
 package com.example.stock.sdo.fault;
 
+import javax.xml.namespace.QName;
+
 import com.example.stock.sdo.InvalidSymbolFault;
 
 /**
@@ -26,6 +28,10 @@ import com.example.stock.sdo.InvalidSymbolFault;
  *
  */
 public class InvalidSymbolFault_Exception extends Exception {
+    /**
+     * Generated QName for the fault element
+     */
+    public static final QName FAULT_ELEMENT = new QName("http://www.example.com/stock", "InvalidSymbolFault");
     /**
      * Java type that goes as soapenv:Fault detail element.
      */
