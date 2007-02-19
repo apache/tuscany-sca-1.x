@@ -39,7 +39,7 @@
     <profiles>
         <!-- default profile -->
         <profile>
-            <id>default</id>
+            <id>stable</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -54,7 +54,7 @@
         </profile>
 
         <profile>
-            <id>all</id>
+            <id>integration</id>
             <modules>
                 <module>pom/parent</module>
                 <module>buildtools</module>
@@ -62,24 +62,18 @@
                 <module>sca</module>
                 <module>testing/sca</module>
                 <module>samples</module>
-                <module>sampleapps</module>
             </modules>
         </profile>
 
         <profile>
-            <id>sca</id>
+            <id>unstable</id>
             <modules>
                 <module>pom/parent</module>
                 <module>buildtools</module>
                 <module>spec</module>
                 <module>sca</module>
-            </modules>
-        </profile>
-
-        <profile>
-            <id>extensions</id>
-            <modules>
-                <module>sca/extensions</module>
+                <module>testing/sca</module>
+                <module>samples</module>
             </modules>
         </profile>
 

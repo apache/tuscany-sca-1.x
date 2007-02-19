@@ -42,7 +42,7 @@
     
     <profiles>
         <profile>
-            <id>default</id>
+            <id>stable</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -54,8 +54,9 @@
               <module>samples</module>
           </modules>
         </profile>
+
         <profile>
-            <id>all</id>
+            <id>integration</id>
           <modules>
               <module>binding</module>
               <module>databinding</module>
@@ -64,6 +65,18 @@
               <module>samples</module>
           </modules>
         </profile>
+
+        <profile>
+            <id>unstable</id>
+          <modules>
+              <module>binding</module>
+              <module>databinding</module>
+              <module>tools</module>
+              <module>plugins</module>
+              <module>samples</module>
+          </modules>
+        </profile>
+
       </profiles>
 
     <dependencyManagement>

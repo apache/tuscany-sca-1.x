@@ -126,10 +126,30 @@
 
     <profiles>
         <profile>
-            <id>default</id>
+            <id>stable</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <modules>
+                <module>api</module>
+                <module>host-api</module>
+                <module>spi</module>
+                <module>core</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>integration</id>
+            <modules>
+                <module>api</module>
+                <module>host-api</module>
+                <module>spi</module>
+                <module>core</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>unstable</id>
             <modules>
                 <module>api</module>
                 <module>host-api</module>

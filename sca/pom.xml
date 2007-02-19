@@ -308,7 +308,7 @@
 
     <profiles>
         <profile>
-            <id>default</id>
+            <id>stable</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -321,7 +321,7 @@
         </profile>
 
         <profile>
-            <id>all</id>
+            <id>integration</id>
             <modules>
                 <module>kernel</module>
                 <module>services</module>
@@ -333,8 +333,13 @@
         </profile>
 
         <profile>
-            <id>extensions</id>
+            <id>unstable</id>
             <modules>
+                <module>kernel</module>
+                <module>services</module>
+                <module>test</module>
+                <module>plugins</module>
+                <module>runtime</module>
                 <module>extensions</module>
             </modules>
         </profile>
