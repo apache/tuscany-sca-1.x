@@ -36,7 +36,7 @@ public interface ExceptionHandler {
      * @param cause The protocol-specific error
      * @return An instance of java exception to represent the fault
      */
-    Exception createException(DataType<DataType<?>> exceptionType, String message, Object faultInfo, Throwable cause);
+    Exception createException(DataType<DataType> exceptionType, String message, Object faultInfo, Throwable cause);
 
     /**
      * Retrieve the fault info from a java exception
@@ -48,7 +48,7 @@ public interface ExceptionHandler {
     Object getFaultInfo(Exception exception);
 
     /**
-     * Introspect an exception class to figure
+     * Introspect an exception class to figure out the fault data type
      * 
      * @param exceptionType The exception class
      * @return The data type for the fault

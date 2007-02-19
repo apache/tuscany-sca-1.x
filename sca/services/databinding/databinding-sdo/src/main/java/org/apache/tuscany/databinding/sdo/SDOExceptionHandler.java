@@ -17,24 +17,30 @@
  * under the License.    
  */
 
-package org.apache.tuscany.databinding.jaxb;
+package org.apache.tuscany.databinding.sdo;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import javax.xml.namespace.QName;
-import javax.xml.ws.WebFault;
 
 import org.apache.tuscany.spi.databinding.ExceptionHandler;
 import org.apache.tuscany.spi.model.DataType;
+
+import commonj.sdo.Type;
+import commonj.sdo.helper.HelperContext;
+import commonj.sdo.impl.HelperProvider;
 
 /**
  * JAXB implementation of ExceptionHandler
  * 
  * @version $Rev$ $Date$
  */
-public class JAXBExceptionHandler implements ExceptionHandler {
+public class SDOExceptionHandler implements ExceptionHandler {
     private static final Class[] EMPTY_CLASS_ARRAY = new Class[0];
+
+    // FIXME: Need a way to pass in the HelperContext
+    private HelperContext helperContext = HelperProvider.getDefaultContext();
 
     /**
      * <ul>
@@ -50,9 +56,9 @@ public class JAXBExceptionHandler implements ExceptionHandler {
      * protocol specific fault information
      * </ul>
      */
-    public Exception createException(DataType<DataType> exceptionType,
-                                     String message,
-                                     Object faultInfo,
+    public Exception createException(DataType<DataType> exceptionType, 
+                                     String message, 
+                                     Object faultInfo, 
                                      Throwable cause) {
         Class exceptionClass = (Class)exceptionType.getPhysical();
         DataType<?> faultBeanType = exceptionType.getLogical();
@@ -79,26 +85,28 @@ public class JAXBExceptionHandler implements ExceptionHandler {
     }
 
     public DataType<?> getFaultType(Class<? extends Exception> exceptionType) {
-        WebFault webFault = exceptionType.getAnnotation(WebFault.class);
-        if (webFault == null) {
-            return null;
-        } else {
-            QName element = new QName(webFault.targetNamespace(), webFault.name());
-            // TODO: Need to determine the fault bean class
-            // String faultBean = webFault.faultBean();
-            Class faultBeanClass = null;
-            try {
-                Method method = exceptionType.getMethod("getFaultInfo", EMPTY_CLASS_ARRAY);
-                faultBeanClass = method.getReturnType();
-            } catch (NoSuchMethodException e) {
-                faultBeanClass = null;
-            }
-            // The logical type of a fault is the QName of the element that the
-            // only part in
-            // the fault message references
-            DataType<QName> faultType = new DataType<QName>(faultBeanClass, element);
-            return faultType;
+        Class faultBeanClass = null;
+        try {
+            Method method = exceptionType.getMethod("getFaultInfo", EMPTY_CLASS_ARRAY);
+            faultBeanClass = method.getReturnType();
+        } catch (NoSuchMethodException e) {
+            faultBeanClass = null;
         }
+        if (faultBeanClass == null) {
+            return null;
+        }
+
+        Type type = helperContext.getTypeHelper().getType(faultBeanClass);
+        if (type != null) {
+            String ns = type.getURI();
+            String name = helperContext.getXSDHelper().getLocalName(type);
+            QName typeInfo = new QName(ns, name);
+            DataType<QName> faultType = new DataType<QName>(faultBeanClass, typeInfo);
+            return faultType;
+        } else {
+            return null;
+        }
+
     }
 
 }

@@ -83,7 +83,7 @@
                 <version>1.0-incubator-SNAPSHOT</version>
                 <executions>
                     <execution>
-                        <id>generate-sdo</id>
+                        <id>generate-po-sdo</id>
                         <phase>generate-test-sources</phase>
                         <configuration>
                             <schemaFile>${basedir}/src/test/resources/ipo.xsd</schemaFile>
@@ -96,6 +96,21 @@
                             <goal>generate</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>generate-stock-sdo</id>
+                        <phase>generate-test-sources</phase>
+                        <configuration>
+                            <schemaFile>${basedir}/src/test/resources/stock.xsd</schemaFile>
+                            <javaPackage>com.example.stock.sdo</javaPackage>
+                            <prefix>Stock</prefix>
+                            <noNotification>true</noNotification>
+                            <noContainer>true</noContainer>
+                            <noUnsettable>true</noUnsettable>
+                        </configuration>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>                    
                 </executions>
             </plugin>
         </plugins>
