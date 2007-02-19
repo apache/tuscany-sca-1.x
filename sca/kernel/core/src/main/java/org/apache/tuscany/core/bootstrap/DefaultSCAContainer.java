@@ -64,7 +64,7 @@ public class DefaultSCAContainer extends SCAContainer {
         if (monitorFactory == null) {
             monitorFactory = new JavaLoggingMonitorFactory();
         }
-        ClassLoader cl = getClass().getClassLoader();
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
         launcher = new LauncherImpl();
         launcher.setApplicationLoader(cl);
 
