@@ -62,7 +62,7 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-            <groupId>org.apache.tuscany.sca.services.databinding</groupId>
+            <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
 			<artifactId>databinding-axiom</artifactId>
 			<version>${pom.version}</version>
 			<scope>compile</scope>
