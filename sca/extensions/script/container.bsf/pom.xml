@@ -20,7 +20,7 @@
 <project>
 
     <parent>
-        <groupId>org.apache.tuscany.sca.services.containers</groupId>
+        <groupId>org.apache.tuscany.sca.extensions</groupId>
         <artifactId>parent</artifactId>
         <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
             <artifactId>tuscany-spi</artifactId>
-				<version>0.1-integration-incubating-SNAPSHOT</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
@@ -56,7 +56,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-test</artifactId>
-				<version>0.1-integration-incubating-SNAPSHOT</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
 
