@@ -31,6 +31,7 @@ import javax.wsdl.Output;
 import javax.wsdl.Part;
 import javax.xml.namespace.QName;
 
+import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.idl.ElementInfo;
 import org.apache.tuscany.spi.idl.InvalidServiceContractException;
 import org.apache.tuscany.spi.idl.TypeInfo;
@@ -109,7 +110,7 @@ public class WSDLOperation {
             Input input = operation.getInput();
             Message message = (input == null) ? null : input.getMessage();
             inputType = getMessageType(message);
-            inputType.setDataBinding("idl:input");
+            inputType.setDataBinding(DataBinding.IDL_INPUT);
         }
         return inputType;
     }

@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.apache.tuscany.spi.component.Component;
 import org.apache.tuscany.spi.component.CompositeComponent;
+import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.databinding.Mediator;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
@@ -67,9 +68,9 @@ public class DataBindingInterceptorTestCase extends TestCase {
             new Operation<Class>("call", inputType2, type2, null, false, "org.w3c.dom.Node", NO_CONVERSATION);
 
         DataType<DataType> outputType1 =
-            new DataType<DataType>("idl:output", Object.class, operation1.getOutputType());
+            new DataType<DataType>(DataBinding.IDL_OUTPUT, Object.class, operation1.getOutputType());
         DataType<DataType> outputType2 =
-            new DataType<DataType>("idl:output", Object.class, operation2.getOutputType());
+            new DataType<DataType>(DataBinding.IDL_OUTPUT, Object.class, operation2.getOutputType());
 
         OutboundWire outboundWire = EasyMock.createMock(OutboundWire.class);
         InboundWire inboundWire = EasyMock.createMock(InboundWire.class);

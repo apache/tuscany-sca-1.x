@@ -18,6 +18,9 @@
  */
 package org.apache.tuscany.core.databinding.impl;
 
+import static org.apache.tuscany.spi.databinding.DataBinding.IDL_INPUT;
+import static org.apache.tuscany.spi.databinding.DataBinding.IDL_OUTPUT;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +90,7 @@ public class IDLTransformerTestCase extends TestCase {
             new DataType<QName>(null, Object.class, new QName(URI_ORDER_XSD, "checkOrderStatus"));
         types0.add(wrapperType);
         DataType<List<DataType<QName>>> inputType0 =
-            new DataType<List<DataType<QName>>>("idl:input", Object[].class, types0);
+            new DataType<List<DataType<QName>>>(IDL_INPUT, Object[].class, types0);
 
         List<DataType<QName>> types1 = new ArrayList<DataType<QName>>();
         DataType<QName> customerIdType =
@@ -99,7 +102,7 @@ public class IDLTransformerTestCase extends TestCase {
         types1.add(orderType);
         types1.add(flagType);
         DataType<List<DataType<QName>>> inputType =
-            new DataType<List<DataType<QName>>>("idl:input", Object[].class, types1);
+            new DataType<List<DataType<QName>>>(IDL_INPUT, Object[].class, types1);
 
         DataType<QName> statusType =
             new DataType<QName>(null, Object.class, new QName(URI_ORDER_XSD, "status"));
@@ -172,7 +175,6 @@ public class IDLTransformerTestCase extends TestCase {
 
         Object[] source = new Object[] {"cust001", IPO_XML, Integer.valueOf(1)};
         Input2InputTransformer t = new Input2InputTransformer();
-        t.setDataBindingRegistry(dataBindingRegistry);
         t.setMediator(m);
 
         TransformationContext context = new TransformationContextImpl();
@@ -181,7 +183,7 @@ public class IDLTransformerTestCase extends TestCase {
         types.add(new DataType<Class>("java.lang.String", String.class, String.class));
         types.add(new DataType<Class>(Object.class.getName(), int.class, int.class));
         DataType<List<DataType<Class>>> inputType1 =
-            new DataType<List<DataType<Class>>>("idl:input", Object[].class, types);
+            new DataType<List<DataType<Class>>>(IDL_INPUT, Object[].class, types);
         context.setSourceDataType(inputType1);
         context.setTargetDataType(op.getInputType());
         Object[] results = t.transform(source, context);
@@ -193,12 +195,12 @@ public class IDLTransformerTestCase extends TestCase {
 
         TransformationContext context1 = new TransformationContextImpl();
         DataType<DataType> sourceType =
-            new DataType<DataType>("idl:output", Object.class, op.getOutputType());
+            new DataType<DataType>(IDL_OUTPUT, Object.class, op.getOutputType());
         sourceType.setOperation(op.getOutputType().getOperation());
 
         context1.setSourceDataType(sourceType);
         DataType<DataType> targetType =
-            new DataType<DataType>("idl:output", Object.class,
+            new DataType<DataType>(IDL_OUTPUT, Object.class,
                                    new DataType<Class>("java.lang.Object", String.class, String.class));
         context1.setTargetDataType(targetType);
 
@@ -210,7 +212,6 @@ public class IDLTransformerTestCase extends TestCase {
         status.appendChild(factory.createTextNode("shipped"));
         Output2OutputTransformer t2 = new Output2OutputTransformer();
         t2.setMediator(m);
-        t2.setDataBindingRegistry(dataBindingRegistry);
         Object st = t2.transform(responseElement, context1);
         assertEquals("shipped", st);
 

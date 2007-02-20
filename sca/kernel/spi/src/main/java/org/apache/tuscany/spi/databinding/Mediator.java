@@ -53,4 +53,15 @@ public interface Mediator {
             DataType targetDataType,
             Map<Class<?>, Object> context);
     
+    /**
+     * Get the DataBinding registry
+     * @return
+     */
+    DataBindingRegistry getDataBindingRegistry();
+    
+    /**
+     * Get the Transformer registry
+     * @return
+     */
+    TransformerRegistry getTransformerRegistry();    
 }

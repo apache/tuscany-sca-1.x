@@ -31,6 +31,7 @@ import org.osoa.sca.annotations.OneWay;
 import org.osoa.sca.annotations.Remotable;
 import org.osoa.sca.annotations.Scope;
 
+import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.idl.InvalidConversationalOperationException;
 import org.apache.tuscany.spi.idl.InvalidServiceContractException;
 import org.apache.tuscany.spi.idl.OverloadedOperationException;
@@ -51,8 +52,6 @@ import static org.apache.tuscany.core.util.JavaIntrospectionHelper.getBaseName;
  * @version $Rev$ $Date$
  */
 public class JavaInterfaceProcessorRegistryImpl implements JavaInterfaceProcessorRegistry {
-    public static final String IDL_INPUT = "idl:input";
-
     private static final String UNKNOWN_DATABINDING = null;
 
     private List<JavaInterfaceProcessor> processors = new ArrayList<JavaInterfaceProcessor>();
@@ -146,7 +145,7 @@ public class JavaInterfaceProcessorRegistryImpl implements JavaInterfaceProcesso
             }
 
             DataType<List<DataType<Type>>> inputType =
-                new DataType<List<DataType<Type>>>(IDL_INPUT, Object[].class, paramDataTypes);
+                new DataType<List<DataType<Type>>>(DataBinding.IDL_INPUT, Object[].class, paramDataTypes);
             Operation<Type> operation = new Operation<Type>(name,
                 inputType,
                 returnDataType,

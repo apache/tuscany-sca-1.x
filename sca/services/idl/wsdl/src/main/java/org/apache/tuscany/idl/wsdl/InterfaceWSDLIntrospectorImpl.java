@@ -35,8 +35,6 @@ import org.osoa.sca.annotations.Constructor;
  * Introspector for creating WSDLServiceContract definitions from WSDL PortTypes.
  */
 public class InterfaceWSDLIntrospectorImpl implements InterfaceWSDLIntrospector {
-    public static final String INPUT_PARTS = "idl:input";
-
     private WSDLDefinitionRegistry wsdlDefinitionRegistry;
 
     /**

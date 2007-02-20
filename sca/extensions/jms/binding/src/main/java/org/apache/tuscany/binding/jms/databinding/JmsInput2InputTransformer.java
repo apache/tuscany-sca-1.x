@@ -19,6 +19,7 @@
 
 package org.apache.tuscany.binding.jms.databinding;
 
+import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.databinding.Transformer;
 import org.osoa.sca.annotations.Service;
@@ -41,7 +42,7 @@ public class JmsInput2InputTransformer extends AbstractJmsTransformer<Object[]> 
 
     @Override
     public String getTargetDataBinding() {
-        return IDL_INPUT;
+        return DataBinding.IDL_INPUT;
     }
 
     /**

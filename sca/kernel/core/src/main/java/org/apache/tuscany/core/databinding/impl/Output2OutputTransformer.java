@@ -25,7 +25,6 @@ import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.databinding.DataBinding;
-import org.apache.tuscany.spi.databinding.DataBindingRegistry;
 import org.apache.tuscany.spi.databinding.Mediator;
 import org.apache.tuscany.spi.databinding.PullTransformer;
 import org.apache.tuscany.spi.databinding.TransformationContext;
@@ -34,9 +33,9 @@ import org.apache.tuscany.spi.databinding.Transformer;
 import org.apache.tuscany.spi.databinding.WrapperHandler;
 import org.apache.tuscany.spi.databinding.extension.TransformerExtension;
 import org.apache.tuscany.spi.idl.ElementInfo;
-import org.apache.tuscany.spi.model.WrapperInfo;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
+import org.apache.tuscany.spi.model.WrapperInfo;
 import org.osoa.sca.annotations.Service;
 
 /**
@@ -46,9 +45,6 @@ import org.osoa.sca.annotations.Service;
 @Service(Transformer.class)
 public class Output2OutputTransformer extends TransformerExtension<Object, Object> implements
     PullTransformer<Object, Object> {
-    private static final String IDL_OUTPUT = "idl:output";
-
-    protected DataBindingRegistry dataBindingRegistry;
 
     protected Mediator mediator;
 
@@ -67,22 +63,14 @@ public class Output2OutputTransformer extends TransformerExtension<Object, Objec
         this.mediator = mediator;
     }
 
-    /**
-     * @param dataBindingRegistry the dataBindingRegistry to set
-     */
-    @Autowire
-    public void setDataBindingRegistry(DataBindingRegistry dataBindingRegistry) {
-        this.dataBindingRegistry = dataBindingRegistry;
-    }
-
     @Override
     public String getSourceDataBinding() {
-        return IDL_OUTPUT;
+        return DataBinding.IDL_OUTPUT;
     }
 
     @Override
     public String getTargetDataBinding() {
-        return IDL_OUTPUT;
+        return DataBinding.IDL_OUTPUT;
     }
 
     /**
@@ -111,7 +99,7 @@ public class Output2OutputTransformer extends TransformerExtension<Object, Objec
     private WrapperHandler getWapperHandler(Operation<?> operation) {
         String dataBindingId;
         dataBindingId = operation.getDataBinding();
-        DataBinding dataBinding = dataBindingRegistry.getDataBinding(dataBindingId);
+        DataBinding dataBinding = mediator.getDataBindingRegistry().getDataBinding(dataBindingId);
         WrapperHandler wrapperHandler = dataBinding == null ? null : dataBinding.getWrapperHandler();
         if (wrapperHandler == null) {
             throw new TransformationException(
@@ -121,7 +109,7 @@ public class Output2OutputTransformer extends TransformerExtension<Object, Objec
     }
 
     private WrapperHandler getWapperHandler(String dataBindingId) {
-        DataBinding dataBinding = dataBindingRegistry.getDataBinding(dataBindingId);
+        DataBinding dataBinding = mediator.getDataBindingRegistry().getDataBinding(dataBindingId);
         return dataBinding == null ? null : dataBinding.getWrapperHandler();
     }
 

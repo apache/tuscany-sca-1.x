@@ -38,9 +38,7 @@ import org.apache.tuscany.spi.databinding.extension.TransformerExtension;
  */
 public abstract class AbstractJmsTransformer<T> extends TransformerExtension<T, T> implements PullTransformer<T, T> {
 
-    protected static final String IDL_INPUT = "idl:input";
     protected static final String JMS_INPUT = "jms:input";
-    protected static final String IDL_OUTPUT = "idl:output";
     protected static final String JMS_OUTPUT = "jms:output";
 
     protected DataBindingRegistry dataBindingRegistry;

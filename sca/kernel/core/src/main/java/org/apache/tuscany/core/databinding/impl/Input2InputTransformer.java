@@ -25,7 +25,6 @@ import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.databinding.DataBinding;
-import org.apache.tuscany.spi.databinding.DataBindingRegistry;
 import org.apache.tuscany.spi.databinding.Mediator;
 import org.apache.tuscany.spi.databinding.PullTransformer;
 import org.apache.tuscany.spi.databinding.TransformationContext;
@@ -34,10 +33,9 @@ import org.apache.tuscany.spi.databinding.Transformer;
 import org.apache.tuscany.spi.databinding.WrapperHandler;
 import org.apache.tuscany.spi.databinding.extension.TransformerExtension;
 import org.apache.tuscany.spi.idl.ElementInfo;
-import org.apache.tuscany.spi.model.WrapperInfo;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
-
+import org.apache.tuscany.spi.model.WrapperInfo;
 import org.osoa.sca.annotations.Service;
 
 /**
@@ -48,10 +46,6 @@ import org.osoa.sca.annotations.Service;
 public class Input2InputTransformer extends TransformerExtension<Object[], Object[]> implements
     PullTransformer<Object[], Object[]> {
 
-    private static final String IDL_INPUT = "idl:input";
-
-    protected DataBindingRegistry dataBindingRegistry;
-
     protected Mediator mediator;
 
     public Input2InputTransformer() {
@@ -60,12 +54,12 @@ public class Input2InputTransformer extends TransformerExtension<Object[], Objec
 
     @Override
     public String getSourceDataBinding() {
-        return IDL_INPUT;
+        return DataBinding.IDL_INPUT;
     }
 
     @Override
     public String getTargetDataBinding() {
-        return IDL_INPUT;
+        return DataBinding.IDL_INPUT;
     }
 
     /**
@@ -74,14 +68,6 @@ public class Input2InputTransformer extends TransformerExtension<Object[], Objec
     @Autowire
     public void setMediator(Mediator mediator) {
         this.mediator = mediator;
-    }
-
-    /**
-     * @param dataBindingRegistry the dataBindingRegistry to set
-     */
-    @Autowire
-    public void setDataBindingRegistry(DataBindingRegistry dataBindingRegistry) {
-        this.dataBindingRegistry = dataBindingRegistry;
     }
 
     /**
@@ -205,7 +191,7 @@ public class Input2InputTransformer extends TransformerExtension<Object[], Objec
     }
 
     private WrapperHandler getWapperHandler(String dataBindingId, boolean required) {
-        DataBinding dataBinding = dataBindingRegistry.getDataBinding(dataBindingId);
+        DataBinding dataBinding = mediator.getDataBindingRegistry().getDataBinding(dataBindingId);
         WrapperHandler wrapperHandler = dataBinding == null ? null : dataBinding.getWrapperHandler();
         if (wrapperHandler == null && required) {
             throw new TransformationException(

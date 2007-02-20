@@ -168,4 +168,18 @@ public class MediatorImpl implements Mediator {
         }
         return path;
     }
+
+    /**
+     * @return the dataBindingRegistry
+     */
+    public DataBindingRegistry getDataBindingRegistry() {
+        return dataBindingRegistry;
+    }
+
+    /**
+     * @return the transformerRegistry
+     */
+    public TransformerRegistry getTransformerRegistry() {
+        return transformerRegistry;
+    }
 }
