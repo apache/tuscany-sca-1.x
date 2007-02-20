@@ -67,7 +67,8 @@
         <dependency>
             <groupId>javax.xml.ws</groupId>
             <artifactId>jaxws-api</artifactId>
-            <version>2.0</version>
+            <!-- Set to 2.1 to make jaxws-maven-plugin happy -->
+            <version>2.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
