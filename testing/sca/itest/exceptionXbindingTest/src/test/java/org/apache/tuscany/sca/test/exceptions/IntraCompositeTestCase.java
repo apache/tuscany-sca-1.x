@@ -43,13 +43,13 @@ public class IntraCompositeTestCase extends SCATestCase {
         } catch (Exception e) {
 
             e.printStackTrace();
-            throw new AssertionFailedError(e + "");
+            fail(e + "");
 
         }
 
     }
 
-    public void badtestInvalidSymbolSDOException() {
+    public void _testInvalidSymbolSDOException() {
         try {
             stockTrader.testInvalidSymbolSDOException();
             throw new AssertionFailedError("Expected InvalidSymbolSDOException");
@@ -58,13 +58,13 @@ public class IntraCompositeTestCase extends SCATestCase {
 
             assertNotNull(isf);
             StockOffer sp = isf.getOffer();
-            assertEquals(99.00F, sp.getPrice());
-            assertEquals("IBM", sp.getSymbol());
+            assertEquals(11.00F, sp.getPrice());
+            assertEquals("IBM0", sp.getSymbol());
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new AssertionFailedError("Expected InvalidSymbolSDOException" + e);
-
+            fail("Expected InvalidSymbolSDOException" + e);
+            
         }
 
     }

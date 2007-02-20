@@ -67,6 +67,11 @@
         <system:implementation.system class="org.apache.tuscany.core.databinding.impl.Input2InputTransformer" />
     </component>
 
+    <component name="transformer.Exception2ExceptionTransformer">
+        <system:implementation.system class="org.apache.tuscany.core.databinding.impl.Exception2ExceptionTransformer" />
+    </component>
+
+
     <component name="transformer.Output2OutputTransformer">
         <system:implementation.system class="org.apache.tuscany.core.databinding.impl.Output2OutputTransformer" />
     </component>

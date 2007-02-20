@@ -23,7 +23,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.tuscany.spi.component.CompositeComponent;
+import org.apache.tuscany.spi.databinding.DataBinding;
+import org.apache.tuscany.spi.databinding.ExceptionHandler;
 import org.apache.tuscany.spi.databinding.Mediator;
+import org.apache.tuscany.spi.databinding.TransformationException;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
 import org.apache.tuscany.spi.wire.Interceptor;
@@ -32,7 +35,7 @@ import org.apache.tuscany.spi.wire.Wire;
 
 /**
  * An interceptor to transform data accross databindings on the wire
- *
+ * 
  * @version $Rev$ $Date$
  */
 public class DataBindingInteceptor implements Interceptor {
@@ -65,35 +68,90 @@ public class DataBindingInteceptor implements Interceptor {
     /**
      * @see org.apache.tuscany.spi.wire.Interceptor#invoke(org.apache.tuscany.spi.wire.Message)
      */
+    /* (non-Javadoc)
+     * @see org.apache.tuscany.spi.wire.Interceptor#invoke(org.apache.tuscany.spi.wire.Message)
+     */
     public Message invoke(Message msg) {
         Object input = transform(msg.getBody(), sourceOperation.getInputType(), targetOperation.getInputType());
         msg.setBody(input);
         Message resultMsg = next.invoke(msg);
         Object result = resultMsg.getBody();
-        // FIXME: How to deal with faults?
-        if (resultMsg.isFault()) {
-            // We need to figure out what fault type it is and then transform it back the source fault type
-            // throw new InvocationRuntimeException((Throwable) result);
+        if (sourceOperation.isNonBlocking()) {
+            // Not to reset the message body
             return resultMsg;
-        } else {
-            if (sourceOperation.isNonBlocking()) {
-                // Not to reset the message body
-                return resultMsg;
-            }
-            // FIXME: Should we fix the Operation model so that getOutputType returns DataType<DataType<T>>?
-            DataType<DataType> targetType =
-                new DataType<DataType>("idl:output", Object.class, targetOperation.getOutputType());
+        }
 
-            targetType.setOperation(targetOperation.getOutputType().getOperation());
-            DataType<DataType> sourceType =
-                new DataType<DataType>("idl:output", Object.class, sourceOperation.getOutputType());
-            sourceType.setOperation(sourceOperation.getOutputType().getOperation());
+        // FIXME: Should we fix the Operation model so that getOutputType
+        // returns DataType<DataType<T>>?
+        DataType<DataType> targetType =
+            new DataType<DataType>(DataBinding.IDL_OUTPUT, Object.class, targetOperation.getOutputType());
+
+        targetType.setOperation(targetOperation.getOutputType().getOperation());
+        DataType<DataType> sourceType =
+            new DataType<DataType>(DataBinding.IDL_OUTPUT, Object.class, sourceOperation.getOutputType());
+        sourceType.setOperation(sourceOperation.getOutputType().getOperation());
+
+        if (resultMsg.isFault()) {
+
+            // FIXME: We need to figure out what fault type it is and then transform it
+            // back the source fault type
+            // throw new InvocationRuntimeException((Throwable) result);
+
+            if ((result instanceof Exception) && !(result instanceof RuntimeException)) {
+                // FIXME: How to match fault data to a fault type for the
+                // operation?
+                DataType targetDataType = null;
+                for (DataType exType : targetOperation.getFaultTypes()) {
+                    if (((Class)exType.getPhysical()).isInstance(result)) {
+                        targetDataType = exType;
+                        break;
+                    }
+                }
+                
+                if (targetDataType == null) {
+                    // Not a business exception
+                    return resultMsg;
+                }
+
+                DataType targetFaultType = getFaultType(targetDataType);
+                if (targetFaultType == null) {
+                    throw new TransformationException("Target fault type cannot be resolved");
+                }
+
+                // FIXME: How to match a source fault type to a target fault
+                // type?
+                DataType sourceDataType = null;
+                DataType sourceFaultType = null;
+                for (DataType exType : sourceOperation.getFaultTypes()) {
+                    DataType faultType = getFaultType(exType);
+                    // Match by the QName (XSD element) of the fault type
+                    if (faultType != null && targetFaultType.getLogical().equals(faultType.getLogical())) {
+                        sourceDataType = exType;
+                        sourceFaultType = faultType;
+                        break;
+                    }
+                }
+
+                if (sourceFaultType == null) {
+                    throw new TransformationException("No matching source fault type is found");
+                }
+
+                Object newResult =
+                    transformException(result, targetDataType, sourceDataType, targetFaultType, sourceFaultType);
+                if (newResult != result) {
+                    resultMsg.setBodyWithFault(newResult);
+                }
+            }
+
+        } else {
+            assert !(result instanceof Throwable) : "Expected messages that are not throwable " + result;
 
             Object newResult = transform(result, targetType, sourceType);
             if (newResult != result) {
                 resultMsg.setBody(newResult);
             }
         }
+
         return resultMsg;
     }
 
@@ -104,6 +162,46 @@ public class DataBindingInteceptor implements Interceptor {
         Map<Class<?>, Object> metadata = new HashMap<Class<?>, Object>();
         metadata.put(CompositeComponent.class, compositeComponent);
         return mediator.mediate(source, sourceType, targetType, metadata);
+    }
+
+    private DataType getFaultType(DataType exceptionType) {
+        DataBinding targetDataBinding =
+            mediator.getDataBindingRegistry().getDataBinding(exceptionType.getDataBinding());
+        if (targetDataBinding == null) {
+            return null;
+        }
+        ExceptionHandler targetHandler = targetDataBinding.getExceptionHandler();
+        if (targetHandler == null) {
+            return null;
+        }
+        return targetHandler.getFaultType((Class)exceptionType.getPhysical());
+    }
+
+    /**
+     * @param source The source exception
+     * @param sourceExType The data type for the source exception
+     * @param targetExType The data type for the target exception
+     * @param sourceType The fault type for the source
+     * @param targetType The fault type for the target
+     * @return
+     */
+    private Object transformException(Object source,
+                                      DataType sourceExType,
+                                      DataType targetExType,
+                                      DataType sourceType,
+                                      DataType targetType) {
+        if (sourceType == targetType || (sourceType != null && sourceType.equals(targetType))) {
+            return source;
+        }
+        Map<Class<?>, Object> metadata = new HashMap<Class<?>, Object>();
+        metadata.put(CompositeComponent.class, compositeComponent);
+
+        DataType<DataType<?>> eSourceDataType =
+            new DataType<DataType<?>>("idl:fault", sourceExType.getPhysical(), sourceType);
+        DataType<DataType<?>> eTargetDataType =
+            new DataType<DataType<?>>("idl:fault", targetExType.getPhysical(), targetType);
+
+        return mediator.mediate(source, eSourceDataType, eTargetDataType, metadata);
     }
 
     /**

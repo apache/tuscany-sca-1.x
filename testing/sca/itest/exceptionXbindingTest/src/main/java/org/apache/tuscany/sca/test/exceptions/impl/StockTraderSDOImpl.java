@@ -72,7 +72,8 @@ public class StockTraderSDOImpl implements StockTraderSDO {
         StockOffer stockOffer = ScatesttoolFactory.INSTANCE.createStockOffer();
         // set up for a InvalidSymbolSDOException
         stockOffer.setName("");
-        stockOffer.setSymbol("");
+        stockOffer.setSymbol("IBM0");
+
         stockOffer.setPrice(11.0F); // offer to buy at max $100.00
         exchangeJaxb.stockQuoteOffer(stockOffer);
             

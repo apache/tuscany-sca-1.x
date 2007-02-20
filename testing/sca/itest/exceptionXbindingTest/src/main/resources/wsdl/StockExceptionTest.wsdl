@@ -57,7 +57,29 @@
                 </complexType>
             </element>
             
-            <element name="hoursTillopen"   type="xsd:int" />
+            <element name="MarketClosedFault"   type="xsd:int" />
+           
+           <!-- Fault wrapper -->
+           <element name="detail" type="tns:detail" minOccurs="0"/>
+            
+           <element name="ServiceWrapperFault">
+                <complexType>
+                    <sequence>
+                        <element name="faultreason"  type="xsd:string" />
+                        <element name="detail" minOccurs="1" type="tns:detail" />
+                    </sequence>
+                </complexType>
+            </element>
+            xs:complexType name="detail">
+
+
+			<complexType name="detail">
+			<sequence>
+			  <any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="1" /> 
+			  </sequence>
+			  <anyAttribute namespace="##other" processContents="lax" /> 
+			</complexType>
+     
         </schema>
     </wsdl:types>
 
@@ -75,7 +97,7 @@
     </wsdl:message>
 
     <wsdl:message name="MarketClosedFault">
-        <wsdl:part element="tns:hoursTillopen" name="fault" />
+        <wsdl:part element="tns:MarketClosedFault" name="fault" />
     </wsdl:message>
 
 
