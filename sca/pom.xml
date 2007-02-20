@@ -326,8 +326,6 @@
                 <module>kernel</module>
                 <module>services</module>
                 <module>test</module>
-                <module>plugins</module>
-                <module>runtime</module>
                 <module>extensions</module>
             </modules>
         </profile>
@@ -338,8 +336,6 @@
                 <module>kernel</module>
                 <module>services</module>
                 <module>test</module>
-                <module>plugins</module>
-                <module>runtime</module>
                 <module>extensions</module>
             </modules>
         </profile>

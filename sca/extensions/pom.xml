@@ -66,18 +66,35 @@
         </repository>
     </repositories>
 
-    <modules>
-        <module>axis2</module>
-<!--
-        <module>groovy</module>
-        <module>javascript</module>
-        <module>jms</module>
-        <module>jsonrpc</module>
-        <module>rmi</module>
-        <module>ruby</module>
-        <module>spring</module>
--->
-    </modules>
+    <profiles>
+        <!-- default profile -->
+        <profile>
+            <id>stable</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>axis2</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>integration</id>
+            <modules>
+                <module>axis2</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>unstable</id>
+            <modules>
+                <module>jms</module>
+                <module>jsonrpc</module>
+                <module>script/container.bsf</module>
+            </modules>
+        </profile>
+
+    </profiles>
 
     <dependencyManagement>
         <dependencies>
@@ -129,13 +146,6 @@
                <artifactId>tuscany-spi</artifactId>
                <version>${scaKernelVersion}</version>
                <scope>compile</scope>
-            </dependency>
-
-            <dependency>
-               <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
-               <artifactId>webapp-api</artifactId>
-               <version>${scaKernelVersion}</version>
-               <scope>runtime</scope>
             </dependency>
 
             <dependency>

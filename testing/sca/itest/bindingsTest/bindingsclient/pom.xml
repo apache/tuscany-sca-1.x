@@ -45,20 +45,6 @@
             <version>1.0-incubator-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.tuscany.testing.bindingstest</groupId>
-            <artifactId>iTest-Bindings-bindingscomposite</artifactId>
-            <version>SNAPSHOT</version>
-            <type>war</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tuscany.testing.bindingstest</groupId>
-            <artifactId>iTest-Bindings-bindingsutility</artifactId>
-            <version>SNAPSHOT</version>
-            <type>war</type>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
 </project>
