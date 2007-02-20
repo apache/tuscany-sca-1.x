@@ -33,7 +33,7 @@ import commonj.sdo.helper.HelperContext;
 import commonj.sdo.impl.HelperProvider;
 
 /**
- * JAXB implementation of ExceptionHandler
+ * SDO implementation of ExceptionHandler
  * 
  * @version $Rev$ $Date$
  */
@@ -112,7 +112,10 @@ public class SDOExceptionHandler implements ExceptionHandler {
         } catch (Throwable e) {
             // Ignore
         }
-        DataType<QName> faultType = new DataType<QName>(faultBeanClass, typeInfo);
+        if (typeInfo == null) {
+            return null;
+        }
+        DataType<QName> faultType = new DataType<QName>(SDODataBinding.NAME, faultBeanClass, typeInfo);
         return faultType;
 
     }

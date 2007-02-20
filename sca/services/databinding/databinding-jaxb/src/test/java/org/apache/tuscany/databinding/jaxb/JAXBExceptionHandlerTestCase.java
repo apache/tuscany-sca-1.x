@@ -46,6 +46,7 @@ public class JAXBExceptionHandlerTestCase extends TestCase {
         DataType<?> dataType = handler.getFaultType(InvalidSymbolFault_Exception.class);
         assertEquals(InvalidSymbolFault.class, dataType.getPhysical());
         assertEquals(ELEMENT, dataType.getLogical());
+        assertEquals(JAXBDataBinding.NAME, dataType.getDataBinding());
     }
 
     public void testCreate() {

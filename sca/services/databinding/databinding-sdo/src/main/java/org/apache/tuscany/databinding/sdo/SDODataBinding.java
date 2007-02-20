@@ -21,6 +21,7 @@ package org.apache.tuscany.databinding.sdo;
 
 import javax.xml.namespace.QName;
 
+import org.apache.tuscany.spi.databinding.ExceptionHandler;
 import org.apache.tuscany.spi.databinding.SimpleTypeMapper;
 import org.apache.tuscany.spi.databinding.WrapperHandler;
 import org.apache.tuscany.spi.databinding.extension.DataBindingExtension;
@@ -39,6 +40,7 @@ import commonj.sdo.impl.HelperProvider;
  * @version $Reve$ $Date$
  */
 public class SDODataBinding extends DataBindingExtension {
+    public static final String NAME = "commonj.sdo.DataObject";
     public static final String ROOT_NAMESPACE = "commonj.sdo";
     public static final QName ROOT_ELEMENT = new QName(ROOT_NAMESPACE, "dataObject");
 
@@ -100,6 +102,11 @@ public class SDODataBinding extends DataBindingExtension {
         } else {
             return super.copy(arg);
         }
+    }
+
+    @Override
+    public ExceptionHandler getExceptionHandler() {
+        return new SDOExceptionHandler();
     }
 
 }

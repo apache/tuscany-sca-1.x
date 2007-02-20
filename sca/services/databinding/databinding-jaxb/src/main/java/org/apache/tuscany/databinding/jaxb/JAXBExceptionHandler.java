@@ -96,7 +96,7 @@ public class JAXBExceptionHandler implements ExceptionHandler {
             // The logical type of a fault is the QName of the element that the
             // only part in
             // the fault message references
-            DataType<QName> faultType = new DataType<QName>(faultBeanClass, element);
+            DataType<QName> faultType = new DataType<QName>(JAXBDataBinding.NAME, faultBeanClass, element);
             return faultType;
         }
     }

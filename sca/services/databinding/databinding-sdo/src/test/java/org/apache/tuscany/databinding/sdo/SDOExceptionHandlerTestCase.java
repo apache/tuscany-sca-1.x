@@ -50,6 +50,7 @@ public class SDOExceptionHandlerTestCase extends TestCase {
         DataType<?> dataType = handler.getFaultType(InvalidSymbolFault_Exception.class);
         assertEquals(InvalidSymbolFault.class, dataType.getPhysical());
         assertEquals(InvalidSymbolFault_Exception.FAULT_ELEMENT, dataType.getLogical());
+        assertEquals(SDODataBinding.NAME, dataType.getDataBinding());
     }
 
     public void testCreate() {
