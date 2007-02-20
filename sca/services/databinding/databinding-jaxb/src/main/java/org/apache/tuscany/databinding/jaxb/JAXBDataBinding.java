@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
+import org.apache.tuscany.spi.databinding.ExceptionHandler;
 import org.apache.tuscany.spi.databinding.extension.DOMHelper;
 import org.apache.tuscany.spi.databinding.extension.DataBindingExtension;
 import org.apache.tuscany.spi.model.DataType;
@@ -137,6 +138,11 @@ public class JAXBDataBinding extends DataBindingExtension {
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
+    }
+
+    @Override
+    public ExceptionHandler getExceptionHandler() {
+        return new JAXBExceptionHandler();
     }
 
 }
