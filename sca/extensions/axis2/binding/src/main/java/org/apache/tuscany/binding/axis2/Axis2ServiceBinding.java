@@ -373,4 +373,9 @@ public class Axis2ServiceBinding extends ServiceBindingExtension {
         }
         return conversational;
     }
+
+    @Override
+    public boolean allowsPassByReference() {
+        return true;
+    }
 }
