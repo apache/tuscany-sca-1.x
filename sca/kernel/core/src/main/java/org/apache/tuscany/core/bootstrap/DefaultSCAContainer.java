@@ -80,10 +80,11 @@ public class DefaultSCAContainer extends SCAContainer {
             urls = cl.getResources(SCAContainer.EXTENSION_SCDL);
             extensions.addAll(Collections.list(urls));
             if (exts != null) {
-            	for (URL ext : exts) {
-            		if (!extensions.contains(ext))
-            			extensions.add(ext);
-            	}
+                for (URL ext : exts) {
+                    if (!extensions.contains(ext)) {
+                        extensions.add(ext);
+                    }    
+                }
             }
             int i = 0;
             for (URL ext : extensions) {
