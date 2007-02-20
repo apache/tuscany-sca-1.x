@@ -63,12 +63,13 @@ public class StockTraderSDOImpl implements StockTraderSDO {
         stockOffer.setPrice(100.00F); // offer to buy at max $100.00
 
         StockOffer stockOfferAccepted = exchangeJaxb.stockQuoteOffer(stockOffer);
-        
+
         return stockOfferAccepted;
 
     }
 
-    public void testInvalidSymbolSDOException() throws RemoteException, InvalidSymbolSDOException, MarketClosedSDOException {
+    public void testInvalidSymbolSDOException() throws RemoteException, InvalidSymbolSDOException,
+        MarketClosedSDOException {
         StockOffer stockOffer = ScatesttoolFactory.INSTANCE.createStockOffer();
         // set up for a InvalidSymbolSDOException
         stockOffer.setName("");
@@ -76,8 +77,8 @@ public class StockTraderSDOImpl implements StockTraderSDO {
 
         stockOffer.setPrice(11.0F); // offer to buy at max $100.00
         exchangeJaxb.stockQuoteOffer(stockOffer);
-            
-     }
+
+    }
 
     public void marketClosedSDOExceptionTest() {
         StockOffer stockOffer = ScatesttoolFactory.INSTANCE.createStockOffer();
@@ -90,14 +91,30 @@ public class StockTraderSDOImpl implements StockTraderSDO {
             StockOffer stockOfferAccepted = exchangeJaxb.stockQuoteOffer(stockOffer);
             stockOfferAccepted.getPrice(); // the price actually bought.
         } catch (RemoteException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         } catch (InvalidSymbolSDOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         } catch (MarketClosedSDOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
+        }
+    }
+
+    public Object  testNotDeclaredAtSourceTest() {
+        StockOffer stockOffer = ScatesttoolFactory.INSTANCE.createStockOffer();
+
+        // set up for a MarketClosedSDOException
+        stockOffer.setName("testNotDeclaredAtSourceTest");
+        stockOffer.setSymbol("TNDAS");
+        stockOffer.setPrice(Float.NaN); // offer to buy at max $100.00
+        try {
+            return  exchangeJaxb.stockQuoteOffer(stockOffer);
+            
+        } catch (Exception e) {
+            return e;
+           
         }
 
     }

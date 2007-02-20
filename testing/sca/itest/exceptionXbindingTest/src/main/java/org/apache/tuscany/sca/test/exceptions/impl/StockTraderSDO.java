@@ -32,4 +32,6 @@ public interface StockTraderSDO {
 
     void testInvalidSymbolSDOException() throws RemoteException, InvalidSymbolSDOException, MarketClosedSDOException;
 
+    Object testNotDeclaredAtSourceTest();
+
 }

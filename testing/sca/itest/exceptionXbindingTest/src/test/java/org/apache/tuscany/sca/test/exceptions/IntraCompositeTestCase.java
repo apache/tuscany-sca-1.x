@@ -22,6 +22,7 @@ import junit.framework.AssertionFailedError;
 
 import org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDO;
 import org.apache.tuscany.sca.test.exceptions.sdohandgen.InvalidSymbolSDOException;
+import org.apache.tuscany.spi.databinding.TransformationException;
 import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
@@ -52,7 +53,7 @@ public class IntraCompositeTestCase extends SCATestCase {
     public void testInvalidSymbolSDOException() {
         try {
             stockTrader.testInvalidSymbolSDOException();
-            throw new AssertionFailedError("Expected InvalidSymbolSDOException");
+            fail("Expected InvalidSymbolSDOException");
         } catch (InvalidSymbolSDOException e) {
             InvalidSymbolFault isf = e.getFaultInfo();
 
@@ -64,8 +65,17 @@ public class IntraCompositeTestCase extends SCATestCase {
         } catch (Exception e) {
             e.printStackTrace();
             fail("Expected InvalidSymbolSDOException" + e);
-            
+
         }
+    }
+
+    public void testNotDeclaredAtSourceException() {
+
+        Object ret = stockTrader.testNotDeclaredAtSourceTest();
+
+        assertNotNull(ret);
+
+        assertEquals(TransformationException.class, ret.getClass());
 
     }
 

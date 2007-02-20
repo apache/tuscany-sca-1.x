@@ -24,6 +24,7 @@ import org.apache.tuscany.sca.test.exceptions.impl.jaxb.InvalidSymbolFault_Excep
 import org.apache.tuscany.sca.test.exceptions.impl.jaxb.MarketClosedFault;
 import org.apache.tuscany.sca.test.exceptions.impl.jaxb.ObjectFactory;
 import org.apache.tuscany.sca.test.exceptions.impl.jaxb.StockOffer;
+import org.apache.tuscany.sca.test.exceptions.impl.jaxb.TestNotDeclaredAtSourceFault;
 import org.osoa.sca.annotations.Service;
 
 /**
@@ -44,7 +45,7 @@ public class StockExchangeJaxB implements StockExceptionTestJAXB {
      * 
      * @see org.apache.tuscany.sca.test.exceptions.impl.jaxb.StockExceptionTest#stockQuoteOffer(org.apache.tuscany.sca.test.exceptions.impl.jaxb.StockOffer)
      */
-    public StockOffer stockQuoteOffer(StockOffer input) throws InvalidSymbolFault_Exception, MarketClosedFault {
+    public StockOffer stockQuoteOffer(StockOffer input) throws InvalidSymbolFault_Exception, MarketClosedFault, TestNotDeclaredAtSourceFault{
 
         System.out.println("stockQuoteOffer '" + input + "'");
 
@@ -54,12 +55,18 @@ public class StockExchangeJaxB implements StockExceptionTestJAXB {
             return input;
 
         }
-        if ("CLOSED".equals(input.getName())) {
+        else if ("CLOSED".equals(input.getName())) {
             throw new MarketClosedFault("TO LATE!", 3);
+            
+        } else if( "testNotDeclaredAtSourceTest".equals(input.getName())){
+            
+            throw new TestNotDeclaredAtSourceFault("not declared", "fault info");
+            
         }
         ObjectFactory jaxbOjectFactory = new ObjectFactory();
 
         InvalidSymbolFault faultinfo = jaxbOjectFactory.createInvalidSymbolFault();
+        
         faultinfo.setOffer(input);
 
         throw new InvalidSymbolFault_Exception("bad symbol", faultinfo);
