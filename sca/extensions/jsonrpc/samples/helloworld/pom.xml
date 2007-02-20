@@ -36,10 +36,6 @@
             <artifactId>sca-api-r1.0</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
-            <artifactId>webapp-api</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-test</artifactId>
         </dependency>
@@ -98,28 +94,6 @@
                     </execution>
                 </executions>
             </plugin>            
-            <plugin>
-                <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
-                <artifactId>tuscany-war-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>tuscany-war</id>
-                        <goals>
-                            <goal>tuscany-war</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <loadExtensionDependencies>true</loadExtensionDependencies>
-                    <extensions>
-                       <dependency>
-                          <groupId>org.apache.tuscany.sca.extensions.jsonrpc</groupId>
-                          <artifactId>tuscany-jsonrpc</artifactId>
-                          <version>${extensionVersion}</version>
-                       </dependency>
-                    </extensions>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>
