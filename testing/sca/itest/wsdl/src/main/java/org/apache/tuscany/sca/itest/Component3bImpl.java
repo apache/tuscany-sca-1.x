@@ -19,14 +19,16 @@
 
 package org.apache.tuscany.sca.itest;
 
+import helloworld.HelloWorldService;
+
 import org.osoa.sca.annotations.Reference;
 
-public class Component1Impl implements Component {
+public class Component3bImpl implements HelloWorldService {
 
-    private Component comp;
+    private HelloWorldService comp;
 
     @Reference
-    public void setComp(Component comp) {
+    public void setComp(HelloWorldService comp) {
         this.comp = comp;
     }
 

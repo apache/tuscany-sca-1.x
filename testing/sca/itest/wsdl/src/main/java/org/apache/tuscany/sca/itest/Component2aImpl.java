@@ -19,10 +19,20 @@
 
 package org.apache.tuscany.sca.itest;
 
-public class Component2Impl implements Component {
+import helloworld.HelloWorldService;
 
+import org.osoa.sca.annotations.Reference;
+
+public class Component2aImpl implements HelloWorldService {
+
+    private HelloWorldService comp;
+
+    @Reference
+    public void setComp(HelloWorldService comp) {
+        this.comp = comp;
+    }
     public String getGreetings(String s) {
-        return "Hi " + s;
+        return comp.getGreetings(s);
     }
 
 }
