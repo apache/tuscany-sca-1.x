@@ -51,7 +51,7 @@ public class WSDLTestCase extends SCATestCase {
         assertEquals("Hi petra", client10.getGreetings("petra"));
         HelloWorldService client11 = CurrentCompositeContext.getContext().locateService(HelloWorldService.class, "Client1b2a3b4b");
         assertEquals("Hi petra", client11.getGreetings("petra"));
-//TODO: TUSCANY-xxx DataBindingInterceptor incorrect when binding.ws wired to java component using interface.wsdl 
+//TODO: TUSCANY-1124 DataBindingInterceptor incorrect when binding.ws wired to java component using interface.wsdl 
 //     HelloWorldService client12 = CurrentCompositeContext.getContext().locateService(HelloWorldService.class, "Client1b2b3a4a");
 //      assertEquals("Hi petra", client12.getGreetings("petra"));
 //      HelloWorldService client13 = CurrentCompositeContext.getContext().locateService(HelloWorldService.class, "Client1b2b3a4b");
@@ -62,7 +62,7 @@ public class WSDLTestCase extends SCATestCase {
 //      assertEquals("Hi petra", client15.getGreetings("petra"));
     }
 
-    // TODO: TUSCANY-xxx, Testcases fail with out of heap space if too many individual test run in one testcase 
+    // TODO: TUSCANY-1125, Testcases fail with out of heap space if too many individual test run in one testcase 
 //    public void testClient1a2a3a4a()  {
 //        HelloWorldService client = CurrentCompositeContext.getContext().locateService(HelloWorldService.class, "Client1a2a3a4a");
 //        assertEquals("Hi petra", client.getGreetings("petra"));
