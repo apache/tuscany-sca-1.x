@@ -27,6 +27,7 @@ import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.databinding.DataBindingRegistry;
 import org.apache.tuscany.spi.extension.AtomicComponentExtension;
+import org.apache.tuscany.spi.extension.ServiceBindingExtension;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
 import org.apache.tuscany.spi.model.ServiceContract;
@@ -75,6 +76,12 @@ public class PassByValueWirePostProcessor extends WirePostProcessorExtension {
                 ((AtomicComponentExtension) target.getContainer()).isAllowsPassByReference();
         }
         
+        boolean srcAllowsPassByReference = false;
+        if (source.getContainer() instanceof ServiceBindingExtension) {
+            srcAllowsPassByReference =
+                ((ServiceBindingExtension) source.getContainer()).allowsPassByReference();
+        }
+        
         Map<Operation<?>, InboundInvocationChain> chains = target.getInvocationChains();
         for (Map.Entry<Operation<?>, InboundInvocationChain> entry : chains.entrySet()) {
             targetOperation = entry.getKey();
@@ -87,7 +94,7 @@ public class PassByValueWirePostProcessor extends WirePostProcessorExtension {
             }
             
             if (target.getServiceContract().isRemotable()
-                && (!implAllowsPassByReference && !methodAllowsPassByReference)) { 
+                && (!srcAllowsPassByReference && !implAllowsPassByReference && !methodAllowsPassByReference)) { 
                 sourceOperation =
                     getSourceOperation(source.getInvocationChains().keySet(), targetOperation.getName());
    

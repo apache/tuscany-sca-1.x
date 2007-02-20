@@ -84,4 +84,7 @@ public abstract class ServiceBindingExtension extends AbstractSCAObject implemen
         return service != null && service.isSystem();
     }
 
+    public boolean allowsPassByReference() {
+        return false;
+    }
 }
