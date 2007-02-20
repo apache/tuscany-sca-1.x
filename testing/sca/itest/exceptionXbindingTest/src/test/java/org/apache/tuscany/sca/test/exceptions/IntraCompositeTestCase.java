@@ -49,7 +49,7 @@ public class IntraCompositeTestCase extends SCATestCase {
 
     }
 
-    public void _testInvalidSymbolSDOException() {
+    public void testInvalidSymbolSDOException() {
         try {
             stockTrader.testInvalidSymbolSDOException();
             throw new AssertionFailedError("Expected InvalidSymbolSDOException");

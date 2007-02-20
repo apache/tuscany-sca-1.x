@@ -19,12 +19,16 @@
 
 package org.apache.tuscany.sca.test.exceptions.sdohandgen;
 
+import javax.xml.namespace.QName;
+
 import stockexceptiontestservice.scatesttool.InvalidSymbolFault;
 
 /**
  * 
  */
 public class InvalidSymbolSDOException extends Exception {
+
+   public static final QName FAULT_ELEMENT = new QName("http://scatesttool.stockexceptiontestservice", "InvalidSymbolFault");
 
     /**
      * 
