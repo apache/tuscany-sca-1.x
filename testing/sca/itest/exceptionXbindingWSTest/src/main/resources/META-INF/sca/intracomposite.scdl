@@ -36,7 +36,7 @@
 	</component>
 	
 	<reference name="stockTraderSDOReference">
-		<interface.java class="org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDO"/>
+		<interface.java class="org.apache.tuscany.sca.test.exceptions.sdohandgen.StockExceptionTest"/>
 		<binding.ws endpoint="http://scatesttool.stockexceptiontestservice#wsdl.endpoint(StockExceptionTestService/StockExceptionTestServiceSoapPort)" location="wsdl/StockExceptionTest.wsdl"/>
             location="wsdl/StockExceptionTest.wsdl" /> 
    	</reference>
