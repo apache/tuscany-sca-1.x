@@ -33,8 +33,8 @@ public class HelloWorldImpl implements HelloWorldService {
         String name = requestOM.getFirstElement().getText();
 
         OMFactory omFactory = OMAbstractFactory.getOMFactory();
-        OMElement responseOM = omFactory.createOMElement("getGreetingsResponse", "http://helloworld", "helloworld");
-        OMElement param = omFactory.createOMElement("getGreetingsReturn", "http://helloworld", "helloworld");
+        OMElement responseOM = omFactory.createOMElement("getGreetingsResponse", "http://helloworldOM", "helloworld");
+        OMElement param = omFactory.createOMElement("getGreetingsReturn", "http://helloworldOM", "helloworld");
         responseOM.addChild(param);
         param.addChild(omFactory.createOMText("Hello " + name));
         
