@@ -26,7 +26,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-helloworldwsclientOM</artifactId>
+    <artifactId>tuscany-sample-helloworldwsclientOM</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany HelloWorld Web Service Client Sample OM</name>
     <description>A sample client for a HelloWorld Web Service OM.</description>
@@ -38,8 +38,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.ws.commons.axiom</groupId>
-            <artifactId>axiom-impl</artifactId>
+            <groupId>org.apache.tuscany.sca.extensions.axis2.samples</groupId>
+            <artifactId>tuscany-sample-helloworldwsOM</artifactId>
+            <scope>test</scope>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
@@ -53,8 +55,6 @@
                     <archive>
                         <manifest>
                             <mainClass>helloworldOM.HelloWorldClient</mainClass>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>../lib/</classpathPrefix>
                         </manifest>
                     </archive>
                 </configuration>

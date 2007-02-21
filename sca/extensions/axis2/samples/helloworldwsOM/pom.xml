@@ -26,7 +26,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-helloworldwsOM</artifactId>
+    <artifactId>tuscany-sample-helloworldwsOM</artifactId>
     <packaging>jar</packaging>
     <name>Tuscany HelloWorld Web Service Sample OM</name>
     <description>A sample HelloWorld Web Service OM.</description>
@@ -36,16 +36,6 @@
         <dependency>
             <groupId>org.apache.ws.commons.axiom</groupId>
             <artifactId>axiom-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.ws.commons.axiom</groupId>
-            <artifactId>axiom-impl</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.woodstox</groupId>
-            <artifactId>wstx-asl</artifactId>
         </dependency>
 
     </dependencies>

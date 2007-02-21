@@ -70,6 +70,9 @@ public class DefaultSCAContainer extends SCAContainer {
 
         if (system == null) {
             system = cl.getResource(SCAContainer.SYSTEM_SCDL);
+            if (system == null) {
+            	system = cl.getResource(SCAContainer.DEFAULT_SYSTEM_SCDL);
+            }
         }
 
         try {

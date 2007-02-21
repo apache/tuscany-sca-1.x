@@ -33,6 +33,7 @@ import org.osoa.sca.ComponentContext;
  * The Tuscany container
  */
 public abstract class SCAContainer {
+    public static final String DEFAULT_SYSTEM_SCDL = "META-INF/tuscany/default-system.composite";
     public static final String SYSTEM_SCDL = "META-INF/tuscany/system.composite";
     public static final String EXTENSION_SCDL = "META-INF/sca/extension.composite";
     public static final String SERVICE_SCDL = "META-INF/sca/service.composite";
