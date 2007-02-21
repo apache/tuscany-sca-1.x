@@ -86,8 +86,9 @@ public class JettyServiceImpl implements JettyService {
     static {
         // hack to replace the static Jetty logger
         System.setProperty("org.mortbay.log.class", JettyLogger.class.getName());
+         
     }
-
+ 
     public JettyServiceImpl(@Monitor TransportMonitor monitor,
                             @Autowire WorkScheduler scheduler) {
         this.monitor = monitor;
@@ -101,6 +102,10 @@ public class JettyServiceImpl implements JettyService {
                 jettyLogger.setDebugEnabled(true);
             }
         }
+        
+        httpPort = Integer.getInteger("Tuscany.JettyService.httpPort", httpPort);
+        
+
     }
 
     @Property
