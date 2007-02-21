@@ -24,6 +24,15 @@ import helloworld.HelloWorldService;
 import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CurrentCompositeContext;
 
+/**
+ * Tests all the combinations of wiring services, components, and references
+ * which use either interface.java or interface.wsdl.
+ * 
+ * The tests use a service (1) wired to a components (2) wired to another 
+ * component (3) wired to a reference (4). Each of those uses either 
+ * interface.java (a) or interface.wsdl (b). This results in 16 different
+ * combinations 1a2a3a4a thru 1b2b3b4b.
+ */
 public class WSDLTestCase extends SCATestCase {
 
     public void testClient1a2a3a4a()  {
