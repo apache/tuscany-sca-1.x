@@ -57,11 +57,41 @@
         </repository>
     </repositories>
 
+    <profiles>
+        <profile>
+            <id>stable</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+              <module>helloworldws</module>
+              <module>helloworldwsclient</module>
+          </modules>
+        </profile>
+
+        <profile>
+            <id>integration</id>
+            <modules>
+              <module>helloworldws</module>
+              <module>helloworldwsOM</module>
+              <module>helloworldwsclient</module>
+              <module>helloworldwsclientOM</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>unstable</id>
+            <modules>
+              <module>helloworldws</module>
+              <module>helloworldwsOM</module>
+              <module>helloworldwsclient</module>
+              <module>helloworldwsclientOM</module>
+          </modules>
+        </profile>
+
+      </profiles>
+
     <modules>
-        <module>helloworldws</module>
-        <module>helloworldwsOM</module>
-        <module>helloworldwsclient</module>
-        <module>helloworldwsclientOM</module>
     </modules>
 
     <dependencyManagement>

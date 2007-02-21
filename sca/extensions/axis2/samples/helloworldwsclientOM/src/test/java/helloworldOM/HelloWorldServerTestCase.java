@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,18 +15,29 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" name="helloworldws">
+ */
+package helloworldOM;
 
-    <service name="HelloWorldWebService">
-        <!-- interface.wsdl interface="http://helloworldOM#wsdl.interface(HelloWorld)"/ -->
-        <interface.java interface="helloworldOM.HelloWorldService"/>
-        <binding.ws endpoint="http://helloworldOM#wsdl.endpoint(HelloWorldService/HelloWorldSoapPort)" location="wsdl/helloworldOM.wsdl" />
-        <reference>HelloWorldServiceComponent</reference>
-    </service>
+import java.io.IOException;
+import java.net.Socket;
 
-    <component name="HelloWorldServiceComponent">
-        <implementation.java class="helloworldOM.HelloWorldImpl"/>
-    </component>
+import org.apache.tuscany.test.SCATestCase;
 
-</composite>
+public class HelloWorldServerTestCase extends SCATestCase {
+	
+	@Override
+	protected void setUp() throws Exception {
+		setApplicationSCDL("META-INF/sca/helloworldwsOM.composite");
+		super.setUp();
+	}
+	
+	public void testPing() throws IOException {
+		new Socket("127.0.0.1", 8080);
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+		super.tearDown();
+	}
+
+}

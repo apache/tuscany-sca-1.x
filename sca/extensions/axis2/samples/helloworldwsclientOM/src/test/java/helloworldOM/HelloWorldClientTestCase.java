@@ -25,23 +25,28 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.tuscany.test.SCATestCase;
+import org.apache.tuscany.test.SCATestCaseRunner;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
  * Test case for helloworld web service client 
  */
-public class HelloWorldWSClient extends SCATestCase {
+public class HelloWorldClientTestCase extends SCATestCase {
 
     private HelloWorldService helloWorldService;
 
+    private SCATestCaseRunner server;
+
     @Override
     protected void setUp() throws Exception {
-        // FIXME: Adding extensions programtically
-        addExtension("org.apache.tuscany.binding.axis2.WebServiceBinding", getClass().getClassLoader().getResource("META-INF/tuscany/binding.axis2.scdl"));
         super.setUp();
+
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
         helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
+
+        server =  new SCATestCaseRunner(HelloWorldServerTestCase.class);
+        server.setUp();
     }
 
     public void testWSClient() {
@@ -52,6 +57,12 @@ public class HelloWorldWSClient extends SCATestCase {
         parmE.addChild(fac.createOMText("petra"));
         OMElement responseOM = helloWorldService.getGreetings(requestOM);
         Assert.assertEquals("Hello John", "");
+    }
+    
+    @Override
+    protected void tearDown() throws Exception {
+    	super.tearDown();
+    	server.tearDown();
     }
 
 }

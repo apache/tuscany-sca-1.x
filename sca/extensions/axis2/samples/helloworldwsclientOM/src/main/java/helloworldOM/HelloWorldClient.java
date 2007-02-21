@@ -22,6 +22,7 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMNode;
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import static java.lang.System.out;
@@ -39,6 +40,8 @@ public class HelloWorldClient {
     private static final String TARGET_NAMESPACE = "http://helloworldOM";
 
     public  final static void main(String[] args) throws Exception {
+    	
+    	SCAContainer.start();
         
         // Invoke the HelloWorld service
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
@@ -63,6 +66,7 @@ public class HelloWorldClient {
         out.println(value);
         out.flush();
 
+        SCAContainer.stop();
     }
 
     private static void printTRee(OMElement value) {
