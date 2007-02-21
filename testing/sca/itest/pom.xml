@@ -49,7 +49,6 @@
 	        <module>callBackSetCallbackTest</module>
 	        <module>callBackSetCallbackConvTest</module>
 	        <module>conversationsTest</module>
-	        <module>wsdl</module>
                 <module>bindingsTest</module>
             </modules>
         </profile>
