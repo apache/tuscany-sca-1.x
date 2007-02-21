@@ -21,7 +21,7 @@
 	<dbsdo:import.sdo factory="stockexceptiontestservice.scatesttool.ScatesttoolFactory"/>
 	
 	<service name="exchangeJaxbService">
-		<interface.java class="helloworld.HelloWorldService"/>
+		<interface.java class="org.apache.tuscany.sca.test.exceptions.impl.StockExceptionTestJAXB"/>
 		<binding.ws endpoint="http://scatesttool.stockexceptiontestservice#wsdl.endpoint(StockExceptionTestService/StockExceptionTestServiceSoapPort)" location="wsdl/StockExceptionTest.wsdl"/>
 		<reference>exchangeJaxbComponent</reference>
 	</service>
@@ -32,12 +32,12 @@
 	
 	<component name="stockTraderSDOComponent">
 		<implementation.java class="org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDOImpl"/>
-		<reference name="stockTraderSDOReference">exchangeJaxbComponent</reference>
+		<reference name="exchangeJaxb">stockTraderSDOReference</reference>
 	</component>
 	
 	<reference name="stockTraderSDOReference">
 		<interface.java class="org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDO"/>
-		<binding.ws endpoint="http://scatesttool.stockexceptiontestservice#wsdl.endpoint(StockExceptionTestService/StockExceptionTestServiceSoapPort)" location="wsdl/StockExceptionTest.wsdl)"/>
+		<binding.ws endpoint="http://scatesttool.stockexceptiontestservice#wsdl.endpoint(StockExceptionTestService/StockExceptionTestServiceSoapPort)" location="wsdl/StockExceptionTest.wsdl"/>
             location="wsdl/StockExceptionTest.wsdl" /> 
    	</reference>
 </composite>
