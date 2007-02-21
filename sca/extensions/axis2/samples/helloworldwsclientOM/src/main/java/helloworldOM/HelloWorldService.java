@@ -19,12 +19,14 @@
 package helloworldOM;
 
 import org.apache.axiom.om.OMElement;
+import org.apache.tuscany.api.annotation.DataType;
 import org.osoa.sca.annotations.Service;
 import org.osoa.sca.annotations.Remotable;
 
 
 @Service
 @Remotable
+@DataType(name="org.apache.axiom.om.OMElement")
 public interface HelloWorldService {
 
     public OMElement getGreetings(OMElement parmE);
