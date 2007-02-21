@@ -24,13 +24,14 @@ import junit.framework.Assert;
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
+import org.apache.axiom.om.OMText;
 import org.apache.tuscany.test.SCATestCase;
 import org.apache.tuscany.test.SCATestCaseRunner;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
- * Test case for helloworld web service client 
+ * Test case for helloworld web service client
  */
 public class HelloWorldClientTestCase extends SCATestCase {
 
@@ -45,24 +46,25 @@ public class HelloWorldClientTestCase extends SCATestCase {
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
         helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
 
-        server =  new SCATestCaseRunner(HelloWorldServerTestCase.class);
+        server = new SCATestCaseRunner(HelloWorldServerTestCase.class);
         server.setUp();
     }
 
     public void testWSClient() {
-        OMFactory fac= OMAbstractFactory.getOMFactory();
+        OMFactory fac = OMAbstractFactory.getOMFactory();
         OMElement requestOM = fac.createOMElement("getGreetings", "http://helloworldOM", "helloworld");
         OMElement parmE = fac.createOMElement("name", "http://helloworldOM", "helloworld");
         requestOM.addChild(parmE);
         parmE.addChild(fac.createOMText("petra"));
         OMElement responseOM = helloWorldService.getGreetings(requestOM);
-        Assert.assertEquals("Hello John", "");
+        OMElement child = (OMElement)responseOM.getFirstElement();
+        Assert.assertEquals("Hello petra", ((OMText)child.getFirstOMChild()).getText());
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
-    	super.tearDown();
-    	server.tearDown();
+        super.tearDown();
+        server.tearDown();
     }
 
 }
