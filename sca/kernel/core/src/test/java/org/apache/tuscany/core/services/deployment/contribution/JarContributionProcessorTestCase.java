@@ -33,7 +33,7 @@ public class JarContributionProcessorTestCase extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
     }
-
+    
     public final void testProcessJarArtifacts() throws Exception {
         JarContributionProcessor jarContribution = new JarContributionProcessor();
         ContributionProcessorRegistry mockRegistry = EasyMock.createMock(ContributionProcessorRegistry.class);
