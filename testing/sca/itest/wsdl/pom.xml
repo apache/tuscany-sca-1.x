@@ -69,6 +69,22 @@
             <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sdo</groupId>
+            <artifactId>tuscany-sdo-impl</artifactId>
+            <version>${sdo.version}</version>
+            <scope>compile</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.apache.tuscany.sca.services.databinding</groupId>
+			<artifactId>databinding-sdo</artifactId>
+			<version>${scaKernelVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
+			<artifactId>databinding-axiom</artifactId>
+			<version>${scaKernelVersion}</version>
+		</dependency>
     </dependencies>
 
 </project>
