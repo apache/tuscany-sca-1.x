@@ -113,7 +113,18 @@ public class DataBindingJavaInterfaceProcessor extends JavaInterfaceProcessorExt
         Class cls = (Class) dataType.getPhysical();
         if (cls.isPrimitive() || SIMPLE_TYPE_SET.contains(cls)) {
             dataType.setDataBinding(SIMPLE_JAVA_OBJECTS);
-        } else if (cls == String.class && (dataBinding == null || !dataBinding.equals(String.class.getName()))) {
+        } 
+        /**
+         * [rfeng] The following code hits a bug in IBM JDK 5.0          
+         * if (cls == String.class && (dataBinding == null || !dataBinding.equals(String.class.getName()))) {
+         *      // Identify the String as a simple type
+         *      dataType.setDataBinding(SIMPLE_JAVA_OBJECTS);
+         * }     
+         */      
+        
+        boolean plainString =
+            cls == String.class && ((dataBinding == null) || !dataBinding.equals(String.class.getName()));
+        if (plainString) {
             // Identify the String as a simple type
             dataType.setDataBinding(SIMPLE_JAVA_OBJECTS);
         }
