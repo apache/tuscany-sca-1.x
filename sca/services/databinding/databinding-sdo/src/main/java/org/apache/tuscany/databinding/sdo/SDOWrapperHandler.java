@@ -19,6 +19,9 @@
 
 package org.apache.tuscany.databinding.sdo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.databinding.TransformationContext;
@@ -50,16 +53,6 @@ public class SDOWrapperHandler implements WrapperHandler<Object> {
     }
 
     /**
-     * @see org.apache.tuscany.spi.databinding.WrapperHandler#getChild(java.lang.Object,
-     *      int, ElementInfo)
-     */
-    public Object getChild(Object wrapper, int i, ElementInfo element) {
-        DataObject wrapperDO =
-            (wrapper instanceof XMLDocument) ? ((XMLDocument)wrapper).getRootObject() : (DataObject)wrapper;
-        return wrapperDO.get(element.getQName().getLocalPart());
-    }
-
-    /**
      * @see org.apache.tuscany.spi.databinding.WrapperHandler#setChild(java.lang.Object,
      *      int, ElementInfo, java.lang.Object)
      */
@@ -67,6 +60,17 @@ public class SDOWrapperHandler implements WrapperHandler<Object> {
         DataObject wrapperDO =
             (wrapper instanceof XMLDocument) ? ((XMLDocument)wrapper).getRootObject() : (DataObject)wrapper;
         wrapperDO.set(childElement.getQName().getLocalPart(), value);
+    }
+
+    public List getChildren(Object wrapper) {
+        DataObject wrapperDO =
+            (wrapper instanceof XMLDocument) ? ((XMLDocument)wrapper).getRootObject() : (DataObject)wrapper;
+        List properties = wrapperDO.getInstanceProperties();
+        List<Object> elements = new ArrayList<Object>();
+        for (int i = 0; i < properties.size(); i++) {
+            elements.add(wrapperDO.get(i));
+        }
+        return elements;
     }
 
 }

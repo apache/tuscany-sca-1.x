@@ -91,10 +91,8 @@ public class PropertyObjectFactoryImpl implements PropertyObjectFactory {
             if (dataBinding != null) {
                 targetDataType = new DataType<Class>(dataBinding, javaType, javaType);
             } else {
-                targetDataType = registry.introspectType(javaType);
-                if (targetDataType == null) {
-                    targetDataType = new DataType<Class>("java.lang.Object", javaType, javaType);
-                }
+                targetDataType = new DataType<Class>(dataBinding, javaType, javaType);
+                registry.introspectType(targetDataType, null);
             }
         }
 

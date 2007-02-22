@@ -19,7 +19,10 @@
 
 package org.apache.tuscany.databinding.axiom;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
@@ -45,23 +48,16 @@ public class OMElementWrapperHandler implements WrapperHandler<OMElement> {
         return wrapper;
     }
 
-    public Object getChild(OMElement wrapper, int i, ElementInfo element) {
-        int index = 0;
-        for (Iterator e = wrapper.getChildElements(); e.hasNext();) {
-            OMElement child = (OMElement) e.next();
-            if (index != i) {
-                index++;
-                continue;
-            }
-            if (child.getQName().equals(element.getQName())) {
-                return child;
-            }
-        }
-        return null;
-    }
-
     public void setChild(OMElement wrapper, int i, ElementInfo childElement, Object value) {
         wrapper.addChild((OMElement) value);
+    }
+
+    public List getChildren(OMElement wrapper) {
+        List<Object> elements = new ArrayList<Object>();
+        for (Iterator i = wrapper.getChildElements(); i.hasNext();) {
+            elements.add(i.next());
+        }
+        return elements;
     }
 
 }

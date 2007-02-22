@@ -19,6 +19,7 @@
 
 package org.apache.tuscany.core.databinding.impl;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -30,35 +31,46 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import javax.xml.datatype.Duration;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.tuscany.api.annotation.DataContext;
+import org.apache.tuscany.api.annotation.DataType;
+import org.apache.tuscany.api.annotation.WrapperStyle;
+import org.apache.tuscany.spi.annotation.Autowire;
+import org.apache.tuscany.spi.databinding.DataBindingRegistry;
 import org.apache.tuscany.spi.idl.InvalidServiceContractException;
 import org.apache.tuscany.spi.idl.java.JavaInterfaceProcessorExtension;
 import org.apache.tuscany.spi.idl.java.JavaServiceContract;
 import org.apache.tuscany.spi.model.Operation;
 
-import org.apache.tuscany.api.annotation.DataContext;
-import org.apache.tuscany.api.annotation.DataType;
-
 /**
  * The databinding annotation processor for java interfaces
- *
+ * 
  * @version $Rev$ $Date$
  */
 public class DataBindingJavaInterfaceProcessor extends JavaInterfaceProcessorExtension {
-
-    private static final String SIMPLE_JAVA_OBJECTS = "java.lang.Object";
-
     private static final Class[] SIMPLE_JAVA_TYPES =
         {Byte.class, Character.class, Short.class, Integer.class, Long.class, Float.class, Double.class, Date.class,
-        Calendar.class, GregorianCalendar.class, Duration.class, XMLGregorianCalendar.class, BigInteger.class,
-        BigDecimal.class};
+         Calendar.class, GregorianCalendar.class, Duration.class, XMLGregorianCalendar.class, BigInteger.class,
+         BigDecimal.class};
 
     private static final Set<Class> SIMPLE_TYPE_SET = new HashSet<Class>(Arrays.asList(SIMPLE_JAVA_TYPES));
 
+    private DataBindingRegistry dataBindingRegistry;
+
+    public DataBindingJavaInterfaceProcessor(@Autowire
+    DataBindingRegistry dataBindingRegistry) {
+        super();
+        this.dataBindingRegistry = dataBindingRegistry;
+    }
+
     public void visitInterface(Class<?> clazz, Class<?> callbackClass, JavaServiceContract contract)
         throws InvalidServiceContractException {
+        if (!contract.isRemotable()) {
+            return;
+        }
         Map<String, Operation<Type>> operations = contract.getOperations();
         processInterface(clazz, contract, operations);
         if (callbackClass != null) {
@@ -67,9 +79,9 @@ public class DataBindingJavaInterfaceProcessor extends JavaInterfaceProcessorExt
         }
     }
 
-    private void processInterface(Class<?> clazz,
-                                  JavaServiceContract contract,
+    private void processInterface(Class<?> clazz, JavaServiceContract contract, 
                                   Map<String, Operation<Type>> operations) {
+        WrapperStyle interfaceWrapperStyle = clazz.getAnnotation(WrapperStyle.class);
         DataType interfaceDataType = clazz.getAnnotation(DataType.class);
         if (interfaceDataType != null) {
             contract.setDataBinding(interfaceDataType.name());
@@ -81,6 +93,9 @@ public class DataBindingJavaInterfaceProcessor extends JavaInterfaceProcessorExt
         for (Method method : clazz.getMethods()) {
             Operation<?> operation = operations.get(method.getName());
             DataType operationDataType = method.getAnnotation(DataType.class);
+            if (operationDataType == null) {
+                operationDataType = interfaceDataType;
+            }
 
             if (operationDataType != null) {
                 operation.setDataBinding(operationDataType.name());
@@ -89,44 +104,31 @@ public class DataBindingJavaInterfaceProcessor extends JavaInterfaceProcessorExt
                     operation.setMetaData(c.key(), c.value());
                 }
             }
+            WrapperStyle operationWrapperStyle = clazz.getAnnotation(WrapperStyle.class);
+            if (operationWrapperStyle == null) {
+                operationWrapperStyle = interfaceWrapperStyle;
+            }
+            
+            if (operationWrapperStyle != null) {
+                operation.setDataBinding(operationWrapperStyle.value());
+                operation.setWrapperStyle(true);
+            }
+            // String dataBinding = operation.getDataBinding();
 
-            String dataBinding = operation.getDataBinding();
-
+            Annotation[] annotations = null;
+            if (operationDataType != null) {
+                annotations = new Annotation[] {operationDataType};
+            }
             // FIXME: We need a better way to identify simple java types
             for (org.apache.tuscany.spi.model.DataType<?> d : operation.getInputType().getLogical()) {
-                adjustSimpleType(d, dataBinding);
+                dataBindingRegistry.introspectType(d, annotations);
             }
             if (operation.getOutputType() != null) {
-                adjustSimpleType(operation.getOutputType(), dataBinding);
+                dataBindingRegistry.introspectType(operation.getOutputType(), annotations);
             }
             for (org.apache.tuscany.spi.model.DataType<?> d : operation.getFaultTypes()) {
-                adjustSimpleType(d, dataBinding);
+                dataBindingRegistry.introspectType(d, annotations);
             }
-        }
-    }
-
-    private void adjustSimpleType(org.apache.tuscany.spi.model.DataType<?> dataType, String dataBinding) {
-        Type type = dataType.getPhysical();
-        if (!(type instanceof Class)) {
-            return;
-        }
-        Class cls = (Class) dataType.getPhysical();
-        if (cls.isPrimitive() || SIMPLE_TYPE_SET.contains(cls)) {
-            dataType.setDataBinding(SIMPLE_JAVA_OBJECTS);
-        } 
-        /**
-         * [rfeng] The following code hits a bug in IBM JDK 5.0          
-         * if (cls == String.class && (dataBinding == null || !dataBinding.equals(String.class.getName()))) {
-         *      // Identify the String as a simple type
-         *      dataType.setDataBinding(SIMPLE_JAVA_OBJECTS);
-         * }     
-         */      
-        
-        boolean plainString =
-            cls == String.class && ((dataBinding == null) || !dataBinding.equals(String.class.getName()));
-        if (plainString) {
-            // Identify the String as a simple type
-            dataType.setDataBinding(SIMPLE_JAVA_OBJECTS);
         }
     }
 }

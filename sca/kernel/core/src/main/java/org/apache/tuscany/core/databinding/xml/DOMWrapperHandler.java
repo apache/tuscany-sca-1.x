@@ -19,6 +19,9 @@
 
 package org.apache.tuscany.core.databinding.xml;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.namespace.QName;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -49,31 +52,27 @@ public class DOMWrapperHandler implements WrapperHandler<Node> {
         return DOMHelper.createElement(document, name);
     }
 
-    public Object getChild(Node wrapper, int i, ElementInfo element) {
-        int index = 0;
-        NodeList nodes = wrapper.getChildNodes();
-        for (int j = 0; j < nodes.getLength(); j++) {
-            Node node = nodes.item(j);
-            if (node.getNodeType() != Node.ELEMENT_NODE) {
-                continue;
-            }
-            if (index != i) {
-                index++;
-            } else {
-                QName name = DOMHelper.getQName(node);
-                if (name.equals(element.getQName())) {
-                    return node;
-                }
-            }
-        }
-        return null;
-    }
-
     public void setChild(Node wrapper, int i, ElementInfo childElement, Object value) {
         Node node = (Node) value;
         if (node.getNodeType() == Node.DOCUMENT_NODE) {
             node = ((Document) node).getDocumentElement();
         }
         wrapper.appendChild(wrapper.getOwnerDocument().importNode(node, true));
+    }
+
+    public List getChildren(Node wrapper) {
+        assert wrapper != null;
+        if (wrapper.getNodeType() == Node.DOCUMENT_NODE) {
+            wrapper = ((Document) wrapper).getDocumentElement();
+        }
+        List<Node> elements = new ArrayList<Node>();
+        NodeList nodes = wrapper.getChildNodes();
+        for (int j = 0; j < nodes.getLength(); j++) {
+            Node node = nodes.item(j);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                elements.add(node);
+            }
+        }
+        return elements;
     }
 }

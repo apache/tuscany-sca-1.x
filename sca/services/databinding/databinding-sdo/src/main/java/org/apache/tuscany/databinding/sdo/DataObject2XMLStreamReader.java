@@ -44,9 +44,7 @@ public class DataObject2XMLStreamReader extends TransformerExtension<DataObject,
         try {
             HelperContext helperContext = SDODataTypeHelper.getHelperContext(context);
             XMLStreamHelper streamHelper = SDOUtil.createXMLStreamHelper(helperContext.getTypeHelper());
-            Object logicalType = context.getSourceDataType().getLogical();
-            QName elementName =
-                    (logicalType instanceof QName) ? (QName) logicalType : SDODataBinding.ROOT_ELEMENT;
+            QName elementName = SDODataTypeHelper.getElement(context.getSourceDataType());
             XMLHelper xmlHelper = helperContext.getXMLHelper();
             XMLDocument document =
                     xmlHelper.createDocument(source, elementName.getNamespaceURI(), elementName.getLocalPart());

@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 
 import org.apache.tuscany.api.annotation.DataContext;
 import org.apache.tuscany.api.annotation.DataType;
+import org.apache.tuscany.spi.databinding.DataBindingRegistry;
 import org.apache.tuscany.spi.idl.InvalidServiceContractException;
 import org.apache.tuscany.spi.idl.java.JavaServiceContract;
 import org.apache.tuscany.spi.model.Operation;
@@ -52,7 +53,8 @@ public class DataBindingJavaInterfaceProcessorTestCase extends TestCase {
      * @throws InvalidServiceContractException
      */
     public final void testVisitInterface() throws InvalidServiceContractException {
-        DataBindingJavaInterfaceProcessor processor = new DataBindingJavaInterfaceProcessor();
+        DataBindingRegistry registry = new DataBindingRegistryImpl();
+        DataBindingJavaInterfaceProcessor processor = new DataBindingJavaInterfaceProcessor(registry);
         JavaServiceContract contract = new JavaServiceContract(MockInterface.class);
         Map<String, Operation<Type>> operations = new HashMap<String, Operation<Type>>();
         Operation<Type> operation = new Operation<Type>("call", null, null, null, false, null, NO_CONVERSATION);
@@ -60,6 +62,7 @@ public class DataBindingJavaInterfaceProcessorTestCase extends TestCase {
         operations.put("call", operation);
         operations.put("call1", operation1);
         contract.setOperations(operations);
+        contract.setRemotable(true);
         processor.visitInterface(MockInterface.class, null, contract);
         Assert.assertEquals("org.w3c.dom.Node", contract.getDataBinding());
         Assert.assertEquals("element", (String)contract.getMetaData().get("nodeType"));

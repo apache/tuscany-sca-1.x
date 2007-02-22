@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.databinding.sdo;
 
+import java.lang.annotation.Annotation;
+
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.databinding.ExceptionHandler;
@@ -52,30 +54,33 @@ public class SDODataBinding extends DataBindingExtension {
     }
 
     @Override
-    public DataType introspect(Class<?> javaType) {
-        if (javaType == null) {
-            return null;
+    public boolean introspect(DataType dataType, Annotation[] annotations) {
+        Object physical = dataType.getPhysical();
+        if (!(physical instanceof Class)) {
+            return false;
         }
+        Class javaType = (Class)physical;
         HelperContext context = HelperProvider.getDefaultContext();
         // FIXME: Need a better to test dynamic SDO
         if (DataObject.class.isAssignableFrom(javaType)) {
             // Dynamic SDO
-            return new DataType<QName>(getName(), javaType, null);
+            dataType.setLogical(DataObject.class);
+            return true;
         }
         // FIXME: We need to access HelperContext
         Type type = context.getTypeHelper().getType(javaType);
         if (type == null) {
-            return null;
+            return false;
         }
         if (type.isDataType()) {
             // FIXME: Ignore simple types?
-            return null;
+            return false;
         }
         String namespace = type.getURI();
         String name = context.getXSDHelper().getLocalName(type);
         QName xmlType = new QName(namespace, name);
-        DataType<QName> dataType = new DataType<QName>(getName(), javaType, xmlType);
-        return dataType;
+        dataType.setLogical(xmlType);
+        return true;
     }
 
     @Override

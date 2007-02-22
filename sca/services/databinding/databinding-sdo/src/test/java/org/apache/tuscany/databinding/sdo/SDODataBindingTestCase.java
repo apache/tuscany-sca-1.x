@@ -53,15 +53,21 @@ public class SDODataBindingTestCase extends TestCase {
     }
 
     public final void testIntrospect() {
-        DataType<?> dataType = binding.introspect(DataObject.class);
-        Assert.assertTrue(dataType.getDataBinding().equals(binding.getName()));
-        Assert.assertTrue(dataType.getPhysical() == DataObject.class && dataType.getLogical() == null);
-        dataType = binding.introspect(PurchaseOrderType.class);
-        Assert.assertEquals(PurchaseOrderType.class, dataType.getPhysical());
-        Assert.assertEquals(new QName("http://www.example.com/IPO", "PurchaseOrderType"), dataType.getLogical());
-        dataType = binding.introspect(USAddress.class);
-        Assert.assertEquals(USAddress.class, dataType.getPhysical());
-        Assert.assertEquals(new QName("http://www.example.com/IPO", "USAddress"), dataType.getLogical());
+        DataType dataType = new DataType(DataObject.class, null);
+        boolean yes = binding.introspect(dataType, null);
+        assertTrue(yes);
+        assertTrue(dataType.getDataBinding().equals(binding.getName()));
+        assertTrue(dataType.getPhysical() == DataObject.class && dataType.getLogical() == DataObject.class);
+        dataType = new DataType(PurchaseOrderType.class, null);
+        yes = binding.introspect(dataType, null);
+        assertTrue(yes);
+        assertEquals(PurchaseOrderType.class, dataType.getPhysical());
+        assertEquals(new QName("http://www.example.com/IPO", "PurchaseOrderType"), dataType.getLogical());
+        dataType = new DataType(USAddress.class, null);
+        yes = binding.introspect(dataType, null);
+        assertTrue(yes);
+        assertEquals(USAddress.class, dataType.getPhysical());
+        assertEquals(new QName("http://www.example.com/IPO", "USAddress"), dataType.getLogical());
     }
 
     public final void testCopyRoot() {

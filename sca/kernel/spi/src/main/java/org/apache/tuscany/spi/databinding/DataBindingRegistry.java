@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.spi.databinding;
 
+import java.lang.annotation.Annotation;
+
 import org.apache.tuscany.spi.model.DataType;
 
 /**
@@ -50,11 +52,12 @@ public interface DataBindingRegistry {
     /**
      * Introspect the java class to figure out what DataType supports it
      * 
-     * @param javaType The java class or interface
+     * @param DataType The initial data type
+     * @param annotations The java annotations
      * @return A DataType representing the java type or null if no databinding
      *         recognizes the java type
      */
-    DataType introspectType(Class<?> javaType);
+    boolean introspectType(DataType dataType, Annotation[] annotations);
 
     /**
      * Introspect the value to figure out the corresponding DataType

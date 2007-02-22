@@ -26,6 +26,7 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.WebFault;
 
 import org.apache.tuscany.spi.databinding.ExceptionHandler;
+import org.apache.tuscany.spi.idl.ElementInfo;
 import org.apache.tuscany.spi.model.DataType;
 
 /**
@@ -97,6 +98,7 @@ public class JAXBExceptionHandler implements ExceptionHandler {
             // only part in
             // the fault message references
             DataType<QName> faultType = new DataType<QName>(JAXBDataBinding.NAME, faultBeanClass, element);
+            faultType.setMetadata(ElementInfo.class.getName(), new ElementInfo(element, null));
             return faultType;
         }
     }

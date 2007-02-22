@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.spi.databinding;
 
+import java.util.List;
+
 import org.apache.tuscany.spi.idl.ElementInfo;
 
 /**
@@ -45,12 +47,9 @@ public interface WrapperHandler<T> {
     void setChild(T wrapper, int i, ElementInfo childElement, Object value);
 
     /**
-     * Get child element from the wrapper
-     * 
-     * @param wrapper The wrapper
-     * @param i The index
-     * @param element The XSD element
-     * @return The value of the child
+     * Get a list of child elements from the wrapper
+     * @param wrapper
+     * @return child elements under the wrapper
      */
-    Object getChild(T wrapper, int i, ElementInfo element);
+    List getChildren(T wrapper);
 }

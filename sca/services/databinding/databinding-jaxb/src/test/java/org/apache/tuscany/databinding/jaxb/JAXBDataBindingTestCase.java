@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.databinding.jaxb;
 
+import java.lang.annotation.Annotation;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
@@ -48,22 +50,30 @@ public class JAXBDataBindingTestCase extends TestCase {
 
     /**
      * Test method for
-     * {@link org.apache.tuscany.databinding.jaxb.JAXBDataBinding#introspect(java.lang.Class)}.
+     * {@link org.apache.tuscany.databinding.jaxb.JAXBDataBinding#introspect(java.lang.Class, Annotation)}.
      */
     public final void testIntrospect() {
-        DataType<?> dataType = binding.introspect(JAXBElement.class);
-        Assert.assertTrue(dataType.getDataBinding().equals(binding.getName()));
-        Assert.assertTrue(dataType.getPhysical() == JAXBElement.class && dataType.getLogical() == null);
-        dataType = binding.introspect(MockJAXBElement.class);
-        Assert.assertEquals(PurchaseOrderType.class, dataType.getPhysical());
-        Assert.assertEquals(new QName("http://www.example.com/IPO", "PurchaseOrderType"), dataType.getLogical());
-        dataType = binding.introspect(USAddress.class);
-        Assert.assertEquals(USAddress.class, dataType.getPhysical());
-        Assert.assertEquals(new QName("http://www.example.com/IPO", "USAddress"), dataType.getLogical());
-        dataType = binding.introspect(USState.class);
-        Assert.assertTrue(dataType.getDataBinding().equals(binding.getName()));
-        Assert.assertEquals(USState.class, dataType.getPhysical());
-        Assert.assertEquals(new QName("http://www.example.com/IPO", "USState"), dataType.getLogical());
+        DataType dataType = new DataType(JAXBElement.class, null);
+        boolean yes = binding.introspect(dataType, null);
+        assertTrue(yes);
+        assertTrue(dataType.getDataBinding().equals(binding.getName()));
+        assertTrue(dataType.getPhysical() == JAXBElement.class && dataType.getLogical() == null);
+        dataType = new DataType(MockJAXBElement.class, null);
+        yes = binding.introspect(dataType, null);
+        assertTrue(yes);
+        assertEquals(MockJAXBElement.class, dataType.getPhysical());
+        assertEquals(new QName("http://www.example.com/IPO", "PurchaseOrderType"), dataType.getLogical());
+        dataType = new DataType(USAddress.class, null);
+        yes = binding.introspect(dataType, null);
+        assertTrue(yes);
+        assertEquals(USAddress.class, dataType.getPhysical());
+        assertEquals(new QName("http://www.example.com/IPO", "USAddress"), dataType.getLogical());
+        dataType = new DataType(USState.class, null);
+        yes = binding.introspect(dataType, null);
+        assertTrue(yes);
+        assertTrue(dataType.getDataBinding().equals(binding.getName()));
+        assertEquals(USState.class, dataType.getPhysical());
+        assertEquals(new QName("http://www.example.com/IPO", "USState"), dataType.getLogical());
 
     }
 

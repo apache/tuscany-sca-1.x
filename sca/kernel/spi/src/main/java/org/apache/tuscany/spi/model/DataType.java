@@ -39,7 +39,7 @@ public class DataType<L> extends ModelObject implements Cloneable {
 
     private final Type physical;
 
-    private final L logical;
+    private L logical;
 
     private Map<String, Object> metadata = new HashMap<String, Object>();
 
@@ -237,6 +237,13 @@ public class DataType<L> extends ModelObject implements Cloneable {
 
     public void setOperation(Operation operation) {
         this.operation = operation;
+    }
+
+    /**
+     * @param logical the logical to set
+     */
+    public void setLogical(L logical) {
+        this.logical = logical;
     }
 
 }

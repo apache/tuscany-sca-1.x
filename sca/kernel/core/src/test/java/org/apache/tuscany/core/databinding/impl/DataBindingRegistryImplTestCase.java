@@ -22,6 +22,8 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 
+import java.lang.annotation.Annotation;
+
 import javax.xml.stream.XMLStreamReader;
 
 import junit.framework.Assert;
@@ -49,19 +51,23 @@ public class DataBindingRegistryImplTestCase extends TestCase {
 
     public void testRegistry() {
         DataBinding db1 = createMock(DataBinding.class);
+        expect(db1.getAliases()).andReturn(new String[] {"db1"}).anyTimes();
         expect(db1.getName()).andReturn(ContentHandler.class.getName()).anyTimes();
         DataType<Class> dataType1 = new DataType<Class>(ContentHandler.class, ContentHandler.class);
-        expect(db1.introspect(ContentHandler.class)).andReturn(dataType1);
-        expect(db1.introspect((Class)EasyMock.anyObject())).andReturn(null).anyTimes();
+        expect(db1.introspect(dataType1, null)).andReturn(true);
+        expect(db1.introspect(EasyMock.not(EasyMock.same(dataType1)), (Annotation[])EasyMock.isNull()))
+            .andReturn(false).anyTimes();
         replay(db1);
 
         registry.register(db1);
 
         DataBinding db2 = createMock(DataBinding.class);
+        expect(db2.getAliases()).andReturn(new String[] {"db2"}).anyTimes();
         expect(db2.getName()).andReturn(XMLStreamReader.class.getName()).anyTimes();
         DataType<Class> dataType2 = new DataType<Class>(XMLStreamReader.class, XMLStreamReader.class);
-        expect(db2.introspect(XMLStreamReader.class)).andReturn(dataType2);
-        expect(db2.introspect((Class)EasyMock.anyObject())).andReturn(null).anyTimes();
+        expect(db2.introspect(dataType2, null)).andReturn(true);
+        expect(db2.introspect(EasyMock.not(EasyMock.same(dataType2)), (Annotation[])EasyMock.isNull()))
+            .andReturn(false).anyTimes();
         replay(db2);
 
         registry.register(db2);
@@ -70,17 +76,17 @@ public class DataBindingRegistryImplTestCase extends TestCase {
         DataBinding db3 = registry.getDataBinding(name);
         Assert.assertTrue(db1 == db3);
 
-        DataType<?> dt = registry.introspectType(ContentHandler.class);
-        Assert.assertEquals(dataType1, dt);
+        DataType dt = new DataType(ContentHandler.class, null);
+        registry.introspectType(dt, null);
+        Assert.assertEquals(dataType1.getLogical(), ContentHandler.class);
         Assert.assertTrue(dt.getDataBinding().equalsIgnoreCase(name));
 
         registry.unregister(name);
         DataBinding db4 = registry.getDataBinding(name);
         Assert.assertNull(db4);
-        
-       
-        dt = registry.introspectType(ContentHandler.class);
-        Assert.assertNotNull(dt);
+
+        dt = new DataType(null, String.class, null);
+        registry.introspectType(dt, null);
         Assert.assertEquals("java.lang.Object", dt.getDataBinding());
     }
 

@@ -18,8 +18,6 @@
  */
 package org.apache.tuscany.databinding.sdo;
 
-import static org.apache.tuscany.databinding.sdo.SDODataBinding.ROOT_ELEMENT;
-
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.databinding.PullTransformer;
@@ -41,13 +39,8 @@ public class DataObject2String extends TransformerExtension<DataObject, String> 
         try {
             HelperContext helperContext = SDODataTypeHelper.getHelperContext(context);
             XMLHelper xmlHelper = helperContext.getXMLHelper();
-            Object logicalType = context.getSourceDataType().getLogical();
-            if (logicalType instanceof QName) {
-                QName elementName = (QName)logicalType;
-                return xmlHelper.save(source, elementName.getNamespaceURI(), elementName.getLocalPart());
-            } else {
-                return xmlHelper.save(source, ROOT_ELEMENT.getNamespaceURI(), ROOT_ELEMENT.getLocalPart());
-            }
+            QName elementName = SDODataTypeHelper.getElement(context.getSourceDataType());
+            return xmlHelper.save(source, elementName.getNamespaceURI(), elementName.getLocalPart());
         } catch (Exception e) {
             throw new TransformationException(e);
         }

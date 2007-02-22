@@ -20,6 +20,7 @@
 package org.apache.tuscany.databinding.jaxb;
 
 import java.beans.Introspector;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -47,7 +48,12 @@ public class JAXBDataBinding extends DataBindingExtension {
     public static final String NAME = JAXBElement.class.getName();
 
     @Override
-    public DataType introspect(Class<?> javaType) {
+    public boolean introspect(DataType dataType, Annotation[] annotations) {
+        Object physical = dataType.getPhysical();
+        if (!(physical instanceof Class)) {
+            return false;
+        }
+        Class javaType = (Class)physical;
         if (JAXBElement.class.isAssignableFrom(javaType)) {
             Type type = javaType.getGenericSuperclass();
             if (type instanceof ParameterizedType) {
@@ -56,16 +62,25 @@ public class JAXBDataBinding extends DataBindingExtension {
                 if (rawType == JAXBElement.class) {
                     Type actualType = parameterizedType.getActualTypeArguments()[0];
                     if (actualType instanceof Class) {
-                        return introspect((Class<?>)actualType);
+                        QName xmlType = getXmlTypeName((Class)actualType);
+                        dataType.setLogical(xmlType);
+                        dataType.setDataBinding(getName());
+                        return true;
                     }
                 }
             }
-            return new DataType<QName>(getName(), javaType, null);
+            dataType.setLogical(null);
+            dataType.setDataBinding(getName());
+            return true;
         }
 
         QName xmlType = getXmlTypeName(javaType);
-        DataType<QName> dataType = new DataType<QName>(getName(), javaType, xmlType);
-        return dataType;
+        if (xmlType == null) {
+            return false;
+        }
+        dataType.setLogical(xmlType);
+        dataType.setDataBinding(getName());
+        return true;
     }
 
     public static QName getXmlTypeName(Class<?> javaType) {
@@ -74,7 +89,9 @@ public class JAXBDataBinding extends DataBindingExtension {
         Package pkg = javaType.getPackage();
         if (pkg != null) {
             XmlSchema schema = pkg.getAnnotation(XmlSchema.class);
-            namespace = schema.namespace();
+            if (schema != null) {
+                namespace = schema.namespace();
+            }
         }
         XmlType type = javaType.getAnnotation(XmlType.class);
         if (type != null) {
@@ -107,7 +124,7 @@ public class JAXBDataBinding extends DataBindingExtension {
                 name = Introspector.decapitalize(javaType.getSimpleName());
             }
         }
-        if (namespace == null && name == null) {
+        if (name == null) {
             return null;
         }
         QName xmlType = new QName(namespace, name);

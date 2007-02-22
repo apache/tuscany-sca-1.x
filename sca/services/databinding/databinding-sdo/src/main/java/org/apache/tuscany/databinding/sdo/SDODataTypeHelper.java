@@ -19,11 +19,15 @@
 
 package org.apache.tuscany.databinding.sdo;
 
+import javax.xml.namespace.QName;
+
 import org.apache.tuscany.databinding.sdo.ImportSDOLoader.SDOType;
 import org.apache.tuscany.sdo.util.SDOUtil;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
+import org.apache.tuscany.spi.idl.ElementInfo;
+import org.apache.tuscany.spi.model.DataType;
 
 import commonj.sdo.helper.HelperContext;
 import commonj.sdo.impl.HelperProvider;
@@ -53,11 +57,12 @@ public final class SDODataTypeHelper {
             return helperContext;
         }
     }
-    
+
     public static HelperContext getHelperContext(DeploymentContext deploymentContext) {
         HelperContext helperContext = null;
         if (deploymentContext != null && deploymentContext.getParent() != null) {
-            // HACK: Retrieve the SDO HelperContext from the CompositeComponent extensions
+            // HACK: Retrieve the SDO HelperContext from the CompositeComponent
+            // extensions
             helperContext = (HelperContext)deploymentContext.getParent().getExtension(HelperContext.class.getName());
             if (helperContext == null) {
                 helperContext = SDOUtil.createHelperContext();
@@ -68,12 +73,21 @@ public final class SDODataTypeHelper {
         if (helperContext == null) {
             helperContext = getDefaultHelperContext();
         }
-        
+
         return helperContext;
     }
-    
+
     protected static HelperContext getDefaultHelperContext() {
         // SDOUtil.createHelperContext();
         return HelperProvider.getDefaultContext();
+    }
+
+    public static QName getElement(DataType<?> dataType) {
+        ElementInfo info = (ElementInfo)dataType.getMetadata().get(ElementInfo.class.getName());
+        if (info == null) {
+            return SDODataBinding.ROOT_ELEMENT;
+        } else {
+            return info.getQName();
+        }
     }
 }

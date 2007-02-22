@@ -19,15 +19,17 @@
 
 package org.apache.tuscany.core.databinding.impl;
 
+import java.lang.annotation.Annotation;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
-
-import org.osoa.sca.annotations.EagerInit;
+import java.util.Set;
 
 import org.apache.tuscany.core.databinding.javabeans.JavaBeansDataBinding;
 import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.databinding.DataBindingRegistry;
 import org.apache.tuscany.spi.model.DataType;
+import org.osoa.sca.annotations.EagerInit;
 
 /**
  * The default implementation of a data binding registry
@@ -47,34 +49,53 @@ public class DataBindingRegistryImpl implements DataBindingRegistry {
 
     public void register(DataBinding dataBinding) {
         bindings.put(dataBinding.getName().toLowerCase(), dataBinding);
+        String[] aliases = dataBinding.getAliases();
+        if (aliases != null) {
+            for (String alias : aliases) {
+                bindings.put(alias.toLowerCase(), dataBinding);
+            }
+        }
     }
 
     public DataBinding unregister(String id) {
         if (id == null) {
             return null;
         }
-        return bindings.remove(id.toLowerCase());
+        DataBinding dataBinding = bindings.remove(id.toLowerCase());
+        if (dataBinding != null) {
+            String[] aliases = dataBinding.getAliases();
+            if (aliases != null) {
+                for (String alias : aliases) {
+                    bindings.remove(alias.toLowerCase());
+                }
+            }
+        }
+        return dataBinding;
+    }
+    
+    private Set<DataBinding> getDataBindings() {
+        return new HashSet<DataBinding>(bindings.values());
     }
 
-    public DataType introspectType(Class<?> javaType) {
-        DataType dataType = null;
-        for (DataBinding binding : bindings.values()) {
+    public boolean introspectType(DataType dataType, Annotation[] annotations) {
+        for (DataBinding binding : getDataBindings()) {
             //don't introspect for JavaBeansDatabinding as all javatypes will anyways match to its basetype 
             //which is java.lang.Object.  Default to this only if no databinding results
             if (!binding.getName().equals(JavaBeansDataBinding.NAME)) {
-                dataType = binding.introspect(javaType);
-            }
-            
-            if (dataType != null) {
-                return dataType;
+                if (binding.introspect(dataType, annotations)) {
+                    return true;
+                }
             }
         }
-        return new DataType<Class>(JavaBeansDataBinding.NAME, Object.class, javaType);
+        if (dataType.getDataBinding() == null) {
+            dataType.setDataBinding(JavaBeansDataBinding.NAME);
+        }
+        return false;
     }
 
     public DataType introspectType(Object value) {
         DataType dataType = null;
-        for (DataBinding binding : bindings.values()) {
+        for (DataBinding binding : getDataBindings()) {
             //don't introspect for JavaBeansDatabinding as all javatypes will anyways match to its basetype 
             //which is java.lang.Object.  Default to this only if no databinding results
             if (!binding.getName().equals(JavaBeansDataBinding.NAME)) {
@@ -84,7 +105,7 @@ public class DataBindingRegistryImpl implements DataBindingRegistry {
                 return dataType;
             }
         }
-        return new DataType<Class>(JavaBeansDataBinding.NAME, Object.class, value.getClass());
+        return new DataType<Class>(JavaBeansDataBinding.NAME, value.getClass(), value.getClass());
     }
 
 }

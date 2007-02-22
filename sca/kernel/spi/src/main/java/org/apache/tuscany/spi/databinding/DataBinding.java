@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.spi.databinding;
 
+import java.lang.annotation.Annotation;
+
 import org.apache.tuscany.spi.model.DataType;
 
 /**
@@ -43,14 +45,22 @@ public interface DataBinding {
      * @return The name of the databinding
      */
     String getName();
+    
+    /**
+     * Get the aliases for the databinding
+     * 
+     * @return An array of aliases
+     */
+    String[] getAliases();
 
     /**
-     * Introspect a java class or interface to create a DataType model
+     * Introspect and populate information to a DataType model
      * 
      * @param javaType The java class or interface to be introspected
-     * @return The DataType or null if the java type is not supported by this databinding
+     * @param annotations The java annotations
+     * @return true if the databinding has recognized the given data type
      */
-    DataType introspect(Class<?> javaType);
+    boolean introspect(DataType dataType, Annotation[] annotations);
 
     /**
      * Introspect the data to figure out the corresponding data type

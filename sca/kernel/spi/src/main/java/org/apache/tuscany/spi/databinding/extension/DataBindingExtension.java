@@ -27,6 +27,7 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectStreamClass;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
 
 import org.osoa.sca.annotations.EagerInit;
 import org.osoa.sca.annotations.Init;
@@ -43,7 +44,7 @@ import org.apache.tuscany.spi.model.DataType;
 
 /**
  * Base Implementation of DataBinding
- *
+ * 
  * @version $Rev$ $Date$
  */
 @Service(DataBinding.class)
@@ -58,9 +59,11 @@ public abstract class DataBindingExtension implements DataBinding {
     protected String name;
 
     /**
-     * Create a databinding with the base java type whose name will be used as the name of the databinding
-     *
-     * @param baseType The base java class or interface representing the databinding, for example, org.w3c.dom.Node
+     * Create a databinding with the base java type whose name will be used as
+     * the name of the databinding
+     * 
+     * @param baseType The base java class or interface representing the
+     *            databinding, for example, org.w3c.dom.Node
      */
     protected DataBindingExtension(Class<?> baseType) {
         this(baseType.getName(), baseType);
@@ -68,9 +71,10 @@ public abstract class DataBindingExtension implements DataBinding {
 
     /**
      * Create a databinding with the name and base java type
-     *
-     * @param name     The name of the databinding
-     * @param baseType The base java class or interface representing the databinding, for example, org.w3c.dom.Node
+     * 
+     * @param name The name of the databinding
+     * @param baseType The base java class or interface representing the
+     *            databinding, for example, org.w3c.dom.Node
      */
     protected DataBindingExtension(String name, Class<?> baseType) {
         this.name = name;
@@ -87,22 +91,30 @@ public abstract class DataBindingExtension implements DataBinding {
         registry.register(this);
     }
 
-    public DataType introspect(Class<?> javaType) {
-        if (baseType == null || javaType == null) {
-            return null;
+    public boolean introspect(DataType type, Annotation[] annotations) {
+        assert type != null;
+        Object physical = type.getPhysical();
+        if (physical instanceof Class) {
+            Class cls = (Class)physical;
+            if (baseType != null && baseType.isAssignableFrom(cls)) {
+                type.setDataBinding(getName());
+                type.setLogical(baseType);
+                return true;
+            }
         }
-        if (baseType.isAssignableFrom(javaType)) {
-            return new DataType<Class>(name, javaType, baseType);
-        } else {
-            return null;
-        }
+        return false;
     }
 
     public DataType introspect(Object value) {
         if (value == null) {
             return null;
         } else {
-            return introspect(value.getClass());
+            DataType<Class> dataType = new DataType<Class>(value.getClass(), value.getClass());
+            if (introspect(dataType, null)) {
+                return dataType;
+            } else {
+                return null;
+            }
         }
     }
 
@@ -116,7 +128,7 @@ public abstract class DataBindingExtension implements DataBinding {
     public WrapperHandler getWrapperHandler() {
         return null;
     }
-    
+
     public ExceptionHandler getExceptionHandler() {
         return null;
     }
@@ -126,8 +138,10 @@ public abstract class DataBindingExtension implements DataBinding {
             return null;
         }
         final Class clazz = arg.getClass();
-        if (String.class == clazz || clazz.isPrimitive() || Number.class.isAssignableFrom(clazz)
-            || Boolean.class.isAssignableFrom(clazz) || Character.class.isAssignableFrom(clazz)
+        if (String.class == clazz || clazz.isPrimitive()
+            || Number.class.isAssignableFrom(clazz)
+            || Boolean.class.isAssignableFrom(clazz)
+            || Character.class.isAssignableFrom(clazz)
             || Byte.class.isAssignableFrom(clazz)) {
             // Immutable classes
             return arg;
@@ -147,13 +161,11 @@ public abstract class DataBindingExtension implements DataBinding {
                 bis.close();
                 return objectCopy;
             } else {
-                //return arg;
-                throw new IllegalArgumentException(
-                    "Pass-by-value is not supported for the given object");
+                // return arg;
+                throw new IllegalArgumentException("Pass-by-value is not supported for the given object");
             }
         } catch (Exception e) {
-            throw new IllegalArgumentException(
-                "Pass-by-value is not supported for the given object", e);
+            throw new IllegalArgumentException("Pass-by-value is not supported for the given object", e);
         }
     }
 
@@ -161,8 +173,7 @@ public abstract class DataBindingExtension implements DataBinding {
         return new ObjectOutputStream(os);
     }
 
-    protected ObjectInputStream getObjectInputStream(InputStream is, final ClassLoader cl)
-        throws IOException {
+    protected ObjectInputStream getObjectInputStream(InputStream is, final ClassLoader cl) throws IOException {
         ObjectInputStream ois = new ObjectInputStream(is) {
             @Override
             protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException {
@@ -179,6 +190,10 @@ public abstract class DataBindingExtension implements DataBinding {
 
     public SimpleTypeMapper getSimpleTypeMapper() {
         return new SimpleTypeMapperExtension();
+    }
+
+    public String[] getAliases() {
+        return null;
     }
 
 }

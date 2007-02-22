@@ -144,8 +144,8 @@ public class Input2InputTransformer extends TransformerExtension<Object[], Objec
         } else if (sourceWrapped && (!targetWrapped)) {
             // Wrapped to Unwrapped
             Object sourceWrapper = source[0];
-            List<ElementInfo> childElements = sourceOp.getWrapper().getInputChildElements();
-            Object[] target = new Object[childElements.size()];
+            // List<ElementInfo> childElements = sourceOp.getWrapper().getInputChildElements();
+            Object[] target = null;
 
             targetWrapperHandler = getWapperHandler(targetType.getOperation().getDataBinding(), false);
             if (targetWrapperHandler != null) {
@@ -160,18 +160,15 @@ public class Input2InputTransformer extends TransformerExtension<Object[], Objec
                                      sourceType.getLogical().get(0),
                                      targetWrapperType,
                                      context.getMetadata());
-                for (int i = 0; i < childElements.size(); i++) {
-                    ElementInfo childElement = childElements.get(i);
-                    target[i] = targetWrapperHandler.getChild(targetWrapper, i, childElement);
-                }
+                target = targetWrapperHandler.getChildren(targetWrapper).toArray();
             } else {
-                for (int i = 0; i < childElements.size(); i++) {
-                    ElementInfo childElement = childElements.get(i);
-                    Object child = sourceWrapperHandler.getChild(sourceWrapper, i, childElement);
+                Object[] sourceChildren = sourceWrapperHandler.getChildren(sourceWrapper).toArray();
+                target = new Object[sourceChildren.length];
+                for (int i = 0; i < sourceChildren.length; i++) {
                     DataType<QName> childType =
                         sourceOp.getWrapper().getUnwrappedInputType().getLogical().get(i);
                     target[i] =
-                        mediator.mediate(child, childType, targetType.getLogical().get(i), context
+                        mediator.mediate(sourceChildren[i], childType, targetType.getLogical().get(i), context
                             .getMetadata());
                 }
             }
