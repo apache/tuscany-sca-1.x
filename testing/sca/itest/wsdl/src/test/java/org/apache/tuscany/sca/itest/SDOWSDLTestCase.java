@@ -65,7 +65,7 @@ public class SDOWSDLTestCase extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        setApplicationSCDL(getClass().getResource("/META-INF/sca/sdoApplication.composite"));
+//        setApplicationSCDL(getClass().getResource("/META-INF/sca/sdoApplication.composite"));
         super.setUp();
     }
 
