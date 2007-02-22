@@ -46,8 +46,8 @@ public class HelloWorldClientTestCase extends SCATestCase {
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
         helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
 
-        server = new SCATestCaseRunner(HelloWorldServerTestCase.class);
-        server.setUp();
+        //server = new SCATestCaseRunner(HelloWorldServerTestCase.class);
+        //server.setUp();
     }
 
     public void testWSClient() {
@@ -64,7 +64,7 @@ public class HelloWorldClientTestCase extends SCATestCase {
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        server.tearDown();
+        //server.tearDown();
     }
 
 }
