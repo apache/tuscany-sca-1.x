@@ -66,8 +66,8 @@
             <modules>
               <module>helloworldws</module>
               <module>helloworldwsclient</module>
-              <module>helloworldwsOM</module>
-              <module>helloworldwsclientOM</module>
+              <module>helloworldws-om</module>
+              <module>helloworldwsclient-om</module>
           </modules>
         </profile>
 
@@ -76,8 +76,8 @@
             <modules>
               <module>helloworldws</module>
               <module>helloworldwsclient</module>
-              <module>helloworldwsOM</module>
-              <module>helloworldwsclientOM</module>
+              <module>helloworldws-om</module>
+              <module>helloworldwsclient-om</module>
             </modules>
         </profile>
 
@@ -86,8 +86,8 @@
             <modules>
               <module>helloworldws</module>
               <module>helloworldwsclient</module>
-              <module>helloworldwsOM</module>
-              <module>helloworldwsclientOM</module>
+              <module>helloworldws-om</module>
+              <module>helloworldwsclient-om</module>
           </modules>
         </profile>
 
