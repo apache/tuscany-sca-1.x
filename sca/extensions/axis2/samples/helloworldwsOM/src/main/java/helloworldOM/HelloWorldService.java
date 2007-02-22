@@ -19,12 +19,16 @@
 package helloworldOM;
 
 import org.apache.axiom.om.OMElement;
+import org.apache.tuscany.api.annotation.DataType;
 import org.osoa.sca.annotations.Remotable;
+import org.osoa.sca.annotations.Service;
 
 /**
  * This is the business interface of the HelloWorld greetings service.
  */
+@Service
 @Remotable
+@DataType(name="org.apache.axiom.om.OMElement")
 public interface HelloWorldService {
 
     public OMElement getGreetings(OMElement name);

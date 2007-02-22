@@ -66,6 +66,8 @@
             <modules>
               <module>helloworldws</module>
               <module>helloworldwsclient</module>
+              <module>helloworldwsOM</module>
+              <module>helloworldwsclientOM</module>
           </modules>
         </profile>
 
@@ -73,8 +75,8 @@
             <id>integration</id>
             <modules>
               <module>helloworldws</module>
-              <module>helloworldwsOM</module>
               <module>helloworldwsclient</module>
+              <module>helloworldwsOM</module>
               <module>helloworldwsclientOM</module>
             </modules>
         </profile>
@@ -83,8 +85,8 @@
             <id>unstable</id>
             <modules>
               <module>helloworldws</module>
-              <module>helloworldwsOM</module>
               <module>helloworldwsclient</module>
+              <module>helloworldwsOM</module>
               <module>helloworldwsclientOM</module>
           </modules>
         </profile>
