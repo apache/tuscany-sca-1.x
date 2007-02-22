@@ -42,6 +42,7 @@
                 <module>propertyTest</module>
                 <module>exceptionTests</module>
                 <module>exceptionXbindingTest</module>
+                <module>exceptionXbindingWSTest</module>
 	        <module>callBackBasicTest</module>
 	        <module>callBackCTypeTest</module>
 	        <module>callBackAPITest</module>

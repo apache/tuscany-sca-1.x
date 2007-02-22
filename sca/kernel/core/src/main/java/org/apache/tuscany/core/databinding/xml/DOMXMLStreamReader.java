@@ -613,9 +613,13 @@ public class DOMXMLStreamReader implements XMLFragmentStreamReader {
         this.rootElementName = rootElement.getLocalName();
         this.rootElementURI = rootElement.getNamespaceURI();
 
-        declaredNamespaceMap.put("xml", "http://www.w3.org/XML/1998/namespace");
-        declaredNamespaceMap.put("xmlns", "http://www.w3.org/2000/xmlns/");
-        declaredNamespaceMap.put("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+//TODO remove permanently? 02/22/07
+//    This is causing exceptionXbindingWSTest to fail because it is binding these prefixes
+//    later in the xml document. All tests run with out this and we are not sure why 
+//      why it was required.  old woodstox bug?
+//        declaredNamespaceMap.put("xml", "http://www.w3.org/XML/1998/namespace");
+//        declaredNamespaceMap.put("xmlns", "http://www.w3.org/2000/xmlns/");
+//        declaredNamespaceMap.put("xsi", "http://www.w3.org/2001/XMLSchema-instance");
 
         populateProperties();
     }
