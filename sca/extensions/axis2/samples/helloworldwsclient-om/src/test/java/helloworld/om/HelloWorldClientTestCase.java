@@ -17,7 +17,7 @@
  * under the License.    
  */
 
-package helloworldOM;
+package helloworld.om;
 
 import helloworld.om.HelloWorldService;
 import junit.framework.Assert;
