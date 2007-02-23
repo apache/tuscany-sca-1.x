@@ -114,7 +114,7 @@ public class PropertyTestCase extends SCATestCase {
         Object[] propBeanCollection = propertyService.getComplexPropertyFour().toArray();
         assertNotNull(propBeanCollection);
         assertEquals(1, ((ComplexPropertyBean)propBeanCollection[0]).getIntegerNumber());
-        assertEquals(222.22, ((ComplexPropertyBean)propBeanCollection[1]).getDoubleNumber());
+        assertEquals(222.222, ((ComplexPropertyBean)propBeanCollection[1]).getDoubleNumber());
         assertEquals(33, ((ComplexPropertyBean)propBeanCollection[2]).getNumberSet().getIntegerNumber());
     } 
     
