@@ -21,6 +21,7 @@ package org.apache.tuscany.databinding.axiom;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.tuscany.spi.databinding.ExceptionHandler;
+import org.apache.tuscany.spi.idl.ServiceFaultException;
 import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
@@ -32,21 +33,25 @@ import org.apache.tuscany.spi.model.DataType;
 public class AxiomExceptionHandler implements ExceptionHandler {
 
     public Exception createException(DataType<DataType> exceptionType, String message, Object faultInfo, Throwable cause) {
-        return new AxiomFaultException(message, (OMElement)faultInfo, cause);
+        return new ServiceFaultException(message, (OMElement)faultInfo, cause);
     }
 
     public Object getFaultInfo(Exception exception) {
         if (exception == null) {
             return null;
         }
-        AxiomFaultException faultException = (AxiomFaultException)exception;
+        ServiceFaultException faultException = (ServiceFaultException)exception;
         return faultException.getFaultInfo();
 
     }
 
-    public DataType<?> getFaultType(Class<? extends Exception> exceptionType) {
-        if (AxiomFaultException.class == exceptionType) {
-            DataType<XMLType> faultType = new DataType<XMLType>(AxiomDataBinding.NAME, OMElement.class, XMLType.UNKNOWN);
+    public DataType<?> getFaultType(DataType exceptionType) {
+        if (ServiceFaultException.class == exceptionType.getPhysical()) {
+            XMLType type = XMLType.UNKNOWN;
+            if(exceptionType.getLogical() instanceof XMLType) {
+                type = (XMLType) exceptionType.getLogical();
+            }
+            DataType<XMLType> faultType = new DataType<XMLType>(AxiomDataBinding.NAME, OMElement.class, type);
             return faultType;
         } else {
             return null;

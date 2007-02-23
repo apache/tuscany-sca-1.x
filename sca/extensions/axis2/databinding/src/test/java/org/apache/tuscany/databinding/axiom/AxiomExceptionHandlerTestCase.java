@@ -28,6 +28,7 @@ import junit.framework.TestCase;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.impl.builder.StAXOMBuilder;
+import org.apache.tuscany.spi.idl.ServiceFaultException;
 import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
@@ -80,25 +81,25 @@ public class AxiomExceptionHandlerTestCase extends TestCase {
     }
 
     public void testGetFaultType() {
-        DataType<?> dataType = handler.getFaultType(AxiomFaultException.class);
+        DataType<?> dataType = handler.getFaultType(new DataType<XMLType>(ServiceFaultException.class, null));
         assertEquals(OMElement.class, dataType.getPhysical());
         assertEquals(XMLType.UNKNOWN, dataType.getLogical());
         assertEquals(AxiomDataBinding.NAME, dataType.getDataBinding());
-        dataType = handler.getFaultType(Exception.class);
+        dataType = handler.getFaultType(new DataType<XMLType>(Exception.class, null));
         assertNull(dataType);
     }
 
     public void testCreate() {
 
         Exception ex = handler.createException(null, "Order", faultElement, null);
-        assertTrue(ex instanceof AxiomFaultException);
-        AxiomFaultException exception = (AxiomFaultException)ex;
+        assertTrue(ex instanceof ServiceFaultException);
+        ServiceFaultException exception = (ServiceFaultException)ex;
         assertEquals("Order", exception.getMessage());
         assertSame(faultElement, exception.getFaultInfo());
     }
 
     public void testGetFaultInfo() {
-        AxiomFaultException exception = new AxiomFaultException("Order", faultElement, null);
+        ServiceFaultException exception = new ServiceFaultException("Order", faultElement, null);
         Object faultInfo = handler.getFaultInfo(exception);
         assertSame(faultElement, faultInfo);
     }

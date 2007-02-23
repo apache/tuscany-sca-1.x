@@ -50,8 +50,8 @@ public interface ExceptionHandler {
     /**
      * Introspect an exception class to figure out the fault data type
      * 
-     * @param exceptionType The exception class
+     * @param exceptionDataType The exception class
      * @return The data type for the fault
      */
-    DataType<?> getFaultType(Class<? extends Exception> exceptionType);
+    DataType<?> getFaultType(DataType exceptionDataType);
 }

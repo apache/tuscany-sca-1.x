@@ -174,7 +174,7 @@ public class DataBindingInteceptor implements Interceptor {
         if (targetHandler == null) {
             return null;
         }
-        return targetHandler.getFaultType((Class)exceptionType.getPhysical());
+        return targetHandler.getFaultType(exceptionType);
     }
 
     /**

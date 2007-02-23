@@ -48,14 +48,16 @@ public class SDOExceptionHandlerTestCase extends TestCase {
     }
 
     public void testGetFaultType() {
-        DataType<?> dataType = handler.getFaultType(InvalidSymbolFault_Exception.class);
+        DataType execType = new DataType<XMLType>(InvalidSymbolFault_Exception.class, XMLType.UNKNOWN);
+        DataType<?> dataType = handler.getFaultType(execType);
         assertEquals(InvalidSymbolFault.class, dataType.getPhysical());
         assertEquals(InvalidSymbolFault_Exception.FAULT_ELEMENT, ((XMLType) dataType.getLogical()).getElementName());
         assertEquals(SDODataBinding.NAME, dataType.getDataBinding());
     }
 
     public void testCreate() {
-        DataType<?> faultType = handler.getFaultType(InvalidSymbolFault_Exception.class);
+        DataType execType = new DataType<XMLType>(InvalidSymbolFault_Exception.class, XMLType.UNKNOWN);
+        DataType<?> faultType = handler.getFaultType(execType);
         InvalidSymbolFault fault = StockFactory.INSTANCE.createInvalidSymbolFault();
         fault.setMessage("ABC");
         fault.setSymbol("IBM0");

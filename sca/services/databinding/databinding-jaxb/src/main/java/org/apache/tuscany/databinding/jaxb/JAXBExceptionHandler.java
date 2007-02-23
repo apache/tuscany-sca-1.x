@@ -76,7 +76,8 @@ public class JAXBExceptionHandler implements ExceptionHandler {
         }
     }
 
-    public DataType<?> getFaultType(Class<? extends Exception> exceptionType) {
+    public DataType<?> getFaultType(DataType exDataType) {
+        Class<?> exceptionType  = (Class) exDataType.getPhysical();
         WebFault webFault = exceptionType.getAnnotation(WebFault.class);
         if (webFault == null) {
             return null;

@@ -83,7 +83,8 @@ public class SDOExceptionHandler implements ExceptionHandler {
         }
     }
 
-    public DataType<?> getFaultType(Class<? extends Exception> exceptionType) {
+    public DataType<?> getFaultType(DataType exceptionDataType) {
+        Class exceptionType = (Class) exceptionDataType.getPhysical();
         Class faultBeanClass = null;
         try {
             Method method = exceptionType.getMethod("getFaultInfo", EMPTY_CLASS_ARRAY);

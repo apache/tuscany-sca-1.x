@@ -17,34 +17,34 @@
  * under the License.    
  */
 
-package org.apache.tuscany.databinding.axiom;
+package org.apache.tuscany.spi.idl;
 
-import org.apache.axiom.om.OMElement;
 import org.apache.tuscany.api.TuscanyException;
 
 /**
- * The generic java exception to wrap faults in OM
+ * The generic java exception to wrap service faults 
  * 
  * @version $Rev$ $Date$
  */
-public class AxiomFaultException extends TuscanyException {
+public class ServiceFaultException extends TuscanyException {
     private static final long serialVersionUID = -8002583655240625792L;
-    private OMElement faultInfo;
+    private Object faultInfo;
 
     /**
      * @param message
-     * @param identifier
+     * @param faultInfo
      */
-    public AxiomFaultException(String message, OMElement faultInfo) {
+    public ServiceFaultException(String message, Object faultInfo) {
         super(message);
         this.faultInfo = faultInfo;
     }
 
     /**
      * @param message
+     * @param faultInfo
      * @param cause
      */
-    public AxiomFaultException(String message, OMElement faultInfo, Throwable cause) {
+    public ServiceFaultException(String message, Object faultInfo, Throwable cause) {
         super(message, cause);
         this.faultInfo = faultInfo;
     }
@@ -52,7 +52,7 @@ public class AxiomFaultException extends TuscanyException {
     /**
      * @return the faultInfo
      */
-    public OMElement getFaultInfo() {
+    public Object getFaultInfo() {
         return faultInfo;
     }
 

@@ -34,6 +34,7 @@ import javax.xml.namespace.QName;
 import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.idl.ElementInfo;
 import org.apache.tuscany.spi.idl.InvalidServiceContractException;
+import org.apache.tuscany.spi.idl.ServiceFaultException;
 import org.apache.tuscany.spi.idl.TypeInfo;
 import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.WrapperInfo;
@@ -132,7 +133,7 @@ public class WSDLOperation {
                     throw new NotSupportedWSDLException("Multi-part output is not supported");
                 }
                 Part part = (Part)outputParts.get(0);
-                outputType = new WSDLPart(part).getDataType();
+                outputType = new WSDLPart(part, Object.class).getDataType();
                 // outputType.setMetadata(WSDLOperation.class.getName(), this);
             }
         }
@@ -155,7 +156,7 @@ public class WSDLOperation {
                     throw new NotSupportedWSDLException("The fault message MUST have a single part");
                 }
                 Part part = (Part)faultParts.get(0);
-                WSDLPart wsdlPart = new WSDLPart(part);
+                WSDLPart wsdlPart = new WSDLPart(part, ServiceFaultException.class);
                 faultTypes.add(wsdlPart.getDataType());
             }
         }
@@ -167,7 +168,7 @@ public class WSDLOperation {
         if (message != null) {
             Collection parts = message.getOrderedParts(null);
             for (Object p : parts) {
-                WSDLPart part = new WSDLPart((Part)p);
+                WSDLPart part = new WSDLPart((Part)p, Object.class);
                 DataType<XMLType> partType = part.getDataType();
                 partTypes.add(partType);
             }
@@ -221,7 +222,7 @@ public class WSDLOperation {
 
         private DataType<XMLType> dataType;
 
-        public WSDLPart(Part part) throws InvalidWSDLException {
+        public WSDLPart(Part part, Class javaType) throws InvalidWSDLException {
             this.part = part;
             QName elementName = part.getElementName();
             if (elementName != null) {
@@ -244,7 +245,7 @@ public class WSDLOperation {
                     element.setSchemaTypeName(type.getQName());
                 }
             }
-            dataType = new DataType<XMLType>(dataBinding, Object.class, new XMLType(getElementInfo(element)));
+            dataType = new DataType<XMLType>(dataBinding, javaType, new XMLType(getElementInfo(element)));
             // dataType.setMetadata(WSDLPart.class.getName(), this);
             // dataType.setMetadata(ElementInfo.class.getName(), getElementInfo(element));
         }
