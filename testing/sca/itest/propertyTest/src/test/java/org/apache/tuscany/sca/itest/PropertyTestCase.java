@@ -19,7 +19,7 @@
 
 package org.apache.tuscany.sca.itest;
 
-import junit.framework.TestCase;
+import java.util.Collection;
 
 import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CurrentCompositeContext;
@@ -32,7 +32,7 @@ public class PropertyTestCase extends SCATestCase {
  //   private PropertyService propertyService;
        
 
-    public void testA() {
+    /*public void testA() {
         assertEquals("a", abService.getA());
     }
     
@@ -93,7 +93,7 @@ public class PropertyTestCase extends SCATestCase {
         assertEquals("2006",propertyService.getYear());
         
     } 
-    
+    */
     public void testComplexProperty()
     {
         ComplexPropertyBean propBean = propertyService.getComplexPropertyOne();
@@ -105,6 +105,17 @@ public class PropertyTestCase extends SCATestCase {
         assertNotNull(propBean);
         assertEquals(10, propBean.intArray[0]);
         assertEquals((float)22, propBean.numberSetArray[1].floatNumber);
+        
+        propBean = propertyService.getComplexPropertyThree();
+        assertNotNull(propBean);
+        assertEquals("TestElementString_1", propBean.stringArray[0]);
+        assertEquals((float)22, propBean.numberSetArray[1].floatNumber);
+        
+        Object[] propBeanCollection = propertyService.getComplexPropertyFour().toArray();
+        assertNotNull(propBeanCollection);
+        assertEquals(1, ((ComplexPropertyBean)propBeanCollection[0]).getIntegerNumber());
+        assertEquals(222.22, ((ComplexPropertyBean)propBeanCollection[1]).getDoubleNumber());
+        assertEquals(33, ((ComplexPropertyBean)propBeanCollection[2]).getNumberSet().getIntegerNumber());
     } 
     
     protected void setUp() throws Exception {

@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.sca.itest;
 
+import java.util.Collection;
+
 import org.osoa.sca.annotations.Property;
 
 public class PropertyComponentImpl implements PropertyComponent {
@@ -27,6 +29,12 @@ public class PropertyComponentImpl implements PropertyComponent {
     
     @Property
     protected ComplexPropertyBean complexPropertyTwo;
+    
+    @Property
+    protected ComplexPropertyBean complexPropertyThree;
+    
+    @Property
+    protected Collection<ComplexPropertyBean> complexPropertyFour;
     
     @Property(name = "location")
     protected String location = "RTP";
@@ -43,10 +51,22 @@ public class PropertyComponentImpl implements PropertyComponent {
     }
 
     public ComplexPropertyBean getComplexPropertyOne() {
+        //System.out.println(complexPropertyOne);
         return complexPropertyOne;
     }
 
     public ComplexPropertyBean getComplexPropertyTwo() {
+        //System.out.println(complexPropertyTwo);
         return complexPropertyTwo;
+    }
+    
+    public ComplexPropertyBean getComplexPropertyThree() {
+        //System.out.println(complexPropertyThree);
+        return complexPropertyThree;
+    }
+    
+    public Collection<ComplexPropertyBean> getComplexPropertyFour() {
+        //System.out.println(complexPropertyThree);
+        return complexPropertyFour;
     }
 }

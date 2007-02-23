@@ -19,10 +19,14 @@
 
 package org.apache.tuscany.sca.itest;
 
+import java.util.Collection;
+
 
 public interface PropertyComponent {
     public String getLocation();
     public String getYear();
     public ComplexPropertyBean getComplexPropertyOne();
     public ComplexPropertyBean getComplexPropertyTwo();
+    public ComplexPropertyBean getComplexPropertyThree();
+    public Collection<ComplexPropertyBean> getComplexPropertyFour();
 }
