@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.spi.model;
 
+import java.util.List;
+
 import javax.xml.namespace.QName;
 
 import org.w3c.dom.Document;
@@ -31,20 +33,26 @@ import org.apache.tuscany.spi.ObjectFactory;
  */
 public class Property<T> extends ModelObject {
     private String name;
-    private ObjectFactory<T> defaultValueFactory;
+    private ObjectFactory<?> defaultValueFactory;
     private QName xmlType;
+    private QName xmlElement;
     private Class<T> javaType;
     private boolean many;
-    private boolean noDefault;
-    private Document defaultValue;
+    private boolean mustSupply;
+    private List<Document> defaultValues;
+    
 
     public Property() {
+        mustSupply = false;
+        many = false;
     }
 
     public Property(String name, QName xmlType, Class<T> javaType) {
         this.name = name;
         this.xmlType = xmlType;
         this.javaType = javaType;
+        mustSupply = false;
+        many = false;
     }
 
     public String getName() {
@@ -55,11 +63,15 @@ public class Property<T> extends ModelObject {
         this.name = name;
     }
 
-    public ObjectFactory<T> getDefaultValueFactory() {
+    public ObjectFactory<?> getDefaultValueFactory() {
         return defaultValueFactory;
     }
 
     public void setDefaultValueFactory(ObjectFactory<T> factory) {
+        this.defaultValueFactory = factory;
+    }
+    
+    public void setDefaultMultiValueFactory(ObjectFactory<List<T>> factory) {
         this.defaultValueFactory = factory;
     }
 
@@ -87,19 +99,35 @@ public class Property<T> extends ModelObject {
         this.many = many;
     }
 
-    public boolean isNoDefault() {
-        return noDefault;
+    public boolean isMustSupply() {
+        return mustSupply;
     }
 
-    public void setNoDefault(boolean noDefault) {
-        this.noDefault = noDefault;
+    public void setMustSupply(boolean mustSupply) {
+        this.mustSupply = mustSupply;
     }
 
-    public Document getDefaultValue() {
+    /*public Document getDefaultValue() {
         return defaultValue;
     }
 
     public void setDefaultValue(Document defaultValue) {
         this.defaultValue = defaultValue;
+    }*/
+
+    public QName getXmlElement() {
+        return xmlElement;
+    }
+
+    public void setXmlElement(QName xmlElement) {
+        this.xmlElement = xmlElement;
+    }
+
+    public List<Document> getDefaultValues() {
+        return defaultValues;
+    }
+
+    public void setDefaultValues(List<Document> defaultValues) {
+        this.defaultValues = defaultValues;
     }
 }

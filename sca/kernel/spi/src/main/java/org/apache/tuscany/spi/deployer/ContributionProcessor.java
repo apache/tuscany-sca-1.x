@@ -47,7 +47,7 @@ public interface ContributionProcessor {
      */
     void processContent(Contribution contribution, URI source, InputStream inputStream) throws DeploymentException,
         IOException;
-
+ 
     /**
      * Process a contribution from another model object. It will be used for the
      * case that one artifact has other inline artifacts, for example, the WSDL

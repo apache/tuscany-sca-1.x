@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.spi.loader;
 
+import java.util.List;
+
 import org.apache.tuscany.spi.ObjectFactory;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.model.PropertyValue;
@@ -41,4 +43,7 @@ public interface PropertyObjectFactory {
      */
     <T> ObjectFactory<T> createObjectFactory(Property<T> property, PropertyValue<T> propertyValue)
         throws LoaderException;
+    
+    <T> ObjectFactory<List<T>> createListObjectFactory(Property<T> property, PropertyValue<T> propertyValue)
+    throws LoaderException;
 }

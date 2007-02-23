@@ -18,20 +18,21 @@
  */
 package org.apache.tuscany.spi.model;
 
+import java.util.List;
+
 import org.apache.tuscany.spi.ObjectFactory;
 import org.w3c.dom.Document;
 
 /**
  * Represents a configured component property
- *
  * @version $Rev$ $Date$
  */
 public class PropertyValue<T> extends ModelObject {
     private String name;
     private String source;
     private String file;
-    private Document value;
-    private ObjectFactory<T> valueFactory;
+    private List<Document> value;
+    private ObjectFactory<?> valueFactory;
 
     public PropertyValue() {
     }
@@ -53,12 +54,12 @@ public class PropertyValue<T> extends ModelObject {
      * @param name
      * @param value
      */
-    public PropertyValue(String name, Document value) {
+    public PropertyValue(String name, List<Document> value) {
         this.name = name;
         this.value = value;
     }
     
-    public PropertyValue(String name, ObjectFactory<T> valueFactory) {
+    public PropertyValue(String name, ObjectFactory<?> valueFactory) {
         this.name = name;
         this.valueFactory = valueFactory;
     }
@@ -96,19 +97,24 @@ public class PropertyValue<T> extends ModelObject {
         this.source = source;
     }
 
-    public ObjectFactory<T> getValueFactory() {
+    public ObjectFactory<?> getValueFactory() {
         return valueFactory;
     }
 
-    public void setValueFactory(ObjectFactory<T> valueFactory) {
+    public void setValueFactory(ObjectFactory<?> valueFactory) {
         this.valueFactory = valueFactory;
     }
+    
+    public void setMultiValueFactory(ObjectFactory<List<T>> valueFactory) {
+        this.valueFactory = valueFactory;
+    }
+    
 
-    public Document getValue() {
+    public List<Document> getValue() {
         return value;
     }
 
-    public void setValue(Document value) {
+    public void setValue(List<Document> value) {
         this.value = value;
     }
 

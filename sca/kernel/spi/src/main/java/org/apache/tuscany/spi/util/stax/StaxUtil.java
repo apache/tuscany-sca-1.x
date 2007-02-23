@@ -18,9 +18,13 @@
  */
 package org.apache.tuscany.spi.util.stax;
 
+import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.XMLConstants;
@@ -31,6 +35,9 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import org.apache.tuscany.spi.databinding.SimpleTypeMapper;
+import org.apache.tuscany.spi.databinding.extension.DOMHelper;
+import org.apache.tuscany.spi.databinding.extension.SimpleTypeMapperExtension;
 import org.apache.tuscany.spi.model.InteractionScope;
 import org.apache.tuscany.spi.model.Multiplicity;
 import org.w3c.dom.Attr;
@@ -41,16 +48,18 @@ import org.w3c.dom.Node;
 /**
  * Utility for stax operations.
  * 
- * @version $Revision$ $Date$
- *
+ * @version $Revision$ $Date: 2007-02-01 05:37:32 +0530 (Thu, 01 Feb
+ *          2007) $
  */
 public abstract class StaxUtil {
 
     /** XML input factory. */
     private static final XMLInputFactory xmlFactory =
-        XMLInputFactory.newInstance("javax.xml.stream.XMLInputFactory", StaxUtil.class.getClassLoader());;
+        XMLInputFactory.newInstance("javax.xml.stream.XMLInputFactory", StaxUtil.class
+            .getClassLoader());
 
-    private static final Map<String, Multiplicity> MULTIPLICITY = new HashMap<String, Multiplicity>(4);
+    private static final Map<String, Multiplicity> MULTIPLICITY =
+        new HashMap<String, Multiplicity>(4);
 
     static {
         MULTIPLICITY.put("0..1", Multiplicity.ZERO_ONE);
@@ -88,12 +97,27 @@ public abstract class StaxUtil {
             return InteractionScope.NONCONVERSATIONAL;
         }
     }
-
-    public static Document createPropertyValue(XMLStreamReader reader, QName type, DocumentBuilder builder)
-        throws XMLStreamException {
-        Document doc = builder.newDocument();
-
-        // root element has no namespace and local name "value"
+    
+    public static List<Document> createPropertyValues(XMLStreamReader reader,
+                                                      QName type,
+                                                      QName element,
+                                                      DocumentBuilder builder) throws XMLStreamException {
+       
+        final QName PROPERTY = new QName(XML_NAMESPACE_1_0, "property");
+        List<Document> propertyValues = new ArrayList<Document>();
+        Document value = null;
+        do {
+            value = StaxUtil.createPropertyValue(reader, type, element, builder);
+            if (value != null) {
+                propertyValues.add(value);
+            }
+        } while (!PROPERTY.equals(reader.getName()));
+        return propertyValues;
+    }
+           
+    
+    private static Element createDefaultRootElement(QName type, Document doc) {
+        
         Element root = doc.createElementNS(null, "value");
         if (type != null) {
             Attr xsi = doc.createAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns:xsi");
@@ -104,20 +128,61 @@ public abstract class StaxUtil {
             if (prefix == null || prefix.length() == 0) {
                 prefix = "ns";
             }
-            Attr typeXmlns = doc.createAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns:" + prefix);
+            Attr typeXmlns =
+                doc.createAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns:" + prefix);
             typeXmlns.setValue(type.getNamespaceURI());
             root.setAttributeNodeNS(typeXmlns);
 
-            Attr xsiType = doc.createAttributeNS(XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI, "xsi:type");
+            Attr xsiType =
+                doc.createAttributeNS(XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI, "xsi:type");
             xsiType.setValue(prefix + ":" + type.getLocalPart());
             root.setAttributeNodeNS(xsiType);
+        } 
+        return root;
+    }
+           
+    
+    public static Document createPropertyValue(XMLStreamReader reader,
+                                               QName type,
+                                               QName element,
+                                               DocumentBuilder builder
+                                               ) throws XMLStreamException {
+        Document doc = null;
+        try {
+        doc = builder.newDocument();
+        } catch ( Exception e ) { e.printStackTrace();}
+        if (element == null && type != null && SimpleTypeMapperExtension.isSimpleXSDType(type)) {
+            // root element has no namespace and local name "value"
+            Element root = createDefaultRootElement(type, doc);   
+            doc.appendChild(root);
+            loadPropertyValue(reader, root, doc);
+            if (!isValueDefined(root)) {
+                return null;
+            }
+            
+        } else {
+            loadPropertyValue(reader, null, doc);
+            if (doc.getChildNodes().getLength() == 0) {
+                return null;
+            }
         }
-        doc.appendChild(root);
-
-        loadPropertyValue(reader, root);
         return doc;
     }
-
+    
+    
+    private static boolean isValueDefined(Element value) {
+        if (value.hasChildNodes()) {
+            Node childNode = value.getFirstChild();
+            if (childNode.getNodeType() == Document.ELEMENT_NODE 
+                || (childNode.getNodeType() == Document.TEXT_NODE 
+                    && childNode.getTextContent().trim().length() > 0)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+     
     /**
      * Load a property value specification from an StAX stream into a DOM
      * Document. Only elements, text and attributes are processed; all comments
@@ -126,14 +191,14 @@ public abstract class StaxUtil {
      * @param reader the stream to read from
      * @param root the DOM node to load
      */
-    public static void loadPropertyValue(XMLStreamReader reader, Node root) throws XMLStreamException {
-        Document document = root.getOwnerDocument();
+    public static void loadPropertyValue(XMLStreamReader reader, Node root, Document document) throws XMLStreamException {
         Node current = root;
         while (true) {
             switch (reader.next()) {
                 case XMLStreamConstants.START_ELEMENT:
                     QName name = reader.getName();
-                    Element child = document.createElementNS(name.getNamespaceURI(), name.getLocalPart());
+                    Element child =
+                        document.createElementNS(name.getNamespaceURI(), name.getLocalPart());
 
                     // add the attributes for this element
                     int count = reader.getAttributeCount();
@@ -145,14 +210,24 @@ public abstract class StaxUtil {
                     }
 
                     // push the new element and make it the current one
-                    current.appendChild(child);
+                    if (root == null) {
+                        document.appendChild(child);
+                        root = child;
+                    } else {
+                        current.appendChild(child);
+                    }
                     current = child;
+
                     break;
                 case XMLStreamConstants.CDATA:
-                    current.appendChild(document.createCDATASection(reader.getText()));
+                    if (current != null) {
+                        current.appendChild(document.createCDATASection(reader.getText()));
+                    }
                     break;
                 case XMLStreamConstants.CHARACTERS:
-                    current.appendChild(document.createTextNode(reader.getText()));
+                    if (current != null) {
+                        current.appendChild(document.createTextNode(reader.getText()));
+                    }
                     break;
                 case XMLStreamConstants.END_ELEMENT:
                     // if we are back at the root then we are done
@@ -278,7 +353,8 @@ public abstract class StaxUtil {
         QName qname = reader.getName();
         String namePrefix = qname.getPrefix();
         String localPart = qname.getLocalPart();
-        String name = namePrefix == null || "".equals(namePrefix) ? localPart : namePrefix + ":" + localPart;
+        String name =
+            namePrefix == null || "".equals(namePrefix) ? localPart : namePrefix + ":" + localPart;
         return name;
     }
 
