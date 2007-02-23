@@ -36,6 +36,7 @@ import org.apache.tuscany.spi.wire.InboundWire;
 import org.apache.tuscany.spi.wire.Interceptor;
 import org.apache.tuscany.spi.wire.OutboundWire;
 import org.apache.tuscany.spi.wire.WirePostProcessorExtension;
+import org.osoa.sca.annotations.Remotable;
 
 /**
  * This processor is responsible for enforcing the pass-by-value semantics required of Remotable interfaces. This is
@@ -71,7 +72,11 @@ public class PassByValueWirePostProcessor extends WirePostProcessorExtension {
 
         boolean implAllowsPassByReference = false;
         boolean methodAllowsPassByReference = false;
-        if (target.getContainer() instanceof AtomicComponentExtension) {
+        if (target.getServiceContract().getInterfaceClass() != null) {
+            Class ic = target.getServiceContract().getInterfaceClass();
+            implAllowsPassByReference = ic.getAnnotation(Remotable.class) != null;
+        }
+        if (!implAllowsPassByReference && target.getContainer() instanceof AtomicComponentExtension) {
             implAllowsPassByReference =
                 ((AtomicComponentExtension) target.getContainer()).isAllowsPassByReference();
         }

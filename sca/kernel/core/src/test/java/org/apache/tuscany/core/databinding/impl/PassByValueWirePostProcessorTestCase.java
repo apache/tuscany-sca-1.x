@@ -88,6 +88,7 @@ public class PassByValueWirePostProcessorTestCase extends TestCase {
         OutboundInvocationChainImpl outChain = new OutboundInvocationChainImpl(operation1);
         outChainsMap.put(operation1, outChain);
 
+        expect(inboundWire.getServiceContract()).andReturn(serviceContract);
         expect(inboundWire.getContainer()).andReturn(componentExtn).anyTimes();
         expect(outboundWire.getContainer()).andReturn(componentExtn).anyTimes();
         expect(inboundWire.getServiceContract()).andReturn(serviceContract);
@@ -135,6 +136,7 @@ public class PassByValueWirePostProcessorTestCase extends TestCase {
         OutboundInvocationChainImpl outChain = new OutboundInvocationChainImpl(operation1);
         outChainsMap.put(operation1, outChain);
 
+        expect(inboundWire.getServiceContract()).andReturn(serviceContract);
         expect(inboundWire.getContainer()).andReturn(componentExtn).anyTimes();
         expect(outboundWire.getContainer()).andReturn(componentExtn).anyTimes();
         expect(inboundWire.getServiceContract()).andReturn(serviceContract);
@@ -181,6 +183,7 @@ public class PassByValueWirePostProcessorTestCase extends TestCase {
         OutboundInvocationChainImpl outChain = new OutboundInvocationChainImpl(operation1);
         outChainsMap.put(operation1, outChain);
 
+        expect(inboundWire.getServiceContract()).andReturn(serviceContract);
         expect(inboundWire.getContainer()).andReturn(componentExtn).anyTimes();
         expect(outboundWire.getContainer()).andReturn(componentExtn).anyTimes();
         expect(inboundWire.getServiceContract()).andReturn(serviceContract);
