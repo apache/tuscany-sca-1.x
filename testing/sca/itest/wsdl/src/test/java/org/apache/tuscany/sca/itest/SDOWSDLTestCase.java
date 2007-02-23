@@ -43,29 +43,49 @@ import bigbank.account.services.accountdata.AccountDataService;
 public class SDOWSDLTestCase extends SCATestCase {
 
     public void testClient1a2a3a4a() throws RemoteException  {
-//        AccountDataService client = CurrentCompositeContext.getContext().locateService(AccountDataService.class, "AccountServiceClient");
-//        CustomerProfileData dataIn = AccountFactory.INSTANCE.createCustomerProfileData();
-//        dataIn.setAddress("home");
-//        dataIn.setEmail("petra@home");
-//        dataIn.setFirstName("petra");
-//        dataIn.setId(1);
-//        dataIn.setLastName("A");
-//        dataIn.setLoginID("petra");
-//        dataIn.setPassword("ant");
-//        
-//        CustomerProfileData dataOut = client.createAccount(dataIn , false, false);
-//        
-//        assertEquals(dataIn.getAddress(), dataOut.getAddress());
-//        assertEquals(dataIn.getEmail(), dataOut.getEmail());
-//        assertEquals(dataIn.getFirstName(), dataOut.getFirstName());
-//        assertEquals(dataIn.getId(), dataOut.getId());
-//        assertEquals(dataIn.getLastName(), dataOut.getLastName());
-//        assertEquals(dataIn.getLoginID(), dataOut.getLoginID());
-//        assertEquals(dataIn.getPassword(), dataOut.getPassword());
+        
+        doit("Client1a2a3a4a");
+        doit("Client1a2a3a4b");
+        doit("Client1a2a3b4a");
+        doit("Client1a2a3b4b");
+        doit("Client1a2b3a4a");
+        doit("Client1a2b3a4b");
+        doit("Client1a2b3b4a");
+        doit("Client1a2b3b4b");
+        doit("Client1b2a3a4a");
+        doit("Client1b2a3a4b");
+        doit("Client1b2a3b4a");
+        doit("Client1b2a3b4b");
+//        doit("Client1b2b3a4a");
+//        doit("Client1b2b3a4b");
+//        doit("Client1b2b3b4a");
+//        doit("Client1b2b3b4b");
+    }
+
+    private void doit(String compName) throws RemoteException {
+        AccountDataService client = CurrentCompositeContext.getContext().locateService(AccountDataService.class, compName);
+        CustomerProfileData dataIn = AccountFactory.INSTANCE.createCustomerProfileData();
+        dataIn.setAddress("home");
+        dataIn.setEmail("petra@home");
+        dataIn.setFirstName("petra");
+        dataIn.setId(1);
+        dataIn.setLastName("A");
+        dataIn.setLoginID("petra");
+        dataIn.setPassword("ant");
+        
+        CustomerProfileData dataOut = client.createAccount(dataIn , false, false);
+        
+        assertEquals(dataIn.getAddress(), dataOut.getAddress());
+        assertEquals(dataIn.getEmail(), dataOut.getEmail());
+        assertEquals(dataIn.getFirstName(), dataOut.getFirstName());
+        assertEquals(dataIn.getId(), dataOut.getId());
+        assertEquals(dataIn.getLastName(), dataOut.getLastName());
+        assertEquals(dataIn.getLoginID(), dataOut.getLoginID());
+        assertEquals(dataIn.getPassword(), dataOut.getPassword());
     }
 
     protected void setUp() throws Exception {
-//        setApplicationSCDL(getClass().getResource("/META-INF/sca/sdoApplication.composite"));
+        setApplicationSCDL(getClass().getResource("/META-INF/sca/sdoApplication.composite"));
         super.setUp();
     }
 

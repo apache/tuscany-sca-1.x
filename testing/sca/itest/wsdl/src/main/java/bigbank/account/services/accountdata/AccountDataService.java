@@ -19,7 +19,12 @@
 package bigbank.account.services.accountdata;
 
 import org.apache.tuscany.api.annotation.DataType;
+import org.osoa.sca.annotations.AllowsPassByReference;
+import org.osoa.sca.annotations.Remotable;
 
+@Remotable
+@DataType(name="commonj.sdo.DataObject")
+@AllowsPassByReference
 public interface AccountDataService {
 
     /**
