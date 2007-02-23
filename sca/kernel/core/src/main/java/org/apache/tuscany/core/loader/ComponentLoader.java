@@ -25,6 +25,7 @@ import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
@@ -71,8 +72,8 @@ import org.osoa.sca.annotations.Constructor;
 import org.w3c.dom.Document;
 
 /**
- * Loads a component definition from an XML-based assembly file
- *
+ * Loads a component definition from an XML-based assembly file 
+ * 
  * @version $Rev$ $Date$
  */
 public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
@@ -81,13 +82,18 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
     private static final QName REFERENCE = new QName(XML_NAMESPACE_1_0, "reference");
 
     private static final String PROPERTY_FILE_ATTR = "file";
-    private static final String PROPERTY_NAME_ATTR = "name";
     private static final String PROPERTY_SOURCE_ATTR = "source";
+    private static final String PROPERTY_NAME_ATTR = "name";
+    private static final String PROPERTY_TYPE_ATTR = "type";
+    private static final String PROPERTY_ELEMENT_ATTR = "element";
+    public static final char COLON = ':';
 
     private PropertyObjectFactory propertyFactory;
 
     @Constructor
-    public ComponentLoader(@Autowire LoaderRegistry registry, @Autowire PropertyObjectFactory propertyFactory) {
+    public ComponentLoader(@Autowire
+    LoaderRegistry registry, @Autowire
+    PropertyObjectFactory propertyFactory) {
         super(registry);
         this.propertyFactory = propertyFactory;
     }
@@ -100,7 +106,8 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
     public ComponentDefinition<?> load(CompositeComponent parent,
                                        ModelObject object,
                                        XMLStreamReader reader,
-                                       DeploymentContext deploymentContext) throws XMLStreamException, LoaderException {
+                                       DeploymentContext deploymentContext) throws XMLStreamException,
+                                                                           LoaderException {
         assert COMPONENT.equals(reader.getName());
         String name = reader.getAttributeValue(null, "name");
         String initLevel = reader.getAttributeValue(null, "initLevel");
@@ -140,12 +147,11 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
                     case END_ELEMENT:
                         if (reader.getName().equals(COMPONENT)) {
                             // hack to leave alone SystemImplementation
-                            if (!((Implementation) componentDefinition
-                                .getImplementation() instanceof SystemImplementation)) {
+                            if (!((Implementation)componentDefinition.getImplementation() instanceof SystemImplementation)) {
                                 populatePropertyValues(componentDefinition);
                             }
                             ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-                                (ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>) componentDefinition
+                                (ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>)componentDefinition
                                     .getImplementation().getComponentType();
                             for (ReferenceDefinition ref : type.getReferences().values()) {
                                 if (ref.isAutowire()) {
@@ -168,14 +174,14 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
 
     protected Implementation<?> loadImplementation(CompositeComponent parent,
                                                    XMLStreamReader reader,
-                                                   DeploymentContext deploymentContext)
-        throws XMLStreamException, LoaderException {
+                                                   DeploymentContext deploymentContext) throws XMLStreamException,
+                                                                                       LoaderException {
         reader.nextTag();
         ModelObject o = registry.load(parent, null, reader, deploymentContext);
         if (!(o instanceof Implementation)) {
             throw new MissingImplementationException();
         }
-        return (Implementation<?>) o;
+        return (Implementation<?>)o;
     }
 
     @SuppressWarnings("unchecked")
@@ -192,23 +198,40 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
         }
         
         PropertyValue<Type> propertyValue;
+        readPropertyType(reader, property);
+        
         String source = reader.getAttributeValue(null, PROPERTY_SOURCE_ATTR);
         String file = reader.getAttributeValue(null, PROPERTY_FILE_ATTR);
+        
         if (source != null || file != null) {
             propertyValue = new PropertyValue<Type>(name, source, file);
-            propertyValue.setValue(property.getDefaultValue());
+            propertyValue.setValue(property.getDefaultValues());
             LoaderUtil.skipToEndElement(reader);
         } else {
             try {
                 DocumentBuilder documentBuilder = DOMHelper.newDocumentBuilder();
-                Document value = StaxUtil.createPropertyValue(reader, property.getXmlType(), documentBuilder);
-                propertyValue = new PropertyValue<Type>(name, value);
+                List<Document> values = loadPropertyValues(reader, documentBuilder, property.getXmlType(), property.getXmlElement());
+                propertyValue = new PropertyValue<Type>(name, values);
+                if (!property.isMany() && values.size() > 1) {
+                    ManyPropertyValueLoaderException ex = new ManyPropertyValueLoaderException();
+                    ex.setPropertyName(name);
+                    ex.setLine(reader.getLocation().getLineNumber());
+                    ex.setColumn(reader.getLocation().getColumnNumber());
+                    throw ex;
+                }
             } catch (ParserConfigurationException e) {
                 throw new LoaderException(e);
             }
         }
-        ObjectFactory<Type> objectFactory = propertyFactory.createObjectFactory(property, propertyValue);
-        // propertyValue.setValueFactory(new SimplePropertyObjectFactory(property, propertyValue.getValue()));
+        
+        ObjectFactory<?> objectFactory = null;
+        if (property.isMany()) {
+            objectFactory = propertyFactory.createListObjectFactory(property, propertyValue);
+        } else {
+            objectFactory = propertyFactory.createObjectFactory(property, propertyValue);
+        }
+        // propertyValue.setValueFactory(new
+        // SimplePropertyObjectFactory(property, propertyValue.getValue()));
         propertyValue.setValueFactory(objectFactory);
         componentDefinition.add(propertyValue);
     }
@@ -216,11 +239,10 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
     protected void loadReference(XMLStreamReader reader,
                                  DeploymentContext deploymentContext,
                                  ComponentDefinition<?> componentDefinition) throws XMLStreamException,
-                                                                                    LoaderException {
+                                                                            LoaderException {
         String name = reader.getAttributeValue(null, "name");
         String text = reader.getElementText();
         String target = text != null ? text.trim() : null;
-
 
         if (name == null) {
             throw new InvalidReferenceException("No name specified");
@@ -245,7 +267,8 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
             } else {
                 for (BindingDefinition binding : definition.getBindings()) {
                     try {
-                        // FIXME this is bad - clarify in the spec how URIs are overriden
+                        // FIXME this is bad - clarify in the spec how URIs are
+                        // overriden
                         binding.setTargetUri(new URI(target));
                     } catch (URISyntaxException e) {
                         throw new LoaderException(e);
@@ -268,8 +291,8 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
     }
 
     @SuppressWarnings("unchecked")
-    protected void populatePropertyValues(ComponentDefinition<Implementation<?>> componentDefinition)
-        throws LoaderException, MissingPropertyValueException {
+    protected void populatePropertyValues(ComponentDefinition<Implementation<?>> componentDefinition) throws LoaderException,
+                                                                                                     MissingPropertyValueException {
         ComponentType componentType = componentDefinition.getImplementation().getComponentType();
         if (componentType != null) {
             Map<String, Property<?>> properties = componentType.getProperties();
@@ -277,16 +300,19 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
 
             for (Property<?> aProperty : properties.values()) {
                 if (propertyValues.get(aProperty.getName()) == null) {
-                    if (aProperty.isNoDefault()) {
+                    if (aProperty.isMustSupply()) {
                         throw new MissingPropertyValueException(aProperty.getName());
-                    } else if (aProperty.getDefaultValue() != null) {
+                    } else if (aProperty.getDefaultValues() != null) {
                         PropertyValue propertyValue = new PropertyValue();
                         propertyValue.setName(aProperty.getName());
-                        propertyValue.setValue(aProperty.getDefaultValue());
-                        propertyValue.setValueFactory(
-                          propertyFactory.createObjectFactory(aProperty, propertyValue));
-                        /*propertyValue.setValueFactory(new SimplePropertyObjectFactory(aProperty,
-                            propertyValue.getValue()));*/
+                        propertyValue.setValue(aProperty.getDefaultValues());
+                        propertyValue.setValueFactory(propertyFactory
+                            .createObjectFactory(aProperty, propertyValue));
+                        /*
+                         * propertyValue.setValueFactory(new
+                         * SimplePropertyObjectFactory(aProperty,
+                         * propertyValue.getValue()));
+                         */
                         propertyValues.put(aProperty.getName(), propertyValue);
                     }
                 }
@@ -295,7 +321,8 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
     }
 
     /**
-     * Validates a component definition, ensuring all component type configuration elements are satisfied
+     * Validates a component definition, ensuring all component type
+     * configuration elements are satisfied
      */
     protected void validate(ComponentDefinition<Implementation<?>> definition) throws LoaderException {
         // validate refererences
@@ -337,4 +364,61 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
 
         }
     }
-}
+
+    private void readPropertyType(XMLStreamReader reader, Property property) throws MissingTypePropertyLoaderException{
+
+        String typeName = reader.getAttributeValue(null, PROPERTY_TYPE_ATTR);
+        String elementName = reader.getAttributeValue(null, PROPERTY_ELEMENT_ATTR);
+        QName xmlElement = null;
+        QName xmlType = null;
+
+        if (typeName != null) {
+            int index = typeName.indexOf(COLON);
+            if (index != -1) {
+                String prefix = typeName.substring(0, index);
+                String localName = typeName.substring(index + 1);
+                String ns = reader.getNamespaceURI(prefix);
+                xmlType = new QName(ns, localName, prefix);
+            }
+        } else if (elementName != null) {
+            int index = elementName.indexOf(COLON);
+            if (index != -1) {
+                String prefix = elementName.substring(0, index);
+                String localName = elementName.substring(index + 1);
+                String ns = reader.getNamespaceURI(prefix);
+                xmlElement = new QName(ns, localName, prefix);
+                // FIXME :
+                // need to figure out how to determine the xmltype from this
+                // xmlelement
+                // this need access to the global xml element thro
+                // schemalocation or thro
+                // artifact repository
+                xmlType = null;
+            }
+        }
+
+        if (xmlType != null) {
+            property.setXmlType(xmlType);
+        }
+
+        if (xmlElement != null) {
+            property.setXmlElement(xmlElement);
+        }
+        
+        /*if (property.getXmlType() == null && property.getXmlElement() == null) {
+            MissingTypePropertyLoaderException ex = new MissingTypePropertyLoaderException();
+            ex.setPropertyName(property.getName());
+            ex.setLine(reader.getLocation().getLineNumber());
+            ex.setColumn(reader.getLocation().getColumnNumber());
+            throw ex; 
+        }*/
+    }
+
+    private List<Document> loadPropertyValues(XMLStreamReader reader,
+                                    DocumentBuilder documentBuilder,
+                                    QName xmlType,
+                                    QName xmlElement) throws XMLStreamException {
+        return StaxUtil.createPropertyValues(reader, xmlType, xmlElement, documentBuilder);
+    }
+    
+ }

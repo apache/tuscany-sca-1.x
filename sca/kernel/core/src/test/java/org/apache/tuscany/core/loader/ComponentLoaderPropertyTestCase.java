@@ -51,7 +51,7 @@ public class ComponentLoaderPropertyTestCase extends TestCase {
             new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
         Property property = new Property();
         property.setName("name");
-        property.setNoDefault(true);
+        property.setMustSupply(true);
         type.add(property);
         
         JavaImplementation impl = new JavaImplementation(null, type);

@@ -19,6 +19,9 @@
 
 package org.apache.tuscany.core.property;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.core.databinding.xml.DOMDataBinding;
@@ -31,6 +34,7 @@ import org.apache.tuscany.spi.databinding.Mediator;
 import org.apache.tuscany.spi.databinding.extension.SimpleTypeMapperExtension;
 import org.apache.tuscany.spi.idl.ElementInfo;
 import org.apache.tuscany.spi.idl.TypeInfo;
+import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.PropertyObjectFactory;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Property;
@@ -58,18 +62,26 @@ public class PropertyObjectFactoryImpl implements PropertyObjectFactory {
 
     public <T> ObjectFactory<T> createObjectFactory(Property<T> property, PropertyValue<T> value) {
         if (mediator == null) {
-            return new SimplePropertyObjectFactory<T>(property, value.getValue());
+            return new SimplePropertyObjectFactory<T>(property, value.getValue().get(0));
         }
         return new ObjectFactoryImpl<T>(property, value);
     }
+    
+    public <T> ObjectFactory<List<T>> createListObjectFactory(Property<T> property, PropertyValue<T> value) throws LoaderException {
+        if (mediator == null) {
+            return new SimpleMultivaluedPropertyObjectFactory<T>(property, value.getValue());
+        }
+        return new ListObjectFactoryImpl<T>(property, value);
+    }
 
-    public class ObjectFactoryImpl<P> implements ObjectFactory<P> {
-        private Property<P> property;
-        private PropertyValue<P> propertyValue;
-        private DataType<QName> sourceDataType;
-        private DataType<?> targetDataType;
+    
+    public class ObjectFactoryImplBase<P> {
+        protected Property<P> property;
+        protected PropertyValue<P> propertyValue;
+        protected DataType<QName> sourceDataType;
+        protected DataType<?> targetDataType;
 
-        public ObjectFactoryImpl(Property<P> property, PropertyValue<P> propertyValue) {
+        public ObjectFactoryImplBase(Property<P> property, PropertyValue<P> propertyValue) {
             this.property = property;
             this.propertyValue = propertyValue;
             sourceDataType = new DataType<QName>(DOMDataBinding.NAME, Node.class, this.property.getXmlType());
@@ -95,11 +107,33 @@ public class PropertyObjectFactoryImpl implements PropertyObjectFactory {
                 registry.introspectType(targetDataType, null);
             }
         }
-
-        @SuppressWarnings("unchecked")
-        public P getInstance() throws ObjectCreationException {
-            return (P)mediator.mediate(propertyValue.getValue(), sourceDataType, targetDataType, null);
-        }
     }
 
+    public class ObjectFactoryImpl<P> extends ObjectFactoryImplBase<P> implements ObjectFactory<P> {
+        
+        public ObjectFactoryImpl(Property<P> property, PropertyValue<P> propertyValue) {
+            super(property, propertyValue);
+        }
+    
+        @SuppressWarnings("unchecked")
+        public P getInstance() throws ObjectCreationException {
+            return (P)mediator.mediate(propertyValue.getValue().get(0), sourceDataType, targetDataType, null);
+        }
+    }
+        
+    public class ListObjectFactoryImpl<P> extends ObjectFactoryImplBase<P> implements ObjectFactory<List<P>> {
+        
+        public ListObjectFactoryImpl(Property<P> property, PropertyValue<P> propertyValue) {
+            super(property, propertyValue);
+        }
+    
+        @SuppressWarnings("unchecked")
+        public List<P> getInstance() throws ObjectCreationException {
+            List<P> instances = new ArrayList<P>();
+            for (int count = 0; count < propertyValue.getValue().size() ; ++count) {
+                instances.add((P)mediator.mediate(propertyValue.getValue().get(count), sourceDataType, targetDataType, null));
+            }
+            return instances;
+        }
+    }
 }

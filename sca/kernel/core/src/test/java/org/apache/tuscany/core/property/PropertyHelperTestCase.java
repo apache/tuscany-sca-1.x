@@ -36,7 +36,7 @@ import org.easymock.EasyMock;
  */
 public class PropertyHelperTestCase extends TestCase {
     private static final String IPO_XML =
-        "<?xml version=\"1.0\"?>" + "<ipo:purchaseOrder"
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<ipo:purchaseOrder"
             + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
             + "  xmlns:ipo=\"http://www.example.com/IPO\""
             + "  xsi:schemaLocation=\"http://www.example.com/IPO ipo.xsd\""

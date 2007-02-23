@@ -18,6 +18,9 @@
  */
 package org.apache.tuscany.core.property;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -39,7 +42,10 @@ public class SimplePropertyObjectFactoryTestCase extends TestCase {
         EasyMock.expect(document.getDocumentElement()).andReturn(element);
         EasyMock.expect(element.getTextContent()).andReturn(value);
         EasyMock.replay(document, element);
-        return new PropertyValue<T>(null, document);
+        
+        List<Document> valueList = new ArrayList<Document>();
+        valueList.add(document);
+        return new PropertyValue<T>(null, valueList);
     }
 
     public void testInteger() throws Exception {

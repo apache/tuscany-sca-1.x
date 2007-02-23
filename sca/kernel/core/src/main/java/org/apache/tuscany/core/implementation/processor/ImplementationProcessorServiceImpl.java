@@ -18,20 +18,18 @@
  */
 package org.apache.tuscany.core.implementation.processor;
 
+import static org.apache.tuscany.core.util.JavaIntrospectionHelper.getBaseName;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Member;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
+
 import javax.xml.namespace.QName;
 
-import org.osoa.sca.annotations.Callback;
-import org.osoa.sca.annotations.Property;
-import org.osoa.sca.annotations.Reference;
-import org.osoa.sca.annotations.Remotable;
-import org.osoa.sca.annotations.Resource;
-
+import org.apache.tuscany.core.idl.java.IllegalCallbackException;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.databinding.extension.SimpleTypeMapperExtension;
 import org.apache.tuscany.spi.idl.InvalidServiceContractException;
@@ -45,11 +43,12 @@ import org.apache.tuscany.spi.implementation.java.JavaMappedService;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.implementation.java.ProcessingException;
 import org.apache.tuscany.spi.model.Multiplicity;
-import org.apache.tuscany.spi.model.OverrideOptions;
 import org.apache.tuscany.spi.model.ServiceContract;
-
-import org.apache.tuscany.core.idl.java.IllegalCallbackException;
-import static org.apache.tuscany.core.util.JavaIntrospectionHelper.getBaseName;
+import org.osoa.sca.annotations.Callback;
+import org.osoa.sca.annotations.Property;
+import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Remotable;
+import org.osoa.sca.annotations.Resource;
 
 /**
  * The default implementation of an <code>ImplementationProcessorService</code>
@@ -312,7 +311,7 @@ public class ImplementationProcessorServiceImpl implements ImplementationProcess
             throw new DuplicatePropertyException(name);
         }
         property.setName(name);
-        property.setNoDefault(Boolean.parseBoolean(propAnnot.required()));
+        property.setMustSupply(Boolean.parseBoolean(propAnnot.required()));
 
         String xmlType = propAnnot.xmlType();
         if (xmlType != null && xmlType.length() != 0) {

@@ -66,4 +66,11 @@ public class XML2JavaMapperException extends TuscanyRuntimeException {
         this.javaType = javaType;
     }
 
+    @Override
+    public String getMessage() {
+        return super.getMessage() + " <" + getJavaFieldName() + "> " + " in <" + getJavaType() + ">";
+    }
+    
+    
+
 }

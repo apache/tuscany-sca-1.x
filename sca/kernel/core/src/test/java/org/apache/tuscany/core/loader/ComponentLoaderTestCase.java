@@ -142,6 +142,8 @@ public class ComponentLoaderTestCase extends TestCase {
         XMLStreamReader reader = createMock(XMLStreamReader.class);
         expect(reader.getAttributeValue(null, "name")).andReturn("name");
         expect(reader.getAttributeValue(null, "source")).andReturn("$source");
+        expect(reader.getAttributeValue(null, "type")).andReturn(null).anyTimes();
+        expect(reader.getAttributeValue(null, "element")).andReturn(null).anyTimes();
         expect(reader.getAttributeValue(null, "file")).andReturn(null);
         expect(reader.next()).andReturn(XMLStreamConstants.END_ELEMENT);
         replay(reader);

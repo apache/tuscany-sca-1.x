@@ -16,17 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.core.loader;
+package org.apache.tuscany.core.injection;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.tuscany.spi.ObjectFactory;
 
 /**
- * Root unchecked exception for the injection package
+ * Implementation of ObjectFactory that returns a single instance, typically an immutable type.
  *
- * @version $Rev: 487057 $ $Date: 2006-12-14 12:50:44 +0530 (Thu, 14 Dec 2006) $
+ * @version $Rev: 430937 $ $Date: 2006-08-12 06:47:56 +0530 (Sat, 12 Aug 2006) $
  */
-public class DefaultPropertyValueLoaderException extends PropertyLoaderException {
+public class SingletonListObjectFactory<T> implements ObjectFactory<List<T>> {
+    private List<T> instance;
 
-    public DefaultPropertyValueLoaderException() {
-        super("Default Property Value must be supplied only when 'mustSupply' attribute is set to 'false'");
+    public SingletonListObjectFactory(List<T> instance) {
+        this.instance = Collections.unmodifiableList(instance);
     }
+
+    public List<T> getInstance() {
+        return instance;
+    }
+
 }

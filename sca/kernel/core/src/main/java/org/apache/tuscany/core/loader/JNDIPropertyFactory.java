@@ -18,6 +18,9 @@
  */
 package org.apache.tuscany.core.loader;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -28,6 +31,7 @@ import org.apache.tuscany.spi.loader.PropertyObjectFactory;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.model.PropertyValue;
 
+import org.apache.tuscany.core.injection.JNDIListObjectFactory;
 import org.apache.tuscany.core.injection.JNDIObjectFactory;
 
 /**
@@ -41,10 +45,25 @@ import org.apache.tuscany.core.injection.JNDIObjectFactory;
 public class JNDIPropertyFactory implements PropertyObjectFactory {
     public <T> ObjectFactory<T> createObjectFactory(Property<T> property, PropertyValue<T> value)
         throws LoaderException {
-        String text = value.getValue().getDocumentElement().getTextContent();
+        String text = value.getValue().get(0).getDocumentElement().getTextContent();
         try {
             Context context = new InitialContext();
             return new JNDIObjectFactory<T>(context, text);
+        } catch (NamingException e) {
+            throw new LoaderException(e);
+        }
+    }
+    
+    public <T> ObjectFactory<List<T>> createListObjectFactory(Property<T> property, PropertyValue<T> value)
+    throws LoaderException {
+        try {
+            List<T> instances = new ArrayList<T>();
+            Context context = new InitialContext();
+            List<String> text = new ArrayList<String>();
+            for (int count = 0 ; count < instances.size() ; ++count) {
+                text.add(value.getValue().get(count).getDocumentElement().getTextContent());
+            }
+            return new JNDIListObjectFactory<T>(context, text);
         } catch (NamingException e) {
             throw new LoaderException(e);
         }

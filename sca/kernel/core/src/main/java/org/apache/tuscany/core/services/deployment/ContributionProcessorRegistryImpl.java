@@ -75,7 +75,7 @@ public class ContributionProcessorRegistryImpl implements ContributionProcessorR
         if (!this.registry.containsKey(contentType)) {
             throw new UnsupportedContentTypeException(contentType, sourceURL.getPath());
         }
-
+ 
         this.registry.get(contentType).processContent(contribution, source, inputStream);
 
     }

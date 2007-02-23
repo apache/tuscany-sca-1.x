@@ -18,15 +18,17 @@
  */
 package org.apache.tuscany.core.loader;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import java.util.ArrayList;
+import java.util.List;
+
+import junit.framework.TestCase;
 
 import org.apache.tuscany.spi.ObjectFactory;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.model.PropertyValue;
-
-import junit.framework.TestCase;
 import org.easymock.EasyMock;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @version $Rev$ $Date$
@@ -39,7 +41,10 @@ public class StringParserPropertyFactoryTestCase extends TestCase {
         EasyMock.expect(document.getDocumentElement()).andReturn(element);
         EasyMock.expect(element.getTextContent()).andReturn(value);
         EasyMock.replay(document, element);
-        return new PropertyValue<T>(null, document);
+        
+        List<Document> valueList = new ArrayList<Document>();
+        valueList.add(document);
+        return new PropertyValue<T>(null, valueList);
     }
 
     public void testInteger() throws Exception {

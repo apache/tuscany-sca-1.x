@@ -61,5 +61,9 @@ public class PropertyLoaderException extends LoaderException {
     public void setPropertyName(String propertyName) {
         this.propertyName = propertyName;
     }
+    
+    public String getMessage() {
+        return super.getMessage() + " in " + getPropertyName();
+    }
 
 }

@@ -24,9 +24,9 @@ package org.apache.tuscany.core.loader;
  *
  * @version $Rev: 487057 $ $Date: 2006-12-14 12:50:44 +0530 (Thu, 14 Dec 2006) $
  */
-public class DefaultPropertyValueLoaderException extends PropertyLoaderException {
+public class ManyPropertyValueLoaderException extends PropertyLoaderException {
 
-    public DefaultPropertyValueLoaderException() {
-        super("Default Property Value must be supplied only when 'mustSupply' attribute is set to 'false'");
+    public ManyPropertyValueLoaderException() {
+        super("Multiple property values may be supplied only if 'many' attribute is set to  'true'");
     }
 }

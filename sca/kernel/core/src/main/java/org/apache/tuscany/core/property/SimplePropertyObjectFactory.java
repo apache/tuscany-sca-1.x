@@ -36,7 +36,7 @@ public class SimplePropertyObjectFactory<P> implements ObjectFactory<P> {
         super();
         
         this.property = property;
-        this.value = (value == null) ? property.getDefaultValue() : value;
+        this.value = (value == null) ? property.getDefaultValues().get(0) : value;
         this.typeMapper = new SimpleTypeMapperExtension();
     }
 

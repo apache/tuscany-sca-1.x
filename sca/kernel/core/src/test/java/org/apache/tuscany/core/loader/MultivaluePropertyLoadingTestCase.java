@@ -21,20 +21,24 @@ package org.apache.tuscany.core.loader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
 
 import junit.framework.TestCase;
 
 import org.apache.tuscany.core.databinding.javabeans.JavaBean2DOMNodeTransformer;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
 import org.apache.tuscany.spi.model.Property;
+import org.apache.tuscany.spi.util.stax.StaxUtil;
 import org.easymock.EasyMock;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -43,26 +47,28 @@ import org.w3c.dom.Text;
 /**
  * @version $Rev: 502055 $ $Date: 2007-02-01 05:37:32 +0530 (Thu, 01 Feb 2007) $
  */
-public class PropertyLoaderTestCase extends TestCase {
+public class MultivaluePropertyLoadingTestCase extends TestCase {
     private PropertyLoader propertyLoader;
     private XMLInputFactory xmlFactory;
     
     
     public void testPropertyLoading_SimpleType() throws Exception {
         String xml = "<tus:property xmlns:foo='http://foo.com' "
-                + "xmlns:tus='http://www.osoa.org/xmlns/sca/1.0' "
-                + "xmlns:xs='http://www.w3.org/2001/XMLSchema' "
-            + " name='TestProperty' type='xs:string'>"
+                + "xmlns:tus='http://www.osoa.org/xmlns/sca/1.0'"
+            + " name='TestProperty' many='true' type='foo:TestType'>"
+            + "<foo:TestValue>"
             + "TestPropertyValue"
+            + "</foo:TestValue>"
             + "</tus:property>";
 
         XMLStreamReader reader = getReader(xml);
         Property<?> aProperty = propertyLoader.load(null, null, reader, null);
+        //printNode(aProperty.getDefaultValue());
         
         assertEquals("TestProperty", aProperty.getName());
-        assertEquals(new QName("http://www.w3.org/2001/XMLSchema", "string", "xs"), aProperty.getXmlType());
+        assertEquals(new QName("http://foo.com", "TestType", "foo"), aProperty.getXmlType());
         assertEquals(false, aProperty.isMustSupply());
-        assertEquals(false, aProperty.isMany());
+        assertEquals(true, aProperty.isMany());
         
         Element root = aProperty.getDefaultValues().get(0).getDocumentElement();
         
@@ -73,86 +79,105 @@ public class PropertyLoaderTestCase extends TestCase {
         assertEquals("TestPropertyValue", t.getTextContent());
     }
     
-    
     public void testPropertyLoading_Type() throws Exception {
         String xml = "<tus:property xmlns:foo='http://foo.com' "
-                        + "xmlns:tus='http://www.osoa.org/xmlns/sca/1.0' " 
+                	+ "xmlns:tus='http://www.osoa.org/xmlns/sca/1.0' " 
                         + "xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' "
-                        + " name='complexFoo' type='foo:MyComplexType'>"
+                        + " name='complexFoo' many='true' type='foo:MyComplexType'>"
                         + "<MyComplexPropertyValue1 xsi:type='foo:MyComplexType' attr='bar'>"
                             + "<foo:a>AValue</foo:a>" 
                             + "<foo:b>InterestingURI</foo:b>"
-                        + "</MyComplexPropertyValue1>"
-            + "</tus:property>";
+                        + "</MyComplexPropertyValue1>" 
+                        + "<MyComplexPropertyValue2 xsi:type='foo:MyComplexType' attr='zing'>"
+                            + "<foo:a>BValue</foo:a>"
+                            + "<foo:b>BoringURI</foo:b>"
+                        + "</MyComplexPropertyValue2>"
+                        + "</tus:property>";
+
+        
 
         XMLStreamReader reader = getReader(xml);
         Property<?> aProperty = propertyLoader.load(null, null, reader, null);
+        
         assertEquals("complexFoo", aProperty.getName());
         assertEquals(new QName("http://foo.com", "MyComplexType", "foo"), aProperty.getXmlType());
         assertEquals(false, aProperty.isMustSupply());
-        assertEquals(false, aProperty.isMany());
+        assertEquals(true, aProperty.isMany());
         
-        Element root = aProperty.getDefaultValues().get(0).getDocumentElement();
+        Element secondValue = aProperty.getDefaultValues().get(1).getDocumentElement();
         
-        NodeList childNodes = root.getChildNodes();
+        NodeList childNodes = secondValue.getChildNodes();
         assertEquals(2, childNodes.getLength());
 
         Element e = (Element) childNodes.item(0);
         assertEquals("http://foo.com", e.getNamespaceURI());
         assertEquals("a", e.getLocalName());
-        assertEquals("AValue", e.getTextContent());
+        assertEquals("BValue", e.getTextContent());
         e = (Element) childNodes.item(1);
         assertEquals("http://foo.com", e.getNamespaceURI());
         assertEquals("b", e.getLocalName());
-        assertEquals("InterestingURI", e.getTextContent());
+        assertEquals("BoringURI", e.getTextContent());
     }
-    
+  
     public void testPropertyLoading_Element() throws Exception {
-        String xml = "<tus:property xmlns:foo='http://foo.com' "
+        String xml = 
+            "<tus:property xmlns:foo='http://foo.com' "
                 + "xmlns:tus='http://www.osoa.org/xmlns/sca/1.0'"
-            + " name='TestProperty' element='foo:TestElement'>\n"
-            + "<foo:TestElement>"
-            + "<foo:a>aValue</foo:a>"
-            + "<foo:b>InterestingURI</foo:b>"
+                + " name='TestProperty' many='true' element='foo:TestElement'>\n"
+                + "<foo:TestElement>"
+                    + "<foo:a>aValue1</foo:a>"
+                    + "<foo:b>InterestingURI1</foo:b>"
+                + "</foo:TestElement>"
+                + "<foo:TestElement>"
+                    + "<foo:a>aValue2</foo:a>"
+                    + "<foo:b>InterestingURI2</foo:b>"
             + "</foo:TestElement>"
             + "</tus:property>";
         XMLStreamReader reader = getReader(xml);
         Property<?> aProperty = propertyLoader.load(null, null, reader, null);
         
-        Element root = aProperty.getDefaultValues().get(0).getDocumentElement();
+        Element secondElement = aProperty.getDefaultValues().get(1).getDocumentElement();
         
+        assertEquals(2, aProperty.getDefaultValues().size());
         assertEquals("TestProperty", aProperty.getName());
         assertEquals(new QName("http://foo.com", "TestElement", "foo"), aProperty.getXmlElement());
         assertEquals(false, aProperty.isMustSupply());
-        assertEquals(false, aProperty.isMany());
+        assertEquals(true, aProperty.isMany());
         
-        NodeList childNodes = root.getChildNodes();
+        NodeList childNodes = secondElement.getChildNodes();
         assertEquals(2, childNodes.getLength());
 
         Element e = (Element) childNodes.item(0);
         assertEquals("http://foo.com", e.getNamespaceURI());
         assertEquals("a", e.getLocalName());
-        assertEquals("aValue", e.getTextContent());
+        assertEquals("aValue2", e.getTextContent());
         e = (Element) childNodes.item(1);
         assertEquals("http://foo.com", e.getNamespaceURI());
         assertEquals("b", e.getLocalName());
-        assertEquals("InterestingURI", e.getTextContent());
+        assertEquals("InterestingURI2", e.getTextContent());
     }
     
-    public void testPropertyLoadingNoDefault() throws Exception {
-        String xml = "<tus:property xmlns:foo='http://foo.com' "
-        	+ "xmlns:tus='http://www.osoa.org/xmlns/sca/1.0'"
-            + " name='TestProperty' type='foo:TestType' mustSupply='true'>"
-            + "<foo:a>aValue</foo:a>"
-            + "<foo:b>InterestingURI</foo:b>"
-            + "</tus:property>";
+    public void testManyValueException() throws Exception {
+        String xml = 
+            "<tus:property xmlns:foo='http://foo.com' "
+            + "xmlns:tus='http://www.osoa.org/xmlns/sca/1.0'"
+            + " name='TestProperty' element='foo:TestElement'>\n"
+            + "<foo:TestElement>"
+                + "<foo:a>aValue1</foo:a>"
+                + "<foo:b>InterestingURI1</foo:b>"
+            + "</foo:TestElement>"
+            + "<foo:TestElement>"
+                + "<foo:a>aValue2</foo:a>"
+                + "<foo:b>InterestingURI2</foo:b>"
+        + "</foo:TestElement>"
+        + "</tus:property>";
 
         XMLStreamReader reader = getReader(xml);
         
         try {
             propertyLoader.load(null, null, reader, null);
         } catch (Exception e) {
-            assertTrue(e instanceof DefaultPropertyValueLoaderException);
+            assertTrue(e instanceof ManyPropertyValueLoaderException);
         }
     }
 

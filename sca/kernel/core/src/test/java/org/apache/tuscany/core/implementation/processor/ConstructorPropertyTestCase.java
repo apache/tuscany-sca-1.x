@@ -45,7 +45,7 @@ public class ConstructorPropertyTestCase extends TestCase {
         Constructor<Foo> ctor = Foo.class.getConstructor(String.class);
         processor.visitConstructor(null, ctor, type, null);
         JavaMappedProperty<?> property = type.getProperties().get("myProp");
-        assertEquals(property.isNoDefault(), true);
+        assertEquals(property.isMustSupply(), true);
         assertEquals("myProp", property.getName());
     }
 

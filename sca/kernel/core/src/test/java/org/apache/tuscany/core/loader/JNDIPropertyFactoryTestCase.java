@@ -1,19 +1,21 @@
 package org.apache.tuscany.core.loader;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
+import junit.framework.TestCase;
+
+import org.apache.tuscany.core.injection.JNDIObjectFactory;
+import org.apache.tuscany.spi.model.PropertyValue;
+import org.easymock.EasyMock;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import org.apache.tuscany.spi.model.PropertyValue;
-
-import junit.framework.TestCase;
-import org.apache.tuscany.core.injection.JNDIObjectFactory;
-import org.easymock.EasyMock;
 
 /**
  * @version $Rev$ $Date$
@@ -32,7 +34,9 @@ public class JNDIPropertyFactoryTestCase extends TestCase {
             EasyMock.expect(doc.getDocumentElement()).andReturn(element);
             EasyMock.replay(doc);
             PropertyValue<?> value = new MockPropertyValue<Type>();
-            value.setValue(doc);
+            List<Document> docList = new ArrayList<Document>();
+            docList.add(doc);
+            value.setValue(docList);
             JNDIObjectFactory<?> jndiFactory = (JNDIObjectFactory<?>) factory.createObjectFactory(null, value);
             assertEquals("bar", jndiFactory.getInstance());
         } finally {

@@ -24,15 +24,18 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.stream.XMLStreamException;
 
+import org.apache.tuscany.core.injection.SingletonListObjectFactory;
+import org.apache.tuscany.core.injection.SingletonObjectFactory;
 import org.apache.tuscany.spi.ObjectFactory;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.PropertyObjectFactory;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.model.PropertyValue;
-
-import org.apache.tuscany.core.injection.SingletonObjectFactory;
 
 /**
  * Implementation of StAXPropertyFactory that interprets the XML as
@@ -43,8 +46,19 @@ public class StringParserPropertyFactory implements PropertyObjectFactory {
 
     public <T> ObjectFactory<T> createObjectFactory(Property<T> property, PropertyValue<T> value)
         throws LoaderException {
-        String text = value.getValue().getDocumentElement().getTextContent();
+        String text = value.getValue().get(0).getDocumentElement().getTextContent();
         return new SingletonObjectFactory<T>(createInstance(text, property.getJavaType()));
+    }
+    
+    public <T> ObjectFactory<List<T>> createListObjectFactory(Property<T> property, PropertyValue<T> value)
+    throws LoaderException {
+        String text = null;
+        List<T> instances = new ArrayList<T>();
+        for (int count = 0 ; count < value.getValue().size() ; ++count) {
+            text = value.getValue().get(count).getDocumentElement().getTextContent();
+            instances.add(createInstance(text, property.getJavaType()));
+        }
+        return new SingletonListObjectFactory<T>(instances);
     }
 
     @SuppressWarnings("unchecked")

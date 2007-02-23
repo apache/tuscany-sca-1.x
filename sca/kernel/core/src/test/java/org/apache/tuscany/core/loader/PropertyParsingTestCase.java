@@ -47,7 +47,7 @@ public class PropertyParsingTestCase extends TestCase {
             + "</property>";
 
         XMLStreamReader reader = getReader(xml);
-        StaxUtil.loadPropertyValue(reader, root);
+        StaxUtil.loadPropertyValue(reader, root, root.getOwnerDocument());
         NodeList childNodes = root.getChildNodes();
         assertEquals(2, childNodes.getLength());
 
