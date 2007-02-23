@@ -21,8 +21,6 @@ package org.apache.tuscany.core.databinding.impl;
 
 import java.util.List;
 
-import javax.xml.namespace.QName;
-
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.databinding.Mediator;
@@ -33,6 +31,7 @@ import org.apache.tuscany.spi.databinding.Transformer;
 import org.apache.tuscany.spi.databinding.WrapperHandler;
 import org.apache.tuscany.spi.databinding.extension.TransformerExtension;
 import org.apache.tuscany.spi.idl.ElementInfo;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
 import org.apache.tuscany.spi.model.WrapperInfo;
@@ -144,7 +143,7 @@ public class Output2OutputTransformer extends TransformerExtension<Object, Objec
                     return targetWrapper;
                 }
                 ElementInfo argElement = childElements.get(0);
-                DataType<QName> argType = wrapper.getUnwrappedOutputType();
+                DataType<XMLType> argType = wrapper.getUnwrappedOutputType();
                 Object child = response;
                 child = mediator.mediate(response, sourceType.getLogical(), argType, context.getMetadata());
                 targetWrapperHandler.setChild(targetWrapper, 0, argElement, child);
@@ -162,9 +161,9 @@ public class Output2OutputTransformer extends TransformerExtension<Object, Objec
                     ElementInfo wrapperElement = sourceOp.getWrapper().getInputWrapperElement();
                     // Object targetWrapper =
                     // targetWrapperHandler.create(wrapperElement, context);
-                    DataType<QName> targetWrapperType =
-                        new DataType<QName>(targetType.getLogical().getDataBinding(), Object.class,
-                                            wrapperElement.getQName());
+                    DataType<XMLType> targetWrapperType =
+                        new DataType<XMLType>(targetType.getLogical().getDataBinding(), Object.class,
+                                            new XMLType(wrapperElement));
                     Object targetWrapper =
                         mediator.mediate(sourceWrapper, sourceType.getLogical(), targetWrapperType, context
                             .getMetadata());

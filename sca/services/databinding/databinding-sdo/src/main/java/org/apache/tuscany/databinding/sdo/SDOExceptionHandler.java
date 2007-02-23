@@ -26,6 +26,7 @@ import java.lang.reflect.Method;
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.databinding.ExceptionHandler;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
 import commonj.sdo.Type;
@@ -57,10 +58,7 @@ public class SDOExceptionHandler implements ExceptionHandler {
      * protocol specific fault information
      * </ul>
      */
-    public Exception createException(DataType<DataType> exceptionType, 
-                                     String message, 
-                                     Object faultInfo, 
-                                     Throwable cause) {
+    public Exception createException(DataType<DataType> exceptionType, String message, Object faultInfo, Throwable cause) {
         Class exceptionClass = (Class)exceptionType.getPhysical();
         DataType<?> faultBeanType = exceptionType.getLogical();
         Class faultBeanClass = (Class)faultBeanType.getPhysical();
@@ -97,25 +95,26 @@ public class SDOExceptionHandler implements ExceptionHandler {
             return null;
         }
 
-        QName typeInfo = null;
+        QName faultElement = null;
         try {
             Field field = exceptionType.getField("FAULT_ELEMENT");
-            typeInfo = (QName)field.get(null);
+            faultElement = (QName)field.get(null);
         } catch (NoSuchFieldException e) {
             // Fall back to type inspection
             Type type = helperContext.getTypeHelper().getType(faultBeanClass);
             if (type != null) {
                 String ns = type.getURI();
                 String name = helperContext.getXSDHelper().getLocalName(type);
-                typeInfo = new QName(ns, name);
+                faultElement = new QName(ns, name);
             }
         } catch (Throwable e) {
             // Ignore
         }
-        if (typeInfo == null) {
+        if (faultElement == null) {
             return null;
         }
-        DataType<QName> faultType = new DataType<QName>(SDODataBinding.NAME, faultBeanClass, typeInfo);
+        DataType<XMLType> faultType =
+            new DataType<XMLType>(SDODataBinding.NAME, faultBeanClass, new XMLType(faultElement, null));
         return faultType;
 
     }

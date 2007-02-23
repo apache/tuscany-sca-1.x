@@ -24,6 +24,7 @@ import javax.xml.namespace.QName;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
 import com.example.ipo.sdo.PurchaseOrderType;
@@ -57,17 +58,19 @@ public class SDODataBindingTestCase extends TestCase {
         boolean yes = binding.introspect(dataType, null);
         assertTrue(yes);
         assertTrue(dataType.getDataBinding().equals(binding.getName()));
-        assertTrue(dataType.getPhysical() == DataObject.class && dataType.getLogical() == DataObject.class);
+        assertTrue(dataType.getPhysical() == DataObject.class && dataType.getLogical() == XMLType.UNKNOWN);
         dataType = new DataType(PurchaseOrderType.class, null);
         yes = binding.introspect(dataType, null);
         assertTrue(yes);
         assertEquals(PurchaseOrderType.class, dataType.getPhysical());
-        assertEquals(new QName("http://www.example.com/IPO", "PurchaseOrderType"), dataType.getLogical());
+        assertEquals(new QName("http://www.example.com/IPO", "PurchaseOrderType"), ((XMLType)dataType.getLogical())
+            .getTypeName());
         dataType = new DataType(USAddress.class, null);
         yes = binding.introspect(dataType, null);
         assertTrue(yes);
         assertEquals(USAddress.class, dataType.getPhysical());
-        assertEquals(new QName("http://www.example.com/IPO", "USAddress"), dataType.getLogical());
+        assertEquals(new QName("http://www.example.com/IPO", "USAddress"), ((XMLType)dataType.getLogical())
+            .getTypeName());
     }
 
     public final void testCopyRoot() {

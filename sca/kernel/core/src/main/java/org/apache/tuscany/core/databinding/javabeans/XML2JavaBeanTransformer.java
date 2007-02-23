@@ -71,7 +71,7 @@ public abstract class XML2JavaBeanTransformer<T> extends TransformerExtension<T,
 
     public Object toJavaObject(TypeInfo xmlType, T xmlElement, TransformationContext context) {
         if (xmlType.isSimpleType()) {
-            return mapper.toJavaObject(xmlType, getText(xmlElement), context);
+            return mapper.toJavaObject(xmlType.getQName(), getText(xmlElement), context);
         } else {
             Class<?> javaType = (Class<?>) context.getTargetDataType().getLogical();
             return createJavaObject(xmlElement, javaType, context);
@@ -83,7 +83,7 @@ public abstract class XML2JavaBeanTransformer<T> extends TransformerExtension<T,
         throws XML2JavaMapperException {
         List<T> childElements = getChildElements(element);
         if (childElements.size() == 1 && isTextElement(childElements.get(0))) {
-            return (L) mapper.toJavaObject(mapper.getXMLType(javaType),
+            return (L) mapper.toJavaObject(mapper.getXMLType(javaType).getQName(),
                                                  getText(childElements.get(0)),
                                                  context);
         } else {

@@ -27,6 +27,7 @@ import org.apache.tuscany.spi.databinding.ExceptionHandler;
 import org.apache.tuscany.spi.databinding.SimpleTypeMapper;
 import org.apache.tuscany.spi.databinding.WrapperHandler;
 import org.apache.tuscany.spi.databinding.extension.DataBindingExtension;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
 import commonj.sdo.DataObject;
@@ -64,7 +65,7 @@ public class SDODataBinding extends DataBindingExtension {
         // FIXME: Need a better to test dynamic SDO
         if (DataObject.class.isAssignableFrom(javaType)) {
             // Dynamic SDO
-            dataType.setLogical(DataObject.class);
+            dataType.setLogical(XMLType.UNKNOWN);
             return true;
         }
         // FIXME: We need to access HelperContext
@@ -79,7 +80,7 @@ public class SDODataBinding extends DataBindingExtension {
         String namespace = type.getURI();
         String name = context.getXSDHelper().getLocalName(type);
         QName xmlType = new QName(namespace, name);
-        dataType.setLogical(xmlType);
+        dataType.setLogical(new XMLType(null, xmlType));
         return true;
     }
 

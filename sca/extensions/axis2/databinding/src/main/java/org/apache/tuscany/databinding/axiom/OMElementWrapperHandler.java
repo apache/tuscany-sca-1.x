@@ -20,13 +20,15 @@
 package org.apache.tuscany.databinding.axiom;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.xml.namespace.QName;
 
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
+import org.apache.axiom.om.OMNamespace;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.databinding.WrapperHandler;
 import org.apache.tuscany.spi.idl.ElementInfo;
@@ -49,7 +51,12 @@ public class OMElementWrapperHandler implements WrapperHandler<OMElement> {
     }
 
     public void setChild(OMElement wrapper, int i, ElementInfo childElement, Object value) {
-        wrapper.addChild((OMElement) value);
+        OMElement element = (OMElement)value;
+        QName elementName = childElement.getQName();
+        OMNamespace namespace = factory.createOMNamespace(elementName.getNamespaceURI(), elementName.getPrefix());
+        element.setNamespace(namespace);
+        element.setLocalName(childElement.getQName().getLocalPart());
+        wrapper.addChild((OMElement)value);
     }
 
     public List getChildren(OMElement wrapper) {

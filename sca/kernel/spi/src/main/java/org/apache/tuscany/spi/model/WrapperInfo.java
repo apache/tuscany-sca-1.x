@@ -20,9 +20,9 @@
 package org.apache.tuscany.spi.model;
 
 import java.util.List;
-import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.idl.ElementInfo;
+import org.apache.tuscany.spi.idl.XMLType;
 
 /**
  * The "Wrapper Style" WSDL operation is defined by The Java API for XML-Based Web Services (JAX-WS) 2.0 specification,
@@ -48,16 +48,16 @@ public class WrapperInfo {
 
     private List<ElementInfo> outputChildElements;
 
-    private DataType<List<DataType<QName>>> unwrappedInputType;
+    private DataType<List<DataType<XMLType>>> unwrappedInputType;
 
-    private DataType<QName> unwrappedOutputType;
+    private DataType<XMLType> unwrappedOutputType;
 
     public WrapperInfo(ElementInfo inputWrapperElement,
                        ElementInfo outputWrapperElement,
                        List<ElementInfo> inputElements,
                        List<ElementInfo> outputElements,
-                       DataType<List<DataType<QName>>> unwrappedInputType,
-                       DataType<QName> unwrappedOutputType) {
+                       DataType<List<DataType<XMLType>>> unwrappedInputType,
+                       DataType<XMLType> unwrappedOutputType) {
         super();
         this.inputWrapperElement = inputWrapperElement;
         this.outputWrapperElement = outputWrapperElement;
@@ -98,14 +98,14 @@ public class WrapperInfo {
     /**
      * @return the unwrappedInputType
      */
-    public DataType<List<DataType<QName>>> getUnwrappedInputType() {
+    public DataType<List<DataType<XMLType>>> getUnwrappedInputType() {
         return unwrappedInputType;
     }
 
     /**
      * @return the unwrappedOutputType
      */
-    public DataType<QName> getUnwrappedOutputType() {
+    public DataType<XMLType> getUnwrappedOutputType() {
         return unwrappedOutputType;
     }
 }

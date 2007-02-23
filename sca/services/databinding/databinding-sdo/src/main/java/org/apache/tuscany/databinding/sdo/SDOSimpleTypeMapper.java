@@ -40,8 +40,7 @@ public class SDOSimpleTypeMapper implements SimpleTypeMapper {
         super();
     }
 
-    public Object toJavaObject(TypeInfo simpleType, String value, TransformationContext context) {
-        QName typeName = simpleType.getQName();
+    public Object toJavaObject(QName typeName, String value, TransformationContext context) {
         Type type = null;
         if (URI_2001_SCHEMA_XSD.equals(typeName.getNamespaceURI())) {
             type = SDOUtil.getXSDSDOType(typeName.getLocalPart());
@@ -53,8 +52,7 @@ public class SDOSimpleTypeMapper implements SimpleTypeMapper {
         return SDOUtil.createFromString(type, value);
     }
 
-    public String toXMLLiteral(TypeInfo simpleType, Object obj, TransformationContext context) {
-        QName typeName = simpleType.getQName();
+    public String toXMLLiteral(QName typeName, Object obj, TransformationContext context) {
         Type type = null;
         if (URI_2001_SCHEMA_XSD.equals(typeName.getNamespaceURI())) {
             type = SDOUtil.getXSDSDOType(typeName.getLocalPart());

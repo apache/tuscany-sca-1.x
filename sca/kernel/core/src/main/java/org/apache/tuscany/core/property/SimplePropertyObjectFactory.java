@@ -56,7 +56,7 @@ public class SimplePropertyObjectFactory<P> implements ObjectFactory<P> {
             if (xmlType == null) {
                 throw new IllegalArgumentException("Complex property is not supported.");
             }
-            instance = (P)typeMapper.toJavaObject(xmlType, text, null);
+            instance = (P)typeMapper.toJavaObject(xmlType.getQName(), text, null);
         }
         return instance;
     }

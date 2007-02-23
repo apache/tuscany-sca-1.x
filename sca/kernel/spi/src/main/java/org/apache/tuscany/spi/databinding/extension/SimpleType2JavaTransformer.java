@@ -21,9 +21,7 @@ package org.apache.tuscany.spi.databinding.extension;
 import org.apache.tuscany.spi.databinding.PullTransformer;
 import org.apache.tuscany.spi.databinding.SimpleTypeMapper;
 import org.apache.tuscany.spi.databinding.TransformationContext;
-import org.apache.tuscany.spi.idl.ElementInfo;
-import org.apache.tuscany.spi.idl.TypeInfo;
-import org.w3c.dom.Node;
+import org.apache.tuscany.spi.idl.XMLType;
 
 /**
  * Transformer to convert data from a databinding's representation of simple
@@ -43,14 +41,8 @@ public abstract class SimpleType2JavaTransformer<T> extends TransformerExtension
     }
 
     public Object transform(T source, TransformationContext context) {
-        TypeInfo simpleType = (TypeInfo)context.getSourceDataType().getMetadata(TypeInfo.class.getName());
-        if (simpleType == null) {
-            ElementInfo element =
-                (ElementInfo)context.getSourceDataType().getMetadata(ElementInfo.class.getName());
-            simpleType = (TypeInfo)element.getType();
-        }
-        
-        return mapper.toJavaObject(simpleType, getText(source), context);
+        XMLType xmlType = (XMLType) context.getSourceDataType().getLogical();
+        return mapper.toJavaObject(xmlType.getTypeName(), getText(source), context);
     }
 
     public Class getTargetType() {

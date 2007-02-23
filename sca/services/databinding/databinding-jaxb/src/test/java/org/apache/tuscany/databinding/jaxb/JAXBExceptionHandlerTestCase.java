@@ -23,6 +23,7 @@ import javax.xml.namespace.QName;
 
 import org.apache.tuscany.databinding.jaxb.fault.InvalidSymbolFault;
 import org.apache.tuscany.databinding.jaxb.fault.InvalidSymbolFault_Exception;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
 import junit.framework.TestCase;
@@ -45,7 +46,7 @@ public class JAXBExceptionHandlerTestCase extends TestCase {
     public void testGetFaultType() {
         DataType<?> dataType = handler.getFaultType(InvalidSymbolFault_Exception.class);
         assertEquals(InvalidSymbolFault.class, dataType.getPhysical());
-        assertEquals(ELEMENT, dataType.getLogical());
+        assertEquals(ELEMENT, ((XMLType) dataType.getLogical()).getElementName());
         assertEquals(JAXBDataBinding.NAME, dataType.getDataBinding());
     }
 

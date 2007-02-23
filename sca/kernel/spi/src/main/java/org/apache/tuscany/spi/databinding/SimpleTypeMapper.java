@@ -19,7 +19,7 @@
 
 package org.apache.tuscany.spi.databinding;
 
-import org.apache.tuscany.spi.idl.TypeInfo;
+import javax.xml.namespace.QName;
 
 /**
  * Type Mapper between XML schema simple data types and java objects
@@ -32,7 +32,7 @@ public interface SimpleTypeMapper {
      * @param context The context of the transformation
      * @return A java object for the XML value
      */
-    Object toJavaObject(TypeInfo simpleType, String value, TransformationContext context);
+    Object toJavaObject(QName simpleType, String value, TransformationContext context);
     /**
      * Create the XML lexical representation for a java object
      * @param simpleType The XSD simple type
@@ -40,5 +40,5 @@ public interface SimpleTypeMapper {
      * @param context The context of the transformation
      * @return The XML lexical representation
      */
-    String toXMLLiteral(TypeInfo simpleType, Object obj, TransformationContext context);
+    String toXMLLiteral(QName simpleType, Object obj, TransformationContext context);
 }

@@ -35,6 +35,7 @@ import javax.xml.namespace.QName;
 import org.apache.tuscany.spi.databinding.ExceptionHandler;
 import org.apache.tuscany.spi.databinding.extension.DOMHelper;
 import org.apache.tuscany.spi.databinding.extension.DataBindingExtension;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 import org.w3c.dom.Document;
 
@@ -62,19 +63,19 @@ public class JAXBDataBinding extends DataBindingExtension {
                 if (rawType == JAXBElement.class) {
                     Type actualType = parameterizedType.getActualTypeArguments()[0];
                     if (actualType instanceof Class) {
-                        QName xmlType = getXmlTypeName((Class)actualType);
+                        XMLType xmlType = getXmlTypeName((Class)actualType);
                         dataType.setLogical(xmlType);
                         dataType.setDataBinding(getName());
                         return true;
                     }
                 }
             }
-            dataType.setLogical(null);
+            dataType.setLogical(XMLType.UNKNOWN);
             dataType.setDataBinding(getName());
             return true;
         }
 
-        QName xmlType = getXmlTypeName(javaType);
+        XMLType xmlType = getXmlTypeName(javaType);
         if (xmlType == null) {
             return false;
         }
@@ -83,7 +84,7 @@ public class JAXBDataBinding extends DataBindingExtension {
         return true;
     }
 
-    public static QName getXmlTypeName(Class<?> javaType) {
+    public static XMLType getXmlTypeName(Class<?> javaType) {
         String namespace = null;
         String name = null;
         Package pkg = javaType.getPackage();
@@ -127,8 +128,7 @@ public class JAXBDataBinding extends DataBindingExtension {
         if (name == null) {
             return null;
         }
-        QName xmlType = new QName(namespace, name);
-        return xmlType;
+        return new XMLType(null, new QName(namespace, name));
     }
 
     public JAXBDataBinding() {

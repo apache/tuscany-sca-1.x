@@ -39,6 +39,7 @@ import org.apache.tuscany.spi.databinding.extension.DOMHelper;
 import org.apache.tuscany.spi.databinding.extension.SimpleTypeMapperExtension;
 import org.apache.tuscany.spi.idl.ElementInfo;
 import org.apache.tuscany.spi.idl.TypeInfo;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.WrapperInfo;
 import org.w3c.dom.Document;
@@ -85,33 +86,34 @@ public class IDLTransformerTestCase extends TestCase {
     }
 
     public void testTransform() throws Exception {
-        List<DataType<QName>> types0 = new ArrayList<DataType<QName>>();
-        DataType<QName> wrapperType =
-            new DataType<QName>(null, Object.class, new QName(URI_ORDER_XSD, "checkOrderStatus"));
+        List<DataType<XMLType>> types0 = new ArrayList<DataType<XMLType>>();
+        DataType<XMLType> wrapperType =
+            new DataType<XMLType>(null, Object.class, new XMLType(new QName(URI_ORDER_XSD, "checkOrderStatus"), null));
         types0.add(wrapperType);
-        DataType<List<DataType<QName>>> inputType0 =
-            new DataType<List<DataType<QName>>>(IDL_INPUT, Object[].class, types0);
+        DataType<List<DataType<XMLType>>> inputType0 =
+            new DataType<List<DataType<XMLType>>>(IDL_INPUT, Object[].class, types0);
 
-        List<DataType<QName>> types1 = new ArrayList<DataType<QName>>();
-        DataType<QName> customerIdType =
-            new DataType<QName>(null, Object.class, new QName(URI_ORDER_XSD, "customerId"));
-        DataType<QName> orderType =
-            new DataType<QName>(null, Object.class, new QName(URI_ORDER_XSD, "order"));
-        DataType<QName> flagType = new DataType<QName>(null, Object.class, new QName(URI_ORDER_XSD, "flag"));
+        List<DataType<XMLType>> types1 = new ArrayList<DataType<XMLType>>();
+        DataType<XMLType> customerIdType =
+            new DataType<XMLType>(null, Object.class, new XMLType(new QName(URI_ORDER_XSD, "customerId"), null));
+        DataType<XMLType> orderType =
+            new DataType<XMLType>(null, Object.class, new XMLType(new QName(URI_ORDER_XSD, "order"), null));
+        DataType<XMLType> flagType =
+            new DataType<XMLType>(null, Object.class, new XMLType(new QName(URI_ORDER_XSD, "flag"), null));
         types1.add(customerIdType);
         types1.add(orderType);
         types1.add(flagType);
-        DataType<List<DataType<QName>>> inputType =
-            new DataType<List<DataType<QName>>>(IDL_INPUT, Object[].class, types1);
+        DataType<List<DataType<XMLType>>> inputType =
+            new DataType<List<DataType<XMLType>>>(IDL_INPUT, Object[].class, types1);
 
-        DataType<QName> statusType =
-            new DataType<QName>(null, Object.class, new QName(URI_ORDER_XSD, "status"));
-        DataType<QName> responseType =
-            new DataType<QName>(null, Object.class, new QName(URI_ORDER_XSD, "checkOrderStatusResponse"));
+        DataType<XMLType> statusType =
+            new DataType<XMLType>(null, Object.class, new XMLType(new QName(URI_ORDER_XSD, "status"), null));
+        DataType<XMLType> responseType =
+            new DataType<XMLType>(null, Object.class, new XMLType(new QName(URI_ORDER_XSD, "checkOrderStatusResponse"),
+                                                                  null));
 
-        org.apache.tuscany.spi.model.Operation<QName> op =
-            new org.apache.tuscany.spi.model.Operation<QName>("checkOrderStatus", inputType0, responseType,
-                                                              null);
+        org.apache.tuscany.spi.model.Operation<XMLType> op =
+            new org.apache.tuscany.spi.model.Operation<XMLType>("checkOrderStatus", inputType0, responseType, null);
         op.setDataBinding(DOMDataBinding.NAME);
 
         inputType0.setOperation(op);
@@ -121,8 +123,7 @@ public class IDLTransformerTestCase extends TestCase {
         wrapperType.setMetadata(ElementInfo.class.getName(), inputElement);
 
         ElementInfo customerId =
-            new ElementInfo(new QName("", "customerId"), SimpleTypeMapperExtension.XSD_SIMPLE_TYPES
-                .get("string"));
+            new ElementInfo(new QName("", "customerId"), SimpleTypeMapperExtension.XSD_SIMPLE_TYPES.get("string"));
         ElementInfo order =
             new ElementInfo(new QName("", "order"), new TypeInfo(new QName(URI_ORDER_XSD), false, null));
         ElementInfo flag =
@@ -151,8 +152,7 @@ public class IDLTransformerTestCase extends TestCase {
         outputElements.add(statusElement);
 
         ElementInfo outputElement =
-            new ElementInfo(new QName(URI_ORDER_XSD, "checkOrderStatusResponse"), new TypeInfo(null, false,
-                                                                                               null));
+            new ElementInfo(new QName(URI_ORDER_XSD, "checkOrderStatusResponse"), new TypeInfo(null, false, null));
 
         responseType.setMetadata(ElementInfo.class.getName(), inputElement);
         responseType.setOperation(op);
@@ -194,14 +194,13 @@ public class IDLTransformerTestCase extends TestCase {
         assertEquals("checkOrderStatus", element.getLocalName());
 
         TransformationContext context1 = new TransformationContextImpl();
-        DataType<DataType> sourceType =
-            new DataType<DataType>(IDL_OUTPUT, Object.class, op.getOutputType());
+        DataType<DataType> sourceType = new DataType<DataType>(IDL_OUTPUT, Object.class, op.getOutputType());
         sourceType.setOperation(op.getOutputType().getOperation());
 
         context1.setSourceDataType(sourceType);
         DataType<DataType> targetType =
-            new DataType<DataType>(IDL_OUTPUT, Object.class,
-                                   new DataType<Class>("java.lang.Object", String.class, String.class));
+            new DataType<DataType>(IDL_OUTPUT, Object.class, new DataType<Class>("java.lang.Object", String.class,
+                                                                                 String.class));
         context1.setTargetDataType(targetType);
 
         Document factory = DOMHelper.newDocument();

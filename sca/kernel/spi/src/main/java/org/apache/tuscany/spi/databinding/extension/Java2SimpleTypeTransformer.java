@@ -18,11 +18,12 @@
  */
 package org.apache.tuscany.spi.databinding.extension;
 
+import javax.xml.namespace.QName;
+
 import org.apache.tuscany.spi.databinding.PullTransformer;
 import org.apache.tuscany.spi.databinding.SimpleTypeMapper;
 import org.apache.tuscany.spi.databinding.TransformationContext;
-import org.apache.tuscany.spi.idl.ElementInfo;
-import org.apache.tuscany.spi.idl.TypeInfo;
+import org.apache.tuscany.spi.idl.XMLType;
 
 /**
  * Transformer to convert data from a simple java object to a databinding's representation
@@ -41,11 +42,9 @@ public abstract class Java2SimpleTypeTransformer<T> extends TransformerExtension
     }
 
     public T transform(Object source, TransformationContext context) {
-        ElementInfo element =
-                (ElementInfo) context.getTargetDataType().getMetadata(ElementInfo.class.getName());
-        TypeInfo simpleType = (TypeInfo) element.getType();
-        String text = mapper.toXMLLiteral(simpleType, source, context);
-        return createElement(element, text, context);
+        XMLType xmlType = (XMLType) context.getTargetDataType().getLogical();
+        String text = mapper.toXMLLiteral(xmlType.getTypeName(), source, context);
+        return createElement(xmlType.getElementName(), text, context);
     }
 
     public Class getSourceType() {
@@ -56,6 +55,6 @@ public abstract class Java2SimpleTypeTransformer<T> extends TransformerExtension
         return 10000;
     }
 
-    protected abstract T createElement(ElementInfo element, String literal, TransformationContext context);
+    protected abstract T createElement(QName element, String literal, TransformationContext context);
 
 }

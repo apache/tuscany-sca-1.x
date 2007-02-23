@@ -21,6 +21,7 @@ package org.apache.tuscany.databinding.sdo;
 
 import junit.framework.TestCase;
 
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
 import com.example.stock.sdo.InvalidSymbolFault;
@@ -49,7 +50,7 @@ public class SDOExceptionHandlerTestCase extends TestCase {
     public void testGetFaultType() {
         DataType<?> dataType = handler.getFaultType(InvalidSymbolFault_Exception.class);
         assertEquals(InvalidSymbolFault.class, dataType.getPhysical());
-        assertEquals(InvalidSymbolFault_Exception.FAULT_ELEMENT, dataType.getLogical());
+        assertEquals(InvalidSymbolFault_Exception.FAULT_ELEMENT, ((XMLType) dataType.getLogical()).getElementName());
         assertEquals(SDODataBinding.NAME, dataType.getDataBinding());
     }
 

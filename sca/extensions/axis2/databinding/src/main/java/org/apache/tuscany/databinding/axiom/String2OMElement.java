@@ -32,6 +32,7 @@ import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.databinding.TransformationException;
 import org.apache.tuscany.spi.databinding.Transformer;
 import org.apache.tuscany.spi.databinding.extension.TransformerExtension;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 import org.osoa.sca.annotations.Service;
 
@@ -58,14 +59,15 @@ public class String2OMElement extends TransformerExtension<String, OMElement> im
     private void adjustElementName(TransformationContext context, OMElement element) {
         if (context != null) {
             DataType dataType = context.getTargetDataType();
-            Object targetQName = dataType == null ? null : dataType.getLogical();
-            if (!(targetQName instanceof QName)) {
+            Object logical = dataType == null ? null : dataType.getLogical();
+            if (!(logical instanceof XMLType)) {
                 return;
             }
-            if (!element.getQName().equals(targetQName)) {
+            XMLType xmlType = (XMLType) logical;
+            if(xmlType.isElement() && !xmlType.getElementName().equals(element.getQName())) {
                 // TODO: Throw expection or switch to the new Element
                 OMFactory factory = OMAbstractFactory.getOMFactory();
-                QName name = (QName)targetQName;
+                QName name = xmlType.getElementName();
                 OMNamespace namespace = factory.createOMNamespace(name.getNamespaceURI(), name.getPrefix());
                 element.setNamespace(namespace);
                 element.setLocalName(name.getLocalPart());

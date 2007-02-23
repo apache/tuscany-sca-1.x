@@ -33,6 +33,7 @@ import org.apache.tuscany.spi.databinding.Transformer;
 import org.apache.tuscany.spi.databinding.WrapperHandler;
 import org.apache.tuscany.spi.databinding.extension.TransformerExtension;
 import org.apache.tuscany.spi.idl.ElementInfo;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
 import org.apache.tuscany.spi.model.WrapperInfo;
@@ -104,7 +105,7 @@ public class Input2InputTransformer extends TransformerExtension<Object[], Objec
             sourceWrapperHandler = getWapperHandler(sourceType.getOperation().getDataBinding(), true);
         }
 
-        DataType<List<DataType<QName>>> targetType = context.getTargetDataType();
+        DataType<List<DataType<XMLType>>> targetType = context.getTargetDataType();
         Operation<?> targetOp = (Operation<?>)targetType.getOperation();
         boolean targetWrapped = targetOp != null && targetOp.isWrapperStyle();
         WrapperHandler targetWrapperHandler = null;
@@ -129,11 +130,11 @@ public class Input2InputTransformer extends TransformerExtension<Object[], Objec
             if (source == null) {
                 return new Object[] {targetWrapper};
             }
-            List<DataType<QName>> argTypes = wrapper.getUnwrappedInputType().getLogical();
+            List<DataType<XMLType>> argTypes = wrapper.getUnwrappedInputType().getLogical();
 
             for (int i = 0; i < source.length; i++) {
                 ElementInfo argElement = wrapper.getInputChildElements().get(i);
-                DataType<QName> argType = argTypes.get(i);
+                DataType<XMLType> argType = argTypes.get(i);
                 Object child = source[i];
                 child =
                     mediator.mediate(source[i], sourceType.getLogical().get(i), argType, context
@@ -152,9 +153,9 @@ public class Input2InputTransformer extends TransformerExtension<Object[], Objec
                 ElementInfo wrapperElement = sourceOp.getWrapper().getInputWrapperElement();
                 // Object targetWrapper =
                 // targetWrapperHandler.create(wrapperElement, context);
-                DataType<QName> targetWrapperType =
-                    new DataType<QName>(targetType.getOperation().getDataBinding(), Object.class,
-                                        wrapperElement.getQName());
+                DataType<XMLType> targetWrapperType =
+                    new DataType<XMLType>(targetType.getOperation().getDataBinding(), Object.class,
+                                        new XMLType(wrapperElement));
                 Object targetWrapper =
                     mediator.mediate(sourceWrapper,
                                      sourceType.getLogical().get(0),
@@ -165,7 +166,7 @@ public class Input2InputTransformer extends TransformerExtension<Object[], Objec
                 Object[] sourceChildren = sourceWrapperHandler.getChildren(sourceWrapper).toArray();
                 target = new Object[sourceChildren.length];
                 for (int i = 0; i < sourceChildren.length; i++) {
-                    DataType<QName> childType =
+                    DataType<XMLType> childType =
                         sourceOp.getWrapper().getUnwrappedInputType().getLogical().get(i);
                     target[i] =
                         mediator.mediate(sourceChildren[i], childType, targetType.getLogical().get(i), context

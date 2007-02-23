@@ -36,11 +36,6 @@ import org.apache.tuscany.spi.idl.TypeInfo;
 
 public class SimpleTypeMapperExtension extends XSDDataTypeConverter implements SimpleTypeMapper {
 
-    public static final int BASE64_ENCODING = 1;
-    public static final int HEXBIN_ENCODING = 2;
-
-    public static final String SET = "set";
-
     public static final Map<Class, String> JAVA2XML = new HashMap<Class, String>();
 
     public static final String URI_2001_SCHEMA_XSD = "http://www.w3.org/2001/XMLSchema";
@@ -218,7 +213,6 @@ public class SimpleTypeMapperExtension extends XSDDataTypeConverter implements S
         XML2JAVA.put("NOTATION", javax.xml.namespace.QName.class);
     }
 
-    private int byteEncoding = BASE64_ENCODING;
     private DatatypeFactory factory;
 
     public SimpleTypeMapperExtension() {
@@ -230,19 +224,19 @@ public class SimpleTypeMapperExtension extends XSDDataTypeConverter implements S
         }
     }
 
-    public Class getJavaType(TypeInfo xmlType) {
-        TypeInfo baseType = xmlType;
-        while (baseType.getBaseType() != null) {
-            baseType = baseType.getBaseType();
+    public Class getJavaType(QName xmlType) {
+        if (URI_2001_SCHEMA_XSD.equals(xmlType.getNamespaceURI())) {
+            return XML2JAVA.get(xmlType.getLocalPart());
+        } else {
+            return null;
         }
-        return XML2JAVA.get(baseType.getQName().getLocalPart());
     }
 
     public TypeInfo getXMLType(Class javaType) {
         return XSD_SIMPLE_TYPES.get(JAVA2XML.get(javaType));
     }
 
-    public Object toJavaObject(TypeInfo simpleType, String literal, TransformationContext context) {
+    public Object toJavaObject(QName simpleType, String literal, TransformationContext context) {
         /**
          * <ul>
          * <li>xsd:string --- java.lang.String
@@ -278,15 +272,8 @@ public class SimpleTypeMapperExtension extends XSDDataTypeConverter implements S
             return null;
         }
         String value = literal.trim();
-        if (!simpleType.isSimpleType()) {
-            throw new IllegalArgumentException("Complex type is not supported for simple java databinding.");
-        }
-        TypeInfo baseType = simpleType;
-        while (baseType.getBaseType() != null) {
-            baseType = (TypeInfo)baseType.getBaseType();
-        }
 
-        QName type = baseType.getQName();
+        QName type = simpleType;
         if (type.equals(XSD_STRING)) {
             return parseString(value);
         } else if (type.equals(XSD_INT)) {
@@ -364,7 +351,7 @@ public class SimpleTypeMapperExtension extends XSDDataTypeConverter implements S
         return factory.newXMLGregorianCalendar(calendar);
     }
 
-    public String toXMLLiteral(TypeInfo simpleType, Object obj, TransformationContext context) {
+    public String toXMLLiteral(QName simpleType, Object obj, TransformationContext context) {
         if (obj instanceof Float || obj instanceof Double) {
             if (obj instanceof Float) {
                 return printDouble(((Float)obj).floatValue());
@@ -380,16 +367,11 @@ public class SimpleTypeMapperExtension extends XSDDataTypeConverter implements S
             return ((XMLGregorianCalendar)obj).toXMLFormat();
         } else if (obj instanceof byte[]) {
             if (simpleType != null) {
-                if (simpleType.getQName().equals(XSD_BASE64)) {
-                    byteEncoding = BASE64_ENCODING;
-                } else if (simpleType.getQName().equals(XSD_HEXBIN)) {
-                    byteEncoding = BASE64_ENCODING;
+                if (simpleType.equals(XSD_BASE64)) {
+                    return printBase64Binary((byte[])obj);
+                } else if (simpleType.equals(XSD_HEXBIN)) {
+                    return printHexBinary((byte[])obj);
                 }
-            }
-            if (byteEncoding == BASE64_ENCODING) {
-                return printBase64Binary((byte[])obj);
-            } else if (byteEncoding == HEXBIN_ENCODING) {
-                return printHexBinary((byte[])obj);
             }
         } else if (obj instanceof QName) {
             NamespaceContext namespaceContext =
@@ -402,14 +384,6 @@ public class SimpleTypeMapperExtension extends XSDDataTypeConverter implements S
     public static boolean isSimpleXSDType(QName typeName) {
         return typeName.getNamespaceURI().equals(URI_2001_SCHEMA_XSD) 
             && XSD_SIMPLE_TYPES.get(typeName.getLocalPart()) != null;
-    }
-
-    public int getByteEncoding() {
-        return byteEncoding;
-    }
-
-    public void setByteEncoding(int byteEncoding) {
-        this.byteEncoding = byteEncoding;
     }
 
 }

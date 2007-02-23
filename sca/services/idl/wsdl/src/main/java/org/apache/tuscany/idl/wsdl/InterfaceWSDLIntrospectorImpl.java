@@ -28,6 +28,7 @@ import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.idl.InvalidServiceContractException;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.InteractionScope;
 import org.osoa.sca.annotations.Constructor;
 
@@ -47,10 +48,10 @@ public class InterfaceWSDLIntrospectorImpl implements InterfaceWSDLIntrospector 
     }
 
     // FIXME: Do we want to deal with document-literal wrapped style based on the JAX-WS spec?
-    protected Map<String, org.apache.tuscany.spi.model.Operation<QName>> introspectOperations(PortType portType)
+    protected Map<String, org.apache.tuscany.spi.model.Operation<XMLType>> introspectOperations(PortType portType)
         throws InvalidServiceContractException {
-        Map<String, org.apache.tuscany.spi.model.Operation<QName>> operations =
-                new HashMap<String, org.apache.tuscany.spi.model.Operation<QName>>();
+        Map<String, org.apache.tuscany.spi.model.Operation<XMLType>> operations =
+                new HashMap<String, org.apache.tuscany.spi.model.Operation<XMLType>>();
         for (Object op : portType.getOperations()) {
             Operation wsdlOp = (Operation) op;
             operations.put(wsdlOp.getName(), introspectOperation(wsdlOp));
@@ -58,7 +59,7 @@ public class InterfaceWSDLIntrospectorImpl implements InterfaceWSDLIntrospector 
         return operations;
     }
 
-    protected org.apache.tuscany.spi.model.Operation<QName> introspectOperation(Operation wsdlOp)
+    protected org.apache.tuscany.spi.model.Operation<XMLType> introspectOperation(Operation wsdlOp)
         throws InvalidServiceContractException {
 
         WSDLOperation op = new WSDLOperation(wsdlOp, null, wsdlDefinitionRegistry.getSchemaRegistry());

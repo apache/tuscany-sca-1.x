@@ -27,6 +27,7 @@ import javax.xml.namespace.QName;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
 import com.example.ipo.jaxb.ObjectFactory;
@@ -57,23 +58,25 @@ public class JAXBDataBindingTestCase extends TestCase {
         boolean yes = binding.introspect(dataType, null);
         assertTrue(yes);
         assertTrue(dataType.getDataBinding().equals(binding.getName()));
-        assertTrue(dataType.getPhysical() == JAXBElement.class && dataType.getLogical() == null);
+        assertTrue(dataType.getPhysical() == JAXBElement.class && dataType.getLogical() == XMLType.UNKNOWN);
         dataType = new DataType(MockJAXBElement.class, null);
         yes = binding.introspect(dataType, null);
         assertTrue(yes);
         assertEquals(MockJAXBElement.class, dataType.getPhysical());
-        assertEquals(new QName("http://www.example.com/IPO", "PurchaseOrderType"), dataType.getLogical());
+        assertEquals(new QName("http://www.example.com/IPO", "PurchaseOrderType"), ((XMLType)dataType.getLogical())
+            .getTypeName());
         dataType = new DataType(USAddress.class, null);
         yes = binding.introspect(dataType, null);
         assertTrue(yes);
         assertEquals(USAddress.class, dataType.getPhysical());
-        assertEquals(new QName("http://www.example.com/IPO", "USAddress"), dataType.getLogical());
+        assertEquals(new QName("http://www.example.com/IPO", "USAddress"), ((XMLType)dataType.getLogical())
+            .getTypeName());
         dataType = new DataType(USState.class, null);
         yes = binding.introspect(dataType, null);
         assertTrue(yes);
         assertTrue(dataType.getDataBinding().equals(binding.getName()));
         assertEquals(USState.class, dataType.getPhysical());
-        assertEquals(new QName("http://www.example.com/IPO", "USState"), dataType.getLogical());
+        assertEquals(new QName("http://www.example.com/IPO", "USState"), ((XMLType)dataType.getLogical()).getTypeName());
 
     }
 

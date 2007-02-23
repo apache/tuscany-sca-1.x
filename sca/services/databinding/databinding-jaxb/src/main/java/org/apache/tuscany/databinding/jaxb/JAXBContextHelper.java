@@ -29,7 +29,7 @@ import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.databinding.TransformationException;
-import org.apache.tuscany.spi.idl.ElementInfo;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
 
@@ -84,15 +84,21 @@ public class JAXBContextHelper {
             return (JAXBElement)value;
         } else {
             Class type = (Class)dataType.getPhysical();
-            ElementInfo elementInfo = (ElementInfo)dataType.getMetadata(ElementInfo.class.getName());
+            Object logical = dataType.getLogical();
             QName elementName = JAXBDataBinding.ROOT_ELEMENT;
-            if (elementInfo != null) {
-                elementName = elementInfo.getQName();
+            if (logical instanceof XMLType) {
+                XMLType xmlType = (XMLType)logical;
+                QName element = xmlType.getElementName();
+                if (element != null) {
+                    elementName = element;
+                } else {
+                    /**
+                     * Set the declared type to Object.class so that xsi:type
+                     * will be produced
+                     */
+                    type = Object.class;
+                }
             } else {
-                /**
-                 * Set the declared type to Object.class so that xsi:type will
-                 * be produced
-                 */
                 type = Object.class;
             }
             return new JAXBElement(elementName, type, value);

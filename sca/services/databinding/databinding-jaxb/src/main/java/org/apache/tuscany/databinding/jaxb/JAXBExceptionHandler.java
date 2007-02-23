@@ -26,7 +26,7 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.WebFault;
 
 import org.apache.tuscany.spi.databinding.ExceptionHandler;
-import org.apache.tuscany.spi.idl.ElementInfo;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
 /**
@@ -51,10 +51,7 @@ public class JAXBExceptionHandler implements ExceptionHandler {
      * protocol specific fault information
      * </ul>
      */
-    public Exception createException(DataType<DataType> exceptionType,
-                                     String message,
-                                     Object faultInfo,
-                                     Throwable cause) {
+    public Exception createException(DataType<DataType> exceptionType, String message, Object faultInfo, Throwable cause) {
         Class exceptionClass = (Class)exceptionType.getPhysical();
         DataType<?> faultBeanType = exceptionType.getLogical();
         Class faultBeanClass = (Class)faultBeanType.getPhysical();
@@ -97,8 +94,10 @@ public class JAXBExceptionHandler implements ExceptionHandler {
             // The logical type of a fault is the QName of the element that the
             // only part in
             // the fault message references
-            DataType<QName> faultType = new DataType<QName>(JAXBDataBinding.NAME, faultBeanClass, element);
-            faultType.setMetadata(ElementInfo.class.getName(), new ElementInfo(element, null));
+            DataType<XMLType> faultType =
+                new DataType<XMLType>(JAXBDataBinding.NAME, faultBeanClass, new XMLType(element, null));
+            // faultType.setMetadata(ElementInfo.class.getName(), new
+            // ElementInfo(element, null));
             return faultType;
         }
     }

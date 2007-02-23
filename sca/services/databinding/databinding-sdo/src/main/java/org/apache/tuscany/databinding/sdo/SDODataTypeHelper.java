@@ -26,7 +26,7 @@ import org.apache.tuscany.sdo.util.SDOUtil;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
-import org.apache.tuscany.spi.idl.ElementInfo;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
 import commonj.sdo.helper.HelperContext;
@@ -83,11 +83,15 @@ public final class SDODataTypeHelper {
     }
 
     public static QName getElement(DataType<?> dataType) {
-        ElementInfo info = (ElementInfo)dataType.getMetadata().get(ElementInfo.class.getName());
-        if (info == null) {
-            return SDODataBinding.ROOT_ELEMENT;
-        } else {
-            return info.getQName();
+        Object logical = dataType.getLogical();
+        QName elementName = SDODataBinding.ROOT_ELEMENT;
+        if (logical instanceof XMLType) {
+            XMLType xmlType = (XMLType)logical;
+            QName element = xmlType.getElementName();
+            if (element != null) {
+                elementName = element;
+            }
         }
+        return elementName;
     }
 }
