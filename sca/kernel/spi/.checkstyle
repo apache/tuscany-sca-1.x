@@ -3,7 +3,7 @@
     <local-check-config name="Tuscany" location="F:\TuscanyLatest\buildtools\src\main\resources\tuscany-checkstyle.xml" type="external" description="">
         <additional-data name="protect-config-file" value="false"/>
     </local-check-config>
-    <fileset name="all" enabled="true" check-config-name="Tuscany" local="false">
+    <fileset name="all" enabled="true" check-config-name="Tuscany Checks" local="false">
         <file-match-pattern match-pattern="." include-pattern="true"/>
     </fileset>
 </fileset-config>
