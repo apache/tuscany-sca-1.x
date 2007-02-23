@@ -76,6 +76,7 @@ public class JavaComponentTypeLoader extends ComponentTypeLoaderExtension<JavaIm
                 ServiceContract<?> newServiceContract = sideFileSD.getServiceContract();
                 // TODO: TUSCANY-1111, runtime requires interfaceClass but currently there's no way of gen'ing that from WSDL
                 newServiceContract.setInterfaceClass(actualSD.getServiceContract().getInterfaceClass());
+                newServiceContract.setDataBinding(actualSD.getServiceContract().getDataBinding());
                 actualSD.setServiceContract(newServiceContract);
             }
         }
