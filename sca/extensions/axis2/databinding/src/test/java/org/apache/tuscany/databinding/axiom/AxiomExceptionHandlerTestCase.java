@@ -28,6 +28,7 @@ import junit.framework.TestCase;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.impl.builder.StAXOMBuilder;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
 /**
@@ -81,7 +82,7 @@ public class AxiomExceptionHandlerTestCase extends TestCase {
     public void testGetFaultType() {
         DataType<?> dataType = handler.getFaultType(AxiomFaultException.class);
         assertEquals(OMElement.class, dataType.getPhysical());
-        assertEquals(OMElement.class, dataType.getLogical());
+        assertEquals(XMLType.UNKNOWN, dataType.getLogical());
         assertEquals(AxiomDataBinding.NAME, dataType.getDataBinding());
         dataType = handler.getFaultType(Exception.class);
         assertNull(dataType);

@@ -21,6 +21,7 @@ package org.apache.tuscany.databinding.axiom;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.tuscany.spi.databinding.ExceptionHandler;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
 /**
@@ -45,7 +46,7 @@ public class AxiomExceptionHandler implements ExceptionHandler {
 
     public DataType<?> getFaultType(Class<? extends Exception> exceptionType) {
         if (AxiomFaultException.class == exceptionType) {
-            DataType<Class> faultType = new DataType<Class>(AxiomDataBinding.NAME, OMElement.class, OMElement.class);
+            DataType<XMLType> faultType = new DataType<XMLType>(AxiomDataBinding.NAME, OMElement.class, XMLType.UNKNOWN);
             return faultType;
         } else {
             return null;
