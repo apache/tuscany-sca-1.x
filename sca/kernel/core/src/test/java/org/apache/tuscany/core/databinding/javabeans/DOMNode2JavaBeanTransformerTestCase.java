@@ -35,6 +35,7 @@ import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.databinding.extension.DOMHelper;
 import org.apache.tuscany.spi.idl.ElementInfo;
 import org.apache.tuscany.spi.idl.TypeInfo;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 import org.easymock.EasyMock;
 import org.w3c.dom.Document;
@@ -75,12 +76,12 @@ public class DOMNode2JavaBeanTransformerTestCase extends TestCase {
         TypeInfo typeInfo = new TypeInfo(null, false, null);
 
         TransformationContext context = EasyMock.createMock(TransformationContext.class);
-        DataType<Class> targetDataType = new DataType<Class>(null, SamplePropertyBean.class);
+        DataType<Class> targetDataType = new DataType<Class>(SamplePropertyBean.class, SamplePropertyBean.class);
         EasyMock.expect(context.getTargetDataType()).andReturn(targetDataType).anyTimes();
 
-        DataType<Class> sourceDataType = new DataType<Class>(null, null);
-        ElementInfo eleInfo = new ElementInfo(null, typeInfo);
-        sourceDataType.setMetadata(ElementInfo.class.getName(), eleInfo);
+        DataType<XMLType> sourceDataType = new DataType<XMLType>(null, new XMLType(typeInfo));
+        // ElementInfo eleInfo = new ElementInfo(null, typeInfo);
+        // sourceDataType.setMetadata(ElementInfo.class.getName(), eleInfo);
         EasyMock.expect(context.getSourceDataType()).andReturn(sourceDataType).anyTimes();
         EasyMock.replay(context);
 

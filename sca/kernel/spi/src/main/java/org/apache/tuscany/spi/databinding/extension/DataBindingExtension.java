@@ -28,6 +28,8 @@ import java.io.ObjectStreamClass;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import org.osoa.sca.annotations.EagerInit;
 import org.osoa.sca.annotations.Init;
@@ -57,6 +59,7 @@ public abstract class DataBindingExtension implements DataBinding {
     protected Class<?> baseType;
 
     protected String name;
+    protected String[] aliases; 
 
     /**
      * Create a databinding with the base java type whose name will be used as
@@ -66,7 +69,7 @@ public abstract class DataBindingExtension implements DataBinding {
      *            databinding, for example, org.w3c.dom.Node
      */
     protected DataBindingExtension(Class<?> baseType) {
-        this(baseType.getName(), baseType);
+        this(baseType.getName(), null, baseType);
     }
 
     /**
@@ -77,9 +80,22 @@ public abstract class DataBindingExtension implements DataBinding {
      *            databinding, for example, org.w3c.dom.Node
      */
     protected DataBindingExtension(String name, Class<?> baseType) {
+        this(name, null, baseType);
+    }
+    
+    /**
+     * Create a databinding with the name and base java type
+     * 
+     * @param name The name of the databinding
+     * @param aliases The aliases of the databinding
+     * @param baseType The base java class or interface representing the
+     *            databinding, for example, org.w3c.dom.Node
+     */
+    protected DataBindingExtension(String name, String[] aliases, Class<?> baseType) {
         this.name = name;
         this.baseType = baseType;
-    }
+        this.aliases = aliases;
+    }    
 
     @Autowire
     public void setDataBindingRegistry(DataBindingRegistry registry) {
@@ -93,7 +109,10 @@ public abstract class DataBindingExtension implements DataBinding {
 
     public boolean introspect(DataType type, Annotation[] annotations) {
         assert type != null;
-        Object physical = type.getPhysical();
+        Type physical = type.getPhysical();
+        if (physical instanceof ParameterizedType) {
+            physical = ((ParameterizedType)physical).getRawType();
+        }
         if (physical instanceof Class) {
             Class cls = (Class)physical;
             if (baseType != null && baseType.isAssignableFrom(cls)) {
@@ -103,6 +122,15 @@ public abstract class DataBindingExtension implements DataBinding {
             }
         }
         return false;
+    }
+    
+    protected static org.apache.tuscany.api.annotation.DataType getDataTypeAnnotation(Annotation[] annotations) {
+        for (Annotation a : annotations) {
+            if (a.annotationType() == org.apache.tuscany.api.annotation.DataType.class) {
+                return (org.apache.tuscany.api.annotation.DataType) a;
+            }
+        }
+        return null;
     }
 
     public DataType introspect(Object value) {
@@ -193,7 +221,7 @@ public abstract class DataBindingExtension implements DataBinding {
     }
 
     public String[] getAliases() {
-        return null;
+        return aliases;
     }
 
 }

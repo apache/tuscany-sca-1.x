@@ -35,7 +35,7 @@ import java.util.Map;
  * @version $Rev$ $Date$
  */
 public class DataType<L> extends ModelObject implements Cloneable {
-    private String dataBinding = Object.class.getName();
+    private String dataBinding;
 
     private final Type physical;
 

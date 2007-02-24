@@ -72,22 +72,27 @@ public class DataBindingRegistryImplTestCase extends TestCase {
 
         registry.register(db2);
 
+        // Lookup by name
         String name = db1.getName();
         DataBinding db3 = registry.getDataBinding(name);
-        Assert.assertTrue(db1 == db3);
+        assertSame(db1, db3);
 
+        // Look up by alias
+        DataBinding db5 = registry.getDataBinding("db1");
+        assertSame(db1, db5);
+        
         DataType dt = new DataType(ContentHandler.class, null);
         registry.introspectType(dt, null);
-        Assert.assertEquals(dataType1.getLogical(), ContentHandler.class);
-        Assert.assertTrue(dt.getDataBinding().equalsIgnoreCase(name));
+        assertEquals(dataType1.getLogical(), ContentHandler.class);
+        assertTrue(dt.getDataBinding().equalsIgnoreCase("java.lang.Object"));
 
         registry.unregister(name);
         DataBinding db4 = registry.getDataBinding(name);
-        Assert.assertNull(db4);
+        assertNull(db4);
 
         dt = new DataType(null, String.class, null);
         registry.introspectType(dt, null);
-        Assert.assertEquals("java.lang.Object", dt.getDataBinding());
+        assertEquals("java.lang.Object", dt.getDataBinding());
     }
 
 }

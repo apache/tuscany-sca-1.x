@@ -36,6 +36,6 @@ public class JavaBeansDataBinding extends DataBindingExtension {
     public static final String NAME = Object.class.getName();
 
     public JavaBeansDataBinding() {
-        super(Object.class);
+        super(NAME, Object.class);
     }
 }

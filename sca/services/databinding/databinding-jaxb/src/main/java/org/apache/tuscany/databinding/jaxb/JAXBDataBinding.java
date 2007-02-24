@@ -43,10 +43,15 @@ import org.w3c.dom.Document;
  * JAXB DataBinding
  */
 public class JAXBDataBinding extends DataBindingExtension {
+    public static final String NAME = JAXBElement.class.getName();
+    public static final String[] ALIASES = new String[] {"jaxb"};
+
     public static final String ROOT_NAMESPACE = "http://tuscany.apache.org/xmlns/sca/databinding/jaxb/1.0";
     public static final QName ROOT_ELEMENT = new QName(ROOT_NAMESPACE, "root");
 
-    public static final String NAME = JAXBElement.class.getName();
+    public JAXBDataBinding() {
+        super(NAME, ALIASES, JAXBElement.class);
+    }
 
     @Override
     public boolean introspect(DataType dataType, Annotation[] annotations) {
@@ -129,10 +134,6 @@ public class JAXBDataBinding extends DataBindingExtension {
             return null;
         }
         return new XMLType(null, new QName(namespace, name));
-    }
-
-    public JAXBDataBinding() {
-        super(NAME, JAXBElement.class);
     }
 
     @SuppressWarnings("unchecked")

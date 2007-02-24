@@ -165,6 +165,7 @@ public class DataBindingInteceptor implements Interceptor {
     }
 
     private DataType getFaultType(DataType exceptionType) {
+        // FIXME: We cannot assume the exception will have a databinding set
         DataBinding targetDataBinding =
             mediator.getDataBindingRegistry().getDataBinding(exceptionType.getDataBinding());
         if (targetDataBinding == null) {

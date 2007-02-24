@@ -51,12 +51,25 @@
         <system:implementation.system class="org.apache.tuscany.core.databinding.impl.DataTypeLoader" />
     </component>
 
-    <!-- Simple databindings -->
     <component name="databinding.dom">
-        <system:implementation.system class="org.apache.tuscany.core.databinding.impl.SimpleDataBinding" />
-        <property name="className">org.w3c.dom.Node</property>
-    </component>
+        <system:implementation.system class="org.apache.tuscany.core.databinding.xml.DOMDataBinding" />
+   </component>
     
+    <component name="databinding.xmlString">
+        <system:implementation.system class="org.apache.tuscany.core.databinding.xml.XMLStringDataBinding" />
+   </component>
+       
+    <!-- Group databindings -->
+    <!-- 
+    <component name="databinding.group.common">
+        <system:implementation.system class="org.apache.tuscany.core.databinding.impl.CommonGroupDataBinding" />
+   </component>
+   -->
+
+    <component name="databinding.stax">
+        <system:implementation.system class="org.apache.tuscany.core.databinding.xml.StAXDataBinding" />
+    </component>
+       
     <component name="databinding.javabeans">
         <system:implementation.system class="org.apache.tuscany.core.databinding.javabeans.JavaBeansDataBinding" />
     </component>
@@ -71,9 +84,12 @@
         <system:implementation.system class="org.apache.tuscany.core.databinding.impl.Exception2ExceptionTransformer" />
     </component>
 
-
     <component name="transformer.Output2OutputTransformer">
         <system:implementation.system class="org.apache.tuscany.core.databinding.impl.Output2OutputTransformer" />
+    </component>
+
+    <component name="transformer.Group2GroupTransformer">
+        <system:implementation.system class="org.apache.tuscany.core.databinding.impl.Group2GroupTransformer" />
     </component>
 
     <component name="transformer.InputSource2Node">

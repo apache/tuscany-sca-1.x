@@ -31,9 +31,10 @@ import org.apache.tuscany.spi.databinding.extension.DataBindingExtension;
  */
 public class DOMDataBinding extends DataBindingExtension {
     public static final String NAME = Node.class.getName();
+    public static final String[] ALIASES = new String[] {"dom"};
 
     public DOMDataBinding() {
-        super(Node.class);
+        super(NAME, ALIASES, Node.class);
     }
 
     @Override
@@ -44,13 +45,8 @@ public class DOMDataBinding extends DataBindingExtension {
     public Object copy(Object source) {
         if (Node.class.isAssignableFrom(source.getClass())) {
             Node nodeSource = (Node) source;
-            Node2String strTransformer = new Node2String();
-            String stringCopy = strTransformer.transform(nodeSource, null);
-
-            String2Node nodeTransformer = new String2Node();
-            return nodeTransformer.transform(stringCopy, null);
+            return nodeSource.cloneNode(true);
         }
-
         return super.copy(source);
     }
 }

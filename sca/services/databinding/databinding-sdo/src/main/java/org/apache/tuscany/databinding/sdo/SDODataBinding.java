@@ -43,14 +43,16 @@ import commonj.sdo.impl.HelperProvider;
  * @version $Reve$ $Date$
  */
 public class SDODataBinding extends DataBindingExtension {
-    public static final String NAME = "commonj.sdo.DataObject";
+    public static final String NAME = DataObject.class.getName();
+    public static final String[] ALIASES = new String[] {"sdo"};
+    
     public static final String ROOT_NAMESPACE = "commonj.sdo";
     public static final QName ROOT_ELEMENT = new QName(ROOT_NAMESPACE, "dataObject");
 
     private WrapperHandler<Object> wrapperHandler;
 
     public SDODataBinding() {
-        super(DataObject.class);
+        super(NAME, ALIASES, DataObject.class);
         wrapperHandler = new SDOWrapperHandler();
     }
 
@@ -65,6 +67,7 @@ public class SDODataBinding extends DataBindingExtension {
         // FIXME: Need a better to test dynamic SDO
         if (DataObject.class.isAssignableFrom(javaType)) {
             // Dynamic SDO
+            dataType.setDataBinding(getName());
             dataType.setLogical(XMLType.UNKNOWN);
             return true;
         }
@@ -80,6 +83,7 @@ public class SDODataBinding extends DataBindingExtension {
         String namespace = type.getURI();
         String name = context.getXSDHelper().getLocalName(type);
         QName xmlType = new QName(namespace, name);
+        dataType.setDataBinding(getName());
         dataType.setLogical(new XMLType(null, xmlType));
         return true;
     }

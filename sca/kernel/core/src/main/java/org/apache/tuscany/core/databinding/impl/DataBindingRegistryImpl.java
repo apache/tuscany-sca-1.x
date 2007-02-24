@@ -33,7 +33,7 @@ import org.osoa.sca.annotations.EagerInit;
 
 /**
  * The default implementation of a data binding registry
- *
+ * 
  * @version $Rev$ $Date$
  */
 @EagerInit
@@ -72,32 +72,42 @@ public class DataBindingRegistryImpl implements DataBindingRegistry {
         }
         return dataBinding;
     }
-    
+
     private Set<DataBinding> getDataBindings() {
         return new HashSet<DataBinding>(bindings.values());
     }
 
     public boolean introspectType(DataType dataType, Annotation[] annotations) {
         for (DataBinding binding : getDataBindings()) {
-            //don't introspect for JavaBeansDatabinding as all javatypes will anyways match to its basetype 
-            //which is java.lang.Object.  Default to this only if no databinding results
+            // don't introspect for JavaBeansDatabinding as all javatypes will
+            // anyways match to its basetype
+            // which is java.lang.Object. Default to this only if no databinding
+            // results
             if (!binding.getName().equals(JavaBeansDataBinding.NAME)) {
                 if (binding.introspect(dataType, annotations)) {
                     return true;
                 }
             }
         }
-        if (dataType.getDataBinding() == null) {
-            dataType.setDataBinding(JavaBeansDataBinding.NAME);
+        // FIXME: Should we honor the databinding from operation/interface
+        // level?
+        Object physical = dataType.getPhysical();
+        if (physical instanceof Class) {
+            if (physical == Object.class || Throwable.class.isAssignableFrom((Class)physical)) {
+                return false;
+            }
         }
+        dataType.setDataBinding(JavaBeansDataBinding.NAME);
         return false;
     }
 
     public DataType introspectType(Object value) {
         DataType dataType = null;
         for (DataBinding binding : getDataBindings()) {
-            //don't introspect for JavaBeansDatabinding as all javatypes will anyways match to its basetype 
-            //which is java.lang.Object.  Default to this only if no databinding results
+            // don't introspect for JavaBeansDatabinding as all javatypes will
+            // anyways match to its basetype
+            // which is java.lang.Object. Default to this only if no databinding
+            // results
             if (!binding.getName().equals(JavaBeansDataBinding.NAME)) {
                 dataType = binding.introspect(value);
             }

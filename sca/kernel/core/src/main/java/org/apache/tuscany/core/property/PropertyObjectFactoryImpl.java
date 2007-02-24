@@ -34,6 +34,7 @@ import org.apache.tuscany.spi.databinding.Mediator;
 import org.apache.tuscany.spi.databinding.extension.SimpleTypeMapperExtension;
 import org.apache.tuscany.spi.idl.ElementInfo;
 import org.apache.tuscany.spi.idl.TypeInfo;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.PropertyObjectFactory;
 import org.apache.tuscany.spi.model.DataType;
@@ -53,8 +54,10 @@ public class PropertyObjectFactoryImpl implements PropertyObjectFactory {
     public PropertyObjectFactoryImpl() {
     }
 
-    @Constructor({"registry", "mediator"})
-    public PropertyObjectFactoryImpl(@Autowire DataBindingRegistry registry, @Autowire Mediator mediator) {
+    @Constructor( {"registry", "mediator"})
+    public PropertyObjectFactoryImpl(@Autowire
+    DataBindingRegistry registry, @Autowire
+    Mediator mediator) {
         super();
         this.registry = registry;
         this.mediator = mediator;
@@ -66,28 +69,29 @@ public class PropertyObjectFactoryImpl implements PropertyObjectFactory {
         }
         return new ObjectFactoryImpl<T>(property, value);
     }
-    
-    public <T> ObjectFactory<List<T>> createListObjectFactory(Property<T> property, PropertyValue<T> value) throws LoaderException {
+
+    public <T> ObjectFactory<List<T>> createListObjectFactory(Property<T> property, PropertyValue<T> value)
+        throws LoaderException {
         if (mediator == null) {
             return new SimpleMultivaluedPropertyObjectFactory<T>(property, value.getValue());
         }
         return new ListObjectFactoryImpl<T>(property, value);
     }
 
-    
     public class ObjectFactoryImplBase<P> {
         protected Property<P> property;
         protected PropertyValue<P> propertyValue;
-        protected DataType<QName> sourceDataType;
+        protected DataType<XMLType> sourceDataType;
         protected DataType<?> targetDataType;
 
         public ObjectFactoryImplBase(Property<P> property, PropertyValue<P> propertyValue) {
             this.property = property;
             this.propertyValue = propertyValue;
-            sourceDataType = new DataType<QName>(DOMDataBinding.NAME, Node.class, this.property.getXmlType());
+            sourceDataType =
+                new DataType<XMLType>(DOMDataBinding.NAME, Node.class, new XMLType(null, this.property.getXmlType()));
             TypeInfo typeInfo = null;
             if (this.property.getXmlType() != null) {
-                if (SimpleTypeMapperExtension.isSimpleXSDType(this.property.getXmlType())) { 
+                if (SimpleTypeMapperExtension.isSimpleXSDType(this.property.getXmlType())) {
                     typeInfo = new TypeInfo(property.getXmlType(), true, null);
                 } else {
                     typeInfo = new TypeInfo(property.getXmlType(), false, null);
@@ -95,43 +99,50 @@ public class PropertyObjectFactoryImpl implements PropertyObjectFactory {
             } else {
                 typeInfo = new TypeInfo(property.getXmlType(), false, null);
             }
-            
-            ElementInfo elementInfo = new ElementInfo(null, typeInfo);
-            sourceDataType.setMetadata(ElementInfo.class.getName(), elementInfo);
+
+            XMLType xmlType = new XMLType(typeInfo);
+            /*
+             * ElementInfo elementInfo = new ElementInfo(null, typeInfo);
+             * sourceDataType.setMetadata(ElementInfo.class.getName(),
+             * elementInfo);
+             */
             Class javaType = this.property.getJavaType();
             String dataBinding = (String)property.getExtensions().get(DataBinding.class.getName());
             if (dataBinding != null) {
-                targetDataType = new DataType<Class>(dataBinding, javaType, javaType);
+                targetDataType = new DataType<XMLType>(dataBinding, javaType, xmlType);
             } else {
-                targetDataType = new DataType<Class>(dataBinding, javaType, javaType);
+                targetDataType = new DataType<XMLType>(dataBinding, javaType, xmlType);
                 registry.introspectType(targetDataType, null);
             }
         }
     }
 
     public class ObjectFactoryImpl<P> extends ObjectFactoryImplBase<P> implements ObjectFactory<P> {
-        
+
         public ObjectFactoryImpl(Property<P> property, PropertyValue<P> propertyValue) {
             super(property, propertyValue);
         }
-    
+
         @SuppressWarnings("unchecked")
         public P getInstance() throws ObjectCreationException {
             return (P)mediator.mediate(propertyValue.getValue().get(0), sourceDataType, targetDataType, null);
         }
     }
-        
+
     public class ListObjectFactoryImpl<P> extends ObjectFactoryImplBase<P> implements ObjectFactory<List<P>> {
-        
+
         public ListObjectFactoryImpl(Property<P> property, PropertyValue<P> propertyValue) {
             super(property, propertyValue);
         }
-    
+
         @SuppressWarnings("unchecked")
         public List<P> getInstance() throws ObjectCreationException {
             List<P> instances = new ArrayList<P>();
-            for (int count = 0; count < propertyValue.getValue().size() ; ++count) {
-                instances.add((P)mediator.mediate(propertyValue.getValue().get(count), sourceDataType, targetDataType, null));
+            for (int count = 0; count < propertyValue.getValue().size(); ++count) {
+                instances.add((P)mediator.mediate(propertyValue.getValue().get(count),
+                                                  sourceDataType,
+                                                  targetDataType,
+                                                  null));
             }
             return instances;
         }

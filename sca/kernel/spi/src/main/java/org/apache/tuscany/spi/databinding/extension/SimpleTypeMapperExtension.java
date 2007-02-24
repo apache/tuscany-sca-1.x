@@ -382,6 +382,9 @@ public class SimpleTypeMapperExtension extends XSDDataTypeConverter implements S
     }
 
     public static boolean isSimpleXSDType(QName typeName) {
+        if (typeName == null) {
+            return false;
+        }
         return typeName.getNamespaceURI().equals(URI_2001_SCHEMA_XSD) 
             && XSD_SIMPLE_TYPES.get(typeName.getLocalPart()) != null;
     }

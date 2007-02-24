@@ -21,31 +21,32 @@ package org.apache.tuscany.core.databinding.xml;
 
 import java.lang.annotation.Annotation;
 
+import javax.xml.stream.XMLStreamReader;
+
 import org.apache.tuscany.spi.databinding.extension.DataBindingExtension;
 import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 
 /**
- * A DataBinding for the XML string
+ * A DataBinding for the StAX
  * 
  * @version $Rev$ $Date$
  */
-public class XMLStringDataBinding extends DataBindingExtension {
-    public static final String NAME = String.class.getName();
-    public static final String[] ALIASES = new String[] {"xml.string"};
+public class StAXDataBinding extends DataBindingExtension {
+    public static final String NAME = XMLStreamReader.class.getName();
+    public static final String[] ALIASES = new String[] {"stax"};
 
-    public XMLStringDataBinding() {
-        super(NAME, ALIASES, String.class);
+    public StAXDataBinding() {
+        super(NAME, ALIASES, XMLStreamReader.class);
     }
 
-    @Override
     public boolean introspect(DataType type, Annotation[] annotations) {
-        if (registry.getDataBinding(type.getDataBinding()) == this) {
-            type.setDataBinding(getName());
+        if (super.introspect(type, annotations)) {
             type.setLogical(XMLType.UNKNOWN);
             return true;
         } else {
             return false;
         }
     }
+
 }

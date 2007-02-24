@@ -27,6 +27,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.namespace.QName;
+
 import org.apache.tuscany.spi.databinding.PullTransformer;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.databinding.Transformer;
@@ -34,6 +36,7 @@ import org.apache.tuscany.spi.databinding.extension.SimpleTypeMapperExtension;
 import org.apache.tuscany.spi.databinding.extension.TransformerExtension;
 import org.apache.tuscany.spi.idl.ElementInfo;
 import org.apache.tuscany.spi.idl.TypeInfo;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.osoa.sca.annotations.Service;
 
 /**
@@ -57,23 +60,15 @@ public abstract class XML2JavaBeanTransformer<T> extends TransformerExtension<T,
     }
     
     public Object transform(T source, TransformationContext context) {
-        TypeInfo xmlType =
-                (TypeInfo) context.getSourceDataType().getMetadata(TypeInfo.class.getName());
-        if (xmlType == null) {
-            ElementInfo element =
-                    (ElementInfo) context.getSourceDataType()
-                                         .getMetadata(ElementInfo.class.getName());
-            xmlType = (TypeInfo) element.getType();
-        }
-
-        return toJavaObject(xmlType, getRootElement(source), context);
+        XMLType xmlType = (XMLType) context.getSourceDataType().getLogical();
+        return toJavaObject(xmlType.getTypeName(), getRootElement(source), context);
     }
 
-    public Object toJavaObject(TypeInfo xmlType, T xmlElement, TransformationContext context) {
-        if (xmlType.isSimpleType()) {
-            return mapper.toJavaObject(xmlType.getQName(), getText(xmlElement), context);
+    public Object toJavaObject(QName xmlType, T xmlElement, TransformationContext context) {
+        if (SimpleTypeMapperExtension.isSimpleXSDType(xmlType)) {
+            return mapper.toJavaObject(xmlType, getText(xmlElement), context);
         } else {
-            Class<?> javaType = (Class<?>) context.getTargetDataType().getLogical();
+            Class<?> javaType = (Class<?>)context.getTargetDataType().getPhysical();
             return createJavaObject(xmlElement, javaType, context);
         }
     }

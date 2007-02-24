@@ -23,6 +23,9 @@ import java.util.List;
 
 import org.osoa.sca.annotations.EagerInit;
 
+import org.apache.tuscany.spi.annotation.Autowire;
+import org.apache.tuscany.spi.databinding.DataBinding;
+import org.apache.tuscany.spi.databinding.DataBindingRegistry;
 import org.apache.tuscany.spi.databinding.Transformer;
 import org.apache.tuscany.spi.databinding.TransformerRegistry;
 
@@ -31,7 +34,8 @@ import org.apache.tuscany.spi.databinding.TransformerRegistry;
  */
 @EagerInit
 public class TransformerRegistryImpl implements TransformerRegistry {
-
+    private DataBindingRegistry dataBindingRegistry;
+    
     private final DirectedGraph<Object, Transformer> graph = new DirectedGraph<Object, Transformer>();
 
     public void registerTransformer(String sourceType, String resultType, int weight, Transformer transformer) {
@@ -55,8 +59,10 @@ public class TransformerRegistryImpl implements TransformerRegistry {
     }
 
     public List<Transformer> getTransformerChain(String sourceType, String resultType) {
+        String source = normalize(sourceType);
+        String result = normalize(resultType);
         List<Transformer> transformers = new ArrayList<Transformer>();
-        DirectedGraph<Object, Transformer>.Path path = graph.getShortestPath(sourceType, resultType);
+        DirectedGraph<Object, Transformer>.Path path = graph.getShortestPath(source, result);
         if (path == null) {
             return null;
         }
@@ -68,6 +74,28 @@ public class TransformerRegistryImpl implements TransformerRegistry {
 
     public String toString() {
         return graph.toString();
+    }
+
+    /**
+     * @param dataBindingRegistry the dataBindingRegistry to set
+     */
+    @Autowire
+    public void setDataBindingRegistry(DataBindingRegistry dataBindingRegistry) {
+        this.dataBindingRegistry = dataBindingRegistry;
+    }
+    
+    /**
+     * Normalize the id to a name of a data binding as databindings may have aliases
+     * @param id
+     * @return
+     */
+    private String normalize(String id) {
+        if (dataBindingRegistry != null) {
+            DataBinding dataBinding = dataBindingRegistry.getDataBinding(id);
+            return dataBinding == null ? id : dataBinding.getName();
+        } else {
+            return id;
+        }
     }
 
 }
