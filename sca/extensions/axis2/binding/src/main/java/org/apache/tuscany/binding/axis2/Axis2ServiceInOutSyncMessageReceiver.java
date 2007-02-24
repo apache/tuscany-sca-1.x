@@ -20,12 +20,15 @@ package org.apache.tuscany.binding.axis2;
 
 import java.lang.reflect.InvocationTargetException;
 
+import javax.xml.namespace.QName;
+
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.soap.SOAPEnvelope;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.Constants;
 import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.receivers.AbstractInOutSyncMessageReceiver;
+import org.apache.tuscany.spi.idl.ServiceFaultException;
 import org.apache.tuscany.spi.model.Operation;
 import org.apache.tuscany.spi.wire.InvocationRuntimeException;
 
@@ -46,7 +49,9 @@ public class Axis2ServiceInOutSyncMessageReceiver extends AbstractInOutSyncMessa
 
     @Override
     public void invokeBusinessLogic(MessageContext inMC, MessageContext outMC) throws AxisFault {
+        QName envQName = null;
         try {
+            envQName= inMC.getEnvelope().getQName();
             OMElement requestOM = inMC.getEnvelope().getBody().getFirstElement();
             Object[] args = new Object[] {requestOM};
             
@@ -64,15 +69,49 @@ public class Axis2ServiceInOutSyncMessageReceiver extends AbstractInOutSyncMessa
 
         } catch (InvocationTargetException e) {
             e.printStackTrace();
-            Throwable t = e.getCause();
-            if (t instanceof Exception) {
-                throw AxisFault.makeFault((Exception)t);
-            }
-            throw new InvocationRuntimeException(e);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw AxisFault.makeFault(e);
-        }
+            throw processMessageFault(envQName.getNamespaceURI(), e.getCause());
+         } catch(InvocationRuntimeException e){
+             e.printStackTrace();
+             throw processMessageFault(envQName.getNamespaceURI(), e.getCause());
+         } catch (AxisFault e) {
+             e.printStackTrace();
+             throw e;
+         } catch (Exception e) {
+             e.printStackTrace();
+             throw AxisFault.makeFault(e);
+         }
+    }
 
+    /**
+     * @param envQName
+     * @param e
+     * @throws AxisFault
+     */
+    private AxisFault processMessageFault(String nsURI, Throwable t)  {
+        
+        if (t instanceof ServiceFaultException) { //Business fault.
+            OMElement faultdetail = null;
+            String reason = "";
+
+            ServiceFaultException sfe = (ServiceFaultException)t;
+            reason= sfe.getMessage(); 
+            reason = reason == null ? "" : reason;
+            Object finfo = sfe.getFaultInfo();
+
+            if (finfo instanceof OMElement) {
+                faultdetail = (OMElement)finfo;
+
+            }
+            QName faultCode= new QName(nsURI ,
+                                       org.apache.axiom.soap.SOAP12Constants.SOAP_FAULT_VALUE_SENDER);
+            return new AxisFault(faultCode, reason, null, null, faultdetail);
+
+
+        } else if ( t instanceof Exception) {
+            return  AxisFault.makeFault((Exception) t);
+        }
+        
+
+        return new AxisFault(t);
     }
 }
