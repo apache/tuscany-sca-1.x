@@ -18,9 +18,6 @@
  */
 package org.apache.tuscany.container.script;
 
-import static org.apache.tuscany.spi.idl.java.JavaIDLUtils.findMethod;
-
-import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import org.apache.tuscany.spi.ObjectCreationException;
