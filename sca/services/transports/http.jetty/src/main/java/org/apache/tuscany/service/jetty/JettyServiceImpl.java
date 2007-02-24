@@ -20,9 +20,13 @@ package org.apache.tuscany.service.jetty;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.resource.spi.work.Work;
 import javax.servlet.Servlet;
+import javax.servlet.ServletException;
 
 import org.apache.tuscany.api.annotation.Monitor;
 import org.apache.tuscany.spi.annotation.Autowire;
@@ -51,8 +55,9 @@ import org.osoa.sca.annotations.Service;
 
 /**
  * Implements an HTTP transport service using Jetty.
- *
- * @version $$Rev$$ $$Date$$
+ * 
+ * @version $$Rev$$ $$Date: 2007-02-21 13:28:30 +0000 (Wed, 21 Feb
+ *          2007) $$
  */
 @Scope("COMPOSITE")
 @Service(ServletHost.class)
@@ -86,25 +91,26 @@ public class JettyServiceImpl implements JettyService {
     static {
         // hack to replace the static Jetty logger
         System.setProperty("org.mortbay.log.class", JettyLogger.class.getName());
-         
+
     }
- 
-    public JettyServiceImpl(@Monitor TransportMonitor monitor,
-                            @Autowire WorkScheduler scheduler) {
+
+    public JettyServiceImpl(@Monitor
+    TransportMonitor monitor, @Autowire
+    WorkScheduler scheduler) {
         this.monitor = monitor;
         this.scheduler = scheduler;
-        // Jetty uses a static logger, so jam in the monitor into a static reference
+        // Jetty uses a static logger, so jam in the monitor into a static
+        // reference
         Logger logger = Log.getLogger(null);
         if (logger instanceof JettyLogger) {
-            JettyLogger jettyLogger = (JettyLogger) logger;
+            JettyLogger jettyLogger = (JettyLogger)logger;
             jettyLogger.setMonitor(this.monitor);
             if (debug) {
                 jettyLogger.setDebugEnabled(true);
             }
         }
-        
+
         httpPort = Integer.getInteger("Tuscany.JettyService.httpPort", httpPort);
-        
 
     }
 
@@ -155,20 +161,20 @@ public class JettyServiceImpl implements JettyService {
 
     @Destroy
     public void destroy() throws Exception {
-    	if (state == STARTED) {
-	        state = STOPPING;
-	        synchronized (joinLock) {
-	            joinLock.notifyAll();
-	        }
-	        server.stop();
-	        state = STOPPED;
-	        //monitor.shutdown();
-    	}
+        if (state == STARTED) {
+            state = STOPPING;
+            synchronized (joinLock) {
+                joinLock.notifyAll();
+            }
+            server.stop();
+            state = STOPPED;
+            // monitor.shutdown();
+        }
     }
 
     public void registerMapping(String path, Servlet servlet) {
-    	if (state == STARTING) {
-    		
+        if (state == STARTING) {
+
             try {
                 server = new Server();
                 if (scheduler == null) {
@@ -187,15 +193,15 @@ public class JettyServiceImpl implements JettyService {
                         sslConnector.setKeystore(keystore);
                         sslConnector.setPassword(certPassword);
                         sslConnector.setKeyPassword(keyPassword);
-                        server.setConnectors(new Connector[]{httpConnector, sslConnector});
+                        server.setConnectors(new Connector[] {httpConnector, sslConnector});
                     } else {
                         SelectChannelConnector selectConnector = new SelectChannelConnector();
                         selectConnector.setPort(httpPort);
-                        server.setConnectors(new Connector[]{selectConnector});
+                        server.setConnectors(new Connector[] {selectConnector});
                     }
                 } else {
                     connector.setPort(httpPort);
-                    server.setConnectors(new Connector[]{connector});
+                    server.setConnectors(new Connector[] {connector});
                 }
 
                 ContextHandler contextHandler = new ContextHandler();
@@ -210,15 +216,15 @@ public class JettyServiceImpl implements JettyService {
 
                 server.setStopAtShutdown(true);
                 server.setSendServerVersion(sendServerVersion);
-                //monitor.started();
+                // monitor.started();
                 server.start();
                 state = STARTED;
             } catch (Exception e) {
                 state = ERROR;
                 throw new SCAObjectStartException(e);
             }
-    	}
-    	
+        }
+
         ServletHolder holder = new ServletHolder(servlet);
         servletHandler.addServlet(holder);
         ServletMapping mapping = new ServletMapping();
@@ -227,13 +233,34 @@ public class JettyServiceImpl implements JettyService {
         servletHandler.addServletMapping(mapping);
     }
 
-    public Servlet unregisterMapping(String string) {
-//        throw new UnsupportedOperationException();
-        return null;
+    public Servlet unregisterMapping(String path) {
+        Servlet removedServlet = null;
+        List<ServletMapping> mappings = new ArrayList(Arrays.asList(servletHandler.getServletMappings()));
+        for (ServletMapping mapping : mappings) {
+            if (Arrays.asList(mapping.getPathSpecs()).contains(path)) {
+                try {
+                    removedServlet = servletHandler.getServlet(mapping.getServletName()).getServlet();
+                } catch (ServletException e) {
+                    throw new IllegalStateException(e);
+                }
+                mappings.remove(mapping);
+                break;
+            }
+        }
+        if (removedServlet != null) {
+            servletHandler.setServletMappings((ServletMapping[])mappings.toArray(new ServletMapping[mappings.size()]));
+        }
+        return removedServlet;
     }
 
     public boolean isMappingRegistered(String path) {
-        throw new UnsupportedOperationException();
+        ServletMapping[] mappings = servletHandler.getServletMappings();
+        for (ServletMapping mapping : mappings) {
+            if (Arrays.asList(mapping.getPathSpecs()).contains(path)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void registerComposite(File compositeLocation) throws IOException {
@@ -249,7 +276,8 @@ public class JettyServiceImpl implements JettyService {
     }
 
     /**
-     * An integration wrapper to enable use of a {@link WorkScheduler} with Jetty
+     * An integration wrapper to enable use of a {@link WorkScheduler} with
+     * Jetty
      */
     private class TuscanyThreadPool implements ThreadPool {
 

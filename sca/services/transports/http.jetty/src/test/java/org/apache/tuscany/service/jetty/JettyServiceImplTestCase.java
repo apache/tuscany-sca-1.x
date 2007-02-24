@@ -81,6 +81,29 @@ public class JettyServiceImplTestCase extends TestCase {
         assertTrue(servlet.invoked);
     }
 
+    public void testIsMappingRegistered() throws Exception {
+        JettyServiceImpl service = new JettyServiceImpl(monitor, null);
+        service.setHttpPort(HTTP_PORT);
+        service.init();
+        TestServlet servlet = new TestServlet();
+        service.registerMapping("/foo", servlet);
+        assertTrue(service.isMappingRegistered("/foo"));
+        assertFalse(service.isMappingRegistered("/bar"));
+        service.destroy();
+    }
+
+    public void testUnregisterMapping() throws Exception {
+        JettyServiceImpl service = new JettyServiceImpl(monitor, null);
+        service.setHttpPort(HTTP_PORT);
+        service.init();
+        TestServlet servlet = new TestServlet();
+        service.registerMapping("/foo", servlet);
+        assertTrue(service.isMappingRegistered("/foo"));
+        service.unregisterMapping("/foo");
+        assertFalse(service.isMappingRegistered("/foo"));
+        service.destroy();
+    }
+
     public void testRequestSession() throws Exception {
         JettyServiceImpl service = new JettyServiceImpl(monitor, scheduler);
         service.setDebug(true);
