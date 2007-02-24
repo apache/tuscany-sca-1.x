@@ -71,14 +71,9 @@ public class ScriptInstanceFactory implements ObjectFactory<ScriptInstance> {
             // TODO: hack to get Ruby working with the standalone launcher
             Thread.currentThread().setContextClassLoader(BSFManager.class.getClassLoader());
 
-//            // register any context objects (SCA properties and references)
-//            for (String beanName : context.keySet()) {
-//                bsfManager.registerBean(beanName, context.get(beanName));
-//            }
-
             // register any context objects (SCA properties and references)
             for (Map.Entry<String, ObjectFactory> entry : contextObjects.entrySet()) {
-                bsfManager.registerBean(entry.getKey(), entry.getValue().getInstance());
+                bsfManager.declareBean(entry.getKey(), entry.getValue().getInstance(), Object.class);
             }
 
             String scriptLanguage = BSFManager.getLangFromFilename(resourceName);
