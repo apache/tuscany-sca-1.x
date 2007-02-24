@@ -32,12 +32,6 @@ public class HelloWorldClientTestCase extends SCATestCase {
 
     private CompositeContext compositeContext;
     
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        this.compositeContext = CurrentCompositeContext.getContext();
-    }
-    
     public void testHelloWorldJavaScript() throws Exception {
         HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldJSComponent");
         String msg = helloWorldService.getGreetings("Petra");
@@ -63,6 +57,13 @@ public class HelloWorldClientTestCase extends SCATestCase {
 //        Assert.assertEquals("groovyHello Petra", msg);
 //    }
 
+    @Override
+    protected void setUp() throws Exception {
+        setApplicationSCDL(getClass().getResource("/META-INF/sca/helloworld.composite"));
+        super.setUp();
+        this.compositeContext = CurrentCompositeContext.getContext();
+    }
+    
     @Override
     protected void tearDown() throws Exception {
     	super.tearDown();
