@@ -61,7 +61,6 @@ public class ScriptComponentBuilderTestCase extends TestCase {
         ComponentDefinition<ScriptImplementation> impl =
             new ComponentDefinition<ScriptImplementation>(new ScriptImplementation());
         ScriptComponentType componentType = new ScriptComponentType();
-        componentType.setLifecycleScope(Scope.COMPOSITE);
         ServiceDefinition service = new ServiceDefinition();
         ServiceContract serviceContract = new JavaServiceContract();
         service.setServiceContract(serviceContract);

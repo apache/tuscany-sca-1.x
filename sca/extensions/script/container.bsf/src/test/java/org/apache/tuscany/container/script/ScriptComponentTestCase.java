@@ -18,17 +18,18 @@
  */
 package org.apache.tuscany.container.script;
 
+import static org.apache.tuscany.spi.model.Operation.NO_CONVERSATION;
+
 import java.lang.reflect.Type;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.apache.tuscany.spi.component.ScopeContainer;
 import org.apache.tuscany.spi.model.Operation;
-import static org.apache.tuscany.spi.model.Operation.NO_CONVERSATION;
 import org.apache.tuscany.spi.model.Scope;
 import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.wire.TargetInvoker;
-
-import junit.framework.TestCase;
 import org.easymock.EasyMock;
 
 public class ScriptComponentTestCase extends TestCase {
@@ -37,10 +38,7 @@ public class ScriptComponentTestCase extends TestCase {
 
     @SuppressWarnings("unchecked")
     public void testCreateTargetInvoker() {
-        ComponentConfiguration config = new ComponentConfiguration();
-        config.setName("foo");
-        config.setScopeContainer(container);
-        ScriptComponent component = new ScriptComponent(config);
+        ScriptComponent component = new ScriptComponent("foo", null, null, null, null,null,0,null, container.getScope());
         Operation<Type> operation = new Operation<Type>("hashCode", null, null, null, false, null, NO_CONVERSATION);
         operation.setServiceContract(new Contract<Type>(List.class));
         TargetInvoker invoker = component.createTargetInvoker("hashCode", operation, null);

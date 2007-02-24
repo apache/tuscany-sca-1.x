@@ -30,17 +30,8 @@ import org.apache.tuscany.spi.model.ServiceDefinition;
  */
 public class ScriptComponentType extends ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> {
 
-    private Scope lifecycleScope = Scope.COMPOSITE;
-
     public ScriptComponentType() {
-    }
-
-    public Scope getLifecycleScope() {
-        return lifecycleScope;
-    }
-
-    public void setLifecycleScope(Scope lifecycleScope) {
-        this.lifecycleScope = lifecycleScope;
+        this.implementationScope = Scope.COMPOSITE;
     }
 
 }

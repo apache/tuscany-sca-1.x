@@ -18,10 +18,6 @@
  */
 package org.apache.tuscany.container.script;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.apache.tuscany.spi.builder.BuilderConfigException;
 import org.apache.tuscany.spi.component.Component;
 import org.apache.tuscany.spi.component.CompositeComponent;
@@ -31,7 +27,6 @@ import org.apache.tuscany.spi.extension.ComponentBuilderExtension;
 import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.PropertyValue;
 import org.apache.tuscany.spi.model.Scope;
-import org.apache.tuscany.spi.model.ServiceDefinition;
 
 /**
  * Extension point for creating {@link ScriptComponent}s from an assembly configuration
@@ -47,52 +42,45 @@ public class ScriptComponentBuilder extends ComponentBuilderExtension<ScriptImpl
         return ScriptImplementation.class;
     }
 
-    @SuppressWarnings("unchecked")
     public Component build(CompositeComponent parent, ComponentDefinition<ScriptImplementation> componentDefinition,
                            DeploymentContext deploymentContext) throws BuilderConfigException {
 
-        String name = componentDefinition.getName();
         ScriptImplementation implementation = componentDefinition.getImplementation();
-        ScriptComponentType componentType = implementation.getComponentType();
 
-        // get list of serviceBindings provided by this component
-        Collection<ServiceDefinition> collection = componentType.getServices().values();
-        List<Class<?>> services = new ArrayList<Class<?>>(collection.size());
-        for (ServiceDefinition serviceDefinition : collection) {
-            services.add(serviceDefinition.getServiceContract().getInterfaceClass());
+        ScriptInstanceFactory instanceFactory = createInstanceFactory(componentDefinition, implementation);
+
+        String name = componentDefinition.getName();
+        Scope scope = getScope(deploymentContext, implementation.getComponentType());
+
+        return new ScriptComponent(name, parent, wireService, workContext, workScheduler, null, 0, instanceFactory, scope);
+    }
+
+    private ScriptInstanceFactory createInstanceFactory(ComponentDefinition<ScriptImplementation> componentDefinition, ScriptImplementation implementation) {
+
+        String className = implementation.getClassName();
+        String scriptSource = implementation.getScriptSource();
+        String scriptName = implementation.getScriptName();
+        ClassLoader cl = implementation.getClassLoader();
+
+        ScriptInstanceFactory instanceFactory = new ScriptInstanceFactory(scriptName, className, scriptSource, cl);
+
+        // add the properties for the component
+        for (PropertyValue propertyValue : componentDefinition.getPropertyValues().values()) {
+            instanceFactory.addContextObjectFactory(propertyValue.getName(), propertyValue.getValueFactory());
         }
 
-        // TODO: have ComponentBuilderExtension pass ScopeContainer in on build method?
+        return instanceFactory;
+    }
+
+    protected Scope getScope(DeploymentContext deploymentContext, ScriptComponentType componentType) {
         ScopeContainer scopeContainer;
-        Scope scope = componentType.getLifecycleScope();
+        Scope scope = componentType.getImplementationScope();
         if (Scope.COMPOSITE == scope) {
             scopeContainer = deploymentContext.getCompositeScope();
         } else {
             scopeContainer = scopeRegistry.getScopeContainer(scope);
         }
-        String className = implementation.getClassName();
-        String scriptSource = implementation.getScriptSource();
-        String scriptName = implementation.getScriptName();
-        ClassLoader cl = implementation.getClassLoader();
-        ScriptInstanceFactory instanceFactory =
-            new ScriptInstanceFactory(scriptName, className, scriptSource, cl);
-
-        // get the properties for the component
-        for (PropertyValue propertyValue : componentDefinition.getPropertyValues().values()) {
-            //TODO this is not safe for since multiple instances can share mutable properties
-            instanceFactory.addContextObjectFactory(propertyValue.getName(), propertyValue.getValueFactory());
-        }
-
-        ComponentConfiguration config = new ComponentConfiguration();
-        config.setName(name);
-        config.setFactory(instanceFactory);
-        config.setServices(services);
-        config.setParent(parent);
-        config.setScopeContainer(scopeContainer);
-        config.setWireService(wireService);
-        config.setWorkContext(workContext);
-        config.setWorkScheduler(workScheduler);
-        return new ScriptComponent(config);
+        return scopeContainer.getScope();
     }
 
 }

@@ -24,6 +24,8 @@ import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.ComponentTypeLoaderExtension;
 import org.apache.tuscany.spi.loader.LoaderException;
+import org.apache.tuscany.spi.loader.MissingResourceException;
+import org.apache.tuscany.spi.loader.MissingSideFileException;
 import org.apache.tuscany.spi.model.ComponentType;
 
 /**

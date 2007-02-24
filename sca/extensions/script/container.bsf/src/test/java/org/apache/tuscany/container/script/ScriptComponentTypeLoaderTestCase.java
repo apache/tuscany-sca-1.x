@@ -20,14 +20,16 @@ package org.apache.tuscany.container.script;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import javax.xml.stream.XMLStreamException;
+
+import junit.framework.TestCase;
 
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
-
-import junit.framework.TestCase;
+import org.apache.tuscany.spi.loader.MissingSideFileException;
 import org.easymock.EasyMock;
 import org.easymock.IAnswer;
 
