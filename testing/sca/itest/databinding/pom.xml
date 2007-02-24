@@ -18,14 +18,14 @@
  * under the License.    
 -->
 <project>
-	<parent>
-        <groupId>org.apache.tuscany.sca.services.databinding</groupId>
-		<artifactId>parent</artifactId>
-		<version>0.1-integration-incubating-SNAPSHOT</version>
-	</parent>
-
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>databinding-test</artifactId>
+    <parent>
+        <groupId>org.apache.tuscany.testing</groupId>
+        <artifactId>sca-itest</artifactId>
+        <version>0.1-integration-incubating-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>databinding-test</artifactId>
     <packaging>jar</packaging>
     <name>Apache Tuscany Data Binding Integration Test</name>
 	<description>Apache Tuscany Data Binding Integration Test</description>
@@ -46,7 +46,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
             <artifactId>tuscany-spi</artifactId>
-				<version>0.1-integration-incubating-SNAPSHOT</version>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 		<dependency>
@@ -81,12 +81,10 @@
         </dependency>
         		
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.easymock</groupId>
             <artifactId>easymock</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
         </dependency>
         
         <dependency>
@@ -137,6 +135,7 @@
             <plugin>
 				<groupId>org.apache.tuscany.sdo</groupId>
 				<artifactId>tuscany-sdo-plugin</artifactId>
+                                <version>1.0-incubator-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<id>generate-sdo</id>
