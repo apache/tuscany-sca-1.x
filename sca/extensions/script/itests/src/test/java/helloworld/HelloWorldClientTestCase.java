@@ -50,6 +50,12 @@ public class HelloWorldClientTestCase extends SCATestCase {
         Assert.assertEquals("rbHello Petra", msg);
     }
 
+    public void testHelloWorldPython() throws Exception {
+        HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldPythonComponent");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("pyHello Petra", msg);
+    }
+
     @Override
     protected void tearDown() throws Exception {
     	super.tearDown();

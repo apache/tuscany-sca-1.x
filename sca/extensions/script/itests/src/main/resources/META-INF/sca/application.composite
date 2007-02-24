@@ -29,4 +29,8 @@
         <implementation.script script="helloworld/helloworld.rb"/>
     </component>
 
+    <component name="HelloWorldPythonComponent">
+        <implementation.script script="helloworld/helloworld.py"/>
+    </component>
+
 </composite>

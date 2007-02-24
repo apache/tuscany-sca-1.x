@@ -30,6 +30,17 @@
     <name>Apache Tuscany Script Container ITests</name>
     <description>Apache Tuscany Script Container Itests</description>
 
+    <repositories>
+       <!-- This is reqquired for Jython as 2.2 Beta1 hasn't made it to the maven repos yet -->
+       <repository>
+          <id>ant</id>
+          <url>http://people.apache.org/~antelder/maven2</url>
+          <snapshots>
+             <enabled>true</enabled>
+          </snapshots>
+       </repository>
+    </repositories>
+
     <dependencies>
 
         <dependency>
@@ -65,6 +76,13 @@
             <groupId>org.jruby</groupId>
             <artifactId>jruby</artifactId>
             <version>0.9.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>jython</groupId>
+            <artifactId>jython</artifactId>
+            <version>2.2b1</version>
             <scope>test</scope>
         </dependency>
 
