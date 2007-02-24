@@ -31,18 +31,37 @@
     <packaging>pom</packaging>
     <name>Apache Tuscany SCA Data Bindings</name>
 
-    <modules>
-        <module>databinding-jaxb</module>
-        <module>databinding-sdo</module>
-    </modules>
-
     <profiles>
         <profile>
-            <id>unstable</id>
+            <id>stable</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <modules>
+                <module>databinding-jaxb</module>
+                <module>databinding-sdo</module>
                 <module>databinding-xmlbeans</module>
             </modules>
         </profile>
+
+        <profile>
+            <id>integration</id>
+            <modules>
+                <module>databinding-jaxb</module>
+                <module>databinding-sdo</module>
+                <module>databinding-xmlbeans</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>unstable</id>
+            <modules>
+                <module>databinding-jaxb</module>
+                <module>databinding-sdo</module>
+                <module>databinding-xmlbeans</module>
+            </modules>
+        </profile>
+
     </profiles>
 
 </project>
