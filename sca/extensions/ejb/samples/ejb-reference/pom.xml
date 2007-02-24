@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * 
+ * (C) Copyright IBM Corp. 2004, 2006  All Rights Reserved
+ * 
+ -->
+<project>
+    <parent>
+        <groupId>org.apache.tuscany.sca.extensions.ejb.samples</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1-integration-incubating-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>tuscany-sample-ejb-reference</artifactId>
+    <packaging>jar</packaging>
+    <name>Tuscany EJB reference binding Sample</name>
+    <description>uscany EJB reference binding Sample</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.osoa</groupId>
+            <artifactId>sca-api-r1.0</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-test</artifactId>
+            <version>${scaImplVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca.extensions.ejb</groupId>
+            <artifactId>tuscany-ejb</artifactId>
+            <version>${scaImplVersion}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>account.AccountClient</mainClass> 
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
