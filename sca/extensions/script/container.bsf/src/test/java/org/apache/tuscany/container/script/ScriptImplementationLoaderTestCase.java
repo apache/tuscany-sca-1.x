@@ -108,7 +108,8 @@ public class ScriptImplementationLoaderTestCase extends TestCase {
             mockLoader.load(parent, null, reader, deploymentContext);
             fail();
         } catch (MissingResourceException e) {
-            assertEquals("foo.py", e.getMessage());
+            assertEquals("Missing resource", e.getMessage());
+            assertEquals("foo.py", e.getIdentifier());
         }
         verify(reader);
         verify(deploymentContext);
