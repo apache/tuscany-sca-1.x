@@ -67,9 +67,7 @@ public class ScriptComponent extends AtomicComponentExtension {
     }
 
     public TargetInvoker createTargetInvoker(String targetName, Operation operation, InboundWire callbackWire) {
-        Method[] methods = operation.getServiceContract().getInterfaceClass().getMethods();
-        Method method = findMethod(operation, methods);
-        return new ScriptTargetInvoker(method.getName(), this);
+        return new ScriptTargetInvoker(operation.getName(), this);
     }
 
     @SuppressWarnings({"unchecked"})

@@ -61,13 +61,6 @@
         </dependency>
 
         <dependency>
-            <groupId>rhino</groupId>
-            <artifactId>js</artifactId>
-            <version>1.6R2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.easymock</groupId>
             <artifactId>easymock</artifactId>
         </dependency>

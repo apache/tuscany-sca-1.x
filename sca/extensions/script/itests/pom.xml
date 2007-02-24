@@ -66,10 +66,10 @@
         </dependency>
 
         <dependency>
-            <groupId>rhino</groupId>
-            <artifactId>js</artifactId>
-            <version>1.6R2</version>
-            <scope>test</scope>
+            <groupId>org.apache.tuscany.sca.extensions</groupId>
+            <artifactId>tuscany-e4x</artifactId>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -92,6 +92,20 @@
             <version>1.0</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca.services.idl</groupId>
+            <artifactId>tuscany-wsdl</artifactId>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+
+		<dependency>
+			<groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
+			<artifactId>databinding-axiom</artifactId>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+            <scope>test</scope>
+		</dependency>
 
     </dependencies>
 

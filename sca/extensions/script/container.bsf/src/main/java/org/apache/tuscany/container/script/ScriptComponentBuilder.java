@@ -24,9 +24,11 @@ import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.component.ScopeContainer;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.ComponentBuilderExtension;
+import org.apache.tuscany.spi.idl.java.JavaServiceContract;
 import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.PropertyValue;
 import org.apache.tuscany.spi.model.Scope;
+import org.apache.tuscany.spi.model.ServiceDefinition;
 
 /**
  * Extension point for creating {@link ScriptComponent}s from an assembly configuration
@@ -46,6 +48,13 @@ public class ScriptComponentBuilder extends ComponentBuilderExtension<ScriptImpl
                            DeploymentContext deploymentContext) throws BuilderConfigException {
 
         ScriptImplementation implementation = componentDefinition.getImplementation();
+        
+        for (ServiceDefinition service : implementation.getComponentType().getServices().values()) {
+            // if its not a Java interface assume WSDL and want XML databinding
+            if (!(service.getServiceContract() instanceof JavaServiceContract)) {
+                service.getServiceContract().setDataBinding("org.mozilla.javascript.xml.XMLObject");
+            }
+        }
 
         ScriptInstanceFactory instanceFactory = createInstanceFactory(componentDefinition, implementation);
 
