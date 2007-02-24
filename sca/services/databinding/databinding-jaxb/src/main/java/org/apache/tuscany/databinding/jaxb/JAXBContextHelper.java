@@ -107,17 +107,15 @@ public class JAXBContextHelper {
 
     @SuppressWarnings("unchecked")
     public static Object createReturnValue(DataType dataType, Object value) {
-        Class<?> cls = (Class)dataType.getPhysical();
-        XmlRootElement element = cls.getAnnotation(XmlRootElement.class);
-        if (element == null) {
+        Class<?> cls = getJavaType(dataType);
+        if (cls == JAXBElement.class) {
+            return createJAXBElement(dataType, value);
+        } else {
             if (value instanceof JAXBElement) {
                 return ((JAXBElement)value).getValue();
             } else {
                 return value;
             }
-        } else {
-            QName root = new QName(element.namespace(), element.name());
-            return new JAXBElement(root, (Class)dataType.getPhysical(), value);
         }
     }
 

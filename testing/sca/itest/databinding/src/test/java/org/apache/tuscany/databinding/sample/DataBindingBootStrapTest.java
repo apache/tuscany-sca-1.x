@@ -25,6 +25,7 @@ import static org.easymock.EasyMock.replay;
 import java.io.StringReader;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 
@@ -33,6 +34,7 @@ import org.apache.tuscany.databinding.jaxb.Reader2JAXB;
 import org.apache.tuscany.databinding.sdo.String2DataObject;
 import org.apache.tuscany.databinding.xmlbeans.XMLStreamReader2XmlObject;
 import org.apache.tuscany.spi.databinding.TransformationContext;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
@@ -81,7 +83,7 @@ public class DataBindingBootStrapTest extends SCATestCase {
 
     @SuppressWarnings("unchecked")
     public void testDataBindingBootstrap() throws Exception {
-        DataType targetDataType = new DataType<Class>(Object.class, null);
+        DataType targetDataType = new DataType<XMLType>(Object.class, XMLType.UNKNOWN);
         targetDataType.setMetadata(JAXBContextHelper.JAXB_CONTEXT_PATH, contextPath);
         TransformationContext tContext = createMock(TransformationContext.class);
         expect(tContext.getTargetDataType()).andReturn(targetDataType).anyTimes();
@@ -91,23 +93,26 @@ public class DataBindingBootStrapTest extends SCATestCase {
         DataObject po1 = t1.transform(IPO_XML, null);
         client.call(po1);
 
-        XMLStreamReader reader =
-            XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(IPO_XML));
+        PurchaseOrderDocument.Factory.newInstance();
+
+        XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(IPO_XML));
         XMLStreamReader2XmlObject t2 = new XMLStreamReader2XmlObject();
         PurchaseOrderDocument po2 = (PurchaseOrderDocument)t2.transform(reader, null);
         client.call(po2.getPurchaseOrder());
 
+        QName root = new QName("http://www.example.com/IPO", "purchaseOrder");
+        DataType targetDataType1 = new DataType<XMLType>(PurchaseOrderType.class, new XMLType(root, null));
+        TransformationContext tContext1 = createMock(TransformationContext.class);
+        expect(tContext1.getTargetDataType()).andReturn(targetDataType1).anyTimes();
+        replay(tContext1);
         Reader2JAXB t3 = new Reader2JAXB();
-        JAXBElement<PurchaseOrderType> po3 =
-            (JAXBElement<PurchaseOrderType>)t3.transform(new StringReader(IPO_XML), tContext);
-        client.call(po3.getValue());
+        PurchaseOrderType po3 = (PurchaseOrderType)t3.transform(new StringReader(IPO_XML), tContext1);
+        client.call(po3);
 
     }
 
     protected void setUp() throws Exception {
         setApplicationSCDL(getClass(), "META-INF/sca/default.scdl");
-        addExtension("test-extensions", getClass().getClassLoader()
-            .getResource("META-INF/tuscany/test-extensions.scdl"));
         super.setUp();
         CompositeContext context = CurrentCompositeContext.getContext();
         client = context.locateService(Client.class, "Client");
