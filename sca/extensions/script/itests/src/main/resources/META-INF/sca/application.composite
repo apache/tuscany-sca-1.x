@@ -25,4 +25,8 @@
         <implementation.script script="helloworld/helloworld.js"/>
     </component>
 
+    <component name="HelloWorldRubyComponent">
+        <implementation.script script="helloworld/helloworld.rb"/>
+    </component>
+
 </composite>

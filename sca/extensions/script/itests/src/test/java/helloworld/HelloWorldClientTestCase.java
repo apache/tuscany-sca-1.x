@@ -38,12 +38,18 @@ public class HelloWorldClientTestCase extends SCATestCase {
         this.compositeContext = CurrentCompositeContext.getContext();
     }
     
-    public void testWSClient() throws Exception {
+    public void testHelloWorldJavaScript() throws Exception {
         HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldJSComponent");
         String msg = helloWorldService.getGreetings("Petra");
         Assert.assertEquals("jsHello Petra", msg);
     }
     
+    public void testHelloWorldRuby() throws Exception {
+        HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyComponent");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("rbHello Petra", msg);
+    }
+
     @Override
     protected void tearDown() throws Exception {
     	super.tearDown();
