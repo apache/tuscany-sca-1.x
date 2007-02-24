@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,25 +15,8 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-
-           name="ScriptItests">
-    
-    <component name="HelloWorldJSComponent">
-        <implementation.script script="helloworld/helloworld.js"/>
-    </component>
-
-    <component name="HelloWorldRubyComponent">
-        <implementation.script script="helloworld/helloworld.rb"/>
-    </component>
-
-    <component name="HelloWorldPythonComponent">
-        <implementation.script script="helloworld/helloworld.py"/>
-    </component>
-
-    <component name="HelloWorldGroovyComponent">
-        <implementation.script script="helloworld/helloworld.groovy" />
-    </component>
-
-</composite>
+ */
+ 
+String getGreetings(s) {
+   return "groovyHello " + s;
+}

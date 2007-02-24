@@ -56,6 +56,13 @@ public class HelloWorldClientTestCase extends SCATestCase {
         Assert.assertEquals("pyHello Petra", msg);
     }
 
+// TODO: Groovy doesn't work yet. Looks like a bug in the Groovy BSF engine
+//    public void testHelloWorldGroovy() throws Exception {
+//        HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldGroovyComponent");
+//        String msg = helloWorldService.getGreetings("Petra");
+//        Assert.assertEquals("groovyHello Petra", msg);
+//    }
+
     @Override
     protected void tearDown() throws Exception {
     	super.tearDown();
