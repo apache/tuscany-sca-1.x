@@ -39,6 +39,7 @@ public class ScriptInstanceFactory implements ObjectFactory<ScriptInstance> {
     private String className;
     private String scriptSource;
     private Map<String, ObjectFactory> contextObjects;
+    private Map<String, Class> contextTypes;
 
     public ScriptInstanceFactory(String resourceName,
                                  String className,
@@ -49,6 +50,7 @@ public class ScriptInstanceFactory implements ObjectFactory<ScriptInstance> {
         this.className = className;
         this.scriptSource = scriptSource;
         this.contextObjects = new HashMap<String, ObjectFactory>();
+        this.contextTypes = new HashMap<String, Class>();
     }
 
     /**
@@ -73,7 +75,12 @@ public class ScriptInstanceFactory implements ObjectFactory<ScriptInstance> {
 
             // register any context objects (SCA properties and references)
             for (Map.Entry<String, ObjectFactory> entry : contextObjects.entrySet()) {
-                bsfManager.declareBean(entry.getKey(), entry.getValue().getInstance(), Object.class);
+                Object value = entry.getValue().getInstance();
+                Class type = contextTypes.get(entry.getKey());
+                if (type == null) {
+                    type = value.getClass();
+                }
+                bsfManager.declareBean(entry.getKey(), value, type);
             }
 
             String scriptLanguage = BSFManager.getLangFromFilename(resourceName);
@@ -123,6 +130,11 @@ public class ScriptInstanceFactory implements ObjectFactory<ScriptInstance> {
 
     public void addContextObjectFactory(String name, ObjectFactory<?> factory) {
         contextObjects.put(name, factory);
+    }
+
+    public void addContextObjectFactory(String name, Class type, ObjectFactory<?> factory) {
+        contextObjects.put(name, factory);
+        contextTypes.put(name, type);
     }
 
 }

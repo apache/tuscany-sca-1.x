@@ -75,7 +75,7 @@ public class ScriptComponent extends AtomicComponentExtension {
     @SuppressWarnings({"unchecked"})
     protected void onReferenceWire(OutboundWire wire) {
         Class<?> clazz = wire.getServiceContract().getInterfaceClass();
-        factory.addContextObjectFactory(wire.getReferenceName(), new WireObjectFactory(clazz, wire, wireService));
+        factory.addContextObjectFactory(wire.getReferenceName(), clazz, new WireObjectFactory(clazz, wire, wireService));
     }
 
     public Object getTargetInstance() throws TargetResolutionException {

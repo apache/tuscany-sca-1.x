@@ -35,7 +35,7 @@ public class ScriptInstanceFactoryTestCase extends TestCase {
         BSFManager.registerScriptingEngine("mock", MockBSFEngine.class.getName(), new String[]{"mock"});
         ScriptInstanceFactory factory =
             new ScriptInstanceFactory("foo.mock", "bar", "baz", getClass().getClassLoader());
-        factory.addContextObjectFactory("foo", new SingletonObjectFactory("bar"));
+        factory.addContextObjectFactory("foo", String.class, new SingletonObjectFactory("bar"));
         ScriptInstanceImpl instance = (ScriptInstanceImpl) factory.getInstance();
         assertNotNull(instance);
         assertNotNull(instance.bsfEngine);
@@ -45,7 +45,7 @@ public class ScriptInstanceFactoryTestCase extends TestCase {
         BSFManager.registerScriptingEngine("mock", MockBSFEngine.class.getName(), new String[]{"mock"});
         ScriptInstanceFactory factory =
             new ScriptInstanceFactory("foo.mock", null, "baz", getClass().getClassLoader());
-        factory.addContextObjectFactory("foo", new SingletonObjectFactory("bar"));
+        factory.addContextObjectFactory("foo", String.class, new SingletonObjectFactory("bar"));
         ScriptInstanceImpl instance = (ScriptInstanceImpl) factory.getInstance();
         assertNotNull(instance);
         assertNotNull(instance.bsfEngine);
@@ -55,7 +55,7 @@ public class ScriptInstanceFactoryTestCase extends TestCase {
         BSFManager.registerScriptingEngine("ruby", MockBSFEngine.class.getName(), new String[]{"mock"});
         ScriptInstanceFactory factory =
             new ScriptInstanceFactory("foo.mock", "bar", "baz", getClass().getClassLoader());
-        factory.addContextObjectFactory("foo", new SingletonObjectFactory("bar"));
+        factory.addContextObjectFactory("foo", String.class, new SingletonObjectFactory("bar"));
         ScriptInstanceImpl instance = (ScriptInstanceImpl) factory.getInstance();
         assertNotNull(instance);
         assertNotNull(instance.bsfEngine);
