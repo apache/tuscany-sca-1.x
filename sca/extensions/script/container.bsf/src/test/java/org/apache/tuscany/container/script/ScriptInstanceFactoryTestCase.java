@@ -36,7 +36,7 @@ public class ScriptInstanceFactoryTestCase extends TestCase {
         ScriptInstanceFactory factory =
             new ScriptInstanceFactory("foo.mock", "bar", "baz", getClass().getClassLoader());
         factory.addContextObjectFactory("foo", String.class, new SingletonObjectFactory("bar"));
-        ScriptInstanceImpl instance = (ScriptInstanceImpl) factory.getInstance();
+        ScriptInstance instance = (ScriptInstance) factory.getInstance();
         assertNotNull(instance);
         assertNotNull(instance.bsfEngine);
     }
@@ -46,7 +46,7 @@ public class ScriptInstanceFactoryTestCase extends TestCase {
         ScriptInstanceFactory factory =
             new ScriptInstanceFactory("foo.mock", null, "baz", getClass().getClassLoader());
         factory.addContextObjectFactory("foo", String.class, new SingletonObjectFactory("bar"));
-        ScriptInstanceImpl instance = (ScriptInstanceImpl) factory.getInstance();
+        ScriptInstance instance = (ScriptInstance) factory.getInstance();
         assertNotNull(instance);
         assertNotNull(instance.bsfEngine);
     }
@@ -56,7 +56,7 @@ public class ScriptInstanceFactoryTestCase extends TestCase {
         ScriptInstanceFactory factory =
             new ScriptInstanceFactory("foo.mock", "bar", "baz", getClass().getClassLoader());
         factory.addContextObjectFactory("foo", String.class, new SingletonObjectFactory("bar"));
-        ScriptInstanceImpl instance = (ScriptInstanceImpl) factory.getInstance();
+        ScriptInstance instance = (ScriptInstance) factory.getInstance();
         assertNotNull(instance);
         assertNotNull(instance.bsfEngine);
     }

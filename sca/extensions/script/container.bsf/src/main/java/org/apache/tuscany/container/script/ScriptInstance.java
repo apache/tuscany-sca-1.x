@@ -20,12 +20,29 @@ package org.apache.tuscany.container.script;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.apache.bsf.BSFEngine;
+
 /**
  * An invokable instance of a script
  * 
  * Basically just a wrapper around a BSF engine with an optional script class object.
  */
-public interface ScriptInstance {
+public class ScriptInstance {
 
-    Object invokeTarget(String operationName, Object[] args) throws InvocationTargetException;
+    protected BSFEngine bsfEngine;
+    protected Object clazz;
+
+    public ScriptInstance(BSFEngine bsfEngine, Object clazz) {
+        this.bsfEngine = bsfEngine;
+        this.clazz = clazz;
+    }
+
+    public Object invokeTarget(String operationName, Object[] args) throws InvocationTargetException {
+        try {
+            return bsfEngine.call(clazz, operationName, args);
+        } catch (Exception e) {
+            throw new InvocationTargetException(e);
+        }
+    }
 }
+

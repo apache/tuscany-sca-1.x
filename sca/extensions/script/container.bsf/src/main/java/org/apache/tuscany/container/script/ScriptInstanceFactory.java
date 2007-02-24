@@ -98,7 +98,7 @@ public class ScriptInstanceFactory implements ObjectFactory<ScriptInstance> {
                 }
             }
 
-            return new ScriptInstanceImpl(bsfEngine, clazz);
+            return new ScriptInstance(bsfEngine, clazz);
 
         } catch (BSFException e) {
             if (e.getTargetException() != null) {

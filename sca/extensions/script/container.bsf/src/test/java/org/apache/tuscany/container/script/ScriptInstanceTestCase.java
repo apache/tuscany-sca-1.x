@@ -23,8 +23,8 @@ import java.lang.reflect.InvocationTargetException;
 import junit.framework.TestCase;
 import org.apache.tuscany.container.script.mock.MockBSFEngine;
 
-public class ScriptInstanceImplTestCase extends TestCase {
-    private ScriptInstanceImpl instance;
+public class ScriptInstanceTestCase extends TestCase {
+    private ScriptInstance instance;
 
     public void testInvokeTarget() throws InvocationTargetException {
         assertEquals("hello:", instance.invokeTarget("hello", null));
@@ -41,6 +41,6 @@ public class ScriptInstanceImplTestCase extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        this.instance = new ScriptInstanceImpl(new MockBSFEngine(), null);
+        this.instance = new ScriptInstance(new MockBSFEngine(), null);
     }
 }
