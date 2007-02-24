@@ -31,6 +31,7 @@ public class CalculatorTestCase extends SCATestCase {
     private CalculatorService calculatorService;
 
     protected void setUp() throws Exception {
+    	super.setApplicationSCDL("Calculator.composite");
         super.setUp();
 
         CompositeContext context = CurrentCompositeContext.getContext();

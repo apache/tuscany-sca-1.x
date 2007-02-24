@@ -27,11 +27,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.testing.bindingstest</groupId>
-    <artifactId>iTest-Bindings-bindingscomposite</artifactId>
+    <artifactId>tuscany-itest-bindings-bindingscomposite</artifactId>
     <packaging>jar</packaging>
     <name>SCA FVT Bindings Test Tool Service Composite</name>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.tuscany.sca.services.databinding</groupId>
+            <artifactId>databinding-sdo</artifactId>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>commonj</groupId>

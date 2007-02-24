@@ -42,6 +42,7 @@ public class HelloWorldClientTestCase extends SCATestCase {
 
     @Override
     protected void setUp() throws Exception {
+    	setApplicationSCDL("helloworldwsclient-om.composite");
         super.setUp();
 
         CompositeContext compositeContext = CurrentCompositeContext.getContext();

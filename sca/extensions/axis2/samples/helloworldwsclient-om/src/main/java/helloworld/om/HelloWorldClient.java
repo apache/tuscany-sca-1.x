@@ -43,7 +43,7 @@ public class HelloWorldClient {
 
     public  final static void main(String[] args) throws Exception {
     	
-    	SCAContainer.start();
+    	SCAContainer.start("helloworldwsclient-om.composite");
         
         // Invoke the HelloWorld service
         CompositeContext compositeContext = CurrentCompositeContext.getContext();

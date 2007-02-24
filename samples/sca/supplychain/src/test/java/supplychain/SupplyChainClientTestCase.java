@@ -32,6 +32,7 @@ public class SupplyChainClientTestCase extends SCATestCase {
     private Customer customer;
 
     protected void setUp() throws Exception {
+    	super.setApplicationSCDL("supplychain.composite");
         super.setUp();
 
         CompositeContext context = CurrentCompositeContext.getContext();

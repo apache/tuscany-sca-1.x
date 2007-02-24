@@ -29,7 +29,7 @@ import org.osoa.sca.CurrentCompositeContext;
 public class CalculatorClient {
     public static void main(String[] args) throws Exception {
     	
-    	SCAContainer.start();
+    	SCAContainer.start("Calculator.composite");
 
         CompositeContext context = CurrentCompositeContext.getContext();
         CalculatorService calculatorService =

@@ -12,7 +12,7 @@ public class HelloWorldServer {
 	 */
 	public static void main(String[] args) {
 		
-		SCAContainer.start("META-INF/sca/helloworldws-om.composite");
+		SCAContainer.start("helloworldws-om.composite");
 		
 		try {
 			System.out.println("HelloWorld server started");

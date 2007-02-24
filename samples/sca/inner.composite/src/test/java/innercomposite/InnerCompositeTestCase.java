@@ -27,6 +27,7 @@ public class InnerCompositeTestCase extends SCATestCase {
     private Source source;
 
     protected void setUp() throws Exception {
+    	super.setApplicationSCDL("OuterComposite.composite");
         super.setUp();
 
         CompositeContext context = CurrentCompositeContext.getContext();

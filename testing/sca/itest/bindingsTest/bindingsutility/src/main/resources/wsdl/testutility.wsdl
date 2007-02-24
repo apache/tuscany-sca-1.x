@@ -695,7 +695,7 @@
 
     <wsdl:service name="SCATestUtilityService">
         <wsdl:port binding="tns:SCATestUtilityServiceSoapBinding" name="SCATestUtilityServiceSoapPort">
-            <wsdlsoap:address location="http://localhost:8080/testtool/services/SCATestUtilityService" />
+            <wsdlsoap:address location="http://localhost:8081/services/SCATestUtilityWSService" />
 
         </wsdl:port>
 

@@ -29,6 +29,7 @@ public class BigBankTestCase extends SCATestCase {
     AccountService accountService;
 
     protected void setUp() throws Exception {
+    	super.setApplicationSCDL("BigBank.composite");
         super.setUp();
 
         CompositeContext context = CurrentCompositeContext.getContext();

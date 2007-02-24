@@ -109,6 +109,9 @@ public class DefaultSCAContainer extends SCAContainer {
             if (applicationSCDL == null) {
                 applicationSCDL = cl.getResource(SCAContainer.APPLICATION_SCDL);
                 if (applicationSCDL == null) {
+                	applicationSCDL = cl.getResource(SCAContainer.META_APPLICATION_SCDL);
+                }
+                if (applicationSCDL == null) {
                     throw new RuntimeException("application SCDL not found: " + SCAContainer.APPLICATION_SCDL);
                 }
             }

@@ -27,7 +27,7 @@ public class HelloWorldServerTestCase extends SCATestCase {
 	
 	@Override
 	protected void setUp() throws Exception {
-		setApplicationSCDL("META-INF/sca/helloworldws-om.composite");
+		setApplicationSCDL("helloworldws-om.composite");
 		super.setUp();
 	}
 	

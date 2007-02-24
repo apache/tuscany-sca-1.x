@@ -29,16 +29,30 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.testing.bindingstest</groupId>
-    <artifactId>iTest-Bindings-bindingsclient</artifactId>
+    <artifactId>tuscany-itest-bindings-bindingsclient</artifactId>
     <packaging>jar</packaging>
     <name>SCA FVT Bindings Test Tool JSP Client</name>
 
-    <properties>
-        <!-- The installation folder of Tomcat -->
-        <tomcat.dir>C:/Apache/apache-tomcat-5.5.20</tomcat.dir>
-    </properties>
-
     <dependencies>
+
+        <dependency>
+            <groupId>org.apache.tuscany.testing.bindingstest</groupId>
+            <artifactId>tuscany-itest-bindings-bindingscomposite</artifactId>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.testing.bindingstest</groupId>
+            <artifactId>tuscany-itest-bindings-bindingsutility</artifactId>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca.services.databinding</groupId>
+            <artifactId>databinding-sdo</artifactId>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>commonj</groupId>
             <artifactId>sdo-api-r2.1</artifactId>

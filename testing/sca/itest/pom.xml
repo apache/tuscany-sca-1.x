@@ -51,7 +51,6 @@
 	        <module>callBackSetCallbackConvTest</module>
 	        <module>conversationsTest</module>
                 <module>bindingsTest</module>
-                <module>databinding</module>
             </modules>
         </profile>
 

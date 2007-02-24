@@ -34,10 +34,11 @@ import org.osoa.sca.ComponentContext;
  */
 public abstract class SCAContainer {
     public static final String DEFAULT_SYSTEM_SCDL = "META-INF/tuscany/default-system.composite";
-    public static final String SYSTEM_SCDL = "META-INF/tuscany/system.composite";
+    public static final String SYSTEM_SCDL = "system.composite";
     public static final String EXTENSION_SCDL = "META-INF/sca/extension.composite";
     public static final String SERVICE_SCDL = "META-INF/sca/service.composite";
-    public static final String APPLICATION_SCDL = "META-INF/sca/application.composite";
+    public static final String META_APPLICATION_SCDL = "META-INF/sca/application.composite";
+    public static final String APPLICATION_SCDL = "application.composite";
 
     private static SCAContainer instance;
 
@@ -167,7 +168,26 @@ public abstract class SCAContainer {
      */
     public static void start(String application) {
         try {
-            getInstance().startup(null, null, Thread.currentThread().getContextClassLoader().getResource(application));
+        	ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        	URL applicationURL = cl.getResource(application);
+            getInstance().startup(null, null, applicationURL);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
+     * Start the Tuscany container with the given SCDL
+     * 
+     * @param application The path of the system SCDL
+     * @param application The path of the application SCDL
+     */
+    public static void start(String system, String application) {
+        try {
+        	ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        	URL systemURL = cl.getResource(system);
+        	URL applicationURL = cl.getResource(application);
+            getInstance().startup(systemURL, null, applicationURL);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }

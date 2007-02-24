@@ -12,7 +12,7 @@ import org.osoa.sca.CurrentCompositeContext;
 public class InnerCompositeClient {
 
     public static void main(String[] args) throws Exception {
-    	SCAContainer.start();
+    	SCAContainer.start("OuterComposite.composite");
     	
         CompositeContext context = CurrentCompositeContext.getContext();
 

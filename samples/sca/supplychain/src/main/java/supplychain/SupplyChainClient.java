@@ -29,7 +29,7 @@ import org.osoa.sca.CurrentCompositeContext;
 public class SupplyChainClient {
 
     public static final void main(String[] args) throws Exception {
-    	SCAContainer.start();
+    	SCAContainer.start("supplychain.composite");
         
         // Locate the Customer component and invoke it
         CompositeContext context = CurrentCompositeContext.getContext();

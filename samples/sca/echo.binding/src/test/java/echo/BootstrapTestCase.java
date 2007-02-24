@@ -29,19 +29,15 @@ import org.apache.tuscany.test.SCATestCase;
 public class BootstrapTestCase extends SCATestCase {
 
     private Client client;
-    private Client clientService;
 
     public void testDemoBoot() {
         client.call("foo");
-        //clientService.call("foo");
     }
 
     protected void setUp() throws Exception {
-        addExtension("echo.binding", getClass().getClassLoader().getResource("META-INF/sca/echo.system.scdl"));
+    	super.setApplicationSCDL("echo.composite");
         super.setUp();
         CompositeContext context = CurrentCompositeContext.getContext();
         client = context.locateService(Client.class, "Client");
-        // JFM temporarily commented out until we get a better solution as only local bindings are available.  
-        //clientService = context.locateService(Client.class, "ClientService");
     }
 }

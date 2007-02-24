@@ -29,7 +29,7 @@ import org.osoa.sca.CurrentCompositeContext;
 public class HelloWorldClient {
 
     public  final static void main(String[] args) throws Exception {
-    	SCAContainer.start();
+    	SCAContainer.start("helloworldwsclient.composite");
     	
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
         HelloWorldService helloWorldService= compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");

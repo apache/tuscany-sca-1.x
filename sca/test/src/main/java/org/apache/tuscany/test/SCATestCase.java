@@ -37,12 +37,13 @@ import org.apache.tuscany.spi.component.CompositeComponent;
 public abstract class SCATestCase extends TestCase {
     private Map<String, URL> extensions = new HashMap<String, URL>();
     private URL applicationSCDL;
+    private URL systemSCDL;
     protected CompositeComponent component;
 
     protected void setUp() throws Exception {
         super.setUp();
         
-        SCAContainer.start(null, extensions == null || extensions.isEmpty() ? null :
+        SCAContainer.start(systemSCDL, extensions == null || extensions.isEmpty() ? null :
                                extensions.values().toArray(new URL[0]), applicationSCDL);
 
         // FIXME: How to expose the composite component?
@@ -59,8 +60,22 @@ public abstract class SCATestCase extends TestCase {
     /**
      * A TestCase can use this to override the default SCDL location
      */
+    protected void setSystemSCDL(URL systemSCDL) {
+        this.systemSCDL = systemSCDL;
+    }
+
+    /**
+     * A TestCase can use this to override the default SCDL location
+     */
     protected void setApplicationSCDL(String applicationSCDL) {
         this.applicationSCDL = Thread.currentThread().getContextClassLoader().getResource(applicationSCDL);
+    }
+
+    /**
+     * A TestCase can use this to override the default SCDL location
+     */
+    protected void setSystemSCDL(String systemSCDL) {
+        this.systemSCDL = Thread.currentThread().getContextClassLoader().getResource(systemSCDL);
     }
 
     /**
@@ -75,6 +90,20 @@ public abstract class SCATestCase extends TestCase {
     protected void setApplicationSCDL(Class<?> aClass, String path) throws MalformedURLException {
         URL root = getRoot(aClass);
         setApplicationSCDL(new URL(root, path));
+    }
+
+    /**
+     * Set the system scdl based on the classpath entry for a class.
+     * Normally this will be a class in the production code associated with this
+     * test case.
+     * 
+     * @param aClass a Class from which to determine the resource base url
+     * @param path location of the system SCDL relative to the base class
+     * @throws MalformedURLException if the path is malformed
+     */
+    protected void setSystemSCDL(Class<?> aClass, String path) throws MalformedURLException {
+        URL root = getRoot(aClass);
+        setSystemSCDL(new URL(root, path));
     }
 
     /**
