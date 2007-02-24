@@ -26,7 +26,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>container-script</artifactId>
+    <artifactId>tuscany-bsf</artifactId>
     <name>Apache Tuscany Script Container</name>
     <description>Apache Tuscany Script Container using BSF</description>
 
