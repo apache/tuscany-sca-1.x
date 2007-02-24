@@ -54,6 +54,16 @@ public final class ComponentNames {
      */
     public static final String TUSCANY_WIRE_SERVICE = "wireService";
 
+    /**
+     * The name of the component that contains the contribution service.
+     */    
+    public static final String TUSCANY_CONTRIBUTION_SERVICE = "contributionService";
+    
+    /**
+     * The name of the component that contains the assmebly service.
+     */    
+    public static final String TUSCANY_ASSEMBLY_SERVICE = "assemblyService";
+    
     private ComponentNames() {
     }
 

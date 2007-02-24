@@ -32,6 +32,7 @@ import org.apache.tuscany.core.launcher.CompositeContextImpl;
 import org.apache.tuscany.core.launcher.LauncherImpl;
 import org.apache.tuscany.core.monitor.JavaLoggingMonitorFactory;
 import org.apache.tuscany.host.MonitorFactory;
+import org.apache.tuscany.host.deployment.ContributionService;
 import org.apache.tuscany.host.runtime.InitializationException;
 import org.apache.tuscany.spi.bootstrap.ComponentNames;
 import org.apache.tuscany.spi.builder.BuilderException;
@@ -59,6 +60,7 @@ public class DefaultSCAContainer extends SCAContainer {
     private CompositeContextImpl context;
     private LauncherImpl launcher;
     private MonitorFactory monitorFactory;
+    private ContributionService contributionService;
 
     protected void startup(URL system, URL[] exts, URL applicationSCDL) throws Exception {
         if (monitorFactory == null) {
@@ -71,12 +73,15 @@ public class DefaultSCAContainer extends SCAContainer {
         if (system == null) {
             system = cl.getResource(SCAContainer.SYSTEM_SCDL);
             if (system == null) {
-            	system = cl.getResource(SCAContainer.DEFAULT_SYSTEM_SCDL);
+                system = cl.getResource(SCAContainer.DEFAULT_SYSTEM_SCDL);
             }
         }
 
         try {
             CompositeComponent composite = launcher.bootRuntime(system, monitorFactory);
+            AtomicComponent csComponent =
+                (AtomicComponent)composite.getSystemChild(ComponentNames.TUSCANY_CONTRIBUTION_SERVICE);
+            contributionService = (ContributionService) csComponent.getTargetInstance();
             List<URL> extensions = new ArrayList<URL>();
             Enumeration<URL> urls = cl.getResources(SCAContainer.SERVICE_SCDL);
             extensions.addAll(Collections.list(urls));
