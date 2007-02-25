@@ -26,7 +26,6 @@ import java.net.URI;
 import javax.xml.stream.XMLInputFactory;
 
 import org.apache.tuscany.core.deployer.RootDeploymentContext;
-import org.apache.tuscany.host.deployment.ContributionProcessorException;
 import org.apache.tuscany.host.deployment.DeploymentException;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.deployer.CompositeClassLoader;
@@ -75,13 +74,14 @@ public class ScdlContributionProcessor extends ContributionProcessorExtension im
 
             CompositeComponentType componentType = this.registry.load(null, null, contribution.getArtifact(source).getLocation(), CompositeComponentType.class, deploymentContext);
 
-            //FIXME add this to artifact
             CompositeImplementation implementation = new CompositeImplementation();
+            implementation.setComponentType(componentType);
             ComponentDefinition<CompositeImplementation> componentDefinition = new ComponentDefinition<CompositeImplementation>(implementation);
             
+            contribution.getArtifact(source).addModelObject(null, null, componentDefinition);
+            
         }catch(LoaderException le){
-            le.printStackTrace();
-            throw new ContributionProcessorException("Error processing SCDL", contribution.getArtifact(source).getLocation().toExternalForm(), le);
+            throw new InvalidComponentDefinitionlException(contribution.getArtifact(source).getLocation().toExternalForm(), le);
         }
     }
 

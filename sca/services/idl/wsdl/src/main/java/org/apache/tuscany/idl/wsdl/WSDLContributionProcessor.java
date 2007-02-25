@@ -39,6 +39,7 @@ import javax.wsdl.xml.WSDLLocator;
 import javax.wsdl.xml.WSDLReader;
 import javax.xml.namespace.QName;
 
+import org.apache.tuscany.core.services.deployment.ContributionProcessorException;
 import org.apache.tuscany.host.deployment.DeploymentException;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.deployer.ArtifactResolverRegistry;
@@ -250,8 +251,7 @@ public class WSDLContributionProcessor extends ContributionProcessorExtension {
         try {
             loadDefinition(contribution, null, source, inputStream);
         } catch (WSDLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new ContributionProcessorException("Error processing WSDL", contribution.getArtifact(source).getLocation().toExternalForm(), e);
         } 
     }
 
