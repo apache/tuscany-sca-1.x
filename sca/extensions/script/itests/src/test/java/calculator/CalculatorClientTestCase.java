@@ -32,11 +32,15 @@ public class CalculatorClientTestCase extends SCATestCase {
 
     private CompositeContext compositeContext;
     
-    public void testHelloWorldRuby() throws Exception {
-        CalculatorService calculatorService = compositeContext.locateService(CalculatorService.class, "CalculatorComponent");
-
+    public void testCalculatorRuby() throws Exception {
+        CalculatorService calculatorService = compositeContext.locateService(CalculatorService.class, "RubyCalculatorComponent");
         Assert.assertEquals(3.0, calculatorService.add(1,2));
+        Assert.assertEquals(1.5, calculatorService.div(3,2));
+    }
 
+    public void testCalculatorPython() throws Exception {
+        CalculatorService calculatorService = compositeContext.locateService(CalculatorService.class, "PythonCalculatorComponent");
+        Assert.assertEquals(3.0, calculatorService.add(1,2));
         Assert.assertEquals(1.5, calculatorService.div(3,2));
     }
 

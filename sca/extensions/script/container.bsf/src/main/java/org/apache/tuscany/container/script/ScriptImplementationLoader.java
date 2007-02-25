@@ -75,15 +75,12 @@ public class ScriptImplementationLoader extends LoaderExtension<ScriptImplementa
         ClassLoader cl = deploymentContext.getClassLoader();
         String scriptSource = loadSource(cl, scriptName);
 
-//        ScriptInstanceFactory instanceFactory = new ScriptInstanceFactory(scriptName, className, scriptSource, cl);
-
         ScriptImplementation implementation = new ScriptImplementation();
         implementation.setResourceName(scriptName);
         implementation.setScriptSource(scriptSource);
         implementation.setClassName(className);
         implementation.setScriptName(scriptName);
         implementation.setClassLoader(cl);
-        //implementation.setScriptInstanceFactory(instanceFactory);
 
         registry.loadComponentType(parent, implementation, deploymentContext);
 

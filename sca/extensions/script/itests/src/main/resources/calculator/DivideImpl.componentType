@@ -6,6 +6,7 @@
   </service>
 
   <property name="round" type="xsd:boolean">false</property>
+  <property name="doRounding" type="xsd:boolean">false</property>
 
 </componentType>              
        

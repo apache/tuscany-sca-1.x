@@ -21,14 +21,25 @@
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
 	name="sample.calculator">
 
-	<component name="CalculatorComponent">
+	<component name="RubyCalculatorComponent">
 		<implementation.ruby script="calculator/CalculatorImpl.rb" class="CalculatorImpl"/>
-	    <reference name="divideService">DivideComponent</reference>
+	    <reference name="divideService">RubyDivideComponent</reference>
 	</component>
         
-	<component name="DivideComponent">
+	<component name="RubyDivideComponent">
 		<implementation.ruby script="calculator/DivideImpl.rb" class="DivideImpl"/>
 		<property name="round">true</property>
 	</component>
+
+	<component name="PythonCalculatorComponent">
+        <implementation.python module="calculator/CalculatorImpl.py" scope="composite"/>
+	    <reference name="divideService">PythonDivideComponent</reference>
+	</component>
+
+    <component name="PythonDivideComponent">
+        <implementation.python module="calculator/DivideImpl.py" scope="composite"/>
+        <property name="doRounding">false</property>
+     </component>
+
 
 </composite>
