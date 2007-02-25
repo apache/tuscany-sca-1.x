@@ -39,6 +39,13 @@ public class XMLTestCase extends SCATestCase {
         Assert.assertEquals("e4xHi Petra", msg);
     }
 
+    public void testHelloWorldJavaScript2() throws Exception {
+        HelloWorldService helloWorldService =
+            compositeContext.locateService(HelloWorldService.class, "HelloWorldJSViaProxyComponent");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("e4xHi Petra", msg);
+    }
+
     @Override
     protected void setUp() throws Exception {
         setApplicationSCDL(getClass().getResource("/META-INF/sca/xml.composite"));

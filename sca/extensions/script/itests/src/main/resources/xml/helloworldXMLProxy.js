@@ -17,7 +17,11 @@
  * under the License.    
  */
  
-function getGreetings(s) {
-   java.lang.System.out.println("in helloworld.js s:" + s);
-   return ref.getGreetings(s);
+function getGreetings(xmlIn) {
+   java.lang.System.out.println("via proxy type of in: " + typeof xmlIn);
+
+   var xmlOut = ref.getGreetings(xmlIn);
+
+   java.lang.System.out.println("via proxy type of out: " + typeof xmlOut);
+   return xmlOut;
 }

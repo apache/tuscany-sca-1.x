@@ -27,6 +27,8 @@ import org.osoa.sca.annotations.Service;
 
 /**
  * DataBinding for E4X
+ * 
+ * This requires Rhino using the WSO2 Axiom based E4X impl
  */
 @Service(DataBinding.class)
 public class E4XDataBinding extends DataBindingExtension {
@@ -44,5 +46,12 @@ public class E4XDataBinding extends DataBindingExtension {
     @Override
     public WrapperHandler getWrapperHandler() {
         return new E4XWrapperHandler();
+    }
+
+    /**
+     * Treat E4X as pass-by-ref
+     */
+    public Object copy(Object source) {
+        return source;
     }
 }

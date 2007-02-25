@@ -60,8 +60,7 @@ public class OMElement2E4X extends TransformerExtension<OMElement, XML> implemen
         Context cx = Context.enter();
         try {
 
-            Object[] jsArgs = new Object[] {cx.newObject(scope, "XML", new Object[] {source})};
-            return (XML)jsArgs[0];
+            return (XML)cx.newObject(scope, "XML", new Object[] {source});
 
         } finally {
             Context.exit();

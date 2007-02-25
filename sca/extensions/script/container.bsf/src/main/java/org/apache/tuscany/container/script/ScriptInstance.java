@@ -21,6 +21,7 @@ package org.apache.tuscany.container.script;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.bsf.BSFEngine;
+import org.apache.bsf.BSFException;
 
 /**
  * An invokable instance of a script
@@ -40,7 +41,9 @@ public class ScriptInstance {
     public Object invokeTarget(String operationName, Object[] args) throws InvocationTargetException {
         try {
             return bsfEngine.call(clazz, operationName, args);
-        } catch (Exception e) {
+        } catch (BSFException e) {
+            throw new InvocationTargetException(e.getTargetException() != null ? e.getTargetException() : e);
+         } catch (Exception e) {
             throw new InvocationTargetException(e);
         }
     }

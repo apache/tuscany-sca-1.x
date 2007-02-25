@@ -30,4 +30,15 @@
         <implementation.script script="xml/helloworldXML.js"/>
     </component>
 
+    <component name="HelloWorldJSViaProxyComponent">
+        <implementation.script script="xml/helloworld.js"/>
+        <reference name="ref">HelloWorldXMLProxyJSComponent</reference>
+    </component>
+
+    <component name="HelloWorldXMLProxyJSComponent">
+        <implementation.script script="xml/helloworldXMLProxy.js"/>
+        <reference name="ref">HelloWorldXMLJSComponent</reference>
+    </component>
+
+
 </composite>

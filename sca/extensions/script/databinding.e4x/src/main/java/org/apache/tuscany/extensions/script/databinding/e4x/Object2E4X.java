@@ -40,7 +40,6 @@ public class Object2E4X extends Java2SimpleTypeTransformer<XML> {
     private OMElement2E4X om2e4x;
 
     public Object2E4X() {
-        super();
         factory = OMAbstractFactory.getOMFactory();
         om2e4x = new OMElement2E4X();
     }

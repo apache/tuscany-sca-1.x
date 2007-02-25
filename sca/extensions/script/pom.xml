@@ -1,4 +1,5 @@
-/*
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -15,9 +16,25 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
- */
- 
-function getGreetings(s) {
-   java.lang.System.out.println("in helloworld.js s:" + s);
-   return ref.getGreetings(s);
-}
+-->
+<project>
+
+    <parent>
+        <groupId>org.apache.tuscany.sca.extensions</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1-integration-incubating-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
+    <name>Apache Tuscany SCA Extensions for Scripting</name>
+
+    <modules>
+       <module>container.bsf</module>
+       <module>databinding.e4x</module>
+       <module>itests</module>
+    </modules>
+
+</project>

@@ -54,6 +54,13 @@
         </dependency>
 
         <dependency>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>2.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-test</artifactId>
             <version>0.1-integration-incubating-SNAPSHOT</version>

@@ -18,6 +18,11 @@
  */
 package org.apache.tuscany.container.script;
 
+import static org.objectweb.asm.Opcodes.ACC_ABSTRACT;
+import static org.objectweb.asm.Opcodes.ACC_INTERFACE;
+import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
+import static org.objectweb.asm.Opcodes.V1_5;
+
 import java.util.Arrays;
 
 import org.apache.tuscany.spi.ObjectCreationException;
@@ -28,18 +33,21 @@ import org.apache.tuscany.spi.extension.AtomicComponentExtension;
 import org.apache.tuscany.spi.extension.ExecutionMonitor;
 import org.apache.tuscany.spi.model.Operation;
 import org.apache.tuscany.spi.model.Scope;
+import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.services.work.WorkScheduler;
 import org.apache.tuscany.spi.wire.InboundWire;
 import org.apache.tuscany.spi.wire.OutboundWire;
 import org.apache.tuscany.spi.wire.TargetInvoker;
+import org.apache.tuscany.spi.wire.WireObjectFactory;
 import org.apache.tuscany.spi.wire.WireService;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Type;
 
 /**
  * A component implementation for script languages.
- *
- * @version $Rev$ $Date$
  */
 public class ScriptComponent extends AtomicComponentExtension {
+
     private ScriptInstanceFactory factory;
 
     public ScriptComponent(String name,
@@ -54,13 +62,11 @@ public class ScriptComponent extends AtomicComponentExtension {
         super(name, parent, wireService, workContext, workScheduler, monitor, initLevel);
         this.factory = factory;
         this.scope = scope;
-        setAllowsPassByReference(true);
         setPassByReferenceMethods(Arrays.asList(new String[]{}));
     }
 
-    @SuppressWarnings("unchecked")
     public Object createInstance() throws ObjectCreationException {
-        return factory.getInstance(); //(serviceBindings, context);
+        return factory.getInstance(); 
     }
 
     public TargetInvoker createTargetInvoker(String targetName, Operation operation, InboundWire callbackWire) {
@@ -70,6 +76,9 @@ public class ScriptComponent extends AtomicComponentExtension {
     @SuppressWarnings({"unchecked"})
     protected void onReferenceWire(OutboundWire wire) {
         Class<?> clazz = wire.getServiceContract().getInterfaceClass();
+        if (clazz == null) {
+            clazz = createInterfaceClass(wire.getServiceContract());
+        }
         factory.addContextObjectFactory(wire.getReferenceName(), clazz, new WireObjectFactory(clazz, wire, wireService));
     }
 
@@ -77,4 +86,50 @@ public class ScriptComponent extends AtomicComponentExtension {
         return scopeContainer.getInstance(this);
     }
 
+    /**
+     * Create an Java interface class for the WSDL ServiceContract
+     * TODO: this should probably be moved to wsdl idl module
+     */
+    private Class createInterfaceClass(ServiceContract serviceContract) {
+        ClassWriter cw = new ClassWriter(false);
+
+        // Generate the interface
+        String interfaceName = serviceContract.getInterfaceName();
+        cw.visit(V1_5,
+                 ACC_PUBLIC + ACC_ABSTRACT + ACC_INTERFACE,
+                 interfaceName,
+                 null,
+                 "java/lang/Object",
+                 new String[0]);
+
+        // Generate methods from the WSDL operations
+        for (Object o : serviceContract.getOperations().values()) {
+            Operation operation = (Operation)o;
+            String inputType = Type.getDescriptor(Object.class);
+            String outputType = Type.getDescriptor(Object.class);
+            cw.visitMethod(ACC_PUBLIC + ACC_ABSTRACT,
+                           operation.getName(),
+                           "(" + inputType + ")" + outputType,
+                           null,
+                           null).visitEnd();
+        }
+
+        // Generate the bytecodes
+        cw.visitEnd();
+        byte[] bytes = cw.toByteArray();
+
+        Class interfaceClass = new GeneratedClassLoader().defineClass(bytes);
+
+        return interfaceClass;
+    }
+
+    private class GeneratedClassLoader extends ClassLoader {
+        public Class defineClass(byte[] byteArray) {
+            try {
+                return defineClass(null, byteArray, 0, byteArray.length);
+            } catch (Throwable e) {
+                return null;
+            }
+        }
+    }
 }

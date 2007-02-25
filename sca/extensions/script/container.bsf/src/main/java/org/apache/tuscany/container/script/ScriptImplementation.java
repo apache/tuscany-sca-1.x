@@ -20,8 +20,6 @@ package org.apache.tuscany.container.script;
 
 import org.apache.tuscany.spi.model.AtomicImplementation;
 
-//import org.apache.tuscany.container.script.helper.ScriptFactory;
-
 /**
  * Model object for a script implementation.
  */
@@ -32,8 +30,6 @@ public class ScriptImplementation extends AtomicImplementation<ScriptComponentTy
     private String scriptSource;
     private String scriptName;
     private ClassLoader classLoader;
-
-//    private ScriptFactory scriptFactory;
 
     public String getResourceName() {
         return resourceName;
@@ -59,14 +55,6 @@ public class ScriptImplementation extends AtomicImplementation<ScriptComponentTy
         this.scriptSource = scriptSource;
     }
 
-//    public ScriptFactory getScriptFactory() {
-//        return scriptFactory;
-//    }
-//
-//    public void setScriptFactory(ScriptFactory scriptFactory) {
-//        this.scriptFactory = scriptFactory;
-//    }
-
     public String getScriptName() {
         return scriptName;
     }
@@ -82,11 +70,5 @@ public class ScriptImplementation extends AtomicImplementation<ScriptComponentTy
     public void setClassLoader(ClassLoader classLoader) {
         this.classLoader = classLoader;
     }
-//    public ScriptFactory getScriptInstanceFactory() {
-//        return scriptFactory;
-//    }
-//
-//    public void setScriptInstanceFactory(ScriptFactory scriptFactory) {
-//        this.scriptFactory = scriptFactory;
-//    }
+
 }
