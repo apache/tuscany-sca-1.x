@@ -38,7 +38,8 @@ import org.apache.tuscany.spi.implementation.java.ImplementationProcessorService
 
 public class JavaContributionProcessorTestCase extends TestCase {
     private static final String JAR_CONTRIBUTION = "/repository/sample-calculator.jar";
-    private static final String JAVA_ARTIFACT_URL = "jar:file://repository/sample-calculator.jar!/calculator/AddService.class" ;
+    private static final String JAVA_ARTIFACT_URL 
+        = "jar:file://repository/sample-calculator.jar!/calculator/AddService.class";
     private IntrospectionRegistryImpl registry;
     
     protected void setUp() throws Exception {
@@ -55,7 +56,7 @@ public class JavaContributionProcessorTestCase extends TestCase {
         registry.registerProcessor(new ResourceProcessor());
     }
     
-    protected URL getClassURL() throws Exception{
+    protected URL getClassURL() throws Exception {
         URL jarURL = getClass().getResource(JAR_CONTRIBUTION);
         JarInputStream jar = new JarInputStream(getClass().getResourceAsStream(JAR_CONTRIBUTION));
         URL rootURL =  new URL("jar:" + jarURL.toString() + "!/");
@@ -64,8 +65,7 @@ public class JavaContributionProcessorTestCase extends TestCase {
         try {
             while (true) {
                 JarEntry entry = jar.getNextJarEntry();
-                if(entry.getName().endsWith(".class")){
-
+                if (entry.getName().endsWith(".class")) {
                     classURL = new URL(rootURL, entry.getName());
                     break;
                 }

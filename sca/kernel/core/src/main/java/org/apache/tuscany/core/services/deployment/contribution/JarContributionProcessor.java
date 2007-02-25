@@ -88,7 +88,7 @@ public class JarContributionProcessor extends ContributionProcessorExtension imp
 
     public void processContent(Contribution contribution, URI source, InputStream inputStream)
         throws DeploymentException, IOException {
-        if(contribution == null){
+        if (contribution == null) {
             throw new IllegalArgumentException("Invalid null contribution.");
         }
 
@@ -120,7 +120,8 @@ public class JarContributionProcessor extends ContributionProcessorExtension imp
                 
 
                 //just process scdl for now
-                if("application/v.tuscany.scdl".equals(contentType) /* || "application/java-vm".equals(contentType) */ ){
+                if ("application/v.tuscany.scdl".equals(contentType) 
+                        /* || "application/java-vm".equals(contentType) */) {
                     this.registry.processContent(contribution, artifactURI, artifactURL.openStream());
                 }
             } catch (URISyntaxException e) {

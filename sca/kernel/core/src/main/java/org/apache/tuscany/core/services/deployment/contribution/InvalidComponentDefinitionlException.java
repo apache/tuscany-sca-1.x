@@ -26,6 +26,11 @@ import org.apache.tuscany.host.deployment.DeploymentException;
  */
 public class InvalidComponentDefinitionlException extends DeploymentException {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2724173457894813837L;
+
     protected InvalidComponentDefinitionlException(String componentDefinitionLocatoin) {
         super(componentDefinitionLocatoin);
     }

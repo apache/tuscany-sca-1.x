@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.core.bootstrap;
 
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -106,6 +107,7 @@ public class DefaultSCAContainer extends SCAContainer {
 
             WireService wireService = (WireService)((AtomicComponent)wireServiceComponent).getTargetInstance();
 
+            //Start using contribution services
             if (applicationSCDL == null) {
                 applicationSCDL = cl.getResource(SCAContainer.APPLICATION_SCDL);
                 if (applicationSCDL == null) {
@@ -115,6 +117,10 @@ public class DefaultSCAContainer extends SCAContainer {
                     throw new RuntimeException("application SCDL not found: " + SCAContainer.APPLICATION_SCDL);
                 }
             }
+
+            //URL contributionLocation = new URL( applicationSCDL.toExternalForm().replace(SCAContainer.APPLICATION_SCDL, ""));
+            //URI appURI = this.contributionService.contribute(contributionLocation, false);
+            
             component = launcher.bootApplication("application", applicationSCDL);
             component.start();
             context = new CompositeContextImpl(component, wireService);
@@ -153,7 +159,7 @@ public class DefaultSCAContainer extends SCAContainer {
         Component component = deployer.deploy(composite, definition);
         component.start();
     }
-
+    
     protected void shutdown() throws Exception {
         CurrentCompositeContext.setContext(null);
         component.stop();

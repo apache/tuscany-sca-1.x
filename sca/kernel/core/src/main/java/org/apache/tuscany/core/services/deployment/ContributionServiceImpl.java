@@ -43,13 +43,14 @@ public class ContributionServiceImpl implements ContributionService {
      * Repository where contributions are stored. Usually set by injection.
      */
     protected ContributionRepository contributionRepository;
+
     /**
      * Registry of available processors. Usually set by injection.
      */
     protected ContributionProcessorRegistry processorRegistry;
+
     /**
-     * Contribution registry
-     * This is a registry of processed Contributios index by URI
+     * Contribution registry This is a registry of processed Contributios index by URI
      */
     protected Map<URI, Contribution> contributionRegistry = new HashMap<URI, Contribution>();
 
@@ -81,7 +82,8 @@ public class ContributionServiceImpl implements ContributionService {
         }
     }
 
-    public URI contribute(URI source, InputStream contributionStream, boolean storeInRepository) throws DeploymentException, IOException {
+    public URI contribute(URI source, InputStream contributionStream, boolean storeInRepository)
+        throws DeploymentException, IOException {
         if (source == null) {
             throw new IllegalArgumentException("source URI for contribution is null");
         }
@@ -93,23 +95,22 @@ public class ContributionServiceImpl implements ContributionService {
         // store the contribution in the contribution repository
         URI contributionURI = URI.create("sca://contribution/" + UUID.randomUUID());
         URL locationURL;
-        if(storeInRepository){
+        if (storeInRepository) {
             locationURL = this.contributionRepository.store(source, contributionStream);
-        }else{
+        } else {
             locationURL = source.toURL();
         }
-            
-        
+
         Contribution contribution = null;
         contribution = new Contribution(contributionURI);
         contribution.setLocation(locationURL);
 
-        //process the contribution
+        // process the contribution
         this.processorRegistry.processContent(contribution, contributionURI, locationURL.openStream());
 
-        //store the contribution on the registry
+        // store the contribution on the registry
         this.contributionRegistry.put(contribution.getUri(), contribution);
-        
+
         return contribution.getUri();
     }
 
@@ -118,9 +119,9 @@ public class ContributionServiceImpl implements ContributionService {
     }
 
     public void remove(URI contribution) throws DeploymentException {
-        //remove from repository
+        // remove from repository
         this.contributionRegistry.remove(contribution);
-        //remove from registry
+        // remove from registry
         this.contributionRegistry.remove(contribution);
     }
 

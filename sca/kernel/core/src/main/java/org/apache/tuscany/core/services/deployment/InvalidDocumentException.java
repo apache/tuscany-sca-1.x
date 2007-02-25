@@ -26,6 +26,12 @@ import org.apache.tuscany.host.deployment.DeploymentException;
  * @version $Rev$ $Date$
  */
 public class InvalidDocumentException extends DeploymentException {
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8872656291809499499L;
+
     protected InvalidDocumentException(String rootElement) {
         super(rootElement);
     }

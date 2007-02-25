@@ -47,7 +47,7 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
     private void traverse(List<URL> fileList, File root) throws IOException {
         if (root.isFile()) {
             fileList.add(root.toURL());
-        } else if (root.isDirectory() && ! root.getName().equals(".svn")) {
+        } else if (root.isDirectory() && !root.getName().equals(".svn")) {
             File[] files = root.listFiles();
             for (int i = 0; i < files.length; i++) {
                 traverse(fileList, files[i]);
@@ -62,7 +62,8 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
      * @return
      * @throws IOException
      */
-    protected List<URL> getArtifacts(URL rootURL, InputStream sourceInputStream) throws DeploymentException, IOException {
+    protected List<URL> getArtifacts(URL rootURL, InputStream sourceInputStream) 
+        throws DeploymentException, IOException {
         List<URL> artifacts = new ArrayList<URL>();
 
         // Assume the root is a jar file
@@ -70,7 +71,7 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
         
         try {
             rootFolder = new File(rootURL.toURI());
-            if(rootFolder.isDirectory()){
+            if (rootFolder.isDirectory()) {
                 this.traverse(artifacts, rootFolder);
             }
 
@@ -82,8 +83,9 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
     }    
     
     
-    public void processContent(Contribution contribution, URI source, InputStream inputStream) throws DeploymentException, IOException {
-        if(contribution == null){
+    public void processContent(Contribution contribution, URI source, InputStream inputStream) 
+        throws DeploymentException, IOException {
+        if (contribution == null) {
             throw new IllegalArgumentException("Invalid null contribution.");
         }
 
@@ -104,7 +106,7 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
             
 
             //just process scdl for now
-            if("application/v.tuscany.scdl".equals(contentType) || "application/java-vm".equals(contentType) ){
+            if ("application/v.tuscany.scdl".equals(contentType) || "application/java-vm".equals(contentType)) {
                 this.registry.processContent(contribution, source, inputStream);
             }
             // process each artifact
@@ -114,7 +116,8 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
 
     }
 
-    public void processModel(Contribution contribution, URI source, Object modelObject) throws DeploymentException, IOException {
+    public void processModel(Contribution contribution, URI source, Object modelObject) 
+        throws DeploymentException, IOException {
         // TODO Auto-generated method stub
 
     }

@@ -32,13 +32,16 @@ import org.osoa.sca.annotations.Property;
 @EagerInit
 public class ContributionDirectoryWatcher {
     private final String path;
+
     private final ContributionService contributionService;
-    
-    public ContributionDirectoryWatcher(@Autowire ContributionService contributionService, @Property(name = "path")String path) {
+
+    public ContributionDirectoryWatcher(@Autowire
+    ContributionService contributionService, @Property(name = "path")
+    String path) {
         this.path = path;
         this.contributionService = contributionService;
     }
-    
+
     @Init
     public void init() {
         File extensionDir = new File(path);
@@ -49,16 +52,17 @@ public class ContributionDirectoryWatcher {
 
         File[] files = extensionDir.listFiles();
         for (File file : files) {
-            try{
-                if(file.isDirectory())
+            try {
+                if (file.isDirectory()) {
                     this.contributionService.contribute(file.toURL(), false);
-                else
+                } else {
                     this.contributionService.contribute(file.toURL(), true);
-            }catch(DeploymentException de){
-                //FIXME handle this
+                }
+            } catch (DeploymentException de) {
+                // FIXME handle this
                 de.printStackTrace();
-            }catch(IOException ioe){
-                //FIXME handle this
+            } catch (IOException ioe) {
+                // FIXME handle this
                 ioe.printStackTrace();
             }
         }

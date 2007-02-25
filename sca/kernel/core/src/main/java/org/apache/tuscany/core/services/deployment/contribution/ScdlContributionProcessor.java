@@ -39,53 +39,58 @@ import org.apache.tuscany.spi.model.CompositeComponentType;
 import org.apache.tuscany.spi.model.CompositeImplementation;
 import org.apache.tuscany.spi.model.Contribution;
 
-public class ScdlContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor{
+public class ScdlContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor {
     public static final String CONTENT_TYPE = "application/v.tuscany.scdl";
+
     private final LoaderRegistry registry;
-    
+
     protected XMLInputFactory xmlFactory;
-    
+
     @Override
     public String getContentType() {
         return CONTENT_TYPE;
     }
-    
-    public ScdlContributionProcessor(@Autowire LoaderRegistry registry){
+
+    public ScdlContributionProcessor(@Autowire LoaderRegistry registry) {
         super();
         this.registry = registry;
         this.xmlFactory = XMLInputFactory.newInstance("javax.xml.stream.XMLInputFactory", getClass().getClassLoader());
     }
-    
 
-    public void processContent(Contribution contribution, URI source, InputStream inputStream) 
-       throws DeploymentException, IOException {
+    public void processContent(Contribution contribution, URI source, InputStream inputStream)
+        throws DeploymentException, IOException {
         if (source == null) {
             throw new IllegalArgumentException("Invalid null source uri.");
         }
 
         if (inputStream == null) {
             throw new IllegalArgumentException("Invalid null source inputstream.");
-        }        
-        
-        try{
+        }
+
+        try {
             CompositeClassLoader cl = new CompositeClassLoader(getClass().getClassLoader());
             cl.addURL(contribution.getLocation());
-            DeploymentContext deploymentContext = new RootDeploymentContext(cl, this.xmlFactory, null, contribution.getArtifact(source).getLocation());
+            DeploymentContext deploymentContext = new RootDeploymentContext(cl, this.xmlFactory, null, 
+                    contribution.getArtifact(source).getLocation());
 
-            CompositeComponentType componentType = this.registry.load(null, null, contribution.getArtifact(source).getLocation(), CompositeComponentType.class, deploymentContext);
+            CompositeComponentType componentType = this.registry.load(null, null, 
+                    contribution.getArtifact(source).getLocation(), CompositeComponentType.class, deploymentContext);
 
             CompositeImplementation implementation = new CompositeImplementation();
             implementation.setComponentType(componentType);
-            ComponentDefinition<CompositeImplementation> componentDefinition = new ComponentDefinition<CompositeImplementation>(implementation);
-            
+            ComponentDefinition<CompositeImplementation> componentDefinition = 
+                new ComponentDefinition<CompositeImplementation>(implementation);
+
             contribution.getArtifact(source).addModelObject(null, null, componentDefinition);
-            
-        }catch(LoaderException le){
-            throw new InvalidComponentDefinitionlException(contribution.getArtifact(source).getLocation().toExternalForm(), le);
+
+        } catch (LoaderException le) {
+            throw new InvalidComponentDefinitionlException(contribution.getArtifact(source).getLocation()
+                    .toExternalForm(), le);
         }
     }
 
-    public void processModel(Contribution contribution, URI source, Object modelObject) throws DeploymentException, IOException {
+    public void processModel(Contribution contribution, URI source, Object modelObject) throws DeploymentException,
+            IOException {
         // TODO Auto-generated method stub
 
     }

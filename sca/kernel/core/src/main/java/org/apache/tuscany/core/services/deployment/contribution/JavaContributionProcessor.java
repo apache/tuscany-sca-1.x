@@ -34,7 +34,7 @@ import org.apache.tuscany.spi.implementation.java.Introspector;
 import org.apache.tuscany.spi.model.Contribution;
 import org.osoa.sca.annotations.Constructor;
 
-public class JavaContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor{
+public class JavaContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor {
     public static final String CONTENT_TYPE = "application/java-vm";
     private Introspector introspector;
     
@@ -43,12 +43,12 @@ public class JavaContributionProcessor extends ContributionProcessorExtension im
         return CONTENT_TYPE;
     }
     
-    @Constructor({"introspector"})
-    public JavaContributionProcessor(@Autowire IntrospectionRegistry introspector){
+    @Constructor("introspector")
+    public JavaContributionProcessor(@Autowire IntrospectionRegistry introspector) {
         this.introspector = introspector;
     }
     
-    private String getClazzName(URL clazzURL){
+    private String getClazzName(URL clazzURL) {
         String clazzName;
         
         clazzName = clazzURL.toExternalForm().substring(clazzURL.toExternalForm().lastIndexOf("!/") + 2, 
@@ -60,7 +60,7 @@ public class JavaContributionProcessor extends ContributionProcessorExtension im
     
 
     public void processContent(Contribution contribution, URI source, InputStream inputStream) 
-       throws DeploymentException, IOException {
+        throws DeploymentException, IOException {
         if (source == null) {
             throw new IllegalArgumentException("Invalid null source uri.");
         }
@@ -71,17 +71,17 @@ public class JavaContributionProcessor extends ContributionProcessorExtension im
         
         // TODO Auto-generated method stub
         
-        try{
-           CompositeClassLoader cl = new CompositeClassLoader(getClass().getClassLoader());
-           cl.addURL(contribution.getLocation());
+        try {
+            CompositeClassLoader cl = new CompositeClassLoader(getClass().getClassLoader());
+            cl.addURL(contribution.getLocation());
            
-           String clazzName = getClazzName(contribution.getArtifact(source).getLocation());
-           System.out.println(clazzName);
+            String clazzName = getClazzName(contribution.getArtifact(source).getLocation());
+            System.out.println(clazzName);
            
-           Class clazz = cl.loadClass(clazzName);
+            Class clazz = cl.loadClass(clazzName);
                       
-//            PojoComponentType javaInfo = introspector.introspect(null, clazz, null, null);
-        }catch(ClassNotFoundException cnfe){
+          //PojoComponentType javaInfo = introspector.introspect(null, clazz, null, null);
+        } catch (ClassNotFoundException cnfe) {
             String msg = cnfe.getMessage();
             
         }
@@ -93,7 +93,8 @@ public class JavaContributionProcessor extends ContributionProcessorExtension im
 
     }
 
-    public void processModel(Contribution contribution, URI source, Object modelObject) throws DeploymentException, IOException {
+    public void processModel(Contribution contribution, URI source, Object modelObject) 
+        throws DeploymentException, IOException {
         // TODO Auto-generated method stub
 
     }
