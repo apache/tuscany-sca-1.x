@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<componentType xmlns="http://www.osoa.org/xmlns/sca/1.0" xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance">
+
+  <service name="DivideService">
+        <interface.java class="calculator.DivideService" />
+  </service>
+
+  <property name="round" type="xsd:boolean">false</property>
+
+</componentType>              
+       

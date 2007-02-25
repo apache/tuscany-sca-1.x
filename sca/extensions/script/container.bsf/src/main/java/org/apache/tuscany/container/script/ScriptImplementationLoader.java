@@ -18,17 +18,17 @@
  */
 package org.apache.tuscany.container.script;
 
+import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
-import org.osoa.sca.annotations.Constructor;
 
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.component.CompositeComponent;
@@ -39,6 +39,7 @@ import org.apache.tuscany.spi.loader.LoaderRegistry;
 import org.apache.tuscany.spi.loader.LoaderUtil;
 import org.apache.tuscany.spi.loader.MissingResourceException;
 import org.apache.tuscany.spi.model.ModelObject;
+import org.osoa.sca.annotations.Constructor;
 
 /**
  * Loader for handling implementation.script elements.

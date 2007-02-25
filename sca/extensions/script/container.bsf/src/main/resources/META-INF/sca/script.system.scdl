@@ -29,6 +29,18 @@
         <system:implementation.system class="org.apache.tuscany.container.script.ScriptImplementationLoader"/>
     </component>
 
+    <component name="script.implementationRubyLoader">
+        <system:implementation.system class="org.apache.tuscany.container.script.ScriptImplementationRubyLoader"/>
+    </component>
+
+    <component name="script.implementationPythonLoader">
+        <system:implementation.system class="org.apache.tuscany.container.script.ScriptImplementationPythonLoader"/>
+    </component>
+
+    <component name="script.implementationJavaScriptLoader">
+        <system:implementation.system class="org.apache.tuscany.container.script.ScriptImplementationJavaScriptLoader"/>
+    </component>
+
     <component name="script.componentTypeLoader">
         <system:implementation.system class="org.apache.tuscany.container.script.ScriptComponentTypeLoader"/>
     </component>
