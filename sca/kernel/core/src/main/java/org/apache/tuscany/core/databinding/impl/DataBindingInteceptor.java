@@ -19,14 +19,18 @@
 
 package org.apache.tuscany.core.databinding.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.databinding.ExceptionHandler;
 import org.apache.tuscany.spi.databinding.Mediator;
 import org.apache.tuscany.spi.databinding.TransformationException;
+import org.apache.tuscany.spi.idl.ServiceFaultException;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
 import org.apache.tuscany.spi.wire.Interceptor;
@@ -68,7 +72,9 @@ public class DataBindingInteceptor implements Interceptor {
     /**
      * @see org.apache.tuscany.spi.wire.Interceptor#invoke(org.apache.tuscany.spi.wire.Message)
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.tuscany.spi.wire.Interceptor#invoke(org.apache.tuscany.spi.wire.Message)
      */
     public Message invoke(Message msg) {
@@ -93,21 +99,36 @@ public class DataBindingInteceptor implements Interceptor {
 
         if (resultMsg.isFault()) {
 
-            // FIXME: We need to figure out what fault type it is and then transform it
+            // FIXME: We need to figure out what fault type it is and then
+            // transform it
             // back the source fault type
             // throw new InvocationRuntimeException((Throwable) result);
 
             if ((result instanceof Exception) && !(result instanceof RuntimeException)) {
                 // FIXME: How to match fault data to a fault type for the
                 // operation?
+
+                // If the result is from an InvocationTargetException look at
+                // the actual cause.
+                if (result instanceof InvocationTargetException) {
+                    result = ((InvocationTargetException)result).getCause();
+                }
                 DataType targetDataType = null;
                 for (DataType exType : targetOperation.getFaultTypes()) {
                     if (((Class)exType.getPhysical()).isInstance(result)) {
-                        targetDataType = exType;
-                        break;
+                        if (result instanceof ServiceFaultException) {
+                            if (((ServiceFaultException)result).isMatchingType(exType.getLogical())) {
+                                targetDataType = exType;
+                                break;
+                            }
+
+                        } else {
+                            targetDataType = exType;
+                            break;
+                        }
                     }
                 }
-                
+
                 if (targetDataType == null) {
                     // Not a business exception
                     return resultMsg;

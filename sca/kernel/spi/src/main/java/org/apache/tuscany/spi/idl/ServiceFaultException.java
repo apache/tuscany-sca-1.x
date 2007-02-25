@@ -19,16 +19,19 @@
 
 package org.apache.tuscany.spi.idl;
 
+import javax.xml.namespace.QName;
+
 import org.apache.tuscany.api.TuscanyException;
 
 /**
- * The generic java exception to wrap service faults 
+ * The generic java exception to wrap service faults
  * 
  * @version $Rev$ $Date$
  */
 public class ServiceFaultException extends TuscanyException {
     private static final long serialVersionUID = -8002583655240625792L;
     private Object faultInfo;
+    private QName logical;
 
     /**
      * @param message
@@ -54,6 +57,26 @@ public class ServiceFaultException extends TuscanyException {
      */
     public Object getFaultInfo() {
         return faultInfo;
+    }
+
+    public QName getLogical() {
+        return logical;
+    }
+
+    public void setLogical(QName logical) {
+        this.logical = logical;
+    }
+
+    public boolean isMatchingType(Object type) {
+        if (logical == null)
+            return false;
+
+        if ((type instanceof QName) && logical.equals(type)) {
+            return true;
+        }
+        if (type instanceof XMLType && logical.equals(((XMLType)type).getElementName()))
+            return true;
+        return false;
     }
 
 }

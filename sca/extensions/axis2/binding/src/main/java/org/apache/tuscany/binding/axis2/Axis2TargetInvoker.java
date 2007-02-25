@@ -22,6 +22,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.component.WorkContext;
+import org.apache.tuscany.spi.idl.ServiceFaultException;
 import org.apache.tuscany.spi.model.Scope;
 import org.apache.tuscany.spi.wire.InvocationRuntimeException;
 import org.apache.tuscany.spi.wire.Message;
@@ -42,7 +43,8 @@ import org.apache.axis2.context.MessageContext;
 import org.apache.axis2.wsdl.WSDLConstants;
 
 /**
- * Axis2TargetInvoker uses an Axis2 OperationClient to invoke a remote web service
+ * Axis2TargetInvoker uses an Axis2 OperationClient to invoke a remote web
+ * service
  */
 public class Axis2TargetInvoker implements TargetInvoker {
 
@@ -56,8 +58,11 @@ public class Axis2TargetInvoker implements TargetInvoker {
 
     private WorkContext workContext;
 
-    public Axis2TargetInvoker(ServiceClient serviceClient, QName wsdlOperationName, Options options,
-                              SOAPFactory soapFactory, WorkContext workContext) {
+    public Axis2TargetInvoker(ServiceClient serviceClient,
+                              QName wsdlOperationName,
+                              Options options,
+                              SOAPFactory soapFactory,
+                              WorkContext workContext) {
         this.wsdlOperationName = wsdlOperationName;
         this.options = options;
         this.soapFactory = soapFactory;
@@ -67,7 +72,7 @@ public class Axis2TargetInvoker implements TargetInvoker {
 
     /**
      * Invoke a WS operation
-     *
+     * 
      * @param payload
      * @param sequence
      * @return
@@ -75,16 +80,28 @@ public class Axis2TargetInvoker implements TargetInvoker {
      */
     public Object invokeTarget(final Object payload, final short sequence) throws InvocationTargetException {
         try {
-            Object[] args = (Object[]) payload;
+            Object[] args = (Object[])payload;
             OperationClient operationClient = createOperationClient(args);
 
             operationClient.execute(true);
 
             MessageContext responseMC = operationClient.getMessageContext(WSDLConstants.MESSAGE_LABEL_IN_VALUE);
+
             return responseMC.getEnvelope().getBody().getFirstElement();
 
         } catch (AxisFault e) {
-            throw new InvocationTargetException(e);
+            // convert exception to an exception independent on Axis runtime.
+            Throwable cause = e.getCause();
+            cause = cause == null ? e : cause;
+            ServiceFaultException serviceFaultException =
+                new ServiceFaultException(e.getMessage(), e.getDetail(), cause);
+            OMElement detail = e.getDetail();
+            if (null != detail) {
+                detail.getQName();
+                serviceFaultException.setLogical(detail.getQName());
+            }
+            throw new InvocationTargetException(serviceFaultException);
+
         }
 
     }
@@ -96,37 +113,40 @@ public class Axis2TargetInvoker implements TargetInvoker {
             SOAPBody body = env.getBody();
             for (Object bc : args) {
                 if (bc instanceof OMElement) {
-                    body.addChild((OMElement) bc);
+                    body.addChild((OMElement)bc);
                 } else {
                     throw new IllegalArgumentException(
-                        "Can't handle mixed payloads betweem OMElements and other types.");
+                                                       "Can't handle mixed payloads betweem OMElements and other types.");
                 }
             }
         }
         MessageContext requestMC = new MessageContext();
         requestMC.setEnvelope(env);
-        // Axis2 operationClients can not be shared so create a new one for each request
+        // Axis2 operationClients can not be shared so create a new one for each
+        // request
         OperationClient operationClient = serviceClient.createClient(wsdlOperationName);
-        
-        
-        if(workContext != null){
-            String conversationId = (String) workContext.getIdentifier(Scope.CONVERSATION);
-            if(conversationId != null && conversationId.length()!=0){
-                EndpointReference fromEPR= new EndpointReference(AddressingConstants.Final.WSA_ANONYMOUS_URL);
+
+        if (workContext != null) {
+            String conversationId = (String)workContext.getIdentifier(Scope.CONVERSATION);
+            if (conversationId != null && conversationId.length() != 0) {
+                EndpointReference fromEPR = new EndpointReference(AddressingConstants.Final.WSA_ANONYMOUS_URL);
                 fromEPR.addReferenceParameter(WebServiceBindingDefinition.CONVERSATION_ID_REFPARM_QN, conversationId);
                 options.setFrom(fromEPR);
-                requestMC.setFrom(fromEPR); //who knows why two ways ?
-            
-                //For now do this the brute force method. Need to figure out how to do axis addressing .. configure mar in flow.
+                requestMC.setFrom(fromEPR); // who knows why two ways ?
+
+                // For now do this the brute force method. Need to figure out
+                // how to do axis addressing .. configure mar in flow.
                 SOAPEnvelope sev = requestMC.getEnvelope();
                 SOAPHeader sh = sev.getHeader();
-                OMElement el= fromEPR.toOM(AddressingConstants.Final.WSA_NAMESPACE,AddressingConstants.WSA_FROM,AddressingConstants.WSA_DEFAULT_PREFIX);
+                OMElement el =
+                    fromEPR.toOM(AddressingConstants.Final.WSA_NAMESPACE,
+                                 AddressingConstants.WSA_FROM,
+                                 AddressingConstants.WSA_DEFAULT_PREFIX);
                 sh.addChild(el);
             }
 
         }
 
-                
         operationClient.setOptions(options);
         operationClient.addMessageContext(requestMC);
         return operationClient;
@@ -144,7 +164,7 @@ public class Axis2TargetInvoker implements TargetInvoker {
 
     public Axis2TargetInvoker clone() throws CloneNotSupportedException {
         try {
-            return (Axis2TargetInvoker) super.clone();
+            return (Axis2TargetInvoker)super.clone();
         } catch (CloneNotSupportedException e) {
             // will not happen
             return null;
