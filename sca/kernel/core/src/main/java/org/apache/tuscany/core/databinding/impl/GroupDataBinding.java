@@ -27,23 +27,26 @@ import org.apache.tuscany.spi.databinding.extension.DataBindingExtension;
 import org.apache.tuscany.spi.model.DataType;
 
 /**
- * A DataBinding for the StAX
+ * The base class for a special databinding which represents a group of other databindings
  * 
  * @version $Rev$ $Date$
  */
 public abstract class GroupDataBinding extends DataBindingExtension {
     public static final String NAME = "databinding:group";
 
-    protected Class[] types;
+    /**
+     * Marker type is a java class or interface representing the data format. 
+     */
+    protected Class[] markerTypes;
 
     public GroupDataBinding(Class[] types) {
         super(NAME, null, GroupDataBinding.class);
-        this.types = types;
+        this.markerTypes = types;
     }
 
     @SuppressWarnings("unchecked")
     public boolean introspect(DataType type, Annotation[] annotations) {
-        if (types == null) {
+        if (markerTypes == null) {
             return false;
         }
         Type physical = type.getPhysical();
@@ -54,21 +57,41 @@ public abstract class GroupDataBinding extends DataBindingExtension {
             return false;
         }
         Class cls = (Class)physical;
-        for (Class<?> c : types) {
-            if (c.isAssignableFrom(cls)) {
-                type.setDataBinding(NAME);
-                DataType realType = null;
-                try {
-                    realType = (DataType)type.clone();
-                } catch (CloneNotSupportedException e) {
-                    // Never happen
-                    assert false;
-                }
-                realType.setDataBinding(c.getName());
-                type.setLogical(realType);
+        for (Class<?> c : markerTypes) {
+            if (isTypeOf(c, cls)) {
+                type.setDataBinding(getDataBinding(c));
+                type.setLogical(getLogical(cls, annotations));
+                return true;
             }
         }
         return false;
     }
+    
+    /**
+     * Test if the given type is a subtype of the base type
+     * @param markerType
+     * @param type
+     * @return
+     */
+    protected boolean isTypeOf(Class<?> markerType, Class<?> type) {
+        return markerType.isAssignableFrom(type);
+    }
+    
+    /**
+     * Derive the databinding name from a base class
+     * @param baseType
+     * @return
+     */
+    protected String getDataBinding(Class<?> baseType) {
+        return baseType.getName();
+    }
+    
+    /**
+     * Get the logical type
+     * @param type The java type
+     * @param annotations
+     * @return
+     */
+    protected abstract Object getLogical(Class<?> type, Annotation[] annotations);
 
 }

@@ -60,16 +60,16 @@
    </component>
        
     <!-- Group databindings -->
-    <!-- 
-    <component name="databinding.group.common">
-        <system:implementation.system class="org.apache.tuscany.core.databinding.impl.CommonGroupDataBinding" />
+    <component name="databinding.group.xml">
+        <system:implementation.system class="org.apache.tuscany.core.databinding.xml.XMLGroupDataBinding" />
    </component>
-   -->
 
+<!-- Comment out the stax databinding as it's covered in the databinding.group.xml -->
+<!-- 
     <component name="databinding.stax">
         <system:implementation.system class="org.apache.tuscany.core.databinding.xml.StAXDataBinding" />
     </component>
-       
+-->       
     <component name="databinding.javabeans">
         <system:implementation.system class="org.apache.tuscany.core.databinding.javabeans.JavaBeansDataBinding" />
     </component>

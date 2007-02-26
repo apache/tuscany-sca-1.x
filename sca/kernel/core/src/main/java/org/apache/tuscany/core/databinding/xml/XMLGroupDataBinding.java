@@ -17,12 +17,13 @@
  * under the License.    
  */
 
-package org.apache.tuscany.core.databinding.impl;
+package org.apache.tuscany.core.databinding.xml;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.lang.annotation.Annotation;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLEventWriter;
@@ -31,6 +32,8 @@ import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 
+import org.apache.tuscany.core.databinding.impl.GroupDataBinding;
+import org.apache.tuscany.spi.idl.XMLType;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 
@@ -39,10 +42,17 @@ import org.xml.sax.InputSource;
  * 
  * @version $Rev$ $Date$
  */
-public class CommonGroupDataBinding extends GroupDataBinding {
-    public CommonGroupDataBinding() {
+public class XMLGroupDataBinding extends GroupDataBinding {
+
+    public XMLGroupDataBinding() {
         super(new Class[] {InputStream.class, OutputStream.class, Reader.class, Writer.class, Source.class,
                            Result.class, InputSource.class, ContentHandler.class, XMLStreamReader.class,
                            XMLStreamWriter.class, XMLEventReader.class, XMLEventWriter.class});
     }
+
+    @Override
+    protected Object getLogical(Class<?> markerType, Annotation[] annotations) {
+        return XMLType.UNKNOWN;
+    }
+
 }
