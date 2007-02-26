@@ -29,33 +29,13 @@ public class InvalidFolderContributionURIException extends DeploymentException {
     /**
      * 
      */
-    public InvalidFolderContributionURIException() {
-        // TODO Auto-generated constructor stub
-    }
+    private static final long serialVersionUID = 1564255850052593282L;
 
-    /**
-     * @param message
-     */
-    public InvalidFolderContributionURIException(String message) {
-        super(message);
-        // TODO Auto-generated constructor stub
+    protected InvalidFolderContributionURIException(String componentDefinitionLocatoin) {
+        super(componentDefinitionLocatoin);
     }
-
-    /**
-     * @param cause
-     */
-    public InvalidFolderContributionURIException(Throwable cause) {
-        super(cause);
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * @param message
-     * @param cause
-     */
-    public InvalidFolderContributionURIException(String message, Throwable cause) {
+    
+    protected InvalidFolderContributionURIException(String message, Throwable cause) {
         super(message, cause);
-        // TODO Auto-generated constructor stub
     }
-
 }
