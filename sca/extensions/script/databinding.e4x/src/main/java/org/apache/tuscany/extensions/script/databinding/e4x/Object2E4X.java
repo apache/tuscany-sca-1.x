@@ -26,7 +26,6 @@ import org.apache.axiom.om.OMFactory;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.databinding.Transformer;
 import org.apache.tuscany.spi.databinding.extension.Java2SimpleTypeTransformer;
-import org.mozilla.javascript.xml.XMLObject;
 import org.mozilla.javascript.xmlimpl.XML;
 import org.osoa.sca.annotations.Service;
 
@@ -52,7 +51,7 @@ public class Object2E4X extends Java2SimpleTypeTransformer<XML> {
 
     @Override
     public Class getTargetType() {
-        return XMLObject.class;
+        return XML.class;
     }
 
 }

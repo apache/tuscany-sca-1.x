@@ -22,6 +22,8 @@ package helloworld;
 import junit.framework.Assert;
 
 import org.apache.tuscany.test.SCATestCase;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ContextFactory;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -30,7 +32,7 @@ import org.osoa.sca.CurrentCompositeContext;
  */
 public class PropertiesTestCase extends SCATestCase {
 
-    private CompositeContext compositeContext;
+     private CompositeContext compositeContext;
 
     public void testJavaScriptDefault() throws Exception {
         HelloWorldService helloWorldService =
@@ -46,6 +48,20 @@ public class PropertiesTestCase extends SCATestCase {
         Assert.assertEquals("jsNamaskaar Petra", msg);
     }
 
+    public void testJavaScriptDynDefault() throws Exception {
+        HelloWorldService helloWorldService =
+            compositeContext.locateService(HelloWorldService.class, "HelloWorldJSDynDefaultComponent");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("jsYo! Petra", msg);
+    }
+
+    public void testJavaScriptDynOverride() throws Exception {
+        HelloWorldService helloWorldService =
+            compositeContext.locateService(HelloWorldService.class, "HelloWorldJSDynOverrideComponent");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("jsNamaste Petra", msg);
+    }
+
     public void testPythonDefault() throws Exception {
         HelloWorldService helloWorldService =
             compositeContext.locateService(HelloWorldService.class, "HelloWorldPythonDefaultComponent");
@@ -59,6 +75,20 @@ public class PropertiesTestCase extends SCATestCase {
         Assert.assertEquals("pyNamaskaar Petra", msg);
     }
 
+    public void testPythonDynDefault() throws Exception {
+        HelloWorldService helloWorldService =
+            compositeContext.locateService(HelloWorldService.class, "HelloWorldPythonDynDefaultComponent");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("pyYo! Petra", msg);
+    }
+
+    public void testPythonDynOverride() throws Exception {
+        HelloWorldService helloWorldService =
+            compositeContext.locateService(HelloWorldService.class, "HelloWorldPythonDynOverrideComponent");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("pyNamaste Petra", msg);
+    }
+
     public void testRubyDefault() throws Exception {
         HelloWorldService helloWorldService =
             compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyDefaultComponent");
@@ -70,6 +100,19 @@ public class PropertiesTestCase extends SCATestCase {
             compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyOverrideComponent");
         String msg = helloWorldService.getGreetings("Petra");
         Assert.assertEquals("rbNamaskaar Petra", msg);
+    }
+
+    public void testRubyDynDefault() throws Exception {
+        HelloWorldService helloWorldService =
+            compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyDynDefaultComponent");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("rbYo! Petra", msg);
+    }
+    public void testRubyDynOverride() throws Exception {
+        HelloWorldService helloWorldService =
+            compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyDynOverrideComponent");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("rbNamaste Petra", msg);
     }
 
     @Override

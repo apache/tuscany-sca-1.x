@@ -54,7 +54,7 @@ public class ScriptComponentBuilder extends ComponentBuilderExtension<ScriptImpl
             // if its not a Java interface assume WSDL and want XML databinding
             ServiceContract contract = service.getServiceContract();
             if (!(contract instanceof JavaServiceContract)) {
-                service.getServiceContract().setDataBinding("org.mozilla.javascript.xml.XMLObject");
+                service.getServiceContract().setDataBinding("org.mozilla.javascript.xmlimpl.XML");
             }
         }
 

@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
- 
+
 function getGreetings(s) {
    return "js" + GREETING + " " + s;
 }

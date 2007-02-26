@@ -1,5 +1,6 @@
 package org.apache.tuscany.container.script.mock;
 
+import org.apache.bsf.BSFDeclaredBean;
 import org.apache.bsf.BSFException;
 import org.apache.bsf.util.BSFEngineImpl;
 
@@ -24,4 +25,6 @@ public class MockBSFEngine extends BSFEngineImpl {
         return null;
     }
 
+    public void declareBean(BSFDeclaredBean bean) throws BSFException {
+    }
 }

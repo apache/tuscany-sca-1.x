@@ -41,10 +41,7 @@ public class ScriptInstanceFactory implements ObjectFactory<ScriptInstance> {
     private Map<String, ObjectFactory> contextObjects;
     private Map<String, Class> contextTypes;
 
-    public ScriptInstanceFactory(String resourceName,
-                                 String className,
-                                 String scriptSource,
-                                 ClassLoader classLoader) {
+    public ScriptInstanceFactory(String resourceName, String className, String scriptSource, ClassLoader classLoader) {
         this.resourceName = resourceName;
         this.classLoader = classLoader;
         this.className = className;
@@ -54,17 +51,18 @@ public class ScriptInstanceFactory implements ObjectFactory<ScriptInstance> {
     }
 
     /**
-     * Create a new invokeable instance of the script
-     * <p/>
-     * objects to add to scope of the script instance
-     *
+     * Create a new invokeable instance of the script <p/> objects to add to
+     * scope of the script instance
+     * 
      * @return a RhinoScriptInstance
      */
-    //public ScriptInstanceImpl createInstance(List<Class<?>> serviceBindings, Map<String, Object> context) {
+    // public ScriptInstanceImpl createInstance(List<Class<?>> serviceBindings,
+    // Map<String, Object> context) {
     public ScriptInstance getInstance() throws ObjectCreationException {
         try {
 
-            //TODO: this uses a new manager and recompiles the scrip each time, may be able to optimize
+            // TODO: this uses a new manager and recompiles the scrip each time,
+            // may be able to optimize
             // but need to be careful about instance scoping
 
             BSFManager bsfManager = new BSFManager();
@@ -86,6 +84,19 @@ public class ScriptInstanceFactory implements ObjectFactory<ScriptInstance> {
             String scriptLanguage = BSFManager.getLangFromFilename(resourceName);
             BSFEngine bsfEngine = bsfManager.loadScriptingEngine(scriptLanguage);
             bsfEngine.exec(resourceName, 0, 0, scriptSource);
+
+            // register any context objects (SCA properties and references)
+            for (Map.Entry<String, ObjectFactory> entry : contextObjects.entrySet()) {
+                Object value = entry.getValue().getInstance();
+                Class type = contextTypes.get(entry.getKey());
+                if (type == null) {
+                    type = value.getClass();
+                }
+                // TODO: Hack to bypass bug in BSF javascript engine
+                if (!("javascript".equals(scriptLanguage)) || (value instanceof Number) || (value instanceof String) || (value instanceof Boolean)) {
+                    bsfManager.declareBean(entry.getKey(), value, type);
+                }
+            }
 
             // if there's a className then get the class object
             Object clazz = null;

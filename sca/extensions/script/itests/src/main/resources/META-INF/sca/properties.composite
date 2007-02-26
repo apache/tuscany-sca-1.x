@@ -18,7 +18,8 @@
  * under the License.    
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-
+           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           
            name="ScriptItests">
     
     <component name="HelloWorldJSDefaultComponent">
@@ -30,6 +31,15 @@
         <property name="GREETING">Namaskaar</property>
     </component>
 
+    <component name="HelloWorldJSDynDefaultComponent">
+        <implementation.script script="properties/helloworldDyn.js"/>
+    </component>
+
+    <component name="HelloWorldJSDynOverrideComponent">
+        <implementation.script script="properties/helloworldDyn.js"/>
+        <property name="GREETING">Namaste</property>
+    </component>
+
     <component name="HelloWorldRubyDefaultComponent">
         <implementation.script script="properties/helloworld.rb"/>
     </component>
@@ -39,6 +49,15 @@
         <property name="GREETING">Namaskaar</property>
     </component>
 
+    <component name="HelloWorldRubyDynDefaultComponent">
+        <implementation.script script="properties/helloworldDyn.rb"/>
+    </component>
+
+    <component name="HelloWorldRubyDynOverrideComponent">
+        <implementation.script script="properties/helloworldDyn.rb"/>
+        <property name="GREETING">Namaste</property>
+    </component>
+
     <component name="HelloWorldPythonDefaultComponent">
         <implementation.script script="properties/helloworld.py"/>
     </component>
@@ -46,6 +65,15 @@
     <component name="HelloWorldPythonOverrideComponent">
         <implementation.script script="properties/helloworld.py"/>
         <property name="GREETING">Namaskaar</property>
+    </component>
+
+    <component name="HelloWorldPythonDynDefaultComponent">
+        <implementation.script script="properties/helloworldDyn.py"/>
+    </component>
+
+    <component name="HelloWorldPythonDynOverrideComponent">
+        <implementation.script script="properties/helloworldDyn.py"/>
+        <property name="GREETING">Namaste</property>
     </component>
 
 </composite>

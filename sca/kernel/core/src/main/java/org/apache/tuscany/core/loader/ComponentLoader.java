@@ -192,7 +192,7 @@ public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
         String name = reader.getAttributeValue(null, PROPERTY_NAME_ATTR);
         Implementation<?> implementation = componentDefinition.getImplementation();
         ComponentType<?, ?, ?> componentType = implementation.getComponentType();
-        Property<Type> property = (Property<Type>) componentType.getProperties().get(name);
+        Property<Type> property = componentType.getProperty(name);
         if (property == null) {
             throw new UndefinedPropertyException(name);
         }

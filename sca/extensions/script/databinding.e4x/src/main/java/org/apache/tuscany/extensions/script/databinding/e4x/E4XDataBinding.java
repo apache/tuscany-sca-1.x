@@ -22,7 +22,7 @@ package org.apache.tuscany.extensions.script.databinding.e4x;
 import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.databinding.WrapperHandler;
 import org.apache.tuscany.spi.databinding.extension.DataBindingExtension;
-import org.mozilla.javascript.xml.XMLObject;
+import org.mozilla.javascript.xmlimpl.XML;
 import org.osoa.sca.annotations.Service;
 
 /**
@@ -33,11 +33,11 @@ import org.osoa.sca.annotations.Service;
 @Service(DataBinding.class)
 public class E4XDataBinding extends DataBindingExtension {
     
-    public static final String NAME = XMLObject.class.getName();
+    public static final String NAME = XML.class.getName();
     public static final String[] ALIASES = new String[] {"e4x"};
 
     public E4XDataBinding() {
-        super(NAME, ALIASES, XMLObject.class);
+        super(NAME, ALIASES, XML.class);
     }
 
     /**

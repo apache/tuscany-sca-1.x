@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.container.script;
 
+import javax.xml.namespace.QName;
+
 import org.apache.tuscany.spi.model.ComponentType;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.model.ReferenceDefinition;
@@ -25,8 +27,8 @@ import org.apache.tuscany.spi.model.Scope;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
 /**
- * A componentType for script components
- * TODO: need lifecycle methods init/destroy 
+ * A componentType for script components TODO: need lifecycle methods
+ * init/destroy
  */
 public class ScriptComponentType extends ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> {
 
@@ -34,4 +36,12 @@ public class ScriptComponentType extends ComponentType<ServiceDefinition, Refere
         this.implementationScope = Scope.COMPOSITE;
     }
 
+    @Override
+    public Property getProperty(String name) {
+        Property p = super.getProperty(name);
+        if (p == null) {
+            p = new Property<Object>(name, new QName("http://www.w3.org/2001/XMLSchema", "any"), null);
+        }
+        return p;
+    }
 }

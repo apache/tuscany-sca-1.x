@@ -175,4 +175,14 @@ public class ComponentType<S extends ServiceDefinition, R extends ReferenceDefin
     public void add(P property) {
         properties.put(property.getName(), property);
     }
+
+    /**
+     * Get a specific property that can be used to configure the implementation.
+     * 
+     * @param name the name of the property
+     * @return the property that can be used to configure the implementation or null if no such property exists
+     */
+    public Property getProperty(String name) {
+        return properties.get(name);
+    }
 }
