@@ -41,7 +41,7 @@ public interface ContributionService {
      * @throws DeploymentException if there was a problem with the contribution
      * @throws IOException         if there was a problem reading the resource
      */
-    URI contribute(URL contribution, boolean copyToRepository) throws DeploymentException, IOException;
+    URI contribute(URL contribution, boolean storeInRepository) throws DeploymentException, IOException;
 
     /**
      * Contribute an artifact to the SCA Domain.
