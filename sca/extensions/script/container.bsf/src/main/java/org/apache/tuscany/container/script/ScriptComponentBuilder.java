@@ -28,6 +28,7 @@ import org.apache.tuscany.spi.idl.java.JavaServiceContract;
 import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.PropertyValue;
 import org.apache.tuscany.spi.model.Scope;
+import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
 /**
@@ -51,7 +52,8 @@ public class ScriptComponentBuilder extends ComponentBuilderExtension<ScriptImpl
         
         for (ServiceDefinition service : implementation.getComponentType().getServices().values()) {
             // if its not a Java interface assume WSDL and want XML databinding
-            if (!(service.getServiceContract() instanceof JavaServiceContract)) {
+            ServiceContract contract = service.getServiceContract();
+            if (!(contract instanceof JavaServiceContract)) {
                 service.getServiceContract().setDataBinding("org.mozilla.javascript.xml.XMLObject");
             }
         }
