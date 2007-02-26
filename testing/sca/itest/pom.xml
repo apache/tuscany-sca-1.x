@@ -52,6 +52,7 @@
 	        <module>conversationsTest</module>
 	        <module>wsdl</module>
                 <module>bindings</module>
+                <module>databinding</module>
             </modules>
         </profile>
 
