@@ -54,6 +54,7 @@ public class ContentTypeDescriberImpl implements ContentTypeDescriber {
         contentTypeRegistry.put("COMPOSITE", "application/v.tuscany.scdl");
         contentTypeRegistry.put("WSDL", "application/v.tuscany.wsdl");
         contentTypeRegistry.put("JAR", "application/x-compressed");
+        contentTypeRegistry.put("FOLDER", "application/v.tuscany.folder");
     }
 
     protected String resolveContentyTypeByExtension(URL resourceURL) {
@@ -78,20 +79,24 @@ public class ContentTypeDescriberImpl implements ContentTypeDescriber {
         URLConnection connection = null;
         String contentType = defaultContentType;
 
-        contentType = resolveContentyTypeByExtension(resourceURL);
-        if (contentType == null) {
-            try {
-                connection = resourceURL.openConnection();
-                contentType = connection.getContentType();
-
-                if (contentType == null || contentType.equals("content/unknown")) {
-                    // here we couldn't figure out from our registry or from URL
-                    // return defaultContentType if provided
-                    contentType = defaultContentType;
+        if (FileHelper.toFile(resourceURL).isDirectory()) {
+            contentType = this.contentTypeRegistry.get("FOLDER");
+        } else {
+            contentType = resolveContentyTypeByExtension(resourceURL);
+            if (contentType == null) {
+                try {
+                    connection = resourceURL.openConnection();
+                    contentType = connection.getContentType();
+    
+                    if (contentType == null || contentType.equals("content/unknown")) {
+                        // here we couldn't figure out from our registry or from URL
+                        // return defaultContentType if provided
+                        contentType = defaultContentType;
+                    }
+                } catch (IOException io) {
+                    // could not access artifact, just ignore and we will return
+                    // null contentType
                 }
-            } catch (IOException io) {
-                // could not access artifact, just ignore and we will return
-                // null contentType
             }
         }
         return contentType == null ? defaultContentType : contentType;

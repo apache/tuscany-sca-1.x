@@ -29,11 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tuscany.core.services.deployment.ContentTypeDescriberImpl;
+import org.apache.tuscany.core.util.FileHelper;
 import org.apache.tuscany.host.deployment.DeploymentException;
 import org.apache.tuscany.spi.deployer.ContentTypeDescriber;
 import org.apache.tuscany.spi.deployer.ContributionProcessor;
 import org.apache.tuscany.spi.extension.ContributionProcessorExtension;
 import org.apache.tuscany.spi.model.Contribution;
+import org.apache.tuscany.spi.model.DeployedArtifact;
 
 public class FolderContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor {
     public static final String CONTENT_TYPE = "application/v.tuscany.folder";
@@ -95,22 +97,30 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
 
         URL sourceURL = contribution.getArtifact(source).getLocation();
 
+        
         for (URL artifactURL : getArtifacts(sourceURL, inputStream)) {
-            // FIXME
-            // contribution.addArtifact(artifact)
             
-            ContentTypeDescriber contentTypeDescriber = new ContentTypeDescriberImpl();
-            String contentType = contentTypeDescriber.getContentType(artifactURL, null);
-            System.out.println("File : " + artifactURL);
-            System.out.println("Type : " + contentType);
-            
-
-            //just process scdl for now
-            if ("application/v.tuscany.scdl".equals(contentType) || "application/java-vm".equals(contentType)) {
-                this.registry.processContent(contribution, source, inputStream);
+            URI artifactURI;
+            try {
+                artifactURI = new URI(contribution.getUri().toASCIIString() + "/" + FileHelper.getName(artifactURL.getPath()));
+                DeployedArtifact artifact = new DeployedArtifact(artifactURI);
+                artifact.setLocation(artifactURL);
+                contribution.addArtifact(artifact);
+                
+                ContentTypeDescriber contentTypeDescriber = new ContentTypeDescriberImpl();
+                String contentType = contentTypeDescriber.getContentType(artifactURL, null);
+                System.out.println("File : " + artifactURL);
+                System.out.println("Type : " + contentType);
+                
+    
+                //just process scdl for now
+                if ("application/v.tuscany.scdl".equals(contentType) /*|| "application/java-vm".equals(contentType)*/) {
+                    this.registry.processContent(contribution, artifactURI, artifactURL.openStream());
+                }
+            } catch (URISyntaxException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-            // process each artifact
-            //this.registry.processContent(contribution, artifactURL, inputStream);
 
         }
 

@@ -47,6 +47,9 @@
     <component name="JarContributionProcessor" initLevel="30">
         <system:implementation.system class="org.apache.tuscany.core.services.deployment.contribution.JarContributionProcessor" />
     </component>
+    <component name="FolderContributionProcessor" initLevel="30">
+        <system:implementation.system class="org.apache.tuscany.core.services.deployment.contribution.FolderContributionProcessor" />
+    </component>
     <component name="JavaContributionProcessor" initLevel="30">
         <system:implementation.system class="org.apache.tuscany.core.services.deployment.contribution.JavaContributionProcessor" />
     </component>
