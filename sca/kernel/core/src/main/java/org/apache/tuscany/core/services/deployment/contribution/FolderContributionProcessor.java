@@ -107,10 +107,11 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
                 artifact.setLocation(artifactURL);
                 contribution.addArtifact(artifact);
                 
+                //TODO: remove this... for debug purpose only
                 ContentTypeDescriber contentTypeDescriber = new ContentTypeDescriberImpl();
                 String contentType = contentTypeDescriber.getContentType(artifactURL, null);
-                System.out.println("File : " + artifactURL);
-                System.out.println("Type : " + contentType);
+                //System.out.println("File : " + artifactURL);
+                //System.out.println("Type : " + contentType);
                 
     
                 //just process scdl for now

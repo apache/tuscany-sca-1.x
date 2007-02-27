@@ -19,6 +19,7 @@
 
 package org.apache.tuscany.core.services.deployment.contribution;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -108,15 +109,17 @@ public class JarContributionProcessor extends ContributionProcessorExtension imp
             URI artifactURI;
             
             try {
-                artifactURI = new URI(source.toASCIIString() + "/" + FileHelper.getName(artifactURL.getPath()));
+                artifactURI = new URI(source.toASCIIString() + File.separatorChar + FileHelper.getName(artifactURL.getPath()));
                 DeployedArtifact artifact = new DeployedArtifact(artifactURI);
                 artifact.setLocation(artifactURL);
                 contribution.addArtifact(artifact);
                 
-                
+
+                //TODO: remove this... for debug purpose only
                 ContentTypeDescriber contentTypeDescriber = new ContentTypeDescriberImpl();
                 String contentType = contentTypeDescriber.getContentType(artifactURL, null);
-                System.out.println("Type : " + contentType);
+                //System.out.println("File : " + artifactURL);
+                //System.out.println("Type : " + contentType);
                 
 
                 //just process scdl for now
