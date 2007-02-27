@@ -109,7 +109,7 @@ public class JarContributionProcessor extends ContributionProcessorExtension imp
             URI artifactURI;
             
             try {
-                artifactURI = new URI(source.toASCIIString() + "/" + FileHelper.getName(artifactURL.getPath()));
+                artifactURI = new URI(source.toString() + "/" + FileHelper.getName(artifactURL.getPath()));
                 DeployedArtifact artifact = new DeployedArtifact(artifactURI);
                 artifact.setLocation(artifactURL);
                 contribution.addArtifact(artifact);

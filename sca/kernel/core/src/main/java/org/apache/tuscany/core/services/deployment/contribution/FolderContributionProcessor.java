@@ -102,7 +102,7 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
             
             URI artifactURI;
             try {
-                artifactURI = new URI(contribution.getUri().toASCIIString() + "/" + FileHelper.getName(artifactURL.getPath()));
+                artifactURI = new URI(contribution.getUri().toString() + "/" + FileHelper.getName(artifactURL.getPath()));
                 DeployedArtifact artifact = new DeployedArtifact(artifactURI);
                 artifact.setLocation(artifactURL);
                 contribution.addArtifact(artifact);
