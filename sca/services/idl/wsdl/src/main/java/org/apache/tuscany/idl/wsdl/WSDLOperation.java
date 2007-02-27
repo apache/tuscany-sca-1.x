@@ -195,13 +195,14 @@ public class WSDLOperation {
             operationModel.setWrapperStyle(isWrapperStyle());
             // operationModel.setMetaData(WSDLOperation.class.getName(), this);
             if (isWrapperStyle()) {
-                operationModel.setWrapper(getWrapper().getWrapperInfo());
+                WrapperInfo wrapperInfo = getWrapper().getWrapperInfo();
+                operationModel.setWrapper(wrapperInfo);
                 // Register the operation with the types
-                for (DataType<?> d : wrapper.getUnwrappedInputType().getLogical()) {
+                for (DataType<?> d : wrapperInfo.getUnwrappedInputType().getLogical()) {
                     d.setOperation(operationModel);
                 }
-                if (wrapper.getUnwrappedOutputType() != null) {
-                    wrapper.getUnwrappedOutputType().setOperation(operationModel);
+                if (wrapperInfo.getUnwrappedOutputType() != null) {
+                    wrapperInfo.getUnwrappedOutputType().setOperation(operationModel);
                 }
             }
         }
@@ -445,6 +446,7 @@ public class WSDLOperation {
             return outputWrapperElement;
         }
 
+        /*
         public DataType<List<DataType<XMLType>>> getUnwrappedInputType() throws InvalidWSDLException {
             if (unwrappedInputType == null) {
                 List<DataType<XMLType>> childTypes = new ArrayList<DataType<XMLType>>();
@@ -476,6 +478,7 @@ public class WSDLOperation {
             }
             return unwrappedOutputType;
         }
+        */
 
         public WrapperInfo getWrapperInfo() throws InvalidServiceContractException {
             if (wrapperInfo == null) {
@@ -492,7 +495,7 @@ public class WSDLOperation {
                     }
                 }
                 wrapperInfo =
-                    new WrapperInfo(in, out, inChildren, outChildren, getUnwrappedInputType(), getUnwrappedOutputType());
+                    new WrapperInfo(dataBinding, in, out, inChildren, outChildren);
             }
             return wrapperInfo;
         }

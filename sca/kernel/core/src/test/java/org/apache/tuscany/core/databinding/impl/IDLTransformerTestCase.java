@@ -103,8 +103,6 @@ public class IDLTransformerTestCase extends TestCase {
         types1.add(customerIdType);
         types1.add(orderType);
         types1.add(flagType);
-        DataType<List<DataType<XMLType>>> inputType =
-            new DataType<List<DataType<XMLType>>>(IDL_INPUT, Object[].class, types1);
 
         DataType<XMLType> statusType =
             new DataType<XMLType>(null, Object.class, new XMLType(new QName(URI_ORDER_XSD, "status"), null));
@@ -158,7 +156,7 @@ public class IDLTransformerTestCase extends TestCase {
         responseType.setOperation(op);
 
         WrapperInfo wrapperInfo =
-            new WrapperInfo(inputElement, outputElement, inputElements, outputElements, inputType, statusType);
+            new WrapperInfo(DOMDataBinding.NAME, inputElement, outputElement, inputElements, outputElements);
         op.setWrapper(wrapperInfo);
         op.setDataBinding(DOMDataBinding.NAME);
 

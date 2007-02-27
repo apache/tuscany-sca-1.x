@@ -19,17 +19,12 @@
 
 package org.apache.tuscany.databinding.jaxb;
 
-import java.beans.Introspector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchema;
-import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.databinding.ExceptionHandler;
@@ -68,7 +63,7 @@ public class JAXBDataBinding extends DataBindingExtension {
                 if (rawType == JAXBElement.class) {
                     Type actualType = parameterizedType.getActualTypeArguments()[0];
                     if (actualType instanceof Class) {
-                        XMLType xmlType = getXmlTypeName((Class)actualType);
+                        XMLType xmlType = JAXBContextHelper.getXmlTypeName((Class)actualType);
                         dataType.setLogical(xmlType);
                         dataType.setDataBinding(getName());
                         return true;
@@ -80,60 +75,13 @@ public class JAXBDataBinding extends DataBindingExtension {
             return true;
         }
 
-        XMLType xmlType = getXmlTypeName(javaType);
+        XMLType xmlType = JAXBContextHelper.getXmlTypeName(javaType);
         if (xmlType == null) {
             return false;
         }
         dataType.setLogical(xmlType);
         dataType.setDataBinding(getName());
         return true;
-    }
-
-    public static XMLType getXmlTypeName(Class<?> javaType) {
-        String namespace = null;
-        String name = null;
-        Package pkg = javaType.getPackage();
-        if (pkg != null) {
-            XmlSchema schema = pkg.getAnnotation(XmlSchema.class);
-            if (schema != null) {
-                namespace = schema.namespace();
-            }
-        }
-        XmlType type = javaType.getAnnotation(XmlType.class);
-        if (type != null) {
-            String typeNamespace = type.namespace();
-            String typeName = type.name();
-
-            if (typeNamespace.equals("##default") && typeName.equals("")) {
-                XmlRootElement rootElement = javaType.getAnnotation(XmlRootElement.class);
-                if (rootElement != null) {
-                    namespace = rootElement.namespace();
-                } else {
-                    // FIXME: The namespace should be from the referencing
-                    // property
-                    namespace = null;
-                }
-            } else if (typeNamespace.equals("##default")) {
-                // namespace is from the package
-            } else {
-                namespace = typeNamespace;
-            }
-
-            if (typeName.equals("##default")) {
-                name = Introspector.decapitalize(javaType.getSimpleName());
-            } else {
-                name = typeName;
-            }
-        } else {
-            XmlEnum xmlEnum = javaType.getAnnotation(XmlEnum.class);
-            if (xmlEnum != null) {
-                name = Introspector.decapitalize(javaType.getSimpleName());
-            }
-        }
-        if (name == null) {
-            return null;
-        }
-        return new XMLType(null, new QName(namespace, name));
     }
 
     @SuppressWarnings("unchecked")

@@ -18,11 +18,13 @@
  */
 package org.apache.tuscany.api.annotation;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.ElementType.FIELD;
-import java.lang.annotation.Retention;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
@@ -30,7 +32,7 @@ import java.lang.annotation.Target;
  *
  * @version $Rev$ $Date$
  */
-@Target({TYPE, METHOD, FIELD})
+@Target({TYPE, METHOD, FIELD, PARAMETER})
 @Retention(RUNTIME)
 public @interface DataType {
 
@@ -39,23 +41,5 @@ public @interface DataType {
      * @return the unique name of the data binding
      */
     String name();
-
-    /**
-     * Returns the logical data type
-     * @return the logical data type
-     */
-    Class logicalType() default Object.class;
-
-    /**
-     * Returns the physical data type
-     * @return the physical data type
-     */
-    Class physicalType() default Object.class;
-
-    /**
-     * Returns an array of extensibility elements
-     * @return an array of extensibility elements
-     */
-    DataContext[] context() default {};
 
 }

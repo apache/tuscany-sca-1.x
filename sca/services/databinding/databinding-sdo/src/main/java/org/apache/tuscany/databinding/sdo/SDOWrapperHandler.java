@@ -59,7 +59,7 @@ public class SDOWrapperHandler implements WrapperHandler<Object> {
     public void setChild(Object wrapper, int i, ElementInfo childElement, Object value) {
         DataObject wrapperDO =
             (wrapper instanceof XMLDocument) ? ((XMLDocument)wrapper).getRootObject() : (DataObject)wrapper;
-        wrapperDO.set(childElement.getQName().getLocalPart(), value);
+        wrapperDO.set(i, value);
     }
 
     public List getChildren(Object wrapper) {

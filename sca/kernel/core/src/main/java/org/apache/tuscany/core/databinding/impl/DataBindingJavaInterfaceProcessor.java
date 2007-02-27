@@ -35,9 +35,8 @@ import java.util.Set;
 import javax.xml.datatype.Duration;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.tuscany.api.annotation.DataContext;
 import org.apache.tuscany.api.annotation.DataType;
-import org.apache.tuscany.api.annotation.WrapperStyle;
+import org.apache.tuscany.api.annotation.IDLMapping;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.databinding.DataBindingRegistry;
 import org.apache.tuscany.spi.idl.InvalidServiceContractException;
@@ -81,14 +80,10 @@ public class DataBindingJavaInterfaceProcessor extends JavaInterfaceProcessorExt
 
     private void processInterface(Class<?> clazz, JavaServiceContract contract, 
                                   Map<String, Operation<Type>> operations) {
-        WrapperStyle interfaceWrapperStyle = clazz.getAnnotation(WrapperStyle.class);
+        IDLMapping interfaceMapping = clazz.getAnnotation(IDLMapping.class);
         DataType interfaceDataType = clazz.getAnnotation(DataType.class);
         if (interfaceDataType != null) {
             contract.setDataBinding(interfaceDataType.name());
-            // FIXME: [rfeng] Keep data context as metadata?
-            for (DataContext c : interfaceDataType.context()) {
-                contract.setMetaData(c.key(), c.value());
-            }
         }
         for (Method method : clazz.getMethods()) {
             Operation<?> operation = operations.get(method.getName());
@@ -100,18 +95,15 @@ public class DataBindingJavaInterfaceProcessor extends JavaInterfaceProcessorExt
             if (operationDataType != null) {
                 operation.setDataBinding(operationDataType.name());
                 // FIXME: [rfeng] Keep data context as metadata?
-                for (DataContext c : operationDataType.context()) {
-                    operation.setMetaData(c.key(), c.value());
-                }
             }
-            WrapperStyle operationWrapperStyle = clazz.getAnnotation(WrapperStyle.class);
-            if (operationWrapperStyle == null) {
-                operationWrapperStyle = interfaceWrapperStyle;
+            IDLMapping operationMapping = clazz.getAnnotation(IDLMapping.class);
+            if (operationMapping == null) {
+                operationMapping = interfaceMapping;
             }
             
-            if (operationWrapperStyle != null) {
-                operation.setDataBinding(operationWrapperStyle.value());
-                operation.setWrapperStyle(true);
+            if (operationMapping != null) {
+                operation.setDataBinding(operationMapping.dataBinding());
+                operation.setWrapperStyle(operationMapping.wrapperStyle());
             }
             // String dataBinding = operation.getDataBinding();
 

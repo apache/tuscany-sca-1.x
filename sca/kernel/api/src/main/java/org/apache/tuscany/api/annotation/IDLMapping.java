@@ -26,17 +26,26 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Annotation that can be applied to interfaces or methods to indicate a wrapper
- * style
+ * Annotation that can be applied to interfaces or methods to provide IDL mapping metadata 
  * 
  * @version $Rev$ $Date$
  */
 @Target( {METHOD, TYPE})
 @Retention(RUNTIME)
-public @interface WrapperStyle {
+public @interface IDLMapping {
 
     /**
      * The name of the databinding for the wrapper
      */
-    String value();
+    String dataBinding() default "";
+    
+    /**
+     * To indicate if the java interface/method is generated from a WSDL using wrapper style.
+     * 
+     * @see javax.xml.ws.RequestWrapper
+     * @see javax.xml.ws.RequestWrapper
+     * 
+     * @return
+     */
+    boolean wrapperStyle() default true;
 }
