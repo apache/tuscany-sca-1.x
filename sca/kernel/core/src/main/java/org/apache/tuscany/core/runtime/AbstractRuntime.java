@@ -174,11 +174,12 @@ public abstract class AbstractRuntime implements TuscanyRuntime {
 
         // deploy the system scdl
         try {
-            tuscanySystem = deploySystemScdl(bootstrapper.createDeployer(),
-                                             systemComponent,
-                                             ComponentNames.TUSCANY_SYSTEM,
-                                             getSystemScdl(),
-                                             getClass().getClassLoader());
+            tuscanySystem =
+                deploySystemScdl(bootstrapper.createDeployer(),
+                                 systemComponent,
+                                 ComponentNames.TUSCANY_SYSTEM,
+                                 getSystemScdl(),
+                                 getClass().getClassLoader());
         } catch (LoaderException e) {
             throw new InitializationException(e);
         } catch (BuilderException e) {
@@ -209,9 +210,8 @@ public abstract class AbstractRuntime implements TuscanyRuntime {
         }
     }
 
-
     protected Bootstrapper createBootstrapper() {
-        TuscanyManagementService tms = (TuscanyManagementService) getManagementService();
+        TuscanyManagementService tms = (TuscanyManagementService)getManagementService();
         return new DefaultBootstrapper(getMonitorFactory(), xmlFactory, tms);
     }
 
@@ -230,7 +230,7 @@ public abstract class AbstractRuntime implements TuscanyRuntime {
             throw new InitializationException("Deployer must be an atomic component");
         }
         try {
-            return (Deployer) ((AtomicComponent) deployerComponent).getTargetInstance();
+            return (Deployer)((AtomicComponent)deployerComponent).getTargetInstance();
         } catch (TargetResolutionException e) {
             throw new InitializationException(e);
         }
@@ -242,7 +242,7 @@ public abstract class AbstractRuntime implements TuscanyRuntime {
             throw new InitializationException("WireService must be an atomic component");
         }
         try {
-            return (WireService) ((AtomicComponent) wireServiceComponent).getTargetInstance();
+            return (WireService)((AtomicComponent)wireServiceComponent).getTargetInstance();
         } catch (TargetResolutionException e) {
             throw new InitializationException(e);
         }
@@ -252,8 +252,8 @@ public abstract class AbstractRuntime implements TuscanyRuntime {
                                                   CompositeComponent parent,
                                                   String name,
                                                   URL systemScdl,
-                                                  ClassLoader systemClassLoader)
-        throws LoaderException, BuilderException, ComponentException {
+                                                  ClassLoader systemClassLoader) throws LoaderException,
+        BuilderException, ComponentException {
 
         SystemCompositeImplementation impl = new SystemCompositeImplementation();
         impl.setScdlLocation(systemScdl);
@@ -261,21 +261,23 @@ public abstract class AbstractRuntime implements TuscanyRuntime {
         ComponentDefinition<SystemCompositeImplementation> definition =
             new ComponentDefinition<SystemCompositeImplementation>(name, impl);
 
-        return (CompositeComponent) deployer.deploy(parent, definition);
+        return (CompositeComponent)deployer.deploy(parent, definition);
     }
 
     protected CompositeComponent deployApplicationScdl(Deployer deployer,
-			CompositeComponent parent, String name, URL applicationScdl,
-			ClassLoader applicationClassLoader) throws LoaderException,
-			BuilderException, ComponentException {
+                                                       CompositeComponent parent,
+                                                       String name,
+                                                       URL applicationScdl,
+                                                       ClassLoader applicationClassLoader) throws LoaderException,
+        BuilderException, ComponentException {
 
-		CompositeImplementation impl = new CompositeImplementation();
-		impl.setScdlLocation(applicationScdl);
-		impl.setClassLoader(applicationClassLoader);
-		ComponentDefinition<CompositeImplementation> definition = new ComponentDefinition<CompositeImplementation>(
-				name, impl);
+        CompositeImplementation impl = new CompositeImplementation();
+        impl.setScdlLocation(applicationScdl);
+        impl.setClassLoader(applicationClassLoader);
+        ComponentDefinition<CompositeImplementation> definition =
+            new ComponentDefinition<CompositeImplementation>(name, impl);
 
-		return (CompositeComponent) deployer.deploy(parent, definition);
-	}
+        return (CompositeComponent)deployer.deploy(parent, definition);
+    }
 
 }
