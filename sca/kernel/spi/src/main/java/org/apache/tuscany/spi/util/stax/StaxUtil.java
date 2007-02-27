@@ -148,10 +148,8 @@ public abstract class StaxUtil {
                                                DocumentBuilder builder
                                                ) throws XMLStreamException {
         Document doc = null;
-        try {
-        doc = builder.newDocument();
-        } catch ( Exception e ) { e.printStackTrace();}
         if (element == null && type != null && SimpleTypeMapperExtension.isSimpleXSDType(type)) {
+            doc = builder.newDocument();
             // root element has no namespace and local name "value"
             Element root = createDefaultRootElement(type, doc);   
             doc.appendChild(root);
@@ -161,6 +159,7 @@ public abstract class StaxUtil {
             }
             
         } else {
+            doc = builder.newDocument();
             loadPropertyValue(reader, null, doc);
             if (doc.getChildNodes().getLength() == 0) {
                 return null;
@@ -199,6 +198,7 @@ public abstract class StaxUtil {
                     QName name = reader.getName();
                     Element child =
                         document.createElementNS(name.getNamespaceURI(), name.getLocalPart());
+                    child.setPrefix(name.getPrefix());
 
                     // add the attributes for this element
                     int count = reader.getAttributeCount();
