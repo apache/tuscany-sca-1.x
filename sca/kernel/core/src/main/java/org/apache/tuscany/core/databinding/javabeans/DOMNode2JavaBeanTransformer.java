@@ -56,7 +56,7 @@ public class DOMNode2JavaBeanTransformer extends XML2JavaBeanTransformer<Node> {
 
     @Override
     public String getElementName(Node element) throws XML2JavaMapperException {
-        return element.getNodeName();
+        return element.getLocalName();
     }
 
     @Override
