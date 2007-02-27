@@ -68,16 +68,16 @@ public class Axis2ServiceInOutSyncMessageReceiver extends AbstractInOutSyncMessa
             outMC.getOperationContext().setProperty(Constants.RESPONSE_WRITTEN, Constants.VALUE_TRUE);
 
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             throw processMessageFault(envQName.getNamespaceURI(), e.getCause());
          } catch(InvocationRuntimeException e){
-             e.printStackTrace();
+             // e.printStackTrace();
              throw processMessageFault(envQName.getNamespaceURI(), e.getCause());
          } catch (AxisFault e) {
-             e.printStackTrace();
+             // e.printStackTrace();
              throw e;
          } catch (Exception e) {
-             e.printStackTrace();
+             // e.printStackTrace();
              throw AxisFault.makeFault(e);
          }
     }
