@@ -39,6 +39,7 @@ import org.apache.tuscany.spi.model.ModelObject;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.util.stax.StaxUtil;
 import org.osoa.sca.annotations.Constructor;
+import org.w3c.dom.Document;
 
 /**
  * Loads a property from an XML-based assembly file
@@ -139,7 +140,7 @@ public class PropertyLoader extends LoaderExtension<Property> {
             mustSupply = Boolean.parseBoolean(attrValue);
         }
 
-        List defaultValues =
+        List<Document> defaultValues =
             StaxUtil.createPropertyValues(reader, xmlType, xmlElement, documentBuilder);
 
         if (mustSupply && defaultValues.size() > 0) {
