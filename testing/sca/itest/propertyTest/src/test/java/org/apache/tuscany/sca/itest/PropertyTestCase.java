@@ -32,7 +32,7 @@ public class PropertyTestCase extends SCATestCase {
  //   private PropertyService propertyService;
        
 
-    /*public void testA() {
+    public void testA() {
         assertEquals("a", abService.getA());
     }
     
@@ -93,24 +93,29 @@ public class PropertyTestCase extends SCATestCase {
         assertEquals("2006",propertyService.getYear());
         
     } 
-    */
-    public void testComplexProperty()
-    {
+    
+    public void testComplexPropertyOne() {
         ComplexPropertyBean propBean = propertyService.getComplexPropertyOne();
         assertNotNull(propBean);
         assertEquals("TestString_1", propBean.getStringArray()[0]);
         assertEquals(2, propBean.numberSetArray[1].integerNumber);
-        
-        propBean = propertyService.getComplexPropertyTwo();
+    }
+    
+    public void testComplexPropertyTwo() {
+        ComplexPropertyBean propBean = propertyService.getComplexPropertyTwo();
         assertNotNull(propBean);
         assertEquals(10, propBean.intArray[0]);
         assertEquals((float)22, propBean.numberSetArray[1].floatNumber);
-        
-        propBean = propertyService.getComplexPropertyThree();
+    }
+    
+    public void testComplexPropertyThree() {
+        ComplexPropertyBean propBean = propertyService.getComplexPropertyThree();
         assertNotNull(propBean);
         assertEquals("TestElementString_1", propBean.stringArray[0]);
         assertEquals((float)22, propBean.numberSetArray[1].floatNumber);
-        
+    }
+    
+    public void testComplexPropertyFour() {
         Object[] propBeanCollection = propertyService.getComplexPropertyFour().toArray();
         assertNotNull(propBeanCollection);
         assertEquals(1, ((ComplexPropertyBean)propBeanCollection[0]).getIntegerNumber());
