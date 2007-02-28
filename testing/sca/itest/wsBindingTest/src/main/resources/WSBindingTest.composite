@@ -35,4 +35,16 @@
 			location="wsdl/helloworld.wsdl" />
     </reference>
     
+    <component name="HelloworldClientSimplest">
+      <implementation.java class="helloworld.HelloWorldServiceComponent"/>
+      <reference name="helloWorldService">HelloworldClientRefSimplest</reference>
+    </component>
+
+    <reference name="HelloworldClientRefSimplest">
+        <interface.wsdl xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance" 
+            interface="http://helloworld#wsdl.interface(HelloWorld)" 
+            wsdli:wsdlLocation="http://helloworld wsdl/helloworld.wsdl" />
+        <binding.ws/>
+    </reference>
+
 </composite>
