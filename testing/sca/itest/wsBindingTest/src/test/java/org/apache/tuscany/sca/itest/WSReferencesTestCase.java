@@ -47,6 +47,12 @@ public class WSReferencesTestCase extends SCATestCase {
         Assert.assertEquals("Hi Petra", msg);
     }
 
+    public void testWSClientServiceSimplest() throws Exception {
+        HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloworldClientServiceSimplest");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("Hi Petra", msg);
+    }
+
     @Override
     protected void tearDown() throws Exception {
     	super.tearDown();

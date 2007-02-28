@@ -33,6 +33,12 @@
         <reference>HelloWorldServiceComponent</reference>
     </service>
 
+    <service name="HelloWorldWebServiceSimplest">
+        <interface.wsdl interface="http://helloworld#wsdl.interface(HelloWorld)" wsdli:wsdlLocation="http://helloworld wsdl/helloworld.wsdl" />
+        <binding.ws/>
+        <reference>HelloWorldServiceComponent</reference>
+    </service>
+
     <component name="HelloWorldServiceComponent">
         <implementation.java class="helloworld.HelloWorldImpl" />
     </component>
