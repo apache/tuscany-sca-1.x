@@ -102,6 +102,16 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
                 outboundContract.setDataBinding(OM_DATA_BINDING);
             }
 
+            // TODO: TUSCANY-xxx, <binding.ws> with no wsdl only works with <interface.wsdl>
+            if (wsBinding.getWSDLDefinition() == null) {
+                if (outboundContract instanceof WSDLServiceContract) {
+                    String ns = ((WSDLServiceContract)outboundContract).getPortType().getQName().getNamespaceURI();
+                    wsBinding.setWSDLDefinition(wsdlReg.getDefinition(ns));
+                } else {
+                    throw new IllegalStateException("<binding.ws> with no WSDL requires using <interface.wsdl>");
+                }
+            }
+
             // FIXME: We need to define how the WSDL PortType is honored in the case that
             // both the service.ws and interface.wsdl are in place.
             // The WSDL portType from the WSDL Port decides the incoming SOAP message format
@@ -154,9 +164,13 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
             }
 
             // TODO: TUSCANY-xxx, <binding.ws> with no wsdl only works with <interface.wsdl>
-            if (wsBinding.getWSDLDefinition() == null && inboundContract instanceof WSDLServiceContract) {
-                String ns = ((WSDLServiceContract)inboundContract).getPortType().getQName().getNamespaceURI();
-                wsBinding.setWSDLDefinition(wsdlReg.getDefinition(ns));
+            if (wsBinding.getWSDLDefinition() == null) {
+                if (inboundContract instanceof WSDLServiceContract) {
+                    String ns = ((WSDLServiceContract)inboundContract).getPortType().getQName().getNamespaceURI();
+                    wsBinding.setWSDLDefinition(wsdlReg.getDefinition(ns));
+                } else {
+                    throw new IllegalStateException("<binding.ws> with no WSDL requires using <interface.wsdl>");
+                }
             }
 
             // FIXME: We need to define how the WSDL PortType is honored in the case that
