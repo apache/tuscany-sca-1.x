@@ -40,7 +40,6 @@
             <modules>
                 <module>databinding-jaxb</module>
                 <module>databinding-sdo</module>
-                <module>databinding-xmlbeans</module>
             </modules>
         </profile>
 
