@@ -70,7 +70,15 @@ public class WebServiceBindingDefinition extends BindingDefinition {
     public Port getWSDLPort() {
         if (port == null) {
             Service service = getWSDLService();
-            port = service.getPort(portName);
+            if (portName == null) {
+                Map ports = service.getPorts();
+                if (ports.size() != 1) {
+                    throw new IllegalStateException("when portName is null WSDL service must have exactly one WSDL port");
+                }
+                port = (Port)ports.values().iterator().next();
+            } else {
+                port = service.getPort(portName);
+            }
         }
         return port;
     }
@@ -132,5 +140,9 @@ public class WebServiceBindingDefinition extends BindingDefinition {
             }
         }
         return binding;
+    }
+
+    public String getWSDLNamepace() {
+        return namespace;
     }
 }

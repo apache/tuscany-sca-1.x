@@ -26,6 +26,7 @@ import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.tuscany.binding.axis2.util.TuscanyAxisConfigurator;
 import org.apache.tuscany.idl.wsdl.InterfaceWSDLIntrospector;
+import org.apache.tuscany.idl.wsdl.WSDLDefinitionRegistry;
 import org.apache.tuscany.idl.wsdl.WSDLServiceContract;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.builder.BuilderConfigException;
@@ -59,6 +60,8 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
 
     private WorkContext workContext;
 
+    private WSDLDefinitionRegistry wsdlReg;
+
     public Axis2BindingBuilder() throws BuilderConfigException {
         initAxis();
     }
@@ -81,6 +84,10 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
         this.workContext = workContext;
     }
 
+    @Autowire
+    public void setWSDLDefinitionRegistry(WSDLDefinitionRegistry wsdlReg) {
+        this.wsdlReg = wsdlReg;
+    }
 
     @SuppressWarnings("unchecked")
     public ServiceBinding build(
@@ -144,6 +151,12 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
             ServiceContract<?> inboundContract = boundReferenceDefinition.getServiceContract();
             if (WSDLServiceContract.class.isInstance(inboundContract)) {
                 inboundContract.setDataBinding(OM_DATA_BINDING);
+            }
+
+            // TODO: TUSCANY-xxx, <binding.ws> with no wsdl only works with <interface.wsdl>
+            if (wsBinding.getWSDLDefinition() == null && inboundContract instanceof WSDLServiceContract) {
+                String ns = ((WSDLServiceContract)inboundContract).getPortType().getQName().getNamespaceURI();
+                wsBinding.setWSDLDefinition(wsdlReg.getDefinition(ns));
             }
 
             // FIXME: We need to define how the WSDL PortType is honored in the case that
