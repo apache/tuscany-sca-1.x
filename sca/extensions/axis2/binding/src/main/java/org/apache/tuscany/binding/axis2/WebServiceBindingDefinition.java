@@ -19,6 +19,9 @@
 package org.apache.tuscany.binding.axis2;
 
 
+import java.util.Map;
+
+import javax.wsdl.Binding;
 import javax.wsdl.Definition;
 import javax.wsdl.Port;
 import javax.wsdl.Service;
@@ -37,21 +40,63 @@ public class WebServiceBindingDefinition extends BindingDefinition {
     private Definition definition;
     private Port port;
     private Service service;
-    //private String portURI;
     private String uri;
+    private String namespace;
+    private String serviceName;
+    private String portName;
+    private String bindingName;
+    private Binding binding;
+
+    /**
+     * @deprecated pre 1.0 binding.ws spec
+     */
+    @Deprecated
     public WebServiceBindingDefinition(Definition definition, Port port, String uri, String portURI, Service service) {
         this.definition = definition;
         this.port = port;
         this.uri = uri;
-        //this.portURI = portURI;
         this.service = service;
     }
 
+    public WebServiceBindingDefinition(String ns, Definition definition, String serviceName, String portName, String bindingName, String uri) {
+        this.namespace = ns;
+        this.definition = definition;
+        this.serviceName = serviceName;
+        this.portName = portName;
+        this.bindingName = bindingName;
+        this.uri = uri;
+    }
+
     public Port getWSDLPort() {
+        if (port == null) {
+            Service service = getWSDLService();
+            port = service.getPort(portName);
+        }
         return port;
     }
 
     public Service getWSDLService() {
+        if (service == null) {
+            if (definition == null) {
+                throw new IllegalStateException("WSDL definition is null");
+            }
+            Map services = definition.getServices();
+            if (serviceName != null) {
+                QName serviceQN = new QName(namespace, serviceName);
+                for (Object o : services.values()) {
+                    Service s = (Service) o;
+                    if (s.getQName().equals(serviceQN)) {
+                        service = s;
+                        break;
+                    }
+                }
+                if (service == null) {
+                    throw new IllegalStateException("no service: " + serviceQN);
+                }
+            } else {
+                service = (Service)services.values().iterator().next();
+            }
+        }
         return service;
     }
 
@@ -67,15 +112,25 @@ public class WebServiceBindingDefinition extends BindingDefinition {
         definition = def;
     }
 
-    //    public void setPortURI(String uri) {
-    //        portURI = uri;
-    //    }
-
     public String getURI() {
         return uri;
     }
 
     public void setURI(String theUri) {
         this.uri = theUri;
+    }
+    
+    public Binding getBinding() {
+        if (binding == null) {
+            if (definition == null) {
+                throw new IllegalStateException("WSDL definition is null");
+            }
+            QName bindingQN = new QName(namespace, bindingName);
+            this.binding = definition.getBinding(bindingQN);
+            if (binding == null) {
+                throw new IllegalStateException("no binding: " + bindingQN);
+            }
+        }
+        return binding;
     }
 }

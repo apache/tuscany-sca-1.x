@@ -70,21 +70,120 @@ public class WebServiceBindingLoader extends LoaderExtension<WebServiceBindingDe
     public WebServiceBindingDefinition load(CompositeComponent parent, ModelObject object, XMLStreamReader reader,
                                   DeploymentContext deploymentContext)
         throws XMLStreamException, LoaderException {
-        // not sure what uri was here ? String uri = reader.getAttributeValue(null, "uri");
-        String uri = null;
+
+        String uri = reader.getAttributeValue(null, "uri");
+        String wsdlElement = reader.getAttributeValue(null, "wsdlElement");
+        String wsdliLocation = reader.getAttributeValue(null, "wsdlLocation");
+
+        // TODO: keep these old attributes for now for backward compatability
         String endpoint = reader.getAttributeValue(null, "endpoint");
         String wsdlLocation = reader.getAttributeValue(null, "location");
+
+        // TODO: support wsa:endpointreference
+        
         LoaderUtil.skipToEndElement(reader);
-        try {
-            return createBinding(uri, endpoint, wsdlLocation, deploymentContext);
-        } catch (Exception e) {
-            throw new LoaderException(e);
+
+        WebServiceBindingDefinition wsBinding;
+        if (endpoint != null && endpoint.length() > 0) {
+            // TODO: support these old attributes for now for backward compatability
+            try {
+                wsBinding = createBindingOld(uri, endpoint, wsdlLocation, deploymentContext);
+            } catch (Exception e) {
+                throw new LoaderException(e);
+            }
+        } else {
+            wsBinding = createWSBinding(wsdlElement, wsdliLocation, uri, deploymentContext);
+        }
+        
+        return wsBinding;
+    }
+
+    protected WebServiceBindingDefinition createWSBinding(String wsdlElement, String wsdliLocation, String uri, DeploymentContext deploymentContext) throws LoaderException {
+        if (wsdlElement == null || wsdlElement.length() < 1) {
+            throw new IllegalArgumentException("missing wsdlElement attribute");
+        }
+        if (wsdlElement.indexOf("#wsdl.") < 1) {
+            throw new IllegalArgumentException("missing '#wsdl.' in wsdlElement attribute");
         }
 
+        String ns = getWSDLNamespace(wsdlElement);
+
+        String serviceName = null;
+        String portName = null;
+        String bindingName = null;
+
+        String uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.service");
+        if (uriValue != null) {
+            serviceName = uriValue;
+        } else {
+            uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.port");
+            if (uriValue != null) {
+                int i = uriValue.lastIndexOf('/');
+                if (i == -1) {
+                    throw new IllegalArgumentException("Missing '/' seperator between service and port in wsdl.port() in wsdlElement attribute");
+                } 
+                serviceName = uriValue.substring(0, i);
+                portName = uriValue.substring(i);
+            } else {
+                uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.enpoint");
+                if (uriValue != null) {
+                    throw new IllegalArgumentException("WSDL 2.0 not supported for '#wsdl.endpoint' in wsdlElement attribute");
+                } 
+                uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.binding");
+                if (uriValue == null) {
+                    throw new IllegalArgumentException("missing '#wsdl.service' or '#wsdl.port' or '#wsdl.endpoint'or '#wsdl.binding' in wsdlElement attribute");
+                }
+                bindingName = uriValue;
+            }
+        }
+
+        Definition definition = null;
+        if (wsdliLocation != null && wsdliLocation.length() > 0) {
+            try {
+                definition = wsdlDefinitionRegistry.loadDefinition(wsdliLocation, deploymentContext.getClassLoader());
+            } catch (Exception e) {
+                throw new LoaderException("Exception loading WSDL", e);
+            }
+        } else if (ns != null ){
+            definition = wsdlDefinitionRegistry.getDefinition(ns);
+        }
+        
+        WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition(ns, definition, serviceName, portName, bindingName, uri);
+
+        return wsBinding;
+    }
+    
+    protected String getWSDLElementURIValue(String wsdlElement, String type) { 
+        String value = null;
+        type = "#" + type + "(";
+        int i = wsdlElement.indexOf(type);
+        if (i > -1) {
+            int j = wsdlElement.indexOf(')',i);
+            if (j < 0) {
+                throw new IllegalArgumentException("missing closing bracket ')' on " + type + " in wsdlElement attribute");
+            }
+            value = wsdlElement.substring(i, j);
+        }
+        return value;
+    }
+
+    private String getWSDLNamespace(String wsdlElement) {
+        String ns = null;
+        if (wsdlElement != null && wsdlElement.length() > 0) {
+            int i = wsdlElement.indexOf('#');
+            if (i < 0) {
+                throw new IllegalArgumentException("missing '#' namespace delimiter in wsdlElement attribute");
+            }
+            if (i == 0) {
+                throw new IllegalArgumentException("no namespace in wsdlElement attribute");
+            }
+            ns = wsdlElement.substring(0, i);
+        }
+        return ns;
     }
 
     @SuppressWarnings("unchecked")
-    private WebServiceBindingDefinition createBinding(String uri, String endpoint, String wsdlLocation, DeploymentContext deploymentContext)
+    private WebServiceBindingDefinition createBindingOld(String uri, String endpoint, String wsdlLocation, DeploymentContext deploymentContext)
         throws WSDLException, IOException, LoaderException {
         // Get the WSDL port namespace and name
         if (uri == null && endpoint != null) {
