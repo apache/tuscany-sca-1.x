@@ -95,7 +95,7 @@ public class WSDLContributionProcessor extends ContributionProcessorExtension {
         reader.setFeature("javax.wsdl.verbose", false);
         reader.setExtensionRegistry(extensionRegistry);
 
-        WSDLLocatorImpl locator = new WSDLLocatorImpl(contribution.getUri(), location, inputStream);
+        WSDLLocatorImpl locator = new WSDLLocatorImpl(contribution, location, inputStream);
         Definition definition = reader.readWSDL(locator);
         String definitionNamespace = definition.getTargetNamespace();
         if (namespace != null && !namespace.equals(definitionNamespace)) {
@@ -193,12 +193,12 @@ public class WSDLContributionProcessor extends ContributionProcessorExtension {
     }
 
     public class WSDLLocatorImpl implements WSDLLocator {
-        private URI contribution;
+        private Contribution contribution;
         private InputStream inputStream;
         private String baseURI;
         private URI latestImportURI;
 
-        public WSDLLocatorImpl(URI contribution, URI baseURI, InputStream is) {
+        public WSDLLocatorImpl(Contribution contribution, URI baseURI, InputStream is) {
             this.contribution = contribution;
             this.baseURI = baseURI.toString();
             this.inputStream = is;

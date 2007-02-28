@@ -59,9 +59,9 @@ public class XSDContributionProcessor extends ContributionProcessorExtension {
      * URI resolver implementation for xml schema
      */
     protected class URIResolverImpl implements URIResolver {
-        private URI contribution;
+        private Contribution contribution;
 
-        public URIResolverImpl(URI contriution) {
+        public URIResolverImpl(Contribution contriution) {
             this.contribution = contriution;
         }
 
@@ -82,7 +82,7 @@ public class XSDContributionProcessor extends ContributionProcessorExtension {
     public XmlSchema loadSchema(Contribution contribution, String namespace, URI location, InputStream inputStream)
         throws IOException, DeploymentException {
         XmlSchemaCollection collection = new XmlSchemaCollection();
-        collection.setSchemaResolver(new URIResolverImpl(contribution.getUri()));
+        collection.setSchemaResolver(new URIResolverImpl(contribution));
         XmlSchema schema = collection.read(new InputStreamReader(inputStream), null);
 
         if (namespace != null && schema != null && !namespace.equals(schema.getTargetNamespace())) {

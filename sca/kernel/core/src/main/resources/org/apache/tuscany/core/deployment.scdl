@@ -41,6 +41,11 @@
     <component name="contributionProcessorRegistry" initLevel="35">
         <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContributionProcessorRegistryImpl" />
     </component>
+
+    <component name="artifactResolverRegistry" initLevel="35">
+        <system:implementation.system class="org.apache.tuscany.core.services.deployment.ArtifactResolverRegistryImpl" />
+    </component>
+
     <component name="contentTypeDescriber" initLevel="30">
         <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContentTypeDescriberImpl" />
     </component>

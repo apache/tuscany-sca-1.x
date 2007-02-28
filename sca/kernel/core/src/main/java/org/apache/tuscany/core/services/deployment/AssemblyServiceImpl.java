@@ -59,29 +59,28 @@ public class AssemblyServiceImpl implements AssemblyService, ChangeSetHandlerReg
     private final CompositeComponent domain;
 
     @Constructor
-    public AssemblyServiceImpl(@Autowire
-    ContributionService contributionService, CompositeComponent domain) {
+    public AssemblyServiceImpl(@Autowire ContributionService contributionService, CompositeComponent domain) {
         this.contributionService = contributionService;
         this.domain = domain;
     }
 
-    public Object addCompositeToDomain(URI contribution, URI composite) throws DeploymentException, IOException {
+    public Object addCompositeToDomain(URI contribution, URI composite) throws DeploymentException {
 
-        Contribution contributionMetadata = (Contribution) this.contributionService
-                .getContributionMetaData(contribution);
+        Contribution contributionMetadata =
+            (Contribution)this.contributionService.getContribution(contribution);
         DeployedArtifact scdlArtifact = contributionMetadata.getArtifacts().get(composite);
-        ComponentDefinition model = (ComponentDefinition) scdlArtifact.getModelObject(CompositeComponentType.class,
-                null);
+        ComponentDefinition model =
+            (ComponentDefinition)scdlArtifact.getModelObject(CompositeComponentType.class, null);
 
         Component component = null;
         Deployer deployer = null;
 
         SCAObject child = this.domain.getSystemChild(ComponentNames.TUSCANY_DEPLOYER);
-        assert (child instanceof AtomicComponent) : "Deployer must be an atomic component";
+        assert child instanceof AtomicComponent : "Deployer must be an atomic component";
 
         try {
 
-            deployer = (Deployer) ((AtomicComponent) child).getTargetInstance();
+            deployer = (Deployer)((AtomicComponent)child).getTargetInstance();
             component = deployer.deployFromContribution(this.domain, model);
 
         } catch (TargetResolutionException e) {
@@ -103,7 +102,7 @@ public class AssemblyServiceImpl implements AssemblyService, ChangeSetHandlerReg
 
         URLConnection connection = changeSet.openConnection();
         String contentType = connection.getContentType();
-        //todo try and figure out content type from the URL
+        // todo try and figure out content type from the URL
         if (contentType == null) {
             throw new UnsupportedContentTypeException(null, changeSet.toString());
         }
@@ -138,5 +137,18 @@ public class AssemblyServiceImpl implements AssemblyService, ChangeSetHandlerReg
 
     public void register(ChangeSetHandler handler) {
         registry.put(handler.getContentType(), handler);
+    }
+
+    public <T> T getDefinition(URI contribution, Class<T> type, String namespace, String name) {
+        return contributionService.resolve(contribution, type, namespace, name);
+    }
+
+    public Object getDomainComposite() {
+        return domain;
+    }
+
+    public void removeCompositeFromDomain(URI contribution, URI composite) throws DeploymentException {
+        // TODO:
+        throw new UnsupportedOperationException("To be implemented");
     }
 }

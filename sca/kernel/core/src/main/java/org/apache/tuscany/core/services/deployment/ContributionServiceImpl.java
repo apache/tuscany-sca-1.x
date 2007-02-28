@@ -31,9 +31,12 @@ import org.apache.tuscany.core.util.IOHelper;
 import org.apache.tuscany.host.deployment.ContributionService;
 import org.apache.tuscany.host.deployment.DeploymentException;
 import org.apache.tuscany.spi.annotation.Autowire;
+import org.apache.tuscany.spi.deployer.ArtifactResolverRegistry;
 import org.apache.tuscany.spi.deployer.ContributionProcessorRegistry;
 import org.apache.tuscany.spi.deployer.ContributionRepository;
+import org.apache.tuscany.spi.model.CompositeComponentType;
 import org.apache.tuscany.spi.model.Contribution;
+import org.apache.tuscany.spi.model.DeployedArtifact;
 
 /**
  * @version $Rev$ $Date$
@@ -50,16 +53,20 @@ public class ContributionServiceImpl implements ContributionService {
     protected ContributionProcessorRegistry processorRegistry;
 
     /**
-     * Contribution registry This is a registry of processed Contributios index by URI
+     * Contribution registry This is a registry of processed Contributios index
+     * by URI
      */
     protected Map<URI, Contribution> contributionRegistry = new HashMap<URI, Contribution>();
 
-    public ContributionServiceImpl(@Autowire
-    ContributionRepository repository, @Autowire
-    ContributionProcessorRegistry processorRegistry) {
+    protected ArtifactResolverRegistry resolverRegistry;
+
+    public ContributionServiceImpl(@Autowire ContributionRepository repository, 
+                                   @Autowire ContributionProcessorRegistry processorRegistry,
+                                   @Autowire ArtifactResolverRegistry resolverRegistry) {
         super();
         this.contributionRepository = repository;
         this.processorRegistry = processorRegistry;
+        this.resolverRegistry = resolverRegistry;
     }
 
     public URI contribute(URL contribution, boolean storeInRepository) throws DeploymentException, IOException {
@@ -114,24 +121,33 @@ public class ContributionServiceImpl implements ContributionService {
         return contribution.getUri();
     }
 
-    public Object getContributionMetaData(URI id) {
+    public Object getContribution(URI id) {
         return this.contributionRegistry.get(id);
     }
 
     public void remove(URI contribution) throws DeploymentException {
         // remove from repository
         this.contributionRegistry.remove(contribution);
-        // remove from registry
-        this.contributionRegistry.remove(contribution);
+    }
+
+    public void addDeploymentComposite(URI contribution, Object composite) {
+        CompositeComponentType model = (CompositeComponentType)composite;
+        URI compositeURI = URI.create(contribution.toString() + "/" + model.getName() + ".composite");
+        DeployedArtifact artifact = new DeployedArtifact(compositeURI);
+        // FIXME: the namespace should be from the CompositeComponentType model
+        artifact.addModelObject(composite.getClass(), null, composite);
+        Contribution contributionObject = (Contribution)getContribution(contribution);
+        contributionObject.addArtifact(artifact);
     }
 
     public <T> T resolve(URI contribution, Class<T> definitionType, String namespace, String name) {
-        // TODO Auto-generated method stub
-        return null;
+        Contribution contributionObject = (Contribution)getContribution(contribution);
+        return resolverRegistry.resolve(contributionObject, definitionType, namespace, name, null, null);
     }
 
     public URL resolve(URI contribution, String namespace, URI uri, URI baseURI) {
-        // TODO Auto-generated method stub
-        return null;
+        Contribution contributionObject = (Contribution)getContribution(contribution);
+        return resolverRegistry.resolve(contributionObject, namespace, uri.toString(), baseURI.toString());
     }
+
 }

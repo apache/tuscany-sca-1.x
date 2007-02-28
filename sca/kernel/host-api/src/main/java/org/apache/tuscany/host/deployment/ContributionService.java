@@ -56,10 +56,21 @@ public interface ContributionService {
     URI contribute(URI source, InputStream contribution,  boolean storeInRepository) throws DeploymentException, IOException;
     
     /**
-     * @param contribution
-     * @return
+     * Get the model for an installed contribution
+     * @param contribution The URI of an installed contribution
+     * @return The model for the contribution or null if there is no such contribution
      */
-    Object getContributionMetaData(URI contribution);
+    Object getContribution(URI contribution);
+
+    /**
+     * Adds or updates a deployment composite using a supplied composite
+     * ("composite by value" – a data structure, not an existing resource in the
+     * domain) to the contribution identified by a supplied contribution URI.
+     * The added or updated deployment composite is given a relative URI that
+     * matches the "name" attribute of the composite, with a ".composite" suffix.
+     */
+    void addDeploymentComposite(URI contribution, Object composite);
+        
     
     /**
      * Remove a contribution from the SCA domain
