@@ -23,6 +23,7 @@ import java.rmi.RemoteException;
 
 import helloworld.HelloWorldService;
 
+import org.apache.tuscany.api.SCAContainer;
 import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -87,7 +88,9 @@ public class SDOWSDLTestCase extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        setApplicationSCDL(getClass().getResource("/META-INF/sca/sdoApplication.composite"));
+        //FIXME: get this scenario working in contributions
+        //setApplicationSCDL(getClass().getResource("/META-INF/sca/sdoApplication.composite"));
+        SCAContainer.start("/META-INF/sca/sdoApplication.composite");
         super.setUp();
     }
 
