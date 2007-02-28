@@ -93,7 +93,7 @@ public class ContributionServiceImpl implements ContributionService {
         }
 
         // store the contribution in the contribution repository
-        URI contributionURI = URI.create("sca://contribution/" + UUID.randomUUID());
+        URI contributionURI = URI.create("sca://contribution/" + UUID.randomUUID() + "/");
         URL locationURL;
         if (storeInRepository) {
             locationURL = this.contributionRepository.store(source, contributionStream);
@@ -114,7 +114,7 @@ public class ContributionServiceImpl implements ContributionService {
         return contribution.getUri();
     }
 
-    public Contribution getContribution(URI id) {
+    public Object getContributionMetaData(URI id) {
         return this.contributionRegistry.get(id);
     }
 

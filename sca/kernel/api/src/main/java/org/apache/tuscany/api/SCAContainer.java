@@ -127,7 +127,7 @@ public abstract class SCAContainer {
      */
     public static void start() {
         try {
-            getInstance().startup(null, null, null);
+            getInstance().startup(null, null, null, null);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -140,9 +140,9 @@ public abstract class SCAContainer {
      * @param extensions An array of URLs for extensions
      * @param application The URL for the application SCDL
      */
-    public static void start(URL system, URL[] extensions, URL application) {
+    public static void start(URL system, URL[] extensions, URL application, String compositePath) {
         try {
-            getInstance().startup(system, extensions, application);
+            getInstance().startup(system, extensions, application, compositePath);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -153,9 +153,9 @@ public abstract class SCAContainer {
      * 
      * @param application The URL for the application SCDL
      */
-    public static void start(URL application) {
+    public static void start(URL application, String compositePath) {
         try {
-            getInstance().startup(null, null, application);
+            getInstance().startup(null, null, application, compositePath);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -164,13 +164,13 @@ public abstract class SCAContainer {
     /**
      * Start the Tuscany container with the given SCDL
      * 
-     * @param application The path of the application SCDL
+     * @param compositePath The path of the application SCDL
      */
-    public static void start(String application) {
+    public static void start(String compositePath) {
         try {
         	ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        	URL applicationURL = cl.getResource(application);
-            getInstance().startup(null, null, applicationURL);
+        	URL applicationURL = cl.getResource(compositePath);
+            getInstance().startup(null, null, applicationURL, compositePath);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -179,15 +179,15 @@ public abstract class SCAContainer {
     /**
      * Start the Tuscany container with the given SCDL
      * 
-     * @param application The path of the system SCDL
-     * @param application The path of the application SCDL
+     * @param compositePath The path of the system SCDL
+     * @param compositePath The path of the application SCDL
      */
-    public static void start(String system, String application) {
+    public static void start(String system, String compositePath) {
         try {
         	ClassLoader cl = Thread.currentThread().getContextClassLoader();
         	URL systemURL = cl.getResource(system);
-        	URL applicationURL = cl.getResource(application);
-            getInstance().startup(systemURL, null, applicationURL);
+        	URL applicationURL = cl.getResource(compositePath);
+            getInstance().startup(systemURL, null, applicationURL, compositePath);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -226,9 +226,10 @@ public abstract class SCAContainer {
      * @param system
      * @param extensions
      * @param application
+     * @param compositePath TODO
      * @throws Exception
      */
-    protected abstract void startup(URL system, URL[] extensions, URL application) throws Exception;
+    protected abstract void startup(URL system, URL[] extensions, URL application, String compositePath) throws Exception;
 
     /**
      * Shutdown the container

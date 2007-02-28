@@ -20,6 +20,7 @@ package org.apache.tuscany.host.deployment;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -28,6 +29,9 @@ import java.net.URL;
  * @version $Rev$ $Date$
  */
 public interface AssemblyService {
+    
+    Object addCompositeToDomain(URI contribution, URI composite) throws DeploymentException, IOException;
+    
     /**
      * Apply a set of changes to the SCA Domain's logical assembly.
      *

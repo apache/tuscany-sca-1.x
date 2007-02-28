@@ -79,7 +79,7 @@ public class ContentTypeDescriberImpl implements ContentTypeDescriber {
         URLConnection connection = null;
         String contentType = defaultContentType;
 
-        if (FileHelper.toFile(resourceURL).isDirectory()) {
+        if (resourceURL.getProtocol().equals("file") && FileHelper.toFile(resourceURL).isDirectory()) {
             contentType = this.contentTypeRegistry.get("FOLDER");
         } else {
             contentType = resolveContentyTypeByExtension(resourceURL);

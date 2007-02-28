@@ -38,13 +38,15 @@ public abstract class SCATestCase extends TestCase {
     private Map<String, URL> extensions = new HashMap<String, URL>();
     private URL applicationSCDL;
     private URL systemSCDL;
+    private String compositePath = "META-INF/sca/application.composite";
+    
     protected CompositeComponent component;
 
     protected void setUp() throws Exception {
         super.setUp();
         
         SCAContainer.start(systemSCDL, extensions == null || extensions.isEmpty() ? null :
-                               extensions.values().toArray(new URL[0]), applicationSCDL);
+                               extensions.values().toArray(new URL[0]), applicationSCDL, compositePath);
 
         // FIXME: How to expose the composite component?
         this.component = ((DefaultSCAContainer)SCAContainer.getInstance()).getCompsiteComponent();
@@ -69,6 +71,7 @@ public abstract class SCATestCase extends TestCase {
      */
     protected void setApplicationSCDL(String applicationSCDL) {
         this.applicationSCDL = Thread.currentThread().getContextClassLoader().getResource(applicationSCDL);
+        this.compositePath = applicationSCDL;
     }
 
     /**

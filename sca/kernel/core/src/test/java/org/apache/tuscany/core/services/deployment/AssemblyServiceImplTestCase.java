@@ -90,7 +90,7 @@ public class AssemblyServiceImplTestCase extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        service = new AssemblyServiceImpl();
+        service = new AssemblyServiceImpl(null, null);
     }
 
     private static class MockURLStreamHandler extends URLStreamHandler {

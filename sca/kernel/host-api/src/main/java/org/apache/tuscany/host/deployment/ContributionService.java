@@ -56,6 +56,12 @@ public interface ContributionService {
     URI contribute(URI source, InputStream contribution,  boolean storeInRepository) throws DeploymentException, IOException;
     
     /**
+     * @param contribution
+     * @return
+     */
+    Object getContributionMetaData(URI contribution);
+    
+    /**
      * Remove a contribution from the SCA domain
      * @param contribution The URI of the contribution
      * @throws DeploymentException

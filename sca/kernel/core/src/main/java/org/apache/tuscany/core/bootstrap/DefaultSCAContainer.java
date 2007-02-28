@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.core.bootstrap;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -32,7 +33,10 @@ import org.apache.tuscany.core.implementation.system.model.SystemCompositeImplem
 import org.apache.tuscany.core.launcher.CompositeContextImpl;
 import org.apache.tuscany.core.launcher.LauncherImpl;
 import org.apache.tuscany.core.monitor.JavaLoggingMonitorFactory;
+import org.apache.tuscany.core.services.deployment.AssemblyServiceImpl;
+import org.apache.tuscany.core.util.FileHelper;
 import org.apache.tuscany.host.MonitorFactory;
+import org.apache.tuscany.host.deployment.AssemblyService;
 import org.apache.tuscany.host.deployment.ContributionService;
 import org.apache.tuscany.host.runtime.InitializationException;
 import org.apache.tuscany.spi.bootstrap.ComponentNames;
@@ -57,13 +61,15 @@ import org.osoa.sca.CurrentCompositeContext;
  */
 @SuppressWarnings("deprecation")
 public class DefaultSCAContainer extends SCAContainer {
-    private CompositeComponent component;
-    private CompositeContextImpl context;
-    private LauncherImpl launcher;
-    private MonitorFactory monitorFactory;
-    private ContributionService contributionService;
+    protected CompositeComponent component;
+    protected CompositeContextImpl context;
+    protected LauncherImpl launcher;
+    protected MonitorFactory monitorFactory;
+    //lresende - contribution
+    protected AssemblyService assemblyService;
+    protected ContributionService contributionService;
 
-    protected void startup(URL system, URL[] exts, URL applicationSCDL) throws Exception {
+    protected void startup(URL system, URL[] exts, URL applicationSCDL, String compositePath) throws Exception {
         if (monitorFactory == null) {
             monitorFactory = new JavaLoggingMonitorFactory();
         }
@@ -80,9 +86,14 @@ public class DefaultSCAContainer extends SCAContainer {
 
         try {
             CompositeComponent composite = launcher.bootRuntime(system, monitorFactory);
+            //lresende - contribution
             AtomicComponent csComponent =
                 (AtomicComponent)composite.getSystemChild(ComponentNames.TUSCANY_CONTRIBUTION_SERVICE);
             contributionService = (ContributionService) csComponent.getTargetInstance();
+            
+            this.assemblyService = new AssemblyServiceImpl(contributionService, composite);
+            composite.registerJavaObject(ComponentNames.TUSCANY_ASSEMBLY_SERVICE, AssemblyService.class, assemblyService);
+
             List<URL> extensions = new ArrayList<URL>();
             Enumeration<URL> urls = cl.getResources(SCAContainer.SERVICE_SCDL);
             extensions.addAll(Collections.list(urls));
@@ -117,12 +128,15 @@ public class DefaultSCAContainer extends SCAContainer {
                     throw new RuntimeException("application SCDL not found: " + SCAContainer.APPLICATION_SCDL);
                 }
             }
-
-            //URL contributionLocation = new URL( applicationSCDL.toExternalForm().replace(SCAContainer.APPLICATION_SCDL, ""));
-            //URI appURI = this.contributionService.contribute(contributionLocation, false);
             
-            component = launcher.bootApplication("application", applicationSCDL);
-            component.start();
+            //lresende - contribution
+            URL contributionLocation = getContributionLocation(applicationSCDL, compositePath);
+            URI contributionId = this.contributionService.contribute(contributionLocation, false);
+            URI compositeDefinitionId = new URI(contributionId + FileHelper.getName(applicationSCDL.toString()));
+            
+
+            component = (CompositeComponent) this.assemblyService.addCompositeToDomain(contributionId, compositeDefinitionId);
+
             context = new CompositeContextImpl(component, wireService);
             CurrentCompositeContext.setContext(context);
         } catch (TuscanyException e) {
@@ -131,6 +145,35 @@ public class DefaultSCAContainer extends SCAContainer {
             throw e;
         }
 
+    }
+    
+    private URL getContributionLocation(URL applicationSCDL, String compositePath) {
+        URL root = null;
+
+        // "jar:file://....../something.jar!/a/b/c/app.composite"
+        
+        try {
+            String scdlUrl = applicationSCDL.toExternalForm();
+            String protocol = applicationSCDL.getProtocol();
+            if(protocol.equals("file")){
+                //directory contribution
+                if(scdlUrl.endsWith( compositePath )) {
+                    String location = scdlUrl.substring(0, scdlUrl.lastIndexOf((compositePath)));
+                    //workaround from evil url/uri form maven
+                    root = FileHelper.toFile(new URL(location)).toURI().toURL();
+                }
+
+            } else if( protocol.equals("jar")) {
+                //jar contribution
+                String location = scdlUrl.substring(4, scdlUrl.lastIndexOf("!/"));
+                //workaround from evil url/uri form maven
+                root = FileHelper.toFile(new URL(location)).toURI().toURL();
+            }
+        } catch (MalformedURLException mfe) {
+
+        }
+
+        return root;
     }
 
     /**

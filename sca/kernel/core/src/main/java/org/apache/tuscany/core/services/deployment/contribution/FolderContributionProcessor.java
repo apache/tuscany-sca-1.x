@@ -46,6 +46,12 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
     }
 
     
+    /**
+     * Recursively traverse a root directory
+     * @param fileList
+     * @param root
+     * @throws IOException
+     */
     private void traverse(List<URL> fileList, File root) throws IOException {
         if (root.isFile()) {
             fileList.add(root.toURL());
@@ -95,14 +101,14 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
             throw new IllegalArgumentException("Invalid null source uri.");
         }
 
-        URL sourceURL = contribution.getArtifact(source).getLocation();
+        URL contributionURL = contribution.getArtifact(source).getLocation();
 
         
-        for (URL artifactURL : getArtifacts(sourceURL, inputStream)) {
+        for (URL artifactURL : getArtifacts(contributionURL, inputStream)) {
             
             URI artifactURI;
             try {
-                artifactURI = new URI(contribution.getUri().toString() + "/" + FileHelper.getName(artifactURL.getPath()));
+                artifactURI = new URI(contribution.getUri().toString() + FileHelper.getName(artifactURL.getPath()));
                 DeployedArtifact artifact = new DeployedArtifact(artifactURI);
                 artifact.setLocation(artifactURL);
                 contribution.addArtifact(artifact);

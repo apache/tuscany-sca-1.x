@@ -80,8 +80,10 @@ public class ScdlContributionProcessor extends ContributionProcessorExtension im
             implementation.setComponentType(componentType);
             ComponentDefinition<CompositeImplementation> componentDefinition = 
                 new ComponentDefinition<CompositeImplementation>(implementation);
+            
+            componentDefinition.setName(source.toString());
 
-            contribution.getArtifact(source).addModelObject(null, null, componentDefinition);
+            contribution.getArtifact(source).addModelObject(CompositeComponentType.class, null, componentDefinition);
 
         } catch (LoaderException le) {
             throw new InvalidComponentDefinitionlException(contribution.getArtifact(source).getLocation()

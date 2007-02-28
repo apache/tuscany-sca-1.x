@@ -113,6 +113,37 @@ public class DeployerImpl implements Deployer {
         }
         return component;
     }
+    
+    public <I extends Implementation<?>> Component deployFromContribution(CompositeComponent parent,
+            ComponentDefinition<I> componentDefinition) throws BuilderException, PrepareException {
+        final ScopeContainer scopeContainer = new CompositeScopeContainer(monitor);
+        scopeContainer.start();
+        DeploymentContext deploymentContext = new RootDeploymentContext(null, xmlFactory, scopeContainer, null);
+//        try {
+//            load(parent, componentDefinition, deploymentContext);
+//        } catch (LoaderException e) {
+//            e.addContextName(componentDefinition.getName());
+//            throw e;
+//        }
+        Component component = (Component) build(parent, componentDefinition, deploymentContext);
+        // create a listener so the scope container is shutdown when the top-level composite stops
+        RuntimeEventListener listener = new RuntimeEventListener() {
+            public void onEvent(Event event) {
+                scopeContainer.onEvent(event);
+                if (event instanceof CompositeStop) {
+                    scopeContainer.stop();
+                }
+            }
+        };
+        component.addListener(listener);
+        component.prepare();
+        try {
+            parent.register(component);
+        } catch (ComponentRegistrationException e) {
+            throw new BuilderInstantiationException("Error registering component", e);
+        }
+        return component;
+    }
 
     /**
      * Load the componentDefinition type information for the componentDefinition being deployed. For a typical
