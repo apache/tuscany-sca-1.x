@@ -99,41 +99,38 @@ public class WebServiceBindingLoader extends LoaderExtension<WebServiceBindingDe
     }
 
     protected WebServiceBindingDefinition createWSBinding(String wsdlElement, String wsdliLocation, String uri, DeploymentContext deploymentContext) throws LoaderException {
-        if (wsdlElement == null || wsdlElement.length() < 1) {
-            throw new IllegalArgumentException("missing wsdlElement attribute");
-        }
-        if (wsdlElement.indexOf("#wsdl.") < 1) {
-            throw new IllegalArgumentException("missing '#wsdl.' in wsdlElement attribute");
-        }
-
-        String ns = getWSDLNamespace(wsdlElement);
-
+        String ns = null;
         String serviceName = null;
         String portName = null;
         String bindingName = null;
 
-        String uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.service");
-        if (uriValue != null) {
-            serviceName = uriValue;
-        } else {
-            uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.port");
+        if (wsdlElement != null && wsdlElement.length() > 0) {
+
+            ns = getWSDLNamespace(wsdlElement);
+
+            String uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.service");
             if (uriValue != null) {
-                int i = uriValue.lastIndexOf('/');
-                if (i == -1) {
-                    throw new IllegalArgumentException("Missing '/' seperator between service and port in wsdl.port() in wsdlElement attribute");
-                } 
-                serviceName = uriValue.substring(0, i);
-                portName = uriValue.substring(i);
+                serviceName = uriValue;
             } else {
-                uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.enpoint");
+                uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.port");
                 if (uriValue != null) {
-                    throw new IllegalArgumentException("WSDL 2.0 not supported for '#wsdl.endpoint' in wsdlElement attribute");
-                } 
-                uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.binding");
-                if (uriValue == null) {
-                    throw new IllegalArgumentException("missing '#wsdl.service' or '#wsdl.port' or '#wsdl.endpoint'or '#wsdl.binding' in wsdlElement attribute");
+                    int i = uriValue.lastIndexOf('/');
+                    if (i == -1) {
+                        throw new IllegalArgumentException("Missing '/' seperator between service and port in wsdl.port() in wsdlElement attribute");
+                    } 
+                    serviceName = uriValue.substring(0, i);
+                    portName = uriValue.substring(i+1);
+                } else {
+                    uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.endpoint");
+                    if (uriValue != null) {
+                        throw new IllegalArgumentException("WSDL 2.0 not supported for '#wsdl.endpoint' in wsdlElement attribute");
+                    } 
+                    uriValue = getWSDLElementURIValue(wsdlElement, "wsdl.binding");
+                    if (uriValue == null) {
+                        throw new IllegalArgumentException("missing '#wsdl.service' or '#wsdl.port' or '#wsdl.endpoint'or '#wsdl.binding' in wsdlElement attribute");
+                    }
+                    bindingName = uriValue;
                 }
-                bindingName = uriValue;
             }
         }
 
@@ -155,19 +152,19 @@ public class WebServiceBindingLoader extends LoaderExtension<WebServiceBindingDe
     
     protected String getWSDLElementURIValue(String wsdlElement, String type) { 
         String value = null;
-        type = "#" + type + "(";
-        int i = wsdlElement.indexOf(type);
+        String fullType = "#" + type + "(";
+        int i = wsdlElement.indexOf(fullType);
         if (i > -1) {
             int j = wsdlElement.indexOf(')',i);
             if (j < 0) {
-                throw new IllegalArgumentException("missing closing bracket ')' on " + type + " in wsdlElement attribute");
+                throw new IllegalArgumentException("missing closing bracket ')' on " + fullType + " in wsdlElement attribute");
             }
-            value = wsdlElement.substring(i, j);
+            value = wsdlElement.substring(i + fullType.length(), j);
         }
         return value;
     }
 
-    private String getWSDLNamespace(String wsdlElement) {
+    protected String getWSDLNamespace(String wsdlElement) {
         String ns = null;
         if (wsdlElement != null && wsdlElement.length() > 0) {
             int i = wsdlElement.indexOf('#');
