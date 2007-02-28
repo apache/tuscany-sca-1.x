@@ -34,18 +34,19 @@ import org.apache.tuscany.spi.implementation.java.JavaMappedReference;
 import org.apache.tuscany.spi.implementation.java.JavaMappedService;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.implementation.java.ProcessingException;
-import org.apache.tuscany.spi.model.OverrideOptions;
 import org.osoa.sca.annotations.Property;
 
 /**
- * Processes an {@link @Property} annotation, updating the component type with corresponding {@link JavaMappedProperty}
- *
+ * Processes an {@link @Property} annotation, updating the component type with
+ * corresponding {@link JavaMappedProperty}
+ * 
  * @version $Rev$ $Date$
  */
 public class PropertyProcessor extends AbstractPropertyProcessor<Property> {
     private SimpleTypeMapperExtension typeMapper = new SimpleTypeMapperExtension();
-    
-    public PropertyProcessor(@Autowire ImplementationProcessorService service) {
+
+    public PropertyProcessor(@Autowire
+    ImplementationProcessorService service) {
         super(Property.class, service);
     }
 
@@ -57,7 +58,7 @@ public class PropertyProcessor extends AbstractPropertyProcessor<Property> {
                                     Property annotation,
                                     CompositeComponent parent,
                                     DeploymentContext context) {
-    	String xmlType = annotation.xmlType();
+        String xmlType = annotation.xmlType();
         if (xmlType != null && xmlType.length() != 0) {
             property.setXmlType(QName.valueOf(annotation.xmlType()));
         } else {
@@ -68,9 +69,10 @@ public class PropertyProcessor extends AbstractPropertyProcessor<Property> {
         }
     }
 
-    public <T> void visitConstructor(CompositeComponent parent, Constructor<T> constructor,
-                                     PojoComponentType<JavaMappedService, JavaMappedReference,
-                                         JavaMappedProperty<?>> type,
+    public <T> void visitConstructor(CompositeComponent parent,
+                                     Constructor<T> constructor,
+                                     PojoComponentType<JavaMappedService, JavaMappedReference, 
+                                     JavaMappedProperty<?>> type,
                                      DeploymentContext context) throws ProcessingException {
         // override since heuristic pojo processor evalautes properties
     }
