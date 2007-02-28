@@ -27,6 +27,12 @@
         <reference>HelloWorldServiceComponent</reference>
     </service>
 
+    <service name="HelloWorldWebService2">
+        <interface.java class="helloworld.HelloWorldService" />
+        <binding.ws endpoint="http://helloworld#wsdl.endpoint(HelloWorldService/HelloWorldSoapPort)" location="wsdl/helloworld.wsdl" />
+        <reference>HelloWorldServiceComponent</reference>
+    </service>
+
     <component name="HelloWorldServiceComponent">
         <implementation.java class="helloworld.HelloWorldImpl" />
     </component>
