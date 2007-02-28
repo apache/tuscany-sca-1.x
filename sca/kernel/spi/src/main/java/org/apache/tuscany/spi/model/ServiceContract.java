@@ -252,7 +252,7 @@ public abstract class ServiceContract<T> extends ModelObject implements Cloneabl
         if (operations != null) {
             Map<String, Operation<T>> clonedOperations = new HashMap<String, Operation<T>>();
             for (Operation<T> o : operations.values()) {
-                clonedOperations.put(o.getName(), o);
+                clonedOperations.put(o.getName(), (Operation<T>) o.clone());
             }
             copy.setOperations(clonedOperations);
         }
