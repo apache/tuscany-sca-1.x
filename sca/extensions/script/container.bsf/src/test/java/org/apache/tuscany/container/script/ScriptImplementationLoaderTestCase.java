@@ -22,7 +22,7 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.classextension.EasyMock.createMock;
 import static org.easymock.classextension.EasyMock.replay;
 import static org.easymock.classextension.EasyMock.verify;
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -116,7 +116,7 @@ public class ScriptImplementationLoaderTestCase extends TestCase {
     }
 
     public void testGetXMLType() throws LoaderException {
-        assertEquals(XML_NAMESPACE_1_0, loader.getXMLType().getNamespaceURI());
+        assertEquals(SCA_NS, loader.getXMLType().getNamespaceURI());
         assertEquals("implementation.script", loader.getXMLType().getLocalPart());
     }
 

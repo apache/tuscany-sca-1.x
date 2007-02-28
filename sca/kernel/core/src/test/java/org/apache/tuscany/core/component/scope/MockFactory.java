@@ -67,7 +67,7 @@ public final class MockFactory {
         Class[] interfaces = targetClass.getInterfaces();
         EagerInit eager = targetClass.getAnnotation(EagerInit.class);
         if (eager != null) {
-            sourceConfig.setInitLevel(eager.value());
+            sourceConfig.setInitLevel(50);
         }
 
         Method setter = null;
@@ -118,7 +118,7 @@ public final class MockFactory {
         configuration.setInstanceFactory(new PojoObjectFactory(clazz.getConstructor()));
         EagerInit eager = clazz.getAnnotation(EagerInit.class);
         if (eager != null) {
-            configuration.setInitLevel(eager.value());
+            configuration.setInitLevel(50);
         }
         Method[] methods = clazz.getMethods();
         for (Method method : methods) {

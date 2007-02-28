@@ -20,7 +20,7 @@ package org.osoa.sca.annotations;
 
 import static java.lang.annotation.ElementType.TYPE;
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 
 /**
@@ -29,15 +29,7 @@ import java.lang.annotation.Target;
  * @version $Rev$ $Date$
  */
 @Target({TYPE})
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RUNTIME)
 public @interface EagerInit {
-
-    /**
-     * A Tuscany-specific extension for specifying the component's initialization order, with lesser values given
-     * precedence. A value of 0 indicates the component should not be initialized eagerly.
-     *
-     * @return the component initalization level
-     */
-    public int value() default 50;
 
 }

@@ -52,7 +52,7 @@ public class LoanAppConversationTestCase extends SCATestCase {
             System.out.println("Cancelled: " + loanClient.displayLoan());
             loanClient.closeLoan();
             
-            /* This is a mistake, after @EndConversation, a new conversation is
+            /* This is a mistake, after @EndsConversation, a new conversation is
              * started automatically, so we should not get TargetNotFoundException.
              * Keep this for the timeout case, where we should get the exception
             try {

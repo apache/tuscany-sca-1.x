@@ -22,7 +22,7 @@ import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
@@ -42,7 +42,7 @@ import org.easymock.EasyMock;
  * @version $Rev$ $Date$
  */
 public class ComponentLoaderNoBindingTestCase extends TestCase {
-    private static final QName COMPONENT = new QName(XML_NAMESPACE_1_0, "component");
+    private static final QName COMPONENT = new QName(SCA_NS, "component");
     private ComponentLoader loader;
     private XMLStreamReader reader;
     private ServiceDefinition service;

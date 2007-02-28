@@ -28,7 +28,7 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 import org.osoa.sca.annotations.Constructor;
 
 import org.apache.tuscany.spi.annotation.Autowire;
@@ -49,7 +49,7 @@ import org.apache.tuscany.spi.model.ModelObject;
  * @version $Rev$ $Date$
  */
 public class InterfaceWSDLLoader extends LoaderExtension {
-    public static final QName INTERFACE_WSDL = new QName(XML_NAMESPACE_1_0, "interface.wsdl");
+    public static final QName INTERFACE_WSDL = new QName(SCA_NS, "interface.wsdl");
 
     private static final String WSDLI = "http://www.w3.org/2006/01/wsdl-instance";
 

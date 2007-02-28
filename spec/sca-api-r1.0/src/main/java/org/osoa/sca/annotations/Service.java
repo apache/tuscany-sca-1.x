@@ -33,11 +33,15 @@ import java.lang.annotation.Target;
 public @interface Service {
     /**
      * Array of interfaces that should be exposed as services.
+     *
+     * @return a list of interfaces that should be exposed as services
      */
     Class<?>[] interfaces() default {};
 
     /**
      * Shortcut allowing a single interface to be exposed.
+     *
+     * @return a single service interfaces to be exposed
      */
     Class<?> value() default Void.class;
 }

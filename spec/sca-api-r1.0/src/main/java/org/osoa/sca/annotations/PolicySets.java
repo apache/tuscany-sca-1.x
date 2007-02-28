@@ -18,17 +18,28 @@
  */
 package org.osoa.sca.annotations;
 
-import java.lang.annotation.ElementType;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.TYPE;
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 
 /**
- * Annotation used to indicate a method ends a conversation.
+ * Annotation that allows application of SCA Policy Sets.
+ * <p/>
+ * Each policy set is specified using its XML QName in the form defined by {@link javax.xml.namespace.QName#toString()}.
  *
  * @version $Rev$ $Date$
  */
-@Target({ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface EndConversation {
+@Target({TYPE, FIELD, METHOD, PARAMETER})
+@Retention(RUNTIME)
+public @interface PolicySets {
+    /**
+     * Returns the policy sets to be applied.
+     *
+     * @return the policy sets to be applied
+     */
+    String[] value() default "";
 }

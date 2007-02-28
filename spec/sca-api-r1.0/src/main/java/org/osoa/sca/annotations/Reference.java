@@ -34,12 +34,16 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 public @interface Reference {
     /**
-     * The name of the reference. If not specified then the name will be derived from the annotated field.
+     * The name of the reference. If not specified then the name will be derived from the annotated field or method.
+     *
+     * @return the name of the reference
      */
     public String name() default "";
 
     /**
      * Indicates if a reference must be specified.
+     *
+     * @return true if a reference must be specified
      */
     public boolean required() default false;
 }

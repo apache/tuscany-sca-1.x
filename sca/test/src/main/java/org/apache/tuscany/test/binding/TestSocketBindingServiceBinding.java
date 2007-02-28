@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 
 import javax.xml.namespace.QName;
 
-import org.osoa.sca.Version;
+import org.osoa.sca.Constants;
 
 import org.apache.tuscany.spi.CoreRuntimeException;
 import org.apache.tuscany.spi.component.CompositeComponent;
@@ -28,7 +28,7 @@ import org.apache.tuscany.spi.wire.MessageImpl;
  * @version $Rev$ $Date$
  */
 public class TestSocketBindingServiceBinding extends ServiceBindingExtension {
-    private static final QName BINDING_TEST = new QName(Version.XML_NAMESPACE_1_0, "binding.socket");
+    private static final QName BINDING_TEST = new QName(Constants.SCA_NS, "binding.socket");
     private int port;
     private ServerSocket socket;
     private ExecutorService executor;

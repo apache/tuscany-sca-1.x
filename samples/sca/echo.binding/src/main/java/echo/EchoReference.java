@@ -20,7 +20,7 @@ package echo;
 
 import javax.xml.namespace.QName;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.extension.ReferenceBindingExtension;
@@ -32,7 +32,7 @@ import org.apache.tuscany.spi.wire.TargetInvoker;
  * @version $Rev$ $Date$
  */
 public class EchoReference extends ReferenceBindingExtension {
-    private static final QName BINDING_ECHO = new QName(XML_NAMESPACE_1_0, "binding.echo");
+    private static final QName BINDING_ECHO = new QName(SCA_NS, "binding.echo");
 
     public EchoReference(String name, CompositeComponent parent) {
         super(name, parent);

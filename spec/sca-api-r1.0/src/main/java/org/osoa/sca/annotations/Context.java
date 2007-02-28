@@ -25,7 +25,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 
 /**
- * Annotation used to indicate a field or method that is used to inject the component's CompositeContext.
+ * Annotation used to indicate a field or setter method that is used to inject an SCA context.
+ * The type of context injected is determined by the type of the field or the parameter
+ * to the setter method and is typically a ComponentContext or RequestContext.
  *
  * @version $Rev$ $Date$
  */

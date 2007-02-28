@@ -22,7 +22,7 @@ import java.util.Collection;
 import javax.wsdl.Definition;
 import javax.xml.namespace.QName;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.component.WorkContext;
@@ -48,7 +48,7 @@ import org.apache.tuscany.binding.axis2.util.WebServicePortMetaData;
  * Axis2Reference uses Axis2 to invoke a remote web service
  */
 public class Axis2ReferenceBinding<T> extends ReferenceBindingExtension {
-    private static final QName BINDING_WS = new QName(XML_NAMESPACE_1_0, "binding.ws");
+    private static final QName BINDING_WS = new QName(SCA_NS, "binding.ws");
 
     private WebServicePortMetaData wsPortMetaData;
     private ServiceClient serviceClient;

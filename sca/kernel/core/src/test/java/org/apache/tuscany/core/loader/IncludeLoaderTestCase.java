@@ -24,7 +24,7 @@ import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import org.osoa.sca.Version;
+import org.osoa.sca.Constants;
 
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
@@ -48,7 +48,7 @@ import static org.easymock.EasyMock.verify;
  * @version $Rev$ $Date$
  */
 public class IncludeLoaderTestCase extends TestCase {
-    private static final QName INCLUDE = new QName(Version.XML_NAMESPACE_1_0, "include");
+    private static final QName INCLUDE = new QName(Constants.SCA_NS, "include");
 
     private LoaderRegistry registry;
     private IncludeLoader loader;

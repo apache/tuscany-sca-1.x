@@ -36,17 +36,21 @@ import java.lang.annotation.Target;
 public @interface Property {
     /**
      * The name of the property. If not specified then the name will be derived
-     * from the annotated field.
+     * from the annotated field or method.
+     *
+     * @return the name of the property
      */
-    public String name() default "";
+    String name() default "";
 
     /**
-     * Indicates if property requires to be injected
+     * Indicates whether a value for the property must be provided.
+     *
+     * @return true if a value must be provided
      */
-    public String required() default "false";
+    boolean required() default false;
 
     /**
      * The XML Type in a QName format
      */
-    public String xmlType() default "";
+    String xmlType() default "";
   }

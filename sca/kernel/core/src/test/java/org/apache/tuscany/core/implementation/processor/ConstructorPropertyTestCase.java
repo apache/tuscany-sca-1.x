@@ -121,7 +121,7 @@ public class ConstructorPropertyTestCase extends TestCase {
     private static class Foo {
 
         @org.osoa.sca.annotations.Constructor()
-        public Foo(@Property(name = "myProp", required = "true") String prop) {
+        public Foo(@Property(name = "myProp", required = true) String prop) {
 
         }
 

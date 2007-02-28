@@ -20,7 +20,7 @@ package org.apache.tuscany.binding.jsonrpc;
 
 import javax.xml.namespace.QName;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 import org.osoa.sca.annotations.Destroy;
 
 import org.apache.tuscany.spi.component.CompositeComponent;
@@ -32,7 +32,7 @@ import org.apache.tuscany.spi.wire.WireService;
  * @version $Rev$ $Date$
  */
 public class JSONRPCServiceBinding extends ServiceBindingExtension {
-    public static final QName BINDING_JSON = new QName(XML_NAMESPACE_1_0, "binding.jsonrpc");
+    public static final QName BINDING_JSON = new QName(SCA_NS, "binding.jsonrpc");
 
     private static int servletRegistrationCount = 0;
 

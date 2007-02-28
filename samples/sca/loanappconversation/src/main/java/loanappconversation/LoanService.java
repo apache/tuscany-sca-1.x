@@ -18,7 +18,7 @@
  */
 package loanappconversation;
 
-import org.osoa.sca.annotations.EndConversation;
+import org.osoa.sca.annotations.EndsConversation;
 import org.osoa.sca.annotations.OneWay;
 import org.osoa.sca.annotations.Remotable;
 import org.osoa.sca.annotations.Scope;
@@ -32,6 +32,6 @@ public interface LoanService {
     void cancelApplication();
     String getLoanStatus();
     String display();
-    @EndConversation
+    @EndsConversation
     void close();
 }

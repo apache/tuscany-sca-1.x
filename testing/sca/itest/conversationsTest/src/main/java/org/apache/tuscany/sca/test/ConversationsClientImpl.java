@@ -3,27 +3,24 @@ package org.apache.tuscany.sca.test;
 import java.io.File;
 import java.text.DateFormat;
 
-import org.osoa.sca.CurrentCompositeContext;
+import junit.framework.Assert;
+
 import org.osoa.sca.CompositeContext;
-import org.osoa.sca.ServiceReference;
 import org.osoa.sca.ConversationEndedException;
+import org.osoa.sca.CurrentCompositeContext;
+import org.osoa.sca.ServiceReference;
+import org.osoa.sca.annotations.Context;
+import org.osoa.sca.annotations.ConversationAttributes;
+import org.osoa.sca.annotations.ConversationID;
 import org.osoa.sca.annotations.Reference;
-import org.osoa.sca.annotations.Remotable;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
-import org.osoa.sca.annotations.Context;
-import org.osoa.sca.annotations.ConversationID;
-import org.osoa.sca.annotations.Conversation; 
-
-
-import org.osoa.sca.RequestContext;
-import junit.framework.Assert;
 
 @Service(interfaces={ConversationsClient.class,ConversationsClient2.class})   
 
 
 @Scope("CONVERSATION")
-@Conversation(maxIdleTime="10 minutes",
+@ConversationAttributes(maxIdleTime="10 minutes",
 		      singlePrincipal=false)
 		 	 
 
@@ -211,14 +208,14 @@ public class ConversationsClientImpl implements ConversationsClient, Conversatio
 	private void test3()	
 	{
 		
-	  // Note: The @EndSesion and @EndConversation anotations are not implemented.	 
+	  // Note: The @EndSesion and @EndsConversation anotations are not implemented.	 
       //       So #1 an #2 cannot be done. 
 		
 	  //	
 	  // Verify the various methods to end a session.
 	  // Sesssions can be ended:
 	  //
-      //  1) Server operation annotated with @EndConversation. 
+      //  1) Server operation annotated with @EndsConversation. 
       //  2) Server operation calls an @EndSession annotated callback method.    
       //  3) Servers conversation lifetime times out.  This is test6() so its not implimented in the test3 method.
 	  //  4) The client calls ServiceReference.endSession(); 	
@@ -247,7 +244,7 @@ public class ConversationsClientImpl implements ConversationsClient, Conversatio
 	 //aConversationID = aServRef.getSessionID();	  
 	 //Assert.assertNotNull("Conversations - Test3-1 ConversationID not found", aConversationID);
 	  
-	 //Call the business method annotated with @EndConversation. 
+	 //Call the business method annotated with @EndsConversation. 
 	 aConversationsLifeCycleService.endThisSession(); // This should also drive @Destroy method.
 	  
 	 // Verify session has ended.  The ConversationID should be null; 

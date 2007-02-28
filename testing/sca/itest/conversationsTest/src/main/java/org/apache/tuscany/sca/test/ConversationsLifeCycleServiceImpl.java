@@ -5,17 +5,15 @@ import java.io.File;
 import junit.framework.Assert;
 
 import org.osoa.sca.annotations.Callback;
-import org.osoa.sca.annotations.Service;
-import org.osoa.sca.annotations.Scope;
-import org.osoa.sca.annotations.Conversation;
-import org.osoa.sca.annotations.Init;
+import org.osoa.sca.annotations.ConversationAttributes;
 import org.osoa.sca.annotations.Destroy;
-import org.osoa.sca.annotations.EndConversation;   
-import org.apache.tuscany.sca.test.ConversationsClient;
+import org.osoa.sca.annotations.Init;
+import org.osoa.sca.annotations.Scope;
+import org.osoa.sca.annotations.Service;
 
 @Service(ConversationsLifeCycleService.class)
 @Scope("CONVERSATION")
-@Conversation(maxAge="5 seconds")
+@ConversationAttributes(maxAge="5 seconds")
 
 // This is a short-lived conversational service. 
 
@@ -63,7 +61,7 @@ public class ConversationsLifeCycleServiceImpl implements ConversationsLifeCycle
 	  System.out.println("ConversationsLifeCycleServiceImpl.destroy()");	
 	}
 
-//	@EndConversation
+//	@EndsConversation
 	public void endThisSession() {
     //This method will end the current session by annotation.	
     System.out.println("ConversationsLifeCycleServiceImpl.endThisSession()");		

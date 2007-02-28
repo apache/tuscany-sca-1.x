@@ -18,7 +18,7 @@
  */
 package org.apache.tuscany.binding.axis2;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -52,7 +52,7 @@ import org.osoa.sca.annotations.Scope;
 @Scope("COMPOSITE")
 @SuppressWarnings("deprecation")
 public class WebServiceBindingLoader extends LoaderExtension<WebServiceBindingDefinition> {
-    public static final QName BINDING_WS = new QName(XML_NAMESPACE_1_0, "binding.ws");
+    public static final QName BINDING_WS = new QName(SCA_NS, "binding.ws");
 
     private WSDLDefinitionRegistry wsdlDefinitionRegistry;
 

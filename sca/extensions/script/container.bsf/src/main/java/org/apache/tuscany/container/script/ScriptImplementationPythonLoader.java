@@ -19,7 +19,7 @@
 
 package org.apache.tuscany.container.script;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
@@ -37,7 +37,7 @@ import org.osoa.sca.annotations.Constructor;
 
 public class ScriptImplementationPythonLoader extends ScriptImplementationLoader {
 
-    private static final QName IMPLEMENTATION_PYTHON = new QName(XML_NAMESPACE_1_0, "implementation.python");
+    private static final QName IMPLEMENTATION_PYTHON = new QName(SCA_NS, "implementation.python");
 
     @Constructor({"registry"})
     public ScriptImplementationPythonLoader(@Autowire LoaderRegistry registry) {

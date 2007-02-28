@@ -22,7 +22,7 @@ import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 import org.osoa.sca.annotations.Constructor;
 
 import org.apache.tuscany.spi.annotation.Autowire;
@@ -38,7 +38,7 @@ import org.apache.tuscany.spi.model.ModelObject;
  */
 public class EchoBindingLoader extends LoaderExtension<EchoBinding> {
 
-    public static final QName BINDING_ECHO = new QName(XML_NAMESPACE_1_0, "binding.echo");
+    public static final QName BINDING_ECHO = new QName(SCA_NS, "binding.echo");
 
     @Constructor
     public EchoBindingLoader(@Autowire LoaderRegistry registry) {

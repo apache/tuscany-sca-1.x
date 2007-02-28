@@ -18,7 +18,7 @@ package org.apache.tuscany.binding.jms;
 
 import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +43,7 @@ import org.osoa.sca.annotations.Scope;
 public class JMSBindingLoader extends LoaderExtension<JMSBindingDefinition> {
 
     public static final QName BINDING_JMS =
-        new QName(XML_NAMESPACE_1_0, "binding.jms");
+        new QName(SCA_NS, "binding.jms");
 
     public static final List<String> VALID_CORRELATION_SCHEMES =
         Arrays.asList(new String[] {"requestmsgidtocorrelid", "requestcorrelidtocorrelid", "none"});

@@ -21,16 +21,15 @@ package org.apache.tuscany.core.implementation.processor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import org.osoa.sca.annotations.Conversation;
-import org.osoa.sca.annotations.ConversationID;
-import org.osoa.sca.annotations.Scope;
+import junit.framework.TestCase;
 
 import org.apache.tuscany.spi.implementation.java.JavaMappedProperty;
 import org.apache.tuscany.spi.implementation.java.JavaMappedReference;
 import org.apache.tuscany.spi.implementation.java.JavaMappedService;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
-
-import junit.framework.TestCase;
+import org.osoa.sca.annotations.ConversationAttributes;
+import org.osoa.sca.annotations.ConversationID;
+import org.osoa.sca.annotations.Scope;
 
 /**
  * @version $Rev$ $Date$
@@ -112,30 +111,30 @@ public class ConversationProcessorTestCase extends TestCase {
     }
 
     @Scope("CONVERSATION")
-    @Conversation(maxIdleTime = "10 seconds")
+    @ConversationAttributes(maxIdleTime = "10 seconds")
     private class FooMaxIdle {
     }
 
     @Scope("CONVERSATION")
-    @Conversation(maxAge = "10 seconds")
+    @ConversationAttributes(maxAge = "10 seconds")
     private class FooMaxAge {
     }
 
     @Scope("CONVERSATION")
-    @Conversation(maxAge = "10 seconds", maxIdleTime = "10 seconds")
+    @ConversationAttributes(maxAge = "10 seconds", maxIdleTime = "10 seconds")
     private class BadFooBoth {
     }
 
-    @Conversation(maxAge = "10 seconds")
+    @ConversationAttributes(maxAge = "10 seconds")
     private class ImplicitFooScope {
     }
 
     @Scope("STATELESS")
-    @Conversation(maxAge = "10 seconds")
+    @ConversationAttributes(maxAge = "10 seconds")
     private class BadFooScope {
     }
 
-    @Conversation
+    @ConversationAttributes
     private class FooJustConversation {
     }
 

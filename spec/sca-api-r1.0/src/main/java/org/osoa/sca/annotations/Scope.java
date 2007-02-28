@@ -25,6 +25,8 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation used to indicate a scoped service.
+ * <p/>
+ * The spec refers to but does not describe an eager() attribute; this is an error in the draft.
  *
  * @version $Rev$ $Date$
  */
@@ -34,12 +36,13 @@ public @interface Scope {
     /**
      * The name of the scope. Values currently defined by the specification are:
      * <ul>
-     * <li>stateless (default)</li>
-     * <li>request</li>
-     * <li>session</li>
-     * <li>module</li>
-     * <li>conversation</li>
+     * <li>STATELESS (default)</li>
+     * <li>REQUEST</li>
+     * <li>CONVERSATION</li>
+     * <li>COMPOSITE</li>
      * </ul>
+     *
+     * @return the name of the scope
      */
     String value() default "STATELESS";
 }

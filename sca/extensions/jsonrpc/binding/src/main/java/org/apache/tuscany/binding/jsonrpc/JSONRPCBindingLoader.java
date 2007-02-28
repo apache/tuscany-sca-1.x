@@ -18,7 +18,7 @@
  */
 package org.apache.tuscany.binding.jsonrpc;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -39,7 +39,7 @@ import org.osoa.sca.annotations.Scope;
  */
 @Scope("COMPOSITE")
 public class JSONRPCBindingLoader extends LoaderExtension<JSONRPCBindingDefinition> {
-    public static final QName BINDING_JSON = new QName(XML_NAMESPACE_1_0, "binding.jsonrpc");
+    public static final QName BINDING_JSON = new QName(SCA_NS, "binding.jsonrpc");
 
     public JSONRPCBindingLoader(@Autowire LoaderRegistry registry) {
         super(registry);

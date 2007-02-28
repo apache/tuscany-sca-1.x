@@ -24,7 +24,7 @@ import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 import org.osoa.sca.annotations.Constructor;
 
 import org.apache.tuscany.spi.annotation.Autowire;
@@ -47,7 +47,7 @@ import org.apache.tuscany.spi.util.stax.StaxUtil;
  * @version $Rev$ $Date$
  */
 public class ReferenceLoader extends LoaderExtension<ReferenceDefinition> {
-    public static final QName REFERENCE = new QName(XML_NAMESPACE_1_0, "reference");
+    public static final QName REFERENCE = new QName(SCA_NS, "reference");
 
     @Constructor
     public ReferenceLoader(@Autowire LoaderRegistry registry) {

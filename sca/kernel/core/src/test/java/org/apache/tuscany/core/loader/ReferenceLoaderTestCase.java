@@ -23,7 +23,7 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import org.osoa.sca.Version;
+import org.osoa.sca.Constants;
 
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.loader.LoaderException;
@@ -45,7 +45,7 @@ import org.easymock.EasyMock;
  * @version $Rev$ $Date$
  */
 public class ReferenceLoaderTestCase extends TestCase {
-    private static final QName REFERENCE = new QName(Version.XML_NAMESPACE_1_0, "reference");
+    private static final QName REFERENCE = new QName(Constants.SCA_NS, "reference");
 
     private ReferenceLoader loader;
     private DeploymentContext deploymentContext;

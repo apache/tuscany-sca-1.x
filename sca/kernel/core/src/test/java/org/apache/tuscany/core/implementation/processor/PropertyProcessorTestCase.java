@@ -112,7 +112,7 @@ public class PropertyProcessorTestCase extends TestCase {
 
         @Property
         protected String baz;
-        @Property(required = "true")
+        @Property(required = true)
         protected String bazRequired;
         @Property(name = "theBaz")
         protected String bazField;
@@ -121,7 +121,7 @@ public class PropertyProcessorTestCase extends TestCase {
         public void setFoo(String string) {
         }
 
-        @Property(required = "true")
+        @Property(required = true)
         public void setFooRequired(String string) {
         }
 

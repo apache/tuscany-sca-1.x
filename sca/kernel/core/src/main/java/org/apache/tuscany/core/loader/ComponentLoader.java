@@ -20,7 +20,7 @@ package org.apache.tuscany.core.loader;
 
 import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import java.lang.reflect.Type;
 import java.net.URI;
@@ -77,9 +77,9 @@ import org.w3c.dom.Document;
  * @version $Rev$ $Date$
  */
 public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
-    private static final QName COMPONENT = new QName(XML_NAMESPACE_1_0, "component");
-    private static final QName PROPERTY = new QName(XML_NAMESPACE_1_0, "property");
-    private static final QName REFERENCE = new QName(XML_NAMESPACE_1_0, "reference");
+    private static final QName COMPONENT = new QName(SCA_NS, "component");
+    private static final QName PROPERTY = new QName(SCA_NS, "property");
+    private static final QName REFERENCE = new QName(SCA_NS, "reference");
 
     private static final String PROPERTY_FILE_ATTR = "file";
     private static final String PROPERTY_SOURCE_ATTR = "source";

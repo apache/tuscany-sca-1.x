@@ -18,7 +18,7 @@
  */
 package org.apache.tuscany.core.loader;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class PropertyLoader extends LoaderExtension<Property> {
     public static final String DEFAULT_SCHEMA_NS = "http://www.w3.org/2001/XMLSchema";
     public static final char COLON = ':';
 
-    public static final QName PROPERTY = new QName(XML_NAMESPACE_1_0, "property");
+    public static final QName PROPERTY = new QName(SCA_NS, "property");
     private final DocumentBuilder documentBuilder;
 
     @Constructor( {"registry"})

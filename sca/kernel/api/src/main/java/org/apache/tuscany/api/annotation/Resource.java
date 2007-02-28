@@ -6,40 +6,44 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
-package org.osoa.sca;
+package org.apache.tuscany.api.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Class providing information on the version of the specification
- * supported by these API classes.
+ * Annotation used to indicate a resource should be provided to an implementation by the runtime.
  *
  * @version $Rev$ $Date$
  */
-public final class Version {
-    /**
-     * Identifier for version 1.0
-     */
-    public static final String VERSION_1_0 = "1.0";
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Resource {
 
     /**
-     * Identifier for the XML Namespace for version 1.0
+     * Denotes the name of the resource declared by the implementation.
      */
-    public static final String XML_NAMESPACE_1_0 = "http://www.osoa.org/xmlns/sca/1.0";
+    String name() default "";
 
     /**
-     * The specification version of these API classes.
+     * Denotes if the resource is optional
      */
-    public static final String API_VERSION = VERSION_1_0;
+    boolean optional() default false;
 
-    private Version() {
-    }
+    /**
+     * Denotes the default name of the resource provided by the runtime environment.
+     */
+    String mappedName() default "";
 }

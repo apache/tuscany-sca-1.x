@@ -18,7 +18,7 @@
  */
 package org.apache.tuscany.spi.util.stax;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -103,7 +103,7 @@ public abstract class StaxUtil {
                                                       QName element,
                                                       DocumentBuilder builder) throws XMLStreamException {
        
-        final QName PROPERTY = new QName(XML_NAMESPACE_1_0, "property");
+        final QName PROPERTY = new QName(SCA_NS, "property");
         List<Document> propertyValues = new ArrayList<Document>();
         Document value = null;
         do {

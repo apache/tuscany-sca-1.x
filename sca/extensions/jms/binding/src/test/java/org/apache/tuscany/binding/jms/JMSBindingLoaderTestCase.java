@@ -9,7 +9,7 @@ import javax.xml.stream.XMLStreamReader;
 import junit.framework.TestCase;
 
 import org.apache.tuscany.spi.loader.LoaderException;
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 public class JMSBindingLoaderTestCase extends TestCase {
 
@@ -78,7 +78,7 @@ public class JMSBindingLoaderTestCase extends TestCase {
     private XMLStreamReader createReader(String xml) throws XMLStreamException {
         XMLInputFactory factory = XMLInputFactory.newInstance();
 
-        String xxx = "<xxx xmlns=\"" + XML_NAMESPACE_1_0 + "\">" + xml + "</xxx>";
+        String xxx = "<xxx xmlns=\"" + SCA_NS + "\">" + xml + "</xxx>";
         XMLStreamReader reader = factory.createXMLStreamReader(new StringReader(xxx));
         reader.nextTag();
         reader.nextTag();

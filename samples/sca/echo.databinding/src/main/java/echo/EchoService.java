@@ -18,7 +18,7 @@
  */
 package echo;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import javax.xml.namespace.QName;
 
@@ -30,7 +30,7 @@ import org.apache.tuscany.spi.extension.ServiceBindingExtension;
  * @version $Rev$ $Date$
  */
 public class EchoService extends ServiceBindingExtension {
-    private static final QName BINDING_ECHO = new QName(XML_NAMESPACE_1_0, "binding.echo");
+    private static final QName BINDING_ECHO = new QName(SCA_NS, "binding.echo");
 
     public EchoService(String name, CompositeComponent parent) throws CoreRuntimeException {
         super(name, parent);

@@ -35,6 +35,6 @@ public interface LoanService {
     void cancelApplication();
     String getLoanStatus();
     String display();
-    @EndConversation
+    @EndsConversation
     void close();
 }

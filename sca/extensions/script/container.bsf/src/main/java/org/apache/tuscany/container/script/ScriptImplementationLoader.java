@@ -18,7 +18,7 @@
  */
 package org.apache.tuscany.container.script;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,7 +50,7 @@ import org.osoa.sca.annotations.Constructor;
  */
 public class ScriptImplementationLoader extends LoaderExtension<ScriptImplementation> {
 
-    private static final QName IMPLEMENTATION_SCRIPT = new QName(XML_NAMESPACE_1_0, "implementation.script");
+    private static final QName IMPLEMENTATION_SCRIPT = new QName(SCA_NS, "implementation.script");
 
     @Constructor({"registry"})
     public ScriptImplementationLoader(@Autowire LoaderRegistry registry) {

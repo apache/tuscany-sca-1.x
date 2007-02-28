@@ -26,7 +26,7 @@ import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 import org.easymock.EasyMock;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
@@ -46,9 +46,9 @@ import org.apache.tuscany.spi.model.WireDefinition;
  * @version $Rev: 471504 $ $Date: 2006-11-06 01:10:40 +0530 (Mon, 06 Nov 2006) $
  */
 public class WireLoaderTestCase extends TestCase {
-    private static final QName WIRE = new QName(XML_NAMESPACE_1_0, "wire");
-    private static final QName SOURCE_URI = new QName(XML_NAMESPACE_1_0, "source.uri");
-    private static final QName TARGET_URI = new QName(XML_NAMESPACE_1_0, "target.uri");
+    private static final QName WIRE = new QName(SCA_NS, "wire");
+    private static final QName SOURCE_URI = new QName(SCA_NS, "source.uri");
+    private static final QName TARGET_URI = new QName(SCA_NS, "target.uri");
 
     private LoaderRegistry registry;
     private WireLoader loader;

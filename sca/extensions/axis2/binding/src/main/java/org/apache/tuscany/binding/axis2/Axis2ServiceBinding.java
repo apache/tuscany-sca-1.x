@@ -32,7 +32,7 @@ import javax.wsdl.Operation;
 import javax.wsdl.PortType;
 import javax.xml.namespace.QName;
 
-import static org.osoa.sca.Version.XML_NAMESPACE_1_0;
+import static org.osoa.sca.Constants.SCA_NS;
 import org.osoa.sca.annotations.Destroy;
 
 import org.apache.tuscany.spi.builder.BuilderConfigException;
@@ -72,7 +72,7 @@ import org.apache.tuscany.binding.axis2.util.WebServicePortMetaData;
  * @version $Rev$ $Date$
  */
 public class Axis2ServiceBinding extends ServiceBindingExtension {
-    private static final QName BINDING_WS = new QName(XML_NAMESPACE_1_0, "binding.ws");
+    private static final QName BINDING_WS = new QName(SCA_NS, "binding.ws");
 
     private ServiceContract<?> serviceContract;
 

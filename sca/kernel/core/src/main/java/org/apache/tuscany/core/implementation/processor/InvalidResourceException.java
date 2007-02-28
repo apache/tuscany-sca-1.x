@@ -21,7 +21,7 @@ package org.apache.tuscany.core.implementation.processor;
 import org.apache.tuscany.spi.implementation.java.ProcessingException;
 
 /**
- * Denotes an invalid usage of {@link @org.osoa.sca.annotations.Resource}
+ * Denotes an invalid usage of {@link @org.apache.tuscany.api.annotation.Resource}
  *
  * @version $Rev$ $Date$
  */

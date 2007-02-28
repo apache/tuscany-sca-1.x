@@ -6,44 +6,51 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 package org.osoa.sca.annotations;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.ElementType.TYPE;
+import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 
 /**
- * When placed on a service interface, this annotation specifies the interface
- * to be used for callbacks.
+ * Annotation that allows the attachment of any intent to a Java Class or interface or to members of that
+ * class such as methods, fields or constructor parameters.
  * <p/>
- * When placed on a method or field, this annotation denotes the injection
- * site to be used for a callback reference.
- * <p/>
- * There is a error in the 1.00 draft spec in the declaration of this interface.
- * The form defined here is a proposed correction for that error.
+ * Intents are specified as XML QNames in the representation defined by
+ * {@link javax.xml.namespace.QName#toString()}. Intents may be qualified with one or more
+ * suffixes separated by a "." such as:
+ * <ul>
+ * <li>{http://www.osoa.org/xmlns/sca/1.0}confidentiality</li>
+ * <li>{http://www.osoa.org/xmlns/sca/1.0}confidentiality.message</li>
+ * </ul>
+ * This annotation supports general purpose intents specified as strings.  Users may also define
+ * specific intents using the {@link @org.osoa.sca.annotations.Intent} annotation.
  *
  * @version $Rev$ $Date$
  */
-@Target({TYPE, METHOD, FIELD})
+@Inherited
 @Retention(RUNTIME)
-public @interface Callback {
+@Target({TYPE, METHOD, FIELD, PARAMETER})
+public @interface Requires {
     /**
-     * The Class of the associated callback interface.
+     * Returns the attached intents.
      *
-     * @return the associated callback interface
+     * @return the attached intents
      */
-    Class<?> value() default Void.class;
+    String[] value() default "";
 }

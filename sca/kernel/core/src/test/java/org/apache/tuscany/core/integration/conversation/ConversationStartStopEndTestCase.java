@@ -18,24 +18,23 @@
  */
 package org.apache.tuscany.core.integration.conversation;
 
+import static org.apache.tuscany.spi.model.Scope.CONVERSATION;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-
-import org.osoa.sca.annotations.EndConversation;
-import org.osoa.sca.annotations.Scope;
-
-import org.apache.tuscany.spi.ObjectCreationException;
-import org.apache.tuscany.spi.QualifiedName;
-import static org.apache.tuscany.spi.model.Scope.CONVERSATION;
-import org.apache.tuscany.spi.wire.InboundWire;
-import org.apache.tuscany.spi.wire.OutboundWire;
 
 import org.apache.tuscany.core.implementation.PojoConfiguration;
 import org.apache.tuscany.core.implementation.java.JavaAtomicComponent;
 import org.apache.tuscany.core.injection.PojoObjectFactory;
 import org.apache.tuscany.core.integration.mock.MockFactory;
 import org.apache.tuscany.core.wire.jdk.JDKOutboundInvocationHandler;
+import org.apache.tuscany.spi.ObjectCreationException;
+import org.apache.tuscany.spi.QualifiedName;
+import org.apache.tuscany.spi.wire.InboundWire;
+import org.apache.tuscany.spi.wire.OutboundWire;
 import org.easymock.classextension.EasyMock;
+import org.osoa.sca.annotations.EndsConversation;
+import org.osoa.sca.annotations.Scope;
 
 /**
  * Verifies start, continue and end conversation invocations are processed properly. Checks that a target instance is
@@ -134,7 +133,7 @@ public class ConversationStartStopEndTestCase extends AbstractConversationTestCa
 
         void operation2();
 
-        @EndConversation
+        @EndsConversation
         void end();
 
     }

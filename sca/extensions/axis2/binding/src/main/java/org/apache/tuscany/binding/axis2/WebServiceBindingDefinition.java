@@ -25,7 +25,7 @@ import javax.wsdl.Service;
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.model.BindingDefinition;
-import org.osoa.sca.Version;
+import org.osoa.sca.Constants;
 
 /**
  * Represents a Celtix binding configuration in an assembly
@@ -33,7 +33,7 @@ import org.osoa.sca.Version;
  * @version $Rev$ $Date$
  */
 public class WebServiceBindingDefinition extends BindingDefinition {
-    public static final QName CONVERSATION_ID_REFPARM_QN = new QName(Version.XML_NAMESPACE_1_0,"conversationID");
+    public static final QName CONVERSATION_ID_REFPARM_QN = new QName(Constants.SCA_NS,"conversationID");
     private Definition definition;
     private Port port;
     private Service service;

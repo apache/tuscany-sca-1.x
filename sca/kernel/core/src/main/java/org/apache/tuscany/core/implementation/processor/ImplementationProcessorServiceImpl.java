@@ -48,7 +48,7 @@ import org.osoa.sca.annotations.Callback;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Remotable;
-import org.osoa.sca.annotations.Resource;
+import org.apache.tuscany.api.annotation.Resource;
 
 /**
  * The default implementation of an <code>ImplementationProcessorService</code>
@@ -311,7 +311,7 @@ public class ImplementationProcessorServiceImpl implements ImplementationProcess
             throw new DuplicatePropertyException(name);
         }
         property.setName(name);
-        property.setMustSupply(Boolean.parseBoolean(propAnnot.required()));
+        property.setMustSupply(propAnnot.required());
 
         String xmlType = propAnnot.xmlType();
         if (xmlType != null && xmlType.length() != 0) {

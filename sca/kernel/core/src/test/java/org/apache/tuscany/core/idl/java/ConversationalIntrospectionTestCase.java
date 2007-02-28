@@ -18,7 +18,7 @@
  */
 package org.apache.tuscany.core.idl.java;
 
-import org.osoa.sca.annotations.EndConversation;
+import org.osoa.sca.annotations.EndsConversation;
 import org.osoa.sca.annotations.Scope;
 
 import org.apache.tuscany.spi.idl.InvalidConversationalOperationException;
@@ -64,14 +64,14 @@ public class ConversationalIntrospectionTestCase extends TestCase {
     private interface Foo {
         void operation();
 
-        @EndConversation
+        @EndsConversation
         void endOperation();
     }
 
     private interface BadFoo {
         void operation();
 
-        @EndConversation
+        @EndsConversation
         void endOperation();
     }
 

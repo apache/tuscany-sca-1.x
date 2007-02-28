@@ -33,7 +33,7 @@ public final class Version {
     /**
      * Identifier for the XML Namespace for version 1.0
      */
-    public static final String XML_NAMESPACE_1_0 = "http://www.osoa.org/xmlns/sca/1.0";
+    public static final String SCA_NS = "http://www.osoa.org/xmlns/sca/1.0";
 
     /**
      * The specification version of these API classes.
