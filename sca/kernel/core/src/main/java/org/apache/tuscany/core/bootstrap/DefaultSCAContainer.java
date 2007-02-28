@@ -65,7 +65,7 @@ public class DefaultSCAContainer extends SCAContainer {
     protected CompositeContextImpl context;
     protected LauncherImpl launcher;
     protected MonitorFactory monitorFactory;
-    //lresende - contribution
+    // lresende - contribution
     protected AssemblyService assemblyService;
     protected ContributionService contributionService;
 
@@ -86,13 +86,16 @@ public class DefaultSCAContainer extends SCAContainer {
 
         try {
             CompositeComponent composite = launcher.bootRuntime(system, monitorFactory);
-            //lresende - contribution
+            // lresende - contribution
             AtomicComponent csComponent =
                 (AtomicComponent)composite.getSystemChild(ComponentNames.TUSCANY_CONTRIBUTION_SERVICE);
-            contributionService = (ContributionService) csComponent.getTargetInstance();
-            
+            contributionService = (ContributionService)csComponent.getTargetInstance();
+
+            // TODO: Make assembly service a pluggable component?
             this.assemblyService = new AssemblyServiceImpl(contributionService, composite);
-            composite.registerJavaObject(ComponentNames.TUSCANY_ASSEMBLY_SERVICE, AssemblyService.class, assemblyService);
+            composite.registerJavaObject(ComponentNames.TUSCANY_ASSEMBLY_SERVICE,
+                                         AssemblyService.class,
+                                         assemblyService);
 
             List<URL> extensions = new ArrayList<URL>();
             Enumeration<URL> urls = cl.getResources(SCAContainer.SERVICE_SCDL);
@@ -103,7 +106,7 @@ public class DefaultSCAContainer extends SCAContainer {
                 for (URL ext : exts) {
                     if (!extensions.contains(ext)) {
                         extensions.add(ext);
-                    }    
+                    }
                 }
             }
             int i = 0;
@@ -118,29 +121,31 @@ public class DefaultSCAContainer extends SCAContainer {
 
             WireService wireService = (WireService)((AtomicComponent)wireServiceComponent).getTargetInstance();
 
-            //Start using contribution services            
+            // Start using contribution services
             if (applicationSCDL == null) {
                 applicationSCDL = cl.getResource(SCAContainer.APPLICATION_SCDL);
                 if (applicationSCDL == null) {
                     applicationSCDL = cl.getResource(SCAContainer.META_APPLICATION_SCDL);
-                    if (applicationSCDL != null)
+                    if (applicationSCDL != null) {
                         compositePath = SCAContainer.META_APPLICATION_SCDL;
+                    }
                 } else {
-                    if (compositePath == null)
+                    if (compositePath == null) {
                         compositePath = SCAContainer.APPLICATION_SCDL;
+                    }
                 }
                 if (applicationSCDL == null) {
                     throw new RuntimeException("application SCDL not found: " + SCAContainer.APPLICATION_SCDL);
                 }
-            }        
-            
-            //lresende - contribution
+            }
+
+            // lresende - contribution
             URL contributionLocation = getContributionLocation(applicationSCDL, compositePath);
             URI contributionId = this.contributionService.contribute(contributionLocation, false);
             URI compositeDefinitionId = new URI(contributionId + FileHelper.getName(applicationSCDL.toString()));
-            
 
-            component = (CompositeComponent) this.assemblyService.addCompositeToDomain(contributionId, compositeDefinitionId);
+            component =
+                (CompositeComponent)this.assemblyService.addCompositeToDomain(contributionId, compositeDefinitionId);
 
             context = new CompositeContextImpl(component, wireService);
             CurrentCompositeContext.setContext(context);
@@ -151,31 +156,31 @@ public class DefaultSCAContainer extends SCAContainer {
         }
 
     }
-    
+
     private URL getContributionLocation(URL applicationSCDL, String compositePath) {
         URL root = null;
 
         // "jar:file://....../something.jar!/a/b/c/app.composite"
-        
+
         try {
             String scdlUrl = applicationSCDL.toExternalForm();
             String protocol = applicationSCDL.getProtocol();
-            if(protocol.equals("file")){
-                //directory contribution
-                if(scdlUrl.endsWith( compositePath )) {
-                    String location = scdlUrl.substring(0, scdlUrl.lastIndexOf((compositePath)));
-                    //workaround from evil url/uri form maven
+            if ("file".equals(protocol)) {
+                // directory contribution
+                if (scdlUrl.endsWith(compositePath)) {
+                    String location = scdlUrl.substring(0, scdlUrl.lastIndexOf(compositePath));
+                    // workaround from evil url/uri form maven
                     root = FileHelper.toFile(new URL(location)).toURI().toURL();
                 }
 
-            } else if( protocol.equals("jar")) {
-                //jar contribution
+            } else if ("jar".equals(protocol)) {
+                // jar contribution
                 String location = scdlUrl.substring(4, scdlUrl.lastIndexOf("!/"));
-                //workaround from evil url/uri form maven
+                // workaround from evil url/uri form maven
                 root = FileHelper.toFile(new URL(location)).toURI().toURL();
             }
         } catch (MalformedURLException mfe) {
-
+            throw new IllegalArgumentException(mfe);
         }
 
         return root;
@@ -207,7 +212,7 @@ public class DefaultSCAContainer extends SCAContainer {
         Component component = deployer.deploy(composite, definition);
         component.start();
     }
-    
+
     protected void shutdown() throws Exception {
         CurrentCompositeContext.setContext(null);
         component.stop();
