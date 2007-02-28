@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
  * 
  * @version $Rev$ $Date$
  */
-@Target( {METHOD, TYPE})
+@Target({METHOD, TYPE})
 @Retention(RUNTIME)
 public @interface IDLMapping {
 

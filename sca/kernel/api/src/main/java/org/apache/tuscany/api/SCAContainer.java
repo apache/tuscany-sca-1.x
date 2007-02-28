@@ -113,14 +113,14 @@ public abstract class SCAContainer {
      * 
      * @return The instance
      */
-    public synchronized static SCAContainer getInstance() {
+    public synchronized static SCAContainer getInstance() { // NOPMD
         if (instance != null) {
             return instance;
         }
         ClassLoader classLoader = SCAContainer.class.getClassLoader();
         instance = newInstance(classLoader);
         return instance;
-    }
+    } // NOPMD
 
     /**
      * Start the Tuscany runtime using default SCDLs
@@ -168,8 +168,8 @@ public abstract class SCAContainer {
      */
     public static void start(String compositePath) {
         try {
-        	ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        	URL applicationURL = cl.getResource(compositePath);
+            ClassLoader cl = Thread.currentThread().getContextClassLoader();
+            URL applicationURL = cl.getResource(compositePath);
             getInstance().startup(null, null, applicationURL, compositePath);
         } catch (Exception e) {
             throw new IllegalStateException(e);
@@ -184,9 +184,9 @@ public abstract class SCAContainer {
      */
     public static void start(String system, String compositePath) {
         try {
-        	ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        	URL systemURL = cl.getResource(system);
-        	URL applicationURL = cl.getResource(compositePath);
+            ClassLoader cl = Thread.currentThread().getContextClassLoader();
+            URL systemURL = cl.getResource(system);
+            URL applicationURL = cl.getResource(compositePath);
             getInstance().startup(systemURL, null, applicationURL, compositePath);
         } catch (Exception e) {
             throw new IllegalStateException(e);
@@ -229,7 +229,8 @@ public abstract class SCAContainer {
      * @param compositePath TODO
      * @throws Exception
      */
-    protected abstract void startup(URL system, URL[] extensions, URL application, String compositePath) throws Exception;
+    protected abstract void startup(URL system, URL[] extensions, URL application, String compositePath)
+        throws Exception;
 
     /**
      * Shutdown the container
