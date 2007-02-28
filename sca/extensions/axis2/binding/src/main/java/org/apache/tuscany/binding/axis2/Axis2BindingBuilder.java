@@ -97,8 +97,8 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
 
         try {
             // Set the default databinding
-            ServiceContract<?> outboundContract = serviceDefinition.getServiceContract();
-            if (WSDLServiceContract.class.isInstance(outboundContract)) {
+            ServiceContract outboundContract = serviceDefinition.getServiceContract();
+            if (outboundContract instanceof WSDLServiceContract) {
                 outboundContract.setDataBinding(OM_DATA_BINDING);
             }
 
@@ -158,8 +158,8 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
 
         try {
             // Set the default binding
-            ServiceContract<?> inboundContract = boundReferenceDefinition.getServiceContract();
-            if (WSDLServiceContract.class.isInstance(inboundContract)) {
+            ServiceContract inboundContract = boundReferenceDefinition.getServiceContract();
+            if (inboundContract instanceof WSDLServiceContract) {
                 inboundContract.setDataBinding(OM_DATA_BINDING);
             }
 
