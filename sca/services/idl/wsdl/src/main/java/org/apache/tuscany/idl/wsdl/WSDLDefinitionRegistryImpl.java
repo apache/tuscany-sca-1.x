@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.wsdl.Definition;
 import javax.wsdl.Import;
 import javax.wsdl.PortType;
@@ -199,6 +200,15 @@ public class WSDLDefinitionRegistryImpl implements WSDLDefinitionRegistry {
             schemaRegistry = new XMLSchemaRegistryImpl();
         }
         return schemaRegistry;
+    }
+
+    public Definition getDefinition(String wsdlNamespace) {
+        List<Definition> definitions = definitionsByNamespace.get(wsdlNamespace);
+        if (definitions == null || definitions.size() < 1) {
+            return null;
+        } else {
+            return definitions.get(0);
+        }
     }
 
 }
