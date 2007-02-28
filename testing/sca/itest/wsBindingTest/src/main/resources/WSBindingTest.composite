@@ -22,17 +22,17 @@
 
            name="WSBindingTest">
    
-    <component name="Client1b2b3b4b">
+    <component name="HelloworldClientOld">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1b2b3b4b</reference>
+      <reference name="helloWorldService">HelloworldClientOldRef</reference>
     </component>
 
-    <reference name="ClientRef1b2b3b4b">
+    <reference name="HelloworldClientOldRef">
         <interface.wsdl xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance" 
             interface="http://helloworld#wsdl.interface(HelloWorld)" 
             wsdli:wsdlLocation="http://helloworld wsdl/helloworld.wsdl" />
         <binding.ws endpoint="http://helloworld#wsdl.endpoint(HelloWorldService/HelloWorldSoapPort)"
-			location="wsdl/helloworldC1b2b3b4b.wsdl" />
+			location="wsdl/helloworld.wsdl" />
     </reference>
     
 </composite>
