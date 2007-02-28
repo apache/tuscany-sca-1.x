@@ -88,9 +88,7 @@ public class SDOWSDLTestCase extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        //FIXME: get this scenario working in contributions
-        //setApplicationSCDL(getClass().getResource("/META-INF/sca/sdoApplication.composite"));
-        SCAContainer.start("/META-INF/sca/sdoApplication.composite");
+        setApplicationSCDL("META-INF/sca/sdoApplication.composite");
         super.setUp();
     }
 
