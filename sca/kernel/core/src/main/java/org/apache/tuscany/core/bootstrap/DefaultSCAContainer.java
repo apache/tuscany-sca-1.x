@@ -118,16 +118,21 @@ public class DefaultSCAContainer extends SCAContainer {
 
             WireService wireService = (WireService)((AtomicComponent)wireServiceComponent).getTargetInstance();
 
-            //Start using contribution services
+            //Start using contribution services            
             if (applicationSCDL == null) {
                 applicationSCDL = cl.getResource(SCAContainer.APPLICATION_SCDL);
                 if (applicationSCDL == null) {
-                	applicationSCDL = cl.getResource(SCAContainer.META_APPLICATION_SCDL);
+                    applicationSCDL = cl.getResource(SCAContainer.META_APPLICATION_SCDL);
+                    if (applicationSCDL != null)
+                        compositePath = SCAContainer.META_APPLICATION_SCDL;
+                } else {
+                    if (compositePath == null)
+                        compositePath = SCAContainer.APPLICATION_SCDL;
                 }
                 if (applicationSCDL == null) {
                     throw new RuntimeException("application SCDL not found: " + SCAContainer.APPLICATION_SCDL);
                 }
-            }
+            }        
             
             //lresende - contribution
             URL contributionLocation = getContributionLocation(applicationSCDL, compositePath);
