@@ -31,7 +31,12 @@ public class PropertyTestCase extends SCATestCase {
     private PropertyComponent propertyService;
  //   private PropertyService propertyService;
        
-
+    // FIXME: Workaround to TUSCANY-1145
+    /**
+     * Merge a few tests to work around JIRA issue: 
+     * http://issues.apache.org/jira/browse/TUSCANY-1145
+     */
+    /*
     public void testA() {
         assertEquals("a", abService.getA());
     }
@@ -58,7 +63,18 @@ public class PropertyTestCase extends SCATestCase {
     public void testZ() {
         assertEquals("z", abService.getZ());
     }
-    
+    */
+
+    public void testA2Z() {
+        assertEquals("a", abService.getA());
+        assertEquals("b", abService.getB());
+        assertEquals("c", cdService.getC());       
+        assertEquals("c", cdService.getC2());
+        assertEquals("d", cdService.getD());
+        assertEquals("a", abService.getF());
+        assertEquals("z", abService.getZ());
+    }
+        
     
     public void testIntValue() {
         assertEquals(1, abService.getIntValue());
