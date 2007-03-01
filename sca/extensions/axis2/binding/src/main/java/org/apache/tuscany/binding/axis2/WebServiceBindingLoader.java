@@ -183,7 +183,7 @@ public class WebServiceBindingLoader extends LoaderExtension<WebServiceBindingDe
     private WebServiceBindingDefinition createBindingOld(String uri, String endpoint, String wsdlLocation, DeploymentContext deploymentContext)
         throws WSDLException, IOException, LoaderException {
         // Get the WSDL port namespace and name
-        if (uri == null && endpoint != null) {
+        if (endpoint != null) {
             int h = endpoint.indexOf('#');
             String serviceName;
             String portName;
