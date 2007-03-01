@@ -21,6 +21,7 @@ package org.apache.tuscany.core.implementation.processor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import org.osoa.sca.CompositeContext;
 import org.osoa.sca.RequestContext;
 import org.osoa.sca.ComponentContext;
 import org.osoa.sca.annotations.Context;
@@ -38,6 +39,7 @@ import org.apache.tuscany.spi.implementation.java.ProcessingException;
 import org.apache.tuscany.spi.implementation.java.Resource;
 import org.apache.tuscany.spi.wire.WireService;
 
+import org.apache.tuscany.core.injection.CompositeContextObjectFactory;
 import org.apache.tuscany.core.injection.RequestContextObjectFactory;
 import org.apache.tuscany.core.util.JavaIntrospectionHelper;
 
@@ -116,6 +118,13 @@ public class ContextProcessor extends ImplementationProcessorExtension {
             resource.setObjectFactory(new CompositeContextObjectFactory(parent, wireService));
             type.getResources().put(name, resource);
 */
+        } else if (CompositeContext.class.equals(paramType)) {
+            String name = field.getName();
+            Resource resource = new Resource();
+            resource.setName(name);
+            resource.setMember(field);
+            resource.setObjectFactory(new CompositeContextObjectFactory(parent, wireService));
+            type.getResources().put(name, resource);
         } else if (RequestContext.class.equals(paramType)) {
             String name = field.getName();
             name = JavaIntrospectionHelper.toPropertyName(name);
