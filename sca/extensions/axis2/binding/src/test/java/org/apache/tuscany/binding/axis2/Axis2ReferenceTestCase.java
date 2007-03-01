@@ -18,9 +18,12 @@
  */
 package org.apache.tuscany.binding.axis2;
 
+import static org.apache.tuscany.spi.model.Operation.NO_CONVERSATION;
+
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.HashMap;
+
 import javax.wsdl.Definition;
 import javax.wsdl.Port;
 import javax.wsdl.Service;
@@ -28,20 +31,18 @@ import javax.wsdl.factory.WSDLFactory;
 import javax.wsdl.xml.WSDLReader;
 import javax.xml.namespace.QName;
 
-import org.xml.sax.InputSource;
+import junit.framework.TestCase;
 
+import org.apache.tuscany.idl.wsdl.WSDLServiceContract;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.idl.java.JavaServiceContract;
 import org.apache.tuscany.spi.model.Operation;
-import static org.apache.tuscany.spi.model.Operation.NO_CONVERSATION;
 import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.wire.InboundWire;
 import org.apache.tuscany.spi.wire.TargetInvoker;
 import org.apache.tuscany.spi.wire.WireService;
-
-import junit.framework.TestCase;
-import org.apache.tuscany.idl.wsdl.WSDLServiceContract;
 import org.easymock.EasyMock;
+import org.xml.sax.InputSource;
 
 public class Axis2ReferenceTestCase extends TestCase {
 
@@ -104,6 +105,7 @@ public class Axis2ReferenceTestCase extends TestCase {
             parent,
             wsBinding,
             contract,
+            null,
             null,
             null);
     }

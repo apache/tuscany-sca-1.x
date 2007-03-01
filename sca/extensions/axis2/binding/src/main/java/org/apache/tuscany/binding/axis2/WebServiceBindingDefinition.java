@@ -19,12 +19,16 @@
 package org.apache.tuscany.binding.axis2;
 
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Map;
 
 import javax.wsdl.Binding;
 import javax.wsdl.Definition;
 import javax.wsdl.Port;
 import javax.wsdl.Service;
+import javax.wsdl.extensions.soap.SOAPAddress;
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.model.BindingDefinition;
@@ -124,6 +128,25 @@ public class WebServiceBindingDefinition extends BindingDefinition {
         return uri;
     }
 
+    public URI getPortURI() {
+        URI portURI = null;
+        if (definition != null) {
+            Port port = getWSDLPort();
+            final List wsdlPortExtensions = port.getExtensibilityElements();
+            for (final Object extension : wsdlPortExtensions) {
+                if (extension instanceof SOAPAddress) {
+                    try {
+                        portURI = new URI(((SOAPAddress) extension).getLocationURI());
+                    } catch (URISyntaxException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                }
+            }
+        }
+        return portURI;
+    }
+
     public void setURI(String theUri) {
         this.uri = theUri;
     }
@@ -144,5 +167,17 @@ public class WebServiceBindingDefinition extends BindingDefinition {
 
     public String getWSDLNamepace() {
         return namespace;
+    }
+
+    public String getPortName() {
+        return portName;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public String getBindingName() {
+        return bindingName;
     }
 }
