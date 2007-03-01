@@ -50,6 +50,8 @@ public class WebServiceBindingDefinition extends BindingDefinition {
     private String portName;
     private String bindingName;
     private Binding binding;
+    private boolean spec10Compliant; // hack just to allow any existing WS scdl to still work for now
+    private URI actualURI;
 
     /**
      * @deprecated pre 1.0 binding.ws spec
@@ -69,6 +71,7 @@ public class WebServiceBindingDefinition extends BindingDefinition {
         this.portName = portName;
         this.bindingName = bindingName;
         this.uri = uri;
+        this.spec10Compliant = true;
     }
 
     public Port getWSDLPort() {
@@ -179,5 +182,17 @@ public class WebServiceBindingDefinition extends BindingDefinition {
 
     public String getBindingName() {
         return bindingName;
+    }
+
+    public boolean isSpec10Compliant() {
+        return spec10Compliant;
+    }
+
+    public URI getActualURI() {
+        return actualURI;
+    }
+
+    public void setActualURI(URI actualURI) {
+        this.actualURI = actualURI;
     }
 }

@@ -106,7 +106,6 @@ public class Axis2ReferenceTestCase extends TestCase {
             wsBinding,
             contract,
             null,
-            null,
             null);
     }
 }

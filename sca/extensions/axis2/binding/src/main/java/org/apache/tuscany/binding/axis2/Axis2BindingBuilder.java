@@ -145,6 +145,10 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
                 throw new Axis2BindingBuilderRuntimeException(e);
             }
 
+            if (wsBinding.isSpec10Compliant()) {
+                wsBinding.setActualURI(computeActualURI(wsBinding, BASE_URI, parent.getName(), serviceDefinition.getName()));
+            }
+
             ServiceBinding serviceBinding =
                 new Axis2ServiceBinding(serviceDefinition.getName(), outboundContract, inboundContract, parent, wsBinding,
                     servletHost, configContext, workContext);
@@ -207,10 +211,12 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
             throw new Axis2BindingBuilderRuntimeException(e);
         }
 
-        String endpoint = computeActualURI(wsBinding, BASE_URI, parent.getName(), boundReferenceDefinition.getName());
+        if (wsBinding.isSpec10Compliant()) {
+            wsBinding.setActualURI(computeActualURI(wsBinding, BASE_URI, parent.getName(), boundReferenceDefinition.getName()));
+        }
 
         return new Axis2ReferenceBinding(boundReferenceDefinition.getName(), parent, wsBinding,
-            inboundContract, outboundContract, workContext, endpoint);
+            inboundContract, outboundContract, workContext);
 
     }
 
@@ -236,7 +242,7 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
      * If the <binding.ws> has no wsdlElement but does have a uri attribute then the uri takes precidence
      * over any implicitly used WSDL.
      */
-    protected String computeActualURI(WebServiceBindingDefinition wsBinding, String baseURI, String compositeName, String name) {
+    protected URI computeActualURI(WebServiceBindingDefinition wsBinding, String baseURI, String compositeName, String name) {
         try {
 
             URI portURI = null;         
@@ -245,7 +251,7 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
                 portURI = wsBinding.getPortURI();
             }
             if (portURI != null && portURI.isAbsolute()) {
-                return portURI.toString();
+                return new URI(portURI.toString());
             }
             
             URI explicitURI = null;
@@ -275,8 +281,12 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
                 }
             }
             
+            if (actualURI.endsWith("/")) {
+                actualURI = actualURI.substring(0, actualURI.length() -1);
+            }
+            
             // normalize to handle any . or .. occurances 
-            return new URI(actualURI).normalize().toString();
+            return new URI(actualURI).normalize();
 
         } catch (URISyntaxException e) {
             throw new Axis2BindingBuilderRuntimeException(e);

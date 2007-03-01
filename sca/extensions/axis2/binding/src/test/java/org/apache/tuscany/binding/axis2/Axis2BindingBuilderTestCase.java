@@ -22,6 +22,7 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,8 +35,6 @@ import javax.wsdl.extensions.soap.SOAPAddress;
 import javax.xml.namespace.QName;
 
 import junit.framework.TestCase;
-
-import com.ibm.wsdl.extensions.soap.SOAPAddressImpl;
 
 /**
  * Tests for the WebServicebindingLoader class
@@ -50,109 +49,109 @@ public class Axis2BindingBuilderTestCase extends TestCase {
     public void testDefaultURI() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition(null, null, null, null, null, null);
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
-        assertEquals("http://localhost/services/MyComposite/MyService/", uri);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        assertEquals("http://localhost/services/MyComposite/MyService", uri.toString());
     }
 
     public void testExplicitURI() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition(null, null, null, null, null, "http://foo/bar");
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
-        assertEquals("http://foo/bar", uri);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        assertEquals("http://foo/bar", uri.toString());
     }
     
     public void testExplicitWSDL() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDL("http://my/wsdl/uri"), "myService", "myPort", null, null);
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
-        assertEquals("http://my/wsdl/uri", uri);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        assertEquals("http://my/wsdl/uri", uri.toString());
     }
     
     public void testExplicitWSDLExplicitURI() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDL("http://my/wsdl/uri"), "myService", "myPort", null, "foo");
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
 
         // explicit URI 'foo' should be ignored
-        assertEquals("http://my/wsdl/uri", uri);
+        assertEquals("http://my/wsdl/uri", uri.toString());
     }
 
     public void testExplicitWSDLBindingExplicitURI() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDLBinding("http://my/wsdl/uri"), null, null, "myBinding", "http://my/uri");
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
 
         // explicit URI should be used as the WSDL binding is used not the wsdl service/port
-        assertEquals("http://my/uri", uri);
+        assertEquals("http://my/uri", uri.toString());
     }
 
     public void testExplicitWSDLBindingExplicitRelativeURI() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDLBinding("http://my/wsdl/uri"), null, null, "myBinding", "x/y");
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
 
         // explicit URI should be used as the WSDL binding is used not the wsdl service/port
-        assertEquals("http://localhost/services/MyComposite/MyService/x/y", uri);
+        assertEquals("http://localhost/services/MyComposite/MyService/x/y", uri.toString());
     }
 
     public void testExplicitWSDLBindingExplicitRelativeURIWithDot() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDLBinding("http://my/wsdl/uri"), null, null, "myBinding", "x/./y");
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
 
         // explicit URI should be used as the WSDL binding is used not the wsdl service/port
-        assertEquals("http://localhost/services/MyComposite/MyService/x/y", uri);
+        assertEquals("http://localhost/services/MyComposite/MyService/x/y", uri.toString());
     }
 
     public void testExplicitWSDLBindingExplicitRelativeURIWithDots() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDLBinding("http://my/wsdl/uri"), null, null, "myBinding", "../../x/y");
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
 
         // explicit URI should be used as the WSDL binding is used not the wsdl service/port
-        assertEquals("http://localhost/services/x/y", uri);
+        assertEquals("http://localhost/services/x/y", uri.toString());
     }
 
     public void testExplicitRelativeWSDL() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDL("foo/bar"), "myService", "myPort", null, null);
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
-        assertEquals("http://localhost/services/MyComposite/MyService/foo/bar", uri);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        assertEquals("http://localhost/services/MyComposite/MyService/foo/bar", uri.toString());
     }
 
     public void testExplicitRelativeWSDLWithDots() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDL("../foo/bar"), "myService", "myPort", null, null);
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
-        assertEquals("http://localhost/services/MyComposite/foo/bar", uri);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        assertEquals("http://localhost/services/MyComposite/foo/bar", uri.toString());
     }
 
     public void testExplicitRelativeWSDLExplicitURI() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDL("foo/bar"), "myService", "myPort", null, "http://my/wsdl/uri");
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
-        assertEquals("http://my/wsdl/uri/foo/bar", uri);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        assertEquals("http://my/wsdl/uri/foo/bar", uri.toString());
     }
 
     public void testExplicitRelativeWSDLWithDotsExplicitURI() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDL("../foo/bar"), "myService", "myPort", null, "http://my/wsdl/uri");
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
-        assertEquals("http://my/wsdl/foo/bar", uri);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        assertEquals("http://my/wsdl/foo/bar", uri.toString());
     }
 
     public void testExplicitRelativeWSDLExplicitRelativeURI() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDL("foo/bar"), "myService", "myPort", null, "x/y");
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
-        assertEquals("http://localhost/services/MyComposite/MyService/x/y/foo/bar", uri);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        assertEquals("http://localhost/services/MyComposite/MyService/x/y/foo/bar", uri.toString());
     }
 
     public void testExplicitRelativeWSDLExplicitRelativeURIWithDots() throws Exception {
         Axis2BindingBuilder builder = new Axis2BindingBuilder();
         WebServiceBindingDefinition wsBinding = new WebServiceBindingDefinition("myNS", createMockWSDL("foo/bar"), "myService", "myPort", null, "../x/y");
-        String uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
-        assertEquals("http://localhost/services/MyComposite/x/y/foo/bar", uri);
+        URI uri = builder.computeActualURI(wsBinding, BASE_URI, COMPOSITE_NAME, NAME);
+        assertEquals("http://localhost/services/MyComposite/x/y/foo/bar", uri.toString());
     }
 
     protected Definition createMockWSDL(String endpoint) {

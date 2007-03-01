@@ -60,15 +60,19 @@ public class Axis2ReferenceBinding<T> extends ReferenceBindingExtension {
                                  WebServiceBindingDefinition wsBinding,
                                  ServiceContract contract,
                                  ServiceContract<?> bindingServiceContract,
-                                 WorkContext workContext,
-                                 String endpointURI) {
+                                 WorkContext workContext) {
         super(theName, parent);
         this.bindingServiceContract = bindingServiceContract;
         this.workContext = workContext;
         try {
             Definition wsdlDefinition = wsBinding.getWSDLDefinition();
-            wsPortMetaData =
-                new WebServicePortMetaData(wsdlDefinition, wsBinding.getWSDLPort(), endpointURI, false);
+            if (wsBinding.isSpec10Compliant()) {
+                wsPortMetaData =
+                    new WebServicePortMetaData(wsdlDefinition, wsBinding.getWSDLPort(), wsBinding.getActualURI().toString(), false);
+            } else {
+                wsPortMetaData =
+                    new WebServicePortMetaData(wsdlDefinition, wsBinding.getWSDLPort(), wsBinding.getURI(), false);
+            }
             serviceClient = createServiceClient(wsdlDefinition, wsPortMetaData);
         } catch (AxisFault e) {
             throw new Axis2BindingRunTimeException(e);
