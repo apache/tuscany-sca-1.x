@@ -80,7 +80,7 @@ public class ScdlContributionProcessor extends ContributionProcessorExtension im
             ComponentDefinition<CompositeImplementation> componentDefinition = 
                 new ComponentDefinition<CompositeImplementation>(implementation);
             
-            componentDefinition.setName(source.toString());
+            componentDefinition.setName(componentType.getName());
 
             contribution.getArtifact(source).addModelObject(CompositeComponentType.class, null, componentDefinition);
 
