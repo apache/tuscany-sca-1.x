@@ -22,6 +22,9 @@ package org.apache.tuscany.core.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.JarURLConnection;
+import java.net.URL;
+import java.util.jar.JarFile;
 
 public class IOHelper {
     /**
@@ -93,4 +96,89 @@ public class IOHelper {
         }
         return count;
     }
+    
+    public static InputStream getInputStream(URL url) throws IOException {
+        return new SafeURLInputStream(url);
+    }
+    
+    /**
+     * This class is a workaround for URL stream issue as illustrated below.
+     * InputStream is=url.getInputStream(); is.close(); // This line doesn't close
+     * the JAR file if the URL is a jar entry like "jar:file:/a.jar!/my.composite" We
+     * also need to turn off the JarFile cache.
+     * 
+     * @see http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4950148
+     * 
+     * @version $Rev$ $Date$
+     */
+    public static class SafeURLInputStream extends InputStream {
+        private JarFile jarFile;
+        private InputStream is;
+
+        public SafeURLInputStream(URL url) throws IOException {
+            String protocol = url.getProtocol();
+            if (protocol != null && (protocol.equals("jar"))) {
+                JarURLConnection connection = (JarURLConnection)url.openConnection();
+                // We cannot use cache
+                connection.setUseCaches(false);
+                try {
+                    is = connection.getInputStream();
+                } catch (IOException e) {
+                    throw e;
+                }
+                jarFile = connection.getJarFile();
+            } else {
+                is = url.openStream();
+            }
+        }
+
+        public SafeURLInputStream(JarURLConnection connection) throws IOException {
+            // We cannot use cache
+            connection.setUseCaches(false);
+            is = connection.getInputStream();
+            jarFile = connection.getJarFile();
+        }
+
+        public int available() throws IOException {
+            return is.available();
+        }
+
+        public void close() throws IOException {
+            is.close();
+            // We need to close the JAR file
+            if (jarFile != null) {
+                jarFile.close();
+            }
+        }
+
+        public synchronized void mark(int readlimit) {
+            is.mark(readlimit);
+        }
+
+        public boolean markSupported() {
+            return is.markSupported();
+        }
+
+        public int read() throws IOException {
+            return is.read();
+        }
+
+        public int read(byte[] b, int off, int len) throws IOException {
+            return is.read(b, off, len);
+        }
+
+        public int read(byte[] b) throws IOException {
+            return is.read(b);
+        }
+
+        public synchronized void reset() throws IOException {
+            is.reset();
+        }
+
+        public long skip(long n) throws IOException {
+            return is.skip(n);
+        }
+
+    }
+    
 }

@@ -142,7 +142,7 @@ public class DefaultSCAContainer extends SCAContainer {
             // lresende - contribution
             URL contributionLocation = getContributionLocation(applicationSCDL, compositePath);
             URI contributionId = this.contributionService.contribute(contributionLocation, false);
-            URI compositeDefinitionId = new URI(contributionId + FileHelper.getName(applicationSCDL.toString()));
+            URI compositeDefinitionId = contributionId.resolve(compositePath);
 
             component =
                 (CompositeComponent)this.assemblyService.addCompositeToDomain(contributionId, compositeDefinitionId);

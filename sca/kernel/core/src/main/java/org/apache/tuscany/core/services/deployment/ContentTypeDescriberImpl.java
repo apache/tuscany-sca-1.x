@@ -50,11 +50,11 @@ public class ContentTypeDescriberImpl implements ContentTypeDescriber {
      * extensions
      */
     private void init() {
-        contentTypeRegistry.put("SCDL", "application/v.tuscany.scdl");
-        contentTypeRegistry.put("COMPOSITE", "application/v.tuscany.scdl");
-        contentTypeRegistry.put("WSDL", "application/v.tuscany.wsdl");
+        contentTypeRegistry.put("SCDL", "application/vnd.tuscany.scdl");
+        contentTypeRegistry.put("COMPOSITE", "application/vnd.tuscany.scdl");
+        contentTypeRegistry.put("WSDL", "application/vnd.tuscany.wsdl");
         contentTypeRegistry.put("JAR", "application/x-compressed");
-        contentTypeRegistry.put("FOLDER", "application/v.tuscany.folder");
+        contentTypeRegistry.put("FOLDER", "application/vnd.tuscany.folder");
     }
 
     protected String resolveContentyTypeByExtension(URL resourceURL) {

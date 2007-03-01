@@ -27,7 +27,7 @@ public class ContentTypeDescriberImplTestCase extends TestCase {
 
     public void testResolveContentType() throws Exception {
         URL artifactURL = getClass().getResource("test.scdl");
-        assertEquals("application/v.tuscany.scdl", contentTypeBuilder.getContentType(artifactURL, null));
+        assertEquals("application/vnd.tuscany.scdl", contentTypeBuilder.getContentType(artifactURL, null));
     }
 
     
@@ -38,8 +38,8 @@ public class ContentTypeDescriberImplTestCase extends TestCase {
     
     public void testDefaultContentType() throws Exception {
         URL artifactURL = getClass().getResource("test.ext");
-        assertEquals("application/v.tuscany.ext", 
-                contentTypeBuilder.getContentType(artifactURL, "application/v.tuscany.ext"));        
+        assertEquals("application/vnd.tuscany.ext", 
+                contentTypeBuilder.getContentType(artifactURL, "application/vnd.tuscany.ext"));        
     }
 
     protected void setUp() throws Exception {

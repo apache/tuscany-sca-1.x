@@ -20,9 +20,11 @@
 package org.apache.tuscany.core.util;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.regex.Pattern;
 
 public class FileHelper {
     /**
@@ -39,21 +41,24 @@ public class FileHelper {
      * The Windows separator character.
      */
     private static final char WINDOWS_SEPARATOR = '\\';
-    
+
     protected FileHelper() {
-        
+
     }
+
     /**
      * Returns the index of the last directory separator character.
      * <p>
-     * This method will handle a file in either Unix or Windows format.
-     * The position of the last forward or backslash is returned.
+     * This method will handle a file in either Unix or Windows format. The
+     * position of the last forward or backslash is returned.
      * <p>
-     * The output will be the same irrespective of the machine that the code is running on.
-     *
-     * @param filename  the filename to find the last path separator in, null returns -1
-     * @return the index of the last separator character, or -1 if there
-     * is no such character
+     * The output will be the same irrespective of the machine that the code is
+     * running on.
+     * 
+     * @param filename the filename to find the last path separator in, null
+     *            returns -1
+     * @return the index of the last separator character, or -1 if there is no
+     *         such character
      */
     public static int indexOfLastSeparator(String filename) {
         if (filename == null) {
@@ -63,19 +68,22 @@ public class FileHelper {
         int lastWindowsPos = filename.lastIndexOf(WINDOWS_SEPARATOR);
         return Math.max(lastUnixPos, lastWindowsPos);
     }
-    
+
     /**
-     * Returns the index of the last extension separator character, which is a dot.
+     * Returns the index of the last extension separator character, which is a
+     * dot.
      * <p>
-     * This method also checks that there is no directory separator after the last dot.
-     * To do this it uses {@link #indexOfLastSeparator(String)} which will
-     * handle a file in either Unix or Windows format.
+     * This method also checks that there is no directory separator after the
+     * last dot. To do this it uses {@link #indexOfLastSeparator(String)} which
+     * will handle a file in either Unix or Windows format.
      * <p>
-     * The output will be the same irrespective of the machine that the code is running on.
-     *
-     * @param filename  the filename to find the last path separator in, null returns -1
-     * @return the index of the last separator character, or -1 if there
-     * is no such character
+     * The output will be the same irrespective of the machine that the code is
+     * running on.
+     * 
+     * @param filename the filename to find the last path separator in, null
+     *            returns -1
+     * @return the index of the last separator character, or -1 if there is no
+     *         such character
      */
     public static int indexOfExtension(String filename) {
         if (filename == null) {
@@ -85,23 +93,27 @@ public class FileHelper {
         int lastSeparator = indexOfLastSeparator(filename);
         return lastSeparator > extensionPos ? -1 : extensionPos;
     }
-    
+
     /**
      * Gets the name minus the path from a full filename.
      * <p>
-     * This method will handle a file in either Unix or Windows format.
-     * The text after the last forward or backslash is returned.
+     * This method will handle a file in either Unix or Windows format. The text
+     * after the last forward or backslash is returned.
+     * 
      * <pre>
-     * a/b/c.txt --> c.txt
-     * a.txt     --> a.txt
-     * a/b/c     --> c
-     * a/b/c/    --> ""
+     * a/b/c.txt --&gt; c.txt
+     * a.txt     --&gt; a.txt
+     * a/b/c     --&gt; c
+     * a/b/c/    --&gt; &quot;&quot;
      * </pre>
+     * 
      * <p>
-     * The output will be the same irrespective of the machine that the code is running on.
-     *
-     * @param fileName  the filename to query, null returns null
-     * @return the name of the file without the path, or an empty string if none exists
+     * The output will be the same irrespective of the machine that the code is
+     * running on.
+     * 
+     * @param fileName the filename to query, null returns null
+     * @return the name of the file without the path, or an empty string if none
+     *         exists
      */
     public static String getName(String fileName) {
         if (fileName == null) {
@@ -110,21 +122,24 @@ public class FileHelper {
         int index = indexOfLastSeparator(fileName);
         return fileName.substring(index + 1);
     }
-    
+
     /**
      * Gets the extension of a filename.
      * <p>
      * This method returns the textual part of the filename after the last dot.
      * There must be no directory separator after the dot.
+     * 
      * <pre>
-     * foo.txt      --> "txt"
-     * a/b/c.jpg    --> "jpg"
-     * a/b.txt/c    --> ""
-     * a/b/c        --> ""
+     * foo.txt      --&gt; &quot;txt&quot;
+     * a/b/c.jpg    --&gt; &quot;jpg&quot;
+     * a/b.txt/c    --&gt; &quot;&quot;
+     * a/b/c        --&gt; &quot;&quot;
      * </pre>
+     * 
      * <p>
-     * The output will be the same irrespective of the machine that the code is running on.
-     *
+     * The output will be the same irrespective of the machine that the code is
+     * running on.
+     * 
      * @param filename the filename to retrieve the extension of.
      * @return the extension of the file or an empty string if none exists.
      */
@@ -139,13 +154,13 @@ public class FileHelper {
             return filename.substring(index + 1);
         }
     }
-    
+
     /**
      * Make a directory, including any necessary but nonexistent parent
-     * directories. If there already exists a file with specified name or
-     * the directory cannot be created then an exception is thrown.
-     *
-     * @param directory  directory to create, not null
+     * directories. If there already exists a file with specified name or the
+     * directory cannot be created then an exception is thrown.
+     * 
+     * @param directory directory to create, not null
      * @throws NullPointerException if the directory is null
      * @throws IOException if the directory cannot be created
      */
@@ -153,21 +168,17 @@ public class FileHelper {
         if (directory.exists()) {
             if (directory.isFile()) {
                 String message =
-                    "File "
-                        + directory
-                        + " exists and is "
-                        + "not a directory. Unable to create directory.";
+                    "File " + directory + " exists and is " + "not a directory. Unable to create directory.";
                 throw new IOException(message);
             }
         } else {
             if (!directory.mkdirs()) {
-                String message =
-                    "Unable to create directory " + directory;
+                String message = "Unable to create directory " + directory;
                 throw new IOException(message);
             }
         }
     }
-    
+
     /**
      * Delete a file. If file is a directory, delete it and all sub-directories.
      * <p>
@@ -175,10 +186,10 @@ public class FileHelper {
      * <ul>
      * <li>A directory to be deleted does not have to be empty.</li>
      * <li>You get exceptions when a file or directory cannot be deleted.
-     *      (java.io.File methods returns a boolean)</li>
+     * (java.io.File methods returns a boolean)</li>
      * </ul>
-     *
-     * @param file  file or directory to delete, not null
+     * 
+     * @param file file or directory to delete, not null
      * @throws NullPointerException if the directory is null
      * @throws IOException in case deletion is unsuccessful
      */
@@ -190,36 +201,33 @@ public class FileHelper {
                 throw new FileNotFoundException("File does not exist: " + file);
             }
             if (!file.delete()) {
-                String message =
-                    "Unable to delete file: " + file;
+                String message = "Unable to delete file: " + file;
                 throw new IOException(message);
             }
         }
     }
-    
+
     /**
      * Recursively delete a directory.
-     *
-     * @param directory  directory to delete
+     * 
+     * @param directory directory to delete
      * @throws IOException in case deletion is unsuccessful
      */
-    public static void deleteDirectory(File directory)
-        throws IOException {
+    public static void deleteDirectory(File directory) throws IOException {
         if (!directory.exists()) {
             return;
         }
 
         cleanDirectory(directory);
         if (!directory.delete()) {
-            String message =
-                "Unable to delete directory " + directory + ".";
+            String message = "Unable to delete directory " + directory + ".";
             throw new IOException(message);
         }
     }
 
     /**
      * Clean a directory without deleting it.
-     *
+     * 
      * @param directory directory to clean
      * @throws IOException in case cleaning is unsuccessful
      */
@@ -235,7 +243,7 @@ public class FileHelper {
         }
 
         File[] files = directory.listFiles();
-        if (files == null) {  // null if security restricted
+        if (files == null) { // null if security restricted
             throw new IOException("Failed to list contents of " + directory);
         }
 
@@ -253,17 +261,17 @@ public class FileHelper {
             throw exception;
         }
     }
-    
+
     /**
      * Convert from a <code>URL</code> to a <code>File</code>.
      * <p>
-     * From version 1.1 this method will decode the URL.
-     * Syntax such as <code>file:///my%20docs/file.txt</code> will be
-     * correctly decoded to <code>/my docs/file.txt</code>.
-     *
-     * @param url  the file URL to convert, null returns null
+     * From version 1.1 this method will decode the URL. Syntax such as
+     * <code>file:///my%20docs/file.txt</code> will be correctly decoded to
+     * <code>/my docs/file.txt</code>.
+     * 
+     * @param url the file URL to convert, null returns null
      * @return the equivalent <code>File</code> object, or <code>null</code>
-     *  if the URL's protocol is not <code>file</code>
+     *         if the URL's protocol is not <code>file</code>
      * @throws IllegalArgumentException if the file is incorrectly encoded
      */
     public static File toFile(URL url) {
@@ -275,11 +283,57 @@ public class FileHelper {
             while ((pos = filename.indexOf('%', pos)) >= 0) {
                 if (pos + 2 < filename.length()) {
                     String hexStr = filename.substring(pos + 1, pos + 3);
-                    char ch = (char) Integer.parseInt(hexStr, 16);
+                    char ch = (char)Integer.parseInt(hexStr, 16);
                     filename = filename.substring(0, pos) + ch + filename.substring(pos + 3);
                 }
             }
             return new File(filename);
         }
     }
+
+    public static FileFilter getFileFilter(String regExp, boolean ignoreCase) {
+        return new RegExpFilter(regExp, ignoreCase);
+    }
+
+    /**
+     * A regular-expression based resource filter
+     */
+    public static class RegExpFilter implements FileFilter {
+        private Pattern pattern;
+
+        public RegExpFilter(Pattern pattern) {
+            this.pattern = pattern;
+        }
+
+        public RegExpFilter(String patternStr, boolean ignoreCase) {
+            this.pattern = Pattern.compile(patternStr, ignoreCase ? Pattern.CASE_INSENSITIVE : 0);
+        }
+
+        public boolean accept(File file) {
+            return pattern.matcher(file.getName()).matches();
+        }
+
+        /**
+         * Convert wildcard into a regex pattern
+         * 
+         * @param str
+         * @return
+         */
+        public static RegExpFilter getWildcardFilter(String str, boolean ignoreCase) {
+            StringBuffer buffer = new StringBuffer();
+            for (int i = 0; i < str.length(); i++) {
+                char ch = str.charAt(i);
+                if (ch == '?') {
+                    buffer.append('.');
+                } else if (ch == '*') {
+                    buffer.append(".*");
+                } else {
+                    buffer.append(ch);
+                }
+            }
+            return new RegExpFilter(buffer.toString(), ignoreCase);
+        }
+
+    }
+
 }

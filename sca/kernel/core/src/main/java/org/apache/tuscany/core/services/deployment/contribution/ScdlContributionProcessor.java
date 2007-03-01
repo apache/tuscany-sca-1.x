@@ -40,21 +40,20 @@ import org.apache.tuscany.spi.model.CompositeImplementation;
 import org.apache.tuscany.spi.model.Contribution;
 
 public class ScdlContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor {
-    public static final String CONTENT_TYPE = "application/v.tuscany.scdl";
-
-    private final LoaderRegistry registry;
+    public static final String CONTENT_TYPE = "application/vnd.tuscany.scdl";
 
     protected XMLInputFactory xmlFactory;
-
-    @Override
-    public String getContentType() {
-        return CONTENT_TYPE;
-    }
+    private final LoaderRegistry registry;
 
     public ScdlContributionProcessor(@Autowire LoaderRegistry registry) {
         super();
         this.registry = registry;
         this.xmlFactory = XMLInputFactory.newInstance("javax.xml.stream.XMLInputFactory", getClass().getClassLoader());
+    }
+
+    @Override
+    public String getContentType() {
+        return CONTENT_TYPE;
     }
 
     public void processContent(Contribution contribution, URI source, InputStream inputStream)
@@ -93,8 +92,6 @@ public class ScdlContributionProcessor extends ContributionProcessorExtension im
 
     public void processModel(Contribution contribution, URI source, Object modelObject) throws DeploymentException,
             IOException {
-        // TODO Auto-generated method stub
-
     }
 
 }

@@ -132,7 +132,7 @@ public class ContributionServiceImpl implements ContributionService {
 
     public void addDeploymentComposite(URI contribution, Object composite) {
         CompositeComponentType model = (CompositeComponentType)composite;
-        URI compositeURI = URI.create(contribution.toString() + "/" + model.getName() + ".composite");
+        URI compositeURI = contribution.resolve(model.getName() + ".composite");
         DeployedArtifact artifact = new DeployedArtifact(compositeURI);
         // FIXME: the namespace should be from the CompositeComponentType model
         artifact.addModelObject(composite.getClass(), null, composite);

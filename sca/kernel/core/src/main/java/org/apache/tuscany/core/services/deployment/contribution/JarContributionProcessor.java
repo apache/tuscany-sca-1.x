@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
 import org.apache.tuscany.core.services.deployment.ContentTypeDescriberImpl;
-import org.apache.tuscany.core.util.FileHelper;
+import org.apache.tuscany.core.util.IOHelper;
 import org.apache.tuscany.host.deployment.DeploymentException;
 import org.apache.tuscany.spi.deployer.ContentTypeDescriber;
 import org.apache.tuscany.spi.deployer.ContributionProcessor;
@@ -69,7 +68,10 @@ public class JarContributionProcessor extends ContributionProcessorExtension imp
                     continue;
                 }
 
-                artifacts.add(new URL(rootURL, entry.getName()));
+                // FIXME: Maybe we should externalize the filter as a property
+                if (!entry.getName().startsWith(".")) {
+                    artifacts.add(new URL(rootURL, entry.getName()));
+                }
             }
         } finally {
             jar.close();
@@ -106,33 +108,29 @@ public class JarContributionProcessor extends ContributionProcessorExtension imp
 
         for (URL artifactURL : getArtifacts(sourceURL, inputStream)) {
             URI artifactURI;
-            
-            try {
-                artifactURI = new URI(source.toString() + FileHelper.getName(artifactURL.getPath()));
-                DeployedArtifact artifact = new DeployedArtifact(artifactURI);
-                artifact.setLocation(artifactURL);
-                contribution.addArtifact(artifact);
-                
 
-                //TODO: remove this... for debug purpose only
-                ContentTypeDescriber contentTypeDescriber = new ContentTypeDescriberImpl();
-                String contentType = contentTypeDescriber.getContentType(artifactURL, null);
-                //System.out.println("File : " + artifactURL);
-                //System.out.println("Type : " + contentType);
-                
+            String artifactPath = artifactURL.toExternalForm().substring(sourceURL.toExternalForm().length());
+            artifactURI = contribution.getUri().resolve(artifactPath);
+            DeployedArtifact artifact = new DeployedArtifact(artifactURI);
+            artifact.setLocation(artifactURL);
+            contribution.addArtifact(artifact);
 
-                //just process scdl for now
-                if ("application/v.tuscany.scdl".equals(contentType) 
-                        /* || "application/java-vm".equals(contentType) */) {
+            // TODO: remove this... for debug purpose only
+            ContentTypeDescriber contentTypeDescriber = new ContentTypeDescriberImpl();
+            String contentType = contentTypeDescriber.getContentType(artifactURL, null);
+            // System.out.println("File : " + artifactURL);
+            // System.out.println("Type : " + contentType);
+
+            // just process scdl for now
+            if ("application/vnd.tuscany.scdl".equals(contentType)
+            /* || "application/java-vm".equals(contentType) */) {
+                InputStream is = IOHelper.getInputStream(artifactURL);
+                try {
                     this.registry.processContent(contribution, artifactURI, artifactURL.openStream());
+                } finally {
+                    IOHelper.closeQuietly(is);
                 }
-            } catch (URISyntaxException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
-
- 
-
         }
 
     }

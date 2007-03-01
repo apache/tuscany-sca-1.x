@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.apache.tuscany.core.services.deployment.ContentTypeDescriberImpl;
 import org.apache.tuscany.core.util.FileHelper;
+import org.apache.tuscany.core.util.IOHelper;
 import org.apache.tuscany.host.deployment.DeploymentException;
 import org.apache.tuscany.spi.deployer.ContentTypeDescriber;
 import org.apache.tuscany.spi.deployer.ContributionProcessor;
@@ -38,16 +39,16 @@ import org.apache.tuscany.spi.model.Contribution;
 import org.apache.tuscany.spi.model.DeployedArtifact;
 
 public class FolderContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor {
-    public static final String CONTENT_TYPE = "application/v.tuscany.folder";
+    public static final String CONTENT_TYPE = "application/vnd.tuscany.folder";
 
     @Override
     public String getContentType() {
         return CONTENT_TYPE;
     }
 
-    
     /**
      * Recursively traverse a root directory
+     * 
      * @param fileList
      * @param root
      * @throws IOException
@@ -55,28 +56,29 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
     private void traverse(List<URL> fileList, File root) throws IOException {
         if (root.isFile()) {
             fileList.add(root.toURL());
-        } else if (root.isDirectory() && !root.getName().equals(".svn")) {
-            File[] files = root.listFiles();
+        } else if (root.isDirectory()) {
+            // FIXME: Maybe we should externalize it as a property
+            // Regular expression to exclude .xxx files
+            File[] files = root.listFiles(FileHelper.getFileFilter("[^\u002e].*", true));
             for (int i = 0; i < files.length; i++) {
                 traverse(fileList, files[i]);
             }
         }
     }
 
-    
     /**
      * Get a list of files from the directory
      * 
      * @return
      * @throws IOException
      */
-    protected List<URL> getArtifacts(URL rootURL, InputStream sourceInputStream) 
-        throws DeploymentException, IOException {
+    protected List<URL> getArtifacts(URL rootURL, InputStream sourceInputStream) throws DeploymentException,
+        IOException {
         List<URL> artifacts = new ArrayList<URL>();
 
         // Assume the root is a jar file
         File rootFolder;
-        
+
         try {
             rootFolder = new File(rootURL.toURI());
             if (rootFolder.isDirectory()) {
@@ -88,10 +90,9 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
         }
 
         return artifacts;
-    }    
-    
-    
-    public void processContent(Contribution contribution, URI source, InputStream inputStream) 
+    }
+
+    public void processContent(Contribution contribution, URI source, InputStream inputStream)
         throws DeploymentException, IOException {
         if (contribution == null) {
             throw new IllegalArgumentException("Invalid null contribution.");
@@ -103,40 +104,34 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
 
         URL contributionURL = contribution.getArtifact(source).getLocation();
 
-        
         for (URL artifactURL : getArtifacts(contributionURL, inputStream)) {
-            
-            URI artifactURI;
-            try {
-                artifactURI = new URI(contribution.getUri().toString() + FileHelper.getName(artifactURL.getPath()));
-                DeployedArtifact artifact = new DeployedArtifact(artifactURI);
-                artifact.setLocation(artifactURL);
-                contribution.addArtifact(artifact);
-                
-                //TODO: remove this... for debug purpose only
-                ContentTypeDescriber contentTypeDescriber = new ContentTypeDescriberImpl();
-                String contentType = contentTypeDescriber.getContentType(artifactURL, null);
-                //System.out.println("File : " + artifactURL);
-                //System.out.println("Type : " + contentType);
-                
-    
-                //just process scdl for now
-                if ("application/v.tuscany.scdl".equals(contentType) /*|| "application/java-vm".equals(contentType)*/) {
-                    this.registry.processContent(contribution, artifactURI, artifactURL.openStream());
+            String artifactPath = artifactURL.toExternalForm().substring(contributionURL.toExternalForm().length());
+            URI artifactURI = contribution.getUri().resolve(artifactPath);
+            DeployedArtifact artifact = new DeployedArtifact(artifactURI);
+            artifact.setLocation(artifactURL);
+            contribution.addArtifact(artifact);
+
+            // TODO: remove this... for debug purpose only
+            ContentTypeDescriber contentTypeDescriber = new ContentTypeDescriberImpl();
+            String contentType = contentTypeDescriber.getContentType(artifactURL, null);
+            // System.out.println("File : " + artifactURL);
+            // System.out.println("Type : " + contentType);
+
+            // just process scdl for now
+            if ("application/vnd.tuscany.scdl".equals(contentType)) {
+                InputStream is = artifactURL.openStream();
+                try {
+                    this.registry.processContent(contribution, artifactURI, is);
+                } finally {
+                    IOHelper.closeQuietly(is);
                 }
-            } catch (URISyntaxException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
-
         }
-
     }
 
-    public void processModel(Contribution contribution, URI source, Object modelObject) 
-        throws DeploymentException, IOException {
-        // TODO Auto-generated method stub
-
+    public void processModel(Contribution contribution, URI source, Object modelObject) throws DeploymentException,
+        IOException {
+        // NOOP
     }
 
 }
