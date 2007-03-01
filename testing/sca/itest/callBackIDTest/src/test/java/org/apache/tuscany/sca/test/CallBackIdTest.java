@@ -2,11 +2,10 @@ package org.apache.tuscany.sca.test;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.test.SCATestCase;
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CurrentCompositeContext;
-import org.osoa.sca.annotations.Reference;
 
-public class CallBackIdTest extends SCATestCase  {
+public class CallBackIdTest extends TestCase  {
 
     private CallBackIdClient aCallBackClient;
 	
@@ -15,10 +14,12 @@ public class CallBackIdTest extends SCATestCase  {
     }
 
     protected void setUp() throws Exception {
-      super.setUp();
-      aCallBackClient = CurrentCompositeContext.getContext().locateService(CallBackIdClient.class, "CallBackIdClient");
+    	SCAContainer.start("CallBackIdClient.composite");
+    	
+    	aCallBackClient = CurrentCompositeContext.getContext().locateService(CallBackIdClient.class, "CallBackIdClient");
     }
-   
-       
-   
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
+    }
 }

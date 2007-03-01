@@ -18,19 +18,19 @@
  */
 package org.apache.tuscany.sca.test.exceptions;
 
-import junit.framework.AssertionFailedError;
+import junit.framework.TestCase;
 
+import org.apache.tuscany.api.SCAContainer;
 import org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDO;
 import org.apache.tuscany.sca.test.exceptions.sdohandgen.InvalidSymbolSDOException;
 import org.apache.tuscany.spi.databinding.TransformationException;
-import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 import stockexceptiontestservice.scatesttool.InvalidSymbolFault;
 import stockexceptiontestservice.scatesttool.StockOffer;
 
-public class IntraCompositeTestCase extends SCATestCase {
+public class IntraCompositeTestCase extends TestCase {
     private StockTraderSDO stockTrader;
 
     private CompositeContext context;
@@ -81,11 +81,17 @@ public class IntraCompositeTestCase extends SCATestCase {
 
     @Override
     protected void setUp() throws Exception {
-        super.setUp();
-        context = CurrentCompositeContext.getContext();
+    	SCAContainer.start("ExceptionTest.composite");
+
+    	context = CurrentCompositeContext.getContext();
         assertNotNull(context);
         stockTrader = context.locateService(StockTraderSDO.class, "stockTraderSDOComponent");
 
         assertNotNull(context);
+    }
+    
+    @Override
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
     }
 }

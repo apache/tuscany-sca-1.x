@@ -20,10 +20,10 @@ package org.apache.tuscany.sca.test;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.test.SCATestCase;
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CurrentCompositeContext;
 
-public class CallBackSetCallbackTest extends SCATestCase {
+public class CallBackSetCallbackTest extends TestCase {
 
     private CallBackSetCallbackClient aCallBackClient;
 
@@ -32,10 +32,15 @@ public class CallBackSetCallbackTest extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        super.setUp();
+    	SCAContainer.start("CallBackSetCallbackTest.composite");
+    	
         aCallBackClient =
             CurrentCompositeContext.getContext().locateService(CallBackSetCallbackClient.class,
                                                                "CallBackSetCallbackClient");
+    }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
     }
 
 }

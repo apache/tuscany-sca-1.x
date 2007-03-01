@@ -4,7 +4,6 @@ import junit.framework.TestCase;
 
 import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CurrentCompositeContext;
-import org.osoa.sca.annotations.Reference;
 
 public class CallBackBasicTestCase extends TestCase  {
 
@@ -15,9 +14,7 @@ public class CallBackBasicTestCase extends TestCase  {
     }
 
     protected void setUp() throws Exception {
-      super.setUp();
-      
-      SCAContainer.start();
+      SCAContainer.start("CallBackBasicTest.composite");
       
       aCallBackClient = CurrentCompositeContext.getContext().locateService(CallBackBasicClient.class, "CallBackBasicClient");
     }
@@ -25,8 +22,6 @@ public class CallBackBasicTestCase extends TestCase  {
     @Override
     protected void tearDown() throws Exception {
     	SCAContainer.stop();
-    	
-    	super.tearDown();
     }
        
    

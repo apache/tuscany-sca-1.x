@@ -21,6 +21,6 @@
 	   xmlns:foo="http://foo" 
            name="ExceptionTest">
    
-    <include name="intracomposite" scdlLocation="intracomposite.scdl"/>
+    <include name="intracomposite" scdlLocation="intracomposite.composite"/>
      
 </composite>
