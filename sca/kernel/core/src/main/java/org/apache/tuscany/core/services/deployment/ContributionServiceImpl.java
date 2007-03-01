@@ -113,7 +113,7 @@ public class ContributionServiceImpl implements ContributionService {
         contribution.setLocation(locationURL);
 
         // process the contribution
-        this.processorRegistry.processContent(contribution, contributionURI, locationURL.openStream());
+        this.processorRegistry.processContent(contribution, contributionURI, contributionStream);
 
         // store the contribution on the registry
         this.contributionRegistry.put(contribution.getUri(), contribution);

@@ -120,7 +120,7 @@ public abstract class SCAContainer {
         ClassLoader classLoader = SCAContainer.class.getClassLoader();
         instance = newInstance(classLoader);
         return instance;
-    } // NOPMD
+    }
 
     /**
      * Start the Tuscany runtime using default SCDLs
@@ -203,6 +203,14 @@ public abstract class SCAContainer {
         return getInstance().getContext(componentName);
     }
 
+    
+    /**
+     * Get access to a system service
+     * @param serviceName
+     * @return
+     */
+    protected abstract Object getSystemService(String serviceName);
+    
     /**
      * Stop the Tuscany container
      */

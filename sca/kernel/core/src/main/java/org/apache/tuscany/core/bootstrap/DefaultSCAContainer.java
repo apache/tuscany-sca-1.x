@@ -228,4 +228,16 @@ public class DefaultSCAContainer extends SCAContainer {
     public CompositeComponent getCompsiteComponent() {
         return component;
     }
+    
+    @Override
+    public Object getSystemService(String serviceName){
+
+        if(serviceName.equals(ComponentNames.TUSCANY_CONTRIBUTION_SERVICE)) {
+            return this.contributionService;
+        } else if(serviceName.equals(ComponentNames.TUSCANY_ASSEMBLY_SERVICE)) {
+            return this.assemblyService;
+        } else {
+            return null;
+        }
+    }
 }
