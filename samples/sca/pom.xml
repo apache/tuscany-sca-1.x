@@ -68,19 +68,12 @@
 
     <modules>
         <module>calculator</module>
-<!--
-        <module>webapp</module>
--->
-        <module>echo.databinding</module>
+        <module>composite-impl</module>
+        <module>loanapplication</module>
         <module>supplychain</module>
-        <module>bigbank</module>
-        <module>echo.binding</module>
-        <module>inner.composite</module>
-        <module>loanappconversation</module>
-<!--
-        <module>loanappconversationWS</module>
-        <module>loanappconversationWSClient</module>
--->
+        <module>simple-bigbank</module>
+        <module>echo-binding</module>
+        <module>echo-databinding</module>
     </modules>
 
     <dependencyManagement>
