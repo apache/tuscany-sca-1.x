@@ -20,14 +20,13 @@ package org.apache.tuscany.sca.test.spec;
 
 import java.util.Date;
 
-import org.apache.tuscany.sca.test.spec.MyTotalService;
-import org.apache.tuscany.test.SCATestCase;
+import junit.framework.TestCase;
+
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
-import junit.framework.TestCase;
-
-public class CompositeServiceReferenceTest extends SCATestCase {
+public class CompositeServiceReferenceTest extends TestCase {
     private MyTotalService myService1;
     private MyTotalService myService2;
     private MyTotalService myService3;
@@ -80,7 +79,7 @@ public class CompositeServiceReferenceTest extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        super.setUp();
+    	SCAContainer.start("CompositeTest.composite");
         context = CurrentCompositeContext.getContext();
         myService1 = context.locateService(MyTotalService.class, "MyTotalServiceFromRecursive");
         myService2 = context.locateService(MyTotalService.class, "MyTotalServiceInCompositeWithRecursive");
@@ -88,5 +87,9 @@ public class CompositeServiceReferenceTest extends SCATestCase {
         myService4 = context.locateService(MyTotalService.class, "MyTotalServiceInCompositeWithRecursiveUseService");
         myService5 =
             context.locateService(MyTotalService.class, "MyTotalServiceInCompositeWithComponentServiceUseService");
+    }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
     }
 }

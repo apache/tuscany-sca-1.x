@@ -20,13 +20,12 @@ package org.apache.tuscany.sca.test.spec;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.sca.test.spec.MyService;
-import org.apache.tuscany.test.SCATestCase;
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.RequestContext;
 
-public class CompositeOneService2LevelTest extends SCATestCase {
+public class CompositeOneService2LevelTest extends TestCase {
     private MyService myService;
     private MyService myServiceDefault;
     private MyService myServiceNo;
@@ -113,12 +112,16 @@ public class CompositeOneService2LevelTest extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        super.setUp();
+    	SCAContainer.start("CompositeTest.composite");
         context = CurrentCompositeContext.getContext();
         myService = context.locateService(MyService.class, "MySimpleServiceInRecursiveComponent");
         myServiceDefault = context.locateService(MyService.class, "MySimpleServiceDefault");
         myServiceNo = context.locateService(MyService.class, "MySimpleServiceNo");
         myServiceMay = context.locateService(MyService.class, "MySimpleServiceMay");
         myServiceMust = context.locateService(MyService.class, "MySimpleServiceMust");
+    }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
     }
 }

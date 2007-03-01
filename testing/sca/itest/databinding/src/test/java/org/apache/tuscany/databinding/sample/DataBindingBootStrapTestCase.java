@@ -28,6 +28,9 @@ import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 
+import junit.framework.TestCase;
+
+import org.apache.tuscany.api.SCAContainer;
 import org.apache.tuscany.databinding.jaxb.JAXBContextHelper;
 import org.apache.tuscany.databinding.jaxb.Reader2JAXB;
 import org.apache.tuscany.databinding.sdo.String2DataObject;
@@ -35,7 +38,6 @@ import org.apache.tuscany.databinding.xmlbeans.XMLStreamReader2XmlObject;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.model.DataType;
-import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -46,7 +48,7 @@ import commonj.sdo.DataObject;
 /**
  * @version $Rev$ $Date$
  */
-public class DataBindingBootStrapTestCase extends SCATestCase {
+public class DataBindingBootStrapTestCase extends TestCase {
     private static final String IPO_XML =
         "<?xml version=\"1.0\"?>" + "<ipo:purchaseOrder"
             + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
@@ -111,9 +113,12 @@ public class DataBindingBootStrapTestCase extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        // setApplicationSCDL(getClass(), "META-INF/sca/default.scdl");
-        super.setUp();
+    	SCAContainer.start("DataBindingTest.composite");
         CompositeContext context = CurrentCompositeContext.getContext();
         client = context.locateService(Client.class, "Client");
+    }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
     }
 }

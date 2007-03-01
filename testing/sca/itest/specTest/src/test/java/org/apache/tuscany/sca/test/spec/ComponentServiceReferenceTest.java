@@ -20,15 +20,14 @@ package org.apache.tuscany.sca.test.spec;
 
 import java.util.Date;
 
-import org.apache.tuscany.sca.test.spec.MyTotalService;
-import org.apache.tuscany.test.SCATestCase;
+import junit.framework.TestCase;
+
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.RequestContext;
 
-import junit.framework.TestCase;
-
-public class ComponentServiceReferenceTest extends SCATestCase {
+public class ComponentServiceReferenceTest extends TestCase {
     private MyTotalService myService;
     private CompositeContext context;
 
@@ -76,8 +75,12 @@ public class ComponentServiceReferenceTest extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        super.setUp();
+    	SCAContainer.start("CompositeTest.composite");
         context = CurrentCompositeContext.getContext();
         myService = context.locateService(MyTotalService.class, "MyTotalService");
+    }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
     }
 }

@@ -19,15 +19,16 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
 	   xmlns:foo="http://foo" 
-           name="CompositeTest">
+           name="MyListServiceTest">
    
-    <include name="myTotalService" scdlLocation="myTotalService.scdl"/>
-    <include name="myListService" scdlLocation="myListService.scdl"/>
-    <include name="mySimpleServiceInRecursive" scdlLocation="mySimpleServiceInRecursive.scdl"/>
-    <include name="myServiceInRecursive" scdlLocation="myServiceInRecursive.scdl"/>
-    <include name="mySimpleServiceInRecursive2" scdlLocation="mySimpleServiceInRecursive2.scdl"/>
-    <include name="MyTotalServiceInRecursive" scdlLocation="myTotalServiceInRecursive.scdl"/>
-    <include name="MyTotalServiceInRecursiveForReferenceOverride" scdlLocation="myTotalServiceInRecursiveForReferenceOverride.scdl"/>
+    <component name="MyNewListService">
+        <implementation.java class="org.apache.tuscany.sca.test.spec.impl.MyListServiceImpl"/>
+        <!-- 
+		<reference name="myListServiceList">MyNCService/MyListService</reference>
+		<reference name="myListServiceArray">MyListServiceFor2006/MyListService</reference>
+         -->
+		<property name="serviceYear">2007</property>
+    </component>
     
-    
+   
 </composite>

@@ -20,18 +20,14 @@ package org.apache.tuscany.sca.test.spec;
 
 import java.util.Date;
 
-import org.apache.tuscany.sca.test.spec.MyListService;
-import org.apache.tuscany.sca.test.spec.MyListServiceByYear;
-import org.apache.tuscany.sca.test.spec.MyService;
-import org.apache.tuscany.sca.test.spec.MyServiceByDate;
-import org.apache.tuscany.test.SCATestCase;
+import junit.framework.TestCase;
+
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.RequestContext;
 
-import junit.framework.TestCase;
-
-public class CompositeTest extends SCATestCase {
+public class CompositeTest extends TestCase {
     private MyService myService;
     private MyServiceByDate myServiceByDate;
     private MyListService myListService;
@@ -83,12 +79,16 @@ public class CompositeTest extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        super.setUp();
+    	SCAContainer.start("CompositeTest.composite");
         context = CurrentCompositeContext.getContext();
         myService = context.locateService(MyService.class, "MyServiceInRecursiveMyService");
         myServiceByDate = context.locateService(MyServiceByDate.class, "MyServiceInRecursiveMyServiceByDate");
         myListService = context.locateService(MyListService.class, "MyServiceInRecursiveMyListService");
         myListServiceByYear =
             context.locateService(MyListServiceByYear.class, "MyServiceInRecursiveMyListServiceByYear");
+    }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
     }
 }

@@ -19,12 +19,12 @@
 
 package org.apache.tuscany.sca.itest;
 
-import java.util.Collection;
+import junit.framework.TestCase;
 
-import org.apache.tuscany.test.SCATestCase;
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CurrentCompositeContext;
 
-public class PropertyTestCase extends SCATestCase {
+public class PropertyTestCase extends TestCase {
     private ABComponent abService;
     private CDComponent cdService;  
     private ABCDComponent abcdService;
@@ -140,10 +140,14 @@ public class PropertyTestCase extends SCATestCase {
     } 
     
     protected void setUp() throws Exception {
-        super.setUp();
+        SCAContainer.start("PropertyTest.composite");
         abService = CurrentCompositeContext.getContext().locateService(ABComponent.class, "ABComponent");
         cdService = CurrentCompositeContext.getContext().locateService(CDComponent.class, "CDComponent");    
         abcdService = CurrentCompositeContext.getContext().locateService(ABCDComponent.class, "ABCDComponent");
         propertyService = CurrentCompositeContext.getContext().locateService(PropertyComponent.class, "PropertyComponent");
+    }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
     }
 }

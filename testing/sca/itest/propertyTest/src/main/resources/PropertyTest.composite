@@ -83,8 +83,8 @@
         <property name="c" source="$complex/foo:MyComplexValue/foo:c"/>
         <property name="d" source="$complex/foo:MyComplexValue/foo:d"/>
         <property name="nosource">aValue</property>
-        <property name="fileProperty" file="META-INF/sca/fileProperty.txt"/>
-        <property name="nonFileProperty" file="META-INF/sca/fileProperty.txt" source="$complex/foo:MyComplexValue/foo:c"/>
+        <property name="fileProperty" file="fileProperty.txt"/>
+        <property name="nonFileProperty" file="fileProperty.txt" source="$complex/foo:MyComplexValue/foo:c"/>
         <property name="two" source="$number">2</property>
     </component>
 

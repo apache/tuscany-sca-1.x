@@ -21,16 +21,15 @@ package org.apache.tuscany.sca.itest;
 
 import java.rmi.RemoteException;
 
-import helloworld.HelloWorldService;
+import junit.framework.TestCase;
 
 import org.apache.tuscany.api.SCAContainer;
-import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CurrentCompositeContext;
+
+import bigbank.account.services.accountdata.AccountDataService;
 
 import com.bigbank.account.AccountFactory;
 import com.bigbank.account.CustomerProfileData;
-
-import bigbank.account.services.accountdata.AccountDataService;
 
 /**
  * Tests all the combinations of wiring services, components, and references
@@ -41,7 +40,7 @@ import bigbank.account.services.accountdata.AccountDataService;
  * interface.java (a) or interface.wsdl (b). This results in 16 different
  * combinations 1a2a3a4a thru 1b2b3b4b.
  */
-public class SDOWSDLTestCase extends SCATestCase {
+public class SDOWSDLTestCase extends TestCase {
 
     public void testClient1a2a3a4a() throws RemoteException  {
         
@@ -88,13 +87,11 @@ public class SDOWSDLTestCase extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        setApplicationSCDL("META-INF/sca/sdoApplication.composite");
-        super.setUp();
+    	SCAContainer.start("SDOWSDLTest.composite");
     }
 
-    @Override
     protected void tearDown() throws Exception {
-        super.tearDown();
+    	SCAContainer.stop();
     }
 
 }

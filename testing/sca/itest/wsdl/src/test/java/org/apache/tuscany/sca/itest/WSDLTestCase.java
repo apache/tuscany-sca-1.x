@@ -21,6 +21,7 @@ package org.apache.tuscany.sca.itest;
 
 import helloworld.HelloWorldService;
 
+import org.apache.tuscany.api.SCAContainer;
 import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -138,12 +139,11 @@ public class WSDLTestCase extends SCATestCase {
 //    }
 
     protected void setUp() throws Exception {
-        super.setUp();
+    	SCAContainer.start("WSDLTest.composite");
     }
 
-    @Override
     protected void tearDown() throws Exception {
-        super.tearDown();
+    	SCAContainer.stop();
     }
 
 }

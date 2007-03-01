@@ -18,15 +18,13 @@
  */
 package org.apache.tuscany.sca.test.spec;
 
-import org.apache.tuscany.sca.test.spec.MyListService;
-import org.apache.tuscany.sca.test.spec.MyListServiceByYear;
-import org.apache.tuscany.test.SCATestCase;
+import junit.framework.TestCase;
+
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
-import junit.framework.TestCase;
-
-public class ComponentServiceReferenceListTest extends SCATestCase {
+public class ComponentServiceReferenceListTest extends TestCase {
     private MyListService myListService;
     private MyListServiceByYear myListServiceByYear;
 
@@ -43,9 +41,13 @@ public class ComponentServiceReferenceListTest extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        super.setUp();
+    	SCAContainer.start("CompositeTest.composite");
         context = CurrentCompositeContext.getContext();
         myListService = context.locateService(MyListService.class, "MyNewListService");
         myListServiceByYear = context.locateService(MyListServiceByYear.class, "MyNewListService");
+    }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
     }
 }
