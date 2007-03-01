@@ -64,30 +64,30 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-              <module>helloworldws</module>
-              <module>helloworldwsclient</module>
-              <module>helloworldws-om</module>
-              <module>helloworldwsclient-om</module>
+              <module>helloworld-ws</module>
+              <module>helloworld-wsclient</module>
+              <module>helloworld-om-ws</module>
+              <module>helloworld-om-wsclient</module>
           </modules>
         </profile>
 
         <profile>
             <id>integration</id>
             <modules>
-              <module>helloworldws</module>
-              <module>helloworldwsclient</module>
-              <module>helloworldws-om</module>
-              <module>helloworldwsclient-om</module>
+              <module>helloworld-ws</module>
+              <module>helloworld-wsclient</module>
+              <module>helloworld-om-ws</module>
+              <module>helloworld-om-wsclient</module>
             </modules>
         </profile>
 
         <profile>
             <id>unstable</id>
             <modules>
-              <module>helloworldws</module>
-              <module>helloworldwsclient</module>
-              <module>helloworldws-om</module>
-              <module>helloworldwsclient-om</module>
+              <module>helloworld-ws</module>
+              <module>helloworld-wsclient</module>
+              <module>helloworld-om-ws</module>
+              <module>helloworld-om-wsclient</module>
           </modules>
         </profile>
 
