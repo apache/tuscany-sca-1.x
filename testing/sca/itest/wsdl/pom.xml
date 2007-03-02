@@ -87,4 +87,49 @@
 		</dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/sdo-source</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>        
+            <plugin>
+                <groupId>org.apache.tuscany.sdo</groupId>
+                <artifactId>tuscany-sdo-plugin</artifactId>
+                <version>1.0-incubator-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>generate-sdo</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <schemaFile>${basedir}/src/main/resources/wsdl/AccountService.wsdl</schemaFile>
+                            <javaPackage>com.bigbank.account</javaPackage>
+                            <prefix>Account</prefix>
+                            <noNotification>true</noNotification>
+                            <noContainer>true</noContainer>
+                            <noUnsettable>true</noUnsettable>
+                        </configuration>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
