@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package supplychain;
+package echo;
 
 import junit.framework.TestCase;
 
@@ -25,29 +25,25 @@ import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
- * This client program shows how to create an SCA runtime, start it, locate a simple HelloWorld service component and
- * invoke it.
+ * @version $Rev$ $Date$
  */
-public class SupplyChainClientTestCase extends TestCase {
+public class EchoDataBindingTestCase extends TestCase {
 
-    private Customer customer;
+    private Interface1 componentA;
+
+    public void testTransform() {
+        componentA.call("<message><foo>123</foo></message>");
+        componentA.call1("<message><foo>123</foo></message>");
+    }
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("supplychain.composite");
-
+    	SCAContainer.start("EchoDataBinding.composite");
+    	
         CompositeContext context = CurrentCompositeContext.getContext();
-        customer = context.locateService(Customer.class, "CustomerComponent");
+        componentA = context.locateService(Interface1.class, "ComponentA");
     }
-
+    
     protected void tearDown() throws Exception {
     	SCAContainer.stop();
-    }
-
-    public void test() throws Exception {
-
-        System.out.println("Main thread " + Thread.currentThread());
-        customer.purchaseGoods();
-        System.out.println("Sleeping ...");
-        Thread.sleep(1000);
     }
 }

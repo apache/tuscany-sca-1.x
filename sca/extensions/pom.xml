@@ -102,7 +102,7 @@
             <dependency>
                 <groupId>org.osoa</groupId>
                 <artifactId>sca-api-r1.0</artifactId>
-               <version>${scaVersion}</version>
+               <version>0.1-integration-incubating-SNAPSHOT</version>
                 <scope>compile</scope>
             </dependency>
 

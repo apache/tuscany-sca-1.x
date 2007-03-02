@@ -18,24 +18,28 @@
  */
 package calculator;
 
+import junit.framework.TestCase;
+
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
-
-import org.apache.tuscany.test.SCATestCase;
 
 /**
  * This shows how to test the Calculator service component.
  */
-public class CalculatorTestCase extends SCATestCase {
+public class CalculatorTestCase extends TestCase {
 
     private CalculatorService calculatorService;
 
     protected void setUp() throws Exception {
-    	super.setApplicationSCDL("Calculator.composite");
-        super.setUp();
+    	SCAContainer.start("Calculator.composite");
 
         CompositeContext context = CurrentCompositeContext.getContext();
         calculatorService = context.locateService(CalculatorService.class, "CalculatorServiceComponent");
+    }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
     }
 
     public void testCalculator() throws Exception {

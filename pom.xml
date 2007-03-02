@@ -49,7 +49,7 @@
                 <module>spec</module>
                 <module>sca</module>
                 <module>testing/sca</module>
-                <module>samples</module>
+                <module>samples/sca</module>
             </modules>
         </profile>
 
@@ -61,7 +61,7 @@
                 <module>spec</module>
                 <module>sca</module>
                 <module>testing/sca</module>
-                <module>samples</module>
+                <module>samples/sca</module>
             </modules>
         </profile>
 
@@ -73,7 +73,7 @@
                 <module>spec</module>
                 <module>sca</module>
                 <module>testing/sca</module>
-                <module>samples</module>
+                <module>samples/sca</module>
             </modules>
         </profile>
 

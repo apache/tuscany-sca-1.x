@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,22 +15,10 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
- -->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           name="OuterComposite">
+ */
+package composite;
 
-    <component name="SourceComponent">
-        <implementation.composite name="InnerComposite" scdlLocation="InnerComposite.composite"/>
-        <reference name="TargetComponentRef">TargetComponent</reference>
-        <reference name="TargetComponentRef2">TargetComponent2/InnerTargetService</reference>
-    </component>
+public interface Source {
 
-    <component name="TargetComponent">
-		<implementation.java class="composite.TargetImpl"/>
-    </component>
-    
-    <component name="TargetComponent2">
-        <implementation.composite name="InnerComposite2" scdlLocation="InnerComposite2.composite"/>
-    </component>
-
-</composite>
+    void clientMethod(String arg);
+}

@@ -24,7 +24,7 @@
         <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-greeterws-oneway</artifactId>
+    <artifactId>tuscany-sample-helloworld-oneway-ws</artifactId>
     <packaging>war</packaging>
     <name>Tuscany Greeter Web Service Sample</name>
     <description>A sample Greeter OneWay Web Service.</description>

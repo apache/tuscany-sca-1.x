@@ -1,4 +1,4 @@
-package innercomposite;
+package composite;
 
 import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
@@ -9,7 +9,7 @@ import org.osoa.sca.CurrentCompositeContext;
  *
  * @version $Rev$ $Date$
  */
-public class InnerCompositeClient {
+public class CompositeClient {
 
     public static void main(String[] args) throws Exception {
     	SCAContainer.start("OuterComposite.composite");

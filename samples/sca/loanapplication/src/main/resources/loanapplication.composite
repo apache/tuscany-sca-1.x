@@ -1,4 +1,5 @@
-/*
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -15,10 +16,16 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
- */
-package innercomposite;
+-->
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" name="loanapplication">
 
-public interface SourceCallback {
-
-    void receiveResult(String result);
-}
+    <component name="LoanClientComponent">
+        <implementation.java class="loanapplication.LoanClientImpl"/>
+        <reference name="loanService">LoanServiceComponent</reference>
+    </component>
+    
+    <component name="LoanServiceComponent">
+        <implementation.java class="loanapplication.LoanServiceImpl"/>
+    </component>
+    
+</composite>

@@ -18,24 +18,28 @@
  */
 package simplecallback;
 
+import junit.framework.TestCase;
+
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
-
-import org.apache.tuscany.test.SCATestCase;
 
 /**
  * A testcase that demonstrates resolving the client service and initiating the callback sequence
  */
-public class SimpleCallbackTestCase extends SCATestCase {
+public class SimpleCallbackTestCase extends TestCase {
 
     private MyClient myClient;
 
     protected void setUp() throws Exception {
-        setApplicationSCDL(MyClient.class, "META-INF/sca/default.scdl");
-        super.setUp();
+        SCAContainer.start("simplecallback.composite");
 
         CompositeContext context = CurrentCompositeContext.getContext();
         myClient = context.locateService(MyClient.class, "MyClientComponent");
+    }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
     }
 
     public void test() throws Exception {

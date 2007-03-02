@@ -16,14 +16,20 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package innercomposite;
+package loanapplication;
 
-import org.osoa.sca.annotations.Callback;
-import org.osoa.sca.annotations.OneWay;
-
-@Callback(SourceCallback.class)
-public interface Target {
-
-    @OneWay
-    void someMethod(String arg);
+public class LoanApplication {
+    
+    private String customerName;
+    private float loanAmount;
+    
+    public LoanApplication(String customerName, float loanAmount) {
+        this.customerName = customerName;
+        this.loanAmount = loanAmount;
+    }
+    
+    public String toString() {
+        return "[Customer: " + customerName + ", loan amount: "
+            + loanAmount + "]";
+    }
 }

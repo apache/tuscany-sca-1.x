@@ -16,28 +16,37 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package echo;
+package composite;
 
+import junit.framework.TestCase;
+
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
-import org.apache.tuscany.test.SCATestCase;
+public class CompositeTestCase extends TestCase {
 
-/**
- * @version $Rev$ $Date$
- */
-public class BootstrapTestCase extends SCATestCase {
-
-    private Client client;
-
-    public void testDemoBoot() {
-        client.call("foo");
-    }
+    private Source source;
 
     protected void setUp() throws Exception {
-    	super.setApplicationSCDL("echo.composite");
-        super.setUp();
+    	SCAContainer.start("OuterComposite.composite");
+
         CompositeContext context = CurrentCompositeContext.getContext();
-        client = context.locateService(Client.class, "Client");
+        source = context.locateService(Source.class, "SourceComponent/InnerSourceService");
+    }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
+    }
+
+    public void test() throws Exception {
+        try {
+            System.out.println("Main thread " + Thread.currentThread());
+            source.clientMethod("Client.main");
+            System.out.println("Sleeping ...");
+            Thread.sleep(1000);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 }

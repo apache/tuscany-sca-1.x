@@ -29,7 +29,7 @@
     <packaging>pom</packaging>
     <name>Apache Tuscany Project Parent</name>
     <description>Parent POM defining settings that can be used across Tuscany</description>
-    <version>2-incubator-SNAPSHOT</version>
+    <version>0.1-integration-incubating-SNAPSHOT</version>
 
     <prerequisites>
         <maven>2.0.4</maven>

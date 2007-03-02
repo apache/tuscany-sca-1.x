@@ -22,41 +22,54 @@
         <groupId>org.apache.tuscany.samples.sca</groupId>
         <artifactId>parent</artifactId>
         <version>0.1-integration-incubating-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>tuscany-sample-innercomposite</artifactId>
+    <artifactId>tuscany-sample-composite-impl</artifactId>
     <packaging>jar</packaging>
-    <name>Tuscany Inner Composite Sample</name>
-    <description>A sample implementation showing local wiring of an inner composite.</description>
+    <name>Apache Tuscany Composite Implementation Sample</name>
+    <description>A sample showing local wiring of a component implemented by a composite.</description>
 
     <dependencies>
-        <dependency>
-            <groupId>org.osoa</groupId>
-            <artifactId>sca-api-r1.0</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
             <artifactId>tuscany-api</artifactId>
             <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-test</artifactId>
+            <groupId>org.apache.tuscany.sca.kernel</groupId>
+            <artifactId>tuscany-core</artifactId>
             <version>0.1-integration-incubating-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>innercomposite.InnerCompositeClient</mainClass>
+                            <mainClass>composite.CompositeClient</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

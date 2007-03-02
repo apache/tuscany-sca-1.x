@@ -16,11 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package innercomposite;
+package composite;
 
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
+
 
 @Service(Source.class)
 @Scope("COMPOSITE")

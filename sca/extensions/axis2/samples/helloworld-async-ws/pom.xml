@@ -24,7 +24,7 @@
         <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sample-helloworldws-async</artifactId>
+    <artifactId>tuscany-sample-helloworld-async-ws</artifactId>
     <packaging>war</packaging>
     <name>Tuscany HelloWorld Web Service Sample</name>
     <description>A sample HelloWorld Async Web Service.</description>

@@ -16,9 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package innercomposite;
+package composite;
 
-public interface Source {
+import org.osoa.sca.annotations.Callback;
+import org.osoa.sca.annotations.Scope;
+import org.osoa.sca.annotations.Service;
 
-    void clientMethod(String arg);
+
+@Service(Target.class)
+@Scope("COMPOSITE")
+public class TargetImpl implements Target {
+
+    private SourceCallback sourceCallback;
+
+    @Callback
+    public void setSourceCallback(SourceCallback sourceCallback) {
+        this.sourceCallback = sourceCallback;
+    }
+
+    public void someMethod(String arg) {
+        System.out.println("Target: " + arg);
+        sourceCallback.receiveResult(arg + " -> Target.someMethod");
+    }
 }

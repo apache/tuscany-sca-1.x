@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,16 +15,15 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" name="simplecallback">
+ */
+package loanapplication;
 
-    <component name="LoanClientComponent">
-        <implementation.java class="loanappconversation.LoanClientImpl"/>
-        <reference name="loanService">LoanServiceComponent</reference>
-    </component>
-    
-    <component name="LoanServiceComponent">
-        <implementation.java class="loanappconversation.LoanServiceImpl"/>
-    </component>
-    
-</composite>
+public interface LoanClient {
+
+    void applyForLoan(String customerName, float amount);
+    boolean isApproved();
+    boolean isCancelled();
+    String displayLoan();
+    void cancelLoan();
+    void closeLoan();
+}

@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany</groupId>
         <artifactId>parent</artifactId>
-        <version>2-incubator-SNAPSHOT</version>
+        <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
     <artifactId>buildtools</artifactId>
     <packaging>jar</packaging>

@@ -22,41 +22,28 @@
         <groupId>org.apache.tuscany.samples.sca</groupId>
         <artifactId>parent</artifactId>
         <version>0.1-integration-incubating-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tuscany-sample-webapp</artifactId>
     <packaging>war</packaging>
     <name>Apache Tuscany Simple WebApp Sample</name>
-    <description>A sample WebApplication showing how to include a Tuscany runtime.</description>
+    <description>A sample Web Application showing how to use SCA from a JSP.</description>
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.tuscany.samples.sca</groupId>
-            <artifactId>tuscany-sample-calculator</artifactId>
-            <version>${tuscanyVersion}</version>
+            <groupId>org.apache.tuscany.sca.kernel</groupId>
+            <artifactId>tuscany-api</artifactId>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
-            <artifactId>webapp-api</artifactId>
-            <version>${tuscanyVersion}</version>
+            <groupId>org.apache.tuscany.sca.kernel</groupId>
+            <artifactId>tuscany-core</artifactId>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
-    <build>
-        <finalName>sample-webapp</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
-                <artifactId>tuscany-war-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>tuscany-war</id>
-                        <goals>
-                            <goal>tuscany-war</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+
 </project>

@@ -21,13 +21,13 @@
            name="InnerComposite2">
 
     <service name="InnerTargetService" target="InnerTargetComponent">
-        <interface.java interface="innercomposite.Target"
-                        callbackInterface="innercomposite.SourceCallback"/>
+        <interface.java interface="composite.Target"
+                        callbackInterface="composite.SourceCallback"/>
         <reference name="innerSource">InnerTargetComponent</reference>
     </service>
        
     <component name="InnerTargetComponent">
-		<implementation.java class="innercomposite.TargetImpl"/>
+		<implementation.java class="composite.TargetImpl"/>
     </component>
     
 </composite>

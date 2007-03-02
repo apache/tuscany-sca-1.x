@@ -16,25 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package innercomposite;
+package loanapplication;
 
-import org.osoa.sca.annotations.Callback;
-import org.osoa.sca.annotations.Scope;
-import org.osoa.sca.annotations.Service;
 
-@Service(Target.class)
-@Scope("COMPOSITE")
-public class TargetImpl implements Target {
+import org.apache.tuscany.api.SCAContainer;
+import org.osoa.sca.CompositeContext;
+import org.osoa.sca.CurrentCompositeContext;
 
-    private SourceCallback sourceCallback;
+public class LoanApplicationClient {
 
-    @Callback
-    public void setSourceCallback(SourceCallback sourceCallback) {
-        this.sourceCallback = sourceCallback;
-    }
+    public static void main(String[] args) throws Exception {
+    	SCAContainer.start("loanapplication.composite");
+    	
+        // Locate the MyClient component and invoke it
+        CompositeContext context = CurrentCompositeContext.getContext();
 
-    public void someMethod(String arg) {
-        System.out.println("Target: " + arg);
-        sourceCallback.receiveResult(arg + " -> Target.someMethod");
+        LoanClient loanClient = context.locateService(LoanClient.class, "LoanClientComponent");
+        loanClient.applyForLoan("John Doe", 1000.0f);
+        System.out.println(loanClient.displayLoan());
+        System.out.println("Loan approved: " + loanClient.isApproved());
+        
+        SCAContainer.stop();
     }
 }

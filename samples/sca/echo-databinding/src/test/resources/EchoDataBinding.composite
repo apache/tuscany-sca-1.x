@@ -20,7 +20,7 @@
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:f="http://foo"
-    xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance" name="echo.sample">
+    xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance" name="EchoDataBinding">
 
     <service name="EchoService">
         <interface.java class="echo.Interface1" />

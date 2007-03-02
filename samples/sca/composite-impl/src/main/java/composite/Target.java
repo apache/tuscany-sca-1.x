@@ -16,28 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package echo;
+package composite;
 
-import org.osoa.sca.CompositeContext;
-import org.osoa.sca.CurrentCompositeContext;
+import org.osoa.sca.annotations.Callback;
+import org.osoa.sca.annotations.OneWay;
 
-import org.apache.tuscany.test.SCATestCase;
 
-/**
- * @version $Rev$ $Date$
- */
-public class DataBindingIntegrationTestCase extends SCATestCase {
+@Callback(SourceCallback.class)
+public interface Target {
 
-    private Interface1 componentA;
-
-    public void testTransform() {
-        componentA.call("<message><foo>123</foo></message>");
-        componentA.call1("<message><foo>123</foo></message>");
-    }
-
-    protected void setUp() throws Exception {
-        super.setUp();
-        CompositeContext context = CurrentCompositeContext.getContext();
-        componentA = context.locateService(Interface1.class, "ComponentA");
-    }
+    @OneWay
+    void someMethod(String arg);
 }

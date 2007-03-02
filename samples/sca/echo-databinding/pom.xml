@@ -22,13 +22,21 @@
         <groupId>org.apache.tuscany.samples.sca</groupId>
         <artifactId>parent</artifactId>
         <version>0.1-integration-incubating-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tuscany-sample-echo-databinding</artifactId>
-    <name>Echo DataBinding</name>
-    <description>A Sample for DataBinding</description>
+    <name>Apache Tuscany Echo DataBinding Sample</name>
+    <description>A DataBinding Sample</description>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.tuscany.sca.kernel</groupId>
+            <artifactId>tuscany-api</artifactId>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
             <artifactId>tuscany-spi</artifactId>
@@ -37,17 +45,17 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-test</artifactId>
+            <groupId>org.apache.tuscany.sca.kernel</groupId>
+            <artifactId>tuscany-core</artifactId>
             <version>0.1-integration-incubating-SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
             <artifactId>databinding-axiom</artifactId>
             <version>0.1-integration-incubating-SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -68,17 +76,27 @@
             <groupId>org.apache.ws.commons.axiom</groupId>
             <artifactId>axiom-impl</artifactId>
             <version>SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>org.codehaus.woodstox</groupId>
             <artifactId>wstx-asl</artifactId>
             <version>3.2.0</version>
+            <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.1</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
