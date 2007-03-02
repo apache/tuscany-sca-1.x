@@ -19,7 +19,6 @@
 package org.apache.tuscany.binding.axis2;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import javax.wsdl.Port;
 import javax.wsdl.PortType;
@@ -33,6 +32,7 @@ import org.apache.tuscany.idl.wsdl.WSDLDefinitionRegistry;
 import org.apache.tuscany.idl.wsdl.WSDLServiceContract;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.builder.BuilderConfigException;
+import org.apache.tuscany.spi.component.Component;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.component.ReferenceBinding;
 import org.apache.tuscany.spi.component.ServiceBinding;
@@ -146,7 +146,7 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
             }
 
             if (wsBinding.isSpec10Compliant()) {
-                wsBinding.setActualURI(computeActualURI(wsBinding, BASE_URI, parent.getName(), serviceDefinition.getName()));
+                wsBinding.setActualURI(computeActualURI(wsBinding, BASE_URI, serviceDefinition.getTarget(), serviceDefinition.getName(), parent));
             }
 
             ServiceBinding serviceBinding =
@@ -212,7 +212,7 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
         }
 
         if (wsBinding.isSpec10Compliant()) {
-            wsBinding.setActualURI(computeActualURI(wsBinding, BASE_URI, parent.getName(), boundReferenceDefinition.getName()));
+            wsBinding.setActualURI(computeActualURI(wsBinding, BASE_URI, null, boundReferenceDefinition.getName(), null));
         }
 
         return new Axis2ReferenceBinding(boundReferenceDefinition.getName(), parent, wsBinding,
@@ -241,56 +241,84 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
      * 4. The implicit URI as defined by in section 1.7 in the SCA Assembly spec 
      * If the <binding.ws> has no wsdlElement but does have a uri attribute then the uri takes precidence
      * over any implicitly used WSDL.
+     * @param parent 
      */
-    protected URI computeActualURI(WebServiceBindingDefinition wsBinding, String baseURI, String compositeName, String name) {
-        try {
-
-            URI portURI = null;         
-            if ((wsBinding.getServiceName() != null || wsBinding.getPortName() == null) && wsBinding.getBindingName() == null) {
-                // <binding.ws> explicitly points at a wsdl port, may be a relative URI
-                portURI = wsBinding.getPortURI();
-            }
-            if (portURI != null && portURI.isAbsolute()) {
-                return new URI(portURI.toString());
-            }
-            
-            URI explicitURI = null;
-            if (wsBinding.getURI() != null) {
-                explicitURI = new URI(wsBinding.getURI());
-            }
-
-            String actualURI = "";
-            if (explicitURI == null || !explicitURI.isAbsolute()) {
-                actualURI = baseURI + "/" + compositeName + "/" + name + "/";
-            }
-
-            if (explicitURI != null) {
-                if (portURI != null) {
-                    actualURI = actualURI + explicitURI.toString() + "/" + portURI.toString();
-                } else {
-                    if (explicitURI != null) {
-                        actualURI = actualURI + explicitURI;
-                    }
-                    if (portURI != null) {
-                        actualURI = actualURI + portURI;
-                    }
-                }
-            } else {
-                if (portURI != null) {
-                    actualURI = actualURI + portURI.toString();
-                }
-            }
-            
-            if (actualURI.endsWith("/")) {
-                actualURI = actualURI.substring(0, actualURI.length() -1);
-            }
-            
-            // normalize to handle any . or .. occurances 
-            return new URI(actualURI).normalize();
-
-        } catch (URISyntaxException e) {
-            throw new Axis2BindingBuilderRuntimeException(e);
+    protected URI computeActualURI(WebServiceBindingDefinition wsBinding, String baseURI, URI componentURI, String bindingName, CompositeComponent parent) {
+        URI wsdlURI = null;         
+        if (wsBinding.getServiceName() != null && wsBinding.getBindingName() == null) {
+            // <binding.ws> explicitly points at a wsdl port, may be a relative URI
+            wsdlURI = wsBinding.getPortURI();
         }
+        if (wsdlURI != null && wsdlURI.isAbsolute()) {
+            if (wsBinding.getURI() != null && (wsBinding.getServiceName() != null && wsBinding.getBindingName() == null)) {
+                throw new IllegalArgumentException("binding URI cannot be used with absolute WSDL endpoint URI");
+            }
+            return URI.create(wsdlURI.toString());
+        }
+        
+        // there is no wsdl port endpoint URI or that URI is relative
+        
+        URI bindingURI = null;
+        if (wsBinding.getURI() != null) {
+            bindingURI = URI.create(wsBinding.getURI());
+        }
+
+        if (bindingURI != null && bindingURI.isAbsolute()) {
+            if (wsdlURI != null) {
+                return URI.create(bindingURI + "/" + wsdlURI).normalize();
+            } else {
+                return bindingURI;
+            }
+        }
+        
+        if (componentURI == null) { // null for references
+            wsdlURI = wsBinding.getPortURI();
+            if (bindingURI != null) {
+                return URI.create(wsdlURI + "/" + bindingURI).normalize();
+            } else {
+                return wsdlURI;
+            }
+        }
+        
+
+        // TODO: TUSCANY-xxx, how to tell if component has multiple services using <binding.ws>?
+        //        boolean singleService = (parent != null) && (((Component)parent.getChild(componentURI.toString())).getInboundWires().size() == 1);
+        //        if (bindingURI == null && !singleService) {
+
+        if (bindingURI == null) {
+            bindingURI = URI.create(bindingName);
+        }
+
+        if (componentURI.isAbsolute()) {
+            if (bindingURI == null && wsdlURI == null) {
+                return componentURI;
+            } else if (wsdlURI == null) {
+                return URI.create(componentURI + "/" + bindingURI).normalize();
+            } else if (bindingURI == null) {
+                return URI.create(componentURI + "/" + wsdlURI).normalize();
+            } else {
+                return URI.create(componentURI + "/" + bindingURI + "/" + wsdlURI).normalize();
+            }
+        }
+                
+        String actualURI = "";
+
+        if (bindingURI == null) {
+            actualURI = baseURI + "/" + componentURI + "/";
+        } else {
+            actualURI = baseURI + "/" + componentURI + "/" + bindingURI + "/";
+        }
+
+        if (wsdlURI != null) {
+            actualURI = actualURI + wsdlURI.toString();
+        }
+
+        if (actualURI.endsWith("/")) {
+            actualURI = actualURI.substring(0, actualURI.length() -1);
+        }
+        
+        // normalize to handle any . or .. occurances 
+        return URI.create(actualURI).normalize();
     }
 
 }
