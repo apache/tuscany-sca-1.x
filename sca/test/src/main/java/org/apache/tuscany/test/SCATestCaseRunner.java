@@ -78,6 +78,43 @@ public class SCATestCaseRunner {
     }
 
     /**
+     * Constructs a new TestCase runner passing in the composite name.
+     * 
+     * @param testClass
+     */
+    public SCATestCaseRunner(Class testClass, String compositeName) {
+        try {
+            classLoader = (URLClassLoader)testClass.getClassLoader();
+            if (classLoader instanceof URLClassLoader) {
+                URL[] urls = ((URLClassLoader)classLoader).getURLs();
+                classLoader = new URLClassLoader(urls, classLoader.getParent());
+            } else {
+                classLoader = new URLClassLoader(new URL[0], classLoader);
+            }
+
+            ClassLoader tccl = Thread.currentThread().getContextClassLoader();
+            try {
+                Thread.currentThread().setContextClassLoader(classLoader);
+
+                testCaseClass = Class.forName(testClass.getName(), true, classLoader);
+                Constructor constructor = testCaseClass.getConstructor(new Class[] {String.class});
+                testCase = constructor.newInstance(new Object[] {compositeName});
+
+                testSuiteClass = Class.forName(TestSuite.class.getName(), true, classLoader);
+                Constructor testSuiteConstructor = testSuiteClass.getConstructor(Class.class);
+                testSuite = testSuiteConstructor.newInstance(testCaseClass);
+
+                testResultClass = Class.forName(TestResult.class.getName(), true, classLoader);
+
+            } finally {
+                Thread.currentThread().setContextClassLoader(tccl);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Run the test case
      */
     public void run() {
