@@ -49,8 +49,8 @@
 	        <module>callback-id</module>
 	        <module>callBackSetCallbackTest</module>
 	        <module>callBackSetCallbackConvTest</module>
-	        <module>conversations</module>
 	        <module>wsdl</module>
+	        <module>conversations</module>
                 <module>bindings</module>
             </modules>
         </profile>
@@ -58,40 +58,44 @@
         <profile>
             <id>integration</id>
             <modules>
-                <module>specTest</module>
-                <module>propertyTest</module>
+                <module>spec</module>
+                <module>property</module>
                 <module>exceptionTests</module>
                 <module>exceptionXbindingTest</module>
-	        <module>callBackBasicTest</module>
-	        <module>callBackCTypeTest</module>
-	        <module>callBackAPITest</module>
-	        <module>callBackIDTest</module>
+                <module>exceptionXbindingWSTest</module>
+	        <module>callback-api</module>
+	        <module>callback-basic</module>
+	        <module>callback-complexType</module>
+	        <module>callback-id</module>
 	        <module>callBackSetCallbackTest</module>
 	        <module>callBackSetCallbackConvTest</module>
-	        <module>conversationsTest</module>
+	        <module>conversations</module>
 	        <module>wsdl</module>
                 <module>bindings</module>
                 <module>databinding</module>
+                <module>databindings</module>
             </modules>
         </profile>
 
         <profile>
             <id>unstable</id>
             <modules>
-                <module>specTest</module>
-                <module>propertyTest</module>
+                <module>spec</module>
+                <module>property</module>
                 <module>exceptionTests</module>
                 <module>exceptionXbindingTest</module>
-	        <module>callBackBasicTest</module>
-	        <module>callBackCTypeTest</module>
-	        <module>callBackAPITest</module>
-	        <module>callBackIDTest</module>
+                <module>exceptionXbindingWSTest</module>
+	        <module>callback-api</module>
+	        <module>callback-basic</module>
+	        <module>callback-complexType</module>
+	        <module>callback-id</module>
 	        <module>callBackSetCallbackTest</module>
 	        <module>callBackSetCallbackConvTest</module>
-	        <module>conversationsTest</module>
+	        <module>conversations</module>
 	        <module>wsdl</module>
                 <module>bindings</module>
                 <module>databinding</module>
+                <module>databindings</module>
                 <module>opOverloadTest</module>
             </modules>
         </profile>

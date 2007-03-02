@@ -18,17 +18,17 @@
  * under the License.    
 -->
 <project>
-    <parent>
+     <parent>
         <groupId>org.apache.tuscany.testing</groupId>
-        <artifactId>sca-itest</artifactId>
+        <artifactId>databindings</artifactId>
         <version>0.1-integration-incubating-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>tuscany-itest-databinding</artifactId>
+    <artifactId>iTest-databinding-transformers</artifactId>
     <packaging>jar</packaging>
-    <name>Apache Tuscany Data Binding Integration Test</name>
-	<description>Apache Tuscany Data Binding Integration Test</description>
+    <name>Apache Tuscany DataBinding Transformers Integration Test</name>
+    <description>Apache Tuscany DataBinding Transformers Integration Test</description>
 
     <repositories>
         <repository>

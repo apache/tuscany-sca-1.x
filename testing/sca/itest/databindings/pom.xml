@@ -39,6 +39,7 @@
   <modules>
     <module>jaxb</module>
     <module>sdo</module>
+    <module>transformers</module>
     <!-- module>xmlbeans</module -->
     <!-- module>interComposite</module -->
     <!-- module>intraNestedComposite</module -->
