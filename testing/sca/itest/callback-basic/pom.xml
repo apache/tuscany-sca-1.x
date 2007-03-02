@@ -27,7 +27,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.testing</groupId>
-    <artifactId>iTest-Callback-BasicTest</artifactId>
+    <artifactId>iTest-Callback-Basic</artifactId>
     <version>${testing.version}</version>
     <packaging>jar</packaging>
     <name>Test Suite for SCA Callback Basic</name>

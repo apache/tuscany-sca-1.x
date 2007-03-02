@@ -27,9 +27,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.testing</groupId>
-    <artifactId>iTest-Callback-IDTest</artifactId>
+    <artifactId>iTest-callback-api</artifactId>
     <version>${testing.version}</version>
     <packaging>jar</packaging>
-    <name>Test Suite for SCA Callback ID</name>
+    <name>Test Suite for SCA Callback API</name>
 
 </project>

@@ -27,9 +27,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.tuscany.testing</groupId>
-    <artifactId>iTest-Callback-APITest</artifactId>
+    <artifactId>iTest-conversations</artifactId>
     <version>${testing.version}</version>
     <packaging>jar</packaging>
-    <name>Test Suite for SCA Callback API</name>
+    <name>Test Suite for SCA conversations</name>
 
 </project>
