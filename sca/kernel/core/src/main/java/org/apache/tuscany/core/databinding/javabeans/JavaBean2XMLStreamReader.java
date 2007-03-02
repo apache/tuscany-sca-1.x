@@ -16,36 +16,33 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.core.databinding.xml;
+package org.apache.tuscany.core.databinding.javabeans;
 
 import javax.xml.stream.XMLStreamReader;
 
+import org.apache.tuscany.core.databinding.xml.BeanUtil;
+import org.apache.tuscany.core.databinding.xml.XMLDocumentStreamReader;
 import org.apache.tuscany.spi.databinding.PullTransformer;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.databinding.TransformationException;
 import org.apache.tuscany.spi.databinding.Transformer;
 import org.apache.tuscany.spi.databinding.extension.TransformerExtension;
 import org.osoa.sca.annotations.Service;
-import org.w3c.dom.Node;
 
-/**
- * Transform DOM Node to XML XMLStreamReader
- */
 @Service(Transformer.class)
-public class Node2XMLStreamReader extends TransformerExtension<Node, XMLStreamReader> implements
-    PullTransformer<Node, XMLStreamReader> {
+public class JavaBean2XMLStreamReader extends TransformerExtension<Object, XMLStreamReader> implements
+    PullTransformer<Object, XMLStreamReader> {
 
-    public XMLStreamReader transform(Node source, TransformationContext context) {
+    public XMLStreamReader transform(Object source, TransformationContext context) {
         try {
-            DOMXMLStreamReader reader = new DOMXMLStreamReader(source);
-            return new XMLDocumentStreamReader(reader);
+            return new XMLDocumentStreamReader(BeanUtil.getXMLStreamReader(source));
         } catch (Exception e) {
             throw new TransformationException(e);
         }
     }
 
     public Class getSourceType() {
-        return Node.class;
+        return Object.class;
     }
 
     public Class getTargetType() {
@@ -53,7 +50,7 @@ public class Node2XMLStreamReader extends TransformerExtension<Node, XMLStreamRe
     }
 
     public int getWeight() {
-        return 40;
+        return 50;
     }
 
 }
