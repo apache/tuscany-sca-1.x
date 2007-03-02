@@ -223,6 +223,10 @@
     <phaseOrder type="InFlow">
         <!--  System pre defined phases       -->
         <phase name="Transport">
+            <handler name="TuscanyDispatcher"
+                     class="org.apache.tuscany.binding.axis2.TuscanyDispatcher">
+                <order phase="Transport"/>
+            </handler>
             <handler name="RequestURIBasedDispatcher"
                      class="org.apache.axis2.engine.RequestURIBasedDispatcher">
                 <order phase="Transport"/>

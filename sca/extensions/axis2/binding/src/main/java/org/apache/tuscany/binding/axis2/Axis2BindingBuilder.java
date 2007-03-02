@@ -32,7 +32,6 @@ import org.apache.tuscany.idl.wsdl.WSDLDefinitionRegistry;
 import org.apache.tuscany.idl.wsdl.WSDLServiceContract;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.builder.BuilderConfigException;
-import org.apache.tuscany.spi.component.Component;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.component.ReferenceBinding;
 import org.apache.tuscany.spi.component.ServiceBinding;
@@ -145,12 +144,16 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
                 throw new Axis2BindingBuilderRuntimeException(e);
             }
 
+            String axisServiceName;
             if (wsBinding.isSpec10Compliant()) {
                 wsBinding.setActualURI(computeActualURI(wsBinding, BASE_URI, serviceDefinition.getTarget(), serviceDefinition.getName(), parent));
+                axisServiceName = wsBinding.getActualURI().getPath();
+            } else {
+                axisServiceName = serviceDefinition.getName();
             }
 
             ServiceBinding serviceBinding =
-                new Axis2ServiceBinding(serviceDefinition.getName(), outboundContract, inboundContract, parent, wsBinding,
+                new Axis2ServiceBinding(axisServiceName, outboundContract, inboundContract, parent, wsBinding,
                     servletHost, configContext, workContext);
             return serviceBinding;
 
