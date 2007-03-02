@@ -31,52 +31,28 @@ import org.osoa.sca.CurrentCompositeContext;
  * Test case for binding.ws references 
  */
 @SuppressWarnings("deprecation")
-public class WSReferencesTestCase extends SCATestCase {
+public class ReferenceTestCase extends SCATestCase {
 
     private SCATestCaseRunner server;
     private CompositeContext compositeContext;
 
     @Override
     protected void setUp() throws Exception {
-    	setApplicationSCDL("WSBindingTest.composite");
+        server =  new SCATestCaseRunner(HelloWorldServerTestCase.class);
+
+        setApplicationSCDL("reference.composite");
         super.setUp();
-        
         compositeContext = CurrentCompositeContext.getContext();
 
-        server =  new SCATestCaseRunner(HelloWorldServerTestCase.class);
         server.setUp();
     }
     
-//    public void testWSClient() throws Exception {
-//        HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloworldClientOld");
-//        String msg = helloWorldService.getGreetings("Petra");
-//        Assert.assertEquals("Hi Petra", msg);
-//    }
-//    
-//    public void testWSClientSimplest() throws Exception {
-//        HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloworldClientSimplest");
-//        String msg = helloWorldService.getGreetings("Petra");
-//        Assert.assertEquals("Hi Petra", msg);
-//    }
-//
-//    public void testWSClientURI() throws Exception {
-//        HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloworldClientURI");
-//        String msg = helloWorldService.getGreetings("Petra");
-//        Assert.assertEquals("Hi Petra", msg);
-//    }
-
-    public void testWSClientServiceSimplest() throws Exception {
-        HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloworldClientServiceSimplest");
+    public void testWSClient() throws Exception {
+        HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloworldClientSimplest");
         String msg = helloWorldService.getGreetings("Petra");
         Assert.assertEquals("Hi Petra", msg);
     }
-
-    public void testWSClientServiceDefaultName() throws Exception {
-        HelloWorldService helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloworldClientServiceDefaultName");
-        String msg = helloWorldService.getGreetings("Petra");
-        Assert.assertEquals("Hi Petra", msg);
-    }
-
+    
     @Override
     protected void tearDown() throws Exception {
     	super.tearDown();

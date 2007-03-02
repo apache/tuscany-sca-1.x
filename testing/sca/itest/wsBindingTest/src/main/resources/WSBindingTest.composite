@@ -64,7 +64,18 @@
     <reference name="HelloworldClientServiceSimplestRef">
         <interface.wsdl interface="http://helloworld#wsdl.interface(HelloWorld)" 
             wsdli:wsdlLocation="http://helloworld wsdl/helloworld.wsdl" />
-        <binding.ws uri="http://localhost:8080/services/HelloWorldWebServiceSimplest"/>
+        <binding.ws uri="http://localhost:8080/services/HelloWorldServiceComponent/HelloWorldWebService"/>
+    </reference>
+
+    <component name="HelloworldClientServiceDefaultName">
+      <implementation.java class="helloworld.HelloWorldServiceComponent"/>
+      <reference name="helloWorldService">HelloworldClientServiceDefaultNameRef</reference>
+    </component>
+
+    <reference name="HelloworldClientServiceDefaultNameRef">
+        <interface.wsdl interface="http://helloworld#wsdl.interface(HelloWorld)" 
+            wsdli:wsdlLocation="http://helloworld wsdl/helloworld.wsdl" />
+        <binding.ws uri="http://localhost:8080/HelloWorldServiceComponent/HelloWorldWebService"/>
     </reference>
 
 </composite>
