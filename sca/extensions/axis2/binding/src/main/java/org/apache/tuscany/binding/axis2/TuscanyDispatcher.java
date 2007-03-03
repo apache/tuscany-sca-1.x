@@ -55,6 +55,11 @@ public class TuscanyDispatcher extends RequestURIBasedDispatcher {
 
             String path = URI.create(toEPR.getAddress()).getPath();
             
+            // remove the leading slash
+            if (path != null && path.length() > 1 && path.startsWith("/")) {
+                path = path.substring(1);
+            }
+            
             ConfigurationContext configurationContext = messageContext.getConfigurationContext();
             AxisConfiguration registry = configurationContext.getAxisConfiguration();
 

@@ -29,7 +29,7 @@
     <artifactId>axis2-itest-old-style</artifactId>
     <version>${testing.version}</version>
     <packaging>jar</packaging>
-    <name>Tuscany Axis2 itest - old style scdl</name>
+    <name>Apache Tuscany Axis2 itests old style scdl</name>
 
     <dependencies>
         <dependency>

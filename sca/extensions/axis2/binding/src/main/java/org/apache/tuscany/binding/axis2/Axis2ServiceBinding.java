@@ -22,7 +22,6 @@ import static org.osoa.sca.Constants.SCA_NS;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;

@@ -51,6 +51,7 @@
               <module>databinding</module>
               <module>tools</module>
               <module>plugins</module>
+              <module>itests</module>
               <module>samples</module>
           </modules>
         </profile>
@@ -62,6 +63,7 @@
               <module>databinding</module>
               <module>tools</module>
               <module>plugins</module>
+              <module>itests</module>
               <module>samples</module>
           </modules>
         </profile>
@@ -73,6 +75,7 @@
               <module>databinding</module>
               <module>tools</module>
               <module>plugins</module>
+              <module>itests</module>
               <module>samples</module>
           </modules>
         </profile>

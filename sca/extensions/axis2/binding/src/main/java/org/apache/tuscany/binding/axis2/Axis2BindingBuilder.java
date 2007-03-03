@@ -51,6 +51,7 @@ import org.apache.tuscany.spi.wire.IncompatibleServiceContractException;
  *
  * @version $Rev$ $Date$
  */
+@SuppressWarnings("deprecation")
 public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindingDefinition> {
     private static final String OM_DATA_BINDING = OMElement.class.getName();
 
@@ -148,6 +149,9 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
             if (wsBinding.isSpec10Compliant()) {
                 wsBinding.setActualURI(computeActualURI(wsBinding, BASE_URI, serviceDefinition.getTarget(), serviceDefinition.getName(), parent));
                 axisServiceName = wsBinding.getActualURI().getPath();
+                if (axisServiceName != null && axisServiceName.length() > 1 && axisServiceName.startsWith("/")) {
+                    axisServiceName = axisServiceName.substring(1);
+                }
             } else {
                 axisServiceName = serviceDefinition.getName();
             }

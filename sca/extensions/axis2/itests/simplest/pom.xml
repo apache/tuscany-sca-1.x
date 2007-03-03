@@ -29,7 +29,7 @@
     <artifactId>axis2-itest-simplest</artifactId>
     <version>${testing.version}</version>
     <packaging>jar</packaging>
-    <name>Tuscany Axis2 itest - simplest binding.ws</name>
+    <name>Apache Tuscany Axis2 itests simplest binding.ws</name>
 
     <dependencies>
         <dependency>

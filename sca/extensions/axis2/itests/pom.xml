@@ -29,7 +29,7 @@
     <groupId>org.apache.tuscany.sca.extensions.axis2.itests</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <name>Tuscany itests for the Axis2 extension</name>
+    <name>Apache Tuscany Axis2 itests</name>
 
     <modules>
        <module>old-style</module>
