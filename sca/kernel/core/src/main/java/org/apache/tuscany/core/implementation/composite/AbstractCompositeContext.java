@@ -117,4 +117,8 @@ public abstract class AbstractCompositeContext implements CompositeContext {
         return wire;
     }
 
+    public CompositeComponent getComposite() {
+        return composite;
+    }
+
 }
