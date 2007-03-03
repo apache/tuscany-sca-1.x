@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,25 +15,29 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<project>
+ */
+package helloworld;
 
-    <parent>
-        <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
-        <artifactId>parent</artifactId>
-        <version>0.1-integration-incubating-SNAPSHOT</version>
-    </parent>
+import org.osoa.sca.annotations.Scope;
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.tuscany.sca.extensions.axis2.itests</groupId>
-    <artifactId>parent</artifactId>
-    <packaging>pom</packaging>
-    <name>Apache Tuscany Axis2 itests</name>
+/**
+ * This client program shows how to create an SCA runtime, start it,
+ * locate the HelloWorld service and invoke it.
+ */
+@Scope("COMPOSITE")
+public class HelloWorldServiceComponent implements HelloWorldService {
+   
+    HelloWorldService helloWorldService;
 
-    <modules>
-       <module>axis2-itest-old-style</module>
-       <module>axis2-itest-simplest</module>
-       <module>axis2-itest-service-explicit-uri</module>
-    </modules>
+    public String getGreetings(String name) {
+        return helloWorldService.getGreetings(name);
+    }
 
-</project>
+    public HelloWorldService getHelloWorldService() {
+        return helloWorldService;
+    }
+
+    public void setHelloWorldService(HelloWorldService helloWorldService) {
+        this.helloWorldService = helloWorldService;
+    }
+}

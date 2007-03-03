@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,25 +15,35 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<project>
+ */
+package org.apache.tuscany.sca.itest;
 
-    <parent>
-        <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
-        <artifactId>parent</artifactId>
-        <version>0.1-integration-incubating-SNAPSHOT</version>
-    </parent>
+import java.io.IOException;
+import java.net.Socket;
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.tuscany.sca.extensions.axis2.itests</groupId>
-    <artifactId>parent</artifactId>
-    <packaging>pom</packaging>
-    <name>Apache Tuscany Axis2 itests</name>
+import org.apache.tuscany.test.SCATestCase;
 
-    <modules>
-       <module>axis2-itest-old-style</module>
-       <module>axis2-itest-simplest</module>
-       <module>axis2-itest-service-explicit-uri</module>
-    </modules>
+public class HelloWorldServer extends SCATestCase {
 
-</project>
+    private String composteFileName;
+
+    public HelloWorldServer(String composteFileName) {
+        this.composteFileName = composteFileName;
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+        setApplicationSCDL(composteFileName);
+        super.setUp();
+    }
+
+    public void testPing() throws IOException, InterruptedException {
+        new Socket("127.0.0.1", 8080);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+    }
+
+}
