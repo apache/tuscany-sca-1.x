@@ -35,6 +35,7 @@
        <module>old-style</module>
        <module>simplest</module>
        <module>service-explicit-uri</module>
+       <module>service-relative-uri</module>
     </modules>
 
 </project>

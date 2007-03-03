@@ -29,7 +29,7 @@
     <artifactId>axis2-itest-service-explicit-uri</artifactId>
     <version>${testing.version}</version>
     <packaging>jar</packaging>
-    <name>Apache Tuscany Axis2 itests simplest binding.ws</name>
+    <name>Apache Tuscany Axis2 itests service explicit uri</name>
 
     <dependencies>
         <dependency>
