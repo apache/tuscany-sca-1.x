@@ -32,9 +32,9 @@
     <name>Apache Tuscany Axis2 itests</name>
 
     <modules>
-       <module>axis2-itest-old-style</module>
-       <module>axis2-itest-simplest</module>
-       <module>axis2-itest-service-explicit-uri</module>
+       <module>old-style</module>
+       <module>simplest</module>
+       <module>service-explicit-uri</module>
     </modules>
 
 </project>
