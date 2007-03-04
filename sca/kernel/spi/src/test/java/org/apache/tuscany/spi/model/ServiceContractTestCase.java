@@ -69,6 +69,15 @@ public class ServiceContractTestCase extends TestCase {
         assertEquals(contract, copy);
     }
 
+    public void testGetOperation() throws Exception {
+        ServiceContract<Type> contract = new TestContract();
+        Operation<Type> operation = new Operation<Type>("foo", null, null, null, false, null, NO_CONVERSATION);
+        Map<String, Operation<Type>> ops = new HashMap<String, Operation<Type>>();
+        ops.put("foo", operation);
+        contract.setOperations(ops);
+        assertEquals(operation, contract.getOperation("foo"));
+        assertNull(contract.getOperation("bla"));
+    }
 
     private class TestContract extends ServiceContract<Type> {
 
