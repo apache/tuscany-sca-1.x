@@ -22,33 +22,47 @@ package helloworld;
 import junit.framework.Assert;
 
 import org.apache.tuscany.test.SCATestCase;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ContextFactory;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
- * Test case for using XML in script components
+ * Test case for using references in script components
  */
-public class XMLTestCase extends SCATestCase {
+public class RubyPropertiesTestCase extends SCATestCase {
 
-    private CompositeContext compositeContext;
+     private CompositeContext compositeContext;
 
-    public void testHelloWorldJavaScript() throws Exception {
+    public void testRubyDefault() throws Exception {
         HelloWorldService helloWorldService =
-            compositeContext.locateService(HelloWorldService.class, "HelloWorldJSComponent");
+            compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyDefaultComponent");
         String msg = helloWorldService.getGreetings("Petra");
-        Assert.assertEquals("e4xHi Petra", msg);
+        Assert.assertEquals("rbKia Ora Petra", msg);
+    }
+    public void testRubyOverride() throws Exception {
+        HelloWorldService helloWorldService =
+            compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyOverrideComponent");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("rbNamaskaar Petra", msg);
     }
 
-    public void testHelloWorldJavaScript2() throws Exception {
+    public void testRubyDynDefault() throws Exception {
         HelloWorldService helloWorldService =
-            compositeContext.locateService(HelloWorldService.class, "HelloWorldJSViaProxyComponent");
+            compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyDynDefaultComponent");
         String msg = helloWorldService.getGreetings("Petra");
-        Assert.assertEquals("e4xHi Petra", msg);
+        Assert.assertEquals("rbYo! Petra", msg);
+    }
+    public void testRubyDynOverride() throws Exception {
+        HelloWorldService helloWorldService =
+            compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyDynOverrideComponent");
+        String msg = helloWorldService.getGreetings("Petra");
+        Assert.assertEquals("rbNamaste Petra", msg);
     }
 
     @Override
     protected void setUp() throws Exception {
-        setApplicationSCDL("META-INF/sca/xml.composite");
+        setApplicationSCDL("META-INF/sca/properties.composite");
         super.setUp();
         this.compositeContext = CurrentCompositeContext.getContext();
     }

@@ -59,7 +59,7 @@ public class HelloWorldClientTestCase extends SCATestCase {
 
     @Override
     protected void setUp() throws Exception {
-        setApplicationSCDL(getClass().getResource("/META-INF/sca/helloworld.composite"));
+        setApplicationSCDL("META-INF/sca/helloworld.composite");
         super.setUp();
         this.compositeContext = CurrentCompositeContext.getContext();
     }

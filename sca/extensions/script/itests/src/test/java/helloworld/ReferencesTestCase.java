@@ -55,7 +55,7 @@ public class ReferencesTestCase extends SCATestCase {
 
     @Override
     protected void setUp() throws Exception {
-        setApplicationSCDL(getClass().getResource("/META-INF/sca/references.composite"));
+        setApplicationSCDL("META-INF/sca/references.composite");
         super.setUp();
         this.compositeContext = CurrentCompositeContext.getContext();
     }

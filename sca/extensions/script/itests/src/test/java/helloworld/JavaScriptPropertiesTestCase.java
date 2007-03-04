@@ -30,7 +30,7 @@ import org.osoa.sca.CurrentCompositeContext;
 /**
  * Test case for using references in script components
  */
-public class PropertiesTestCase extends SCATestCase {
+public class JavaScriptPropertiesTestCase extends SCATestCase {
 
      private CompositeContext compositeContext;
 
@@ -62,62 +62,9 @@ public class PropertiesTestCase extends SCATestCase {
         Assert.assertEquals("jsNamaste Petra", msg);
     }
 
-    public void testPythonDefault() throws Exception {
-        HelloWorldService helloWorldService =
-            compositeContext.locateService(HelloWorldService.class, "HelloWorldPythonDefaultComponent");
-        String msg = helloWorldService.getGreetings("Petra");
-        Assert.assertEquals("pyKia Ora Petra", msg);
-    }
-    public void testPythonOverride() throws Exception {
-        HelloWorldService helloWorldService =
-            compositeContext.locateService(HelloWorldService.class, "HelloWorldPythonOverrideComponent");
-        String msg = helloWorldService.getGreetings("Petra");
-        Assert.assertEquals("pyNamaskaar Petra", msg);
-    }
-
-    public void testPythonDynDefault() throws Exception {
-        HelloWorldService helloWorldService =
-            compositeContext.locateService(HelloWorldService.class, "HelloWorldPythonDynDefaultComponent");
-        String msg = helloWorldService.getGreetings("Petra");
-        Assert.assertEquals("pyYo! Petra", msg);
-    }
-
-    public void testPythonDynOverride() throws Exception {
-        HelloWorldService helloWorldService =
-            compositeContext.locateService(HelloWorldService.class, "HelloWorldPythonDynOverrideComponent");
-        String msg = helloWorldService.getGreetings("Petra");
-        Assert.assertEquals("pyNamaste Petra", msg);
-    }
-
-    public void testRubyDefault() throws Exception {
-        HelloWorldService helloWorldService =
-            compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyDefaultComponent");
-        String msg = helloWorldService.getGreetings("Petra");
-        Assert.assertEquals("rbKia Ora Petra", msg);
-    }
-    public void testRubyOverride() throws Exception {
-        HelloWorldService helloWorldService =
-            compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyOverrideComponent");
-        String msg = helloWorldService.getGreetings("Petra");
-        Assert.assertEquals("rbNamaskaar Petra", msg);
-    }
-
-    public void testRubyDynDefault() throws Exception {
-        HelloWorldService helloWorldService =
-            compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyDynDefaultComponent");
-        String msg = helloWorldService.getGreetings("Petra");
-        Assert.assertEquals("rbYo! Petra", msg);
-    }
-    public void testRubyDynOverride() throws Exception {
-        HelloWorldService helloWorldService =
-            compositeContext.locateService(HelloWorldService.class, "HelloWorldRubyDynOverrideComponent");
-        String msg = helloWorldService.getGreetings("Petra");
-        Assert.assertEquals("rbNamaste Petra", msg);
-    }
-
     @Override
     protected void setUp() throws Exception {
-        setApplicationSCDL(getClass().getResource("/META-INF/sca/properties.composite"));
+        setApplicationSCDL("META-INF/sca/properties.composite");
         super.setUp();
         this.compositeContext = CurrentCompositeContext.getContext();
     }

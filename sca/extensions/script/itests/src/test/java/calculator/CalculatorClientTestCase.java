@@ -46,7 +46,7 @@ public class CalculatorClientTestCase extends SCATestCase {
 
     @Override
     protected void setUp() throws Exception {
-        setApplicationSCDL(getClass().getResource("/calculator/sample.calculator.composite"));
+        setApplicationSCDL("calculator/sample.calculator.composite");
         super.setUp();
         this.compositeContext = CurrentCompositeContext.getContext();
     }

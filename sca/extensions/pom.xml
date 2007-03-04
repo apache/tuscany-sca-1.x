@@ -75,6 +75,7 @@
             </activation>
             <modules>
                 <module>axis2</module>
+                <module>script</module>
             </modules>
         </profile>
 

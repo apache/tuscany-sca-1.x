@@ -26,7 +26,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
+    <groupId>org.apache.tuscany.sca.extensions.script</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <name>Apache Tuscany SCA Extensions for Scripting</name>
