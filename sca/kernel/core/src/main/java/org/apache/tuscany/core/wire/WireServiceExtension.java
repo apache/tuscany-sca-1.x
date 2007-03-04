@@ -228,11 +228,11 @@ public abstract class WireServiceExtension implements WireService {
         }
 
         for (Operation<?> operation : source.getOperations().values()) {
-            Operation<?> targetOperation = target.getOperations().get(operation.getName());
+            Operation<?> targetOperation = target.getOperation(operation.getName());
             if (targetOperation == null) {
                 throw new IncompatibleServiceContractException("Operation not found on target", source, target);
             }
-            if (!operation.equals(targetOperation)) {
+            if (!targetOperation.equals(operation)) {
                 throw new IncompatibleServiceContractException("Target operations are not compatible", source, target);
             }
         }

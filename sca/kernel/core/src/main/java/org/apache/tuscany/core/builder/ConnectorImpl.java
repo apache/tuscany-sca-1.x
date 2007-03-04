@@ -149,7 +149,7 @@ public class ConnectorImpl implements Connector {
             // InboundInvocationChain inboundChain = targetChains.get(operation);
             InboundInvocationChain inboundChain = null; // = targetChains.get(operation);
             for (InboundInvocationChain ic: targetChains.values()) {
-                if (ic.getOperation().getName().equals(operation.getName())) {
+                if (ic.getOperation().equals(operation)) {
                     inboundChain = ic;
                     break;
                 }
