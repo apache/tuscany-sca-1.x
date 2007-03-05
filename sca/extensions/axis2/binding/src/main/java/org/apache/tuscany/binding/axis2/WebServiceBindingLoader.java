@@ -47,6 +47,8 @@ import org.osoa.sca.annotations.Scope;
 /**
  * Parses a <code>WebServiceBindingDefinition</code> entry in an assembly XML file
  * 
+ * TODO: TUSCANY-1153 support <wsa:EndpointReference>
+ * 
  * @version $Rev$ $Date$
  */
 @Scope("COMPOSITE")
