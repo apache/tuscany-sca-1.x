@@ -52,8 +52,8 @@ import org.apache.tuscany.core.component.scope.CompositeScopeContainer;
  * @version $Rev$ $Date$
  */
 public class DeployerImpl implements Deployer {
-    protected XMLInputFactory xmlFactory;
     private Loader loader;
+    protected XMLInputFactory xmlFactory;
     protected Builder builder;
     protected ScopeContainerMonitor monitor;
 

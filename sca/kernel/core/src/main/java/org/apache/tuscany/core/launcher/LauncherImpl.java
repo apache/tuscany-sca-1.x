@@ -74,8 +74,8 @@ public class LauncherImpl implements Launcher {
     private CompositeComponent composite;
 
     public CompositeContext bootApplication(URL applicationScdl, ClassLoader applicationClassLoader) {
-    	// TODO Auto-generated method stub
-    	return null;
+        // TODO Auto-generated method stub
+        return null;
     }
     
     public void bootRuntime(URL systemScdl, ClassLoader systemClassLoader, MonitorFactory monitor)

@@ -102,7 +102,7 @@ public abstract class SCAContainer {
                 className = "org.apache.tuscany.core.bootstrap.DefaultSCAContainer";
             }
             Class cls = Class.forName(className, true, classLoader);
-            return (SCAContainer)cls.newInstance();
+            return (SCAContainer)cls.newInstance();  // NOPMD lresende
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }

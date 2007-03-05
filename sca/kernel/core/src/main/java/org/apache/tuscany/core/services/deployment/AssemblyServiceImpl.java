@@ -43,9 +43,6 @@ import org.apache.tuscany.spi.deployer.ChangeSetHandler;
 import org.apache.tuscany.spi.deployer.ChangeSetHandlerRegistry;
 import org.apache.tuscany.spi.deployer.Deployer;
 import org.apache.tuscany.spi.model.ComponentDefinition;
-import org.apache.tuscany.spi.model.CompositeComponentType;
-import org.apache.tuscany.spi.model.Contribution;
-import org.apache.tuscany.spi.model.DeployedArtifact;
 import org.osoa.sca.annotations.Constructor;
 
 /**
@@ -64,11 +61,12 @@ public class AssemblyServiceImpl implements AssemblyService, ChangeSetHandlerReg
         this.domain = domain;
     }
 
-    public Object addCompositeToDomain(URI contribution, URI composite, String artifactName) throws DeploymentException {
+    public Object addCompositeToDomain(URI contribution, URI composite, String artifactName) 
+       throws DeploymentException {
 
-        Contribution contributionMetadata =
+        /*Contribution contributionMetadata =
             (Contribution)this.contributionService.getContribution(contribution);
-        /*DeployedArtifact scdlArtifact = contributionMetadata.getArtifacts().get(composite);
+        DeployedArtifact scdlArtifact = contributionMetadata.getArtifacts().get(composite);
         
         ComponentDefinition model =
             (ComponentDefinition)scdlArtifact.getModelObject(CompositeComponentType.class, null);*/

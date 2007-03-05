@@ -31,35 +31,43 @@ import org.apache.tuscany.spi.deployer.ContributionProcessor;
 import org.apache.tuscany.spi.extension.ContributionProcessorExtension;
 import org.apache.tuscany.spi.implementation.java.IntrospectionRegistry;
 import org.apache.tuscany.spi.implementation.java.Introspector;
+import org.apache.tuscany.spi.implementation.java.PojoComponentType;
+import org.apache.tuscany.spi.implementation.java.ProcessingException;
 import org.apache.tuscany.spi.model.Contribution;
 import org.osoa.sca.annotations.Constructor;
 
 public class JavaContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor {
+    /**
+     * Content-type that this processor can handle
+     */
     public static final String CONTENT_TYPE = "application/java-vm";
+    /**
+     * Pojo introspector
+     */
     private Introspector introspector;
-    
+
+    @Constructor("introspector")
+    public JavaContributionProcessor(@Autowire IntrospectionRegistry introspector) {
+        this.introspector = introspector;
+    }
+
     @Override
     public String getContentType() {
         return CONTENT_TYPE;
     }
     
-    @Constructor("introspector")
-    public JavaContributionProcessor(@Autowire IntrospectionRegistry introspector) {
-        this.introspector = introspector;
-    }
-    
     private String getClazzName(URL clazzURL) {
         String clazzName;
-        
-        clazzName = clazzURL.toExternalForm().substring(clazzURL.toExternalForm().lastIndexOf("!/") + 2, 
-                                                        clazzURL.toExternalForm().length() - ".class".length());
+
+        clazzName =
+            clazzURL.toExternalForm().substring(clazzURL.toExternalForm().lastIndexOf("!/") + 2,
+                                                clazzURL.toExternalForm().length() - ".class".length());
         clazzName = clazzName.replace("/", ".");
-        
+
         return clazzName;
     }
-    
 
-    public void processContent(Contribution contribution, URI source, InputStream inputStream) 
+    public void processContent(Contribution contribution, URI source, InputStream inputStream)
         throws DeploymentException, IOException {
         if (source == null) {
             throw new IllegalArgumentException("Invalid null source uri.");
@@ -67,36 +75,33 @@ public class JavaContributionProcessor extends ContributionProcessorExtension im
 
         if (inputStream == null) {
             throw new IllegalArgumentException("Invalid null source inputstream.");
-        }        
-        
-        // TODO Auto-generated method stub
-        
+        }
+
         try {
             CompositeClassLoader cl = new CompositeClassLoader(getClass().getClassLoader());
             cl.addURL(contribution.getLocation());
-           
+
             String clazzName = getClazzName(contribution.getArtifact(source).getLocation());
             System.out.println(clazzName);
-           
+
             Class clazz = cl.loadClass(clazzName);
-                      
-          //PojoComponentType javaInfo = introspector.introspect(null, clazz, null, null);
+
+            PojoComponentType javaInfo = introspector.introspect(null, clazz, null, null);
+
+            contribution.getArtifact(source).addModelObject(PojoComponentType.class, null, javaInfo);
+
         } catch (ClassNotFoundException cnfe) {
-            String msg = cnfe.getMessage();
-            
+            throw new InvalidPojoComponentDefinitionlException(contribution.getArtifact(source).getLocation()
+                .toExternalForm(), cnfe);
+        } catch (ProcessingException pe) {
+            throw new InvalidPojoComponentDefinitionlException(contribution.getArtifact(source).getLocation()
+                .toExternalForm(), pe);
         }
-//      catch(ProcessingException pe){
-//            String msg = pe.getMessage();
-        
-        
-
-
     }
 
-    public void processModel(Contribution contribution, URI source, Object modelObject) 
-        throws DeploymentException, IOException {
-        // TODO Auto-generated method stub
-
+    public void processModel(Contribution contribution, URI source, Object modelObject) throws DeploymentException,
+        IOException {
+        // NOOP
     }
 
 }
