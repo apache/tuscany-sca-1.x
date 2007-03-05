@@ -48,14 +48,6 @@ public class DeployedArtifact extends ModelObject {
         this.uri = uri;
     }
 
-    public Contribution getContribution() {
-        return contribution;
-    }
-
-    public void setContribution(Contribution contribution) {
-        this.contribution = contribution;
-    }
-
     /**
      * Get the absolute URI as the unique id for the artifact
      * @return
@@ -63,7 +55,29 @@ public class DeployedArtifact extends ModelObject {
     public URI getUri() {
         return uri;
     }
+    
+    /**
+     * @return the location
+     */
+    public URL getLocation() {
+        return location;
+    }
 
+    /**
+     * @param location the location to set
+     */
+    public void setLocation(URL location) {
+        this.location = location;
+    }
+
+    public Contribution getContribution() {
+        return contribution;
+    }
+
+    public void setContribution(Contribution contribution) {
+        this.contribution = contribution;
+    }
+    
     public Map<Class, Map<String, Object>> getModelObjects() {
         return modelObjects;
     }
@@ -89,19 +103,4 @@ public class DeployedArtifact extends ModelObject {
         }
         map.put(namespace, modelObject);
     }
-
-    /**
-     * @return the location
-     */
-    public URL getLocation() {
-        return location;
-    }
-
-    /**
-     * @param location the location to set
-     */
-    public void setLocation(URL location) {
-        this.location = location;
-    }
-
 }

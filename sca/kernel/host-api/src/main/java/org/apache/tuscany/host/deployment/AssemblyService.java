@@ -43,7 +43,7 @@ public interface AssemblyService {
      * @return The added composite
      * @throws DeploymentException
      */
-    Object addCompositeToDomain(URI contribution, URI composite) throws DeploymentException;
+    Object addCompositeToDomain(URI contribution, URI composite, String artifactName) throws DeploymentException;
 
     /**
      * Remove from the Domain Level composite the elements corresponding to the

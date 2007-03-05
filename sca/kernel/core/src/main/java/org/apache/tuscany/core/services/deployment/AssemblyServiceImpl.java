@@ -64,14 +64,18 @@ public class AssemblyServiceImpl implements AssemblyService, ChangeSetHandlerReg
         this.domain = domain;
     }
 
-    public Object addCompositeToDomain(URI contribution, URI composite) throws DeploymentException {
+    public Object addCompositeToDomain(URI contribution, URI composite, String artifactName) throws DeploymentException {
 
         Contribution contributionMetadata =
             (Contribution)this.contributionService.getContribution(contribution);
-        DeployedArtifact scdlArtifact = contributionMetadata.getArtifacts().get(composite);
+        /*DeployedArtifact scdlArtifact = contributionMetadata.getArtifacts().get(composite);
+        
         ComponentDefinition model =
-            (ComponentDefinition)scdlArtifact.getModelObject(CompositeComponentType.class, null);
+            (ComponentDefinition)scdlArtifact.getModelObject(CompositeComponentType.class, null);*/
 
+        ComponentDefinition model = 
+            (ComponentDefinition) this.contributionService.resolve(contribution, ComponentDefinition.class, null, artifactName);
+        
         Component component = null;
         Deployer deployer = null;
 

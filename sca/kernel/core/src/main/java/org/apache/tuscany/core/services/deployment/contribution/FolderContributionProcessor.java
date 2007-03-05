@@ -72,7 +72,7 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
      * @return
      * @throws IOException
      */
-    protected List<URL> getArtifacts(URL rootURL, InputStream sourceInputStream) throws DeploymentException,
+    protected List<URL> getArtifacts(URL rootURL) throws DeploymentException,
         IOException {
         List<URL> artifacts = new ArrayList<URL>();
 
@@ -104,7 +104,7 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
 
         URL contributionURL = contribution.getArtifact(source).getLocation();
 
-        for (URL artifactURL : getArtifacts(contributionURL, inputStream)) {
+        for (URL artifactURL : getArtifacts(contributionURL)) {
             String artifactPath = artifactURL.toExternalForm().substring(contributionURL.toExternalForm().length());
             URI artifactURI = contribution.getUri().resolve(artifactPath);
             DeployedArtifact artifact = new DeployedArtifact(artifactURI);

@@ -38,12 +38,9 @@
         <property name="repository">target/repository</property>
     </component>
 
+    <!-- contribution processor registry and processors -->
     <component name="contributionProcessorRegistry" initLevel="35">
         <system:implementation.system class="org.apache.tuscany.core.services.deployment.ContributionProcessorRegistryImpl" />
-    </component>
-
-    <component name="artifactResolverRegistry" initLevel="35">
-        <system:implementation.system class="org.apache.tuscany.core.services.deployment.ArtifactResolverRegistryImpl" />
     </component>
 
     <component name="contentTypeDescriber" initLevel="30">
@@ -60,6 +57,15 @@
     </component>
     <component name="ScdlContributionProcessor" initLevel="30">
         <system:implementation.system class="org.apache.tuscany.core.services.deployment.contribution.ScdlContributionProcessor" />
+    </component>    
+
+	<!-- contribution resolver registry and resolvers -->
+    <component name="artifactResolverRegistry" initLevel="35">
+        <system:implementation.system class="org.apache.tuscany.core.services.deployment.ArtifactResolverRegistryImpl" />
+    </component>
+
+    <component name="ComponentDefinitionArtifactResolver" initLevel="30">
+        <system:implementation.system class="org.apache.tuscany.core.services.deployment.resolver.ComponentDefinitionArtifactResolver" />
     </component>    
 
 </composite>
