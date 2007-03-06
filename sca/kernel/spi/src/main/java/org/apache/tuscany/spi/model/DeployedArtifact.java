@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class DeployedArtifact extends ModelObject {
     protected Contribution contribution;
-    protected final URI uri;
+    protected URI uri;
     protected URL location;
     /**
      * The map keeps all the model objects loaded/introspected from this artifact. The objects
@@ -39,6 +39,10 @@ public class DeployedArtifact extends ModelObject {
      * a map with namespace as the key and the model object as the value.
      */
     protected Map<Class, Map<String, Object>> modelObjects = new HashMap<Class, Map<String, Object>>();
+
+    public DeployedArtifact() {
+        super();
+    }
 
     /**
      * @param uri
@@ -54,6 +58,10 @@ public class DeployedArtifact extends ModelObject {
      */
     public URI getUri() {
         return uri;
+    }
+    
+    public void setUri(URI uri) {
+        this.uri = uri;
     }
     
     /**

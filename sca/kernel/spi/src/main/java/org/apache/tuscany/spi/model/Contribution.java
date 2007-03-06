@@ -31,7 +31,7 @@ import javax.xml.namespace.QName;
 
 /**
  * The representation of a deployed contribution
- *
+ * 
  * @version $Rev$ $Date$
  */
 public class Contribution extends DeployedArtifact {
@@ -40,24 +40,36 @@ public class Contribution extends DeployedArtifact {
 
     protected List<String> exports = new ArrayList<String>();
     protected List<ContributionImport> imports = new ArrayList<ContributionImport>();
-    protected List<QName> runnables = new ArrayList<QName>();
-    
+    protected List<QName> deployables = new ArrayList<QName>();
+
     /**
      * A list of artifacts in the contribution
      */
     protected Map<URI, DeployedArtifact> artifacts = new HashMap<URI, DeployedArtifact>();
 
+    public Contribution() {
+        super();
+    }
 
     /**
      * @param uri
      */
     public Contribution(URI uri) {
         super(uri);
-        artifacts.put(uri, this);
+        if (uri != null) {
+            artifacts.put(uri, this);
+        }
     }
-    
+
     public URI getUri() {
         return uri;
+    }
+
+    public void setURI(URI uri) {
+        super.setUri(uri);
+        if (uri != null) {
+            artifacts.put(uri, this);
+        }
     }
 
     public List<String> getExports() {
@@ -68,19 +80,19 @@ public class Contribution extends DeployedArtifact {
         return imports;
     }
 
-    public List<QName> getRunnables() {
-        return runnables;
+    public List<QName> getDeployables() {
+        return deployables;
     }
 
     public Map<URI, DeployedArtifact> getArtifacts() {
         return Collections.unmodifiableMap(artifacts);
     }
-    
+
     public void addArtifact(DeployedArtifact artifact) {
         artifact.setContribution(this);
         artifacts.put(artifact.getUri(), artifact);
     }
-    
+
     public DeployedArtifact getArtifact(URI uri) {
         return artifacts.get(uri);
     }
