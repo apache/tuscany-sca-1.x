@@ -19,22 +19,22 @@
 
 package helloworld.om;
 
-import helloworld.om.HelloWorldService;
 import junit.framework.Assert;
+import junit.framework.TestCase;
 
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMText;
-import org.apache.tuscany.test.SCATestCase;
-import org.apache.tuscany.test.SCATestCaseRunner;
+import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.core.test.SCATestCaseRunner;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
  * Test case for helloworld web service client
  */
-public class HelloWorldClientTestCase extends SCATestCase {
+public class HelloWorldClientTestCase extends TestCase {
 
     private HelloWorldService helloWorldService;
 
@@ -42,8 +42,7 @@ public class HelloWorldClientTestCase extends SCATestCase {
 
     @Override
     protected void setUp() throws Exception {
-    	setApplicationSCDL("helloworldwsclient-om.composite");
-        super.setUp();
+    	SCAContainer.start("helloworldwsclient-om.composite");
 
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
         helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
@@ -65,8 +64,8 @@ public class HelloWorldClientTestCase extends SCATestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        super.tearDown();
         server.tearDown();
+        SCAContainer.stop();
     }
 
 }

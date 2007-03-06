@@ -22,115 +22,55 @@
         <groupId>org.apache.tuscany.samples.sca</groupId>
         <artifactId>parent</artifactId>
         <version>0.1-integration-incubating-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tuscany-sample-helloworld-async-ws</artifactId>
-    <packaging>war</packaging>
-    <name>Tuscany HelloWorld Web Service Sample</name>
+    <packaging>jar</packaging>
+    <name>Apache Tuscany HelloWorld Web Service Sample</name>
     <description>A sample HelloWorld Async Web Service.</description>
-
-    <properties>
-        <ws.type>axis2</ws.type>
-    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.osoa</groupId>
-            <artifactId>sca-api-r1.0</artifactId>
-            <version>0.1-integration-incubating-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
             <artifactId>tuscany-api</artifactId>
-            <version>${pom.version}</version>
-            <scope>compile</scope> <!-- runtime is need for webapp integration to include jar -->
-        </dependency>
-        
-        <dependency>
-            <groupId>commonj</groupId>
-            <artifactId>sdo-api-r2.1</artifactId>
-            <version>0.1-integration-incubating-SNAPSHOT</version>
             <scope>compile</scope>
-        </dependency>        
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca.kernel</groupId>
             <artifactId>tuscany-core</artifactId>
-            <version>${pom.version}</version>
-            <scope>runtime</scope> <!-- runtime is need for webapp integration to include jar -->
+            <version>0.1-integration-incubating-SNAPSHOT</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.4</version>
-            <scope>provided</scope>
+            <groupId>org.apache.tuscany.sca.extensions.axis2</groupId>
+            <artifactId>tuscany-axis2</artifactId>
+            <scope>runtime</scope>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.tuscany.sca.services.bindings</groupId>
-            <artifactId>axis2</artifactId>
-            <version>${pom.version}</version>
-            <scope>runtime</scope> <!-- runtime is need for webapp integration to include jar -->
+            <groupId>org.apache.tuscany.sca.services</groupId>
+            <artifactId>tuscany-http-jetty</artifactId>
+            <scope>runtime</scope>
+            <version>0.1-integration-incubating-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.tuscany.sca.services.databinding</groupId>
-            <artifactId>databinding-axiom</artifactId>
-            <version>${pom.version}</version>
-            <scope>runtime</scope> <!-- runtime is need for webapp integration to include jar -->
-        </dependency>        
-        <dependency>
-            <groupId>org.apache.tuscany.sca.services.databinding</groupId>
-            <artifactId>databinding-sdo</artifactId>
-            <version>${pom.version}</version>
-            <scope>runtime</scope> <!-- runtime is need for webapp integration to include jar -->
-        </dependency>                
-        <dependency>
-            <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
-            <artifactId>webapp-api</artifactId>
-            <version>${pom.version}</version>
-            <scope>runtime</scope> <!-- runtime is need for webapp integration to include jar -->
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
-            <artifactId>webapp-host</artifactId>
-            <version>${pom.version}</version>
-            <scope>runtime</scope> <!-- runtime is need for webapp integration to include jar -->
-        </dependency>
-        <dependency>
-          <groupId>org.apache.ws.commons.axiom</groupId>
-          <artifactId>axiom-api</artifactId>
-          <version>SNAPSHOT</version>
-          <scope>compile</scope> 
-        </dependency>
-        <dependency>
-          <groupId>org.apache.ws.commons.axiom</groupId>
-          <artifactId>axiom-impl</artifactId>
-          <version>SNAPSHOT</version>
-          <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        
     </dependencies>
     
     <build>
-        <finalName>sample-helloworldws-async-0.1-integration-incubating-SNAPSHOT</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.tuscany.sca.runtime.webapp</groupId>
-                <artifactId>tuscany-war-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>tuscany-war</id>
-                        <goals>
-                            <goal>tuscany-war</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>helloworld.HelloWorldServer</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
-    </build>    
+    </build>
+
 </project>

@@ -21,9 +21,9 @@ package org.apache.tuscany.sca.itest;
 
 import java.lang.reflect.UndeclaredThrowableException;
 
+import org.apache.tuscany.core.test.SCATestCaseRunner;
 import org.apache.tuscany.sca.util.SCATestUtilityServerTestCase;
 import org.apache.tuscany.test.SCATestCase;
-import org.apache.tuscany.test.SCATestCaseRunner;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 

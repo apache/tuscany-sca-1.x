@@ -21,14 +21,15 @@ package helloworld;
 import java.io.IOException;
 import java.net.Socket;
 
-import org.apache.tuscany.test.SCATestCase;
+import org.apache.tuscany.api.SCAContainer;
 
-public class HelloWorldServerTestCase extends SCATestCase {
+import junit.framework.TestCase;
+
+public class HelloWorldServerTestCase extends TestCase {
 	
 	@Override
 	protected void setUp() throws Exception {
-		setApplicationSCDL("helloworldws.composite");
-		super.setUp();
+		SCAContainer.start("helloworldws.composite");
 	}
 	
 	public void testPing() throws IOException {
@@ -37,7 +38,7 @@ public class HelloWorldServerTestCase extends SCATestCase {
 	
 	@Override
 	protected void tearDown() throws Exception {
-		super.tearDown();
+		SCAContainer.stop();
 	}
 
 }
