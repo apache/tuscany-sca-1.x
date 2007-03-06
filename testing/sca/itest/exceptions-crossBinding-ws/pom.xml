@@ -25,7 +25,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>iTest-exceptionXbindingWS</artifactId>
+	<artifactId>iTest-exceptions-crossBinding-ws</artifactId>
 	<packaging>jar</packaging>
 	<name>Test Suite Exception Handling cross bindings WS</name>
 	<!-- JAX-WS temporary only until java.net maven2 repo is ready-->

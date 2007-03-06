@@ -40,15 +40,15 @@
             <modules>
                 <module>spec</module>
                 <module>property</module>
-                <module>exceptionTests</module>
-                <module>exceptionXbindingTest</module>
-                <module>exceptionXbindingWSTest</module>
+                <module>exceptions</module>
+                <module>exceptions-crossBinding</module>
+                <module>exceptions-crossBinding-ws</module>
 	        <module>callback-api</module>
 	        <module>callback-basic</module>
 	        <module>callback-complexType</module>
 	        <module>callback-id</module>
-	        <module>callBackSetCallbackTest</module>
-	        <module>callBackSetCallbackConvTest</module>
+	        <module>callback-setCallback</module>
+	        <module>callback-setCallbackConversation</module>
 	        <module>wsdl</module>
 	        <module>conversations</module>
                 <module>bindings</module>

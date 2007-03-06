@@ -24,9 +24,12 @@
         <version>0.1-integration-incubating-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>iTest-exceptionTests</artifactId>
+    <groupId>org.apache.tuscany.testing</groupId>
+    <artifactId>iTest-callback-setCallbackConversation</artifactId>
+    <version>${testing.version}</version>
     <packaging>jar</packaging>
-    <name>Test Suite Exception Handling</name>
+    <name>Test Suite for SCA Callback SetCallback Conversation</name>
 
 </project>
