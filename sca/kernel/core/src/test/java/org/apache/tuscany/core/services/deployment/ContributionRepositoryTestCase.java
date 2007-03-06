@@ -37,7 +37,7 @@ public class ContributionRepositoryTestCase extends TestCase {
 
     public void testStore() throws Exception {
         String resourceLocation = "/repository/sample-calculator.jar";
-        URI contribution = getClass().getResource(resourceLocation).toURI();
+        URI contribution = URI.create("/contributions/sample-calculator.jar");
         InputStream contributionStream = getClass().getResourceAsStream(resourceLocation);
         repository.store(contribution, contributionStream);
 
@@ -47,7 +47,7 @@ public class ContributionRepositoryTestCase extends TestCase {
 
     public void testRemove() throws Exception {
         String resourceLocation = "/repository/sample-calculator.jar";
-        URI contribution = getClass().getResource(resourceLocation).toURI();
+        URI contribution = URI.create("/contributions/sample-calculator.jar");
         InputStream contributionStream = getClass().getResourceAsStream(resourceLocation);
         repository.store(contribution, contributionStream);
 
@@ -58,7 +58,7 @@ public class ContributionRepositoryTestCase extends TestCase {
 
     public void testList() throws Exception {
         String resourceLocation = "/repository/sample-calculator.jar";
-        URI contribution = getClass().getResource(resourceLocation).toURI();
+        URI contribution = URI.create("/contributions/sample-calculator.jar");
         InputStream contributionStream = getClass().getResourceAsStream(resourceLocation);
         repository.store(contribution, contributionStream);
 

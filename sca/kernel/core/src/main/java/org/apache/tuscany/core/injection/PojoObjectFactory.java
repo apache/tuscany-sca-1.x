@@ -94,10 +94,14 @@ public class PojoObjectFactory<T> implements ObjectFactory<T> {
         for (int i = 0; i < size; i++) {
             ObjectFactory<?> objectFactory = initializerFactories[i];
             if (objectFactory == null) {
-                String name = ctr.getName();
-                throw new ObjectCallbackException("Null object factory for constructor parameter [" + i + "]", name);
+                // [rfeng] Set it to null for property with default values
+                initargs[i] = null;
+                // String name = ctr.getName();
+                // throw new ObjectCallbackException("Null object factory for
+                // constructor parameter [" + i + "]", name);
+            } else {
+                initargs[i] = objectFactory.getInstance();
             }
-            initargs[i] = objectFactory.getInstance();
         }
         try {
             ctr.setAccessible(true);

@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.core.bootstrap;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -52,8 +53,9 @@ public class DefaultSCAContainer extends SCAContainer {
     protected void startup(URL system, URL[] exts, URL applicationSCDL, String compositePath) throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         List<URL> extensions = exts == null ? null : Arrays.asList(exts);
+        URI contributionURI = URI.create("/default");
         SimpleRuntimeInfo runtimeInfo =
-            new SimpleRuntimeInfoImpl(cl, system, extensions, applicationSCDL, compositePath);
+            new SimpleRuntimeInfoImpl(cl, system, extensions, contributionURI, applicationSCDL, compositePath);
         runtime = new SimpleRuntimeImpl(runtimeInfo);
 
         try {
@@ -70,8 +72,8 @@ public class DefaultSCAContainer extends SCAContainer {
 
     @Override
     protected ComponentContext getContext(String componentName) {
-        CompositeComponent composite = ((CompositeContextImpl) context).getComposite();
-        Component component = (Component) composite.getChild(componentName);
+        CompositeComponent composite = ((CompositeContextImpl)context).getComposite();
+        Component component = (Component)composite.getChild(componentName);
         return new ComponentContextImpl(CurrentCompositeContext.getContext(), component);
     }
 

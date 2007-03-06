@@ -21,7 +21,9 @@ package org.apache.tuscany.core.util;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Pattern;
@@ -43,7 +45,6 @@ public class FileHelper {
     private static final char WINDOWS_SEPARATOR = '\\';
 
     protected FileHelper() {
-
     }
 
     /**
@@ -208,61 +209,6 @@ public class FileHelper {
     }
 
     /**
-     * Recursively delete a directory.
-     * 
-     * @param directory directory to delete
-     * @throws IOException in case deletion is unsuccessful
-     */
-    public static void deleteDirectory(File directory) throws IOException {
-        if (!directory.exists()) {
-            return;
-        }
-
-        cleanDirectory(directory);
-        if (!directory.delete()) {
-            String message = "Unable to delete directory " + directory + ".";
-            throw new IOException(message);
-        }
-    }
-
-    /**
-     * Clean a directory without deleting it.
-     * 
-     * @param directory directory to clean
-     * @throws IOException in case cleaning is unsuccessful
-     */
-    public static void cleanDirectory(File directory) throws IOException {
-        if (!directory.exists()) {
-            String message = directory + " does not exist";
-            throw new IllegalArgumentException(message);
-        }
-
-        if (!directory.isDirectory()) {
-            String message = directory + " is not a directory";
-            throw new IllegalArgumentException(message);
-        }
-
-        File[] files = directory.listFiles();
-        if (files == null) { // null if security restricted
-            throw new IOException("Failed to list contents of " + directory);
-        }
-
-        IOException exception = null;
-        for (int i = 0; i < files.length; i++) {
-            File file = files[i];
-            try {
-                forceDelete(file);
-            } catch (IOException ioe) {
-                exception = ioe;
-            }
-        }
-
-        if (null != exception) {
-            throw exception;
-        }
-    }
-
-    /**
      * Convert from a <code>URL</code> to a <code>File</code>.
      * <p>
      * From version 1.1 this method will decode the URL. Syntax such as
@@ -334,6 +280,425 @@ public class FileHelper {
             return new RegExpFilter(buffer.toString(), ignoreCase);
         }
 
+    }
+
+    /**
+     * Clean a directory without deleting it.
+     * 
+     * @param directory directory to clean
+     * @throws IOException in case cleaning is unsuccessful
+     */
+    public static void cleanDirectory(File directory) throws IOException {
+        if (!directory.exists()) {
+            String message = directory + " does not exist";
+            throw new IllegalArgumentException(message);
+        }
+
+        if (!directory.isDirectory()) {
+            String message = directory + " is not a directory";
+            throw new IllegalArgumentException(message);
+        }
+
+        File[] files = directory.listFiles();
+        if (files == null) { // null if security restricted
+            throw new IOException("Failed to list contents of " + directory);
+        }
+
+        IOException exception = null;
+        for (int i = 0; i < files.length; i++) {
+            File file = files[i];
+            try {
+                forceDelete(file);
+            } catch (IOException ioe) {
+                exception = ioe;
+            }
+        }
+
+        if (null != exception) {
+            throw exception;
+        }
+    }
+
+    /**
+     * Clean a directory without deleting it.
+     * 
+     * @param directory directory to clean, must not be <code>null</code>
+     * @throws NullPointerException if the directory is <code>null</code>
+     * @throws IOException in case cleaning is unsuccessful
+     */
+    private static void cleanDirectoryOnExit(File directory) throws IOException {
+        if (!directory.exists()) {
+            String message = directory + " does not exist";
+            throw new IllegalArgumentException(message);
+        }
+
+        if (!directory.isDirectory()) {
+            String message = directory + " is not a directory";
+            throw new IllegalArgumentException(message);
+        }
+
+        File[] files = directory.listFiles();
+        if (files == null) { // null if security restricted
+            throw new IOException("Failed to list contents of " + directory);
+        }
+
+        IOException exception = null;
+        for (int i = 0; i < files.length; i++) {
+            File file = files[i];
+            try {
+                forceDeleteOnExit(file);
+            } catch (IOException ioe) {
+                exception = ioe;
+            }
+        }
+
+        if (null != exception) {
+            throw exception;
+        }
+    }
+
+    /**
+     * Copies a whole directory to a new location preserving the file dates.
+     * <p>
+     * This method copies the specified directory and all its child directories
+     * and files to the specified destination. The destination is the new
+     * location and name of the directory.
+     * <p>
+     * The destination directory is created if it does not exist. If the
+     * destination directory did exist, then this method merges the source with
+     * the destination, with the source taking precedence.
+     * 
+     * @param srcDir an existing directory to copy, must not be
+     *            <code>null</code>
+     * @param destDir the new directory, must not be <code>null</code>
+     * @throws NullPointerException if source or destination is
+     *             <code>null</code>
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
+     * @since Commons IO 1.1
+     */
+    public static void copyDirectory(File srcDir, File destDir) throws IOException {
+        copyDirectory(srcDir, destDir, true);
+    }
+
+    /**
+     * Copies a whole directory to a new location.
+     * <p>
+     * This method copies the contents of the specified source directory to
+     * within the specified destination directory.
+     * <p>
+     * The destination directory is created if it does not exist. If the
+     * destination directory did exist, then this method merges the source with
+     * the destination, with the source taking precedence.
+     * 
+     * @param srcDir an existing directory to copy, must not be
+     *            <code>null</code>
+     * @param destDir the new directory, must not be <code>null</code>
+     * @param preserveFileDate true if the file date of the copy should be the
+     *            same as the original
+     * @throws NullPointerException if source or destination is
+     *             <code>null</code>
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
+     * @since Commons IO 1.1
+     */
+    public static void copyDirectory(File srcDir, File destDir, boolean preserveFileDate) throws IOException {
+        if (srcDir == null) {
+            throw new NullPointerException("Source must not be null");
+        }
+        if (destDir == null) {
+            throw new NullPointerException("Destination must not be null");
+        }
+        if (!srcDir.exists()) {
+            throw new FileNotFoundException("Source '" + srcDir + "' does not exist");
+        }
+        if (!srcDir.isDirectory()) {
+            throw new IOException("Source '" + srcDir + "' exists but is not a directory");
+        }
+        if (srcDir.getCanonicalPath().equals(destDir.getCanonicalPath())) {
+            throw new IOException("Source '" + srcDir + "' and destination '" + destDir + "' are the same");
+        }
+        doCopyDirectory(srcDir, destDir, preserveFileDate);
+    }
+
+    // -----------------------------------------------------------------------
+    /**
+     * Copies a directory to within another directory preserving the file dates.
+     * <p>
+     * This method copies the source directory and all its contents to a
+     * directory of the same name in the specified destination directory.
+     * <p>
+     * The destination directory is created if it does not exist. If the
+     * destination directory did exist, then this method merges the source with
+     * the destination, with the source taking precedence.
+     * 
+     * @param srcDir an existing directory to copy, must not be
+     *            <code>null</code>
+     * @param destDir the directory to place the copy in, must not be
+     *            <code>null</code>
+     * @throws NullPointerException if source or destination is
+     *             <code>null</code>
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
+     * @since Commons IO 1.2
+     */
+    public static void copyDirectoryToDirectory(File srcDir, File destDir) throws IOException {
+        if (srcDir == null) {
+            throw new NullPointerException("Source must not be null");
+        }
+        if (!(srcDir.exists() && srcDir.isDirectory())) {
+            throw new IllegalArgumentException("Source '" + destDir + "' is not a directory");
+        }
+        if (destDir == null) {
+            throw new NullPointerException("Destination must not be null");
+        }
+        if (!(destDir.exists() && destDir.isDirectory())) {
+            throw new IllegalArgumentException("Destination '" + destDir + "' is not a directory");
+        }
+        copyDirectory(srcDir, new File(destDir, srcDir.getName()), true);
+    }
+
+    /**
+     * Copies a file to a new location preserving the file date.
+     * <p>
+     * This method copies the contents of the specified source file to the
+     * specified destination file. The directory holding the destination file is
+     * created if it does not exist. If the destination file exists, then this
+     * method will overwrite it.
+     * 
+     * @param srcFile an existing file to copy, must not be <code>null</code>
+     * @param destFile the new file, must not be <code>null</code>
+     * @throws NullPointerException if source or destination is
+     *             <code>null</code>
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
+     * @see #copyFileToDirectory(File, File)
+     */
+    public static void copyFile(File srcFile, File destFile) throws IOException {
+        copyFile(srcFile, destFile, true);
+    }
+
+    /**
+     * Copies a file to a new location.
+     * <p>
+     * This method copies the contents of the specified source file to the
+     * specified destination file. The directory holding the destination file is
+     * created if it does not exist. If the destination file exists, then this
+     * method will overwrite it.
+     * 
+     * @param srcFile an existing file to copy, must not be <code>null</code>
+     * @param destFile the new file, must not be <code>null</code>
+     * @param preserveFileDate true if the file date of the copy should be the
+     *            same as the original
+     * @throws NullPointerException if source or destination is
+     *             <code>null</code>
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
+     * @see #copyFileToDirectory(File, File, boolean)
+     */
+    public static void copyFile(File srcFile, File destFile, boolean preserveFileDate) throws IOException {
+        if (srcFile == null) {
+            throw new NullPointerException("Source must not be null");
+        }
+        if (destFile == null) {
+            throw new NullPointerException("Destination must not be null");
+        }
+        if (!srcFile.exists()) {
+            throw new FileNotFoundException("Source '" + srcFile + "' does not exist");
+        }
+        if (srcFile.isDirectory()) {
+            throw new IOException("Source '" + srcFile + "' exists but is a directory");
+        }
+        if (srcFile.getCanonicalPath().equals(destFile.getCanonicalPath())) {
+            throw new IOException("Source '" + srcFile + "' and destination '" + destFile + "' are the same");
+        }
+        if (!(destFile.getParentFile() != null && destFile.getParentFile().exists())) {
+            if (!destFile.getParentFile().mkdirs()) {
+                throw new IOException("Destination '" + destFile + "' directory cannot be created");
+            }
+        }
+        if (!(destFile.exists() && destFile.canWrite())) {
+            throw new IOException("Destination '" + destFile + "' exists but is read-only");
+        }
+        doCopyFile(srcFile, destFile, preserveFileDate);
+    }
+
+    // -----------------------------------------------------------------------
+    /**
+     * Copies a file to a directory preserving the file date.
+     * <p>
+     * This method copies the contents of the specified source file to a file of
+     * the same name in the specified destination directory. The destination
+     * directory is created if it does not exist. If the destination file
+     * exists, then this method will overwrite it.
+     * 
+     * @param srcFile an existing file to copy, must not be <code>null</code>
+     * @param destDir the directory to place the copy in, must not be
+     *            <code>null</code>
+     * @throws NullPointerException if source or destination is null
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
+     * @see #copyFile(File, File, boolean)
+     */
+    public static void copyFileToDirectory(File srcFile, File destDir) throws IOException {
+        copyFileToDirectory(srcFile, destDir, true);
+    }
+
+    /**
+     * Copies a file to a directory optionally preserving the file date.
+     * <p>
+     * This method copies the contents of the specified source file to a file of
+     * the same name in the specified destination directory. The destination
+     * directory is created if it does not exist. If the destination file
+     * exists, then this method will overwrite it.
+     * 
+     * @param srcFile an existing file to copy, must not be <code>null</code>
+     * @param destDir the directory to place the copy in, must not be
+     *            <code>null</code>
+     * @param preserveFileDate true if the file date of the copy should be the
+     *            same as the original
+     * @throws NullPointerException if source or destination is
+     *             <code>null</code>
+     * @throws IOException if source or destination is invalid
+     * @throws IOException if an IO error occurs during copying
+     * @see #copyFile(File, File, boolean)
+     * @since Commons IO 1.3
+     */
+    public static void copyFileToDirectory(File srcFile, File destDir, boolean preserveFileDate) throws IOException {
+        if (destDir == null) {
+            throw new NullPointerException("Destination must not be null");
+        }
+        if (!(destDir.exists() && destDir.isDirectory())) {
+            throw new IllegalArgumentException("Destination '" + destDir + "' is not a directory");
+        }
+        copyFile(srcFile, new File(destDir, srcFile.getName()), preserveFileDate);
+    }
+
+    // -----------------------------------------------------------------------
+    /**
+     * Recursively delete a directory.
+     * 
+     * @param directory directory to delete
+     * @throws IOException in case deletion is unsuccessful
+     */
+    public static void deleteDirectory(File directory) throws IOException {
+        if (!directory.exists()) {
+            return;
+        }
+
+        cleanDirectory(directory);
+        if (!directory.delete()) {
+            String message = "Unable to delete directory " + directory + ".";
+            throw new IOException(message);
+        }
+    }
+
+    /**
+     * Recursively schedule directory for deletion on JVM exit.
+     * 
+     * @param directory directory to delete, must not be <code>null</code>
+     * @throws NullPointerException if the directory is <code>null</code>
+     * @throws IOException in case deletion is unsuccessful
+     */
+    private static void deleteDirectoryOnExit(File directory) throws IOException {
+        if (!directory.exists()) {
+            return;
+        }
+
+        cleanDirectoryOnExit(directory);
+        directory.deleteOnExit();
+    }
+
+    /**
+     * Internal copy directory method.
+     * 
+     * @param srcDir the validated source directory, must not be
+     *            <code>null</code>
+     * @param destDir the validated destination directory, must not be
+     *            <code>null</code>
+     * @param preserveFileDate whether to preserve the file date
+     * @throws IOException if an error occurs
+     * @since Commons IO 1.1
+     */
+    private static void doCopyDirectory(File srcDir, File destDir, boolean preserveFileDate) throws IOException {
+        if (destDir.exists()) {
+            if (!destDir.isDirectory()) {
+                throw new IOException("Destination '" + destDir + "' exists but is not a directory");
+            }
+        } else {
+            if (!destDir.mkdirs()) {
+                throw new IOException("Destination '" + destDir + "' directory cannot be created");
+            }
+            if (preserveFileDate) {
+                destDir.setLastModified(srcDir.lastModified());
+            }
+        }
+        if (!destDir.canWrite()) {
+            throw new IOException("Destination '" + destDir + "' cannot be written to");
+        }
+        // recurse
+        File[] files = srcDir.listFiles();
+        if (files == null) { // null if security restricted
+            throw new IOException("Failed to list contents of " + srcDir);
+        }
+        for (int i = 0; i < files.length; i++) {
+            File copiedFile = new File(destDir, files[i].getName());
+            if (files[i].isDirectory()) {
+                doCopyDirectory(files[i], copiedFile, preserveFileDate);
+            } else {
+                doCopyFile(files[i], copiedFile, preserveFileDate);
+            }
+        }
+    }
+
+    /**
+     * Internal copy file method.
+     * 
+     * @param srcFile the validated source file, must not be <code>null</code>
+     * @param destFile the validated destination file, must not be
+     *            <code>null</code>
+     * @param preserveFileDate whether to preserve the file date
+     * @throws IOException if an error occurs
+     */
+    private static void doCopyFile(File srcFile, File destFile, boolean preserveFileDate) throws IOException {
+        if (destFile.exists() && destFile.isDirectory()) {
+            throw new IOException("Destination '" + destFile + "' exists but is a directory");
+        }
+
+        FileInputStream input = new FileInputStream(srcFile);
+        try {
+            FileOutputStream output = new FileOutputStream(destFile);
+            try {
+                IOHelper.copy(input, output);
+            } finally {
+                IOHelper.closeQuietly(output);
+            }
+        } finally {
+            IOHelper.closeQuietly(input);
+        }
+
+        if (srcFile.length() != destFile.length()) {
+            throw new IOException("Failed to copy full contents from '" + srcFile + "' to '" + destFile + "'");
+        }
+        if (preserveFileDate) {
+            destFile.setLastModified(srcFile.lastModified());
+        }
+    }
+
+    /**
+     * Schedule a file to be deleted when JVM exits. If file is directory delete
+     * it and all sub-directories.
+     * 
+     * @param file file or directory to delete, must not be <code>null</code>
+     * @throws NullPointerException if the file is <code>null</code>
+     * @throws IOException in case deletion is unsuccessful
+     */
+    public static void forceDeleteOnExit(File file) throws IOException {
+        if (file.isDirectory()) {
+            deleteDirectoryOnExit(file);
+        } else {
+            file.deleteOnExit();
+        }
     }
 
 }

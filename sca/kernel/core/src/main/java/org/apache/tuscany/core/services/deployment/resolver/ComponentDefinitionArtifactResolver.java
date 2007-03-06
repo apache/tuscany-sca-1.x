@@ -35,28 +35,29 @@ import org.apache.tuscany.spi.model.DeployedArtifact;
 
 public class ComponentDefinitionArtifactResolver extends ArtifactResolverExtension implements ArtifactResolver {
 
-    public ComponentDefinitionArtifactResolver(@Autowire ArtifactResolverRegistry registry) {
+    public ComponentDefinitionArtifactResolver(@Autowire
+    ArtifactResolverRegistry registry) {
         super(registry);
     }
-    
+
     @Override
-    public Class<?> getType(){
+    public Class<?> getType() {
         return ComponentDefinition.class;
     }
 
     public <ComponentDefinition> ComponentDefinition resolve(Contribution contribution,
-                         Class<ComponentDefinition> modelClass,
-                         String namespace,
-                         String name,
-                         Map attributes,
-                         DeploymentContext context) {
-        
-        
-        //generate artifact uri based on it's name
+                                                             Class<ComponentDefinition> modelClass,
+                                                             String namespace,
+                                                             String name,
+                                                             Map attributes,
+                                                             DeploymentContext context) {
+
+        // generate artifact uri based on it's name
         URI artifactURI = contribution.getUri().resolve(name);
         DeployedArtifact artifact = contribution.getArtifact(artifactURI);
-        
-        ComponentDefinition componentDefinition = (ComponentDefinition) artifact.getModelObject(CompositeComponentType.class, null);
+
+        ComponentDefinition componentDefinition =
+            (ComponentDefinition)artifact.getModelObject(CompositeComponentType.class, null);
         return componentDefinition;
     }
 

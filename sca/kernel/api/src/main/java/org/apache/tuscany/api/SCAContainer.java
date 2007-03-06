@@ -231,10 +231,10 @@ public abstract class SCAContainer {
 
     /**
      * Start up the container
-     * @param system
-     * @param extensions
-     * @param application
-     * @param compositePath TODO
+     * @param system The URL of the SCDL for tuscany system composite
+     * @param extensions The URLs of the SCDLs for tuscany extension composites
+     * @param application The URL of the SCDL for the application composite
+     * @param compositePath The path of the application composite relative to the application URL
      * @throws Exception
      */
     protected abstract void startup(URL system, URL[] extensions, URL application, String compositePath)

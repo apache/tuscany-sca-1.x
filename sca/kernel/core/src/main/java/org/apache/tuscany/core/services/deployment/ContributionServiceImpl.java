@@ -20,12 +20,11 @@ package org.apache.tuscany.core.services.deployment;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.apache.tuscany.core.util.IOHelper;
 import org.apache.tuscany.host.deployment.ContributionService;
@@ -60,65 +59,59 @@ public class ContributionServiceImpl implements ContributionService {
 
     protected ArtifactResolverRegistry resolverRegistry;
 
-    public ContributionServiceImpl(@Autowire ContributionRepository repository, 
-                                   @Autowire ContributionProcessorRegistry processorRegistry,
-                                   @Autowire ArtifactResolverRegistry resolverRegistry) {
+    public ContributionServiceImpl(@Autowire
+    ContributionRepository repository, @Autowire
+    ContributionProcessorRegistry processorRegistry, @Autowire
+    ArtifactResolverRegistry resolverRegistry) {
         super();
         this.contributionRepository = repository;
         this.processorRegistry = processorRegistry;
         this.resolverRegistry = resolverRegistry;
     }
 
-    public URI contribute(URL contribution, boolean storeInRepository) throws DeploymentException, IOException {
-        if (contribution == null) {
-            throw new IllegalArgumentException("contribution is null");
+    public void contribute(URI contributionURI, URL sourceURL, boolean storeInRepository) throws DeploymentException,
+        IOException {
+        if (sourceURL == null) {
+            throw new IllegalArgumentException("Source URL for the contribution is null");
         }
 
-        URI source;
+        Contribution contribution = new Contribution(contributionURI);
+        contribution.setLocation(sourceURL);
+        InputStream is = IOHelper.getInputStream(sourceURL);
         try {
-            source = contribution.toURI();
-        } catch (URISyntaxException e) {
-            throw new IllegalArgumentException("contribution cannot be converted to a URI", e);
-        }
-
-        InputStream is = contribution.openConnection().getInputStream();
-        try {
-            return contribute(source, is, storeInRepository);
+            addContribution(contribution, is, storeInRepository);
         } finally {
             IOHelper.closeQuietly(is);
         }
     }
 
-    public URI contribute(URI source, InputStream contributionStream, boolean storeInRepository)
-        throws DeploymentException, IOException {
-        if (source == null) {
-            throw new IllegalArgumentException("source URI for contribution is null");
-        }
+    public void contribute(URI contributionURI, InputStream input) throws DeploymentException, IOException {
+        Contribution contribution = new Contribution(contributionURI);
+        addContribution(contribution, input, true);
+    }
 
-        if (contributionStream == null) {
-            throw new IllegalArgumentException("Invalid contribution stream : null");
+    private void addContribution(Contribution contribution, InputStream contributionStream, boolean storeInRepository)
+        throws IOException, MalformedURLException, DeploymentException {
+        if (contributionStream == null && contribution.getLocation() == null) {
+            throw new IllegalArgumentException("The content of the contribution is null");
         }
 
         // store the contribution in the contribution repository
-        URI contributionURI = URI.create("sca://contribution/" + UUID.randomUUID() + "/");
-        URL locationURL;
         if (storeInRepository) {
-            locationURL = this.contributionRepository.store(source, contributionStream);
-        } else {
-            locationURL = source.toURL();
+            URL locationURL = null;
+            if (contribution.getLocation() != null) {
+                locationURL = contributionRepository.store(contribution.getUri(), contribution.getLocation());
+            } else {
+                locationURL = contributionRepository.store(contribution.getUri(), contributionStream);
+            }
+            contribution.setLocation(locationURL);
         }
 
-        Contribution contribution = null;
-        contribution = new Contribution(contributionURI);
-        contribution.setLocation(locationURL);
-
         // process the contribution
-        this.processorRegistry.processContent(contribution, contributionURI, contributionStream);
+        this.processorRegistry.processContent(contribution, contribution.getUri(), contributionStream);
 
         // store the contribution on the registry
         this.contributionRegistry.put(contribution.getUri(), contribution);
-
-        return contribution.getUri();
     }
 
     public Object getContribution(URI id) {

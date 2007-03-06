@@ -19,6 +19,7 @@
 
 package org.apache.tuscany.core.runtime.mini;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 
@@ -42,5 +43,6 @@ public interface SimpleRuntimeInfo extends RuntimeInfo {
     URL getSystemSCDL();
     List<URL> getExtensionSCDLs();
     URL getContributionRoot();
+    URI getContributionURI();
     
 }

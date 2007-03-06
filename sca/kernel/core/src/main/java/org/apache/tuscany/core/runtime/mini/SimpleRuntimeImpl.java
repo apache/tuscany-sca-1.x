@@ -87,11 +87,13 @@ public class SimpleRuntimeImpl extends AbstractRuntime implements SimpleRuntime 
             extensionComponent.start();
         }
 
-        URI contributionId = contributionService.contribute(runtimeInfo.getContributionRoot(), false);
+        URI contributionId = runtimeInfo.getContributionURI();
+        contributionService.contribute(contributionId, runtimeInfo.getContributionRoot(), false);
         URI compositeDefinitionId = contributionId.resolve(runtimeInfo.getCompositePath());
 
         application =
-            (CompositeComponent)assemblyService.addCompositeToDomain(contributionId, compositeDefinitionId, runtimeInfo.getCompositePath());
+            (CompositeComponent)assemblyService.addCompositeToDomain(contributionId, compositeDefinitionId, runtimeInfo
+                .getCompositePath());
 
         CompositeContext context = new CompositeContextImpl(application, getWireService());
         CurrentCompositeContext.setContext(context);

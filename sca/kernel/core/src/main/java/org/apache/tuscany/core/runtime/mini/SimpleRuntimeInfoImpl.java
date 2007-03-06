@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -42,6 +44,9 @@ public class SimpleRuntimeInfoImpl extends AbstractRuntimeInfo implements Simple
     private URL applicationSCDL;
     private URL systemSCDL;
 
+    private URL contributionURL;
+    private URI contributionURI;
+
     /**
      * @param classLoader
      * @param compositePath
@@ -52,12 +57,14 @@ public class SimpleRuntimeInfoImpl extends AbstractRuntimeInfo implements Simple
     public SimpleRuntimeInfoImpl(ClassLoader classLoader,
                                  URL systemSCDL,
                                  List<URL> extensions,
+                                 URI contributionURI,
                                  URL applicationSCDL,
                                  String compositePath) {
         this(classLoader, compositePath);
         this.extensions = extensions;
         this.applicationSCDL = applicationSCDL;
         this.systemSCDL = systemSCDL;
+        this.contributionURI = contributionURI;
     }
 
     public SimpleRuntimeInfoImpl(ClassLoader classLoader, String compositePath) {
@@ -70,6 +77,7 @@ public class SimpleRuntimeInfoImpl extends AbstractRuntimeInfo implements Simple
         }
         this.compositePath = compositePath != null ? compositePath : APPLICATION_SCDL;
         getApplicationSCDL();
+        this.contributionURI = URI.create("/default");
     }
 
     public ClassLoader getClassLoader() {
@@ -104,7 +112,10 @@ public class SimpleRuntimeInfoImpl extends AbstractRuntimeInfo implements Simple
     }
 
     public URL getContributionRoot() {
-        return getContributionLocation(getApplicationSCDL(), compositePath);
+        if (contributionURL == null) {
+            contributionURL = getContributionLocation(getApplicationSCDL(), compositePath);
+        }
+        return contributionURL;
     }
 
     public List<URL> getExtensionSCDLs() {
@@ -167,4 +178,7 @@ public class SimpleRuntimeInfoImpl extends AbstractRuntimeInfo implements Simple
         return root;
     }
 
+    public URI getContributionURI() {
+        return contributionURI;
+    }
 }

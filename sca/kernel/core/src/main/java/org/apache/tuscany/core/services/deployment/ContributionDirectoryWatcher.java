@@ -54,9 +54,9 @@ public class ContributionDirectoryWatcher {
         for (File file : files) {
             try {
                 if (file.isDirectory()) {
-                    this.contributionService.contribute(file.toURL(), false);
+                    this.contributionService.contribute(null, file.toURL(), false);
                 } else {
-                    this.contributionService.contribute(file.toURL(), true);
+                    this.contributionService.contribute(null, file.toURL(), true);
                 }
             } catch (DeploymentException de) {
                 // FIXME handle this
