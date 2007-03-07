@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.sca.itest;
 
+import java.util.Collection;
+
 import org.osoa.sca.annotations.Property;
 
 public class CDComponentImpl implements CDComponent {
@@ -27,6 +29,7 @@ public class CDComponentImpl implements CDComponent {
     private String dProperty;
     private String nosource;
     private String fileProperty;
+    private Collection<String> manyValuesFileProperty;
     private int overrideNumber;
     private String cProperty2;
 
@@ -43,6 +46,12 @@ public class CDComponentImpl implements CDComponent {
     public void setFileProp(final String value) {
         this.fileProperty = value;
     }
+    
+    @Property(name="manyValuesFileProperty")
+    public void setFileManyValueProp(final Collection<String> values) {
+        this.manyValuesFileProperty = values;
+    }
+    
     @Property
     public void setC(final String C) {
         this.cProperty = C;
@@ -81,5 +90,8 @@ public class CDComponentImpl implements CDComponent {
     public int getOverrideValue() {
         return this.overrideNumber;
     }
+	public Collection<String> getManyValuesFileProperty() {
+		return this.manyValuesFileProperty;
+	}
 }
 

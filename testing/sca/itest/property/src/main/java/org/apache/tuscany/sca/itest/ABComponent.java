@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.sca.itest;
 
+import java.util.Collection;
+
 public interface ABComponent {  
 
     String getA();
@@ -26,4 +28,6 @@ public interface ABComponent {
     String getZ();
     int getIntValue();
     String getF();
+    Collection<String> getManyStringValues();
+    Collection<Integer> getManyIntegers();
 }

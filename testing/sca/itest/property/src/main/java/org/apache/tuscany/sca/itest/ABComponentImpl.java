@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.sca.itest;
 
+import java.util.Collection;
+
 import org.osoa.sca.annotations.Property;
 
 public class ABComponentImpl implements ABComponent {
@@ -26,7 +28,8 @@ public class ABComponentImpl implements ABComponent {
     private String aProperty;
     private String bProperty;
     private int intValue;
- //   private Collection manyProp;
+    private Collection<String> manyStringValues;
+    private Collection<Integer> manyIntegerValues;
     private String zProperty;
     private String fProperty;
 
@@ -35,10 +38,15 @@ public class ABComponentImpl implements ABComponent {
         this.zProperty = value;
     }
     
-//    @Property(name="foobar")
-//    public void setCollectionProperty(final Collection value) {
-//        this.manyProp = value;
-//    }
+    @Property(name="foobar")
+    public void setManyStringValues(final Collection<String> value) {
+        this.manyStringValues = value;
+    }
+    
+    @Property(name="fooInts")
+    public void setManyIntegers(final Collection<Integer> value) {
+        this.manyIntegerValues = value;
+    }
     
     @Property
     public void setA(final String A) {
@@ -79,4 +87,12 @@ public class ABComponentImpl implements ABComponent {
     public String getF() {
         return this.fProperty;
     }
+
+	public Collection<String> getManyStringValues() {
+		return manyStringValues;
+	}
+	
+	public Collection<Integer> getManyIntegers() {
+		return manyIntegerValues;
+	}
 }

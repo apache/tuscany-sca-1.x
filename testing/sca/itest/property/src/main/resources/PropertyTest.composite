@@ -76,7 +76,18 @@
         <property name="f" source="$complex/foo:MyComplexValue/foo:a">f</property>
         <property name="xpath" source="$complex/foo:MyComplexValue/foo:x/*[local-name()='z']"/>
         <property name="one" source="$number"/>
+        <property name="foobar">
+        	<value>Apache</value>
+        	<value>Tuscany</value>
+        	<value>Java SCA</value>
+        </property>
+        <property name="fooInts">
+        	<value>123</value>
+        	<value>456</value>
+        	<value>789</value>
+        </property>
     </component>
+    
 
     <component name="CDComponent">
         <implementation.java class="org.apache.tuscany.sca.itest.CDComponentImpl"/>
@@ -84,6 +95,7 @@
         <property name="d" source="$complex/foo:MyComplexValue/foo:d"/>
         <property name="nosource">aValue</property>
         <property name="fileProperty" file="fileProperty.txt"/>
+        <property name="manyValuesFileProperty" file="manyValuesFileProperty.txt"/>
         <property name="nonFileProperty" file="fileProperty.txt" source="$complex/foo:MyComplexValue/foo:c"/>
         <property name="two" source="$number">2</property>
     </component>

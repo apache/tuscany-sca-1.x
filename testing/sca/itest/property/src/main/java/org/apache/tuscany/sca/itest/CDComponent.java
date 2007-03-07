@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.sca.itest;
 
+import java.util.Collection;
+
 public interface CDComponent {  
 
     String getC();
@@ -26,5 +28,6 @@ public interface CDComponent {
     String getD();
     String getNoSource();
     String getFileProperty();
+    Collection<String> getManyValuesFileProperty();
     int getOverrideValue();
 }

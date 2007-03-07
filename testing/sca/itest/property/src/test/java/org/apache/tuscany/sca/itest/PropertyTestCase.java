@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.sca.itest;
 
+import java.util.Iterator;
+
 import junit.framework.TestCase;
 
 import org.apache.tuscany.api.SCAContainer;
@@ -96,6 +98,16 @@ public class PropertyTestCase extends TestCase {
         assertEquals("fileValue", cdService.getFileProperty());
     }
     
+    
+    public void testManyValuesFileProperty() {
+    	Iterator<String> iterator = cdService.getManyValuesFileProperty().iterator();
+    	iterator.next();
+    	String secondValue = iterator.next();
+        assertEquals(4, cdService.getManyValuesFileProperty().size());
+        assertEquals("fileValueTwo", secondValue);
+    }
+    
+    
     public void testABCD() {
         assertEquals("a", abcdService.getA());
         assertEquals("b", abcdService.getB());
@@ -109,6 +121,20 @@ public class PropertyTestCase extends TestCase {
         assertEquals("2006",propertyService.getYear());
         
     } 
+    
+    public void testManySimpleStringValues() {
+    	Iterator<String> iterator = abService.getManyStringValues().iterator();
+    	assertEquals("Apache", iterator.next());
+    	assertEquals("Tuscany", iterator.next());
+    	assertEquals("Java SCA", iterator.next());
+    }
+    
+    public void testManySimpleIntegerValues() {
+    	Iterator<Integer> iterator = abService.getManyIntegers().iterator();
+    	assertEquals(123, iterator.next().intValue());
+    	assertEquals(456, iterator.next().intValue());
+    	assertEquals(789, iterator.next().intValue());
+    }
     
     public void testComplexPropertyOne() {
         ComplexPropertyBean propBean = propertyService.getComplexPropertyOne();
