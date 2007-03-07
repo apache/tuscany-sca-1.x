@@ -69,7 +69,7 @@ public class ImportSDOLoader extends LoaderExtension {
 
         // FIXME: [rfeng] How to associate the TypeHelper with deployment
         // context?
-        HelperContext helperContext = SDODataTypeHelper.getHelperContext(deploymentContext);
+        HelperContext helperContext = SDODataTypeHelper.getHelperContext(object);
 
         importFactory(reader, deploymentContext, helperContext);
         importWSDL(reader, deploymentContext, helperContext);

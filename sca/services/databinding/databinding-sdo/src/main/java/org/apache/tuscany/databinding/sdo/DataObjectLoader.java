@@ -66,7 +66,7 @@ public class DataObjectLoader implements StAXElementLoader<ModelObject> {
                             XMLStreamReader reader,
                             DeploymentContext deploymentContext) throws XMLStreamException, LoaderException {
         assert propertyQName.equals(reader.getName());
-        HelperContext helperContext = SDODataTypeHelper.getHelperContext(deploymentContext);
+        HelperContext helperContext = SDODataTypeHelper.getHelperContext(object);
         TypeHelper typeHelper = helperContext.getTypeHelper();
         XMLStreamHelper streamHelper = SDOUtil.createXMLStreamHelper(typeHelper);
         DataObject dataObject = streamHelper.loadObject(reader);
