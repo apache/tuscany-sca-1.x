@@ -20,7 +20,6 @@
 package org.apache.tuscany.core.property;
 
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,16 +31,12 @@ import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.tuscany.core.databinding.javabeans.JavaBean2DOMNodeTransformer;
 import org.apache.tuscany.core.databinding.xml.InputStream2Node;
 import org.apache.tuscany.spi.databinding.extension.DOMHelper;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
@@ -53,6 +48,7 @@ import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.model.PropertyValue;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
@@ -140,16 +136,15 @@ public final class PropertyHelper {
                             throw ex;
                         }
                         
+                        boolean prependValue = false;
                         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
                         Document compositePropDefValues = builder.newDocument();
-                        
-                        boolean prependValue = false;
+                        Node element = null;
                         for (int count = 0 ; count < compositeProp.getDefaultValues().size() ; ++count) {
-                            Node clone = compositeProp.getDefaultValues().get(count).getFirstChild().cloneNode(true);
-                            prependValue = clone.getNodeName().equals("value");
-                            clone = compositePropDefValues.adoptNode(clone);
-                            compositePropDefValues.appendChild(clone);
-                            //compositePropDefValues.appendChild(compositeProp.getDefaultValues().get(count).getFirstChild().cloneNode(true));
+                        	element = compositeProp.getDefaultValues().get(count);
+                            prependValue = element.getNodeName().equals("value");
+                            element = compositePropDefValues.adoptNode(element);
+                            compositePropDefValues.appendChild(element);
                         }
                         // Adding /value because the document root is "value"
                         String path = source.substring(index);
@@ -169,6 +164,7 @@ public final class PropertyHelper {
                             
                         // FIXME: How to deal with namespaces?
                         Document node = evaluate(null, compositePropDefValues, xpath);
+                        //Document node = evaluate(null, compositeProp.getDefaultValues().get(0).getOwnerDocument(), xpath);
                         if (node != null) {
                             List<Document> values = new ArrayList<Document>();
                             values.add(node);
@@ -184,17 +180,26 @@ public final class PropertyHelper {
                     throw new LoaderException(e);
                 }
             } else if (file != null) {
-                Document node = loadFromFile(propValue.getFile(), deploymentContext);
-                List<Document> values = new ArrayList<Document>();
-                values.add(node);
-                propValue.setValue(values);
                 Property<?> prop =
                     (Property<?>)componentDefinition.getImplementation().getComponentType().getProperties()
                         .get(propValue.getName());
+                Document document = loadFromFile(propValue.getFile(), deploymentContext);
+                List<Element> values = new ArrayList<Element>();
                 if (prop.isMany()) {
-                    propValue.setValueFactory(new SimpleMultivaluedPropertyObjectFactory(prop, propValue.getValue()));
+                	//extract the property value elements from the loaded document
+                	Element element = document.getDocumentElement();
+                	Node childNode = null;
+                	for (int count = 0 ; count < element.getChildNodes().getLength() ; ++count) {
+                		if (element.getChildNodes().item(count).getNodeType() == Document.ELEMENT_NODE) {
+                			values.add((Element)element.getChildNodes().item(count));
+                		}
+                	}
+                	propValue.setValue(values);
+                	propValue.setValueFactory(new SimpleMultivaluedPropertyObjectFactory(prop, propValue.getValue()));
                 } else {
-                    propValue.setValueFactory(new SimplePropertyObjectFactory(prop, (Document)propValue.getValue().get(0)));
+                	values.add(document.getDocumentElement());
+                	propValue.setValue(values);
+                	propValue.setValueFactory(new SimplePropertyObjectFactory(prop, (Element)propValue.getValue().get(0)));
                 }
             }
         }

@@ -45,7 +45,7 @@ import org.apache.tuscany.core.injection.JNDIObjectFactory;
 public class JNDIPropertyFactory implements PropertyObjectFactory {
     public <T> ObjectFactory<T> createObjectFactory(Property<T> property, PropertyValue<T> value)
         throws LoaderException {
-        String text = value.getValue().get(0).getDocumentElement().getTextContent();
+        String text = value.getValue().get(0).getTextContent();
         try {
             Context context = new InitialContext();
             return new JNDIObjectFactory<T>(context, text);
@@ -61,7 +61,7 @@ public class JNDIPropertyFactory implements PropertyObjectFactory {
             Context context = new InitialContext();
             List<String> text = new ArrayList<String>();
             for (int count = 0 ; count < instances.size() ; ++count) {
-                text.add(value.getValue().get(count).getDocumentElement().getTextContent());
+                text.add(value.getValue().get(count).getTextContent());
             }
             return new JNDIListObjectFactory<T>(context, text);
         } catch (NamingException e) {

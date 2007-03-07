@@ -39,12 +39,12 @@ public class SimplePropertyObjectFactoryTestCase extends TestCase {
     private <T> PropertyValue<T> mock(String value) {
         Document document = EasyMock.createMock(Document.class);
         Element element = EasyMock.createMock(Element.class);
-        EasyMock.expect(document.getDocumentElement()).andReturn(element);
+        //EasyMock.expect(document.getDocumentElement()).andReturn(element);
         EasyMock.expect(element.getTextContent()).andReturn(value);
         EasyMock.replay(document, element);
         
-        List<Document> valueList = new ArrayList<Document>();
-        valueList.add(document);
+        List<Element> valueList = new ArrayList<Element>();
+        valueList.add(element);
         return new PropertyValue<T>(null, valueList);
     }
 

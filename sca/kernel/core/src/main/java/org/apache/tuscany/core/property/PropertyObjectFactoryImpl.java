@@ -22,8 +22,6 @@ package org.apache.tuscany.core.property;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.namespace.QName;
-
 import org.apache.tuscany.core.databinding.xml.DOMDataBinding;
 import org.apache.tuscany.spi.ObjectCreationException;
 import org.apache.tuscany.spi.ObjectFactory;
@@ -32,7 +30,6 @@ import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.databinding.DataBindingRegistry;
 import org.apache.tuscany.spi.databinding.Mediator;
 import org.apache.tuscany.spi.databinding.extension.SimpleTypeMapperExtension;
-import org.apache.tuscany.spi.idl.ElementInfo;
 import org.apache.tuscany.spi.idl.TypeInfo;
 import org.apache.tuscany.spi.idl.XMLType;
 import org.apache.tuscany.spi.loader.LoaderException;

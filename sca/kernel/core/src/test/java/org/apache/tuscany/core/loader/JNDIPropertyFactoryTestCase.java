@@ -14,7 +14,6 @@ import junit.framework.TestCase;
 import org.apache.tuscany.core.injection.JNDIObjectFactory;
 import org.apache.tuscany.spi.model.PropertyValue;
 import org.easymock.EasyMock;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -30,12 +29,12 @@ public class JNDIPropertyFactoryTestCase extends TestCase {
             Element element = EasyMock.createMock(Element.class);
             EasyMock.expect(element.getTextContent()).andReturn("foo");
             EasyMock.replay(element);
-            Document doc = EasyMock.createMock(Document.class);
-            EasyMock.expect(doc.getDocumentElement()).andReturn(element);
-            EasyMock.replay(doc);
+            //Document doc = EasyMock.createMock(Document.class);
+            //EasyMock.expect(doc.getDocumentElement()).andReturn(element);
+            //EasyMock.replay(doc);
             PropertyValue<?> value = new MockPropertyValue<Type>();
-            List<Document> docList = new ArrayList<Document>();
-            docList.add(doc);
+            List<Element> docList = new ArrayList<Element>();
+            docList.add(element);
             value.setValue(docList);
             JNDIObjectFactory<?> jndiFactory = (JNDIObjectFactory<?>) factory.createObjectFactory(null, value);
             assertEquals("bar", jndiFactory.getInstance());

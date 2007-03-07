@@ -21,24 +21,20 @@ package org.apache.tuscany.core.loader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
 
 import junit.framework.TestCase;
 
 import org.apache.tuscany.core.databinding.javabeans.JavaBean2DOMNodeTransformer;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.util.stax.StaxUtil;
 import org.easymock.EasyMock;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -53,30 +49,33 @@ public class MultivaluePropertyLoadingTestCase extends TestCase {
     
     
     public void testPropertyLoading_SimpleType() throws Exception {
-        String xml = "<tus:property xmlns:foo='http://foo.com' "
-                + "xmlns:tus='http://www.osoa.org/xmlns/sca/1.0'"
-            + " name='TestProperty' many='true' type='foo:TestType'>"
-            + "<foo:TestValue>"
-            + "TestPropertyValue"
-            + "</foo:TestValue>"
-            + "</tus:property>";
+    	String xml = "<tus:property xmlns:foo='http://foo.com' "
+            			+ "xmlns:tus='http://www.osoa.org/xmlns/sca/1.0' "
+            			+ "xmlns:xs='http://www.w3.org/2001/XMLSchema' "
+            			+ " name='TestProperty' type='xs:string' many='true'>"
+            			+ "<value>"
+            				+ "TestPropertyValue1"
+            			+ "</value>"	
+            			+ "<value>"
+        					+ "TestPropertyValue2"
+        				+ "</value>"
+            			+ "</tus:property>";
 
-        XMLStreamReader reader = getReader(xml);
-        Property<?> aProperty = propertyLoader.load(null, null, reader, null);
-        //printNode(aProperty.getDefaultValue());
-        
-        assertEquals("TestProperty", aProperty.getName());
-        assertEquals(new QName("http://foo.com", "TestType", "foo"), aProperty.getXmlType());
-        assertEquals(false, aProperty.isMustSupply());
-        assertEquals(true, aProperty.isMany());
-        
-        Element root = aProperty.getDefaultValues().get(0).getDocumentElement();
-        
-        NodeList childNodes = root.getChildNodes();
-        assertEquals(1, childNodes.getLength());
-
-        Text t = (Text) childNodes.item(0);
-        assertEquals("TestPropertyValue", t.getTextContent());
+	    XMLStreamReader reader = getReader(xml);
+	    Property<?> aProperty = propertyLoader.load(null, null, reader, null);
+	    
+	    assertEquals("TestProperty", aProperty.getName());
+	    assertEquals(new QName("http://www.w3.org/2001/XMLSchema", "string", "xs"), aProperty.getXmlType());
+	    assertEquals(false, aProperty.isMustSupply());
+	    assertEquals(true, aProperty.isMany());
+	    
+	    Element secondValue = aProperty.getDefaultValues().get(1);
+	    
+	    NodeList childNodes = secondValue.getChildNodes();
+	    assertEquals(1, childNodes.getLength());
+	
+	    Text t = (Text) childNodes.item(0);
+	    assertEquals("TestPropertyValue2", t.getTextContent());
     }
     
     public void testPropertyLoading_Type() throws Exception {
@@ -104,7 +103,7 @@ public class MultivaluePropertyLoadingTestCase extends TestCase {
         assertEquals(false, aProperty.isMustSupply());
         assertEquals(true, aProperty.isMany());
         
-        Element secondValue = aProperty.getDefaultValues().get(1).getDocumentElement();
+        Element secondValue = aProperty.getDefaultValues().get(1);
         
         NodeList childNodes = secondValue.getChildNodes();
         assertEquals(2, childNodes.getLength());
@@ -136,7 +135,7 @@ public class MultivaluePropertyLoadingTestCase extends TestCase {
         XMLStreamReader reader = getReader(xml);
         Property<?> aProperty = propertyLoader.load(null, null, reader, null);
         
-        Element secondElement = aProperty.getDefaultValues().get(1).getDocumentElement();
+        Element secondElement = aProperty.getDefaultValues().get(1);
         
         assertEquals(2, aProperty.getDefaultValues().size());
         assertEquals("TestProperty", aProperty.getName());

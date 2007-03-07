@@ -46,7 +46,7 @@ public class StringParserPropertyFactory implements PropertyObjectFactory {
 
     public <T> ObjectFactory<T> createObjectFactory(Property<T> property, PropertyValue<T> value)
         throws LoaderException {
-        String text = value.getValue().get(0).getDocumentElement().getTextContent();
+        String text = value.getValue().get(0).getTextContent();
         return new SingletonObjectFactory<T>(createInstance(text, property.getJavaType()));
     }
     
@@ -55,7 +55,7 @@ public class StringParserPropertyFactory implements PropertyObjectFactory {
         String text = null;
         List<T> instances = new ArrayList<T>();
         for (int count = 0 ; count < value.getValue().size() ; ++count) {
-            text = value.getValue().get(count).getDocumentElement().getTextContent();
+            text = value.getValue().get(count).getTextContent();
             instances.add(createInstance(text, property.getJavaType()));
         }
         return new SingletonListObjectFactory<T>(instances);

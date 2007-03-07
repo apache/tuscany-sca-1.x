@@ -69,7 +69,7 @@ import org.apache.tuscany.spi.model.ReferenceTarget;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.util.stax.StaxUtil;
 import org.osoa.sca.annotations.Constructor;
-import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * Loads a component definition from an XML-based assembly file 
@@ -77,348 +77,371 @@ import org.w3c.dom.Document;
  * @version $Rev$ $Date$
  */
 public class ComponentLoader extends LoaderExtension<ComponentDefinition<?>> {
-    private static final QName COMPONENT = new QName(SCA_NS, "component");
-    private static final QName PROPERTY = new QName(SCA_NS, "property");
-    private static final QName REFERENCE = new QName(SCA_NS, "reference");
+	private static final QName COMPONENT = new QName(SCA_NS, "component");
 
-    private static final String PROPERTY_FILE_ATTR = "file";
-    private static final String PROPERTY_SOURCE_ATTR = "source";
-    private static final String PROPERTY_NAME_ATTR = "name";
-    private static final String PROPERTY_TYPE_ATTR = "type";
-    private static final String PROPERTY_ELEMENT_ATTR = "element";
-    public static final char COLON = ':';
+	private static final QName PROPERTY = new QName(SCA_NS, "property");
 
-    private PropertyObjectFactory propertyFactory;
+	private static final QName REFERENCE = new QName(SCA_NS, "reference");
 
-    @Constructor
-    public ComponentLoader(@Autowire
-    LoaderRegistry registry, @Autowire
-    PropertyObjectFactory propertyFactory) {
-        super(registry);
-        this.propertyFactory = propertyFactory;
-    }
+	private static final String PROPERTY_FILE_ATTR = "file";
 
-    public QName getXMLType() {
-        return COMPONENT;
-    }
+	private static final String PROPERTY_SOURCE_ATTR = "source";
 
-    @SuppressWarnings("unchecked")
-    public ComponentDefinition<?> load(CompositeComponent parent,
-                                       ModelObject object,
-                                       XMLStreamReader reader,
-                                       DeploymentContext deploymentContext) throws XMLStreamException,
-                                                                           LoaderException {
-        assert COMPONENT.equals(reader.getName());
-        String name = reader.getAttributeValue(null, "name");
-        String initLevel = reader.getAttributeValue(null, "initLevel");
+	private static final String PROPERTY_NAME_ATTR = "name";
 
-        try {
-            Implementation<?> impl = loadImplementation(parent, reader, deploymentContext);
-            registry.loadComponentType(parent, impl, deploymentContext);
+	private static final String PROPERTY_TYPE_ATTR = "type";
 
-            ComponentDefinition<Implementation<?>> componentDefinition =
-                new ComponentDefinition<Implementation<?>>(name, impl);
+	private static final String PROPERTY_ELEMENT_ATTR = "element";
 
-            if (initLevel != null) {
-                if (initLevel.length() == 0) {
-                    componentDefinition.setInitLevel(0);
-                } else {
-                    try {
-                        componentDefinition.setInitLevel(Integer.valueOf(initLevel));
-                    } catch (NumberFormatException e) {
-                        throw new InvalidValueException(initLevel, "initValue", e);
-                    }
-                }
-            }
+	public static final char COLON = ':';
 
-            while (true) {
-                switch (reader.next()) {
-                    case START_ELEMENT:
-                        QName qname = reader.getName();
-                        if (PROPERTY.equals(qname)) {
-                            loadProperty(reader, deploymentContext, componentDefinition);
-                        } else if (REFERENCE.equals(qname)) {
-                            loadReference(reader, deploymentContext, componentDefinition);
-                        } else {
-                            throw new UnrecognizedElementException(qname);
-                        }
-                        reader.next();
-                        break;
-                    case END_ELEMENT:
-                        if (reader.getName().equals(COMPONENT)) {
-                            // hack to leave alone SystemImplementation
-                            if (!((Implementation)componentDefinition.getImplementation() instanceof SystemImplementation)) {
-                                populatePropertyValues(componentDefinition);
-                            }
-                            ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-                                (ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>)componentDefinition
-                                    .getImplementation().getComponentType();
-                            for (ReferenceDefinition ref : type.getReferences().values()) {
-                                if (ref.isAutowire()) {
-                                    ReferenceTarget referenceTarget = new ReferenceTarget();
-                                    referenceTarget.setReferenceName(ref.getName());
-                                    componentDefinition.add(referenceTarget);
-                                }
-                            }
-                            validate(componentDefinition);
-                            return componentDefinition;
-                        }
-                        break;
-                }
-            }
-        } catch (LoaderException e) {
-            e.addContextName(name);
-            throw e;
-        }
-    }
+	private PropertyObjectFactory propertyFactory;
 
-    protected Implementation<?> loadImplementation(CompositeComponent parent,
-                                                   XMLStreamReader reader,
-                                                   DeploymentContext deploymentContext) throws XMLStreamException,
-                                                                                       LoaderException {
-        reader.nextTag();
-        ModelObject o = registry.load(parent, null, reader, deploymentContext);
-        if (!(o instanceof Implementation)) {
-            throw new MissingImplementationException();
-        }
-        return (Implementation<?>)o;
-    }
+	@Constructor
+	public ComponentLoader(@Autowire
+	LoaderRegistry registry, @Autowire
+	PropertyObjectFactory propertyFactory) {
+		super(registry);
+		this.propertyFactory = propertyFactory;
+	}
 
-    @SuppressWarnings("unchecked")
-    protected void loadProperty(XMLStreamReader reader,
-                                DeploymentContext deploymentContext,
-                                ComponentDefinition<?> componentDefinition) throws XMLStreamException,
-                                                                                   LoaderException {
-        String name = reader.getAttributeValue(null, PROPERTY_NAME_ATTR);
-        Implementation<?> implementation = componentDefinition.getImplementation();
-        ComponentType<?, ?, ?> componentType = implementation.getComponentType();
-        Property<Type> property = componentType.getProperty(name);
-        if (property == null) {
-            throw new UndefinedPropertyException(name);
-        }
-        
-        PropertyValue<Type> propertyValue;
-        readPropertyType(reader, property);
-        
-        String source = reader.getAttributeValue(null, PROPERTY_SOURCE_ATTR);
-        String file = reader.getAttributeValue(null, PROPERTY_FILE_ATTR);
-        
-        if (source != null || file != null) {
-            propertyValue = new PropertyValue<Type>(name, source, file);
-            propertyValue.setValue(property.getDefaultValues());
-            LoaderUtil.skipToEndElement(reader);
-        } else {
-            try {
-                DocumentBuilder documentBuilder = DOMHelper.newDocumentBuilder();
-                List<Document> values = loadPropertyValues(reader, documentBuilder, property.getXmlType(), property.getXmlElement());
-                propertyValue = new PropertyValue<Type>(name, values);
-                if (!property.isMany() && values.size() > 1) {
-                    ManyPropertyValueLoaderException ex = new ManyPropertyValueLoaderException();
-                    ex.setPropertyName(name);
-                    ex.setLine(reader.getLocation().getLineNumber());
-                    ex.setColumn(reader.getLocation().getColumnNumber());
-                    throw ex;
-                }
-            } catch (ParserConfigurationException e) {
-                throw new LoaderException(e);
-            }
-        }
-        
-        ObjectFactory<?> objectFactory = null;
-        if (property.isMany()) {
-            objectFactory = propertyFactory.createListObjectFactory(property, propertyValue);
-        } else {
-            objectFactory = propertyFactory.createObjectFactory(property, propertyValue);
-        }
-        // propertyValue.setValueFactory(new
-        // SimplePropertyObjectFactory(property, propertyValue.getValue()));
-        propertyValue.setValueFactory(objectFactory);
-        componentDefinition.add(propertyValue);
-    }
+	public QName getXMLType() {
+		return COMPONENT;
+	}
 
-    protected void loadReference(XMLStreamReader reader,
-                                 DeploymentContext deploymentContext,
-                                 ComponentDefinition<?> componentDefinition) throws XMLStreamException,
-                                                                            LoaderException {
-        String name = reader.getAttributeValue(null, "name");
-        String text = reader.getElementText();
-        String target = text != null ? text.trim() : null;
+	@SuppressWarnings("unchecked")
+	public ComponentDefinition<?> load(CompositeComponent parent,
+			ModelObject object, XMLStreamReader reader,
+			DeploymentContext deploymentContext) throws XMLStreamException,
+			LoaderException {
+		assert COMPONENT.equals(reader.getName());
+		String name = reader.getAttributeValue(null, "name");
+		String initLevel = reader.getAttributeValue(null, "initLevel");
 
-        if (name == null) {
-            throw new InvalidReferenceException("No name specified");
-        } else if (target == null) {
-            throw new InvalidReferenceException("No target specified", name);
-        }
-        Implementation<?> impl = componentDefinition.getImplementation();
-        ComponentType<?, ?, ?> componentType = impl.getComponentType();
-        if (!componentType.getReferences().containsKey(name)) {
-            throw new UndefinedReferenceException(name);
-        }
-        if (componentType instanceof CompositeComponentType) {
-            ReferenceDefinition definition = componentType.getReferences().get(name);
-            if (definition.getBindings().isEmpty()) {
-                // TODO JFM allow selection of a default binding
-                try {
-                    LocalBindingDefinition binding = new LocalBindingDefinition(new URI(target));
-                    definition.addBinding(binding);
-                } catch (URISyntaxException e) {
-                    throw new InvalidReferenceException(e);
-                }
-            } else {
-                for (BindingDefinition binding : definition.getBindings()) {
-                    try {
-                        // FIXME this is bad - clarify in the spec how URIs are
-                        // overriden
-                        binding.setTargetUri(new URI(target));
-                    } catch (URISyntaxException e) {
-                        throw new LoaderException(e);
-                    }
-                }
-            }
-        } else {
-            ReferenceTarget referenceTarget = componentDefinition.getReferenceTargets().get(name);
-            if (referenceTarget == null) {
-                referenceTarget = new ReferenceTarget();
-                referenceTarget.setReferenceName(name);
-                componentDefinition.add(referenceTarget);
-            }
-            try {
-                referenceTarget.addTarget(new URI(target));
-            } catch (URISyntaxException e) {
-                throw new InvalidReferenceException(e);
-            }
-        }
-    }
+		try {
+			Implementation<?> impl = loadImplementation(parent, reader,
+					deploymentContext);
+			registry.loadComponentType(parent, impl, deploymentContext);
 
-    @SuppressWarnings("unchecked")
-    protected void populatePropertyValues(ComponentDefinition<Implementation<?>> componentDefinition) throws LoaderException,
-                                                                                                     MissingPropertyValueException {
-        ComponentType componentType = componentDefinition.getImplementation().getComponentType();
-        if (componentType != null) {
-            Map<String, Property<?>> properties = componentType.getProperties();
-            Map<String, PropertyValue<?>> propertyValues = componentDefinition.getPropertyValues();
+			ComponentDefinition<Implementation<?>> componentDefinition = new ComponentDefinition<Implementation<?>>(
+					name, impl);
 
-            for (Property<?> aProperty : properties.values()) {
-                if (propertyValues.get(aProperty.getName()) == null) {
-                    if (aProperty.isMustSupply()) {
-                        throw new MissingPropertyValueException(aProperty.getName());
-                    } else if (aProperty.getDefaultValues() != null) {
-                        PropertyValue propertyValue = new PropertyValue();
-                        propertyValue.setName(aProperty.getName());
-                        propertyValue.setValue(aProperty.getDefaultValues());
-                        propertyValue.setValueFactory(propertyFactory
-                            .createObjectFactory(aProperty, propertyValue));
-                        /*
-                         * propertyValue.setValueFactory(new
-                         * SimplePropertyObjectFactory(aProperty,
-                         * propertyValue.getValue()));
-                         */
-                        propertyValues.put(aProperty.getName(), propertyValue);
-                    }
-                }
-            }
-        }
-    }
+			if (initLevel != null) {
+				if (initLevel.length() == 0) {
+					componentDefinition.setInitLevel(0);
+				} else {
+					try {
+						componentDefinition.setInitLevel(Integer
+								.valueOf(initLevel));
+					} catch (NumberFormatException e) {
+						throw new InvalidValueException(initLevel, "initValue",
+								e);
+					}
+				}
+			}
 
-    /**
-     * Validates a component definition, ensuring all component type
-     * configuration elements are satisfied
-     */
-    protected void validate(ComponentDefinition<Implementation<?>> definition) throws LoaderException {
-        // validate refererences
-        Implementation<?> implementation = definition.getImplementation();
-        ComponentType<?, ?, ?> type = implementation.getComponentType();
-        if (type == null) {
-            return;
-        }
-        for (ReferenceDefinition referenceDef : type.getReferences().values()) {
-            if (referenceDef.isAutowire() || !referenceDef.isRequired()) {
-                continue;
-            }
-            String name = referenceDef.getName();
-            ReferenceTarget target = definition.getReferenceTargets().get(name);
-            if (target == null) {
-                throw new MissingReferenceException(name);
-            }
-            int count = target.getTargets().size();
-            Multiplicity multiplicity = referenceDef.getMultiplicity();
-            switch (multiplicity) {
-                case ZERO_N:
-                    break;
-                case ZERO_ONE:
-                    if (count > 1) {
-                        throw new ReferenceMultiplicityViolationException(name, multiplicity, count);
-                    }
-                    break;
-                case ONE_ONE:
-                    if (count != 1) {
-                        throw new ReferenceMultiplicityViolationException(name, multiplicity, count);
-                    }
-                    break;
-                case ONE_N:
-                    if (count < 1) {
-                        throw new ReferenceMultiplicityViolationException(name, multiplicity, count);
-                    }
-                    break;
-            }
+			while (true) {
+				switch (reader.next()) {
+				case START_ELEMENT:
+					QName qname = reader.getName();
+					if (PROPERTY.equals(qname)) {
+						loadProperty(reader, deploymentContext,
+								componentDefinition);
+					} else if (REFERENCE.equals(qname)) {
+						loadReference(reader, deploymentContext,
+								componentDefinition);
+					} else {
+						throw new UnrecognizedElementException(qname);
+					}
+					reader.next();
+					break;
+				case END_ELEMENT:
+					if (reader.getName().equals(COMPONENT)) {
+						// hack to leave alone SystemImplementation
+						if (!((Implementation) componentDefinition
+								.getImplementation() instanceof SystemImplementation)) {
+							populatePropertyValues(componentDefinition);
+						}
+						ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type = (ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>) componentDefinition
+								.getImplementation().getComponentType();
+						for (ReferenceDefinition ref : type.getReferences()
+								.values()) {
+							if (ref.isAutowire()) {
+								ReferenceTarget referenceTarget = new ReferenceTarget();
+								referenceTarget.setReferenceName(ref.getName());
+								componentDefinition.add(referenceTarget);
+							}
+						}
+						validate(componentDefinition);
+						return componentDefinition;
+					}
+					break;
+				}
+			}
+		} catch (LoaderException e) {
+			e.addContextName(name);
+			throw e;
+		}
+	}
 
-        }
-    }
+	protected Implementation<?> loadImplementation(CompositeComponent parent,
+			XMLStreamReader reader, DeploymentContext deploymentContext)
+			throws XMLStreamException, LoaderException {
+		reader.nextTag();
+		ModelObject o = registry.load(parent, null, reader, deploymentContext);
+		if (!(o instanceof Implementation)) {
+			throw new MissingImplementationException();
+		}
+		return (Implementation<?>) o;
+	}
 
-    private void readPropertyType(XMLStreamReader reader, Property property) throws MissingTypePropertyLoaderException{
+	@SuppressWarnings("unchecked")
+	protected void loadProperty(XMLStreamReader reader,
+			DeploymentContext deploymentContext,
+			ComponentDefinition<?> componentDefinition)
+			throws XMLStreamException, LoaderException {
+		String name = reader.getAttributeValue(null, PROPERTY_NAME_ATTR);
+		Implementation<?> implementation = componentDefinition
+				.getImplementation();
+		ComponentType<?, ?, ?> componentType = implementation
+				.getComponentType();
+		Property<Type> property = componentType.getProperty(name);
+		if (property == null) {
+			throw new UndefinedPropertyException(name);
+		}
 
-        String typeName = reader.getAttributeValue(null, PROPERTY_TYPE_ATTR);
-        String elementName = reader.getAttributeValue(null, PROPERTY_ELEMENT_ATTR);
-        QName xmlElement = null;
-        QName xmlType = null;
+		PropertyValue<Type> propertyValue;
+		readPropertyType(reader, property);
 
-        if (typeName != null) {
-            int index = typeName.indexOf(COLON);
-            if (index != -1) {
-                String prefix = typeName.substring(0, index);
-                String localName = typeName.substring(index + 1);
-                String ns = reader.getNamespaceURI(prefix);
-                xmlType = new QName(ns, localName, prefix);
-            }
-        } else if (elementName != null) {
-            int index = elementName.indexOf(COLON);
-            if (index != -1) {
-                String prefix = elementName.substring(0, index);
-                String localName = elementName.substring(index + 1);
-                String ns = reader.getNamespaceURI(prefix);
-                xmlElement = new QName(ns, localName, prefix);
-                // FIXME :
-                // need to figure out how to determine the xmltype from this
-                // xmlelement
-                // this need access to the global xml element thro
-                // schemalocation or thro
-                // artifact repository
-                xmlType = null;
-            }
-        }
+		String source = reader.getAttributeValue(null, PROPERTY_SOURCE_ATTR);
+		String file = reader.getAttributeValue(null, PROPERTY_FILE_ATTR);
 
-        if (xmlType != null) {
-            property.setXmlType(xmlType);
-        }
+		if (source != null || file != null) {
+			propertyValue = new PropertyValue<Type>(name, source, file);
+			propertyValue.setValue(property.getDefaultValues());
+			LoaderUtil.skipToEndElement(reader);
+		} else {
+			try {
+				DocumentBuilder documentBuilder = DOMHelper
+						.newDocumentBuilder();
+				List<Element> values = StaxUtil.createPropertyValues(reader,
+						property.getXmlType(), property.getXmlElement(), property.isMany(),
+						documentBuilder);
+				propertyValue = new PropertyValue<Type>(name, values);
+				if (!property.isMany() && values.size() > 1) {
+					ManyPropertyValueLoaderException ex = new ManyPropertyValueLoaderException();
+					ex.setPropertyName(name);
+					ex.setLine(reader.getLocation().getLineNumber());
+					ex.setColumn(reader.getLocation().getColumnNumber());
+					throw ex;
+				}
+			} catch (ParserConfigurationException e) {
+				throw new LoaderException(e);
+			}
+		}
 
-        if (xmlElement != null) {
-            property.setXmlElement(xmlElement);
-        }
-        
-        /*if (property.getXmlType() == null && property.getXmlElement() == null) {
-            MissingTypePropertyLoaderException ex = new MissingTypePropertyLoaderException();
-            ex.setPropertyName(property.getName());
-            ex.setLine(reader.getLocation().getLineNumber());
-            ex.setColumn(reader.getLocation().getColumnNumber());
-            throw ex; 
-        }*/
-    }
+		ObjectFactory<?> objectFactory = null;
+		if (property.isMany()) {
+			objectFactory = propertyFactory.createListObjectFactory(property,
+					propertyValue);
+		} else {
+			objectFactory = propertyFactory.createObjectFactory(property,
+					propertyValue);
+		}
+		// propertyValue.setValueFactory(new
+		// SimplePropertyObjectFactory(property, propertyValue.getValue()));
+		propertyValue.setValueFactory(objectFactory);
+		componentDefinition.add(propertyValue);
+	}
 
-    private List<Document> loadPropertyValues(XMLStreamReader reader,
-                                    DocumentBuilder documentBuilder,
-                                    QName xmlType,
-                                    QName xmlElement) throws XMLStreamException {
-        return StaxUtil.createPropertyValues(reader, xmlType, xmlElement, documentBuilder);
-    }
-    
- }
+	protected void loadReference(XMLStreamReader reader,
+			DeploymentContext deploymentContext,
+			ComponentDefinition<?> componentDefinition)
+			throws XMLStreamException, LoaderException {
+		String name = reader.getAttributeValue(null, "name");
+		String text = reader.getElementText();
+		String target = text != null ? text.trim() : null;
+
+		if (name == null) {
+			throw new InvalidReferenceException("No name specified");
+		} else if (target == null) {
+			throw new InvalidReferenceException("No target specified", name);
+		}
+		Implementation<?> impl = componentDefinition.getImplementation();
+		ComponentType<?, ?, ?> componentType = impl.getComponentType();
+		if (!componentType.getReferences().containsKey(name)) {
+			throw new UndefinedReferenceException(name);
+		}
+		if (componentType instanceof CompositeComponentType) {
+			ReferenceDefinition definition = componentType.getReferences().get(
+					name);
+			if (definition.getBindings().isEmpty()) {
+				// TODO JFM allow selection of a default binding
+				try {
+					LocalBindingDefinition binding = new LocalBindingDefinition(
+							new URI(target));
+					definition.addBinding(binding);
+				} catch (URISyntaxException e) {
+					throw new InvalidReferenceException(e);
+				}
+			} else {
+				for (BindingDefinition binding : definition.getBindings()) {
+					try {
+						// FIXME this is bad - clarify in the spec how URIs are
+						// overriden
+						binding.setTargetUri(new URI(target));
+					} catch (URISyntaxException e) {
+						throw new LoaderException(e);
+					}
+				}
+			}
+		} else {
+			ReferenceTarget referenceTarget = componentDefinition
+					.getReferenceTargets().get(name);
+			if (referenceTarget == null) {
+				referenceTarget = new ReferenceTarget();
+				referenceTarget.setReferenceName(name);
+				componentDefinition.add(referenceTarget);
+			}
+			try {
+				referenceTarget.addTarget(new URI(target));
+			} catch (URISyntaxException e) {
+				throw new InvalidReferenceException(e);
+			}
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void populatePropertyValues(
+			ComponentDefinition<Implementation<?>> componentDefinition)
+			throws LoaderException, MissingPropertyValueException {
+		ComponentType componentType = componentDefinition.getImplementation()
+				.getComponentType();
+		if (componentType != null) {
+			Map<String, Property<?>> properties = componentType.getProperties();
+			Map<String, PropertyValue<?>> propertyValues = componentDefinition
+					.getPropertyValues();
+
+			for (Property<?> aProperty : properties.values()) {
+				if (propertyValues.get(aProperty.getName()) == null) {
+					if (aProperty.isMustSupply()) {
+						throw new MissingPropertyValueException(aProperty
+								.getName());
+					} else if (aProperty.getDefaultValues() != null) {
+						PropertyValue propertyValue = new PropertyValue();
+						propertyValue.setName(aProperty.getName());
+						propertyValue.setValue(aProperty.getDefaultValues());
+						propertyValue.setValueFactory(propertyFactory
+								.createObjectFactory(aProperty, propertyValue));
+						/*
+						 * propertyValue.setValueFactory(new
+						 * SimplePropertyObjectFactory(aProperty,
+						 * propertyValue.getValue()));
+						 */
+						propertyValues.put(aProperty.getName(), propertyValue);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Validates a component definition, ensuring all component type
+	 * configuration elements are satisfied
+	 */
+	protected void validate(ComponentDefinition<Implementation<?>> definition)
+			throws LoaderException {
+		// validate refererences
+		Implementation<?> implementation = definition.getImplementation();
+		ComponentType<?, ?, ?> type = implementation.getComponentType();
+		if (type == null) {
+			return;
+		}
+		for (ReferenceDefinition referenceDef : type.getReferences().values()) {
+			if (referenceDef.isAutowire() || !referenceDef.isRequired()) {
+				continue;
+			}
+			String name = referenceDef.getName();
+			ReferenceTarget target = definition.getReferenceTargets().get(name);
+			if (target == null) {
+				throw new MissingReferenceException(name);
+			}
+			int count = target.getTargets().size();
+			Multiplicity multiplicity = referenceDef.getMultiplicity();
+			switch (multiplicity) {
+			case ZERO_N:
+				break;
+			case ZERO_ONE:
+				if (count > 1) {
+					throw new ReferenceMultiplicityViolationException(name,
+							multiplicity, count);
+				}
+				break;
+			case ONE_ONE:
+				if (count != 1) {
+					throw new ReferenceMultiplicityViolationException(name,
+							multiplicity, count);
+				}
+				break;
+			case ONE_N:
+				if (count < 1) {
+					throw new ReferenceMultiplicityViolationException(name,
+							multiplicity, count);
+				}
+				break;
+			}
+
+		}
+	}
+
+	private void readPropertyType(XMLStreamReader reader, Property property)
+			throws MissingTypePropertyLoaderException {
+
+		String typeName = reader.getAttributeValue(null, PROPERTY_TYPE_ATTR);
+		String elementName = reader.getAttributeValue(null,
+				PROPERTY_ELEMENT_ATTR);
+		QName xmlElement = null;
+		QName xmlType = null;
+
+		if (typeName != null) {
+			int index = typeName.indexOf(COLON);
+			if (index != -1) {
+				String prefix = typeName.substring(0, index);
+				String localName = typeName.substring(index + 1);
+				String ns = reader.getNamespaceURI(prefix);
+				xmlType = new QName(ns, localName, prefix);
+			}
+		} else if (elementName != null) {
+			int index = elementName.indexOf(COLON);
+			if (index != -1) {
+				String prefix = elementName.substring(0, index);
+				String localName = elementName.substring(index + 1);
+				String ns = reader.getNamespaceURI(prefix);
+				xmlElement = new QName(ns, localName, prefix);
+				// FIXME :
+				// need to figure out how to determine the xmltype from this
+				// xmlelement
+				// this need access to the global xml element thro
+				// schemalocation or thro
+				// artifact repository
+				xmlType = null;
+			}
+		}
+
+		if (xmlType != null) {
+			property.setXmlType(xmlType);
+		}
+
+		if (xmlElement != null) {
+			property.setXmlElement(xmlElement);
+		}
+
+		/*if (property.getXmlType() == null && property.getXmlElement() == null) {
+		 MissingTypePropertyLoaderException ex = new MissingTypePropertyLoaderException();
+		 ex.setPropertyName(property.getName());
+		 ex.setLine(reader.getLocation().getLineNumber());
+		 ex.setColumn(reader.getLocation().getColumnNumber());
+		 throw ex; 
+		 }*/
+	}
+}

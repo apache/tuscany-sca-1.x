@@ -31,7 +31,6 @@ import javax.xml.stream.XMLStreamReader;
 
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.component.CompositeComponent;
-import org.apache.tuscany.spi.databinding.extension.DOMHelper;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.LoaderExtension;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
@@ -39,7 +38,7 @@ import org.apache.tuscany.spi.model.ModelObject;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.util.stax.StaxUtil;
 import org.osoa.sca.annotations.Constructor;
-import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * Loads a property from an XML-based assembly file
@@ -140,8 +139,8 @@ public class PropertyLoader extends LoaderExtension<Property> {
             mustSupply = Boolean.parseBoolean(attrValue);
         }
 
-        List<Document> defaultValues =
-            StaxUtil.createPropertyValues(reader, xmlType, xmlElement, documentBuilder);
+        List<Element> defaultValues =
+            StaxUtil.createPropertyValues(reader, xmlType, xmlElement, many, documentBuilder);
 
         if (mustSupply && defaultValues.size() > 0) {
             DefaultPropertyValueLoaderException ex = new DefaultPropertyValueLoaderException();

@@ -64,7 +64,7 @@ public class PropertyLoaderTestCase extends TestCase {
         assertEquals(false, aProperty.isMustSupply());
         assertEquals(false, aProperty.isMany());
         
-        Element root = aProperty.getDefaultValues().get(0).getDocumentElement();
+        Element root = aProperty.getDefaultValues().get(0);
         
         NodeList childNodes = root.getChildNodes();
         assertEquals(1, childNodes.getLength());
@@ -92,7 +92,7 @@ public class PropertyLoaderTestCase extends TestCase {
         assertEquals(false, aProperty.isMustSupply());
         assertEquals(false, aProperty.isMany());
         
-        Element root = aProperty.getDefaultValues().get(0).getDocumentElement();
+        Element root = aProperty.getDefaultValues().get(0);
         
         NodeList childNodes = root.getChildNodes();
         assertEquals(2, childNodes.getLength());
@@ -119,7 +119,7 @@ public class PropertyLoaderTestCase extends TestCase {
         XMLStreamReader reader = getReader(xml);
         Property<?> aProperty = propertyLoader.load(null, null, reader, null);
         
-        Element root = aProperty.getDefaultValues().get(0).getDocumentElement();
+        Element root = aProperty.getDefaultValues().get(0);
         
         assertEquals("TestProperty", aProperty.getName());
         assertEquals(new QName("http://foo.com", "TestElement", "foo"), aProperty.getXmlElement());

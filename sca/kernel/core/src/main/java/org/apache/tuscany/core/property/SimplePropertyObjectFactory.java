@@ -24,15 +24,15 @@ import org.apache.tuscany.spi.ObjectFactory;
 import org.apache.tuscany.spi.databinding.extension.SimpleTypeMapperExtension;
 import org.apache.tuscany.spi.idl.TypeInfo;
 import org.apache.tuscany.spi.model.Property;
-import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class SimplePropertyObjectFactory<P> implements ObjectFactory<P> {
     private SimpleTypeMapperExtension typeMapper;
     private Property<P> property;
-    private Document value;
+    private Element value;
     private P instance;
 
-    public SimplePropertyObjectFactory(Property<P> property, Document value) {
+    public SimplePropertyObjectFactory(Property<P> property, Element value) {
         super();
         
         this.property = property;
@@ -46,7 +46,7 @@ public class SimplePropertyObjectFactory<P> implements ObjectFactory<P> {
             return null;
         }
         if (instance == null) {
-            String text = value.getDocumentElement().getTextContent();
+            String text = value.getTextContent();
             TypeInfo xmlType = null;
             if (property.getJavaType() == null) {
                 xmlType = new TypeInfo(property.getXmlType(), true, null);

@@ -27,15 +27,15 @@ import org.apache.tuscany.spi.ObjectFactory;
 import org.apache.tuscany.spi.databinding.extension.SimpleTypeMapperExtension;
 import org.apache.tuscany.spi.idl.TypeInfo;
 import org.apache.tuscany.spi.model.Property;
-import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class SimpleMultivaluedPropertyObjectFactory<P> implements ObjectFactory<List<P>> {
     private SimpleTypeMapperExtension typeMapper;
     private Property<P> property;
-    private List<Document> values;
+    private List<Element> values;
     private List<P> instance;
 
-    public SimpleMultivaluedPropertyObjectFactory(Property<P> property, List<Document> value) {
+    public SimpleMultivaluedPropertyObjectFactory(Property<P> property, List<Element> value) {
         super();
         
         this.property = property;
@@ -55,7 +55,7 @@ public class SimpleMultivaluedPropertyObjectFactory<P> implements ObjectFactory<
         if (instance == null) {
             instance = new ArrayList<P>();
             for (int count = 0 ; count < values.size() ; ++count) {
-                text = values.get(count).getDocumentElement().getTextContent();
+                text = values.get(count).getTextContent();
             
                 if (property.getJavaType() == null) {
                     xmlType = new TypeInfo(property.getXmlType(), true, null);
