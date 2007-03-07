@@ -35,8 +35,6 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import org.apache.tuscany.spi.databinding.SimpleTypeMapper;
-import org.apache.tuscany.spi.databinding.extension.DOMHelper;
 import org.apache.tuscany.spi.databinding.extension.SimpleTypeMapperExtension;
 import org.apache.tuscany.spi.model.InteractionScope;
 import org.apache.tuscany.spi.model.Multiplicity;
@@ -98,20 +96,23 @@ public abstract class StaxUtil {
         }
     }
     
-    public static List<Document> createPropertyValues(XMLStreamReader reader,
+    public static List<Element> createPropertyValues(XMLStreamReader reader,
                                                       QName type,
                                                       QName element,
+                                                      boolean many,
                                                       DocumentBuilder builder) throws XMLStreamException {
        
         final QName PROPERTY = new QName(SCA_NS, "property");
-        List<Document> propertyValues = new ArrayList<Document>();
-        Document value = null;
+        List<Element> propertyValues = new ArrayList<Element>();
+        Document ownerDocument = builder.newDocument();
+        Element value = null;
         do {
-            value = StaxUtil.createPropertyValue(reader, type, element, builder);
+            value = StaxUtil.createPropertyValue(reader, type, element, many, ownerDocument);
             if (value != null) {
                 propertyValues.add(value);
             }
         } while (!PROPERTY.equals(reader.getName()));
+        
         return propertyValues;
     }
            
@@ -142,30 +143,31 @@ public abstract class StaxUtil {
     }
            
     
-    public static Document createPropertyValue(XMLStreamReader reader,
+    public static Element createPropertyValue(XMLStreamReader reader,
                                                QName type,
                                                QName element,
-                                               DocumentBuilder builder
+                                               boolean many,
+                                               Document document
                                                ) throws XMLStreamException {
-        Document doc = null;
         if (element == null && type != null && SimpleTypeMapperExtension.isSimpleXSDType(type)) {
-            doc = builder.newDocument();
-            // root element has no namespace and local name "value"
-            Element root = createDefaultRootElement(type, doc);   
-            doc.appendChild(root);
-            loadPropertyValue(reader, root, doc);
-            if (!isValueDefined(root)) {
-                return null;
-            }
-            
+        	if (many) {
+        		//if property is 'many' then each simple value is enclosed within an element 
+        		//with local name 'value' FIXME :(an assumption for now until specs is clear on this
+        		return loadPropertyValue(reader, null, document);
+        	} else {
+	        	// root element has no namespace and local name "value"
+	            Element root = createDefaultRootElement(type, document);   
+	            //doc.appendChild(root);
+	            loadPropertyValue(reader, root, document);
+	            if (!isValueDefined(root)) {
+	                return null;
+	            } else {
+	            	return root;
+	            }
+        	}
         } else {
-            doc = builder.newDocument();
-            loadPropertyValue(reader, null, doc);
-            if (doc.getChildNodes().getLength() == 0) {
-                return null;
-            }
+            return loadPropertyValue(reader, null, document);
         }
-        return doc;
     }
     
     
@@ -190,7 +192,7 @@ public abstract class StaxUtil {
      * @param reader the stream to read from
      * @param root the DOM node to load
      */
-    public static void loadPropertyValue(XMLStreamReader reader, Node root, Document document) throws XMLStreamException {
+    public static Element loadPropertyValue(XMLStreamReader reader, Element root, Document document) throws XMLStreamException {
         Node current = root;
         while (true) {
             switch (reader.next()) {
@@ -211,7 +213,6 @@ public abstract class StaxUtil {
 
                     // push the new element and make it the current one
                     if (root == null) {
-                        document.appendChild(child);
                         root = child;
                     } else {
                         current.appendChild(child);
@@ -232,7 +233,7 @@ public abstract class StaxUtil {
                 case XMLStreamConstants.END_ELEMENT:
                     // if we are back at the root then we are done
                     if (current == root) {
-                        return;
+                        return root;
                     }
 
                     // pop the element off the stack

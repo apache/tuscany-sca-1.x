@@ -21,7 +21,7 @@ package org.apache.tuscany.spi.model;
 import java.util.List;
 
 import org.apache.tuscany.spi.ObjectFactory;
-import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * Represents a configured component property
@@ -31,7 +31,7 @@ public class PropertyValue<T> extends ModelObject {
     private String name;
     private String source;
     private String file;
-    private List<Document> value;
+    private List<Element> value;
     private ObjectFactory<?> valueFactory;
 
     public PropertyValue() {
@@ -54,7 +54,7 @@ public class PropertyValue<T> extends ModelObject {
      * @param name
      * @param value
      */
-    public PropertyValue(String name, List<Document> value) {
+    public PropertyValue(String name, List<Element> value) {
         this.name = name;
         this.value = value;
     }
@@ -110,11 +110,11 @@ public class PropertyValue<T> extends ModelObject {
     }
     
 
-    public List<Document> getValue() {
+    public List<Element> getValue() {
         return value;
     }
 
-    public void setValue(List<Document> value) {
+    public void setValue(List<Element> value) {
         this.value = value;
     }
 

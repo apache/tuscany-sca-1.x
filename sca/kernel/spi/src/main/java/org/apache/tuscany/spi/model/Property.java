@@ -22,9 +22,8 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.w3c.dom.Document;
-
 import org.apache.tuscany.spi.ObjectFactory;
+import org.w3c.dom.Element;
 
 /**
  * A component property
@@ -39,7 +38,7 @@ public class Property<T> extends ModelObject {
     private Class<T> javaType;
     private boolean many;
     private boolean mustSupply;
-    private List<Document> defaultValues;
+    private List<Element> defaultValues;
     
 
     public Property() {
@@ -123,11 +122,11 @@ public class Property<T> extends ModelObject {
         this.xmlElement = xmlElement;
     }
 
-    public List<Document> getDefaultValues() {
+    public List<Element> getDefaultValues() {
         return defaultValues;
     }
 
-    public void setDefaultValues(List<Document> defaultValues) {
+    public void setDefaultValues(List<Element> defaultValues) {
         this.defaultValues = defaultValues;
     }
 }
