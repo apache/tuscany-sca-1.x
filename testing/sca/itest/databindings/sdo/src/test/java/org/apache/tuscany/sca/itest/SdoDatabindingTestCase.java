@@ -19,9 +19,9 @@
 
 package org.apache.tuscany.sca.itest;
 
+import org.apache.tuscany.sca.itest.databinding.types.PersonType;
+import org.apache.tuscany.sca.itest.databinding.types.TypesFactory;
 import org.apache.tuscany.sca.itest.sdodatabinding.GreeterServiceClient;
-import org.apache.tuscany.sca.itest.sdodatabinding.generated.GeneratedFactory;
-import org.apache.tuscany.sca.itest.sdodatabinding.generated.PersonType;
 import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
@@ -72,7 +72,7 @@ public class SdoDatabindingTestCase extends SCATestCase {
     }
 
     public void greet() {
-        GeneratedFactory factory = GeneratedFactory.INSTANCE;
+        TypesFactory factory = TypesFactory.INSTANCE;
         PersonType person = factory.createPersonType();
         person.setFirstName("George");
         person.setLastName("Doors");

@@ -19,7 +19,7 @@
 
 package org.apache.tuscany.sca.itest.sdodatabinding;
 
-import org.apache.tuscany.sca.itest.sdodatabinding.generated.PersonType;
+import org.apache.tuscany.sca.itest.databinding.types.PersonType;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 

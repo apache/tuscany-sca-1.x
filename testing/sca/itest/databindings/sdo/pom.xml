@@ -16,21 +16,21 @@
     * KIND, either express or implied.  See the License for the
     * specific language governing permissions and limitations
     * under the License.    
-    -->
+-->
 <project>
     <parent>
         <groupId>org.apache.tuscany.testing</groupId>
         <artifactId>databindings</artifactId>
         <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
-    
+
     <modelVersion>4.0.0</modelVersion>
-    
+
     <artifactId>iTest-sdoDatabinding</artifactId>
     <version>${testing.version}</version>
     <packaging>jar</packaging>
     <name>Test Suite for SDO Databindings</name>
-    
+
     <repositories>
         <repository>
             <snapshots>
@@ -42,7 +42,7 @@
             <layout>legacy</layout>
         </repository>
     </repositories>
-    
+
     <pluginRepositories>
         <pluginRepository>
             <snapshots>
@@ -54,7 +54,7 @@
             <layout>legacy</layout>
         </pluginRepository>
     </pluginRepositories>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca.services.databinding</groupId>
@@ -79,20 +79,20 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.1</version>
             <scope>compile</scope>
-        </dependency -->
+            </dependency -->
         <!-- dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
             <version>2.1</version>
             <scope>runtime</scope>
-        </dependency -->
+            </dependency -->
         <!-- dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
             <version>2.1</version>
-        </dependency -->
+            </dependency -->
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -123,10 +123,18 @@
                         <id>generate-sdo</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <schemaDir>${basedir}/src/main/resources/xsd</schemaDir>
-                            <javaPackage>org.apache.tuscany.sca.itest.sdodatabinding.generated</javaPackage>
+                            <schemaFiles>
+                                <configuration>
+                                    <fileName>${basedir}/src/main/resources/wsdl/Greeter.wsdl</fileName>
+                                    <javaPackage>org.apache.tuscany.sca.itest.databinding.services</javaPackage>
+                                </configuration>
+                                <configuration>
+                                    <fileName>${basedir}/src/main/resources/xsd/Person.xsd</fileName>
+                                    <javaPackage>org.apache.tuscany.sca.itest.databinding.types</javaPackage>
+                                </configuration>
+                            </schemaFiles>
                             <noNotification>true</noNotification>
-                            <noContainer>true</noContainer>
+                            <noContainment>true</noContainment>
                             <noUnsettable>true</noUnsettable>
                         </configuration>
                         <goals>
@@ -135,6 +143,6 @@
                     </execution>
                 </executions>
             </plugin>
-    </plugins>
-</build>
+        </plugins>
+    </build>
 </project>

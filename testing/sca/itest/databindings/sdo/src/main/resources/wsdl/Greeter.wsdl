@@ -22,17 +22,18 @@
     xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Greeter">
 
     <wsdl:types>
-        <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
-            xmlns:dataTypes="http://apache.org/tuscany/sca/itest/databinding/types"
+        <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:p="http://apache.org/tuscany/sca/itest/databinding/types"
             targetNamespace="http://apache.org/tuscany/sca/itest/databinding/services" elementFormDefault="qualified">
 
             <xsd:import namespace="http://apache.org/tuscany/sca/itest/databinding/types" schemaLocation="../xsd/Person.xsd" />
-            <xsd:element name="Person" type="dataTypes:PersonType" />
+            <!-- 
+            <xsd:element name="Person" type="p:PersonType" />
+             -->
 
             <element name="greet">
                 <complexType>
                     <sequence>
-                        <element name="parm" type="tns:Person" />
+                        <element name="parm" type="p:PersonType" />
                     </sequence>
                 </complexType>
             </element>

@@ -19,9 +19,8 @@
 
 package org.apache.tuscany.sca.itest.sdodatabinding;
 
+import org.apache.tuscany.sca.itest.databinding.types.PersonType;
 import org.osoa.sca.annotations.Service;
-
-import org.apache.tuscany.sca.itest.sdodatabinding.generated.PersonType;
 
 /**
  * 
@@ -32,7 +31,7 @@ public class GreeterServiceImpl implements GreeterService {
     /*
      * (non-Javadoc)
      * 
-     * @see org.apache.tuscany.sca.itest.sdodatabinding.GreeterService#greet(javax.xml.bind.JAXBElement)
+     * @see org.apache.tuscany.sca.itest.sdodatabinding.GreeterService#greet(org.apache.tuscany.sca.itest.sdodatabinding.generated.PersonType)
      */
     public PersonType greet(PersonType who) {
         System.out.println(who.toString());

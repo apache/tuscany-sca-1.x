@@ -19,10 +19,8 @@
 
 package org.apache.tuscany.sca.itest.jaxbdatabinding;
 
-import org.apache.tuscany.api.annotation.DataType;
-import org.osoa.sca.annotations.Remotable;
-
 import org.apache.tuscany.sca.itest.jaxbdatabinding.generated.PersonType;
+import org.osoa.sca.annotations.Remotable;
 
 /**
  * 
@@ -30,7 +28,7 @@ import org.apache.tuscany.sca.itest.jaxbdatabinding.generated.PersonType;
 @Remotable
 public interface GreeterService {
 
-    @DataType(name = "javax.xml.bind.JAXBElement")
+    // @DataType(name = "javax.xml.bind.JAXBElement")
     PersonType greet(PersonType who);
 
 }

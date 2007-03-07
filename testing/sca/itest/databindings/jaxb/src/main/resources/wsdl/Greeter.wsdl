@@ -38,6 +38,14 @@
                 </complexType>
             </element>
 
+            <element name="greetResponse">
+                <complexType>
+                    <sequence>
+                        <element name="person" type="dataTypes:PersonType" />
+                    </sequence>
+                </complexType>
+            </element>
+
 
         </xsd:schema>
     </wsdl:types>
@@ -47,7 +55,7 @@
     </wsdl:message>
 
     <wsdl:message name="response">
-        <wsdl:part element="tns:greet" name="parameters" />
+        <wsdl:part element="tns:greetResponse" name="parameters" />
     </wsdl:message>
 
     <wsdl:portType name="GreeterPortType">

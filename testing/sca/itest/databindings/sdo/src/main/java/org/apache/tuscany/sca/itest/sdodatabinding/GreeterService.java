@@ -19,10 +19,8 @@
 
 package org.apache.tuscany.sca.itest.sdodatabinding;
 
-import org.apache.tuscany.api.annotation.DataType;
+import org.apache.tuscany.sca.itest.databinding.types.PersonType;
 import org.osoa.sca.annotations.Remotable;
-
-import org.apache.tuscany.sca.itest.sdodatabinding.generated.PersonType;
 
 /**
  * 
@@ -30,7 +28,7 @@ import org.apache.tuscany.sca.itest.sdodatabinding.generated.PersonType;
 @Remotable
 public interface GreeterService {
 
-    @DataType(name = "commonj.sdo.DataObject")
+    // @DataType(name = "commonj.sdo.DataObject")
     PersonType greet(PersonType who);
 
 }

@@ -17,10 +17,15 @@
     * specific language governing permissions and limitations
     * under the License.
 -->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance"
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
+	xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance"
+	xmlns:dbsdo="http://tuscany.apache.org/xmlns/sca/databinding/sdo/1.0"
     name="SDOGreeterService">
-    <dbsdo:import.sdo location="wsdl/Greeter.wsdl" xmlns:dbsdo="http://tuscany.apache.org/xmlns/sca/databinding/sdo/1.0" />
-
+    
+    <!-- SDO factory classes -->
+    <dbsdo:import.sdo factory="org.apache.tuscany.sca.itest.databinding.services.ServicesFactory"/>
+    <dbsdo:import.sdo factory="org.apache.tuscany.sca.itest.databinding.types.TypesFactory"/>
+    
     <!-- Services Exposed via different bindings -->
     <service name="SDOGreeterServiceDefaultBinding">
         <interface.java class="org.apache.tuscany.sca.itest.sdodatabinding.GreeterService" />
