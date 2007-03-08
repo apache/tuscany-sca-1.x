@@ -29,7 +29,7 @@
     <name>SCA API Version 1.0</name>
     <description>API classes for the Service Component Architecture</description>
     <version>0.1-integration-incubating-SNAPSHOT</version>
-    <packaging>osgi-bundle</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <specVersion>1.0</specVersion>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>4.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -75,25 +75,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
                 <configuration>
                     <source>1.5</source>
                     <target>1.5</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.felix.plugins</groupId>
-                <artifactId>maven-osgi-plugin</artifactId>
-                <version>0.8.0-SNAPSHOT</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <osgiManifest>
-                        <bundleName>${pom.name}</bundleName>
-                        <bundleDescription>${pom.description}</bundleDescription>
-                        <bundleVendor>${pom.organization.name}</bundleVendor>
-                        <bundleLocalization>plugin</bundleLocalization>
-                        <bundleSymbolicName>org.osoa.sca</bundleSymbolicName>
-                        <exportPackage>org.osoa.sca;version="${specVersion}", org.osoa.sca.annotations;version="${specVersion}"</exportPackage>
-                    </osgiManifest>
                 </configuration>
             </plugin>
         </plugins>
