@@ -19,36 +19,30 @@
 
 package org.apache.tuscany.core.databinding.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectStreamClass;
-import java.io.OutputStream;
-import java.io.Serializable;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
 import org.apache.tuscany.spi.databinding.DataBinding;
+import org.apache.tuscany.spi.databinding.DataBindingRegistry;
+import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.wire.Interceptor;
 import org.apache.tuscany.spi.wire.Message;
 
-import org.apache.tuscany.core.util.JavaIntrospectionHelper;
-
 /**
  * An interceptor to enforce pass-by-value semantics for remotable interfaces
- *
+ * 
  * @version $Rev$ $Date$
  */
 public class PassByValueInterceptor implements Interceptor {
-    private DataBinding[] argsDataBindings;
+    private DataBindingRegistry registry;
+    private DataBinding[] parameterDatabindings;
     private DataBinding resultDataBinding;
 
-    private DataBinding dataBinding;
-
     private Interceptor next;
+
+    public PassByValueInterceptor(DataBindingRegistry registry) {
+        this.registry = registry;
+    }
 
     public Interceptor getNext() {
         return next;
@@ -64,7 +58,7 @@ public class PassByValueInterceptor implements Interceptor {
 
     public Message invoke(Message msg) {
         Object obj = msg.getBody();
-        msg.setBody(copy((Object[]) obj));
+        msg.setBody(copy((Object[])obj));
         Message result = getNext().invoke(msg);
 
         if (!result.isFault()) {
@@ -72,7 +66,6 @@ public class PassByValueInterceptor implements Interceptor {
         }
         return result;
     }
-
 
     public Object[] copy(Object[] args) {
         if (args == null) {
@@ -89,7 +82,7 @@ public class PassByValueInterceptor implements Interceptor {
                     copiedArgs[i] = copiedArg;
                 } else {
                     DataBinding dataBinding =
-                        (getArgsDataBindings() != null) ? getArgsDataBindings()[i] : null;
+                        (getParameterDatabindings() != null) ? getParameterDatabindings()[i] : null;
                     copiedArg = copy(args[i], dataBinding);
                     map.put(args[i], copiedArg);
                     copiedArgs[i] = copiedArg;
@@ -104,134 +97,28 @@ public class PassByValueInterceptor implements Interceptor {
             return null;
         }
         Object copiedArg;
-        if (dataBinding != null) {
-            copiedArg = dataBinding.copy(arg);
+        if (argDataBinding != null) {
+            copiedArg = argDataBinding.copy(arg);
         } else {
-            if (argDataBinding != null) {
-                copiedArg = argDataBinding.copy(arg);
-            } else {
-                final Class clazz = arg.getClass();
-                if (JavaIntrospectionHelper.isImmutable(clazz)) {
-                    // Immutable classes
-                    return arg;
+            copiedArg = arg;
+            DataType<?> dataType = registry.introspectType(arg);
+            if (dataType != null) {
+                DataBinding binding = registry.getDataBinding(dataType.getDataBinding());
+                if (binding != null) {
+                    copiedArg = binding.copy(arg);
                 }
-                copiedArg = copyJavaObject(arg);
             }
+            // FIXME: What to do if it's not recognized?
         }
         return copiedArg;
     }
 
-    private Object copyJavaObject(Object arg) {
-        try {
-            return deserializeJavaObject(serializeJavaObject(arg));
-        } catch (IllegalArgumentException e) {
-            throw e;
-            //System.out.println("Problem serializing...");
-            //return arg;
-        }
+    public DataBinding[] getParameterDatabindings() {
+        return parameterDatabindings;
     }
 
-    public byte[] serializeJavaObject(Object arg) throws IllegalArgumentException {
-        if (arg == null) {
-            return null;
-        }
-
-        ByteArrayOutputStream bos = null;
-        ObjectOutputStream oos = null;
-
-        try {
-            if (arg instanceof Serializable) {
-                bos = new ByteArrayOutputStream();
-                oos = getObjectOutputStream(bos);
-                oos.writeObject(arg);
-
-                return bos.toByteArray();
-            } else {
-                throw new IllegalArgumentException("Unable to serialize using Java Serialization");
-            }
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Exception while serializing argument ", e);
-        } finally {
-            try {
-                if (oos != null) {
-                    oos.close();
-                }
-                if (bos != null) {
-                    bos.close();
-                }
-            } catch (IOException e) {
-                throw new IllegalArgumentException("Exception while serializing argument ", e);
-            }
-        }
-    }
-
-    public Object deserializeJavaObject(byte[] arg) {
-        if (arg == null) {
-            return null;
-        }
-        final Class clazz = arg.getClass();
-        if (JavaIntrospectionHelper.isImmutable(clazz)) {
-            // Immutable classes
-            return arg;
-        }
-
-        ByteArrayInputStream bis = null;
-        ObjectInputStream ois = null;
-
-        try {
-            bis = new ByteArrayInputStream(arg);
-            ois = getObjectInputStream(bis, clazz.getClassLoader());
-
-            return ois.readObject();
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Exception when attempting to Java Deserialization of object ", e);
-        } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("Exception when attempting to Java Deserialization of object ", e);
-        } finally {
-            try {
-                if (ois != null) {
-                    ois.close();
-                }
-                assert bis != null;
-                bis.close();
-            } catch (IOException e) {
-                throw new IllegalArgumentException("Exception when attempting to Java Deserialization of object ", e);
-            }
-        }
-    }
-
-    protected ObjectOutputStream getObjectOutputStream(OutputStream os) throws IOException {
-        return new ObjectOutputStream(os);
-    }
-
-    protected ObjectInputStream getObjectInputStream(InputStream is, final ClassLoader cl) throws IOException {
-        return new ObjectInputStream(is) {
-            @Override
-            protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException {
-                try {
-                    return Class.forName(desc.getName(), false, cl);
-                } catch (ClassNotFoundException e) {
-                    return super.resolveClass(desc);
-                }
-            }
-
-        };
-    }
-
-    public DataBinding getDataBinding() {
-        return dataBinding;
-    }
-
-    public void setDataBinding(DataBinding dataBinding) {
-        this.dataBinding = dataBinding;
-    }
-
-    public DataBinding[] getArgsDataBindings() {
-        return argsDataBindings;
-    }
-
-    public void setArgsDataBindings(DataBinding[] argsDataBindings) {
-        this.argsDataBindings = argsDataBindings;
+    public void setParameterDatabindings(DataBinding[] dataBindings) {
+        this.parameterDatabindings = dataBindings;
     }
 
     public DataBinding getResultDataBinding() {

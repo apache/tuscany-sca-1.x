@@ -29,22 +29,19 @@ import org.apache.tuscany.spi.component.ServiceBinding;
 import org.apache.tuscany.spi.databinding.DataBinding;
 import org.apache.tuscany.spi.databinding.DataBindingRegistry;
 import org.apache.tuscany.spi.extension.AtomicComponentExtension;
-import org.apache.tuscany.spi.extension.ServiceBindingExtension;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.Operation;
-import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.wire.InboundInvocationChain;
 import org.apache.tuscany.spi.wire.InboundWire;
-import org.apache.tuscany.spi.wire.Interceptor;
 import org.apache.tuscany.spi.wire.OutboundWire;
 import org.apache.tuscany.spi.wire.WirePostProcessorExtension;
-import org.osoa.sca.annotations.Remotable;
 
 /**
- * This processor is responsible for enforcing the pass-by-value semantics required of Remotable interfaces. This is
- * done by adding a pass-by-value interceptor to the inbound invocation chain of a target if the target interface is
- * Remotable.
- *
+ * This processor is responsible for enforcing the pass-by-value semantics
+ * required of Remotable interfaces. This is done by adding a pass-by-value
+ * interceptor to the inbound invocation chain of a target if the target
+ * interface is Remotable.
+ * 
  * @version $Rev$ $Date$
  */
 public class PassByValueWirePostProcessor extends WirePostProcessorExtension {
@@ -64,110 +61,104 @@ public class PassByValueWirePostProcessor extends WirePostProcessorExtension {
     }
 
     public void process(OutboundWire source, InboundWire target) {
-        Interceptor tailInterceptor;
-        PassByValueInterceptor passByValueInterceptor;
+        PassByValueInterceptor interceptor;
         Operation<?> targetOperation;
         Operation<?> sourceOperation;
         DataBinding[] argsDataBindings;
         DataBinding resultDataBinding;
-        AtomicComponentExtension targetComponent;
 
-        boolean implAllowsPassByReference = false;
-        boolean methodAllowsPassByReference = false;
-        
-        //if the source is a service binding or the target is a reference binding do no
-        //add interceptor since the bindings will ensure passbyvalue semantics
-        if ( !(source.getContainer() instanceof ServiceBinding ||
-        		target.getContainer() instanceof ReferenceBinding ) ) {
-       
-        	if (target.getContainer() instanceof AtomicComponentExtension) {
-        		implAllowsPassByReference =
-        			((AtomicComponentExtension) target.getContainer()).isAllowsPassByReference();
-        	}
-        
-	        Map<Operation<?>, InboundInvocationChain> chains = target.getInvocationChains();
-	        for (Map.Entry<Operation<?>, InboundInvocationChain> entry : chains.entrySet()) {
-	            targetOperation = entry.getKey();
-	            methodAllowsPassByReference = false;
-	            
-	            if (target.getContainer() instanceof AtomicComponentExtension) {
-	                methodAllowsPassByReference =
-	                    ((AtomicComponentExtension) target.getContainer()).
-	                    getPassByReferenceMethods().contains(targetOperation.getName());
-	            }
-            
-	            if (target.getServiceContract().isRemotable()
-	                && (!implAllowsPassByReference && !methodAllowsPassByReference)) { 
-	                sourceOperation =
-	                    getSourceOperation(source.getInvocationChains().keySet(), targetOperation.getName());
-	   
-	                if (null != sourceOperation) {
-	                    argsDataBindings = resolveArgsDataBindings(targetOperation);
-	                    resultDataBinding = resolveResultDataBinding(targetOperation);
-	                    passByValueInterceptor = new PassByValueInterceptor();
-	                    passByValueInterceptor.setDataBinding(getDataBinding(targetOperation));
-	                    passByValueInterceptor.setArgsDataBindings(argsDataBindings);
-	                    passByValueInterceptor.setResultDataBinding(resultDataBinding);
-	                    entry.getValue().addInterceptor(0, passByValueInterceptor);
-	                    tailInterceptor = source.getInvocationChains().get(sourceOperation).getTailInterceptor();
-	                    if (tailInterceptor != null) {
-	                        tailInterceptor.setNext(passByValueInterceptor);
-	                    }
-	                }
-	            }
-	        }
+        boolean implAllowsPBR = false;
+        boolean methodAllowsPBR = false;
 
-	        // Check if there's a callback
-	        Map callbackOperations = source.getServiceContract().getCallbackOperations();
-	        implAllowsPassByReference = false;
-	        
-	        if (callbackOperations != null && !callbackOperations.isEmpty()) {
-	            if (source.getContainer() instanceof AtomicComponentExtension) {
-	                implAllowsPassByReference =
-	                    ((AtomicComponentExtension) source.getContainer()).isAllowsPassByReference();
-	            }
-	        
-	            Object targetAddress = source.getContainer().getName();
-	            Map<Operation<?>, InboundInvocationChain> callbackChains = source.getTargetCallbackInvocationChains();
-	            for (Map.Entry<Operation<?>, InboundInvocationChain> entry : callbackChains.entrySet()) {
-	                targetOperation = entry.getKey();
-	                methodAllowsPassByReference = false;
-	                
-	                if (source.getContainer() instanceof AtomicComponentExtension) {
-	                    methodAllowsPassByReference =
-	                        ((AtomicComponentExtension) source.getContainer()).
-	                        getPassByReferenceMethods().contains(targetOperation.getName());
-	                }
-	                
-	                if (source.getServiceContract().isRemotable()
-	                    && (!implAllowsPassByReference && !methodAllowsPassByReference)) {
-	                    sourceOperation =
-	                        getSourceOperation(target.getSourceCallbackInvocationChains(targetAddress).keySet(),
-	                            targetOperation.getName());
-	    
-	                    argsDataBindings = resolveArgsDataBindings(targetOperation);
-	                    resultDataBinding = resolveResultDataBinding(targetOperation);
-	    
-	                    passByValueInterceptor = new PassByValueInterceptor();
-	                    passByValueInterceptor.setDataBinding(getDataBinding(targetOperation));
-	                    passByValueInterceptor.setArgsDataBindings(argsDataBindings);
-	                    passByValueInterceptor.setResultDataBinding(resultDataBinding);
-	    
-	                    entry.getValue().addInterceptor(0, passByValueInterceptor);
-	                    tailInterceptor =
-	                        target.getSourceCallbackInvocationChains(targetAddress).get(sourceOperation)
-	                            .getTailInterceptor();
-	                    if (tailInterceptor != null) {
-	                        tailInterceptor.setNext(passByValueInterceptor);
-	                    }
-	                }
-	            }
-	        }
+        // if the source is a service binding or the target is a reference
+        // binding do no
+        // add interceptor since the bindings will ensure passbyvalue semantics
+        if (!(source.getContainer() instanceof ServiceBinding || target.getContainer() instanceof ReferenceBinding)) {
+
+            if (target.getContainer() instanceof AtomicComponentExtension) {
+                implAllowsPBR = ((AtomicComponentExtension)target.getContainer()).isAllowsPassByReference();
+            }
+
+            Map<Operation<?>, InboundInvocationChain> chains = target.getInvocationChains();
+            for (Map.Entry<Operation<?>, InboundInvocationChain> entry : chains.entrySet()) {
+                targetOperation = entry.getKey();
+                methodAllowsPBR = false;
+
+                if (target.getContainer() instanceof AtomicComponentExtension) {
+                    methodAllowsPBR =
+                        ((AtomicComponentExtension)target.getContainer()).getPassByReferenceMethods()
+                            .contains(targetOperation.getName());
+                }
+
+                if (target.getServiceContract().isRemotable() && (!implAllowsPBR && !methodAllowsPBR)) {
+                    sourceOperation =
+                        getSourceOperation(source.getInvocationChains().keySet(), targetOperation.getName());
+
+                    if (null != sourceOperation) {
+                        argsDataBindings = getParameterDataBindings(sourceOperation);
+                        resultDataBinding = getResultDataBinding(sourceOperation);
+                        interceptor = new PassByValueInterceptor(dataBindingRegistry);
+                        interceptor.setParameterDatabindings(argsDataBindings);
+                        interceptor.setResultDataBinding(resultDataBinding);
+                        source.getInvocationChains().get(sourceOperation).addInterceptor(0, interceptor);
+                        /*
+                         * tailInterceptor =
+                         * source.getInvocationChains().get(sourceOperation).getTailInterceptor();
+                         * if (tailInterceptor != null) {
+                         * tailInterceptor.setNext(passByValueInterceptor); }
+                         */
+                    }
+                }
+            }
+
+            // Check if there's a callback
+            Map callbackOperations = source.getServiceContract().getCallbackOperations();
+            implAllowsPBR = false;
+
+            if (callbackOperations != null && !callbackOperations.isEmpty()) {
+                if (source.getContainer() instanceof AtomicComponentExtension) {
+                    implAllowsPBR = ((AtomicComponentExtension)source.getContainer()).isAllowsPassByReference();
+                }
+
+                Object targetAddress = source.getContainer().getName();
+                Map<Operation<?>, InboundInvocationChain> callbackChains = source.getTargetCallbackInvocationChains();
+                for (Map.Entry<Operation<?>, InboundInvocationChain> entry : callbackChains.entrySet()) {
+                    targetOperation = entry.getKey();
+                    methodAllowsPBR = false;
+
+                    if (source.getContainer() instanceof AtomicComponentExtension) {
+                        methodAllowsPBR =
+                            ((AtomicComponentExtension)source.getContainer()).getPassByReferenceMethods()
+                                .contains(targetOperation.getName());
+                    }
+
+                    if (source.getServiceContract().isRemotable() && (!implAllowsPBR && !methodAllowsPBR)) {
+                        sourceOperation =
+                            getSourceOperation(target.getSourceCallbackInvocationChains(targetAddress).keySet(),
+                                               targetOperation.getName());
+
+                        argsDataBindings = getParameterDataBindings(targetOperation);
+                        resultDataBinding = getResultDataBinding(targetOperation);
+
+                        interceptor = new PassByValueInterceptor(dataBindingRegistry);
+                        interceptor.setParameterDatabindings(argsDataBindings);
+                        interceptor.setResultDataBinding(resultDataBinding);
+
+                        entry.getValue().addInterceptor(0, interceptor);
+                        /*
+                         * tailInterceptor =
+                         * target.getSourceCallbackInvocationChains(targetAddress).get(sourceOperation)
+                         * .getTailInterceptor(); if (tailInterceptor != null) {
+                         * tailInterceptor.setNext(passByValueInterceptor); }
+                         */
+                    }
+                }
+            }
         }
     }
 
     public void process(InboundWire source, OutboundWire target) {
-        //to be done if required.. 
+        // to be done if required..
     }
 
     private Operation getSourceOperation(Set<Operation<?>> operations, String operationName) {
@@ -179,41 +170,19 @@ public class PassByValueWirePostProcessor extends WirePostProcessorExtension {
         return null;
     }
 
-    private DataBinding getDataBinding(Operation<?> operation) {
-        String dataBinding = operation.getDataBinding();
-        if (dataBinding == null) {
-            ServiceContract<?> serviceContract = operation.getServiceContract();
-            dataBinding = serviceContract.getDataBinding();
-        }
-        return dataBindingRegistry.getDataBinding(dataBinding);
-
-    }
-
     @SuppressWarnings("unchecked")
-    private DataBinding[] resolveArgsDataBindings(Operation operation) {
-        List<DataType<?>> argumentTypes = (List<DataType<?>>) operation.getInputType().getLogical();
+    private DataBinding[] getParameterDataBindings(Operation operation) {
+        List<DataType<?>> argumentTypes = (List<DataType<?>>)operation.getInputType().getLogical();
         DataBinding[] argDataBindings = new DataBinding[argumentTypes.size()];
         int count = 0;
         for (DataType argType : argumentTypes) {
-            argDataBindings[count] = null;
-            if (argType != null) {
-                if (argType.getLogical() instanceof Class) {
-                    argDataBindings[count] =
-                        dataBindingRegistry.getDataBinding(((Class) argType.getLogical()).getName());
-                }
-            }
-            ++count;
+            argDataBindings[count++] = dataBindingRegistry.getDataBinding(argType.getDataBinding());
         }
         return argDataBindings;
     }
 
-    private DataBinding resolveResultDataBinding(Operation operation) {
-        DataType<?> resultType = (DataType<?>) operation.getOutputType();
-        DataBinding resultBinding = null;
-        if (resultType != null && resultType.getLogical() instanceof Class) {
-            Class<?> logical = (Class<?>) resultType.getLogical();
-            resultBinding = dataBindingRegistry.getDataBinding(logical.getName());
-        }
-        return resultBinding;
+    private DataBinding getResultDataBinding(Operation operation) {
+        DataType<?> resultType = (DataType<?>)operation.getOutputType();
+        return dataBindingRegistry.getDataBinding(resultType.getDataBinding());
     }
 }

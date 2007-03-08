@@ -21,6 +21,9 @@ package org.apache.tuscany.core.databinding.impl;
 
 import java.io.Serializable;
 
+import org.apache.tuscany.core.databinding.javabeans.JavaBeansDataBinding;
+import org.apache.tuscany.spi.databinding.DataBinding;
+
 import junit.framework.TestCase;
 
 /**
@@ -56,7 +59,10 @@ public class PassByValueInterceptorTestCase extends TestCase {
     }
 
     public void testCopy() {
-        Object[] copy = new PassByValueInterceptor().copy(values);
+        PassByValueInterceptor interceptor = new PassByValueInterceptor(null);
+        DataBinding db = new JavaBeansDataBinding();
+        interceptor.setParameterDatabindings(new DataBinding[] {db, db, db, db, db});
+        Object[] copy = interceptor.copy(values);
         assertTrue(copy[0] instanceof MySerialiable);
         MySerialiable copied = (MySerialiable)copy[0];
         assertNotSame(serialiable, copy[0]);

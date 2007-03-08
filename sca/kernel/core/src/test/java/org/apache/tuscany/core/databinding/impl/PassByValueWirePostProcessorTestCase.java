@@ -106,9 +106,7 @@ public class PassByValueWirePostProcessorTestCase extends TestCase {
         EasyMock.replay(inboundWire, outboundWire);
         processor.process(outboundWire, inboundWire);
 
-        assertEquals(true, inChain.getHeadInterceptor() instanceof PassByValueInterceptor);
-        assertEquals(true,
-            outChain.getTailInterceptor().getNext() instanceof PassByValueInterceptor);
+        assertEquals(true, outChain.getHeadInterceptor() instanceof PassByValueInterceptor);
         assertEquals(true, outChain.getTailInterceptor().getNext().equals(
             inChain.getHeadInterceptor()));
 
