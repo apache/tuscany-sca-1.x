@@ -25,6 +25,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.apache.tuscany.spi.ObjectCreationException;
+import org.apache.tuscany.spi.component.ServiceBinding;
 import org.apache.tuscany.spi.component.TargetResolutionException;
 import org.apache.tuscany.spi.databinding.DataBindingRegistry;
 import org.apache.tuscany.spi.extension.AtomicComponentExtension;
@@ -190,6 +191,44 @@ public class PassByValueWirePostProcessorTestCase extends TestCase {
         expect(inboundWire.getInvocationChains()).andReturn(inChainsMap);
         expect(outboundWire.getServiceContract()).andReturn(serviceContract).anyTimes();
         expect(outboundWire.getInvocationChains()).andReturn(outChainsMap).times(2);
+
+        Interceptor inInterceptor = createMock(Interceptor.class);
+        Interceptor outInterceptor = createMock(Interceptor.class);
+        inChain.addInterceptor(0, inInterceptor);
+        outChain.addInterceptor(0, outInterceptor);
+        outChain.addInterceptor(new SynchronousBridgingInterceptor(inChain.getHeadInterceptor()));
+
+        EasyMock.replay(inboundWire, outboundWire);
+        processor.process(outboundWire, inboundWire);
+
+        assertEquals(false, inChain.getHeadInterceptor() instanceof PassByValueInterceptor);
+        assertEquals(false,
+            outChain.getTailInterceptor().getNext() instanceof PassByValueInterceptor);
+        assertEquals(true, outChain.getTailInterceptor().getNext().equals(
+            inChain.getHeadInterceptor()));
+    }
+    
+    public void testProcessExclusionOfInterceptorForBinding() {
+        InboundWire inboundWire = createMock(InboundWire.class);
+        OutboundWire outboundWire = createMock(OutboundWire.class);
+        
+        ServiceBinding serviceBinding = createMock(ServiceBinding.class);
+        expect(outboundWire.getContainer()).andReturn(serviceBinding).anyTimes();
+        expect(inboundWire.getContainer()).andReturn(null).anyTimes();
+
+        ServiceContract<Type> serviceContract = new JavaServiceContract(null);
+        serviceContract.setRemotable(true);
+        Map<Operation<?>, InboundInvocationChain> inChainsMap =
+            new Hashtable<Operation<?>, InboundInvocationChain>();
+
+        Operation<?> operation1 = new Operation<Type>("testMethod", null, null, null);
+        InboundInvocationChainImpl inChain = new InboundInvocationChainImpl(operation1);
+        inChainsMap.put(operation1, inChain);
+
+        Map<Operation<?>, OutboundInvocationChain> outChainsMap =
+            new Hashtable<Operation<?>, OutboundInvocationChain>();
+        OutboundInvocationChainImpl outChain = new OutboundInvocationChainImpl(operation1);
+        outChainsMap.put(operation1, outChain);
 
         Interceptor inInterceptor = createMock(Interceptor.class);
         Interceptor outInterceptor = createMock(Interceptor.class);
