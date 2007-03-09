@@ -18,38 +18,68 @@
  */
 package org.apache.tuscany.spi.builder;
 
+import org.apache.tuscany.spi.component.SCAObject;
 import org.apache.tuscany.spi.model.BindingDefinition;
 import org.apache.tuscany.spi.model.Implementation;
+import org.apache.tuscany.spi.model.ModelObject;
 
 /**
- * Maintains a registry of builders in the runtime, dispatching to the appropriate one as an assembly model is processed
- * into runtime artifacts
- *
+ * Maintains a registry of builders in the runtime, dispatching to the
+ * appropriate one as an assembly model is processed into runtime artifacts
+ * 
  * @version $Rev$ $Date$
  */
 public interface BuilderRegistry extends Builder {
 
     /**
      * Register a builder for an implementation type.
-     *
+     * 
      * @param implClass the type of implementation that this builder can handle
-     * @param builder   the builder to be registered
+     * @param builder the builder to be registered
      */
     <I extends Implementation<?>> void register(Class<I> implClass, ComponentBuilder<I> builder);
 
     /**
      * Unregister a builder for an implementation type.
-     *
+     * 
      * @param implClass the implementation whose builder should be unregistered
      */
-    <I extends Implementation<?>> void unregister(Class<I> implClass);
+    <I extends Implementation<?>> void unregisterComponentBuilder(Class<I> implClass);
+
+    // FIXME: We need to provide unregister() for other builders
 
     /**
      * Register a binding builder for a binding type
-     *
+     * 
      * @param implClass the binding type
-     * @param builder   the buinder to be registered
+     * @param builder the buinder to be registered
      */
     <B extends BindingDefinition> void register(Class<B> implClass, BindingBuilder<B> builder);
+
+    /**
+     * Unregister a binding builder
+     * 
+     * @param <B>
+     * @param implClass the binding type
+     */
+    <B extends BindingDefinition> void unregisterBindingBuilder(Class<B> implClass);
+
+    /**
+     * Register a generic builder for a model type
+     * 
+     * @param <S>
+     * @param <M>
+     * @param modelClass
+     * @param builder
+     */
+    <S extends SCAObject, M extends ModelObject> void register(Class<M> modelClass, GenericBuilder<S, M> builder);
+
+    /**
+     * Unregister a generic builder
+     * 
+     * @param <M>
+     * @param modelClass The model type
+     */
+    <M extends ModelObject> void unregisterGenericBuilder(Class<M> modelClass);
 
 }

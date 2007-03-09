@@ -42,8 +42,7 @@ public class DataObjectLoaderTestCase extends TestCase {
     private QName name = new QName("http://www.osoa.org/xmlns/mock/0.9", "implementation.mock");
 
     private String xml =
-        "<module name=\"m\" xmlns=\"http://www.osoa.org/xmlns/sca/0.9\" " 
-            + "xmlns:mock=\"http://www.osoa.org/xmlns/mock/0.9\" "
+        "<module name=\"m\" xmlns=\"http://www.osoa.org/xmlns/sca/0.9\" " + "xmlns:mock=\"http://www.osoa.org/xmlns/mock/0.9\" "
             + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"  "
             + "xsi:schemaLocation=\"http://www.osoa.org/xmlns/mock/0.9 "
             + "sca-implementation-mock.xsd http://www.osoa.org/xmlns/sca/0.9 sca-core.xsd \">"
@@ -66,7 +65,7 @@ public class DataObjectLoaderTestCase extends TestCase {
         while (!(event == XMLStreamConstants.START_ELEMENT && reader.getName().equals(name)) && reader.hasNext()) {
             event = reader.nextTag();
         }
-        DataObjectLoader loader = new DataObjectLoader(name);
+        DataObjectLoader loader = new DataObjectLoader(null, name.getNamespaceURI(), name.getLocalPart());
         DeploymentContext context =
             new RootDeploymentContext(getClass().getClassLoader(), inputFactory, new CompositeScopeContainer(null),
                                       null);

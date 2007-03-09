@@ -44,7 +44,7 @@ public class SDOWrapperHandler implements WrapperHandler<Object> {
      *      TransformationContext)
      */
     public Object create(ElementInfo element, TransformationContext context) {
-        HelperContext helperContext = SDODataTypeHelper.getHelperContext(context);
+        HelperContext helperContext = SDOContextHelper.getHelperContext(context);
         QName typeName = element.getType().getQName();
         DataFactory dataFactory = helperContext.getDataFactory();
         DataObject root = dataFactory.create(typeName.getNamespaceURI(), typeName.getLocalPart());

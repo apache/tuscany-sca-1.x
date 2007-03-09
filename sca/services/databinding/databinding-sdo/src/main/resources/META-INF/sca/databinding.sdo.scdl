@@ -38,7 +38,7 @@
     <component name="elementLoader.import.sdo">
         <system:implementation.system class="org.apache.tuscany.databinding.sdo.ImportSDOLoader"/>
     </component>
-    
+
     <component name="databinding.sdo">
         <system:implementation.system class="org.apache.tuscany.databinding.sdo.SDODataBinding" />
     </component>    
@@ -63,6 +63,10 @@
     </component>
     <component name="transformer.XMLStreamReader2XMLDocument">
         <system:implementation.system class="org.apache.tuscany.databinding.sdo.XMLStreamReader2XMLDocument"/>
+    </component>
+
+    <component name="sdotype.builder">
+        <system:implementation.system class="org.apache.tuscany.databinding.sdo.ImportSDOBuilder"/>
     </component>
     
 </composite>

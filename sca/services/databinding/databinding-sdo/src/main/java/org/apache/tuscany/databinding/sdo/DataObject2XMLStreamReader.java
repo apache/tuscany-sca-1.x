@@ -42,9 +42,9 @@ public class DataObject2XMLStreamReader extends TransformerExtension<DataObject,
 
     public XMLStreamReader transform(DataObject source, TransformationContext context) {
         try {
-            HelperContext helperContext = SDODataTypeHelper.getHelperContext(context);
+            HelperContext helperContext = SDOContextHelper.getHelperContext(context);
             XMLStreamHelper streamHelper = SDOUtil.createXMLStreamHelper(helperContext.getTypeHelper());
-            QName elementName = SDODataTypeHelper.getElement(context.getSourceDataType());
+            QName elementName = SDOContextHelper.getElement(context.getSourceDataType());
             XMLHelper xmlHelper = helperContext.getXMLHelper();
             XMLDocument document =
                     xmlHelper.createDocument(source, elementName.getNamespaceURI(), elementName.getLocalPart());

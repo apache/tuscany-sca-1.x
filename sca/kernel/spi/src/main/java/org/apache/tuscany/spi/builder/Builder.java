@@ -21,10 +21,12 @@ package org.apache.tuscany.spi.builder;
 import org.apache.tuscany.spi.component.Component;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.component.Reference;
+import org.apache.tuscany.spi.component.SCAObject;
 import org.apache.tuscany.spi.component.Service;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.Implementation;
+import org.apache.tuscany.spi.model.ModelObject;
 import org.apache.tuscany.spi.model.ReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
@@ -71,4 +73,14 @@ public interface Builder {
     Reference build(CompositeComponent parent, ReferenceDefinition definition, DeploymentContext context)
         throws BuilderException;
 
+    /**
+     * Builds a <code>SCAObject</code>
+     * @param parent
+     * @param modelObject
+     * @param context
+     * @return
+     * @throws BuilderException
+     */
+    SCAObject build(SCAObject parent, ModelObject modelObject, DeploymentContext context) 
+        throws BuilderException;
 }

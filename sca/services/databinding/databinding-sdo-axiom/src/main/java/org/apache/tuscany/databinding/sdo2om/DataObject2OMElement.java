@@ -24,7 +24,7 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMNamespace;
-import org.apache.tuscany.databinding.sdo.SDODataTypeHelper;
+import org.apache.tuscany.databinding.sdo.SDOContextHelper;
 import org.apache.tuscany.spi.databinding.PullTransformer;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.databinding.Transformer;
@@ -46,7 +46,7 @@ public class DataObject2OMElement extends TransformerExtension<DataObject, OMEle
     PullTransformer<DataObject, OMElement> {
 
     public OMElement transform(DataObject source, TransformationContext context) {
-        HelperContext helperContext = SDODataTypeHelper.getHelperContext(context);
+        HelperContext helperContext = SDOContextHelper.getHelperContext(context);
         SDODataSource dataSource = new SDODataSource(source, helperContext);
         OMFactory factory = OMAbstractFactory.getOMFactory();
 

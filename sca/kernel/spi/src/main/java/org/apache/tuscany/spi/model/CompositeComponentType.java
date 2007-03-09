@@ -171,4 +171,18 @@ public class CompositeComponentType<S extends ServiceDefinition,
     public void add(Include include) {
         includes.put(include.getName(), include);
     }
+
+    public Map<Object, Object> getDeclaredExtensions() {
+        return super.getExtensions();
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public Map<Object, Object> getExtensions() {
+        Map<Object, Object> view = new HashMap<Object, Object>(super.getExtensions());
+        for (Include i : includes.values()) {
+            view.putAll(i.getIncluded().getExtensions());
+        }
+        return Collections.unmodifiableMap(view);
+    }
 }

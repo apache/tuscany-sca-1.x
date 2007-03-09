@@ -21,11 +21,13 @@ package org.apache.tuscany.databinding.sdo;
 
 import javax.xml.namespace.QName;
 
-import org.apache.tuscany.databinding.sdo.ImportSDOLoader.SDOType;
 import org.apache.tuscany.sdo.util.SDOUtil;
+import org.apache.tuscany.spi.component.AtomicComponent;
 import org.apache.tuscany.spi.component.CompositeComponent;
+import org.apache.tuscany.spi.component.TargetResolutionException;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.idl.XMLType;
+import org.apache.tuscany.spi.model.CompositeComponentType;
 import org.apache.tuscany.spi.model.DataType;
 import org.apache.tuscany.spi.model.ModelObject;
 
@@ -35,8 +37,8 @@ import commonj.sdo.impl.HelperProvider;
 /**
  * Helper class to get TypeHelper from the context
  */
-public final class SDODataTypeHelper {
-    private SDODataTypeHelper() {
+public final class SDOContextHelper {
+    private SDOContextHelper() {
     }
 
     public static HelperContext getHelperContext(TransformationContext context) {
@@ -46,9 +48,16 @@ public final class SDODataTypeHelper {
         HelperContext helperContext = null;
         CompositeComponent composite = (CompositeComponent)context.getMetadata().get(CompositeComponent.class);
         if (composite != null) {
-            SDOType sdoType = (SDOType)composite.getExtensions().get(SDOType.class);
-            if (sdoType != null) {
-                helperContext = sdoType.getHelperContext();
+            SDOHelperContext sdoContext =
+                (SDOHelperContext)composite.getExtensions().get(HelperContext.class.getName());
+            if (sdoContext != null) {
+                helperContext = sdoContext.getHelperContext();
+            }
+            AtomicComponent child = (AtomicComponent)composite.getSystemChild(HelperContext.class.getName());
+            try {
+                helperContext = (HelperContext)child.getTargetInstance();
+            } catch (TargetResolutionException e) {
+                throw new IllegalArgumentException(e);
             }
         }
         if (helperContext == null) {
@@ -58,15 +67,17 @@ public final class SDODataTypeHelper {
         }
     }
 
-    public static HelperContext getHelperContext(ModelObject composite) {
+    public static HelperContext getHelperContext(ModelObject model) {
         HelperContext helperContext = null;
-        if (composite != null) {
-            // HACK: Retrieve the SDO HelperContext from the CompositeComponent
+        if (model instanceof CompositeComponentType) {
+            // HACK: Retrieve the SDO HelperContext from the
+            // CompositeComponentType
             // extensions
-            helperContext = (HelperContext)composite.getExtensions().get(HelperContext.class.getName());
+            helperContext = (HelperContext)model.getExtensions().get(ImportSDO.IMPORT_SDO);
             if (helperContext == null) {
                 helperContext = SDOUtil.createHelperContext();
-                composite.getExtensions().put(HelperContext.class.getName(), helperContext);
+                ((CompositeComponentType<?, ?, ?>)model).getDeclaredExtensions().put(HelperContext.class.getName(),
+                                                                                     helperContext);
             }
         }
 

@@ -22,14 +22,16 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osoa.sca.annotations.EagerInit;
-
+import org.apache.tuscany.core.binding.local.LocalBindingDefinition;
+import org.apache.tuscany.core.implementation.composite.ReferenceImpl;
+import org.apache.tuscany.core.implementation.composite.ServiceImpl;
 import org.apache.tuscany.spi.QualifiedName;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.builder.BindingBuilder;
 import org.apache.tuscany.spi.builder.BuilderException;
 import org.apache.tuscany.spi.builder.BuilderRegistry;
 import org.apache.tuscany.spi.builder.ComponentBuilder;
+import org.apache.tuscany.spi.builder.GenericBuilder;
 import org.apache.tuscany.spi.builder.MissingWireTargetException;
 import org.apache.tuscany.spi.builder.ScopeNotFoundException;
 import org.apache.tuscany.spi.component.AtomicComponent;
@@ -37,6 +39,7 @@ import org.apache.tuscany.spi.component.Component;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.component.Reference;
 import org.apache.tuscany.spi.component.ReferenceBinding;
+import org.apache.tuscany.spi.component.SCAObject;
 import org.apache.tuscany.spi.component.ScopeContainer;
 import org.apache.tuscany.spi.component.ScopeRegistry;
 import org.apache.tuscany.spi.component.Service;
@@ -47,19 +50,17 @@ import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.ComponentType;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.InteractionScope;
+import org.apache.tuscany.spi.model.ModelObject;
 import org.apache.tuscany.spi.model.ReferenceDefinition;
 import org.apache.tuscany.spi.model.Scope;
 import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.wire.WireService;
-
-import org.apache.tuscany.core.binding.local.LocalBindingDefinition;
-import org.apache.tuscany.core.implementation.composite.ReferenceImpl;
-import org.apache.tuscany.core.implementation.composite.ServiceImpl;
+import org.osoa.sca.annotations.EagerInit;
 
 /**
  * The default builder registry in the runtime
- *
+ * 
  * @version $Rev$ $Date$
  */
 @EagerInit
@@ -67,11 +68,12 @@ public class BuilderRegistryImpl implements BuilderRegistry {
     protected WireService wireService;
     protected ScopeRegistry scopeRegistry;
 
-    private final Map<Class<? extends Implementation<?>>, ComponentBuilder<? extends Implementation<?>>>
-    componentBuilders =
+    private final Map<Class<? extends Implementation<?>>, ComponentBuilder<? extends Implementation<?>>> componentBuilders =
         new HashMap<Class<? extends Implementation<?>>, ComponentBuilder<? extends Implementation<?>>>();
     private final Map<Class<? extends BindingDefinition>, BindingBuilder<? extends BindingDefinition>> bindingBuilders =
         new HashMap<Class<? extends BindingDefinition>, BindingBuilder<? extends BindingDefinition>>();
+    private final Map<Class<? extends ModelObject>, GenericBuilder<? extends SCAObject, ? extends ModelObject>> genericBuilders =
+        new HashMap<Class<? extends ModelObject>, GenericBuilder<? extends SCAObject, ? extends ModelObject>>();
 
     public BuilderRegistryImpl(@Autowire
     ScopeRegistry scopeRegistry, @Autowire
@@ -84,7 +86,7 @@ public class BuilderRegistryImpl implements BuilderRegistry {
         componentBuilders.put(implClass, builder);
     }
 
-    public <I extends Implementation<?>> void unregister(Class<I> implClass) {
+    public <I extends Implementation<?>> void unregisterComponentBuilder(Class<I> implClass) {
         componentBuilders.remove(implClass);
     }
 
@@ -98,7 +100,7 @@ public class BuilderRegistryImpl implements BuilderRegistry {
                                                          DeploymentContext context) throws BuilderException {
         Class<?> implClass = componentDefinition.getImplementation().getClass();
         // noinspection SuspiciousMethodCalls
-        ComponentBuilder<I> componentBuilder = (ComponentBuilder<I>) componentBuilders.get(implClass);
+        ComponentBuilder<I> componentBuilder = (ComponentBuilder<I>)componentBuilders.get(implClass);
         try {
             if (componentBuilder == null) {
                 String name = implClass.getName();
@@ -128,14 +130,15 @@ public class BuilderRegistryImpl implements BuilderRegistry {
                         if (!hasConversationalContract) {
                             Map<String, ReferenceDefinition> references = componentType.getReferences();
                             for (ReferenceDefinition refDef : references.values()) {
-                                // TODO check for a conversational callback contract
+                                // TODO check for a conversational callback
+                                // contract
                                 // refDef.getServiceContract() ...
                             }
                         }
                         if (!hasConversationalContract) {
                             String name = implClass.getName();
-                            throw new NoConversationalContractException(
-                                "No conversational contract for conversational implementation", name);
+                            throw new NoConversationalContractException("No conversational contract for conversational implementation",
+                                                                        name);
                         }
                     }
                     // Now it's ok to set the scope container
@@ -150,8 +153,12 @@ public class BuilderRegistryImpl implements BuilderRegistry {
             assert componentType != null : "Component type must be set";
             // create wires for the component
             if (wireService != null && component instanceof AtomicComponent) {
-                wireService.createWires((AtomicComponent) component, componentDefinition);
+                wireService.createWires((AtomicComponent)component, componentDefinition);
             }
+            // FIXME: Can we merge all the extensions at the component level?
+            buildExtensions(component, componentType, context);
+            buildExtensions(component, componentDefinition.getImplementation(), context);
+            buildExtensions(component, componentDefinition, context);
             return component;
         } catch (BuilderException e) {
             e.addContextName(componentDefinition.getName());
@@ -169,7 +176,8 @@ public class BuilderRegistryImpl implements BuilderRegistry {
             // if no bindings are configured, default to the local binding.
             // this should be changed to allow runtime selection
             if (serviceDefinition.getBindings().isEmpty()) {
-                // TODO JFM implement capability for the runtime to choose a binding
+                // TODO JFM implement capability for the runtime to choose a
+                // binding
                 serviceDefinition.addBinding(new LocalBindingDefinition());
             }
         }
@@ -183,8 +191,7 @@ public class BuilderRegistryImpl implements BuilderRegistry {
             if (bindingBuilder == null) {
                 throw new NoRegisteredBuilderException("No builder registered for type", bindingClass.getName());
             }
-            ServiceBinding binding =
-                bindingBuilder.build(parent, serviceDefinition, definition, deploymentContext);
+            ServiceBinding binding = bindingBuilder.build(parent, serviceDefinition, definition, deploymentContext);
             if (wireService != null) {
                 URI uri = serviceDefinition.getTarget();
                 if (uri == null) {
@@ -194,22 +201,26 @@ public class BuilderRegistryImpl implements BuilderRegistry {
                 ServiceContract<?> contract = serviceDefinition.getServiceContract();
                 wireService.createWires(binding, contract, path);
             }
+            buildExtensions(binding, definition, deploymentContext);
             service.addServiceBinding(binding);
         }
+        buildExtensions(service, serviceDefinition, deploymentContext);
         return service;
     }
 
     @SuppressWarnings("unchecked")
-    public Reference build(CompositeComponent parent,
-                           ReferenceDefinition referenceDefinition,
-                           DeploymentContext context) throws BuilderException {
+    public Reference build(CompositeComponent parent, 
+                           ReferenceDefinition referenceDefinition, 
+                           DeploymentContext context)
+        throws BuilderException {
         String name = referenceDefinition.getName();
         ServiceContract<?> contract = referenceDefinition.getServiceContract();
         if (referenceDefinition.getBindings().isEmpty()) {
             // if no bindings are configured, default to the local binding.
             // this should be changed to allow runtime selection
             if (referenceDefinition.getBindings().isEmpty()) {
-                // TODO JFM implement capability for the runtime to choose a binding
+                // TODO JFM implement capability for the runtime to choose a
+                // binding
                 referenceDefinition.addBinding(new LocalBindingDefinition());
             }
         }
@@ -231,10 +242,50 @@ public class BuilderRegistryImpl implements BuilderRegistry {
                 wireService.createWires(binding, contract, targetName);
 
             }
+            buildExtensions(binding, bindingDefinition, context);
             reference.addReferenceBinding(binding);
 
         }
+        buildExtensions(reference, referenceDefinition, context);
         return reference;
+    }
+
+    @SuppressWarnings("unchecked")
+    public SCAObject build(SCAObject parent, ModelObject modelObject, DeploymentContext context)
+        throws BuilderException {
+        if (modelObject != null) {
+            GenericBuilder builder = genericBuilders.get(modelObject.getClass());
+            if (builder != null) {
+                return builder.build(parent, modelObject, context);
+            }
+        }
+        return null;
+    }
+    
+    // We need to include all the extensions from the include
+    private void buildExtensions(SCAObject parent, ModelObject model, DeploymentContext deploymentContext)
+        throws BuilderException {
+        for (Object o : model.getExtensions().values()) {
+            if (o instanceof ModelObject) {
+                SCAObject scaObject = build(parent, (ModelObject)o, deploymentContext);
+                if (scaObject != null) {
+                    parent.getExtensions().put(scaObject.getName(), scaObject);
+                }
+            }
+        }
+    }    
+
+    public <S extends SCAObject, M extends ModelObject> void register(Class<M> modelClass, 
+                                                                      GenericBuilder<S, M> builder) {
+        genericBuilders.put(modelClass, builder);
+    }
+
+    public <B extends BindingDefinition> void unregisterBindingBuilder(Class<B> implClass) {
+        bindingBuilders.remove(implClass);
+    }
+
+    public <M extends ModelObject> void unregisterGenericBuilder(Class<M> modelClass) {
+        genericBuilders.remove(modelClass);
     }
 
 }

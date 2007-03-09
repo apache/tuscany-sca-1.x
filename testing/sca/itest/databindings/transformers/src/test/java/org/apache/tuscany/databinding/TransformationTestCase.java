@@ -51,7 +51,6 @@ import org.apache.tuscany.databinding.sdo.DataObject2XMLStreamReader;
 import org.apache.tuscany.databinding.sdo.XMLDocument2XMLStreamReader;
 import org.apache.tuscany.databinding.sdo.XMLStreamReader2DataObject;
 import org.apache.tuscany.databinding.sdo.XMLStreamReader2XMLDocument;
-import org.apache.tuscany.databinding.sdo.ImportSDOLoader.SDOType;
 import org.apache.tuscany.databinding.xmlbeans.Node2XmlObject;
 import org.apache.tuscany.databinding.xmlbeans.XMLStreamReader2XmlObject;
 import org.apache.tuscany.databinding.xmlbeans.XmlObject2Node;
@@ -167,7 +166,7 @@ public class TransformationTestCase extends TestCase {
         System.out.println("Path: " + path);
 
         TransformationContext tContext = createTransformationContext();
-        tContext.getMetadata().put(SDOType.class, new SDOType(helperContext));
+        // tContext.getMetadata().put(ImportSDO.class, new ImportSDO(helperContext));
 
         Object result = object;
         for (Transformer transformer : path) {

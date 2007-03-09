@@ -16,28 +16,32 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
+
 package org.apache.tuscany.databinding.sdo;
+
+import javax.xml.namespace.QName;
 
 import org.apache.tuscany.spi.model.ModelObject;
 
-import commonj.sdo.DataObject;
+import commonj.sdo.helper.HelperContext;
 
 /**
- * Wrapper of DataObject as a ModelObject
+ * The model object for import.sdo
  * 
  * @version $Rev$ $Date$
  */
-public class ModelDataObject extends ModelObject {
-    private DataObject dataObject;
+public class ImportSDO extends ModelObject {
+    public static final QName IMPORT_SDO =
+        new QName("http://tuscany.apache.org/xmlns/sca/databinding/sdo/1.0", "import.sdo");
 
-    public ModelDataObject(DataObject dataObject) {
+    private HelperContext helperContext;
+
+    public ImportSDO(HelperContext helperContext) {
         super();
-        this.dataObject = dataObject;
+        this.helperContext = helperContext;
     }
 
-    public DataObject getDataObject() {
-        return dataObject;
+    public HelperContext getHelperContext() {
+        return helperContext;
     }
-    
-    
 }

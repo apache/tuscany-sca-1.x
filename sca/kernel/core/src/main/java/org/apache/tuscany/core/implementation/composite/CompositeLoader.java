@@ -121,7 +121,7 @@ public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
                     } else {
                         // add as an unknown model extension
                         if (o != null) {
-                            composite.getExtensions().put(o.getClass(), o);
+                            composite.getDeclaredExtensions().put(o.getClass(), o);
                         }
                     }
                     reader.next();

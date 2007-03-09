@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.databinding.sdo;
 
+import static org.apache.tuscany.databinding.sdo.ImportSDO.IMPORT_SDO;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -49,8 +51,6 @@ import commonj.sdo.impl.HelperProvider;
  * @version $Rev$ $Date$
  */
 public class ImportSDOLoader extends LoaderExtension {
-    public static final QName IMPORT_SDO =
-        new QName("http://tuscany.apache.org/xmlns/sca/databinding/sdo/1.0", "import.sdo");
 
     @Constructor({"registry"})
     public ImportSDOLoader(@Autowire LoaderRegistry registry) {
@@ -69,12 +69,12 @@ public class ImportSDOLoader extends LoaderExtension {
 
         // FIXME: [rfeng] How to associate the TypeHelper with deployment
         // context?
-        HelperContext helperContext = SDODataTypeHelper.getHelperContext(object);
+        HelperContext helperContext = SDOContextHelper.getHelperContext(object);
 
         importFactory(reader, deploymentContext, helperContext);
         importWSDL(reader, deploymentContext, helperContext);
         LoaderUtil.skipToEndElement(reader);
-        return new SDOType(helperContext);
+        return new ImportSDO(helperContext);
     }
 
     private void importFactory(XMLStreamReader reader, DeploymentContext deploymentContext, HelperContext helperContext)
@@ -100,7 +100,6 @@ public class ImportSDOLoader extends LoaderExtension {
         Field field = factoryClass.getField("INSTANCE");
         Object factory = field.get(null);
         Method method = factory.getClass().getMethod("register", new Class[] {HelperContext.class});
-
         method.invoke(factory, new Object[] {helperContext});
 
         // FIXME: How do we associate the application HelperContext with the one
@@ -140,19 +139,6 @@ public class ImportSDOLoader extends LoaderExtension {
                 sfe.setResourceURI(location);
                 throw sfe;
             }
-        }
-    }
-
-    public static class SDOType extends ModelObject {
-        private HelperContext helperContext;
-
-        public SDOType(HelperContext helperContext) {
-            super();
-            this.helperContext = helperContext;
-        }
-
-        public HelperContext getHelperContext() {
-            return helperContext;
         }
     }
 }

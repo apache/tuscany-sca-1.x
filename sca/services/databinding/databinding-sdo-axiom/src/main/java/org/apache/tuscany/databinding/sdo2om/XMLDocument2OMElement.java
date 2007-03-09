@@ -22,7 +22,7 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMNamespace;
-import org.apache.tuscany.databinding.sdo.SDODataTypeHelper;
+import org.apache.tuscany.databinding.sdo.SDOContextHelper;
 import org.apache.tuscany.spi.databinding.PullTransformer;
 import org.apache.tuscany.spi.databinding.TransformationContext;
 import org.apache.tuscany.spi.databinding.Transformer;
@@ -41,7 +41,7 @@ public class XMLDocument2OMElement extends TransformerExtension<XMLDocument, OME
     PullTransformer<XMLDocument, OMElement> {
 
     public OMElement transform(XMLDocument source, TransformationContext context) {
-        HelperContext helperContext = SDODataTypeHelper.getHelperContext(context);
+        HelperContext helperContext = SDOContextHelper.getHelperContext(context);
         SDODataSource dataSource = new SDODataSource(source, helperContext);
         OMFactory factory = OMAbstractFactory.getOMFactory();
         OMNamespace namespace = factory.createOMNamespace(source.getRootElementURI(), source.getRootElementName());

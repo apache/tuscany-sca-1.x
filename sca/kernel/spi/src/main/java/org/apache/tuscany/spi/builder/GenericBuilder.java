@@ -16,28 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.databinding.sdo;
+package org.apache.tuscany.spi.builder;
 
+import org.apache.tuscany.spi.component.SCAObject;
+import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.model.ModelObject;
 
-import commonj.sdo.DataObject;
-
 /**
- * Wrapper of DataObject as a ModelObject
+ * Responsible for building a {@link SCAObject} from an extensibility element in
+ * the SCDL
  * 
  * @version $Rev$ $Date$
  */
-public class ModelDataObject extends ModelObject {
-    private DataObject dataObject;
-
-    public ModelDataObject(DataObject dataObject) {
-        super();
-        this.dataObject = dataObject;
-    }
-
-    public DataObject getDataObject() {
-        return dataObject;
-    }
-    
-    
+public interface GenericBuilder<S extends SCAObject, M extends ModelObject> {
+    /**
+     * Build a SCAObject from an extensibility element in the SCDL
+     * 
+     * @param parent The parent SCAObject
+     * @param modelObject The model object
+     * @param deploymentContext The deployment context
+     * @return A SCAObject representing the runtime metdata for the extension
+     * @throws BuilderException
+     */
+    S build(SCAObject parent, M modelObject, DeploymentContext deploymentContext) throws BuilderException;
 }
