@@ -76,6 +76,7 @@
             <modules>
                 <module>axis2</module>
                 <module>script</module>
+                <module>jms</module>
             </modules>
         </profile>
 
@@ -83,15 +84,19 @@
             <id>integration</id>
             <modules>
                 <module>axis2</module>
+                <module>script</module>
+                <module>jms</module>
+                <module>jsonrpc</module>
             </modules>
         </profile>
 
         <profile>
             <id>unstable</id>
             <modules>
+                <module>axis2</module>
+                <module>script</module>
                 <module>jms</module>
                 <module>jsonrpc</module>
-                <module>script/container.bsf</module>
             </modules>
         </profile>
 
@@ -126,13 +131,6 @@
                 <artifactId>easymockclassextension</artifactId>
                 <version>2.2</version>
                 <scope>test</scope>
-            </dependency>
-
-            <dependency>
-               <groupId>org.apache.tuscany.sca</groupId>
-               <artifactId>tuscany-test</artifactId>
-               <version>${scaKernelVersion}</version>
-               <scope>test</scope>
             </dependency>
 
             <dependency>

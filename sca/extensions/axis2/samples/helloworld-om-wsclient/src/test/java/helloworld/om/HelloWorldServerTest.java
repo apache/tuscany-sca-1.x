@@ -25,7 +25,7 @@ import junit.framework.TestCase;
 
 import org.apache.tuscany.api.SCAContainer;
 
-public class HelloWorldServerTestCase extends TestCase {
+public class HelloWorldServerTest extends TestCase {
 	
 	@Override
 	protected void setUp() throws Exception {

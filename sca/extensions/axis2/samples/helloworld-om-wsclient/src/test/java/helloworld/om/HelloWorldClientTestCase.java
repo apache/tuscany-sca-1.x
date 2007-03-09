@@ -42,13 +42,14 @@ public class HelloWorldClientTestCase extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-    	SCAContainer.start("helloworldwsclient-om.composite");
+        server = new SCATestCaseRunner(HelloWorldServerTest.class);
+        server.setUp();
 
+        SCAContainer.start("helloworldwsclient-om.composite");
+        
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
         helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
 
-        server = new SCATestCaseRunner(HelloWorldServerTestCase.class);
-        server.setUp();
     }
 
     public void testWSClient() {

@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.core.test;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -32,11 +33,18 @@ import java.net.URLClassLoader;
 public class SCATestCaseRunner {
 
     private ClassLoader classLoader;
-    private Class testSuiteClass;
+    private Class<?> testSuiteClass;
     private Object testSuite;
-    private Class testResultClass;
-    private Class testCaseClass;
+    private Class<?> testResultClass;
+    private Class<?> testCaseClass;
     private Object testCase;
+    
+    private Class<?> beforeAnnotation;
+    private Class<?> beforeClassAnnotation;
+    private Class<?> afterAnnotation;
+    private Class<?> afterClassAnnotation;
+    private Class<?> junit4AdapterClass;
+    private Class<?> junit3TestCaseClass;
 
     /**
      * Constructs a new TestCase runner.
@@ -59,12 +67,23 @@ public class SCATestCaseRunner {
 
                 testCaseClass = Class.forName(testClass.getName(), true, classLoader);
                 testCase = testCaseClass.newInstance();
+                
+                junit3TestCaseClass = Class.forName("junit.framework.TestCase", true, classLoader);
 
                 testSuiteClass = Class.forName("junit.framework.TestSuite", true, classLoader);
                 Constructor testSuiteConstructor = testSuiteClass.getConstructor(Class.class);
                 testSuite = testSuiteConstructor.newInstance(testCaseClass);
 
                 testResultClass = Class.forName("junit.framework.TestResult", true, classLoader);
+
+                try {
+	                beforeAnnotation = Class.forName("org.junit.Before", true, classLoader);
+	                afterAnnotation = Class.forName("org.junit.After", true, classLoader);
+	                beforeClassAnnotation = Class.forName("org.junit.BeforeClass", true, classLoader);
+	                afterClassAnnotation = Class.forName("org.junit.AfterClass", true, classLoader);
+	                junit4AdapterClass = Class.forName("junit.framework.JUnit4TestAdapter", true, classLoader);
+                } catch (Exception e) {
+                }
 
             } finally {
                 Thread.currentThread().setContextClassLoader(tccl);
@@ -81,9 +100,17 @@ public class SCATestCaseRunner {
         ClassLoader tccl = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(classLoader);
-            Object testResult = testResultClass.newInstance();
-            Method runMethod = testSuiteClass.getMethod("run", testResultClass);
-            runMethod.invoke(testSuite, testResult);
+            
+            if (junit3TestCaseClass.isAssignableFrom(testCaseClass)) {
+                Object testResult = testResultClass.newInstance();
+                Method runMethod = testSuiteClass.getMethod("run", testResultClass);
+                runMethod.invoke(testSuite, testResult);
+            } else {
+            	Object junit4Adapter = junit4AdapterClass.getConstructor(Class.class).newInstance(testCaseClass);
+                Object testResult = testResultClass.newInstance();
+                Method runMethod = junit4AdapterClass.getMethod("run", testResultClass);
+                runMethod.invoke(junit4Adapter, testResult);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -95,29 +122,69 @@ public class SCATestCaseRunner {
      * Invoke the setUp method
      */
     public void setUp() {
-        ClassLoader tccl = Thread.currentThread().getContextClassLoader();
-        try {
-            Thread.currentThread().setContextClassLoader(classLoader);
-            Method setUpMethod = testCaseClass.getDeclaredMethod("setUp");
-            setUpMethod.setAccessible(true);
-            setUpMethod.invoke(testCase);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            Thread.currentThread().setContextClassLoader(tccl);
-        }
+    	execute("setUp");
+    }
+
+    /**
+     * Invoke the before methods
+     */
+    public void before() {
+    	execute(beforeAnnotation);
+    }
+
+    /**
+     * Invoke the beforeClass methods
+     */
+    public void beforeClass() {
+    	execute(beforeClassAnnotation);
     }
 
     /**
      * Invoke the tearDown method
      */
     public void tearDown() {
+    	execute("tearDown");
+    }
+
+    /**
+     * Invoke the after methods
+     */
+    public void after() {
+    	execute(afterAnnotation);
+    }
+
+    /**
+     * Invoke the afterClass methods
+     */
+    public void afterClass() {
+    	execute(afterClassAnnotation);
+    }
+
+    /**
+     * Invoke the specified test method.
+     */
+    public void run(String methodName) {
+    	execute(methodName);
+    }
+
+    /**
+     * Invoke the methods annotated with the specified annotation.
+     */
+    private void execute(Class<?> annotationClass) {
+    	if (annotationClass == null) {
+    		throw new RuntimeException(new NoSuchMethodException());
+    	}
         ClassLoader tccl = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(classLoader);
-            Method tearDownMethod = testCaseClass.getDeclaredMethod("tearDown");
-            tearDownMethod.setAccessible(true);
-            tearDownMethod.invoke(testCase);
+            
+            for (Method method: testCaseClass.getDeclaredMethods()) {
+            	for (Annotation annotation: method.getAnnotations()) {
+            		if (annotation.annotationType() == annotationClass) {
+            			method.invoke(testCase);
+            		}
+            	}
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -126,14 +193,15 @@ public class SCATestCaseRunner {
     }
 
     /**
-     * Invoke the specified test method.
+     * Invoke the specified method
      */
-    public void run(String methodName) {
+    private void execute(String methodName) {
         ClassLoader tccl = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(classLoader);
-            Method testMethod = testCaseClass.getMethod(methodName);
-            testMethod.invoke(testCase);
+            Method setUpMethod = testCaseClass.getDeclaredMethod(methodName);
+            setUpMethod.setAccessible(true);
+            setUpMethod.invoke(testCase);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

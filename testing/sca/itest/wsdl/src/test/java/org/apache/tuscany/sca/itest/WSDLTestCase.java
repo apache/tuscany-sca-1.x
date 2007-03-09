@@ -20,9 +20,9 @@
 package org.apache.tuscany.sca.itest;
 
 import helloworld.HelloWorldService;
+import junit.framework.TestCase;
 
 import org.apache.tuscany.api.SCAContainer;
-import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
@@ -34,7 +34,7 @@ import org.osoa.sca.CurrentCompositeContext;
  * interface.java (a) or interface.wsdl (b). This results in 16 different
  * combinations 1a2a3a4a thru 1b2b3b4b.
  */
-public class WSDLTestCase extends SCATestCase {
+public class WSDLTestCase extends TestCase {
 
     public void testClient1a2a3a4a()  {
         HelloWorldService client = CurrentCompositeContext.getContext().locateService(HelloWorldService.class, "Client1a2a3a4a");

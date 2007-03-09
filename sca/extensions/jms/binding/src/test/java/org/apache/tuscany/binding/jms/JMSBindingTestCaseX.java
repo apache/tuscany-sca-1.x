@@ -26,17 +26,19 @@ import javax.jms.JMSException;
 import javax.naming.NamingException;
 import javax.xml.parsers.ParserConfigurationException;
 
+import junit.framework.TestCase;
+
 import org.activemq.broker.BrokerContainer;
 import org.activemq.broker.impl.BrokerContainerImpl;
 import org.activemq.store.vm.VMPersistenceAdapter;
-import org.apache.tuscany.test.SCATestCase;
+import org.apache.tuscany.api.SCAContainer;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import org.xml.sax.SAXException;
 
-public class JMSBindingTestCaseX extends SCATestCase {
+public class JMSBindingTestCaseX extends TestCase {
 
     private IntroService introService;
     private BrokerContainer broker;
@@ -78,10 +80,7 @@ public class JMSBindingTestCaseX extends SCATestCase {
 
     protected void setUp() throws Exception {
         startBroker();
-        setApplicationSCDL(IntroService.class, "META-INF/sca/default.scdl");
-        addExtension("jms.binding", getClass().getClassLoader().getResource("META-INF/sca/binding.jms.scdl"));
-        addExtension("idl.wsdl", getClass().getClassLoader().getResource("META-INF/sca/idl.wsdl.scdl"));
-        addExtension("databinding.axiom", getClass().getResource("/META-INF/sca/databinding.axiom.scdl"));
+        SCAContainer.start("META-INF/sca/default.scdl");
         super.setUp();
         CompositeContext context = CurrentCompositeContext.getContext();
         introService = context.locateService(IntroService.class, "IntroServiceComponent");

@@ -24,37 +24,41 @@ import junit.framework.TestCase;
 
 import org.apache.tuscany.api.SCAContainer;
 import org.apache.tuscany.core.test.SCATestCaseRunner;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
  * Test case for helloworld web service client 
  */
-public class HelloWorldClientTestCase extends TestCase {
+public class HelloWorldClientTestCase {
 
     private HelloWorldService helloWorldService;
     
     private SCATestCaseRunner server;
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void startClient() throws Exception {
     	SCAContainer.start("helloworldwsclient.composite");
         
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
         helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
 
-        server =  new SCATestCaseRunner(HelloWorldServerTestCase.class);
-        server.setUp();
+        server =  new SCATestCaseRunner(HelloWorldServerTest.class);
+        server.before();
     }
     
+    @Test
     public void testWSClient() throws Exception {
         String msg = helloWorldService.getGreetings("Smith");
         Assert.assertEquals("Hello Smith", msg);
     }
     
-    @Override
-    protected void tearDown() throws Exception {
-    	server.tearDown();
+    @After
+    public void stopClient() throws Exception {
+    	server.after();
     	SCAContainer.stop();
     }
 

@@ -18,7 +18,9 @@
  */
 package helloworld;
 
-import org.apache.tuscany.test.SCATestCase;
+import junit.framework.TestCase;
+
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -26,17 +28,19 @@ import org.osoa.sca.CurrentCompositeContext;
  * @author administrator
  *
  */ 
-public class HelloWorldJmsClient extends SCATestCase{ 
+public class HelloWorldJmsClient extends TestCase{ 
     private HelloWorldService helloWorldService;
     protected void setUp() throws Exception {
-        setApplicationSCDL(HelloWorldService.class, "META-INF/sca/default.scdl");
-        addExtension("jms.binding", getClass().getClassLoader().getResource("META-INF/sca/binding.jms.scdl"));
-        addExtension("idl.wsdl", getClass().getClassLoader().getResource("META-INF/sca/idl.wsdl.scdl"));
-        addExtension("databinding.axiom", getClass().getResource("/META-INF/sca/databinding.axiom.scdl"));
-        super.setUp();
+        SCAContainer.start("META-INF/sca/default.scdl");
+
         CompositeContext context = CurrentCompositeContext.getContext();
         helloWorldService = context.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
     }
+    
+    protected void tearDown() throws Exception {
+    	SCAContainer.stop();
+    }
+    
     public void testHelloWorld(){
        assertEquals("Hello World", helloWorldService.sayHello("World"));
     }

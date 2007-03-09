@@ -90,12 +90,6 @@
                 <version>0.1-integration-incubating-SNAPSHOT</version>
                 <scope>compile</scope>
             </dependency>
-            <dependency>
-                <groupId>org.apache.tuscany.sca</groupId>
-                <artifactId>tuscany-test</artifactId>
-                <version>${scaImplVersion}</version>
-                <scope>test</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

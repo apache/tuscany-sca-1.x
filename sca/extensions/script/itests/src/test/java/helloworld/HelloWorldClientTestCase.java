@@ -20,15 +20,16 @@
 package helloworld;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 
-import org.apache.tuscany.test.SCATestCase;
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
  * Test case for helloworld web service client 
  */
-public class HelloWorldClientTestCase extends SCATestCase {
+public class HelloWorldClientTestCase extends TestCase {
 
     private CompositeContext compositeContext;
     
@@ -59,14 +60,13 @@ public class HelloWorldClientTestCase extends SCATestCase {
 
     @Override
     protected void setUp() throws Exception {
-        setApplicationSCDL("META-INF/sca/helloworld.composite");
-        super.setUp();
+        SCAContainer.start("META-INF/sca/helloworld.composite");
         this.compositeContext = CurrentCompositeContext.getContext();
     }
     
     @Override
     protected void tearDown() throws Exception {
-    	super.tearDown();
+    	SCAContainer.stop();
     }
 
 }

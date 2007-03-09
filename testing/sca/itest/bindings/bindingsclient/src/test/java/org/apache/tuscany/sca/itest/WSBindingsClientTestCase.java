@@ -21,13 +21,15 @@ package org.apache.tuscany.sca.itest;
 
 import java.lang.reflect.UndeclaredThrowableException;
 
+import junit.framework.TestCase;
+
+import org.apache.tuscany.api.SCAContainer;
 import org.apache.tuscany.core.test.SCATestCaseRunner;
-import org.apache.tuscany.sca.util.SCATestUtilityServerTestCase;
-import org.apache.tuscany.test.SCATestCase;
+import org.apache.tuscany.sca.util.SCATestUtilityServerTest;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
-public class WSBindingsClientTestCase extends SCATestCase {
+public class WSBindingsClientTestCase extends TestCase {
     private SCATestToolService scaTestTool;
     
     private SCATestCaseRunner toolServer;
@@ -48,12 +50,11 @@ public class WSBindingsClientTestCase extends SCATestCase {
     }
 
     protected void setUp() throws Exception {
-        setApplicationSCDL("bindingsclient.composite");
-        super.setUp();
+        SCAContainer.start("bindingsclient.composite");
         
-        toolServer = new SCATestCaseRunner(SCATestToolServerTestCase.class);
+        toolServer = new SCATestCaseRunner(SCATestToolServerTest.class);
         toolServer.setUp();
-        utilityServer = new SCATestCaseRunner(SCATestUtilityServerTestCase.class);
+        utilityServer = new SCATestCaseRunner(SCATestUtilityServerTest.class);
         utilityServer.setUp();
         
         CompositeContext cc = CurrentCompositeContext.getContext();
@@ -72,7 +73,7 @@ public class WSBindingsClientTestCase extends SCATestCase {
     
     @Override
     protected void tearDown() throws Exception {
-    	super.tearDown();
+    	SCAContainer.stop();
     	toolServer.tearDown();
     	utilityServer.tearDown();
     }

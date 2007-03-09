@@ -20,15 +20,16 @@
 package calculator;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 
-import org.apache.tuscany.test.SCATestCase;
+import org.apache.tuscany.api.SCAContainer;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
  * Test case for caluclator service 
  */
-public class CalculatorClientTestCase extends SCATestCase {
+public class CalculatorClientTestCase extends TestCase {
 
     private CompositeContext compositeContext;
     
@@ -46,14 +47,13 @@ public class CalculatorClientTestCase extends SCATestCase {
 
     @Override
     protected void setUp() throws Exception {
-        setApplicationSCDL("calculator/sample.calculator.composite");
-        super.setUp();
+        SCAContainer.start("calculator/sample.calculator.composite");
         this.compositeContext = CurrentCompositeContext.getContext();
     }
     
     @Override
     protected void tearDown() throws Exception {
-    	super.tearDown();
+    	SCAContainer.stop();
     }
 
 }

@@ -315,7 +315,6 @@
             <modules>
                 <module>kernel</module>
                 <module>services</module>
-                <module>test</module>
                 <module>extensions</module>
             </modules>
         </profile>
@@ -325,7 +324,6 @@
             <modules>
                 <module>kernel</module>
                 <module>services</module>
-                <module>test</module>
                 <module>extensions</module>
             </modules>
         </profile>
@@ -335,7 +333,6 @@
             <modules>
                 <module>kernel</module>
                 <module>services</module>
-                <module>test</module>
                 <module>extensions</module>
             </modules>
         </profile>
