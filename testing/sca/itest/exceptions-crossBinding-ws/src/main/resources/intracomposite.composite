@@ -22,7 +22,7 @@
 	
 	<service name="exchangeJaxbService">
 		<interface.java class="org.apache.tuscany.sca.test.exceptions.impl.StockExceptionTestJAXB"/>
-		<binding.ws endpoint="http://scatesttool.stockexceptiontestservice#wsdl.endpoint(StockExceptionTestService/StockExceptionTestServiceSoapPort)" location="wsdl/StockExceptionTest.wsdl"/>
+		<binding.ws wsdlElement="http://scatesttool.stockexceptiontestservice#wsdl.port(StockExceptionTestService/StockExceptionTestServiceSoapPort)" wsdlLocation="http://scatesttool.stockexceptiontestservice wsdl/StockExceptionTest.wsdl"/>
 		<reference>exchangeJaxbComponent</reference>
 	</service>
 	
@@ -37,7 +37,6 @@
 	
 	<reference name="stockTraderSDOReference">
 		<interface.java class="org.apache.tuscany.sca.test.exceptions.sdohandgen.StockExceptionTest"/>
-		<binding.ws endpoint="http://scatesttool.stockexceptiontestservice#wsdl.endpoint(StockExceptionTestService/StockExceptionTestServiceSoapPort)" location="wsdl/StockExceptionTest.wsdl"/>
-            location="wsdl/StockExceptionTest.wsdl" /> 
+		<binding.ws wsdlElement="http://scatesttool.stockexceptiontestservice#wsdl.port(StockExceptionTestService/StockExceptionTestServiceSoapPort)" wsdlLocation="http://scatesttool.stockexceptiontestservice wsdl/StockExceptionTest.wsdl"/>
    	</reference>
 </composite>
