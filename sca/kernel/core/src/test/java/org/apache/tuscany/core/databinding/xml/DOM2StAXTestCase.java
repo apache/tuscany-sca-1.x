@@ -20,7 +20,6 @@ package org.apache.tuscany.core.databinding.xml;
 
 import javax.xml.stream.XMLStreamReader;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.w3c.dom.Node;
@@ -56,7 +55,9 @@ public class DOM2StAXTestCase extends TestCase {
             + "  </items>"
             + "</ipo:purchaseOrder>";
 
-    private static final String CRAZY_XML = "<p:e1 xmlns:p=\"http://p1\">" + "<p:e2 xmlns:p=\"http://p2\"/></p:e1>";
+    private static final String CRAZY_XML =
+        "<p:e1 xmlns=\"http://ns0\" xmlns:p=\"http://p1\">" 
+        + "<p:e2 xmlns:p=\"http://p2\"/><e3/><e4 xmlns=\"\">E4</e4></p:e1>";
 
     /**
      * @see junit.framework.TestCase#setUp()

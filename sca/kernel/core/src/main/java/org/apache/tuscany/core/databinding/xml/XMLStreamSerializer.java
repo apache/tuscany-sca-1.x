@@ -14,11 +14,9 @@ public class XMLStreamSerializer implements XMLStreamConstants {
     private static int namespaceSuffix;
 
     /*
-     * The behavior of the serializer is such that it returns when it
-     * encounters the starting element for the second time. The depth
-     * variable tracks the depth of the serilizer and tells it when to
-     * return. Note that it is assumed that this serialization starts on an
-     * Element.
+     * The behavior of the serializer is such that it returns when it encounters the starting element for the second
+     * time. The depth variable tracks the depth of the serilizer and tells it when to return. Note that it is assumed
+     * that this serialization starts on an Element.
      */
 
     /**
@@ -28,7 +26,7 @@ public class XMLStreamSerializer implements XMLStreamConstants {
 
     /**
      * Generates a unique namespace prefix that is not in the scope of the NamespaceContext
-     *
+     * 
      * @param nsCtxt
      * @return string
      */
@@ -44,7 +42,7 @@ public class XMLStreamSerializer implements XMLStreamConstants {
 
     /**
      * Method serialize.
-     *
+     * 
      * @param node
      * @param writer
      * @throws XMLStreamException
@@ -58,8 +56,7 @@ public class XMLStreamSerializer implements XMLStreamConstants {
      * @param writer
      * @throws XMLStreamException
      */
-    protected void serializeAttributes(XMLStreamReader reader, XMLStreamWriter writer)
-        throws XMLStreamException {
+    protected void serializeAttributes(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
         int count = reader.getAttributeCount();
         String prefix;
         String namespaceName;
@@ -68,11 +65,9 @@ public class XMLStreamSerializer implements XMLStreamConstants {
             prefix = reader.getAttributePrefix(i);
             namespaceName = reader.getAttributeNamespace(i);
             /*
-             * Due to parser implementations returning null as the namespace
-             * URI (for the empty namespace) we need to make sure that we
-             * deal with a namespace name that is not null. The best way to
-             * work around this issue is to set the namespace uri to "" if
-             * it is null
+             * Due to parser implementations returning null as the namespace URI (for the empty namespace) we need to
+             * make sure that we deal with a namespace name that is not null. The best way to work around this issue is
+             * to set the namespace uri to "" if it is null
              */
             if (namespaceName == null) {
                 namespaceName = "";
@@ -86,10 +81,8 @@ public class XMLStreamSerializer implements XMLStreamConstants {
                 // no prefix attached. So use the prefix provided by the
                 // writer
                 if (writerPrefix != null && (prefix == null || prefix.equals(""))) {
-                    writer.writeAttribute(writerPrefix,
-                        namespaceName,
-                        reader.getAttributeLocalName(i),
-                        reader.getAttributeValue(i));
+                    writer.writeAttribute(writerPrefix, namespaceName, reader.getAttributeLocalName(i), reader
+                        .getAttributeValue(i));
 
                     // writer prefix is available but different from the
                     // current
@@ -125,25 +118,23 @@ public class XMLStreamSerializer implements XMLStreamConstants {
 
     /**
      * Method serializeCData.
-     *
+     * 
      * @param reader
      * @param writer
      * @throws XMLStreamException
      */
-    protected void serializeCData(XMLStreamReader reader, XMLStreamWriter writer)
-        throws XMLStreamException {
+    protected void serializeCData(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
         writer.writeCData(reader.getText());
     }
 
     /**
      * Method serializeComment.
-     *
+     * 
      * @param reader
      * @param writer
      * @throws XMLStreamException
      */
-    protected void serializeComment(XMLStreamReader reader, XMLStreamWriter writer)
-        throws XMLStreamException {
+    protected void serializeComment(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
         writer.writeComment(reader.getText());
     }
 
@@ -152,8 +143,7 @@ public class XMLStreamSerializer implements XMLStreamConstants {
      * @param writer
      * @throws XMLStreamException
      */
-    protected void serializeElement(XMLStreamReader reader, XMLStreamWriter writer)
-        throws XMLStreamException {
+    protected void serializeElement(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
         String prefix = reader.getPrefix();
         String nameSpaceName = reader.getNamespaceURI();
         if (nameSpaceName != null) {
@@ -166,9 +156,10 @@ public class XMLStreamSerializer implements XMLStreamConstants {
                     writer.writeNamespace(prefix, nameSpaceName);
                     writer.setPrefix(prefix, nameSpaceName);
                 } else {
+                    // [rfeng] We need to set default NS 1st before calling writeStateElement
+                    writer.setDefaultNamespace(nameSpaceName);
                     writer.writeStartElement(nameSpaceName, reader.getLocalName());
                     writer.writeDefaultNamespace(nameSpaceName);
-                    writer.setDefaultNamespace(nameSpaceName);
                 }
             }
         } else {
@@ -180,9 +171,10 @@ public class XMLStreamSerializer implements XMLStreamConstants {
         String namespacePrefix;
         for (int i = 0; i < count; i++) {
             namespacePrefix = reader.getNamespacePrefix(i);
-            if (namespacePrefix != null && namespacePrefix.length() == 0) {
-                continue;
-            }
+            // [rfeng] The following is commented out to allow to default ns
+            // if (namespacePrefix != null && namespacePrefix.length() == 0) {
+            // continue;
+            // }
 
             serializeNamespace(namespacePrefix, reader.getNamespaceURI(i), writer);
         }
@@ -194,7 +186,7 @@ public class XMLStreamSerializer implements XMLStreamConstants {
 
     /**
      * Method serializeEndElement.
-     *
+     * 
      * @param writer
      * @throws XMLStreamException
      */
@@ -204,14 +196,13 @@ public class XMLStreamSerializer implements XMLStreamConstants {
 
     /**
      * Method serializeNamespace.
-     *
+     * 
      * @param prefix
      * @param uri
      * @param writer
      * @throws XMLStreamException
      */
-    private void serializeNamespace(String prefix, String uri, XMLStreamWriter writer)
-        throws XMLStreamException {
+    private void serializeNamespace(String prefix, String uri, XMLStreamWriter writer) throws XMLStreamException {
         String prefix1 = writer.getPrefix(uri);
         if (prefix1 == null) {
             writer.writeNamespace(prefix, uri);
@@ -221,13 +212,12 @@ public class XMLStreamSerializer implements XMLStreamConstants {
 
     /**
      * Method serializeNode.
-     *
+     * 
      * @param reader
      * @param writer
      * @throws XMLStreamException
      */
-    protected void serializeNode(XMLStreamReader reader, XMLStreamWriter writer)
-        throws XMLStreamException {
+    protected void serializeNode(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
         // TODO We get the StAXWriter at this point and uses it hereafter
         // assuming that this is the only entry point
         // to this class.
@@ -274,8 +264,7 @@ public class XMLStreamSerializer implements XMLStreamConstants {
      * @param writer
      * @throws XMLStreamException
      */
-    protected void serializeText(XMLStreamReader reader, XMLStreamWriter writer)
-        throws XMLStreamException {
+    protected void serializeText(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
         writer.writeCharacters(reader.getText());
     }
 }

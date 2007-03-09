@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.core.databinding.xml;
 
+import static javax.xml.XMLConstants.DEFAULT_NS_PREFIX;
 import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
 
 import java.util.ArrayList;
@@ -83,7 +84,14 @@ public class DOMXMLStreamReader extends XMLFragmentStreamReaderImpl {
             Attr attr = (Attr)nodeMap.item(i);
             String ns = attr.getNamespaceURI();
             if (XMLNS_ATTRIBUTE_NS_URI.equals(ns)) {
-                nsList.add(new QName(attr.getValue(), "", attr.getLocalName()));
+                String prefix = attr.getPrefix();
+                if (prefix == null) {
+                    // xmlns="http://ns"
+                    nsList.add(new QName(attr.getValue(), "", DEFAULT_NS_PREFIX));
+                } else {
+                    // xmlns:ns="http://ns"
+                    nsList.add(new QName(attr.getValue(), "", attr.getLocalName()));
+                }
             }
         }
         QName[] nss = new QName[nsList.size()];
