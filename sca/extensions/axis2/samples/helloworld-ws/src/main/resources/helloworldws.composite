@@ -19,11 +19,10 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance"
     name="helloworldws">
-    
+
     <service name="HelloWorldWebService">
         <interface.java class="helloworld.HelloWorldService" />
-        <!-- interface.wsdl interface="http://helloworld#wsdl.interface(HelloWorld)" wsdli:wsdlLocation="http://helloworld wsdl/helloworld.wsdl" / -->
-        <binding.ws endpoint="http://helloworld#wsdl.endpoint(HelloWorldService/HelloWorldSoapPort)" location="wsdl/helloworld.wsdl" />
+        <binding.ws wsdlElement="http://helloworld#wsdl.port(HelloWorldService/HelloWorldSoapPort)" wsdlLocation="http://helloworld wsdl/helloworld.wsdl" />
         <reference>HelloWorldServiceComponent</reference>
     </service>
 

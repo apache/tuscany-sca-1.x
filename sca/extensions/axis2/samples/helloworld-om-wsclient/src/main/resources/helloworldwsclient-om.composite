@@ -28,8 +28,7 @@
 
     <reference name="HelloWorldService">
         <interface.java interface="helloworld.om.HelloWorldService"/>
-        <binding.ws endpoint="http://helloworld-om#wsdl.endpoint(HelloWorldService/HelloWorldSoapPort)"
-			location="wsdl/helloworld-om.wsdl" />
+        <binding.ws wsdlElement="http://helloworld-om#wsdl.port(HelloWorldService/HelloWorldSoapPort)" wsdlLocation="http://helloworld-om wsdl/helloworld-om.wsdl" />
     </reference>
 
 </composite>
