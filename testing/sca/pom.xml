@@ -148,7 +148,7 @@
                         <reportFormat>brief</reportFormat>
                         <useFile>false</useFile>
                         <forkMode>once</forkMode>
-                        <argLine>-ea</argLine>
+                        <argLine>-ea -Xmx128m</argLine>
                     </configuration>
                 </plugin>
 
