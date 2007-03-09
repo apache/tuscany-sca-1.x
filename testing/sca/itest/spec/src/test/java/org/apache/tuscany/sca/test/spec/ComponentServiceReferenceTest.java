@@ -22,7 +22,7 @@ import java.util.Date;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.RequestContext;
@@ -75,12 +75,12 @@ public class ComponentServiceReferenceTest extends TestCase {
     }
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("CompositeTest.composite");
+    	SCARuntime.start("CompositeTest.composite");
         context = CurrentCompositeContext.getContext();
         myService = context.locateService(MyTotalService.class, "MyTotalService");
     }
     
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 }

@@ -26,7 +26,7 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMText;
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.apache.tuscany.core.test.SCATestCaseRunner;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
@@ -45,7 +45,7 @@ public class HelloWorldClientTestCase extends TestCase {
         server = new SCATestCaseRunner(HelloWorldServerTest.class);
         server.setUp();
 
-        SCAContainer.start("helloworldwsclient-om.composite");
+        SCARuntime.start("helloworldwsclient-om.composite");
         
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
         helloWorldService = compositeContext.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
@@ -66,7 +66,7 @@ public class HelloWorldClientTestCase extends TestCase {
     @Override
     protected void tearDown() throws Exception {
         server.tearDown();
-        SCAContainer.stop();
+        SCARuntime.stop();
     }
 
 }

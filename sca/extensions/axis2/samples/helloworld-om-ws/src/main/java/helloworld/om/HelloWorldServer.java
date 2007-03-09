@@ -3,7 +3,7 @@ package helloworld.om;
 
 import java.io.IOException;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 
 public class HelloWorldServer {
 
@@ -12,7 +12,7 @@ public class HelloWorldServer {
 	 */
 	public static void main(String[] args) {
 		
-		SCAContainer.start("helloworldws-om.composite");
+		SCARuntime.start("helloworldws-om.composite");
 		
 		try {
 			System.out.println("HelloWorld server started");
@@ -21,7 +21,7 @@ public class HelloWorldServer {
 			e.printStackTrace();
 		}
 		
-		SCAContainer.stop();
+		SCARuntime.stop();
 		System.out.println("HelloWorld server stopped");
 	}
 

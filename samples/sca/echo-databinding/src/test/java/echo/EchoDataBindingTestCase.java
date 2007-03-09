@@ -20,7 +20,7 @@ package echo;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -37,13 +37,13 @@ public class EchoDataBindingTestCase extends TestCase {
     }
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("EchoDataBinding.composite");
+    	SCARuntime.start("EchoDataBinding.composite");
     	
         CompositeContext context = CurrentCompositeContext.getContext();
         componentA = context.locateService(Interface1.class, "ComponentA");
     }
     
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 }

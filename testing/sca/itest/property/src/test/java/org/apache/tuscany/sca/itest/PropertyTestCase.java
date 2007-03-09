@@ -23,7 +23,7 @@ import java.util.Iterator;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CurrentCompositeContext;
 
 public class PropertyTestCase extends TestCase {
@@ -166,7 +166,7 @@ public class PropertyTestCase extends TestCase {
     } 
     
     protected void setUp() throws Exception {
-        SCAContainer.start("PropertyTest.composite");
+        SCARuntime.start("PropertyTest.composite");
         abService = CurrentCompositeContext.getContext().locateService(ABComponent.class, "ABComponent");
         cdService = CurrentCompositeContext.getContext().locateService(CDComponent.class, "CDComponent");    
         abcdService = CurrentCompositeContext.getContext().locateService(ABCDComponent.class, "ABCDComponent");
@@ -174,6 +174,6 @@ public class PropertyTestCase extends TestCase {
     }
     
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 }

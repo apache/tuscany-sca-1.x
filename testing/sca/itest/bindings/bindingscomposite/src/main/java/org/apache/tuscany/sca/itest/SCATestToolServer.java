@@ -3,7 +3,7 @@ package org.apache.tuscany.sca.itest;
 
 import java.io.IOException;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 
 public class SCATestToolServer {
 
@@ -12,7 +12,7 @@ public class SCATestToolServer {
 	 */
 	public static void main(String[] args) {
 		
-		SCAContainer.start("bindingscomposite-system.composite", "bindingscomposite.composite");
+		SCARuntime.start("bindingscomposite-system.composite", "bindingscomposite.composite");
 		
 		try {
 			System.out.println("SCATestTool server started");
@@ -21,7 +21,7 @@ public class SCATestToolServer {
 			e.printStackTrace();
 		}
 		
-		SCAContainer.stop();
+		SCARuntime.stop();
 		System.out.println("SCATestTool server stopped");
 	}
 

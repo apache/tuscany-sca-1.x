@@ -20,7 +20,7 @@ package helloworld;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -31,14 +31,14 @@ import org.osoa.sca.CurrentCompositeContext;
 public class HelloWorldJmsClient extends TestCase{ 
     private HelloWorldService helloWorldService;
     protected void setUp() throws Exception {
-        SCAContainer.start("META-INF/sca/default.scdl");
+        SCARuntime.start("META-INF/sca/default.scdl");
 
         CompositeContext context = CurrentCompositeContext.getContext();
         helloWorldService = context.locateService(HelloWorldService.class, "HelloWorldServiceComponent");
     }
     
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
     
     public void testHelloWorld(){

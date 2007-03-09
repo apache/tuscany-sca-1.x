@@ -64,8 +64,8 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-              <module>helloworld-om-ws</module>
-              <module>helloworld-om-wsclient</module>
+              <module>helloworld-ws</module>
+              <module>helloworld-wsclient</module>
           </modules>
         </profile>
 

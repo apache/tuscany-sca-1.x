@@ -1,6 +1,6 @@
 package composite;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -12,7 +12,7 @@ import org.osoa.sca.CurrentCompositeContext;
 public class CompositeClient {
 
     public static void main(String[] args) throws Exception {
-    	SCAContainer.start("OuterComposite.composite");
+    	SCARuntime.start("OuterComposite.composite");
     	
         CompositeContext context = CurrentCompositeContext.getContext();
 
@@ -21,6 +21,6 @@ public class CompositeClient {
         source.clientMethod("Client.main");
         Thread.sleep(500);
         
-        SCAContainer.stop();
+        SCARuntime.stop();
     }
 }

@@ -23,8 +23,8 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 
-import org.apache.tuscany.api.SCAContainer;
-import org.apache.tuscany.core.bootstrap.DefaultSCAContainer;
+import org.apache.tuscany.api.SCARuntime;
+import org.apache.tuscany.core.bootstrap.DefaultSCARuntime;
 import org.apache.tuscany.core.util.FileHelper;
 import org.apache.tuscany.host.deployment.ContributionService;
 import org.apache.tuscany.spi.bootstrap.ComponentNames;
@@ -43,7 +43,7 @@ public class ContributionServiceTestCase extends SCATestCase {
     protected void setUp() throws Exception {
         super.setUp();
         
-        this.contributionService = (ContributionService) ((DefaultSCAContainer)SCAContainer.getInstance()).getSystemService(ComponentNames.TUSCANY_CONTRIBUTION_SERVICE);
+        this.contributionService = (ContributionService) ((DefaultSCARuntime)SCARuntime.getInstance()).getSystemService(ComponentNames.TUSCANY_CONTRIBUTION_SERVICE);
     }
 
     public void testContributeJAR() throws Exception {

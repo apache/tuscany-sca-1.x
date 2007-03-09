@@ -22,7 +22,7 @@ package org.apache.tuscany.sca.itest;
 import helloworld.HelloWorldService;
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
@@ -139,11 +139,11 @@ public class WSDLTestCase extends TestCase {
 //    }
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("WSDLTest.composite");
+    	SCARuntime.start("WSDLTest.composite");
     }
 
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 
 }

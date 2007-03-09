@@ -22,7 +22,7 @@ package helloworld;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -49,13 +49,13 @@ public class XMLTestCase extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        SCAContainer.start("META-INF/sca/xml.composite");
+        SCARuntime.start("META-INF/sca/xml.composite");
         this.compositeContext = CurrentCompositeContext.getContext();
     }
 
     @Override
     protected void tearDown() throws Exception {
-        SCAContainer.stop();
+        SCARuntime.stop();
     }
 
 }

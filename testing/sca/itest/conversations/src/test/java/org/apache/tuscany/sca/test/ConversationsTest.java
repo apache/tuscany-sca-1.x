@@ -2,7 +2,7 @@ package org.apache.tuscany.sca.test;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CurrentCompositeContext;
 
 public class ConversationsTest extends TestCase  {
@@ -14,14 +14,14 @@ public class ConversationsTest extends TestCase  {
     }
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("ConversationsTest.composite");
+    	SCARuntime.start("ConversationsTest.composite");
     	
        aConversationsClient = CurrentCompositeContext.getContext().locateService(ConversationsClient.class, "ConversationsClient/org.apache.tuscany.sca.test.ConversationsClient");
  
     }
     
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
    
 }

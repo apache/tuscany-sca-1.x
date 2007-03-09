@@ -20,7 +20,7 @@ package bigbank;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -31,14 +31,14 @@ public class BigBankTestCase extends TestCase {
     AccountService accountService;
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("BigBank.composite");
+    	SCARuntime.start("BigBank.composite");
 
         CompositeContext context = CurrentCompositeContext.getContext();
         accountService = context.locateService(AccountService.class, "AccountServiceComponent");
     }
     
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 
     public void test() throws Exception {

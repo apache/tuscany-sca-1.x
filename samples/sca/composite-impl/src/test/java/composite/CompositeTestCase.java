@@ -20,7 +20,7 @@ package composite;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -29,14 +29,14 @@ public class CompositeTestCase extends TestCase {
     private Source source;
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("OuterComposite.composite");
+    	SCARuntime.start("OuterComposite.composite");
 
         CompositeContext context = CurrentCompositeContext.getContext();
         source = context.locateService(Source.class, "SourceComponent/InnerSourceService");
     }
     
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 
     public void test() throws Exception {

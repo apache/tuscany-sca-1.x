@@ -19,14 +19,14 @@
 package loanapplication;
 
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 public class LoanApplicationClient {
 
     public static void main(String[] args) throws Exception {
-    	SCAContainer.start("loanapplication.composite");
+    	SCARuntime.start("loanapplication.composite");
     	
         // Locate the MyClient component and invoke it
         CompositeContext context = CurrentCompositeContext.getContext();
@@ -36,6 +36,6 @@ public class LoanApplicationClient {
         System.out.println(loanClient.displayLoan());
         System.out.println("Loan approved: " + loanClient.isApproved());
         
-        SCAContainer.stop();
+        SCARuntime.stop();
     }
 }

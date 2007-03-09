@@ -4,7 +4,7 @@ package org.apache.tuscany.sca.util;
 import java.io.IOException;
 import java.net.Socket;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 
 import junit.framework.TestCase;
 
@@ -12,7 +12,7 @@ public class SCATestUtilityServerTestCase extends TestCase {
 	
 	@Override
 	protected void setUp() throws Exception {
-		SCAContainer.start("bindingsutility-system.composite", "bindingsutility.composite");
+		SCARuntime.start("bindingsutility-system.composite", "bindingsutility.composite");
 	}
 	
 	public void testPing() throws IOException {
@@ -21,7 +21,7 @@ public class SCATestUtilityServerTestCase extends TestCase {
 	
 	@Override
 	protected void tearDown() throws Exception {
-		SCAContainer.stop();
+		SCARuntime.stop();
 	}
 
 }

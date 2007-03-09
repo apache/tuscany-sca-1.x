@@ -23,7 +23,7 @@ import java.rmi.RemoteException;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CurrentCompositeContext;
 
 import bigbank.account.services.accountdata.AccountDataService;
@@ -87,11 +87,11 @@ public class SDOWSDLTestCase extends TestCase {
     }
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("SDOWSDLTest.composite");
+    	SCARuntime.start("SDOWSDLTest.composite");
     }
 
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 
 }

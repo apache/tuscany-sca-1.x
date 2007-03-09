@@ -18,7 +18,7 @@
  */
 package simplecallback;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -28,7 +28,7 @@ import org.osoa.sca.CurrentCompositeContext;
 public class SimpleCallbackClient {
 
     public static void main(String[] args) throws Exception {
-    	SCAContainer.start("simplecallback.composite");
+    	SCARuntime.start("simplecallback.composite");
     	
         // Locate the MyClient component and invoke it
         CompositeContext context = CurrentCompositeContext.getContext();
@@ -37,6 +37,6 @@ public class SimpleCallbackClient {
         myClient.aClientMethod();
         Thread.sleep(500);
         
-        SCAContainer.stop();
+        SCARuntime.stop();
     }
 }

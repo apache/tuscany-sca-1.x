@@ -21,7 +21,7 @@ package helloworld;
 import java.io.IOException;
 import java.net.Socket;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +30,7 @@ public class HelloWorldServerTest {
 	
 	@Before
 	public void startServer() throws Exception {
-		SCAContainer.start("helloworldws.composite");
+		SCARuntime.start("helloworldws.composite");
 	}
 	
 	@Test
@@ -40,7 +40,7 @@ public class HelloWorldServerTest {
 	
 	@After
 	public void stopServer() throws Exception {
-		SCAContainer.stop();
+		SCARuntime.stop();
 	}
 
 }

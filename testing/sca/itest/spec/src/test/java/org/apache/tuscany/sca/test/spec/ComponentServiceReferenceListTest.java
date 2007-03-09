@@ -20,7 +20,7 @@ package org.apache.tuscany.sca.test.spec;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -41,13 +41,13 @@ public class ComponentServiceReferenceListTest extends TestCase {
     }
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("CompositeTest.composite");
+    	SCARuntime.start("CompositeTest.composite");
         context = CurrentCompositeContext.getContext();
         myListService = context.locateService(MyListService.class, "MyNewListService");
         myListServiceByYear = context.locateService(MyListServiceByYear.class, "MyNewListService");
     }
     
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 }

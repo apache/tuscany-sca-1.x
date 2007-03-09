@@ -20,7 +20,7 @@ package org.apache.tuscany.sca.test.exceptions;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -41,7 +41,7 @@ public class IntraCompositeTestCase extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-    	SCAContainer.start("ExceptionTest.composite");
+    	SCARuntime.start("ExceptionTest.composite");
 
         context = CurrentCompositeContext.getContext();
         assertNotNull(context);
@@ -51,7 +51,7 @@ public class IntraCompositeTestCase extends TestCase {
     
     @Override
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
     
 }

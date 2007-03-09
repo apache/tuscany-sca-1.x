@@ -23,7 +23,7 @@ import java.lang.reflect.UndeclaredThrowableException;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.apache.tuscany.core.test.SCATestCaseRunner;
 import org.apache.tuscany.sca.util.SCATestUtilityServerTest;
 import org.osoa.sca.CompositeContext;
@@ -50,7 +50,7 @@ public class WSBindingsClientTestCase extends TestCase {
     }
 
     protected void setUp() throws Exception {
-        SCAContainer.start("bindingsclient.composite");
+        SCARuntime.start("bindingsclient.composite");
         
         toolServer = new SCATestCaseRunner(SCATestToolServerTest.class);
         toolServer.setUp();
@@ -73,7 +73,7 @@ public class WSBindingsClientTestCase extends TestCase {
     
     @Override
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     	toolServer.tearDown();
     	utilityServer.tearDown();
     }

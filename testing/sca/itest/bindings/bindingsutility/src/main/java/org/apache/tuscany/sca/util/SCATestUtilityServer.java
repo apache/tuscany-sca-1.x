@@ -3,7 +3,7 @@ package org.apache.tuscany.sca.util;
 
 import java.io.IOException;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 
 public class SCATestUtilityServer {
 
@@ -12,7 +12,7 @@ public class SCATestUtilityServer {
 	 */
 	public static void main(String[] args) {
 		
-		SCAContainer.start("bindingsutility-system.composite", "bindingsutility.composite");
+		SCARuntime.start("bindingsutility-system.composite", "bindingsutility.composite");
 		
 		try {
 			System.out.println("SCATestUtility server started");
@@ -21,7 +21,7 @@ public class SCATestUtilityServer {
 			e.printStackTrace();
 		}
 		
-		SCAContainer.stop();
+		SCARuntime.stop();
 		System.out.println("SCATestUtility server stopped");
 	}
 

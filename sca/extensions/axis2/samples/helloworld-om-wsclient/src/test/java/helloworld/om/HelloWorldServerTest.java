@@ -23,13 +23,13 @@ import java.net.Socket;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 
 public class HelloWorldServerTest extends TestCase {
 	
 	@Override
 	protected void setUp() throws Exception {
-		SCAContainer.start("helloworldws-om.composite");
+		SCARuntime.start("helloworldws-om.composite");
 	}
 	
 	public void testPing() throws IOException {
@@ -38,7 +38,7 @@ public class HelloWorldServerTest extends TestCase {
 	
 	@Override
 	protected void tearDown() throws Exception {
-		SCAContainer.stop();
+		SCARuntime.stop();
 	}
 
 }

@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.apache.tuscany.api.TuscanyException;
 import org.apache.tuscany.core.component.ComponentContextImpl;
 import org.apache.tuscany.core.launcher.CompositeContextImpl;
@@ -39,12 +39,12 @@ import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.ServiceUnavailableException;
 
 /**
- * Base class for JUnit tests that want to run in an SCA client environment.
+ * Default implementation of SCARuntime.
  * 
  * @version $Rev$ $Date$
  */
 @SuppressWarnings("deprecation")
-public class DefaultSCAContainer extends SCAContainer {
+public class DefaultSCARuntime extends SCARuntime {
     protected CompositeComponent application;
     protected CompositeContextImpl context;
 

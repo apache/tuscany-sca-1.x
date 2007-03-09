@@ -30,7 +30,7 @@ import javax.xml.stream.XMLStreamReader;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.apache.tuscany.databinding.jaxb.JAXBContextHelper;
 import org.apache.tuscany.databinding.jaxb.Reader2JAXB;
 import org.apache.tuscany.databinding.sdo.String2DataObject;
@@ -113,12 +113,12 @@ public class DataBindingBootStrapTestCase extends TestCase {
     }
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("DataBindingTest.composite");
+    	SCARuntime.start("DataBindingTest.composite");
         CompositeContext context = CurrentCompositeContext.getContext();
         client = context.locateService(Client.class, "Client");
     }
     
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 }

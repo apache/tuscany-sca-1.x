@@ -24,7 +24,7 @@ import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMNode;
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import static java.lang.System.out;
@@ -43,7 +43,7 @@ public class HelloWorldClient {
 
     public  final static void main(String[] args) throws Exception {
     	
-    	SCAContainer.start("helloworldwsclient-om.composite");
+    	SCARuntime.start("helloworldwsclient-om.composite");
         
         // Invoke the HelloWorld service
         CompositeContext compositeContext = CurrentCompositeContext.getContext();
@@ -68,7 +68,7 @@ public class HelloWorldClient {
         out.println(value);
         out.flush();
 
-        SCAContainer.stop();
+        SCARuntime.stop();
     }
 
     private static void printTRee(OMElement value) {

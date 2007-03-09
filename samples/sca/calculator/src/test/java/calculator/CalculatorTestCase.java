@@ -20,7 +20,7 @@ package calculator;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -32,14 +32,14 @@ public class CalculatorTestCase extends TestCase {
     private CalculatorService calculatorService;
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("Calculator.composite");
+    	SCARuntime.start("Calculator.composite");
 
         CompositeContext context = CurrentCompositeContext.getContext();
         calculatorService = context.locateService(CalculatorService.class, "CalculatorServiceComponent");
     }
     
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 
     public void testCalculator() throws Exception {

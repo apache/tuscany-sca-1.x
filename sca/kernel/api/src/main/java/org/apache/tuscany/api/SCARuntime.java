@@ -30,9 +30,9 @@ import java.security.PrivilegedAction;
 import org.osoa.sca.ComponentContext;
 
 /**
- * The Tuscany container
+ * SCARuntime is used to start a Tuscany SCA runtime.
  */
-public abstract class SCAContainer {
+public abstract class SCARuntime {
     public static final String DEFAULT_SYSTEM_SCDL = "META-INF/tuscany/default-system.composite";
     public static final String SYSTEM_SCDL = "system.composite";
     public static final String EXTENSION_SCDL = "META-INF/sca/extension.composite";
@@ -40,7 +40,7 @@ public abstract class SCAContainer {
     public static final String META_APPLICATION_SCDL = "META-INF/sca/application.composite";
     public static final String APPLICATION_SCDL = "application.composite";
 
-    private static SCAContainer instance;
+    private static SCARuntime instance;
 
     /**
      * Read the service name from a configuration file
@@ -79,16 +79,16 @@ public abstract class SCAContainer {
      * the name of the implementation class. Otherwise, if the resource
      * "META-INF/services/org.apache.tuscany.api.TuscanyContainer" can be loaded
      * from the supplied classloader. Otherwise, it will use
-     * "org.apache.tuscany.core.bootstrap.DefaultSCAContainer" as the default.
+     * "org.apache.tuscany.core.bootstrap.DefaultSCARuntime" as the default.
      * The named class is loaded from the supplied classloader and instantiated
      * using its default (no-arg) constructor.
      * 
      * @return
      */
-    private static SCAContainer newInstance(final ClassLoader classLoader) {
+    private static SCARuntime newInstance(final ClassLoader classLoader) {
 
         try {
-            final String name = SCAContainer.class.getName();
+            final String name = SCARuntime.class.getName();
             String className = AccessController.doPrivileged(new PrivilegedAction<String>() {
                 public String run() {
                     return System.getProperty(name);
@@ -99,10 +99,10 @@ public abstract class SCAContainer {
                 className = getServiceName(classLoader, name);
             }
             if (className == null) {
-                className = "org.apache.tuscany.core.bootstrap.DefaultSCAContainer";
+                className = "org.apache.tuscany.core.bootstrap.DefaultSCARuntime";
             }
             Class cls = Class.forName(className, true, classLoader);
-            return (SCAContainer)cls.newInstance();  // NOPMD lresende
+            return (SCARuntime)cls.newInstance();  // NOPMD lresende
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -113,11 +113,11 @@ public abstract class SCAContainer {
      * 
      * @return The instance
      */
-    public synchronized static SCAContainer getInstance() { // NOPMD
+    public synchronized static SCARuntime getInstance() { // NOPMD
         if (instance != null) {
             return instance;
         }
-        ClassLoader classLoader = SCAContainer.class.getClassLoader();
+        ClassLoader classLoader = SCARuntime.class.getClassLoader();
         instance = newInstance(classLoader);
         return instance;
     }
@@ -219,6 +219,8 @@ public abstract class SCAContainer {
             getInstance().shutdown();
         } catch (Exception e) {
             throw new IllegalStateException(e);
+        } finally {
+        	instance = null;
         }
     }
 

@@ -18,7 +18,7 @@
  */
 package supplychain;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -29,7 +29,7 @@ import org.osoa.sca.CurrentCompositeContext;
 public class SupplyChainClient {
 
     public static final void main(String[] args) throws Exception {
-    	SCAContainer.start("supplychain.composite");
+    	SCARuntime.start("supplychain.composite");
         
         // Locate the Customer component and invoke it
         CompositeContext context = CurrentCompositeContext.getContext();
@@ -41,6 +41,6 @@ public class SupplyChainClient {
         System.out.println("Main thread sleeping ...");
         Thread.sleep(1000);
 
-        SCAContainer.stop();
+        SCARuntime.stop();
     }
 }

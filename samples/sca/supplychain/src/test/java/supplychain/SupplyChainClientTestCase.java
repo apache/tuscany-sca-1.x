@@ -20,7 +20,7 @@ package supplychain;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -33,14 +33,14 @@ public class SupplyChainClientTestCase extends TestCase {
     private Customer customer;
 
     protected void setUp() throws Exception {
-    	SCAContainer.start("supplychain.composite");
+    	SCARuntime.start("supplychain.composite");
 
         CompositeContext context = CurrentCompositeContext.getContext();
         customer = context.locateService(Customer.class, "CustomerComponent");
     }
 
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 
     public void test() throws Exception {

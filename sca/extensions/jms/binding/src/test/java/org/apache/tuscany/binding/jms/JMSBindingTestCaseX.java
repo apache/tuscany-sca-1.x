@@ -31,7 +31,7 @@ import junit.framework.TestCase;
 import org.activemq.broker.BrokerContainer;
 import org.activemq.broker.impl.BrokerContainerImpl;
 import org.activemq.store.vm.VMPersistenceAdapter;
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.osoa.sca.CompositeContext;
@@ -80,7 +80,7 @@ public class JMSBindingTestCaseX extends TestCase {
 
     protected void setUp() throws Exception {
         startBroker();
-        SCAContainer.start("META-INF/sca/default.scdl");
+        SCARuntime.start("META-INF/sca/default.scdl");
         super.setUp();
         CompositeContext context = CurrentCompositeContext.getContext();
         introService = context.locateService(IntroService.class, "IntroServiceComponent");

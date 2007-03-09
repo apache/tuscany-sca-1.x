@@ -20,7 +20,7 @@ package loanapplication;
 
 import junit.framework.TestCase;
 
-import org.apache.tuscany.api.SCAContainer;
+import org.apache.tuscany.api.SCARuntime;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
@@ -29,14 +29,14 @@ public class LoanApplicationTestCase extends TestCase {
     private LoanClient loanClient;
 
     protected void setUp() throws Exception {
-        SCAContainer.start("loanapplication.composite");
+        SCARuntime.start("loanapplication.composite");
 
         CompositeContext context = CurrentCompositeContext.getContext();
         loanClient = context.locateService(LoanClient.class, "LoanClientComponent");
     }
     
     protected void tearDown() throws Exception {
-    	SCAContainer.stop();
+    	SCARuntime.stop();
     }
 
     public void test() throws Exception {
