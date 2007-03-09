@@ -18,6 +18,10 @@
  */
 package org.apache.tuscany.tools.wsdl2java.generate;
 
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.Reader;
+
 import junit.framework.TestCase;
 
 /**
@@ -39,6 +43,23 @@ public class WSDL2JavaGeneratorTestCase extends TestCase {
         WSDL2JavaGenerator.main(args);
         
     }
-    
-    
+
+    public void testDynamicSDO() throws IOException {
+        String basedir = System.getProperty("basedir");
+        if (basedir == null)
+            basedir =".";
+
+        String[] args=new String[] { "-targetDirectory", basedir + "/target/wsdl2java-source",
+                "-javaPackage", "org.apache.tuscany.tools.wsdl2java.generate.account",
+                "-dynamicSDO",
+                basedir + "/src/test/resources/AccountService.wsdl"};
+
+        WSDL2JavaGenerator.main(args);
+
+        char buffer[] = new char[1024];
+        Reader file = new FileReader("target/wsdl2java-source/org/apache/tuscany/tools/wsdl2java/generate/account/AccountService.java");
+        file.read(buffer);
+        file.close();
+        assertTrue(new String(buffer).indexOf("commonj.sdo.DataObject") != -1);
+    }
 }

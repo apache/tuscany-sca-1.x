@@ -54,6 +54,7 @@ import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import commonj.sdo.helper.XSDHelper;
 
 public class WSDL2JavaGenerator {
+    static protected final int DYNAMIC_SDO = 1;
 
     /**
      * Generate Java interfaces from WSDL Usage arguments: [ -targetDirectory
@@ -77,6 +78,7 @@ public class WSDL2JavaGenerator {
         String targetDirectory = null;
         String wsdlJavaPackage = null;
         String xsdJavaPackage = null;
+        int dynamicSDO = 0;
 
         int index = 0;
         for (; index < args.length && args[index].startsWith("-"); ++index) {
@@ -86,6 +88,8 @@ public class WSDL2JavaGenerator {
                 targetDirectory = args[++index];
             } else if (args[index].equalsIgnoreCase("-javaPackage")) {
                 wsdlJavaPackage = args[++index];
+            } else if (args[index].equalsIgnoreCase("-dynamicSDO")) {
+                dynamicSDO = DYNAMIC_SDO;
             }
             // else if (...)
             else {
@@ -100,7 +104,7 @@ public class WSDL2JavaGenerator {
             return;
         }
 
-        generateFromWSDL(wsdlFileName, portName!=null? new String[]{portName}:null, targetDirectory, wsdlJavaPackage, xsdJavaPackage, 0);
+        generateFromWSDL(wsdlFileName, portName!=null? new String[]{portName}:null, targetDirectory, wsdlJavaPackage, xsdJavaPackage, dynamicSDO);
 
     }
 
@@ -174,8 +178,9 @@ public class WSDL2JavaGenerator {
                     for (GenClass genClass : (List<GenClass>)currentGenPackage.getGenClasses()) {
                         QName qname = new QName(extendedMetaData.getNamespace(currentEPackage),
                                                 extendedMetaData.getName(genClass.getEcoreClass()));
-                        String interfaceName = currentGenPackage.getInterfacePackageName() + '.'
-                                               + genClass.getInterfaceName();
+                        String interfaceName = (DYNAMIC_SDO & genOptions) == DYNAMIC_SDO ? "commonj.sdo.DataObject" : currentGenPackage
+                                .getInterfacePackageName()
+                                + '.' + genClass.getInterfaceName();
                         SDODataBindingTypeMappingEntry typeMappingEntry =
                                 new SDODataBindingTypeMappingEntry(interfaceName, false, null);
                         typeMapping.put(qname, typeMappingEntry);
@@ -195,8 +200,9 @@ public class WSDL2JavaGenerator {
                                 GenClass genClass = genClasses.get(elementType);
                                 QName qname = new QName(extendedMetaData.getNamespace(currentEPackage),
                                         extendedMetaData.getName(element));
-                                String interfaceName = genClass.getGenPackage().getInterfacePackageName()
-                                + '.' + genClass.getInterfaceName();
+                                String interfaceName = (DYNAMIC_SDO & genOptions) == DYNAMIC_SDO ? "commonj.sdo.DataObject" : genClass
+                                        .getGenPackage().getInterfacePackageName()
+                                        + '.' + genClass.getInterfaceName();
                                 boolean anonymous = extendedMetaData.isAnonymous(eClass);
                                 
                                 // Build list of property class names
@@ -205,8 +211,9 @@ public class WSDL2JavaGenerator {
                                     EClassifier propertyType = feature.getEType();
                                     if (propertyType instanceof EClass) {
                                         GenClass propertyGenClass = genClasses.get(propertyType);
-                                        String propertyClassName = propertyGenClass.getGenPackage().getInterfacePackageName()
-                                                               + '.' + propertyGenClass.getInterfaceName();
+                                        String propertyClassName = (DYNAMIC_SDO & genOptions) == DYNAMIC_SDO ? "commonj.sdo.DataObject"
+                                                : propertyGenClass.getGenPackage().getInterfacePackageName() + '.'
+                                                        + propertyGenClass.getInterfaceName();
                                         propertyClassNames.add(propertyClassName);
                                     } else if (propertyType instanceof EClassifier) {
                                         String propertyClassName = propertyType.getInstanceClass().getName();
@@ -338,6 +345,7 @@ public class WSDL2JavaGenerator {
         System.out.println("Usage arguments:");
         System.out.println("  [ -targetDirectory <target-root-directory> ]");
         System.out.println("  [ -javaPackage <java-package-name> ]");
+        System.out.println("  [ -dynamicSDO ]");
         System.out.println("  <wsdl-file>");
         System.out.println("");
         System.out.println("For example:");
