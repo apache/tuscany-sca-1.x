@@ -32,6 +32,7 @@ import org.apache.tuscany.core.services.deployment.ContentTypeDescriberImpl;
 import org.apache.tuscany.core.util.FileHelper;
 import org.apache.tuscany.core.util.IOHelper;
 import org.apache.tuscany.host.deployment.DeploymentException;
+import org.apache.tuscany.spi.deployer.ContentType;
 import org.apache.tuscany.spi.deployer.ContentTypeDescriber;
 import org.apache.tuscany.spi.deployer.ContributionProcessor;
 import org.apache.tuscany.spi.extension.ContributionProcessorExtension;
@@ -39,7 +40,10 @@ import org.apache.tuscany.spi.model.Contribution;
 import org.apache.tuscany.spi.model.DeployedArtifact;
 
 public class FolderContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor {
-    public static final String CONTENT_TYPE = "application/vnd.tuscany.folder";
+    /**
+     * Content-type that this processor can handle
+     */
+    public static final String CONTENT_TYPE = ContentType.FOLDER;
 
     @Override
     public String getContentType() {
@@ -111,19 +115,17 @@ public class FolderContributionProcessor extends ContributionProcessorExtension 
             artifact.setLocation(artifactURL);
             contribution.addArtifact(artifact);
 
-            // TODO: remove this... for debug purpose only
             ContentTypeDescriber contentTypeDescriber = new ContentTypeDescriberImpl();
             String contentType = contentTypeDescriber.getContentType(artifactURL, null);
-            // System.out.println("File : " + artifactURL);
-            // System.out.println("Type : " + contentType);
 
-            // just process scdl for now
-            if ("application/vnd.tuscany.scdl".equals(contentType)) {
+            // just process scdl and contribution metadata for now
+            if (ContentType.COMPOSITE.equals(contentType)) {
                 InputStream is = artifactURL.openStream();
                 try {
                     this.registry.processContent(contribution, artifactURI, is);
                 } finally {
                     IOHelper.closeQuietly(is);
+                    is = null;
                 }
             }
         }

@@ -18,8 +18,9 @@
  */
 package org.apache.tuscany.core.services.deployment.contribution;
 
-import java.net.URI;
 import java.net.URL;
+import java.util.jar.JarEntry;
+import java.util.jar.JarInputStream;
 
 import junit.framework.TestCase;
 
@@ -35,15 +36,11 @@ import org.apache.tuscany.core.implementation.processor.ScopeProcessor;
 import org.apache.tuscany.core.monitor.NullMonitorFactory;
 import org.apache.tuscany.spi.deployer.ContributionProcessor;
 import org.apache.tuscany.spi.implementation.java.ImplementationProcessorService;
-import org.apache.tuscany.spi.model.Contribution;
-import org.apache.tuscany.spi.model.DeployedArtifact;
 
-public class JavaContributionProcessorTestCase extends TestCase {
+public class CompositeContributionProcessorTestCase extends TestCase {
     private static final String CONTRIBUTION = "/repository/sample-calculator.jar";
-    private static final String JAVA_ARTIFACT = "calculator/AddService.class";
+    private static final String ARTIFACT_URL = "/META-INF/sca/default.scdl";
     private IntrospectionRegistryImpl registry;
-    private URI contributionId;
-    private Contribution contribution;
     
     protected void setUp() throws Exception {
         super.setUp();
@@ -57,23 +54,31 @@ public class JavaContributionProcessorTestCase extends TestCase {
         registry.registerProcessor(new PropertyProcessor(service));
         registry.registerProcessor(new ReferenceProcessor(interfaceProcessorRegistry));
         registry.registerProcessor(new ResourceProcessor());
-        
-        contributionId = new URI("sca://contribution/001");
-        contribution = new Contribution(contributionId);
-        contribution.setLocation(getClass().getResource(CONTRIBUTION));
-        
-        DeployedArtifact classArtifact = new DeployedArtifact(contributionId);
-        classArtifact.setLocation(this.getArtifactURL());
     }
     
     protected URL getArtifactURL() throws Exception {
         URL jarURL = getClass().getResource(CONTRIBUTION);
-        return new URL("jar:" + jarURL.toString() + "!/" + JAVA_ARTIFACT);
+        JarInputStream jar = new JarInputStream(getClass().getResourceAsStream(CONTRIBUTION));
+        URL rootURL =  new URL("jar:" + jarURL.toString() + "!/");
+        URL classURL = null;
+        
+        try {
+            while (true) {
+                JarEntry entry = jar.getNextJarEntry();
+                if (entry.getName().endsWith(".class")) {
+                    classURL = new URL(rootURL, entry.getName());
+                    break;
+                }
+            }
+        } finally {
+            jar.close();
+        }
+        return classURL;
     }
 
-    public final void testProcessJavaArtifact() throws Exception {
-        //ContributionProcessor javaContributionProcessor = new JavaContributionProcessor(registry);
-        //URL artifactURL = this.getArtifactURL();
-        //javaContributionProcessor.processContent(contribution, artifactURL.toURI(), artifactURL.openStream());
+    public final void testProcessScdl() throws Exception {
+        //ContributionProcessor scdlContributionProcessor = new scdlContributionProcessor(registry);
+        //URL jarURL = this.getClassURL();
+        //javaContributionProcessor.processContent(null, jarURL, jarURL.openStream());
     }
 }

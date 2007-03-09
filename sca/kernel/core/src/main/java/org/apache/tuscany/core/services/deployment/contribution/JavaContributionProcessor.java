@@ -27,6 +27,7 @@ import java.net.URL;
 import org.apache.tuscany.host.deployment.DeploymentException;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.deployer.CompositeClassLoader;
+import org.apache.tuscany.spi.deployer.ContentType;
 import org.apache.tuscany.spi.deployer.ContributionProcessor;
 import org.apache.tuscany.spi.extension.ContributionProcessorExtension;
 import org.apache.tuscany.spi.implementation.java.IntrospectionRegistry;
@@ -40,7 +41,7 @@ public class JavaContributionProcessor extends ContributionProcessorExtension im
     /**
      * Content-type that this processor can handle
      */
-    public static final String CONTENT_TYPE = "application/java-vm";
+    public static final String CONTENT_TYPE = ContentType.JAVA;
     /**
      * Pojo introspector
      */
@@ -67,9 +68,9 @@ public class JavaContributionProcessor extends ContributionProcessorExtension im
         return clazzName;
     }
 
-    public void processContent(Contribution contribution, URI source, InputStream inputStream)
+    public void processContent(Contribution contribution, URI artifactURI, InputStream inputStream)
         throws DeploymentException, IOException {
-        if (source == null) {
+        if (artifactURI == null) {
             throw new IllegalArgumentException("Invalid null source uri.");
         }
 
@@ -81,20 +82,20 @@ public class JavaContributionProcessor extends ContributionProcessorExtension im
             CompositeClassLoader cl = new CompositeClassLoader(getClass().getClassLoader());
             cl.addURL(contribution.getLocation());
 
-            String clazzName = getClazzName(contribution.getArtifact(source).getLocation());
+            String clazzName = getClazzName(contribution.getArtifact(artifactURI).getLocation());
             System.out.println(clazzName);
 
             Class clazz = cl.loadClass(clazzName);
 
             PojoComponentType javaInfo = introspector.introspect(null, clazz, null, null);
 
-            contribution.getArtifact(source).addModelObject(PojoComponentType.class, null, javaInfo);
+            contribution.getArtifact(artifactURI).addModelObject(PojoComponentType.class, null, javaInfo);
 
         } catch (ClassNotFoundException cnfe) {
-            throw new InvalidPojoComponentDefinitionlException(contribution.getArtifact(source).getLocation()
+            throw new InvalidPojoComponentDefinitionlException(contribution.getArtifact(artifactURI).getLocation()
                 .toExternalForm(), cnfe);
         } catch (ProcessingException pe) {
-            throw new InvalidPojoComponentDefinitionlException(contribution.getArtifact(source).getLocation()
+            throw new InvalidPojoComponentDefinitionlException(contribution.getArtifact(artifactURI).getLocation()
                 .toExternalForm(), pe);
         }
     }

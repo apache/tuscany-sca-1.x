@@ -84,7 +84,6 @@ public class ContributionProcessorRegistryImpl implements ContributionProcessorR
         }
  
         processor.processContent(contribution, source, inputStream);
-
     }
 
     public void processModel(Contribution contribution, URI source, Object modelObject) throws DeploymentException,

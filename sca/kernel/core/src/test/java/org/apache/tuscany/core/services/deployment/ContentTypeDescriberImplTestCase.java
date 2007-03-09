@@ -22,12 +22,14 @@ import java.net.URL;
 
 import junit.framework.TestCase;
 
+import org.apache.tuscany.spi.deployer.ContentType;
+
 public class ContentTypeDescriberImplTestCase extends TestCase {
     private ContentTypeDescriberImpl contentTypeBuilder;
 
     public void testResolveContentType() throws Exception {
         URL artifactURL = getClass().getResource("test.scdl");
-        assertEquals("application/vnd.tuscany.scdl", contentTypeBuilder.getContentType(artifactURL, null));
+        assertEquals(ContentType.COMPOSITE, contentTypeBuilder.getContentType(artifactURL, null));
     }
 
     

@@ -20,11 +20,15 @@ package org.apache.tuscany.core.services.deployment;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.tuscany.core.util.IOHelper;
 import org.apache.tuscany.host.deployment.ContributionService;
@@ -33,6 +37,7 @@ import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.deployer.ArtifactResolverRegistry;
 import org.apache.tuscany.spi.deployer.ContributionProcessorRegistry;
 import org.apache.tuscany.spi.deployer.ContributionRepository;
+import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.model.CompositeComponentType;
 import org.apache.tuscany.spi.model.Contribution;
 import org.apache.tuscany.spi.model.DeployedArtifact;
@@ -52,6 +57,16 @@ public class ContributionServiceImpl implements ContributionService {
     protected ContributionProcessorRegistry processorRegistry;
 
     /**
+     * xml factory used to create reader instance to load contribution metadata
+     */
+    protected XMLInputFactory xmlFactory;
+    /**
+     * contribution metadata loader
+     */
+    protected ContributionLoader contributionLoader;
+
+
+    /**
      * Contribution registry This is a registry of processed Contributios index
      * by URI
      */
@@ -67,48 +82,119 @@ public class ContributionServiceImpl implements ContributionService {
         this.contributionRepository = repository;
         this.processorRegistry = processorRegistry;
         this.resolverRegistry = resolverRegistry;
+        
+        this.xmlFactory = XMLInputFactory.newInstance("javax.xml.stream.XMLInputFactory", getClass().getClassLoader());
+        this.contributionLoader = new ContributionLoader(null);
     }
 
     public void contribute(URI contributionURI, URL sourceURL, boolean storeInRepository) throws DeploymentException,
         IOException {
+        if (contributionURI == null) {
+            throw new IllegalArgumentException("URI for the contribution is null");
+        }
         if (sourceURL == null) {
             throw new IllegalArgumentException("Source URL for the contribution is null");
         }
 
-        Contribution contribution = new Contribution(contributionURI);
-        contribution.setLocation(sourceURL);
-        InputStream is = IOHelper.getInputStream(sourceURL);
-        try {
-            addContribution(contribution, is, storeInRepository);
-        } finally {
-            IOHelper.closeQuietly(is);
-        }
+        addContribution(contributionURI, sourceURL, null, storeInRepository);
     }
 
     public void contribute(URI contributionURI, InputStream input) throws DeploymentException, IOException {
-        Contribution contribution = new Contribution(contributionURI);
-        addContribution(contribution, input, true);
+        addContribution(contributionURI, null, input, true);
     }
 
-    private void addContribution(Contribution contribution, InputStream contributionStream, boolean storeInRepository)
-        throws IOException, MalformedURLException, DeploymentException {
-        if (contributionStream == null && contribution.getLocation() == null) {
+    private Contribution initializeContributionMetadata(URL sourceURL) throws DeploymentException {
+        Contribution contributionMetadata = null;
+        URL contributionMetadataURL;
+        URL generatedContributionMetadataURL;
+        InputStream metadataStream = null;
+
+        URL[] clUrls = {sourceURL};
+        URLClassLoader cl = new URLClassLoader(clUrls, getClass().getClassLoader());
+
+        contributionMetadataURL = cl.getResource(Contribution.SCA_CONTRIBUTION_META);
+        generatedContributionMetadataURL = cl.getResource(Contribution.SCA_CONTRIBUTION_GENERATED_META);
+
+        try {
+            if (contributionMetadataURL == null && generatedContributionMetadataURL == null) {
+                contributionMetadata = new Contribution();
+            } else {
+                URL metadataURL =
+                    contributionMetadataURL != null ? contributionMetadataURL : generatedContributionMetadataURL;
+
+                try {
+                    metadataStream = metadataURL.openStream();
+                    XMLStreamReader xmlReader = this.xmlFactory.createXMLStreamReader(metadataStream);
+                    contributionMetadata = this.contributionLoader.load(null, null, xmlReader, null);
+
+                } catch (IOException ioe) {
+                    throw new 
+                        InvalidContributionMetadataException(ioe.getMessage(), metadataURL.toExternalForm(), ioe);
+                } catch (XMLStreamException xmle) {
+                    throw new 
+                        InvalidContributionMetadataException(xmle.getMessage(), metadataURL.toExternalForm(), xmle);
+                } catch (LoaderException le) {
+                    throw new 
+                        InvalidContributionMetadataException(le.getMessage(), metadataURL.toExternalForm(), le);
+                }
+            }
+        } finally {
+            IOHelper.closeQuietly(metadataStream);
+            metadataStream = null;
+        }
+
+        if (contributionMetadata == null) {
+            contributionMetadata = new Contribution();
+        }
+
+        return contributionMetadata;
+
+    }
+    
+    /**
+     * Note: 
+     * @param contributionURI ContributionID
+     * @param sourceURL contribution location
+     * @param contributionStream contribution content
+     * @param storeInRepository flag if we store the contribution into the repository or not
+     * @throws IOException
+     * @throws DeploymentException
+     */
+    private void addContribution(URI contributionURI, URL sourceURL, InputStream contributionStream, boolean storeInRepository)
+        throws IOException, DeploymentException {
+        if (contributionStream == null && sourceURL == null) {
             throw new IllegalArgumentException("The content of the contribution is null");
         }
 
         // store the contribution in the contribution repository
-        if (storeInRepository) {
-            URL locationURL = null;
-            if (contribution.getLocation() != null) {
-                locationURL = contributionRepository.store(contribution.getUri(), contribution.getLocation());
+        URL locationURL = sourceURL;
+        if (contributionRepository != null && storeInRepository) {
+            if (sourceURL != null) {
+                locationURL = contributionRepository.store(contributionURI, sourceURL);
             } else {
-                locationURL = contributionRepository.store(contribution.getUri(), contributionStream);
+                locationURL = contributionRepository.store(contributionURI, contributionStream);
             }
-            contribution.setLocation(locationURL);
         }
 
-        // process the contribution
-        this.processorRegistry.processContent(contribution, contribution.getUri(), contributionStream);
+        Contribution contribution = initializeContributionMetadata(locationURL);
+        contribution.setURI(contributionURI);
+        contribution.setLocation(locationURL);
+        
+        if (contributionStream == null) {
+            contributionStream = sourceURL.openStream();
+            try {
+                // process the contribution
+                this.processorRegistry.processContent(contribution, contribution.getUri(), contributionStream);
+            } finally {
+                IOHelper.closeQuietly(contributionStream);
+                contributionStream = null;
+            }
+
+        } else {
+            // process the contribution
+            this.processorRegistry.processContent(contribution, contribution.getUri(), contributionStream);
+        }
+            
 
         // store the contribution on the registry
         this.contributionRegistry.put(contribution.getUri(), contribution);

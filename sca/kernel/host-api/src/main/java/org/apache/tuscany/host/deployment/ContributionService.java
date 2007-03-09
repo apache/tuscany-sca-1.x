@@ -35,7 +35,7 @@ public interface ContributionService {
      * by some implementation-specific means (such as mapping an extension in
      * the URL's path).
      * 
-     * @param contributionURI The URI of the contribution
+     * @param contributionURI The URI that is used as the contribution unique ID. 
      * @param sourceURL the location of the resource containing the artifact
      * @param storeInRepository flag that identifies if you want to copy the
      *            contribution to the repository
@@ -48,7 +48,7 @@ public interface ContributionService {
     /**
      * Contribute an artifact to the SCA Domain.
      * 
-     * @param contributionURI an identifier for the source of this contribution
+     * @param contributionURI The URI that is used as the contribution unique ID.
      * @param contributionContent a stream containing the resource being
      *            contributed; the stream will not be closed but the read
      *            position after the call is undefined

@@ -54,10 +54,10 @@
     <component name="JavaContributionProcessor" initLevel="30">
         <system:implementation.system class="org.apache.tuscany.core.services.deployment.contribution.JavaContributionProcessor" />
     </component>
-    <component name="ScdlContributionProcessor" initLevel="30">
-        <system:implementation.system class="org.apache.tuscany.core.services.deployment.contribution.ScdlContributionProcessor" />
-    </component>    
-
+    <component name="CompositeContributionProcessor" initLevel="30">
+        <system:implementation.system class="org.apache.tuscany.core.services.deployment.contribution.CompositeContributionProcessor" />
+    </component>
+    
 	<!-- contribution resolver registry and resolvers -->
     <component name="artifactResolverRegistry" initLevel="35">
         <system:implementation.system class="org.apache.tuscany.core.services.deployment.ArtifactResolverRegistryImpl" />

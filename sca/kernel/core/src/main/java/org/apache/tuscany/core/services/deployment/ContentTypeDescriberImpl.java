@@ -26,7 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.tuscany.core.util.FileHelper;
+import org.apache.tuscany.spi.deployer.ContentType;
 import org.apache.tuscany.spi.deployer.ContentTypeDescriber;
+import org.apache.tuscany.spi.model.Contribution;
 import org.osoa.sca.annotations.EagerInit;
 import org.osoa.sca.annotations.Service;
 
@@ -50,11 +52,10 @@ public class ContentTypeDescriberImpl implements ContentTypeDescriber {
      * extensions
      */
     private void init() {
-        contentTypeRegistry.put("SCDL", "application/vnd.tuscany.scdl");
-        contentTypeRegistry.put("COMPOSITE", "application/vnd.tuscany.scdl");
-        contentTypeRegistry.put("WSDL", "application/vnd.tuscany.wsdl");
-        contentTypeRegistry.put("JAR", "application/x-compressed");
-        contentTypeRegistry.put("FOLDER", "application/vnd.tuscany.folder");
+        contentTypeRegistry.put("COMPOSITE", ContentType.COMPOSITE);
+        contentTypeRegistry.put("SCDL", ContentType.COMPOSITE);
+        contentTypeRegistry.put("WSDL", ContentType.WSDL);
+        contentTypeRegistry.put("JAR", ContentType.JAR);
     }
 
     protected String resolveContentyTypeByExtension(URL resourceURL) {
@@ -80,7 +81,12 @@ public class ContentTypeDescriberImpl implements ContentTypeDescriber {
         String contentType = defaultContentType;
 
         if (resourceURL.getProtocol().equals("file") && FileHelper.toFile(resourceURL).isDirectory()) {
-            contentType = this.contentTypeRegistry.get("FOLDER");
+            // Special case : contribution is a folder
+            contentType = ContentType.FOLDER;
+        } else if (resourceURL.toExternalForm().endsWith(Contribution.SCA_CONTRIBUTION_META) 
+            || resourceURL.toExternalForm().endsWith(Contribution.SCA_CONTRIBUTION_GENERATED_META)) {
+            // Special case : contribution metadata
+            contentType = ContentType.CONTRIBUTION_METADATA;
         } else {
             contentType = resolveContentyTypeByExtension(resourceURL);
             if (contentType == null) {
@@ -89,7 +95,7 @@ public class ContentTypeDescriberImpl implements ContentTypeDescriber {
                     contentType = connection.getContentType();
     
                     if (contentType == null || contentType.equals("content/unknown")) {
-                        // here we couldn't figure out from our registry or from URL
+                        // here we couldn't figure out from our registry or from URL and it's not a special file
                         // return defaultContentType if provided
                         contentType = defaultContentType;
                     }

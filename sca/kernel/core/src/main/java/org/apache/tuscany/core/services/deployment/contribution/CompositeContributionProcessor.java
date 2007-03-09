@@ -29,6 +29,7 @@ import org.apache.tuscany.core.deployer.RootDeploymentContext;
 import org.apache.tuscany.host.deployment.DeploymentException;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.deployer.CompositeClassLoader;
+import org.apache.tuscany.spi.deployer.ContentType;
 import org.apache.tuscany.spi.deployer.ContributionProcessor;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.ContributionProcessorExtension;
@@ -39,13 +40,16 @@ import org.apache.tuscany.spi.model.CompositeComponentType;
 import org.apache.tuscany.spi.model.CompositeImplementation;
 import org.apache.tuscany.spi.model.Contribution;
 
-public class ScdlContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor {
-    public static final String CONTENT_TYPE = "application/vnd.tuscany.scdl";
+public class CompositeContributionProcessor extends ContributionProcessorExtension implements ContributionProcessor {
+    /**
+     * Content-type that this processor can handle
+     */
+    public static final String CONTENT_TYPE = ContentType.COMPOSITE;
 
     protected XMLInputFactory xmlFactory;
     private final LoaderRegistry registry;
 
-    public ScdlContributionProcessor(@Autowire LoaderRegistry registry) {
+    public CompositeContributionProcessor(@Autowire LoaderRegistry registry) {
         super();
         this.registry = registry;
         this.xmlFactory = XMLInputFactory.newInstance("javax.xml.stream.XMLInputFactory", getClass().getClassLoader());
@@ -56,9 +60,9 @@ public class ScdlContributionProcessor extends ContributionProcessorExtension im
         return CONTENT_TYPE;
     }
 
-    public void processContent(Contribution contribution, URI source, InputStream inputStream)
+    public void processContent(Contribution contribution, URI artifactURI, InputStream inputStream)
         throws DeploymentException, IOException {
-        if (source == null) {
+        if (artifactURI == null) {
             throw new IllegalArgumentException("Invalid null source uri.");
         }
 
@@ -70,10 +74,11 @@ public class ScdlContributionProcessor extends ContributionProcessorExtension im
             CompositeClassLoader cl = new CompositeClassLoader(getClass().getClassLoader());
             cl.addURL(contribution.getLocation());
             DeploymentContext deploymentContext = new RootDeploymentContext(cl, this.xmlFactory, null, 
-                    contribution.getArtifact(source).getLocation());
+                    contribution.getArtifact(artifactURI).getLocation());
 
             CompositeComponentType componentType = this.registry.load(null, null, 
-                    contribution.getArtifact(source).getLocation(), CompositeComponentType.class, deploymentContext);
+                    contribution.getArtifact(artifactURI).getLocation(), 
+                    CompositeComponentType.class, deploymentContext);
 
             CompositeImplementation implementation = new CompositeImplementation();
             implementation.setComponentType(componentType);
@@ -82,10 +87,10 @@ public class ScdlContributionProcessor extends ContributionProcessorExtension im
             
             componentDefinition.setName(componentType.getName());
 
-            contribution.getArtifact(source).addModelObject(CompositeComponentType.class, null, componentDefinition);
+            contribution.getArtifact(artifactURI).addModelObject(CompositeComponentType.class, null, componentDefinition);
 
         } catch (LoaderException le) {
-            throw new InvalidComponentDefinitionlException(contribution.getArtifact(source).getLocation()
+            throw new InvalidComponentDefinitionlException(contribution.getArtifact(artifactURI).getLocation()
                     .toExternalForm(), le);
         }
     }
