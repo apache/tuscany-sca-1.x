@@ -56,7 +56,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca.extensions.axis2.samples</groupId>
             <artifactId>tuscany-sample-helloworld-ws</artifactId>
-            <scope>test</scope>
+            <scope>runtime</scope>
             <version>0.1-integration-incubating-SNAPSHOT</version>
         </dependency>
 
