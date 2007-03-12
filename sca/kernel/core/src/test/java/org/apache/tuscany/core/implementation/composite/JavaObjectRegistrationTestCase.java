@@ -63,7 +63,7 @@ public class JavaObjectRegistrationTestCase extends TestCase {
     public void testApplicationAutowireToObject() throws Exception {
         MockComponent instance = new MockComponent();
         composite.registerJavaObject("foo", MockComponent.class, instance);
-        assertNull(composite.resolveAutowire(MockComponent.class));
+        assertNotNull(composite.resolveAutowire(MockComponent.class));
         assertNull(composite.resolveExternalAutowire(MockComponent.class));
     }
 

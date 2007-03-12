@@ -19,25 +19,26 @@
 
 package org.apache.tuscany.sca.itest;
 
+import junit.framework.TestCase;
+
+import org.apache.tuscany.api.SCARuntime;
 import org.apache.tuscany.sca.itest.databinding.types.PersonType;
 import org.apache.tuscany.sca.itest.databinding.types.TypesFactory;
 import org.apache.tuscany.sca.itest.sdodatabinding.GreeterServiceClient;
-import org.apache.tuscany.test.SCATestCase;
 import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 
 /**
  * 
  */
-public class SdoDatabindingTestCase extends SCATestCase {
+public class SdoDatabindingTestCase extends TestCase {
 
     GreeterServiceClient greeterClient;
     private static boolean initalised = false;
 
     protected void setUp() throws Exception {
         if (!initalised) {
-            setApplicationSCDL("greetersdo.composite");
-            super.setUp();
+            SCARuntime.start("greetersdo.composite");
             initalised = true;
         }
     }

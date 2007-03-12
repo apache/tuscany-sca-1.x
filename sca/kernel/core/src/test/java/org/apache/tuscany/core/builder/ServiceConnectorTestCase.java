@@ -122,6 +122,7 @@ public class ServiceConnectorTestCase extends AbstractConnectorImplTestCase {
         AtomicComponent atomicTarget = EasyMock.createMock(AtomicComponent.class);
         EasyMock.expect(atomicTarget.getInboundWire(EasyMock.isA(String.class))).andReturn(inboundWire).atLeastOnce();
         EasyMock.expect(atomicTarget.getScope()).andReturn(Scope.COMPOSITE);
+        EasyMock.expect(atomicTarget.isSystem()).andReturn(false);
         EasyMock.expect(atomicTarget.createTargetInvoker(EasyMock.isA(String.class),
             EasyMock.isA(Operation.class),
             EasyMock.isA(InboundWire.class))).andReturn(new MockInvoker());

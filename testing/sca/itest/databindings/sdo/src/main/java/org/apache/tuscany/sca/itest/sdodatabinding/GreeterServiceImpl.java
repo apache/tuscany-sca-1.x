@@ -20,24 +20,33 @@
 package org.apache.tuscany.sca.itest.sdodatabinding;
 
 import org.apache.tuscany.sca.itest.databinding.types.PersonType;
+import org.apache.tuscany.spi.annotation.Autowire;
 import org.osoa.sca.annotations.Service;
+
+import commonj.sdo.DataObject;
+import commonj.sdo.helper.HelperContext;
 
 /**
  * 
  */
 @Service(GreeterService.class)
 public class GreeterServiceImpl implements GreeterService {
-
+    /**
+     * It will be injected with a HelperContext for the composite
+     */
+    @Autowire
+    protected HelperContext helperContext;
     /*
      * (non-Javadoc)
      * 
      * @see org.apache.tuscany.sca.itest.sdodatabinding.GreeterService#greet(org.apache.tuscany.sca.itest.sdodatabinding.generated.PersonType)
      */
     public PersonType greet(PersonType who) {
+        System.out.println(helperContext.getXMLHelper().save((DataObject) who, "http://person/", "person"));
+        PersonType copy = (PersonType) helperContext.getCopyHelper().copy((DataObject) who);
+        copy.setGreeting("Hello");
         System.out.println(who.toString());
-        who.setGreeting("Hello");
-        System.out.println(who.toString());
-        return who;
+        return copy;
     }
 
 }

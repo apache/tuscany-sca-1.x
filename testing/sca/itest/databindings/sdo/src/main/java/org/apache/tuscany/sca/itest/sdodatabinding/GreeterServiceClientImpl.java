@@ -28,7 +28,6 @@ import org.osoa.sca.annotations.Service;
  */
 @Service(GreeterServiceClient.class)
 public class GreeterServiceClientImpl implements GreeterServiceClient {
-
     private GreeterService service;
 
     @Reference

@@ -130,6 +130,7 @@ public class ReferenceConnectorTestCase extends AbstractConnectorImplTestCase {
         EasyMock.replay(component);
 
         ReferenceBinding target = EasyMock.createMock(ReferenceBinding.class);
+        EasyMock.expect(target.isSystem()).andReturn(false);
         EasyMock.expect(target.createTargetInvoker(EasyMock.isA(ServiceContract.class), EasyMock.isA(Operation.class)))
             .andReturn(new MockInvoker());
         EasyMock.replay(target);

@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tuscany.core.wire.jdk.JDKWireService;
 import org.apache.tuscany.spi.ObjectCreationException;
 import org.apache.tuscany.spi.component.AtomicComponent;
 import org.apache.tuscany.spi.component.CompositeComponent;
@@ -39,8 +40,6 @@ import org.apache.tuscany.spi.wire.InboundWire;
 import org.apache.tuscany.spi.wire.OutboundWire;
 import org.apache.tuscany.spi.wire.TargetInvoker;
 import org.apache.tuscany.spi.wire.WireService;
-
-import org.apache.tuscany.core.wire.jdk.JDKWireService;
 
 /**
  * An {@link org.apache.tuscany.spi.component.AtomicComponent} used when registering objects directly into a composite
@@ -158,4 +157,8 @@ public class SystemSingletonAtomicComponent<S, T extends S> extends AbstractComp
         inboundWires.put(wire.getServiceName(), wire);
     }
 
+    @Override
+    public boolean isOptimizable() {
+        return true;
+    }    
 }

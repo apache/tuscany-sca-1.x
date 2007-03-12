@@ -278,6 +278,13 @@ public abstract class CompositeComponentExtension extends AbstractComponentExten
                 return service.getValue();
             }
         }
+        
+        // FIXME: [rfeng] Try to lookup from system. Is it reasonable?
+        InboundWire inboundWire = resolveSystemAutowire(instanceInterface);
+        
+        if (inboundWire != null) {
+            return inboundWire;
+        }
         if (getParent() != null) {
             return getParent().resolveAutowire(instanceInterface);
         }

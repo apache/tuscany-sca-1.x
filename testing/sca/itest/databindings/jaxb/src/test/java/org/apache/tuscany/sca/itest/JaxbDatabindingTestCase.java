@@ -19,36 +19,29 @@
 
 package org.apache.tuscany.sca.itest;
 
-import org.apache.tuscany.sca.itest.jaxbdatabinding.GreeterService;
-import org.apache.tuscany.sca.itest.jaxbdatabinding.GreeterServiceClient;
-import org.apache.tuscany.test.SCATestCase;
-import org.osoa.sca.ComponentContext;
-import org.osoa.sca.CompositeContext;
-import org.osoa.sca.CurrentCompositeContext;
+import junit.framework.Assert;
+import junit.framework.TestCase;
 
+import org.apache.tuscany.api.SCARuntime;
+import org.apache.tuscany.sca.itest.jaxbdatabinding.GreeterServiceClient;
 import org.apache.tuscany.sca.itest.jaxbdatabinding.generated.ObjectFactory;
 import org.apache.tuscany.sca.itest.jaxbdatabinding.generated.PersonType;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.osoa.sca.CompositeContext;
+import org.osoa.sca.CurrentCompositeContext;
 
 /**
  * 
  */
-public class JaxbDatabindingTestCase extends SCATestCase {
+public class JaxbDatabindingTestCase {
+    private GreeterServiceClient greeterClient;
     
-    GreeterServiceClient greeterClient;
-    private static boolean initalised = false;
-    
-    protected void setUp() throws Exception{
-        if (!initalised) {
-            setApplicationSCDL("greeterws.composite");
-            super.setUp();
-            initalised = true;
-        }
+    @BeforeClass
+    public static void init() {
+        SCARuntime.start("greeterws.composite");
     }
-    
-    protected void tearDown(){
-        
-    }
-    
+
     private void setUpClient(String binding) throws Exception {
         CompositeContext ctx = CurrentCompositeContext.getContext();
         greeterClient = ctx.locateService(GreeterServiceClient.class, binding + "JAXBGreeterServiceClient");
@@ -56,31 +49,37 @@ public class JaxbDatabindingTestCase extends SCATestCase {
 
     /**
      * Invokes the JAXB Greet service using web service bindings with JAXB payload
+     * 
      * @throws Exception
      */
+    @Test
     public void testWSGreet() throws Exception {
         setUpClient("WS");
         greet();
     }
-    
+
     /**
      * Invokes the JAXB Greet service using default with JAXB payload
+     * 
      * @throws Exception
      */
+    @Test
     public void testDefaultGreet() throws Exception {
         setUpClient("Default");
         greet();
     }
-    
+
     public void greet() {
         ObjectFactory factory = new ObjectFactory();
         PersonType person = factory.createPersonType();
         person.setFirstName("George");
         person.setLastName("Doors");
-        //System.out.println("Client side: " + person.getFirstName() + " " + person.getLastName() + " " + person.getGreeting());
+        // System.out.println("Client side: " + person.getFirstName() + " " + person.getLastName() + " " +
+        // person.getGreeting());
         PersonType greetedPerson = greeterClient.greet(person);
-        //System.out.println("Client side: " + greetedPerson.getFirstName() + " " + greetedPerson.getLastName() + " " + greetedPerson.getGreeting());
-        assertNotSame("greetedPerson.getGreeting() not set","", greetedPerson.getGreeting());
+        // System.out.println("Client side: " + greetedPerson.getFirstName() + " " + greetedPerson.getLastName() + " " +
+        // greetedPerson.getGreeting());
+        Assert.assertNotSame("greetedPerson.getGreeting() not set", "", greetedPerson.getGreeting());
     }
-    
+
 }

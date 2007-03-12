@@ -141,6 +141,15 @@ public class ConnectorImpl implements Connector {
             // system services do not need to have their chains processed, return
             return;
         }
+
+        // FIXME: [rfeng] The targetWire is provided by the system
+        if (targetWire.getContainer() != null && targetWire.getContainer().isSystem()) {
+            sourceWire.setOptimizable(true);
+            sourceWire.setTargetWire(targetWire);
+            // system services do not need to have their chains processed, return
+            return;
+        }
+        
         // match outbound to inbound chains
         for (OutboundInvocationChain outboundChain : sourceWire.getInvocationChains().values()) {
             Operation<?> operation = outboundChain.getOperation();

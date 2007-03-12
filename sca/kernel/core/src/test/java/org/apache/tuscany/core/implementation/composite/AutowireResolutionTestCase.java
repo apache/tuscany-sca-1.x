@@ -49,6 +49,7 @@ public class AutowireResolutionTestCase extends TestCase {
         CompositeComponent parent = createMock(CompositeComponent.class);
         InboundWire wire = TestUtils.createInboundWire(Foo.class, parent);
         EasyMock.expect(parent.resolveAutowire(eq(Foo.class))).andReturn(wire);
+        EasyMock.expect(parent.resolveSystemAutowire(eq(Foo.class))).andReturn(null);
         replay(parent);
         CompositeComponent component = new CompositeComponentImpl("test", parent, null, null);
         assertSame(wire, component.resolveAutowire(Foo.class));
@@ -74,7 +75,7 @@ public class AutowireResolutionTestCase extends TestCase {
         CompositeComponent parent = new CompositeComponentImpl("parent", null, null, null);
         parent.registerJavaObject("foo", Foo.class, foo);
         CompositeComponent component = new CompositeComponentImpl("test", parent, null, null);
-        assertNull(component.resolveAutowire(Foo.class));
+        assertNotNull(component.resolveAutowire(Foo.class));
     }
 
     protected void setUp() throws Exception {
