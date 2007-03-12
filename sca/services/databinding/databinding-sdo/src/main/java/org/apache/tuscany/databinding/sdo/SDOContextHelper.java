@@ -48,16 +48,16 @@ public final class SDOContextHelper {
         HelperContext helperContext = null;
         CompositeComponent composite = (CompositeComponent)context.getMetadata().get(CompositeComponent.class);
         if (composite != null) {
-            SDOHelperContext sdoContext =
-                (SDOHelperContext)composite.getExtensions().get(HelperContext.class.getName());
-            if (sdoContext != null) {
-                helperContext = sdoContext.getHelperContext();
-            }
+//            SDOHelperContext sdoContext =
+//                (SDOHelperContext)composite.getExtensions().get(HelperContext.class.getName());
+//            if (sdoContext != null) {
+//                helperContext = sdoContext.getHelperContext();
+//            }
             AtomicComponent child = (AtomicComponent)composite.getSystemChild(HelperContext.class.getName());
             try {
                 helperContext = (HelperContext)child.getTargetInstance();
             } catch (TargetResolutionException e) {
-                throw new IllegalArgumentException(e);
+                helperContext = null;
             }
         }
         if (helperContext == null) {
@@ -76,7 +76,7 @@ public final class SDOContextHelper {
             helperContext = (HelperContext)model.getExtensions().get(ImportSDO.IMPORT_SDO);
             if (helperContext == null) {
                 helperContext = SDOUtil.createHelperContext();
-                ((CompositeComponentType<?, ?, ?>)model).getDeclaredExtensions().put(HelperContext.class.getName(),
+                ((CompositeComponentType<?, ?, ?>)model).getDeclaredExtensions().put(ImportSDO.IMPORT_SDO,
                                                                                      helperContext);
             }
         }
