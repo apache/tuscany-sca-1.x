@@ -94,7 +94,7 @@
 	        <module>wsdl</module>
                 <module>bindings</module>
                 <module>databindings</module>
-                <module>opOverloadTest</module>
+                <module>operation-overloading</module>
             </modules>
         </profile>
 
