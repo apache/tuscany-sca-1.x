@@ -43,10 +43,9 @@ public class JavaBean2XMLStreamReaderTestCase extends TestCase {
         XMLStreamReader reader = t2.transform(bean, null);
         XMLStreamReader2String t3 = new XMLStreamReader2String();
         String xml = t3.transform(reader, null);
-        assertEquals("<JavaBean2XMLStreamReaderTestCase$MyBean>" 
+        assertTrue(xml.contains("<JavaBean2XMLStreamReaderTestCase$MyBean>" 
                      + "<arr>1</arr><arr>2</arr><arr>3</arr><bean><name>Name</name></bean>"
-                     + "<i>1</i><str>ABC</str></JavaBean2XMLStreamReaderTestCase$MyBean>",
-                     xml);
+                     + "<i>1</i><str>ABC</str></JavaBean2XMLStreamReaderTestCase$MyBean>"));
     }
 
     private static class MyBean {

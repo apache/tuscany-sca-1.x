@@ -309,10 +309,11 @@ public class XMLFragmentStreamReaderImpl implements XMLFragmentStreamReader {
             return START_ELEMENT;
         } else if (state == END_ELEMENT_STATE) {
             return END_ELEMENT;
+        } else if (state == TEXT_STATE) {
+            return CHARACTERS;
         } else { // this is the delegated state
             return childReader.getEventType();
         }
-
     }
 
     public String getLocalName() {

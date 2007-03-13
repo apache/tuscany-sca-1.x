@@ -218,14 +218,8 @@ public class XMLStreamSerializer implements XMLStreamConstants {
      * @throws XMLStreamException
      */
     protected void serializeNode(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
-        // TODO We get the StAXWriter at this point and uses it hereafter
-        // assuming that this is the only entry point
-        // to this class.
-        // If there can be other classes calling methodes of this we might
-        // need to change methode signatures to
-        // OMOutputer
-        while (reader.hasNext()) {
-            int event = reader.next();
+        while (true) {
+            int event = reader.getEventType();
             if (event == START_ELEMENT) {
                 serializeElement(reader, writer);
                 depth++;
@@ -242,18 +236,20 @@ public class XMLStreamSerializer implements XMLStreamConstants {
                 depth--;
             } else if (event == START_DOCUMENT) {
                 depth++; // if a start document is found then increment
+                writer.writeStartDocument();
                 // the depth
             } else if (event == END_DOCUMENT) {
                 if (depth != 0) {
                     depth--; // for the end document - reduce the depth
                 }
-                try {
-                    serializeEndElement(writer);
-                } catch (Exception e) {
-                    // TODO: log exceptions
-                }
+                writer.writeEndDocument();
             }
             if (depth == 0) {
+                break;
+            }
+            if (reader.hasNext()) {
+                reader.next();
+            } else {
                 break;
             }
         }
