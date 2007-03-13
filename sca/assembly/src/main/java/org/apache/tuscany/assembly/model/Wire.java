@@ -18,25 +18,37 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import org.apache.tuscany.assembly.util.Undefinable;
+import org.apache.tuscany.assembly.util.Extensible;
 
 
 
 /**
- * An instance of a reference associated with a particular component.
+ * Represents a wire.
  */
-public interface ComponentReference extends Reference, Undefinable {
-	
-	/**
-	 * Returns the reference defined by the implementation for this reference.
-	 * @return
-	 */
-	Reference getReferenceImplementation();
-
-	/**
-	 * Sets the reference defined by the implementation for this reference.
-	 * @param reference
-	 */
-	void setReferenceImplementation(Reference reference);
-
+public interface Wire extends Extensible {
+    
+    /**
+     * Returns the source of the wire.
+     * @return the source of the wire
+     */
+    ComponentReference getSource();
+    
+    /**
+     * Sets the source of the wire.
+     * @param source the source of the wire
+     */
+    void setSource(ComponentReference source);
+    
+    /**
+     * Returns the target of the wire.
+     * @return the target of the wire
+     */
+    ComponentService getTarget();
+    
+    /**
+     * Sets the target of the wire.
+     * @param target the target of the wire
+     */
+    void setTarget(ComponentService target);
+    
 }

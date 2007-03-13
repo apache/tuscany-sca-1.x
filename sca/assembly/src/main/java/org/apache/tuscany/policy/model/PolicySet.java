@@ -16,27 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model;
-
-import org.apache.tuscany.assembly.util.Undefinable;
+package org.apache.tuscany.policy.model;
 
 
 
 /**
- * An instance of a reference associated with a particular component.
+ * Represents a policy set.  See the Policy Framework specification for a description of this attribute.
  */
-public interface ComponentReference extends Reference, Undefinable {
-	
-	/**
-	 * Returns the reference defined by the implementation for this reference.
-	 * @return
-	 */
-	Reference getReferenceImplementation();
-
-	/**
-	 * Sets the reference defined by the implementation for this reference.
-	 * @param reference
-	 */
-	void setReferenceImplementation(Reference reference);
-
+public interface PolicySet {
+    
 }

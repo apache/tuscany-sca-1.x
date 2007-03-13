@@ -20,13 +20,15 @@ package org.apache.tuscany.assembly.model;
 
 import java.util.List;
 
+import org.apache.tuscany.assembly.util.Undefinable;
+import org.apache.tuscany.policy.model.PolicySetAttachPoint;
 
 
 /**
  * Represents a reference. References within an implementation represent
  * links to services that the implementation uses that must be provided by other components.
  */
-public interface Reference extends AbstractReference, PolicySetAttachPoint {
+public interface Reference extends AbstractReference, PolicySetAttachPoint, Undefinable {
 	
 	/**
 	 * Returns a boolean value, "false" by default, which indicates that the implementation wires this

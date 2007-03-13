@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.assembly.model;
 
+import org.apache.tuscany.policy.model.IntentAttachPoint;
 
 /**
  * Represents a service interface.
@@ -25,4 +26,29 @@ package org.apache.tuscany.assembly.model;
  * Java interfaces, WSDL 1.1 portTypes and WSDL 2.0 interfaces.
  */
 public interface Interface extends IntentAttachPoint {
+
+    /**
+     * Returns true if the interface is conversational. 
+     * @return true if the interface is conversational
+     */
+    boolean isConversational();
+
+    /**
+    * Sets whether the interface is conversational or not. 
+    * @param conversational indicates whether the interface is conversational or not
+     */
+    void setConversational(boolean conversational);
+    
+    /**
+     * Returns true if the interface is a local interface.. 
+     * @return true if the interface is a local interface
+     */
+    boolean isLocal();
+
+    /**
+    * Sets whether the interface is a local or remotable interface. 
+    * @param local indicates whether the interface is local or remotable
+     */
+    void setLocal(boolean local);
+    
 }

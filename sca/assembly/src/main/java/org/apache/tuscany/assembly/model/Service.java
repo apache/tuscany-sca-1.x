@@ -18,25 +18,22 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import org.apache.tuscany.assembly.util.Undefinable;
+import java.util.List;
 
+import org.apache.tuscany.assembly.util.Undefinable;
+import org.apache.tuscany.policy.model.PolicySetAttachPoint;
 
 
 /**
- * An instance of a reference associated with a particular component.
+ * Represents a service. Services are used to publish services provided by
+ * implementations, so that they are addressable by other components.
  */
-public interface ComponentReference extends Reference, Undefinable {
-	
-	/**
-	 * Returns the reference defined by the implementation for this reference.
-	 * @return
-	 */
-	Reference getReferenceImplementation();
-
-	/**
-	 * Sets the reference defined by the implementation for this reference.
-	 * @param reference
-	 */
-	void setReferenceImplementation(Reference reference);
-
+public interface Service extends AbstractService, PolicySetAttachPoint, Undefinable {
+    
+    /**
+     * Returns the bindings supported by this service.
+     * @return the bindings supported by this service
+     */
+    List<Binding> getBindings();
+    
 }

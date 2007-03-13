@@ -18,25 +18,12 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import org.apache.tuscany.assembly.util.Undefinable;
 
 
 
 /**
- * An instance of a reference associated with a particular component.
+ * Represents a service contract.
  */
-public interface ComponentReference extends Reference, Undefinable {
-	
-	/**
-	 * Returns the reference defined by the implementation for this reference.
-	 * @return
-	 */
-	Reference getReferenceImplementation();
-
-	/**
-	 * Sets the reference defined by the implementation for this reference.
-	 * @param reference
-	 */
-	void setReferenceImplementation(Reference reference);
+public interface AbstractService extends Contract {
 
 }

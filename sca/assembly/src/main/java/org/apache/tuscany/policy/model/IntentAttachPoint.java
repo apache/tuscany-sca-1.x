@@ -16,27 +16,19 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model;
+package org.apache.tuscany.policy.model;
 
-import org.apache.tuscany.assembly.util.Undefinable;
-
-
+import java.util.List;
 
 /**
- * An instance of a reference associated with a particular component.
+ * Base interface for all assembly model objects that can be have policy intents attached to them.
  */
-public interface ComponentReference extends Reference, Undefinable {
-	
-	/**
-	 * Returns the reference defined by the implementation for this reference.
-	 * @return
-	 */
-	Reference getReferenceImplementation();
+public interface IntentAttachPoint {
 
 	/**
-	 * Sets the reference defined by the implementation for this reference.
-	 * @param reference
+	 * Returns a list of policy intents.  See the Policy Framework specification for a description of this attribute. 
+	 * @return a list of policy intents.
 	 */
-	void setReferenceImplementation(Reference reference);
+	List<?> getRequiredIntents();
 
 }

@@ -18,13 +18,15 @@
  */
 package org.apache.tuscany.assembly.model;
 
+import org.apache.tuscany.assembly.util.Extensible;
+import org.apache.tuscany.policy.model.IntentAttachPoint;
 
 
 /**
  * Interface contracts define one or more business functions.  These business functions are
  * provided by services and are used by references.
  */
-public interface Contract extends IntentAttachPoint {
+public interface Contract extends Extensible, IntentAttachPoint {
 
     /**
      * Returns the name of the contract.

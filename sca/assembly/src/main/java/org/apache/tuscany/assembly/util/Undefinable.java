@@ -16,19 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model;
+package org.apache.tuscany.assembly.util;
 
-import java.util.List;
+
 
 /**
- * Base interface for all assembly model objects that can be have policy intents attached to them.
+ * Represents a model object that can be marked undefined. This can be used to represent
+ * pointers to missing elements (e.g. an Include of a missing composite) or temporarily mark
+ * pointed objects as undefined until they are actually loaded and initialized.
  */
-public interface IntentAttachPoint {
-
-	/**
-	 * Returns a list of policy intents.  See the Policy Framework specification for a description of this attribute. 
-	 * @return a list of policy intents.
-	 */
-	List<?> getRequiredIntents();
+public interface Undefinable {
+    
+    /**
+     * Returns true if the implementation is undefined.
+     * @return true if the implementation is undefined.
+     */
+    boolean isUndefined();
+    
+    /**
+     * Sets whether the implementation is undefined.
+     * @param undefined whether the implementation is undefined
+     */
+    void setUndefined(boolean undefined);
 
 }

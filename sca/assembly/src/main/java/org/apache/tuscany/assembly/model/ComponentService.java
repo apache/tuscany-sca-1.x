@@ -18,17 +18,25 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import java.util.List;
+import org.apache.tuscany.assembly.util.Undefinable;
+
+
 
 /**
- * Base interface for all assembly model objects that can have policy sets attached to them.
+ * An addressable instance of a service associated with a particular component.
  */
-public interface PolicySetAttachPoint {
+public interface ComponentService extends Service, Undefinable {
+    
+	/**
+	 * Returns the reference defined by the implementation for this reference.
+	 * @return
+	 */
+	Service getService();
 
 	/**
-	 * Returns a list of policy sets. See the Policy Framework specification for a description of this attribute.
-	 * @return a list of policy sets.
+	 * Sets the reference defined by the implementation for this reference.
+	 * @param reference
 	 */
-	List<?> getPolicySets();
+	void setServiceImplementation(Service service);
 
 }
