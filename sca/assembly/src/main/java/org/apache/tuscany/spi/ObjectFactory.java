@@ -16,34 +16,20 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.spi.model.physical;
-
+package org.apache.tuscany.spi;
 
 /**
- * Represents a physical service.
- * 
- * @version $Revision$ $Date$
+ * Implementations create new instances of a particular type
  *
+ * @version $Rev$ $Date$
  */
-public class PhysicalServiceDefinition extends Operations {
-    
-    // The name of the service
-    private String name;
+public interface ObjectFactory<T> {
 
     /**
-     * Sets the name of the service.
-     * @param name Name of the service.
+     * Return a instance of the type that this factory creates.
+     *
+     * @return a instance from this factory
      */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Gets the name of the service.
-     * @return Name of the service.
-     */
-    public String getName() {
-        return name;
-    }
+    T getInstance() throws ObjectCreationException;
 
 }
