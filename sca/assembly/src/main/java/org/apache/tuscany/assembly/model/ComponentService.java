@@ -18,14 +18,13 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import org.apache.tuscany.assembly.util.Undefinable;
 
 
 
 /**
  * An addressable instance of a service associated with a particular component.
  */
-public interface ComponentService extends Service, Undefinable {
+public interface ComponentService extends Service {
     
 	/**
 	 * Returns the reference defined by the implementation for this reference.

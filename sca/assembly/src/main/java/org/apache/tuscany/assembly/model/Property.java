@@ -18,21 +18,15 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import java.util.List;
-
+import org.apache.tuscany.assembly.util.Undefinable;
 import org.apache.tuscany.policy.model.PolicySetAttachPoint;
 
 
 /**
- * Represents a service. Services are used to publish services provided by
- * implementations, so that they are addressable by other components.
+ * A property allows for the configuration of an implementation with externally set data values.
+ * An implementation can have zero or more properties.  Each property has a data type, which may be
+  * either simple or complex.  An implementation may also define a default value for a property.
  */
-public interface Service extends AbstractService, PolicySetAttachPoint {
-    
-    /**
-     * Returns the bindings supported by this service.
-     * @return the bindings supported by this service
-     */
-    List<Binding> getBindings();
+public interface Property extends AbstractProperty, PolicySetAttachPoint, Undefinable {
     
 }

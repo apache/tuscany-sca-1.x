@@ -18,21 +18,13 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import java.util.List;
+import org.apache.tuscany.assembly.util.Undefinable;
 
-import org.apache.tuscany.policy.model.PolicySetAttachPoint;
 
 
 /**
- * Represents a service. Services are used to publish services provided by
- * implementations, so that they are addressable by other components.
+ * Represents a component implementation.
  */
-public interface Service extends AbstractService, PolicySetAttachPoint {
-    
-    /**
-     * Returns the bindings supported by this service.
-     * @return the bindings supported by this service
-     */
-    List<Binding> getBindings();
-    
+public interface Implementation extends ComponentType, Undefinable {
+
 }

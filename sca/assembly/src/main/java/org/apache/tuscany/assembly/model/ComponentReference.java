@@ -18,14 +18,13 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import org.apache.tuscany.assembly.util.Undefinable;
 
 
 
 /**
  * An instance of a reference associated with a particular component.
  */
-public interface ComponentReference extends Reference, Undefinable {
+public interface ComponentReference extends Reference {
 	
 	/**
 	 * Returns the reference defined by the implementation for this reference.
