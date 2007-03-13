@@ -23,71 +23,20 @@
         <artifactId>parent</artifactId>
         <version>0.1-integration-incubating-SNAPSHOT</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.tuscany.sca.assembly</groupId>
     <artifactId>tuscany-assembly</artifactId>
-    <name>Apache Tuscany SCA Assembly</name>
+    <packaging>jar</packaging>
+    <name>Apache Tuscany SCA Assembly Model SPI</name>
+    <description>Apache Tuscany SCA Assembly Model SPI.</description>
 
-    <properties>
-        <scaKernelVersion>0.1-integration-incubating-SNAPSHOT</scaKernelVersion>
-        <scaImplVersion>0.1-integration-incubating-SNAPSHOT</scaImplVersion>
-        <specVersion>1.0</specVersion>
-        <scaVersion>0.1-integration-incubating-SNAPSHOT</scaVersion>
-        <sdoVersion>1.0-incubator-SNAPSHOT</sdoVersion>
-    </properties>
+    <dependencies>
 
-	 <dependencies>
-
-	    <dependency>
-		<groupId>org.osoa</groupId>
-		<artifactId>sca-api-r1.0</artifactId>
-	       <version>0.1-integration-incubating-SNAPSHOT</version>
-		<scope>compile</scope>
-	    </dependency>
-
-	    <dependency>
-		<groupId>junit</groupId>
-		<artifactId>junit</artifactId>
-		<version>4.2</version>
-		<scope>test</scope>
-	    </dependency>
-
-	    <dependency>
-		<groupId>org.easymock</groupId>
-		<artifactId>easymock</artifactId>
-		<version>2.2</version>
-		<scope>test</scope>
-	    </dependency>
-
-	    <dependency>
-		<groupId>org.easymock</groupId>
-		<artifactId>easymockclassextension</artifactId>
-		<version>2.2</version>
-		<scope>test</scope>
-	    </dependency>
-
-	    <dependency>
-	       <groupId>org.apache.tuscany.sca.kernel</groupId>
-	       <artifactId>tuscany-api</artifactId>
-	       <version>${scaKernelVersion}</version>
-	       <scope>compile</scope>
-	    </dependency>
-
-	    <dependency>
-	       <groupId>org.apache.tuscany.sca.kernel</groupId>
-	       <artifactId>tuscany-spi</artifactId>
-	       <version>${scaKernelVersion}</version>
-	       <scope>compile</scope>
-	    </dependency>
-
-	    <dependency>
-	       <groupId>org.apache.tuscany.sca.services.idl</groupId>
-	       <artifactId>tuscany-wsdl</artifactId>
-	       <version>${scaKernelVersion}</version>
-	       <scope>compile</scope>
-	    </dependency>
-
-	</dependencies>
-
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.2</version>
+            <scope>test</scope>
+        </dependency>
+		
+    </dependencies>
 </project>
