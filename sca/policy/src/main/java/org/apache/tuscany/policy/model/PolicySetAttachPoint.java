@@ -29,6 +29,6 @@ public interface PolicySetAttachPoint {
 	 * Returns a list of policy sets. See the Policy Framework specification for a description of this attribute.
 	 * @return a list of policy sets.
 	 */
-	List<?> getPolicySets();
+	List<PolicySet> getPolicySets();
 
 }

@@ -29,6 +29,6 @@ public interface IntentAttachPoint {
 	 * Returns a list of policy intents.  See the Policy Framework specification for a description of this attribute. 
 	 * @return a list of policy intents.
 	 */
-	List<?> getRequiredIntents();
+	List<Intent> getRequiredIntents();
 
 }
