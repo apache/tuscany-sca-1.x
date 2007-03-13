@@ -16,26 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model;
+package org.apache.tuscany.assembly.model.impl;
 
-
-
+import org.apache.tuscany.assembly.model.AbstractService;
 
 /**
- * An addressable instance of a service associated with a particular component.
+ * Represents an abstract service
+ *
+ *  @version $Rev$ $Date$
  */
-public interface ComponentService extends Service {
-    
-	/**
-	 * Returns the service defined by the implementation for this service.
-	 * @return
-	 */
-	Service getService();
-
-	/**
-	 * Sets the service defined by the implementation for this service.
-	 * @param service
-	 */
-	void setService(Service service);
+public class AbstractServiceImpl extends ContractImpl implements AbstractService {
 
 }

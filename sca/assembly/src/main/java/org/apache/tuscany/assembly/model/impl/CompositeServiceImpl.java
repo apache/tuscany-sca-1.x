@@ -16,26 +16,34 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model;
 
+package org.apache.tuscany.assembly.model.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.tuscany.assembly.model.Binding;
+import org.apache.tuscany.assembly.model.ComponentService;
+import org.apache.tuscany.assembly.model.CompositeService;
 
 /**
- * An addressable instance of a service associated with a particular component.
+ * Represents a composite service
+ *
+ *  @version $Rev$ $Date$
  */
-public interface ComponentService extends Service {
-    
-	/**
-	 * Returns the service defined by the implementation for this service.
-	 * @return
-	 */
-	Service getService();
+public class CompositeServiceImpl extends ServiceImpl implements CompositeService {
+	private List<Binding> callbackBindings = new ArrayList<Binding>();
+	private ComponentService promotedService;
 
-	/**
-	 * Sets the service defined by the implementation for this service.
-	 * @param service
-	 */
-	void setService(Service service);
+	public List<Binding> getCallbackBindings() {
+		return callbackBindings;
+	}
 
+	public ComponentService getPromotedService() {
+		return promotedService;
+	}
+	 
+	public void setPromotedService(ComponentService promotedService) {
+		this.promotedService = promotedService;
+	}
 }

@@ -16,26 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model;
 
+package org.apache.tuscany.assembly.model.impl;
 
-
+import org.apache.tuscany.assembly.model.ComponentService;
+import org.apache.tuscany.assembly.model.Service;
 
 /**
- * An addressable instance of a service associated with a particular component.
+ * Represents a component service
+ *
+ *  @version $Rev$ $Date$
  */
-public interface ComponentService extends Service {
-    
-	/**
-	 * Returns the service defined by the implementation for this service.
-	 * @return
-	 */
-	Service getService();
+public class ComponentServiceImpl extends ServiceImpl implements ComponentService {
+	private Service service;
 
-	/**
-	 * Sets the service defined by the implementation for this service.
-	 * @param service
-	 */
-	void setService(Service service);
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
 
 }

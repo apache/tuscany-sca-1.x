@@ -16,26 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model;
 
+package org.apache.tuscany.assembly.model.impl;
 
-
+import org.apache.tuscany.assembly.model.ComponentReference;
+import org.apache.tuscany.assembly.model.Reference;
 
 /**
- * An addressable instance of a service associated with a particular component.
+ * Represents a component reference
+ *
+ *  @version $Rev$ $Date$
  */
-public interface ComponentService extends Service {
-    
-	/**
-	 * Returns the service defined by the implementation for this service.
-	 * @return
-	 */
-	Service getService();
+public class ComponentReferenceImpl extends ReferenceImpl implements ComponentReference {
+	private Reference reference;
 
-	/**
-	 * Sets the service defined by the implementation for this service.
-	 * @param service
-	 */
-	void setService(Service service);
+	public Reference getReference() {
+		return reference;
+	}
+
+	public void setReference(Reference reference) {
+		this.reference = reference;
+	}
 
 }

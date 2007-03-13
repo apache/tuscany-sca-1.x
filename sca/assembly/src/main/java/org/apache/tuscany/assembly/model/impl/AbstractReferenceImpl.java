@@ -18,19 +18,15 @@
  */
 package org.apache.tuscany.assembly.model.impl;
 
-import java.util.List;
-
 import org.apache.tuscany.assembly.model.AbstractReference;
-import org.apache.tuscany.assembly.model.Interface;
 import org.apache.tuscany.assembly.model.Multiplicity;
-import org.apache.tuscany.policy.model.Intent;
 
 /**
  * Represents an abstract reference
  *
  *  @version $Rev$ $Date$
  */
-public class AbstractReferenceImpl extends BaseImpl implements AbstractReference {
+public class AbstractReferenceImpl extends ContractImpl implements AbstractReference {
 	private Multiplicity multiplicity;
 
 	public Multiplicity getMultiplicity() {
@@ -39,41 +35,6 @@ public class AbstractReferenceImpl extends BaseImpl implements AbstractReference
 
 	public void setMultiplicity(Multiplicity multiplicity) {
 		this.multiplicity = multiplicity;
-	}
-
-	public Interface getCallbackInterface() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Interface getInterface() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setCallbackInterface(Interface callbackInterface) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setInterface(Interface callInterface) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setName(String name) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public List<Intent> getRequiredIntents() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

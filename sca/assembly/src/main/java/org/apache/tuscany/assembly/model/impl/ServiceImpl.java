@@ -16,26 +16,31 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model;
 
+package org.apache.tuscany.assembly.model.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.tuscany.assembly.model.Binding;
+import org.apache.tuscany.assembly.model.Service;
+import org.apache.tuscany.policy.model.PolicySet;
 
 /**
- * An addressable instance of a service associated with a particular component.
+ * Represents a reference.
+ *
+ *  @version $Rev$ $Date$
  */
-public interface ComponentService extends Service {
-    
-	/**
-	 * Returns the service defined by the implementation for this service.
-	 * @return
-	 */
-	Service getService();
+public class ServiceImpl extends AbstractServiceImpl implements Service {
+	private List<Binding> bindings = new ArrayList<Binding>();
+	private List<PolicySet> policySets = new ArrayList<PolicySet>();
 
-	/**
-	 * Sets the service defined by the implementation for this service.
-	 * @param service
-	 */
-	void setService(Service service);
+	public List<Binding> getBindings() {
+		return bindings;
+	}
+
+	public List<PolicySet> getPolicySets() {
+		return policySets;
+	}
 
 }

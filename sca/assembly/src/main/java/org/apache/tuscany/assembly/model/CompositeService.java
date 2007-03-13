@@ -33,6 +33,12 @@ public interface CompositeService extends Service {
     ComponentService getPromotedService();
     
     /**
+     * Sets the promoted component service
+     * @param promotedService the promoted component service.
+     */
+    void setPromotedService(ComponentService promotedService);
+    
+    /**
      * Returns the bindings supported for callbacks. 
      * @return the bindings supported for callbacks
      */

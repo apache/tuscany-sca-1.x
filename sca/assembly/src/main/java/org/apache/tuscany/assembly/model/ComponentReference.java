@@ -30,12 +30,12 @@ public interface ComponentReference extends Reference {
 	 * Returns the reference defined by the implementation for this reference.
 	 * @return
 	 */
-	Reference getReferenceImplementation();
+	Reference getReference();
 
 	/**
 	 * Sets the reference defined by the implementation for this reference.
 	 * @param reference
 	 */
-	void setReferenceImplementation(Reference reference);
+	void setReference(Reference reference);
 
 }
