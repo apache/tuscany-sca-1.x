@@ -26,7 +26,6 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.tuscany.testing</groupId>
     <artifactId>iTest-propertyTest</artifactId>
     <version>${testing.version}</version>
     <packaging>jar</packaging>

@@ -38,7 +38,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>spec</module>
+                <!--module>spec</module-->
                 <module>property</module>
                 <module>exceptions</module>
                 <module>exceptions-crossBinding</module>

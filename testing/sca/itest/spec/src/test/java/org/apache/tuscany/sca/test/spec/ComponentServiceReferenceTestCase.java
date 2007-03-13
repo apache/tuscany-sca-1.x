@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 package org.apache.tuscany.sca.test.spec;
 
@@ -27,36 +27,19 @@ import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.RequestContext;
 
-public class ComponentTest extends TestCase {
-    private MyService myService;
-    private MyServiceByDate myServiceByDate;
-    private MyListService myListService;
-    private MyListServiceByYear myListServiceByYear;
-    private MyService myNCService;
-    private MyListService myListServiceFor2006;
-
+public class ComponentServiceReferenceTestCase extends TestCase {
+    private MyTotalService myService;
     private CompositeContext context;
 
     public void testDefaultProperty() {
-        assertEquals("RTP", myService.getLocation());
-        assertEquals("2006", myService.getYear());
+        assertEquals("NC", myService.getLocation());
+        assertEquals("2007", myService.getYear());
 
     }
 
     public void testDefaultService() {
-        assertEquals(myService.nextHoliday(), myServiceByDate.nextHoliday(new Date()));
-        assertEquals(myListService.getHolidays()[0], myListServiceByYear.getHolidays(2006)[0]);
-
-    }
-
-    public void testOverrideProperty() {
-        assertEquals("NC", myNCService.getLocation());
-        assertEquals("2007", myNCService.getYear());
-    }
-
-    public void testServiceWithOverrideProperty() {
-        assertFalse(myNCService.nextHoliday() == myService.nextHoliday());
-        assertEquals(myListServiceFor2006.getHolidays()[0], myListServiceByYear.getHolidays(2006)[0]);
+        assertNotSame(myService.nextHoliday(), myService.nextHoliday(new Date()));
+        assertEquals(myService.getHolidays()[0], myService.getHolidays(2007)[0]);
 
     }
 
@@ -87,21 +70,16 @@ public class ComponentTest extends TestCase {
     private void display(RequestContext context) {
         System.out.println("\tService name:" + context.getServiceName());
         System.out.println("\tSecurity subject:" + context.getSecuritySubject());
-        //System.out.println("\tService reference:" + (Object)context.getServiceReference());
+        //System.out.println("\tService reference:" + context.getServiceReference());
 
     }
 
     protected void setUp() throws Exception {
-        SCARuntime.start();
+    	SCARuntime.start("CompositeTest.composite");
         context = CurrentCompositeContext.getContext();
-        myService = context.locateService(MyService.class, "MyService");
-        myServiceByDate = context.locateService(MyServiceByDate.class, "MyServiceByDate");
-        myListService = context.locateService(MyListService.class, "MyListService");
-        myListServiceByYear = context.locateService(MyListServiceByYear.class, "MyListServiceByYear");
-        myNCService = context.locateService(MyService.class, "MyNCService");
-        myListServiceFor2006 = context.locateService(MyListService.class, "MyListServiceFor2006");
+        myService = context.locateService(MyTotalService.class, "MyTotalService");
     }
-    
+
     protected void tearDown() throws Exception {
     	SCARuntime.stop();
     }

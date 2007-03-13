@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 package org.apache.tuscany.sca.test.spec;
 
@@ -27,19 +27,23 @@ import org.osoa.sca.CompositeContext;
 import org.osoa.sca.CurrentCompositeContext;
 import org.osoa.sca.RequestContext;
 
-public class ComponentServiceReferenceTest extends TestCase {
-    private MyTotalService myService;
+public class CompositeTestCase extends TestCase {
+    private MyService myService;
+    private MyServiceByDate myServiceByDate;
+    private MyListService myListService;
+    private MyListServiceByYear myListServiceByYear;
+
     private CompositeContext context;
 
-    public void testDefaultProperty() {
-        assertEquals("NC", myService.getLocation());
+    public void testOverrideProperty() {
+        assertEquals("CARY", myService.getLocation());
         assertEquals("2007", myService.getYear());
 
     }
 
     public void testDefaultService() {
-        assertNotSame(myService.nextHoliday(), myService.nextHoliday(new Date()));
-        assertEquals(myService.getHolidays()[0], myService.getHolidays(2007)[0]);
+        assertEquals(myService.nextHoliday(), myServiceByDate.nextHoliday(new Date()));
+        assertEquals(myListService.getHolidays()[0], myListServiceByYear.getHolidays(2007)[0]);
 
     }
 
@@ -70,16 +74,20 @@ public class ComponentServiceReferenceTest extends TestCase {
     private void display(RequestContext context) {
         System.out.println("\tService name:" + context.getServiceName());
         System.out.println("\tSecurity subject:" + context.getSecuritySubject());
-        //System.out.println("\tService reference:" + context.getServiceReference());
+        //System.out.println("\tService reference:" + (Object)context.getServiceReference());
 
     }
 
     protected void setUp() throws Exception {
     	SCARuntime.start("CompositeTest.composite");
         context = CurrentCompositeContext.getContext();
-        myService = context.locateService(MyTotalService.class, "MyTotalService");
+        myService = context.locateService(MyService.class, "MyServiceInRecursiveMyService");
+        myServiceByDate = context.locateService(MyServiceByDate.class, "MyServiceInRecursiveMyServiceByDate");
+        myListService = context.locateService(MyListService.class, "MyServiceInRecursiveMyListService");
+        myListServiceByYear =
+            context.locateService(MyListServiceByYear.class, "MyServiceInRecursiveMyListServiceByYear");
     }
-    
+
     protected void tearDown() throws Exception {
     	SCARuntime.stop();
     }

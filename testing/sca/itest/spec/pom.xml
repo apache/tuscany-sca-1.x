@@ -24,9 +24,10 @@
         <version>0.1-integration-incubating-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>iTest-spec</artifactId>
-    <version>SNAPSHOT</version>
+    <version>${testing.version}</version>
     <packaging>jar</packaging>
     <name>Test Suite for SCA Spec APIs</name>
 
