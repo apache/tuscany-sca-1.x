@@ -20,7 +20,6 @@ package org.apache.tuscany.assembly.model;
 
 import java.util.List;
 
-import org.apache.tuscany.assembly.util.Extensible;
 import org.apache.tuscany.policy.model.IntentAttachPoint;
 import org.apache.tuscany.policy.model.PolicySetAttachPoint;
 
@@ -28,7 +27,7 @@ import org.apache.tuscany.policy.model.PolicySetAttachPoint;
 /**
  * Describes an implementation and represents its configurable aspects.
  */
-public interface ComponentType extends Extensible, IntentAttachPoint, PolicySetAttachPoint {
+public interface ComponentType extends Base, IntentAttachPoint, PolicySetAttachPoint {
 
     /**
      * Returns a list of services that are offered.

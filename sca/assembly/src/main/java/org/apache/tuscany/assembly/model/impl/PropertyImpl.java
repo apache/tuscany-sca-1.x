@@ -16,14 +16,25 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model;
 
+package org.apache.tuscany.assembly.model.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.tuscany.assembly.model.Property;
+import org.apache.tuscany.policy.model.PolicySet;
 
 /**
- * Represents a component implementation.
+ * Represents a property.
+ *
+ *  @version $Rev$ $Date$
  */
-public interface Implementation extends ComponentType {
+public class PropertyImpl extends AbstractPropertyImpl implements Property {
+	private List<PolicySet> policySets = new ArrayList<PolicySet>();
+
+	public List<PolicySet> getPolicySets() {
+		return policySets;
+	}
 
 }

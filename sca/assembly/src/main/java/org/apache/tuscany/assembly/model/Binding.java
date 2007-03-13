@@ -18,7 +18,6 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import org.apache.tuscany.assembly.util.Extensible;
 import org.apache.tuscany.policy.model.IntentAttachPoint;
 import org.apache.tuscany.policy.model.PolicySetAttachPoint;
 
@@ -26,7 +25,7 @@ import org.apache.tuscany.policy.model.PolicySetAttachPoint;
 /**
  * Represents a binding.
  */
-public interface Binding extends Extensible, IntentAttachPoint, PolicySetAttachPoint {
+public interface Binding extends Base, IntentAttachPoint, PolicySetAttachPoint {
 
     /**
      * Returns the binding URI.

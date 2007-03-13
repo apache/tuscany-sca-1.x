@@ -28,13 +28,13 @@ public interface ComponentProperty extends Property {
      * Returns the property defined by the component implementation.
      * @return the property defined by the component implementation
      */
-    Property getPropertyImplementation();
+    Property getProperty();
 
     /**
      * Sets the property type that defines this property.
      * @param type the property that defines this property
      */
-    void setPropertyImplementation(Property property);
+    void setProperty(Property property);
 
     /**
      * Returns an xpath expression referencing a property of the enclosing composite.

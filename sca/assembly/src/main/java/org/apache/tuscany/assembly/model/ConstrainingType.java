@@ -20,8 +20,6 @@ package org.apache.tuscany.assembly.model;
 
 import java.util.List;
 
-import org.apache.tuscany.assembly.util.Extensible;
-import org.apache.tuscany.assembly.util.Undefinable;
 import org.apache.tuscany.policy.model.IntentAttachPoint;
 
 
@@ -31,7 +29,7 @@ import org.apache.tuscany.policy.model.IntentAttachPoint;
  * Any component configuration that points to a constrainingType is constrained by this shape.
  * The constrainingType specifies the services, references and properties that must be implemented.
  */
-public interface ConstrainingType extends Extensible, IntentAttachPoint, Undefinable {
+public interface ConstrainingType extends Base, IntentAttachPoint {
 
     /**
      * Returns a list of services that are offered.

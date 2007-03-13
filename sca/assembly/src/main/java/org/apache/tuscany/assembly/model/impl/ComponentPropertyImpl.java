@@ -16,14 +16,44 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model;
 
+package org.apache.tuscany.assembly.model.impl;
 
-
+import org.apache.tuscany.assembly.model.ComponentProperty;
+import org.apache.tuscany.assembly.model.Property;
 
 /**
- * Represents a component implementation.
+ * Represents a component property.
+ *
+ *  @version $Rev$ $Date$
  */
-public interface Implementation extends ComponentType {
+public class ComponentPropertyImpl extends PropertyImpl implements ComponentProperty {
+	private String file;
+	private Property property;
+	private String source;
+
+	public String getFile() {
+		return file;
+	}
+
+	public Property getProperty() {
+		return property;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
+	}
+
+	public void setProperty(Property property) {
+		this.property = property;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
 
 }

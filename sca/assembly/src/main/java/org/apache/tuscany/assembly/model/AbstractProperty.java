@@ -20,7 +20,6 @@ package org.apache.tuscany.assembly.model;
 
 import javax.xml.namespace.QName;
 
-import org.apache.tuscany.assembly.util.Extensible;
 import org.apache.tuscany.policy.model.IntentAttachPoint;
 
 
@@ -29,7 +28,7 @@ import org.apache.tuscany.policy.model.IntentAttachPoint;
  * An implementation can have zero or more properties.  Each property has a data type, which may be
   * either simple or complex.  An implementation may also define a default value for a property.
  */
-public interface AbstractProperty extends Extensible, IntentAttachPoint {
+public interface AbstractProperty extends Base, IntentAttachPoint {
 
     /**
      * Returns the property name.
@@ -75,9 +74,9 @@ public interface AbstractProperty extends Extensible, IntentAttachPoint {
 
     /**
      * Sets whether a value must be supplied for the property.
-     * @param required set to true to require that a value be supplied for uses of this property
+     * @param mustSupply set to true to require that a value be supplied for uses of this property
      */
-    void setMustSupply(boolean required);
+    void setMustSupply(boolean mustSupply);
 
     /**
      * Returns the data type of this property. This is the qualified name of an XML schema type.

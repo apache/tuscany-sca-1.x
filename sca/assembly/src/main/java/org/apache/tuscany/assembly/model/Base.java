@@ -16,26 +16,30 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.util;
+package org.apache.tuscany.assembly.model;
 
-
+import java.util.List;
 
 /**
- * Represents a model object that can be marked undefined. This can be used to represent
- * pointers to missing elements (e.g. an Include of a missing composite) or temporarily mark
- * pointed objects as undefined until they are actually loaded and initialized.
+ * Base interface for all assembly model objects.
  */
-public interface Undefinable {
-    
+public interface Base {
+
     /**
-     * Returns true if the implementation is undefined.
-     * @return true if the implementation is undefined.
+     * Returns a list of extension objects contained in this model object.
+     * @return a list of extension objects container in this model object
+     */
+    List<?> getExtensions();
+
+    /**
+     * Returns true if the model element is undefined.
+     * @return true if the model element is undefined.
      */
     boolean isUndefined();
     
     /**
-     * Sets whether the implementation is undefined.
-     * @param undefined whether the implementation is undefined
+     * Sets whether the model element is undefined.
+     * @param undefined whether the model element is undefined
      */
     void setUndefined(boolean undefined);
 

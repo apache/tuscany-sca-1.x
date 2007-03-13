@@ -16,19 +16,32 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.util;
+package org.apache.tuscany.assembly.model.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Base interface for all assembly model objects that can host extensions.
- */
-public interface Extensible {
+import org.apache.tuscany.assembly.model.Base;
 
-    /**
-     * Returns a list of extension objects contained in this model object.
-     * @return a list of extension objects container in this model object
-     */
-    List<?> getExtensions();
+/**
+ * Convenience base class for assembly model objects.
+ *
+ *  @version $Rev$ $Date$
+ */
+public class BaseImpl implements Base {
+	private List<?> extensions = new ArrayList();
+	private boolean undefined = false;
+
+	public List<?> getExtensions() {
+		return extensions;
+	}
+
+	public boolean isUndefined() {
+		return undefined;
+	}
+
+	public void setUndefined(boolean undefined) {
+		this.undefined = undefined;
+	}
 
 }

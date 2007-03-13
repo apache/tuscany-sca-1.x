@@ -18,7 +18,6 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import org.apache.tuscany.assembly.util.Undefinable;
 import org.apache.tuscany.policy.model.PolicySetAttachPoint;
 
 
@@ -27,6 +26,6 @@ import org.apache.tuscany.policy.model.PolicySetAttachPoint;
  * An implementation can have zero or more properties.  Each property has a data type, which may be
   * either simple or complex.  An implementation may also define a default value for a property.
  */
-public interface Property extends AbstractProperty, PolicySetAttachPoint, Undefinable {
+public interface Property extends AbstractProperty, PolicySetAttachPoint {
     
 }

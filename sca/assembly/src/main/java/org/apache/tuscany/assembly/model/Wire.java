@@ -18,14 +18,13 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import org.apache.tuscany.assembly.util.Extensible;
 
 
 
 /**
  * Represents a wire.
  */
-public interface Wire extends Extensible {
+public interface Wire extends Base {
     
     /**
      * Returns the source of the wire.

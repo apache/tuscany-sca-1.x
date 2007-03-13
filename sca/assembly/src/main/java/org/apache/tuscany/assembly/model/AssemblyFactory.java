@@ -42,12 +42,6 @@ public interface AssemblyFactory {
 	AbstractService createAbstractService();
 	
 	/**
-	 * Create a new binding.
-	 * @return a new binding
-	 */
-	Binding createBinding();
-	
-	/**
 	 * Create a new component.
 	 * @return a new component
 	 */

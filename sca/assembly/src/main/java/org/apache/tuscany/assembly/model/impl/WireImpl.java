@@ -16,14 +16,35 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model;
+package org.apache.tuscany.assembly.model.impl;
 
-
-
+import org.apache.tuscany.assembly.model.ComponentReference;
+import org.apache.tuscany.assembly.model.ComponentService;
+import org.apache.tuscany.assembly.model.Wire;
 
 /**
- * Represents a component implementation.
+ * Represents a wire
+ *
+ *  @version $Rev$ $Date$
  */
-public interface Implementation extends ComponentType {
+public class WireImpl extends BaseImpl implements Wire {
+	private ComponentReference source;
+	private ComponentService target;
+
+	public ComponentReference getSource() {
+		return source;
+	}
+
+	public ComponentService getTarget() {
+		return target;
+	}
+
+	public void setSource(ComponentReference source) {
+		this.source = source;
+	}
+
+	public void setTarget(ComponentService target) {
+		this.target = target;
+	}
 
 }

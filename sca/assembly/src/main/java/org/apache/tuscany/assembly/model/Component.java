@@ -20,7 +20,6 @@ package org.apache.tuscany.assembly.model;
 
 import java.util.List;
 
-import org.apache.tuscany.assembly.util.Extensible;
 import org.apache.tuscany.policy.model.IntentAttachPoint;
 import org.apache.tuscany.policy.model.PolicySetAttachPoint;
 
@@ -29,7 +28,7 @@ import org.apache.tuscany.policy.model.PolicySetAttachPoint;
 /**
  * Represents a component. A component is a configured instance of an implementation.
  */
-public interface Component extends Extensible, IntentAttachPoint, PolicySetAttachPoint {
+public interface Component extends Base, IntentAttachPoint, PolicySetAttachPoint {
 
     /**
      * Returns the name of the component.
