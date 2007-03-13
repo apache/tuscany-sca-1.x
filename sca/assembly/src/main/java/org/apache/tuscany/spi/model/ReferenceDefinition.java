@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.tuscany.assembly.model.Multiplicity;
+
 /**
  * Represents a component reference
  *
