@@ -25,7 +25,6 @@ import junit.framework.TestCase;
 
 import org.apache.tuscany.assembly.model.AssemblyFactory;
 import org.apache.tuscany.assembly.model.impl.AssemblyFactoryImpl;
-import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -53,25 +52,28 @@ public class ReadTestCase extends TestCase {
         reader = null;
     }
 
-    public void testLoadComponentType() throws Exception {
+    public void testReadComponentType() throws Exception {
         InputStream is = getClass().getClassLoader().getResourceAsStream("CalculatorImpl.componentType");
-        ContentHandler handler = new ComponentTypeHandler(factory, reader);
+        ComponentTypeHandler handler = new ComponentTypeHandler(factory, reader);
         reader.setContentHandler(handler);
         reader.parse(new InputSource(is));
+        assertNotNull(handler.getComponentType());
     }
 
-    public void testLoadConstrainingType() throws Exception {
+    public void testReadConstrainingType() throws Exception {
         InputStream is = getClass().getClassLoader().getResourceAsStream("CalculatorComponent.constrainingType");
-        ContentHandler handler = new ConstrainingTypeHandler(factory, reader);
+        ConstrainingTypeHandler handler = new ConstrainingTypeHandler(factory, reader);
         reader.setContentHandler(handler);
         reader.parse(new InputSource(is));
+        assertNotNull(handler.getConstrainingType());
     }
 
-    public void testLoadComposite() throws Exception {
+    public void testReadComposite() throws Exception {
         InputStream is = getClass().getClassLoader().getResourceAsStream("Calculator.composite");
-        ContentHandler handler = new CompositeHandler(factory, reader);
+        CompositeHandler handler = new CompositeHandler(factory, reader);
         reader.setContentHandler(handler);
         reader.parse(new InputSource(is));
+        assertNotNull(handler.getComposite());
     }
 
 }

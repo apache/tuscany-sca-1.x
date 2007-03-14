@@ -62,7 +62,7 @@ public class ConstrainingTypeHandler extends BaseHandler implements ContentHandl
 
             } else if ("property".equals(name)) {
                 abstractProperty = factory.createAbstractProperty();
-                initAbstractProperty(abstractProperty, attr);
+                readAbstractProperty(abstractProperty, attr);
             }
         }
     }

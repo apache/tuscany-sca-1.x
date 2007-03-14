@@ -84,10 +84,10 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
             } else if ("property".equals(name)) {
                 if (component != null) {
                     componentProperty = factory.createComponentProperty();
-                    initProperty(componentProperty, attr);
+                    readProperty(componentProperty, attr);
                 } else {
                     property = factory.createProperty();
-                    initProperty(property, attr);
+                    readProperty(property, attr);
                 }
 
             } else if ("component".equals(name)) {

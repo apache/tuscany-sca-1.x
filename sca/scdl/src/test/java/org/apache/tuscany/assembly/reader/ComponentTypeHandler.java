@@ -62,7 +62,7 @@ public class ComponentTypeHandler extends BaseHandler implements ContentHandler 
 
             } else if ("property".equals(name)) {
                 property = factory.createProperty();
-                initProperty(property, attr);
+                readProperty(property, attr);
             }
         }
     }

@@ -81,7 +81,7 @@ public abstract class BaseHandler extends DefaultHandler implements ContentHandl
         }
     }
 
-    protected void initAbstractProperty(AbstractProperty prop, Attributes attr) {
+    protected void readAbstractProperty(AbstractProperty prop, Attributes attr) {
         prop.setName(getString(attr, "name"));
         prop.setMany(getBoolean(attr, "many"));
         prop.setMustSupply(getBoolean(attr, "mustSupply"));
@@ -96,17 +96,15 @@ public abstract class BaseHandler extends DefaultHandler implements ContentHandl
         // TODO handle default value
     }
 
-    protected void initProperty(Property prop, Attributes attr) {
-        initAbstractProperty(prop, attr);
+    protected void readProperty(Property prop, Attributes attr) {
+        readAbstractProperty(prop, attr);
         // TODO handle property value
     }
 
-    @Override
     public void endPrefixMapping(String prefix) throws SAXException {
         nsStack.endPrefixMapping(prefix);
     }
 
-    @Override
     public void startPrefixMapping(String prefix, String uri) throws SAXException {
         nsStack.startPrefixMapping(prefix, uri);
     }
