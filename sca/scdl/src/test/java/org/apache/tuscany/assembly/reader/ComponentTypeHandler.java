@@ -20,6 +20,7 @@
 package org.apache.tuscany.assembly.reader;
 
 import org.apache.tuscany.assembly.model.AssemblyFactory;
+import org.apache.tuscany.assembly.model.ComponentService;
 import org.apache.tuscany.assembly.model.ComponentType;
 import org.apache.tuscany.assembly.model.Property;
 import org.apache.tuscany.assembly.model.Reference;
@@ -61,6 +62,12 @@ public class ComponentTypeHandler extends BaseHandler implements ContentHandler 
                 reference = factory.createReference();
                 reference.setName(getString(attr, "name"));
 
+                //TODO support multivalued attribute
+            	ComponentService target = factory.createComponentService();
+            	target.setUndefined(true);
+            	target.setName(getString(attr, "target"));
+            	reference.getTargets().add(target);
+            	
             } else if ("property".equals(name)) {
                 property = factory.createProperty();
                 readProperty(property, attr);

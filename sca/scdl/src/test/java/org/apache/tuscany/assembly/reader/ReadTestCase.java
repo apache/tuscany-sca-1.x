@@ -25,6 +25,7 @@ import junit.framework.TestCase;
 
 import org.apache.tuscany.assembly.model.AssemblyFactory;
 import org.apache.tuscany.assembly.model.impl.AssemblyFactoryImpl;
+import org.apache.tuscany.assembly.reader.util.PrintUtil;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -38,13 +39,14 @@ public class ReadTestCase extends TestCase {
 
     AssemblyFactory factory;
     XMLReader reader;
-
+    
     public void setUp() throws Exception {
         factory = new AssemblyFactoryImpl();
 
         reader = XMLReaderFactory.createXMLReader();
         reader.setFeature("http://xml.org/sax/features/namespaces", true);
         reader.setFeature("http://xml.org/sax/features/namespace-prefixes", false);
+        
     }
 
     public void tearDown() throws Exception {
@@ -58,6 +60,8 @@ public class ReadTestCase extends TestCase {
         reader.setContentHandler(handler);
         reader.parse(new InputSource(is));
         assertNotNull(handler.getComponentType());
+        
+        new PrintUtil(System.out).print(handler.getComponentType());
     }
 
     public void testReadConstrainingType() throws Exception {
@@ -66,7 +70,15 @@ public class ReadTestCase extends TestCase {
         reader.setContentHandler(handler);
         reader.parse(new InputSource(is));
         assertNotNull(handler.getConstrainingType());
+
+        new PrintUtil(System.out).print(handler.getConstrainingType());
     }
+    
+    public static void main(String[] args) throws Exception {
+		ReadTestCase tc = new ReadTestCase();
+		tc.setUp();
+		tc.testReadComposite();
+	}
 
     public void testReadComposite() throws Exception {
         InputStream is = getClass().getClassLoader().getResourceAsStream("Calculator.composite");
@@ -74,6 +86,8 @@ public class ReadTestCase extends TestCase {
         reader.setContentHandler(handler);
         reader.parse(new InputSource(is));
         assertNotNull(handler.getComposite());
+
+        new PrintUtil(System.out).print(handler.getComposite());
     }
 
 }

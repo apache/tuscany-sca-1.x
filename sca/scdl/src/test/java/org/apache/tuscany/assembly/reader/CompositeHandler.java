@@ -28,6 +28,7 @@ import org.apache.tuscany.assembly.model.Composite;
 import org.apache.tuscany.assembly.model.CompositeReference;
 import org.apache.tuscany.assembly.model.CompositeService;
 import org.apache.tuscany.assembly.model.Property;
+import org.apache.tuscany.assembly.model.Wire;
 import org.apache.tuscany.assembly.reader.util.BaseHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -49,6 +50,7 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
     private ComponentProperty componentProperty;
     private CompositeService compositeService;
     private CompositeReference compositeReference;
+    private Wire wire;
 
     public CompositeHandler(AssemblyFactory factory, XMLReader reader) {
         super(factory, reader);
@@ -71,15 +73,33 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
                 } else {
                     compositeService = factory.createCompositeService();
                     compositeService.setName(getString(attr, "name"));
+
+                    ComponentService promoted = factory.createComponentService();
+                	promoted.setUndefined(true);
+                	promoted.setName(getString(attr, "promote"));
+                	compositeService.setPromotedService(promoted);
                 }
 
             } else if ("reference".equals(name)) {
                 if (component != null) {
                     componentReference = factory.createComponentReference();
                     componentReference.setName(getString(attr, "name"));
+
+                    //TODO support multivalued attribute
+                	ComponentService target = factory.createComponentService();
+                	target.setUndefined(true);
+                	target.setName(getString(attr, "target"));
+                	componentReference.getTargets().add(target);
+                    
                 } else {
                     compositeReference = factory.createCompositeReference();
                     compositeReference.setName(getString(attr, "name"));
+
+                    //TODO support multivalued attribute
+                    ComponentReference promoted = factory.createComponentReference();
+                	promoted.setUndefined(true);
+                	promoted.setName(getString(attr, "promote"));
+                	compositeReference.getPromotedReferences().add(promoted);
                 }
 
             } else if ("property".equals(name)) {
@@ -95,14 +115,27 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
                 component = factory.createComponent();
                 component.setName(getString(attr, "name"));
                 component.setConstrainingType(getConstrainingType(attr));
+                
+            } else if ("wire".equals(name)) {
+            	wire = factory.createWire();
+            	
+            	ComponentReference source = factory.createComponentReference();
+            	source.setUndefined(true);
+            	source.setName(getString(attr, "source"));
+            	wire.setSource(source);
+            	
+            	ComponentService target = factory.createComponentService();
+            	target.setUndefined(true);
+            	target.setName(getString(attr, "target"));
+            	wire.setTarget(target);
             }
         }
     }
 
-    public void endElement(String uri, String localName, String qName) throws SAXException {
-        if ("composite".equals(localName)) {
+    public void endElement(String uri, String name, String qname) throws SAXException {
+        if ("composite".equals(name)) {
 
-        } else if ("service".equals(localName)) {
+        } else if ("service".equals(name)) {
 
             if (component != null) {
                 component.getServices().add(componentService);
@@ -112,7 +145,7 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
                 compositeService = null;
             }
 
-        } else if ("reference".equals(localName)) {
+        } else if ("reference".equals(name)) {
 
             if (component != null) {
                 component.getReferences().add(componentReference);
@@ -122,7 +155,7 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
                 compositeReference = null;
             }
 
-        } else if ("property".equals(localName)) {
+        } else if ("property".equals(name)) {
 
             if (component != null) {
                 component.getProperties().add(componentProperty);
@@ -132,10 +165,13 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
                 property = null;
             }
 
-        } else if ("component".equals(localName)) {
-
+        } else if ("component".equals(name)) {
             composite.getComponents().add(component);
             component = null;
+
+        } else if ("wire".equals(name)) {
+            composite.getWires().add(wire);
+            wire= null;
 
         }
     }

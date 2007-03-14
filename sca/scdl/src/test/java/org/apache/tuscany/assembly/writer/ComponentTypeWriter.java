@@ -54,8 +54,11 @@ public class ComponentTypeWriter extends BaseWriter {
     	}
     	
     	for (Reference reference: componentType.getReferences()) {
+    		//TODO handle multivalued target attribute
+    		String target = reference.getTargets().isEmpty()? null: reference.getTargets().get(0).getName();
     		out.startElement(sca10, "reference", "reference", attrs(
-    			new Attr("name", reference.getName())
+    			new Attr("name", reference.getName()),
+    			new Attr("target", target)
     		));
     	}
     	
