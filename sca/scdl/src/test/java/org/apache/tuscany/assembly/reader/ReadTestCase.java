@@ -55,17 +55,17 @@ public class ReadTestCase extends TestCase {
 	}
 	
 	public void testLoadComponentType() throws Exception {
-//		InputStream is = getClass().getClassLoader().getResourceAsStream("Calculator.componentType");
-//		ContentHandler handler = new CompositeHandler(factory, reader);
-//        reader.setContentHandler(handler);
-//        reader.parse(new InputSource(is));
+		InputStream is = getClass().getClassLoader().getResourceAsStream("CalculatorImpl.componentType");
+		ContentHandler handler = new ComponentTypeHandler(factory, reader);
+        reader.setContentHandler(handler);
+        reader.parse(new InputSource(is));
 	}
 	
 	public void testLoadConstrainingType() throws Exception {
-//		InputStream is = getClass().getClassLoader().getResourceAsStream("Calculator.constrainingType");
-//		ContentHandler handler = new CompositeHandler(factory, reader);
-//        reader.setContentHandler(handler);
-//        reader.parse(new InputSource(is));
+		InputStream is = getClass().getClassLoader().getResourceAsStream("CalculatorComponent.constrainingType");
+		ContentHandler handler = new ConstrainingTypeHandler(factory, reader);
+        reader.setContentHandler(handler);
+        reader.parse(new InputSource(is));
 	}
 
 	public void testLoadComposite() throws Exception {
