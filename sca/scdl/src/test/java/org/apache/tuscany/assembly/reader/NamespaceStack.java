@@ -78,7 +78,7 @@ public class NamespaceStack {
      * <p>
      * Unlike <code>Stack</code>, <code>ArrayStack</code> accepts null entries.
      */
-    public static class FastStack<T> extends ArrayList<T> {
+    private static class FastStack<T> extends ArrayList<T> {
 
         /** Ensure serialization compatibility */
         private static final long serialVersionUID = 2130079159931574599L;

@@ -18,7 +18,8 @@
  * under the License.
 -->
 <constrainingType xmlns="http://www.osoa.org/xmlns/sca/1.0"
-	name="CalculatorComponent">
+	xmlns:calc="http://sample.calculator"
+	name="calc:CalculatorComponent">
 
   <service name="CalculatorService">
         <interface.java class="calculator.CalculatorService" />

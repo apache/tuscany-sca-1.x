@@ -18,7 +18,8 @@
  */
 package org.apache.tuscany.spi.loader;
 
-import org.apache.tuscany.spi.deployer.DeploymentContext;
+//FIXME need to find a way to remove dependencies on DeploymentContext
+//import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.model.Implementation;
 
 /**
@@ -38,5 +39,6 @@ public interface ComponentTypeLoader<I extends Implementation> {
      * @param context        the current deployment context
      * @throws LoaderException if there was a problem loading the configuration type
      */
-    void load(I implementation, DeploymentContext context) throws LoaderException;
+	//FIXME need to find a way to remove dependencies on DeploymentContext
+    //void load(I implementation, DeploymentContext context) throws LoaderException;
 }

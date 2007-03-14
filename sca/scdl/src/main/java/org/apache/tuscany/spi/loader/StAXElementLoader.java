@@ -21,7 +21,8 @@ package org.apache.tuscany.spi.loader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import org.apache.tuscany.spi.deployer.DeploymentContext;
+//FIXME need to find a way to remove dependencies on DeploymentContext
+//import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.model.ModelObject;
 
 /**
@@ -41,6 +42,7 @@ public interface StAXElementLoader<T extends ModelObject> {
      * @param context the context for the load operation
      * @return the model object for that element
      */
-    T load(ModelObject object, XMLStreamReader reader, DeploymentContext context)
-        throws XMLStreamException, LoaderException;
+//FIXME need to find a way to remove dependencies on DeploymentContext
+//    T load(ModelObject object, XMLStreamReader reader, DeploymentContext context)
+//        throws XMLStreamException, LoaderException;
 }

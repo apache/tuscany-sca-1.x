@@ -139,4 +139,8 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
         }
     }
 
+	public Composite getComposite() {
+		return composite;
+	}
+
 }

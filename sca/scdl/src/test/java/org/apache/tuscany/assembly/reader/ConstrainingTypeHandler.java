@@ -85,4 +85,8 @@ public class ConstrainingTypeHandler extends BaseHandler implements ContentHandl
         }
     }
 
+	public ConstrainingType getConstrainingType() {
+		return constrainingType;
+	}
+
 }

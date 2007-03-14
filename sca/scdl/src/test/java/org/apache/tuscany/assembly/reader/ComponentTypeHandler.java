@@ -85,4 +85,8 @@ public class ComponentTypeHandler extends BaseHandler implements ContentHandler 
         }
     }
 
+	public ComponentType getComponentType() {
+		return componentType;
+	}
+
 }

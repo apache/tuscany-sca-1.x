@@ -22,7 +22,8 @@ import java.net.URL;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import org.apache.tuscany.spi.deployer.DeploymentContext;
+//FIXME need to find a way to remove dependencies on DeploymentContext
+//import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.ModelObject;
 
@@ -48,8 +49,9 @@ public interface Loader {
      * @throws LoaderException if there was a problem loading the document
      * @throws XMLStreamException if there was a problem reading the stream
      */
-    ModelObject load(ModelObject object, XMLStreamReader reader, DeploymentContext deploymentContext)
-        throws XMLStreamException, LoaderException;
+//FIXME need to find a way to remove dependencies on DeploymentContext
+//    ModelObject load(ModelObject object, XMLStreamReader reader, DeploymentContext deploymentContext)
+//        throws XMLStreamException, LoaderException;
 
     /**
      * Load a model object from a specified location.
@@ -62,8 +64,9 @@ public interface Loader {
      * @return the model ojbect loaded from the document
      * @throws LoaderException if there was a problem loading the document
      */
-    <MO extends ModelObject> MO load(ModelObject object, URL url, Class<MO> type, DeploymentContext context)
-        throws LoaderException;
+//FIXME need to find a way to remove dependencies on DeploymentContext
+//    <MO extends ModelObject> MO load(ModelObject object, URL url, Class<MO> type, DeploymentContext context)
+//        throws LoaderException;
 
     /**
      * Load the component type definition for a given implementation. How the component type information is located is
@@ -75,6 +78,7 @@ public interface Loader {
      * @param context        the current deployment context
      * @throws LoaderException if there was a problem loading the component type definition
      */
-    <I extends Implementation<?>> void loadComponentType(I implementation, DeploymentContext context)
-        throws LoaderException;
+//FIXME need to find a way to remove dependencies on DeploymentContext
+//    <I extends Implementation<?>> void loadComponentType(I implementation, DeploymentContext context)
+//        throws LoaderException;
 }

@@ -18,7 +18,8 @@
  * under the License.    
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           name="Calculator">
+	xmlns:calc="http://sample.calculator"
+	name="calc:Calculator">
 
     <service name="CalculatorService">
         <interface.java interface="calculator.CalculatorService"/>

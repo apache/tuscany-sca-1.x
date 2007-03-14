@@ -19,7 +19,7 @@
 
 package org.apache.tuscany.spi.loader;
 
-import org.apache.tuscany.spi.model.Multiplicity;
+import org.apache.tuscany.assembly.model.Multiplicity;
 
 /**
  * Denote the violation of multiplicity declaration for a reference
