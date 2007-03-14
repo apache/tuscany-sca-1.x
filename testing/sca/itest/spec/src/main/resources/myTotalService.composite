@@ -18,15 +18,15 @@
  * under the License.
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-	   xmlns:foo="http://foo" 
+           xmlns:foo="http://foo" 
            name="MyTotalServiceTest">
    
     <include name="myservice" scdlLocation="myservice.composite"/>
     
     <component name="MyTotalService">
         <implementation.java class="org.apache.tuscany.sca.test.spec.impl.MyTotalServiceImpl"/>
-		<reference name="myService">MyNCService/MyService</reference>
-		<reference name="myListService">MyNCService/MyListService</reference>
+        <reference name="myService">MyNCService/MyService</reference>
+        <reference name="myListService">MyNCService/MyListService</reference>
     </component>
     
 </composite>
