@@ -49,8 +49,7 @@ public class DelegatingNamespaceContext implements NamespaceContext {
         }
 
         /**
-         * As per the contract on the API of Namespace context the returned
-         * iterator should be immutable
+         * As per the contract on the API of Namespace context the returned iterator should be immutable
          */
         public void remove() {
             throw new UnsupportedOperationException();
@@ -74,7 +73,7 @@ public class DelegatingNamespaceContext implements NamespaceContext {
 
     /**
      * Generates a unique namespace prefix that is not in the scope of the NamespaceContext
-     *
+     * 
      * @return string
      */
     public String generateUniquePrefix() {
@@ -85,12 +84,12 @@ public class DelegatingNamespaceContext implements NamespaceContext {
         }
 
         return prefix;
-    }    
+    }
 
     public String getNamespaceURI(String prefix) {
         // do the corrections as per the javadoc
-        if (prefixStack.contains(prefix)) {
-            int index = prefixStack.indexOf(prefix);
+        int index = prefixStack.search(prefix);
+        if (index != -1) {
             return (String)uriStack.get(index);
         }
         if (parentNsContext != null) {
@@ -105,7 +104,7 @@ public class DelegatingNamespaceContext implements NamespaceContext {
 
     public String getPrefix(String uri) {
         // do the corrections as per the javadoc
-        int index = uriStack.indexOf(uri);
+        int index = uriStack.search(uri);
         if (index != -1) {
             return (String)prefixStack.get(index);
         }
@@ -120,7 +119,7 @@ public class DelegatingNamespaceContext implements NamespaceContext {
         // create an arraylist that contains the relevant prefixes
         String[] uris = (String[])uriStack.toArray(new String[uriStack.size()]);
         List<String> tempList = new ArrayList<String>();
-        for (int i = 0; i < uris.length; i++) {
+        for (int i = uris.length - 1; i >= 0; i--) {
             if (uris[i].equals(uri)) {
                 tempList.add(prefixStack.get(i));
                 // we assume that array conversion preserves the order
@@ -157,20 +156,15 @@ public class DelegatingNamespaceContext implements NamespaceContext {
     }
 
     /**
-     * An implementation of the {@link java.util.Stack} API that is based on an
-     * <code>ArrayList</code> instead of a <code>Vector</code>, so it is
-     * not synchronized to protect against multi-threaded access. The
-     * implementation is therefore operates faster in environments where you do
-     * not need to worry about multiple thread contention.
+     * An implementation of the {@link java.util.Stack} API that is based on an <code>ArrayList</code> instead of a
+     * <code>Vector</code>, so it is not synchronized to protect against multi-threaded access. The implementation is
+     * therefore operates faster in environments where you do not need to worry about multiple thread contention.
      * <p>
-     * The removal order of an <code>ArrayStack</code> is based on insertion
-     * order: The most recently added element is removed first. The iteration
-     * order is <i>not</i> the same as the removal order. The iterator returns
-     * elements from the bottom up, whereas the {@link #remove()} method removes
-     * them from the top down.
+     * The removal order of an <code>ArrayStack</code> is based on insertion order: The most recently added element is
+     * removed first. The iteration order is <i>not</i> the same as the removal order. The iterator returns elements
+     * from the bottom up, whereas the {@link #remove()} method removes them from the top down.
      * <p>
-     * Unlike <code>Stack</code>, <code>ArrayStack</code> accepts null
-     * entries.
+     * Unlike <code>Stack</code>, <code>ArrayStack</code> accepts null entries.
      */
     public static class FastStack<T> extends ArrayList<T> {
 
@@ -178,20 +172,18 @@ public class DelegatingNamespaceContext implements NamespaceContext {
         private static final long serialVersionUID = 2130079159931574599L;
 
         /**
-         * Constructs a new empty <code>ArrayStack</code>. The initial size
-         * is controlled by <code>ArrayList</code> and is currently 10.
+         * Constructs a new empty <code>ArrayStack</code>. The initial size is controlled by <code>ArrayList</code>
+         * and is currently 10.
          */
         public FastStack() {
             super();
         }
 
         /**
-         * Constructs a new empty <code>ArrayStack</code> with an initial
-         * size.
+         * Constructs a new empty <code>ArrayStack</code> with an initial size.
          * 
          * @param initialSize the initial size to use
-         * @throws IllegalArgumentException if the specified initial size is
-         *             negative
+         * @throws IllegalArgumentException if the specified initial size is negative
          */
         public FastStack(int initialSize) {
             super(initialSize);
@@ -200,8 +192,7 @@ public class DelegatingNamespaceContext implements NamespaceContext {
         /**
          * Return <code>true</code> if this stack is currently empty.
          * <p>
-         * This method exists for compatibility with
-         * <code>java.util.Stack</code>. New users of this class should use
+         * This method exists for compatibility with <code>java.util.Stack</code>. New users of this class should use
          * <code>isEmpty</code> instead.
          * 
          * @return true if the stack is currently empty
@@ -226,13 +217,11 @@ public class DelegatingNamespaceContext implements NamespaceContext {
         }
 
         /**
-         * Returns the n'th item down (zero-relative) from the top of this stack
-         * without removing it.
+         * Returns the n'th item down (zero-relative) from the top of this stack without removing it.
          * 
          * @param n the number of items down to go
          * @return the n'th item on the stack, zero relative
-         * @throws EmptyStackException if there are not enough items on the
-         *             stack to satisfy this request
+         * @throws EmptyStackException if there are not enough items on the stack to satisfy this request
          */
         public T peek(int n) throws EmptyStackException {
             int m = (size() - n) - 1;
@@ -259,8 +248,8 @@ public class DelegatingNamespaceContext implements NamespaceContext {
         }
 
         /**
-         * Pushes a new item onto the top of this stack. The pushed item is also
-         * returned. This is equivalent to calling <code>add</code>.
+         * Pushes a new item onto the top of this stack. The pushed item is also returned. This is equivalent to calling
+         * <code>add</code>.
          * 
          * @param item the item to be added
          * @return the item just pushed
@@ -271,27 +260,19 @@ public class DelegatingNamespaceContext implements NamespaceContext {
         }
 
         /**
-         * Returns the one-based position of the distance from the top that the
-         * specified object exists on this stack, where the top-most element is
-         * considered to be at distance <code>1</code>. If the object is not
-         * present on the stack, return <code>-1</code> instead. The
-         * <code>equals()</code> method is used to compare to the items in
-         * this stack.
+         * Returns the top-most index for the object in the stack
          * 
          * @param object the object to be searched for
-         * @return the 1-based depth into the stack of the object, or -1 if not
-         *         found
+         * @return top-most index, or -1 if not found
          */
         public int search(T object) {
             int i = size() - 1; // Current index
-            int n = 1; // Current distance
             while (i >= 0) {
                 T current = get(i);
                 if ((object == null && current == null) || (object != null && object.equals(current))) {
-                    return n;
+                    return i;
                 }
                 i--;
-                n++;
             }
             return -1;
         }
