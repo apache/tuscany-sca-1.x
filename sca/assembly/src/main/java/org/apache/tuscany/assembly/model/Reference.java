@@ -48,5 +48,11 @@ public interface Reference extends AbstractReference, PolicySetAttachPoint {
      * @return the bindings supported by this reference
      */
     List<Binding> getBindings();
+
+    /**
+     * Returns the targets of this reference.
+     * @return the targets of this reference.
+     */
+    List<ComponentService> getTargets();
     
 }

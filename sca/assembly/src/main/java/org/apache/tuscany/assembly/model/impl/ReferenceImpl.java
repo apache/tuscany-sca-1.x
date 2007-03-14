@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tuscany.assembly.model.Binding;
+import org.apache.tuscany.assembly.model.ComponentService;
 import org.apache.tuscany.assembly.model.Reference;
 import org.apache.tuscany.policy.model.PolicySet;
 
@@ -35,6 +36,7 @@ public class ReferenceImpl extends AbstractReferenceImpl implements Reference {
 	private List<Binding> bindings = new ArrayList<Binding>();
 	private boolean wiredByImpl;
 	private List<PolicySet> policySets = new ArrayList<PolicySet>();
+	private List<ComponentService> targets = new ArrayList<ComponentService>();
 
 	public List<Binding> getBindings() {
 		return bindings;
@@ -50,6 +52,10 @@ public class ReferenceImpl extends AbstractReferenceImpl implements Reference {
 
 	public List<PolicySet> getPolicySets() {
 		return policySets;
+	}
+	
+	public List<ComponentService> getTargets() {
+		return targets;
 	}
 
 }
