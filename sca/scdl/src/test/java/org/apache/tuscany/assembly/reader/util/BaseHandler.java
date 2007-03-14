@@ -17,7 +17,7 @@
  * under the License.    
  */
 
-package org.apache.tuscany.assembly.reader;
+package org.apache.tuscany.assembly.reader.util;
 
 import javax.xml.namespace.QName;
 

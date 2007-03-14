@@ -24,6 +24,7 @@ import org.apache.tuscany.assembly.model.ComponentType;
 import org.apache.tuscany.assembly.model.Property;
 import org.apache.tuscany.assembly.model.Reference;
 import org.apache.tuscany.assembly.model.Service;
+import org.apache.tuscany.assembly.reader.util.BaseHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
