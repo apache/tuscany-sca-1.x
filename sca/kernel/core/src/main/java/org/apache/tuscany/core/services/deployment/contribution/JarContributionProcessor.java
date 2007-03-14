@@ -127,7 +127,7 @@ public class JarContributionProcessor extends ContributionProcessorExtension imp
             if (ContentType.COMPOSITE.equals(contentType)) {
                 InputStream is = IOHelper.getInputStream(artifactURL);
                 try {
-                    this.registry.processContent(contribution, artifactURI, artifactURL.openStream());
+                    this.registry.processContent(contribution, artifactURI, is);
                 } finally {
                     IOHelper.closeQuietly(is);
                     is = null;
