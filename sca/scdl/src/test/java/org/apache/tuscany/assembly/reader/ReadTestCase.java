@@ -19,7 +19,6 @@
 
 package org.apache.tuscany.assembly.reader;
 
-
 import java.io.InputStream;
 
 import junit.framework.TestCase;
@@ -33,46 +32,46 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * Test the usability of the assembly model API when loading SCDL
- *
- *  @version $Rev$ $Date$
+ * 
+ * @version $Rev$ $Date$
  */
 public class ReadTestCase extends TestCase {
-	
-	AssemblyFactory factory;
-	XMLReader reader;
 
-	public void setUp() throws Exception {
-		factory = new AssemblyFactoryImpl();
+    AssemblyFactory factory;
+    XMLReader reader;
 
-		reader = XMLReaderFactory.createXMLReader();
+    public void setUp() throws Exception {
+        factory = new AssemblyFactoryImpl();
+
+        reader = XMLReaderFactory.createXMLReader();
         reader.setFeature("http://xml.org/sax/features/namespaces", true);
         reader.setFeature("http://xml.org/sax/features/namespace-prefixes", false);
-	}
+    }
 
-	public void tearDown() throws Exception {
-		factory = null;
-		reader = null;
-	}
-	
-	public void testLoadComponentType() throws Exception {
-		InputStream is = getClass().getClassLoader().getResourceAsStream("CalculatorImpl.componentType");
-		ContentHandler handler = new ComponentTypeHandler(factory, reader);
-        reader.setContentHandler(handler);
-        reader.parse(new InputSource(is));
-	}
-	
-	public void testLoadConstrainingType() throws Exception {
-		InputStream is = getClass().getClassLoader().getResourceAsStream("CalculatorComponent.constrainingType");
-		ContentHandler handler = new ConstrainingTypeHandler(factory, reader);
-        reader.setContentHandler(handler);
-        reader.parse(new InputSource(is));
-	}
+    public void tearDown() throws Exception {
+        factory = null;
+        reader = null;
+    }
 
-	public void testLoadComposite() throws Exception {
-		InputStream is = getClass().getClassLoader().getResourceAsStream("Calculator.composite");
-		ContentHandler handler = new CompositeHandler(factory, reader);
+    public void testLoadComponentType() throws Exception {
+        InputStream is = getClass().getClassLoader().getResourceAsStream("CalculatorImpl.componentType");
+        ContentHandler handler = new ComponentTypeHandler(factory, reader);
         reader.setContentHandler(handler);
         reader.parse(new InputSource(is));
-	}
-	
+    }
+
+    public void testLoadConstrainingType() throws Exception {
+        InputStream is = getClass().getClassLoader().getResourceAsStream("CalculatorComponent.constrainingType");
+        ContentHandler handler = new ConstrainingTypeHandler(factory, reader);
+        reader.setContentHandler(handler);
+        reader.parse(new InputSource(is));
+    }
+
+    public void testLoadComposite() throws Exception {
+        InputStream is = getClass().getClassLoader().getResourceAsStream("Calculator.composite");
+        ContentHandler handler = new CompositeHandler(factory, reader);
+        reader.setContentHandler(handler);
+        reader.parse(new InputSource(is));
+    }
+
 }

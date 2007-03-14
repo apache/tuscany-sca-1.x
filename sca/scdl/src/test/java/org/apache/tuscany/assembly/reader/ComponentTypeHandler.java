@@ -31,58 +31,58 @@ import org.xml.sax.XMLReader;
 
 /**
  * A test handler to test the usability of the assembly model API when loading SCDL
- *
- *  @version $Rev$ $Date$
+ * 
+ * @version $Rev$ $Date$
  */
 public class ComponentTypeHandler extends BaseHandler implements ContentHandler {
-	
-	private ComponentType componentType;
-	private Service service;
-	private Reference reference;
-	private Property property;
-	
-	public ComponentTypeHandler(AssemblyFactory factory, XMLReader reader) {
-		super(factory, reader);
-	}
 
-	public void startElement(String uri, String name, String qname, Attributes attr) throws SAXException {
-		if (sca10.equals(uri)) {
+    private ComponentType componentType;
+    private Service service;
+    private Reference reference;
+    private Property property;
 
-			if ("componentType".equals(name)) {
-				componentType = factory.createComponentType();
-				componentType.setConstrainingType(getConstrainingType(attr));
-				
-			} else if ("service".equals(name)) {
-				service = factory.createService();
-				service.setName(getString(attr, "name"));
+    public ComponentTypeHandler(AssemblyFactory factory, XMLReader reader) {
+        super(factory, reader);
+    }
 
-			} else if ("reference".equals(name)) {
-				reference = factory.createReference();
-				reference.setName(getString(attr, "name"));
-				
-			} else if ("property".equals(name)) {
-				property = factory.createProperty();
-				initProperty(property, attr);
-			}
-		}
-	}
-	
-	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (sca10.equals(uri)) {
+    public void startElement(String uri, String name, String qname, Attributes attr) throws SAXException {
+        if (sca10.equals(uri)) {
 
-			if ("service".equals(localName)) {
-				componentType.getServices().add(service);
-				service = null;
-				
-			} else if ("reference".equals(localName)) {
-				componentType.getReferences().add(reference);
-				reference = null;
-				
-			} else if ("property".equals(localName)) {
-				componentType.getProperties().add(property);
-				property = null;
-			}
-		}
-	}
+            if ("componentType".equals(name)) {
+                componentType = factory.createComponentType();
+                componentType.setConstrainingType(getConstrainingType(attr));
+
+            } else if ("service".equals(name)) {
+                service = factory.createService();
+                service.setName(getString(attr, "name"));
+
+            } else if ("reference".equals(name)) {
+                reference = factory.createReference();
+                reference.setName(getString(attr, "name"));
+
+            } else if ("property".equals(name)) {
+                property = factory.createProperty();
+                initProperty(property, attr);
+            }
+        }
+    }
+
+    public void endElement(String uri, String localName, String qName) throws SAXException {
+        if (sca10.equals(uri)) {
+
+            if ("service".equals(localName)) {
+                componentType.getServices().add(service);
+                service = null;
+
+            } else if ("reference".equals(localName)) {
+                componentType.getReferences().add(reference);
+                reference = null;
+
+            } else if ("property".equals(localName)) {
+                componentType.getProperties().add(property);
+                property = null;
+            }
+        }
+    }
 
 }

@@ -31,58 +31,58 @@ import org.xml.sax.XMLReader;
 
 /**
  * A test handler to test the usability of the assembly model API when loading SCDL
- *
- *  @version $Rev$ $Date$
+ * 
+ * @version $Rev$ $Date$
  */
 public class ConstrainingTypeHandler extends BaseHandler implements ContentHandler {
-	
-	private ConstrainingType constrainingType;
-	private AbstractService abstractService;
-	private AbstractReference abstractReference;
-	private AbstractProperty abstractProperty;
-	
-	public ConstrainingTypeHandler(AssemblyFactory factory, XMLReader reader) {
-		super(factory, reader);
-	}
 
-	public void startElement(String uri, String name, String qname, Attributes attr) throws SAXException {
-		if (sca10.equals(uri)) {
+    private ConstrainingType constrainingType;
+    private AbstractService abstractService;
+    private AbstractReference abstractReference;
+    private AbstractProperty abstractProperty;
 
-			if ("constrainingType".equals(name)) {
-				constrainingType = factory.createConstrainingType();
-				constrainingType.setName(getQName(attr, "name"));
-				
-			} else if ("service".equals(name)) {
-				abstractService = factory.createAbstractService();
-				abstractService.setName(getString(attr, "name"));
+    public ConstrainingTypeHandler(AssemblyFactory factory, XMLReader reader) {
+        super(factory, reader);
+    }
 
-			} else if ("reference".equals(name)) {
-				abstractReference = factory.createAbstractReference();
-				abstractReference.setName(getString(attr, "name"));
-				
-			} else if ("property".equals(name)) {
-				abstractProperty = factory.createAbstractProperty();
-				initAbstractProperty(abstractProperty, attr);
-			}
-		}
-	}
-	
-	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (sca10.equals(uri)) {
+    public void startElement(String uri, String name, String qname, Attributes attr) throws SAXException {
+        if (sca10.equals(uri)) {
 
-			if ("service".equals(localName)) {
-				constrainingType.getServices().add(abstractService);
-				abstractService = null;
-				
-			} else if ("reference".equals(localName)) {
-				constrainingType.getReferences().add(abstractReference);
-				abstractReference = null;
-				
-			} else if ("property".equals(localName)) {
-				constrainingType.getProperties().add(abstractProperty);
-				abstractProperty = null;
-			}
-		}
-	}
+            if ("constrainingType".equals(name)) {
+                constrainingType = factory.createConstrainingType();
+                constrainingType.setName(getQName(attr, "name"));
+
+            } else if ("service".equals(name)) {
+                abstractService = factory.createAbstractService();
+                abstractService.setName(getString(attr, "name"));
+
+            } else if ("reference".equals(name)) {
+                abstractReference = factory.createAbstractReference();
+                abstractReference.setName(getString(attr, "name"));
+
+            } else if ("property".equals(name)) {
+                abstractProperty = factory.createAbstractProperty();
+                initAbstractProperty(abstractProperty, attr);
+            }
+        }
+    }
+
+    public void endElement(String uri, String localName, String qName) throws SAXException {
+        if (sca10.equals(uri)) {
+
+            if ("service".equals(localName)) {
+                constrainingType.getServices().add(abstractService);
+                abstractService = null;
+
+            } else if ("reference".equals(localName)) {
+                constrainingType.getReferences().add(abstractReference);
+                abstractReference = null;
+
+            } else if ("property".equals(localName)) {
+                constrainingType.getProperties().add(abstractProperty);
+                abstractProperty = null;
+            }
+        }
+    }
 
 }

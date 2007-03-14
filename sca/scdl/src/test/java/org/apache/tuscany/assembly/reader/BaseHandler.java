@@ -27,69 +27,88 @@ import org.apache.tuscany.assembly.model.ConstrainingType;
 import org.apache.tuscany.assembly.model.Property;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * A test handler to test the usability of the assembly model API when loading SCDL
- *
- *  @version $Rev$ $Date$
+ * 
+ * @version $Rev$ $Date$
  */
 public abstract class BaseHandler extends DefaultHandler implements ContentHandler {
-	
-	protected final static String sca10 = "http://www.osoa.org/xmlns/sca/1.0";
 
-	protected AssemblyFactory factory;
-	protected XMLReader reader;
-	
-	public BaseHandler(AssemblyFactory factory, XMLReader reader) {
-		this.factory = factory;
-		this.reader = reader;
-	}
+    protected final static String sca10 = "http://www.osoa.org/xmlns/sca/1.0";
 
-	protected String getString(Attributes attr, String name) {
-		return attr.getValue(name);
-	}
-	
-	protected QName getQName(Attributes attr, String name) {
-		//TODO handle namespace prefixes
-		return new QName(attr.getValue(name));
-	}
-	
-	protected boolean getBoolean(Attributes attr, String name) {
-		return Boolean.valueOf(attr.getValue(name));
-	}
-	
-	protected ConstrainingType getConstrainingType(Attributes attr) {
-		String constrainingTypeName = attr.getValue(sca10, "constrainingType");
-		if (constrainingTypeName!= null) {
-			ConstrainingType constrainingType = factory.createConstrainingType();
-			constrainingType.setName(new QName(constrainingTypeName));
-			constrainingType.setUndefined(true);
-			return constrainingType;
-		} else {
-			return null;
-		}
-	}
-	
-	protected void initAbstractProperty(AbstractProperty prop, Attributes attr) {
-		prop.setName(getString(attr, "name"));
-		prop.setMany(getBoolean(attr, "many"));
-		prop.setMustSupply(getBoolean(attr, "mustSupply"));
-		String xsdElement = getString(attr, "element");
-		if (xsdElement != null) {
-			prop.setXSDElement(new QName(xsdElement));
-		}
-		String xsdType = getString(attr, "type");
-		if (xsdType != null) {
-			prop.setXSDElement(new QName(xsdType));
-		}
-		//TODO handle default value
-	}
-	
-	protected void initProperty(Property prop, Attributes attr) {
-		initAbstractProperty(prop, attr);
-		//TODO handle property value
-	}
-	
+    protected NamespaceStack nsStack = new NamespaceStack();
+    protected AssemblyFactory factory;
+    protected XMLReader reader;
+
+    public BaseHandler(AssemblyFactory factory, XMLReader reader) {
+        this.factory = factory;
+        this.reader = reader;
+    }
+
+    protected String getString(Attributes attr, String name) {
+        return attr.getValue(name);
+    }
+
+    protected QName getQName(Attributes attr, String name) {
+        String qName = attr.getValue(name);
+        int index = qName.indexOf(':');
+        String prefix = index == -1 ? "" : qName.substring(0, index);
+        String localName = index == -1 ? qName : qName.substring(index);
+        String ns = nsStack.getNamespaceURI(prefix);
+        if (ns == null) {
+            ns = "";
+        }
+        return new QName(ns, localName, prefix);
+    }
+
+    protected boolean getBoolean(Attributes attr, String name) {
+        return Boolean.valueOf(attr.getValue(name));
+    }
+
+    protected ConstrainingType getConstrainingType(Attributes attr) {
+        String constrainingTypeName = attr.getValue(sca10, "constrainingType");
+        if (constrainingTypeName != null) {
+            ConstrainingType constrainingType = factory.createConstrainingType();
+            constrainingType.setName(new QName(constrainingTypeName));
+            constrainingType.setUndefined(true);
+            return constrainingType;
+        } else {
+            return null;
+        }
+    }
+
+    protected void initAbstractProperty(AbstractProperty prop, Attributes attr) {
+        prop.setName(getString(attr, "name"));
+        prop.setMany(getBoolean(attr, "many"));
+        prop.setMustSupply(getBoolean(attr, "mustSupply"));
+        String xsdElement = getString(attr, "element");
+        if (xsdElement != null) {
+            prop.setXSDElement(new QName(xsdElement));
+        }
+        String xsdType = getString(attr, "type");
+        if (xsdType != null) {
+            prop.setXSDType(new QName(xsdType));
+        }
+        // TODO handle default value
+    }
+
+    protected void initProperty(Property prop, Attributes attr) {
+        initAbstractProperty(prop, attr);
+        // TODO handle property value
+    }
+
+    @Override
+    public void endPrefixMapping(String prefix) throws SAXException {
+        nsStack.endPrefixMapping(prefix);
+    }
+
+    @Override
+    public void startPrefixMapping(String prefix, String uri) throws SAXException {
+        nsStack.startPrefixMapping(prefix, uri);
+    }
+
 }
