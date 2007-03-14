@@ -20,6 +20,8 @@ package org.apache.tuscany.assembly.model;
 
 import java.util.List;
 
+import javax.xml.namespace.QName;
+
 import org.apache.tuscany.policy.model.IntentAttachPoint;
 
 
@@ -30,6 +32,18 @@ import org.apache.tuscany.policy.model.IntentAttachPoint;
  * The constrainingType specifies the services, references and properties that must be implemented.
  */
 public interface ConstrainingType extends Base, IntentAttachPoint {
+	
+    /**
+     * Returns the name of the constrainingType.
+     * @return the name of the constrainingType
+     */
+    QName getName();
+
+    /**
+     * Sets the name of the constrainingType.
+     * @param name the name of the constrainingType
+     */
+    void setName(QName name);
 
     /**
      * Returns a list of services that are offered.

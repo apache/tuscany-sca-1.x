@@ -21,6 +21,8 @@ package org.apache.tuscany.assembly.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.namespace.QName;
+
 import org.apache.tuscany.assembly.model.AbstractProperty;
 import org.apache.tuscany.assembly.model.AbstractReference;
 import org.apache.tuscany.assembly.model.AbstractService;
@@ -33,10 +35,19 @@ import org.apache.tuscany.policy.model.Intent;
  *  @version $Rev$ $Date$
  */
 public class ConstrainingTypeImpl extends BaseImpl implements ConstrainingType {
+	private QName name;
 	private List<AbstractProperty> properties = new ArrayList<AbstractProperty>();
 	private List<AbstractReference> references = new ArrayList<AbstractReference>();
 	private List<AbstractService> services = new ArrayList<AbstractService>();
 	private List<Intent> requiredIntents = new ArrayList<Intent>();
+	
+	public QName getName() {
+		return name;
+	}
+	
+	public void setName(QName name) {
+		this.name = name;
+	}
 
 	public List<AbstractProperty> getProperties() {
 		return properties;
