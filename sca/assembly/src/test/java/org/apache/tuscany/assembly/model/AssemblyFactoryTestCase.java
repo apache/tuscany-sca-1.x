@@ -20,46 +20,39 @@ package org.apache.tuscany.assembly.model;
 
 import javax.xml.namespace.QName;
 
+import junit.framework.TestCase;
+
 import org.apache.tuscany.assembly.model.impl.AssemblyFactoryImpl;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test building of assembly model instances using the assembly factory.
  *
  *  @version $Rev$ $Date$
  */
-public class AssemblyFactoryTestCase {
+public class AssemblyFactoryTestCase extends TestCase {
 	
 	AssemblyFactory factory;
 
-	@Before
-	public void setUpBefore() throws Exception {
+	public void setUp() throws Exception {
 		factory = new AssemblyFactoryImpl();
 	}
 
-	@After
-	public void tearDownAfter() throws Exception {
+	public void tearDown() throws Exception {
 		factory = null;
 	}
 
-	@Test
 	public void testCreateComponent() {
 		createComponent("AccountServiceComponent1");
 	}
 
-	@Test
 	public void testCreateComponentType() {
 		createComponentType();
 	}
 
-	@Test
 	public void testCreateComposite() {
 		createComposite();
 	}
 
-	@Test
 	public void testCreateConstrainingType() {
 		createConstrainingType();
 	}
