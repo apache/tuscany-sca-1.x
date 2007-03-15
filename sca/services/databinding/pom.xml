@@ -61,6 +61,7 @@
                 <module>databinding-sdo</module>
                 <module>databinding-xmlbeans</module>
                 <module>databinding-sdo-axiom</module>
+                <module>databinding-json</module>
             </modules>
         </profile>
 
