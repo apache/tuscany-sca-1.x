@@ -44,8 +44,8 @@ public class ComponentTestCase extends TestCase {
     }
 
     public void testDefaultService() {
-        assertEquals(myService.nextHoliday(), myServiceByDate.nextHoliday(new Date()));
-        assertEquals(myListService.getHolidays()[0], myListServiceByYear.getHolidays(2006)[0]);
+        assertEquals(myService.nextHoliday(), myServiceByDate.nextHolidayByDate(new Date()));
+        assertEquals(myListService.getHolidays()[0], myListServiceByYear.getHolidaysByYear(2006)[0]);
 
     }
 
@@ -56,12 +56,12 @@ public class ComponentTestCase extends TestCase {
 
     public void testServiceWithOverrideProperty() {
         assertFalse(myNCService.nextHoliday() == myService.nextHoliday());
-        assertEquals(myListServiceFor2006.getHolidays()[0], myListServiceByYear.getHolidays(2006)[0]);
+        assertEquals(myListServiceFor2006.getHolidays()[0], myListServiceByYear.getHolidaysByYear(2006)[0]);
 
     }
 
     public void testContext() {
-        //FIXME Looks like this need the support for @ComponentName
+        //FIXME TUSCANY-1174 - Need support for @ComponentName
         /*
         assertNotNull("Service component name is null", myService.getComponentName());
         assertNotNull("service context is null", myService.getContext());

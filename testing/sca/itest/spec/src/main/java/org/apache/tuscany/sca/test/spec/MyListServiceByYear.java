@@ -22,5 +22,6 @@ import org.osoa.sca.annotations.Remotable;
 
 @Remotable
 public interface MyListServiceByYear {
-    String[] getHolidays(int year);
+    //FIXME renaming method due to TUSCANY-1173. Original name getHolidays
+    String[] getHolidaysByYear(int year);
 }

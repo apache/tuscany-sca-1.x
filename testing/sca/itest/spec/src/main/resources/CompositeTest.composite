@@ -24,7 +24,6 @@
     <include name="myTotalService" scdlLocation="myTotalService.composite"/>
     <include name="myListService" scdlLocation="myListService.composite"/>
     <include name="mySimpleServiceInRecursive" scdlLocation="mySimpleServiceInRecursive.composite"/>
-    <!-- include name="MyServiceComposite" scdlLocation="MyServiceComposite.composite"/ -->
     <include name="myServiceInRecursive" scdlLocation="myServiceInRecursive.composite"/>
     <include name="mySimpleServiceInRecursive2" scdlLocation="mySimpleServiceInRecursive2.composite"/>
     <include name="MyTotalServiceInRecursive" scdlLocation="myTotalServiceInRecursive.composite"/>

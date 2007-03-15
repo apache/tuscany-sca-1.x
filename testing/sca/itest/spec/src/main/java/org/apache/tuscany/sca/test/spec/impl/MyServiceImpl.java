@@ -59,11 +59,11 @@ public class MyServiceImpl implements MyService, MyServiceByDate, MyListService,
 
     public Date nextHoliday() {
 
-        return nextHoliday(new Date());
+        return nextHolidayByDate(new Date());
     }
 
     @SuppressWarnings("deprecation")
-    public Date nextHoliday(Date today) {
+    public Date nextHolidayByDate(Date today) {
         Date d1;
         String[] days = getHolidays();
         for (int j = 0; j < days.length; j++) {
@@ -74,7 +74,7 @@ public class MyServiceImpl implements MyService, MyServiceByDate, MyListService,
         return null;
     }
 
-    public String[] getHolidays(int year) {
+    public String[] getHolidaysByYear(int year) {
         int index = year - 2006;
         if (index >= 0 && index < holidays.length)
             return holidays[index];
@@ -89,7 +89,7 @@ public class MyServiceImpl implements MyService, MyServiceByDate, MyListService,
         else
             theYear = new Integer(year);
 
-        return getHolidays(theYear.intValue());
+        return getHolidaysByYear(theYear.intValue());
     }
 
     @Init

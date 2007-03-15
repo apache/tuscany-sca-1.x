@@ -36,7 +36,7 @@ public class ComponentServiceReferenceListTestCase extends TestCase {
     }
 
     public void testDefaultService() {
-        assertEquals(myListService.getHolidays()[0], myListServiceByYear.getHolidays(2007)[0]);
+        assertEquals(myListService.getHolidays()[0], myListServiceByYear.getHolidaysByYear(2007)[0]);
 
     }
 

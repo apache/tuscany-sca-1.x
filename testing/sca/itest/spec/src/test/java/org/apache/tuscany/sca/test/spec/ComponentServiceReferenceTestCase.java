@@ -38,13 +38,13 @@ public class ComponentServiceReferenceTestCase extends TestCase {
     }
 
     public void testDefaultService() {
-        assertNotSame(myService.nextHoliday(), myService.nextHoliday(new Date()));
-        assertEquals(myService.getHolidays()[0], myService.getHolidays(2007)[0]);
+        assertNotSame(myService.nextHoliday(), myService.nextHolidayByDate(new Date()));
+        assertEquals(myService.getHolidays()[0], myService.getHolidaysByYear(2007)[0]);
 
     }
 
     public void testContext() {
-        //FIXME Looks like this need the support for @ComponentName
+        //FIXME TUSCANY-1174 - Need support for @ComponentName
         /*
         assertNotNull("Service component name is null", myService.getComponentName());
         assertNotNull("service context is null", myService.getContext());

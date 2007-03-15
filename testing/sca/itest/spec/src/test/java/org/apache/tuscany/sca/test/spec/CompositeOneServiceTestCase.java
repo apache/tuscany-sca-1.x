@@ -40,7 +40,7 @@ public class CompositeOneServiceTestCase extends TestCase {
     }
 
     public void testContext() {
-        //FIXME Looks like this need the support for @ComponentName
+        //FIXME TUSCANY-1174 - Need support for @ComponentName
         /*
         assertNotNull("Service component name is null", myService.getComponentName());
         assertNotNull("service context is null", myService.getContext());

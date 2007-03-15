@@ -53,8 +53,8 @@ public class MyTotalServiceImpl implements MyTotalService {
         return myListService.getHolidays();
     }
 
-    public String[] getHolidays(int year) {
-        return myListServiceByYear.getHolidays(year);
+    public String[] getHolidaysByYear(int year) {
+        return myListServiceByYear.getHolidaysByYear(year);
     }
 
     public String getComponentName() {
@@ -65,8 +65,8 @@ public class MyTotalServiceImpl implements MyTotalService {
         return myService.getContext();
     }
 
-    public Date nextHoliday(Date date) {
-        return myServiceByDate.nextHoliday(date);
+    public Date nextHolidayByDate(Date date) {
+        return myServiceByDate.nextHolidayByDate(date);
     }
 
     public String getLocation() {

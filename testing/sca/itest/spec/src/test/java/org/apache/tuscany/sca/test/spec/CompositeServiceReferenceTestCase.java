@@ -51,31 +51,31 @@ public class CompositeServiceReferenceTestCase extends TestCase {
     }
 
     public void testServiceFromRecursive() {
-        assertNotSame(myService1.nextHoliday(), myService1.nextHoliday(new Date()));
-        assertEquals(myService1.getHolidays()[0], myService1.getHolidays(2007)[0]);
+        assertNotSame(myService1.nextHoliday(), myService1.nextHolidayByDate(new Date()));
+        assertEquals(myService1.getHolidays()[0], myService1.getHolidaysByYear(2007)[0]);
 
     }
 
     public void testServiceReferenceFromRecursive() {
-        assertEquals(myService2.getHolidays()[0], myService2.getHolidays(2007)[0]);
-        assertNotSame(myService2.nextHoliday(), myService2.nextHoliday(new Date()));
+        assertEquals(myService2.getHolidays()[0], myService2.getHolidaysByYear(2007)[0]);
+        assertNotSame(myService2.nextHoliday(), myService2.nextHolidayByDate(new Date()));
 
     }
 
     public void testServiceReferenceFromRecursiveUseService() {
-        assertNotSame(myService4.nextHoliday(), myService4.nextHoliday(new Date()));
-        assertEquals(myService4.getHolidays()[0], myService4.getHolidays(2007)[0]);
+        assertNotSame(myService4.nextHoliday(), myService4.nextHolidayByDate(new Date()));
+        assertEquals(myService4.getHolidays()[0], myService4.getHolidaysByYear(2007)[0]);
     }
 
     public void testServiceReferenceFromComponent() {
-        assertEquals(myService3.getHolidays()[0], myService3.getHolidays(2007)[0]);
-        assertNotSame(myService3.nextHoliday(), myService3.nextHoliday(new Date()));
+        assertEquals(myService3.getHolidays()[0], myService3.getHolidaysByYear(2007)[0]);
+        assertNotSame(myService3.nextHoliday(), myService3.nextHolidayByDate(new Date()));
 
     }
 
     public void testServiceReferenceFromComponentUseService() {
-        assertNotSame(myService5.nextHoliday(), myService5.nextHoliday(new Date()));
-        assertEquals(myService5.getHolidays()[0], myService5.getHolidays(2007)[0]);
+        assertNotSame(myService5.nextHoliday(), myService5.nextHolidayByDate(new Date()));
+        assertEquals(myService5.getHolidays()[0], myService5.getHolidaysByYear(2007)[0]);
     }
 
     protected void setUp() throws Exception {

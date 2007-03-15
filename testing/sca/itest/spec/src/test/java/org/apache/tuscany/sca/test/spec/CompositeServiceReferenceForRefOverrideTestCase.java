@@ -50,22 +50,22 @@ public class CompositeServiceReferenceForRefOverrideTestCase extends TestCase {
 
     public void testServiceFromReferenceNo() {
         System.out.println("nextHolday()" + myService1.nextHoliday());
-        System.out.println("nextHolday(Date)" + myService1.nextHoliday(new Date()));
+        System.out.println("nextHolday(Date)" + myService1.nextHolidayByDate(new Date()));
         System.out.println("myService1.getHolidays()[0]" + myService1.getHolidays()[0]);
-        System.out.println("myService1.getHolidays(2007)[0]" + myService1.getHolidays(2007)[0]);
-        assertNotSame(myService1.nextHoliday(), myService1.nextHoliday(new Date()));
-        assertEquals(myService1.getHolidays()[0], myService1.getHolidays(2007)[0]);
+        System.out.println("myService1.getHolidays(2007)[0]" + myService1.getHolidaysByYear(2007)[0]);
+        assertNotSame(myService1.nextHoliday(), myService1.nextHolidayByDate(new Date()));
+        assertEquals(myService1.getHolidays()[0], myService1.getHolidaysByYear(2007)[0]);
     }
 
     public void testServiceFromReferenceMay() {
-        assertEquals(myService2.getHolidays()[0], myService2.getHolidays(2007)[0]);
-        assertNotSame(myService2.nextHoliday(), myService2.nextHoliday(new Date()));
+        assertEquals(myService2.getHolidays()[0], myService2.getHolidaysByYear(2007)[0]);
+        assertNotSame(myService2.nextHoliday(), myService2.nextHolidayByDate(new Date()));
 
     }
 
     public void testServiceFromReferenceMust() {
-        assertEquals(myService3.getHolidays()[0], myService3.getHolidays(2007)[0]);
-        assertNotSame(myService3.nextHoliday(), myService3.nextHoliday(new Date()));
+        assertEquals(myService3.getHolidays()[0], myService3.getHolidaysByYear(2007)[0]);
+        assertNotSame(myService3.nextHoliday(), myService3.nextHolidayByDate(new Date()));
 
     }
 

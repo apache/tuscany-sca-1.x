@@ -42,10 +42,10 @@ public class MyListServiceImpl implements MyListService, MyListServiceByYear {
     protected String year = "2006";
 
     public String[] getHolidays() {
-        return getHolidays(new Integer(year).intValue());
+        return getHolidaysByYear(new Integer(year).intValue());
     }
 
-    public String[] getHolidays(int year) {
+    public String[] getHolidaysByYear(int year) {
         MyListService myService;
         if (myListServicesList != null) {
             for (int i = 0; i < myListServicesList.size(); i++) {
