@@ -29,6 +29,7 @@ import org.osoa.sca.annotations.Remotable;
 import org.osoa.sca.annotations.Scope;
 
 import org.apache.tuscany.spi.databinding.extension.SimpleTypeMapperExtension;
+import org.apache.tuscany.spi.idl.java.JavaInterfaceProcessorRegistry;
 import org.apache.tuscany.spi.implementation.java.ImplementationProcessorService;
 import org.apache.tuscany.spi.implementation.java.JavaMappedProperty;
 import org.apache.tuscany.spi.implementation.java.JavaMappedReference;
@@ -44,12 +45,13 @@ import org.apache.tuscany.core.idl.java.JavaInterfaceProcessorRegistryImpl;
  * @version $Rev$ $Date$
  */
 public class ImplementationProcessorServiceTestCase extends TestCase {
+    private JavaInterfaceProcessorRegistry registry = new JavaInterfaceProcessorRegistryImpl();
+    private ImplementationProcessorService implService = new ImplementationProcessorServiceImpl(registry);
 
-    private ImplementationProcessorService implService =
-        new ImplementationProcessorServiceImpl(new JavaInterfaceProcessorRegistryImpl());
 
     public void testCreateConversationalService() throws Exception {
         JavaMappedService service = implService.createService(Foo.class);
+        service.setServiceContract(registry.introspect(Foo.class, true));
         assertTrue(Foo.class.equals(service.getServiceContract().getInterfaceClass()));
         assertTrue(service.isRemotable());
         assertEquals(InteractionScope.CONVERSATIONAL, service.getServiceContract().getInteractionScope());
@@ -60,6 +62,7 @@ public class ImplementationProcessorServiceTestCase extends TestCase {
 
     public void testCreateDefaultService() throws Exception {
         JavaMappedService service = implService.createService(Baz.class);
+        service.setServiceContract(registry.introspect(Baz.class, true));
         assertTrue(Baz.class.equals(service.getServiceContract().getInterfaceClass()));
         assertTrue(!service.isRemotable());
         assertEquals(InteractionScope.NONCONVERSATIONAL, service.getServiceContract().getInteractionScope());

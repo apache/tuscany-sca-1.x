@@ -99,7 +99,7 @@ public class InterfaceJavaLoader extends LoaderExtension<JavaServiceContract> {
         }
         JavaServiceContract serviceContract;
         try {
-            serviceContract = interfaceRegsitry.introspect(interfaceClass, callbackClass);
+            serviceContract = interfaceRegsitry.introspect(interfaceClass, callbackClass, false);
         } catch (InvalidServiceContractException e) {
             throw new LoaderException(interfaceClass.getName(), e);
         }

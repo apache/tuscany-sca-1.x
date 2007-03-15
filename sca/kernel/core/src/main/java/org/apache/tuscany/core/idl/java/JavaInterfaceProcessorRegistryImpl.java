@@ -68,6 +68,10 @@ public class JavaInterfaceProcessorRegistryImpl implements JavaInterfaceProcesso
     }
 
     public <T> JavaServiceContract introspect(Class<T> type) throws InvalidServiceContractException {
+        return introspect(type, true);
+    }
+
+    public <T> JavaServiceContract introspect(Class<T> type, boolean deep) throws InvalidServiceContractException {
         Class<?> callbackClass = null;
         Callback callback = type.getAnnotation(Callback.class);
         if (callback != null && !Void.class.equals(callback.value())) {
@@ -75,14 +79,20 @@ public class JavaInterfaceProcessorRegistryImpl implements JavaInterfaceProcesso
         } else if (callback != null && Void.class.equals(callback.value())) {
             throw new IllegalCallbackException("No callback interface specified on annotation", type.getName());
         }
-        return introspect(type, callbackClass);
-    }
-
-    public <I, C> JavaServiceContract introspect(Class<I> type, Class<C> callback)
+        return introspect(type, callbackClass, deep);
+    }    
+    public <I, C> JavaServiceContract introspect(Class<I> type, Class<C> callback, boolean deep)
         throws InvalidServiceContractException {
         JavaServiceContract contract = new JavaServiceContract();
         contract.setInterfaceName(getBaseName(type));
         contract.setInterfaceClass(type);
+        if (callback != null) {
+            contract.setCallbackName(getBaseName(callback));
+            contract.setCallbackClass(callback);
+        }
+        if (!deep) {
+            return contract;
+        }
         boolean remotable = type.isAnnotationPresent(Remotable.class);
         contract.setRemotable(remotable);
         Scope interactionScope = type.getAnnotation(Scope.class);
@@ -96,8 +106,6 @@ public class JavaInterfaceProcessorRegistryImpl implements JavaInterfaceProcesso
         contract.setOperations(getOperations(type, remotable, conversational));
 
         if (callback != null) {
-            contract.setCallbackName(getBaseName(callback));
-            contract.setCallbackClass(callback);
             contract.setCallbackOperations(getOperations(callback, remotable, conversational));
         }
 

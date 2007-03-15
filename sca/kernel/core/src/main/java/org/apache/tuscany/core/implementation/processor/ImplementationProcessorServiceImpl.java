@@ -67,7 +67,7 @@ public class ImplementationProcessorServiceImpl implements ImplementationProcess
         JavaMappedService service = new JavaMappedService();
         service.setName(interfaze.getSimpleName());
         service.setRemotable(interfaze.getAnnotation(Remotable.class) != null);
-        ServiceContract<?> contract = registry.introspect(interfaze);
+        ServiceContract<?> contract = registry.introspect(interfaze, false);
         service.setServiceContract(contract);
         return service;
     }
@@ -153,7 +153,7 @@ public class ImplementationProcessorServiceImpl implements ImplementationProcess
         reference.setRequired(false);
         ServiceContract contract;
         try {
-            contract = registry.introspect(paramType);
+            contract = registry.introspect(paramType, false);
         } catch (InvalidServiceContractException e1) {
             throw new ProcessingException(e1);
         }
@@ -256,7 +256,7 @@ public class ImplementationProcessorServiceImpl implements ImplementationProcess
                 }
             }
             Class<?> baseType = getBaseType(rawType, genericParam);
-            ServiceContract<?> contract = registry.introspect(baseType);
+            ServiceContract<?> contract = registry.introspect(baseType, false);
             reference.setServiceContract(contract);
         } catch (InvalidServiceContractException e) {
             throw new ProcessingException(e);
@@ -386,7 +386,7 @@ public class ImplementationProcessorServiceImpl implements ImplementationProcess
                 }
             }
             Class<?> baseType = getBaseType(rawType, genericParam);
-            ServiceContract<?> contract = registry.introspect(baseType);
+            ServiceContract<?> contract = registry.introspect(baseType, false);
             reference.setServiceContract(contract);
         } catch (InvalidServiceContractException e) {
             throw new ProcessingException(e);

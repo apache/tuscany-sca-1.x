@@ -26,6 +26,9 @@ import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.ComponentTypeLoaderExtension;
+import org.apache.tuscany.spi.idl.InvalidServiceContractException;
+import org.apache.tuscany.spi.idl.java.JavaInterfaceProcessorRegistry;
+import org.apache.tuscany.spi.idl.java.JavaServiceContract;
 import org.apache.tuscany.spi.implementation.java.IntrospectionRegistry;
 import org.apache.tuscany.spi.implementation.java.Introspector;
 import org.apache.tuscany.spi.implementation.java.JavaMappedProperty;
@@ -43,11 +46,15 @@ import org.osoa.sca.annotations.Constructor;
  * @version $Rev$ $Date$
  */
 public class JavaComponentTypeLoader extends ComponentTypeLoaderExtension<JavaImplementation> {
+    @Autowire
+    protected JavaInterfaceProcessorRegistry processorRegistry;
+
     private Introspector introspector;
 
-    @Constructor({"registry", "introspector"})
-    public JavaComponentTypeLoader(@Autowire LoaderRegistry loaderRegistry,
-                                   @Autowire IntrospectionRegistry introspector) {
+    @Constructor( {"registry", "introspector"})
+    public JavaComponentTypeLoader(@Autowire
+    LoaderRegistry loaderRegistry, @Autowire
+    IntrospectionRegistry introspector) {
         super(loaderRegistry);
         this.introspector = introspector;
     }
@@ -57,27 +64,39 @@ public class JavaComponentTypeLoader extends ComponentTypeLoaderExtension<JavaIm
         return JavaImplementation.class;
     }
 
-    public void load(CompositeComponent parent,
-                     JavaImplementation implementation,
-                     DeploymentContext deploymentContext) throws LoaderException {
+    public void load(CompositeComponent parent, JavaImplementation implementation, DeploymentContext deploymentContext)
+        throws LoaderException {
         Class<?> implClass = implementation.getImplementationClass();
         PojoComponentType componentType = loadByIntrospection(parent, implementation, deploymentContext);
         URL resource = implClass.getResource(JavaIntrospectionHelper.getBaseName(implClass) + ".componentType");
         if (resource != null) {
-            // TODO: TUSCANY-1111, How to merge the component type loaded from the file into the PojoComponentType 
+            // TODO: TUSCANY-1111, How to merge the component type loaded from the file into the PojoComponentType
             PojoComponentType sideFileCT = loadFromSidefile(parent, resource, deploymentContext);
 
             // TODO: TUSCANY-1111, hack to get the sidefile defined WSDLServiceContract used
             // only works with a single service
             Iterator it = componentType.getServices().values().iterator();
             for (Object o : sideFileCT.getServices().values()) {
-                ServiceDefinition sideFileSD = (ServiceDefinition) o;
+                ServiceDefinition sideFileSD = (ServiceDefinition)o;
                 ServiceDefinition actualSD = (ServiceDefinition)it.next();
                 ServiceContract<?> newServiceContract = sideFileSD.getServiceContract();
-                // TODO: TUSCANY-1111, runtime requires interfaceClass 
+                ServiceContract<?> contract = actualSD.getServiceContract();
+                if (JavaServiceContract.class.isInstance(contract)) {
+                    try {
+                        // [rfeng] AS we now defer the java interface processing for TUSCANY-1165
+                        // We need to do the full introspection now
+                        contract =
+                            processorRegistry.introspect(contract.getInterfaceClass(),
+                                                         contract.getCallbackClass(),
+                                                         true);
+                    } catch (InvalidServiceContractException e) {
+                        throw new LoaderException(e);
+                    }
+                }
+                // TODO: TUSCANY-1111, runtime requires interfaceClass
                 // but currently there's no way of gen'ing that from WSDL
-                newServiceContract.setInterfaceClass(actualSD.getServiceContract().getInterfaceClass());
-                newServiceContract.setDataBinding(actualSD.getServiceContract().getDataBinding());
+                newServiceContract.setInterfaceClass(contract.getInterfaceClass());
+                newServiceContract.setDataBinding(contract.getDataBinding());
                 actualSD.setServiceContract(newServiceContract);
             }
         }
@@ -94,9 +113,8 @@ public class JavaComponentTypeLoader extends ComponentTypeLoaderExtension<JavaIm
         return componentType;
     }
 
-    protected PojoComponentType loadFromSidefile(CompositeComponent parent,
-                                                 URL url,
-                                                 DeploymentContext deploymentContext) throws LoaderException {
+    protected PojoComponentType loadFromSidefile(CompositeComponent parent, URL url, DeploymentContext deploymentContext)
+        throws LoaderException {
         PojoComponentType<JavaMappedService, JavaMappedReference, JavaMappedProperty<?>> componentType =
             new PojoComponentType<JavaMappedService, JavaMappedReference, JavaMappedProperty<?>>();
         return loaderRegistry.load(parent, componentType, url, PojoComponentType.class, deploymentContext);

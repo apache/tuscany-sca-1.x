@@ -38,9 +38,20 @@ public interface InterfaceJavaIntrospector {
     /**
      * Introspect a Java interface and return a service contract definition.
      *
-     * @param type     the interface to inspect
-     * @param callback the callback interface to inspec
+     * @param type the interface to inspect
+     * @param deep Indicate if deep introspection is required
      * @return a JavaServiceContract corresponding to the Java interface
      */
-    <I, C> JavaServiceContract introspect(Class<I> type, Class<C> callback) throws InvalidServiceContractException;
+    <I> JavaServiceContract introspect(Class<I> type, boolean deep) throws InvalidServiceContractException;
+    
+    /**
+     * Introspect a Java interface and return a service contract definition.
+     *
+     * @param type     the interface to inspect
+     * @param callback the callback interface to inspec
+     * @param deep Indicate if deep introspection is required
+     * @return a JavaServiceContract corresponding to the Java interface
+     */
+    <I, C> JavaServiceContract introspect(Class<I> type, Class<C> callback, boolean deep)
+        throws InvalidServiceContractException;
 }

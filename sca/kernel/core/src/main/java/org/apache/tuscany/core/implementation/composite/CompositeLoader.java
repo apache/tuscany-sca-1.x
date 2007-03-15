@@ -36,6 +36,9 @@ import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.deployer.CompositeClassLoader;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.LoaderExtension;
+import org.apache.tuscany.spi.idl.InvalidServiceContractException;
+import org.apache.tuscany.spi.idl.java.JavaInterfaceProcessorRegistry;
+import org.apache.tuscany.spi.idl.java.JavaServiceContract;
 import org.apache.tuscany.spi.loader.InvalidServiceException;
 import org.apache.tuscany.spi.loader.InvalidWireException;
 import org.apache.tuscany.spi.loader.LoaderException;
@@ -49,6 +52,7 @@ import org.apache.tuscany.spi.model.ModelObject;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.model.ReferenceDefinition;
 import org.apache.tuscany.spi.model.ReferenceTarget;
+import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.model.WireDefinition;
 import org.apache.tuscany.spi.services.artifact.Artifact;
@@ -64,6 +68,9 @@ import org.apache.tuscany.core.property.PropertyHelper;
 public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
     public static final QName COMPOSITE = new QName(SCA_NS, "composite");
     public static final String URI_DELIMITER = "/";
+
+    @Autowire
+    protected JavaInterfaceProcessorRegistry processorRegistry;
 
     private final ArtifactRepository artifactRepository;
 
@@ -136,10 +143,39 @@ public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
                     }
             }
         }
+        processJavaInterfaces(composite);
         for (ComponentDefinition<? extends Implementation<?>> c : composite.getComponents().values()) {
+            processJavaInterfaces(c.getImplementation().getComponentType());
             PropertyHelper.processProperties(composite, c, deploymentContext);
         }
         return composite;
+    }
+    
+    protected void processJavaInterfaces(ComponentType componentType) throws LoaderException {
+        if (processorRegistry == null) {
+            return;
+        }
+        try {
+            for (Object s : componentType.getServices().values()) {
+                ServiceContract<?> contract = ((ServiceDefinition)s).getServiceContract();
+                if (JavaServiceContract.class.isInstance(contract)) {
+                    contract =
+                        processorRegistry.introspect(contract.getInterfaceClass(), contract.getCallbackClass(), true);
+                    ((ServiceDefinition)s).setServiceContract(contract);
+                }
+            }
+            for (Object r : componentType.getReferences().values()) {
+                ServiceContract<?> contract = ((ReferenceDefinition)r).getServiceContract();
+                if (JavaServiceContract.class.isInstance(contract)) {
+                    contract =
+                        processorRegistry.introspect(contract.getInterfaceClass(), contract.getCallbackClass(), true);
+                    ((ReferenceDefinition)r).setServiceContract(contract);
+                }
+            }
+        } catch (InvalidServiceContractException e) {
+            throw new LoaderException(e);
+        }
+
     }
 
     protected void resolveWires(CompositeComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> composite)
