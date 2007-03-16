@@ -52,8 +52,9 @@ import commonj.sdo.impl.HelperProvider;
  */
 public class ImportSDOLoader extends LoaderExtension {
 
-    @Constructor({"registry"})
-    public ImportSDOLoader(@Autowire LoaderRegistry registry) {
+    @Constructor( {"registry"})
+    public ImportSDOLoader(@Autowire
+    LoaderRegistry registry) {
         super(registry);
     }
 
@@ -95,7 +96,7 @@ public class ImportSDOLoader extends LoaderExtension {
             }
         }
     }
-    
+
     private static void register(Class factoryClass, HelperContext helperContext) throws Exception {
         Field field = factoryClass.getField("INSTANCE");
         Object factory = field.get(null);
@@ -113,7 +114,7 @@ public class ImportSDOLoader extends LoaderExtension {
         String location = reader.getAttributeValue(null, "location");
         if (location == null) {
             location = reader.getAttributeValue(null, "wsdlLocation");
-        }    
+        }
         if (location != null) {
             try {
                 URL wsdlURL = null;
@@ -136,14 +137,22 @@ public class ImportSDOLoader extends LoaderExtension {
                 }
                 // FIXME: How do we associate the application HelperContext with the one
                 // imported by the composite
-                HelperContext defaultContext = HelperProvider.getDefaultContext();    
+                HelperContext defaultContext = HelperProvider.getDefaultContext();
                 xsdInputStream = wsdlURL.openStream();
                 try {
                     XSDHelper xsdHelper = defaultContext.getXSDHelper();
-                    xsdHelper.define(xsdInputStream, wsdlURL.toExternalForm());
+                    ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
+                    try {
+                        // set TCCL as SDO needs it
+                        ClassLoader cl = deploymentContext.getClassLoader();
+                        Thread.currentThread().setContextClassLoader(cl);
+                        xsdHelper.define(xsdInputStream, wsdlURL.toExternalForm());
+                    } finally {
+                        Thread.currentThread().setContextClassLoader(oldCL);
+                    }
                 } finally {
                     xsdInputStream.close();
-                }                
+                }
             } catch (IOException e) {
                 LoaderException sfe = new LoaderException(e.getMessage());
                 sfe.setResourceURI(location);
