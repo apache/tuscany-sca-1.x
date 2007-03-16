@@ -134,6 +134,16 @@ public class ImportSDOLoader extends LoaderExtension {
                 } finally {
                     xsdInputStream.close();
                 }
+                // FIXME: How do we associate the application HelperContext with the one
+                // imported by the composite
+                HelperContext defaultContext = HelperProvider.getDefaultContext();    
+                xsdInputStream = wsdlURL.openStream();
+                try {
+                    XSDHelper xsdHelper = defaultContext.getXSDHelper();
+                    xsdHelper.define(xsdInputStream, wsdlURL.toExternalForm());
+                } finally {
+                    xsdInputStream.close();
+                }                
             } catch (IOException e) {
                 LoaderException sfe = new LoaderException(e.getMessage());
                 sfe.setResourceURI(location);
