@@ -84,4 +84,15 @@ public interface Component extends Base, IntentAttachPoint, PolicySetAttachPoint
 	 */
 	void setConstrainingType(ConstrainingType constrainingType);
 
+	/**
+	 * Returns true if the component references should be autowired.
+	 * @return whether component references should be autowired.
+	 */
+	boolean isAutowire();
+
+	/**
+	 * Sets whether component references should be autowired.
+	 * @param autowire whether component references should be autowired
+	 */
+	void setAutowire(boolean autowire);
 }

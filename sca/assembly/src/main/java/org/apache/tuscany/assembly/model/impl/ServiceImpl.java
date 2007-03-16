@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tuscany.assembly.model.Binding;
+import org.apache.tuscany.assembly.model.Callback;
 import org.apache.tuscany.assembly.model.Service;
 import org.apache.tuscany.policy.model.PolicySet;
 
@@ -34,6 +35,7 @@ import org.apache.tuscany.policy.model.PolicySet;
 public class ServiceImpl extends AbstractServiceImpl implements Service {
 	private List<Binding> bindings = new ArrayList<Binding>();
 	private List<PolicySet> policySets = new ArrayList<PolicySet>();
+	private Callback callback;
 
 	public List<Binding> getBindings() {
 		return bindings;
@@ -41,6 +43,14 @@ public class ServiceImpl extends AbstractServiceImpl implements Service {
 
 	public List<PolicySet> getPolicySets() {
 		return policySets;
+	}
+	
+	public Callback getCallback() {
+		return callback;
+	}
+	
+	public void setCallback(Callback callback) {
+		this.callback = callback;
 	}
 
 }

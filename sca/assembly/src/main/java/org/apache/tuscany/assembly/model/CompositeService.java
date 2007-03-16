@@ -18,7 +18,6 @@
  */
 package org.apache.tuscany.assembly.model;
 
-import java.util.List;
 
 
 /**
@@ -37,11 +36,5 @@ public interface CompositeService extends Service {
      * @param promotedService the promoted component service.
      */
     void setPromotedService(ComponentService promotedService);
-    
-    /**
-     * Returns the bindings supported for callbacks. 
-     * @return the bindings supported for callbacks
-     */
-    List<Binding> getCallbackBindings();
     
 }

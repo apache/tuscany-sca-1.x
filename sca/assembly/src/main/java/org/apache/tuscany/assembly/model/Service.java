@@ -35,4 +35,16 @@ public interface Service extends AbstractService, PolicySetAttachPoint {
      */
     List<Binding> getBindings();
     
+    /**
+     * Returns a callback definition of the bindings to use for callbacks. 
+     * @return a definition of the bindings to use for callbacks
+     */
+    Callback getCallback();
+
+    /**
+     * Sets a callback definition of the bindings to use for callbacks
+     * @param callback a definition of the bindings to use for callbacks
+     */
+    void setCallback(Callback callback);
+    
 }

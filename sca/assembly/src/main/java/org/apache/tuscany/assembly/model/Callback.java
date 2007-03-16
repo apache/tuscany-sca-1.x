@@ -16,25 +16,23 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.assembly.model.impl;
+package org.apache.tuscany.assembly.model;
 
-import org.apache.tuscany.assembly.model.AbstractReference;
-import org.apache.tuscany.assembly.model.Multiplicity;
+import java.util.List;
+
+import org.apache.tuscany.policy.model.IntentAttachPoint;
+import org.apache.tuscany.policy.model.PolicySetAttachPoint;
+
 
 /**
- * Represents an abstract reference
- *
- *  @version $Rev$ $Date$
+ * Represents a callback object describing the bindings to use for callbacks.
  */
-public class AbstractReferenceImpl extends ContractImpl implements AbstractReference {
-	private Multiplicity multiplicity = Multiplicity.ONE_ONE;
-
-	public Multiplicity getMultiplicity() {
-		return multiplicity;
-	}
-
-	public void setMultiplicity(Multiplicity multiplicity) {
-		this.multiplicity = multiplicity;
-	}
-
+public interface Callback extends Base, IntentAttachPoint, PolicySetAttachPoint {
+    
+    /**
+     * Returns the bindings supported for callbacks. 
+     * @return the bindings supported for callbacks
+     */
+    List<Binding> getBindings();
+    
 }

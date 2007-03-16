@@ -44,6 +44,7 @@ public class ComponentImpl extends BaseImpl implements Component {
 	private List<ComponentService> services = new ArrayList<ComponentService>();
 	private List<Intent> requiredIntents = new ArrayList<Intent>();
 	private List<PolicySet> policySets = new ArrayList<PolicySet>();
+	private boolean autowire;
 
 	public ConstrainingType getConstrainingType() {
 		return constrainingType;
@@ -89,4 +90,11 @@ public class ComponentImpl extends BaseImpl implements Component {
 		return policySets;
 	}
 
+	public boolean isAutowire() {
+		return autowire;
+	}
+	
+	public void setAutowire(boolean autowire) {
+		this.autowire = autowire;
+	}
 }
