@@ -40,6 +40,12 @@ public interface AssemblyFactory {
 	 * @return a new abstract service
 	 */
 	AbstractService createAbstractService();
+
+	/**
+	 * Create a new callback.
+	 * @return
+	 */
+	Callback createCallback();
 	
 	/**
 	 * Create a new component.

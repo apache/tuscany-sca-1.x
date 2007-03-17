@@ -23,6 +23,7 @@ import org.apache.tuscany.assembly.model.AbstractProperty;
 import org.apache.tuscany.assembly.model.AbstractReference;
 import org.apache.tuscany.assembly.model.AbstractService;
 import org.apache.tuscany.assembly.model.AssemblyFactory;
+import org.apache.tuscany.assembly.model.Callback;
 import org.apache.tuscany.assembly.model.Component;
 import org.apache.tuscany.assembly.model.ComponentProperty;
 import org.apache.tuscany.assembly.model.ComponentReference;
@@ -54,6 +55,10 @@ public class AssemblyFactoryImpl implements AssemblyFactory {
 
 	public AbstractService createAbstractService() {
 		return new AbstractServiceImpl();
+	}
+	
+	public Callback createCallback() {
+		return new CallbackImpl();
 	}
 
 	public Component createComponent() {
