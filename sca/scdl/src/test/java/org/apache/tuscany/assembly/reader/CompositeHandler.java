@@ -20,6 +20,7 @@
 package org.apache.tuscany.assembly.reader;
 
 import org.apache.tuscany.assembly.model.AssemblyFactory;
+import org.apache.tuscany.assembly.model.Callback;
 import org.apache.tuscany.assembly.model.Component;
 import org.apache.tuscany.assembly.model.ComponentProperty;
 import org.apache.tuscany.assembly.model.ComponentReference;
@@ -51,6 +52,7 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
     private CompositeService compositeService;
     private CompositeReference compositeReference;
     private Wire wire;
+    private Callback callback;
 
     public CompositeHandler(AssemblyFactory factory, XMLReader reader) {
         super(factory, reader);
@@ -69,9 +71,11 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
             } else if ("service".equals(name)) {
                 if (component != null) {
                     componentService = factory.createComponentService();
+                    component.getServices().add(componentService);
                     componentService.setName(getString(attr, "name"));
                 } else {
                     compositeService = factory.createCompositeService();
+                    composite.getServices().add(compositeService);
                     compositeService.setName(getString(attr, "name"));
 
                     ComponentService promoted = factory.createComponentService();
@@ -83,6 +87,7 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
             } else if ("reference".equals(name)) {
                 if (component != null) {
                     componentReference = factory.createComponentReference();
+                    component.getReferences().add(componentReference);
                     componentReference.setName(getString(attr, "name"));
 
                     //TODO support multivalued attribute
@@ -93,6 +98,7 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
                     
                 } else {
                     compositeReference = factory.createCompositeReference();
+                    composite.getReferences().add(compositeReference);
                     compositeReference.setName(getString(attr, "name"));
 
                     //TODO support multivalued attribute
@@ -105,19 +111,23 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
             } else if ("property".equals(name)) {
                 if (component != null) {
                     componentProperty = factory.createComponentProperty();
+                    component.getProperties().add(componentProperty);
                     readProperty(componentProperty, attr);
                 } else {
                     property = factory.createProperty();
+                    composite.getProperties().add(property);
                     readProperty(property, attr);
                 }
 
             } else if ("component".equals(name)) {
                 component = factory.createComponent();
+                composite.getComponents().add(component);
                 component.setName(getString(attr, "name"));
                 component.setConstrainingType(getConstrainingType(attr));
                 
             } else if ("wire".equals(name)) {
             	wire = factory.createWire();
+                composite.getWires().add(wire);
             	
             	ComponentReference source = factory.createComponentReference();
             	source.setUndefined(true);
@@ -128,51 +138,38 @@ public class CompositeHandler extends BaseHandler implements ContentHandler {
             	target.setUndefined(true);
             	target.setName(getString(attr, "target"));
             	wire.setTarget(target);
-            }
+            	
+	        } else if ("callback".equals(name)) {
+                callback = factory.createCallback();
+	            if (componentReference != null) {
+	            	componentReference.setCallback(callback);
+	            } else if (compositeReference != null) {
+	            	compositeReference.setCallback(callback);
+	            } else if (componentService != null) {
+	            	componentService.setCallback(callback);
+	            } else if (compositeService != null) {
+	            	compositeService.setCallback(callback);
+	            }
+	        }
         }
     }
 
     public void endElement(String uri, String name, String qname) throws SAXException {
-        if ("composite".equals(name)) {
-
-        } else if ("service".equals(name)) {
-
-            if (component != null) {
-                component.getServices().add(componentService);
-                componentService = null;
-            } else {
-                composite.getServices().add(compositeService);
-                compositeService = null;
-            }
-
+        if ("service".equals(name)) {
+            componentService = null;
+            compositeService = null;
         } else if ("reference".equals(name)) {
-
-            if (component != null) {
-                component.getReferences().add(componentReference);
-                componentReference = null;
-            } else {
-                composite.getReferences().add(compositeReference);
-                compositeReference = null;
-            }
-
+            componentReference = null;
+            compositeReference = null;
         } else if ("property".equals(name)) {
-
-            if (component != null) {
-                component.getProperties().add(componentProperty);
-                componentProperty = null;
-            } else {
-                composite.getProperties().add(property);
-                property = null;
-            }
-
+            componentProperty = null;
+            property = null;
         } else if ("component".equals(name)) {
-            composite.getComponents().add(component);
             component = null;
-
         } else if ("wire".equals(name)) {
-            composite.getWires().add(wire);
             wire= null;
-
+        } else if ("callback".equals(name)) {
+        	callback = null;
         }
     }
 

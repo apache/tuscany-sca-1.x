@@ -55,32 +55,31 @@ public class ConstrainingTypeHandler extends BaseHandler implements ContentHandl
 
             } else if ("service".equals(name)) {
                 abstractService = factory.createAbstractService();
+                constrainingType.getServices().add(abstractService);
                 abstractService.setName(getString(attr, "name"));
 
             } else if ("reference".equals(name)) {
                 abstractReference = factory.createAbstractReference();
+                constrainingType.getReferences().add(abstractReference);
                 abstractReference.setName(getString(attr, "name"));
 
             } else if ("property".equals(name)) {
                 abstractProperty = factory.createAbstractProperty();
+                constrainingType.getProperties().add(abstractProperty);
                 readAbstractProperty(abstractProperty, attr);
             }
         }
     }
 
-    public void endElement(String uri, String localName, String qName) throws SAXException {
+    public void endElement(String uri, String name, String qName) throws SAXException {
         if (sca10.equals(uri)) {
-
-            if ("service".equals(localName)) {
-                constrainingType.getServices().add(abstractService);
+            if ("service".equals(name)) {
                 abstractService = null;
 
-            } else if ("reference".equals(localName)) {
-                constrainingType.getReferences().add(abstractReference);
+            } else if ("reference".equals(name)) {
                 abstractReference = null;
 
-            } else if ("property".equals(localName)) {
-                constrainingType.getProperties().add(abstractProperty);
+            } else if ("property".equals(name)) {
                 abstractProperty = null;
             }
         }

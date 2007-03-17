@@ -20,6 +20,7 @@
 package org.apache.tuscany.assembly.reader;
 
 import org.apache.tuscany.assembly.model.AssemblyFactory;
+import org.apache.tuscany.assembly.model.Callback;
 import org.apache.tuscany.assembly.model.ComponentService;
 import org.apache.tuscany.assembly.model.ComponentType;
 import org.apache.tuscany.assembly.model.Property;
@@ -42,6 +43,7 @@ public class ComponentTypeHandler extends BaseHandler implements ContentHandler 
     private Service service;
     private Reference reference;
     private Property property;
+    private Callback callback;
 
     public ComponentTypeHandler(AssemblyFactory factory, XMLReader reader) {
         super(factory, reader);
@@ -56,10 +58,12 @@ public class ComponentTypeHandler extends BaseHandler implements ContentHandler 
 
             } else if ("service".equals(name)) {
                 service = factory.createService();
+                componentType.getServices().add(service);
                 service.setName(getString(attr, "name"));
 
             } else if ("reference".equals(name)) {
                 reference = factory.createReference();
+                componentType.getReferences().add(reference);
                 reference.setName(getString(attr, "name"));
 
                 //TODO support multivalued attribute
@@ -71,25 +75,28 @@ public class ComponentTypeHandler extends BaseHandler implements ContentHandler 
             } else if ("property".equals(name)) {
                 property = factory.createProperty();
                 readProperty(property, attr);
-            }
+
+            } else if ("callback".equals(name)) {
+	            callback = factory.createCallback();
+	            if (reference != null) {
+	            	reference.setCallback(callback);
+	            } else if (service != null) {
+	            	service.setCallback(callback);
+	            }
+	        }
         }
     }
 
-    public void endElement(String uri, String localName, String qName) throws SAXException {
+    public void endElement(String uri, String name, String qName) throws SAXException {
         if (sca10.equals(uri)) {
-
-            if ("service".equals(localName)) {
-                componentType.getServices().add(service);
+            if ("service".equals(name)) {
                 service = null;
-
-            } else if ("reference".equals(localName)) {
-                componentType.getReferences().add(reference);
+            } else if ("reference".equals(name)) {
                 reference = null;
-
-            } else if ("property".equals(localName)) {
-                componentType.getProperties().add(property);
+            } else if ("property".equals(name)) {
                 property = null;
-            }
+            } else if ("callback".equals(name))
+            	callback = null;
         }
     }
 

@@ -82,11 +82,11 @@ public class PrintUtil {
 							}
 							else {
 								Class<?> pvc = pv.getClass();
-								if (pvc.isPrimitive() || pvc.getName().startsWith("java.") || pvc.getName().startsWith("javax.")) {
+								if (pvc.isPrimitive() || pvc.getName().startsWith("java.") || pvc.getName().startsWith("javax.") || pvc.isEnum()) {
 									if (!pd.getName().equals("class")) {
 										if (!(Boolean.FALSE.equals(pv))) {
 											indent(level+1);
-											out.println(pd.getName() + "=" + pv);
+											out.println(pd.getName() + "=" + pv.toString());
 										}
 									}
 								} else {
