@@ -25,6 +25,7 @@ import java.beans.PropertyDescriptor;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,6 +66,9 @@ public class PrintUtil {
 					try {
 						Object pv = pd.getReadMethod().invoke(obj);
 						if (pv != null) {
+							if (pv.getClass().isArray()) {
+								pv = Arrays.asList((Object[])pv);
+							}
 							if (pv instanceof List) {
 								if (!((List)pv).isEmpty()) {
 									level++;
