@@ -31,6 +31,6 @@
     </sequence>
   </complexType>
                  
-  <element name="SimpleTypeWithName" type="tns:SimpleTypeWithComplexType"/>
+  <element name="SimpleTypeWithName" type="tns:SimpleTypeWithNameComplexType"/>
 
 </schema>
