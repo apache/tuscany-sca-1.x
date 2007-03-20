@@ -45,7 +45,6 @@ import org.xml.sax.helpers.XMLReaderFactory;
 public class WriteTestCase extends TestCase {
 
     AssemblyFactory factory;
-
     XMLReader reader;
     Transformer transformer;
 
@@ -57,6 +56,7 @@ public class WriteTestCase extends TestCase {
         reader.setFeature("http://xml.org/sax/features/namespace-prefixes", false);
         
         transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty("indent", "yes");
     }
 
     public void tearDown() throws Exception {
@@ -84,20 +84,30 @@ public class WriteTestCase extends TestCase {
         System.out.println();
     }
 
-    public void testWriteConstrainingType() throws Exception {
+    public void testWriteComposite() throws Exception {
         InputStream is = getClass().getClassLoader().getResourceAsStream("Calculator.composite");
         CompositeHandler handler = new CompositeHandler(factory, reader);
         reader.setContentHandler(handler);
         reader.parse(new InputSource(is));
         assertNotNull(handler.getComposite());
+
+        CompositeWriter writer = new CompositeWriter(handler.getComposite());
+        System.out.println();
+        transformer.transform(new SAXSource(writer, null), new StreamResult(System.out));
+        System.out.println();
     }
 
-    public void testWriteComposite() throws Exception {
+    public void testWriteConstrainingType() throws Exception {
         InputStream is = getClass().getClassLoader().getResourceAsStream("CalculatorComponent.constrainingType");
         ConstrainingTypeHandler handler = new ConstrainingTypeHandler(factory, reader);
         reader.setContentHandler(handler);
         reader.parse(new InputSource(is));
         assertNotNull(handler.getConstrainingType());
+
+        ConstrainingTypeWriter writer = new ConstrainingTypeWriter(handler.getConstrainingType());
+        System.out.println();
+        transformer.transform(new SAXSource(writer, null), new StreamResult(System.out));
+        System.out.println();
     }
 
 }

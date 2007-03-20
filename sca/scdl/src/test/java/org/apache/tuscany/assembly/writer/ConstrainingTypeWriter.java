@@ -19,10 +19,10 @@
 
 package org.apache.tuscany.assembly.writer;
 
-import org.apache.tuscany.assembly.model.ComponentType;
-import org.apache.tuscany.assembly.model.Property;
-import org.apache.tuscany.assembly.model.Reference;
-import org.apache.tuscany.assembly.model.Service;
+import org.apache.tuscany.assembly.model.AbstractProperty;
+import org.apache.tuscany.assembly.model.AbstractReference;
+import org.apache.tuscany.assembly.model.AbstractService;
+import org.apache.tuscany.assembly.model.ConstrainingType;
 import org.apache.tuscany.assembly.writer.util.Attr;
 import org.apache.tuscany.assembly.writer.util.BaseWriter;
 import org.xml.sax.SAXException;
@@ -32,46 +32,35 @@ import org.xml.sax.SAXException;
  * 
  * @version $Rev$ $Date$
  */
-public class ComponentTypeWriter extends BaseWriter {
+public class ConstrainingTypeWriter extends BaseWriter {
 
-    private ComponentType componentType;
+    private ConstrainingType constrainingType;
 
-    public ComponentTypeWriter(ComponentType componentType) {
-        this.componentType = componentType;
+    public ConstrainingTypeWriter(ConstrainingType constrainingType) {
+        this.constrainingType = constrainingType;
     }
     
     protected void write() throws SAXException {
     	
-    	start("componentType", new Attr("constrainingType", getConstrainingType(componentType)));
+    	start("constrainingType");
     	
-    	for (Service service: componentType.getServices()) {
+    	for (AbstractService service: constrainingType.getServices()) {
     		start("service", new Attr("name", service.getName()));
-    		if (service.getCallback() != null) {
-    			start("callback");
-    			end("callback");
-    		}
     		end("service");
     	}
     	
-    	for (Reference reference: componentType.getReferences()) {
+    	for (AbstractReference reference: constrainingType.getReferences()) {
     		//TODO handle multivalued target attribute
-    		String target = reference.getTargets().isEmpty()? null: reference.getTargets().get(0).getName();
-    		start("reference", 
-    			new Attr("name", reference.getName()),
-    			new Attr("target", target));
-    		if (reference.getCallback() != null) {
-    			start("callback");
-    			end("callback");
-    		}
+    		start("reference", new Attr("name", reference.getName()));
     		end("reference");
     	}
     	
-    	for (Property property: componentType.getProperties()) {
+    	for (AbstractProperty property: constrainingType.getProperties()) {
     		start("property", new Attr("name", property.getName()));
     		end("property");
     	}
     	
-    	end("componentType");
+    	end("constrainingType");
     }
     
 }

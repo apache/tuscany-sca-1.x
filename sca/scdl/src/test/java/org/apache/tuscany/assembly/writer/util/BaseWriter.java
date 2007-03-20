@@ -61,7 +61,23 @@ public abstract class BaseWriter extends XMLFilterImpl {
     	out = handler;
     }
     
-    protected Attributes attrs(Attr... attrs) {
+    protected void start(String uri, String name, Attr... attrs) throws SAXException {
+    	out.startElement(uri, null, name, attributes(attrs));
+    }
+
+    protected void start(String name, Attr... attrs) throws SAXException {
+    	out.startElement(sca10, null, name, attributes(attrs));
+    }
+    
+    protected void end(String uri, String name) throws SAXException {
+    	out.endElement(uri, null, name);
+    }
+
+    protected void end(String name) throws SAXException {
+    	out.endElement(sca10, null, name);
+    }
+
+    protected Attributes attributes(Attr... attrs) {
     	AttributesImpl attributes = new AttributesImpl();
     	for (Attr attr: attrs) {
     		if (attr != null)
@@ -79,7 +95,7 @@ public abstract class BaseWriter extends XMLFilterImpl {
     }
 
     protected Attributes abstractPropertyAttributes(AbstractProperty prop) {
-    	Attributes attributes = attrs(
+    	Attributes attributes = attributes(
 	        new Attr("name", prop.getName()),
 	        new Attr("many", prop.isMany()),
 	        new Attr("mustSupply", prop.isMustSupply()),
