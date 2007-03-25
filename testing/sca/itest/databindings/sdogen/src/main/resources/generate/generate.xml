@@ -25,28 +25,28 @@
     <TemplateTargetDir>..</TemplateTargetDir>
   </Template>              
   <Template>
-    <TemplateName>greetersdo.composite.vm</TemplateName>
-    <TemplateTargetDir>../src/main/resources</TemplateTargetDir>
+    <TemplateName>greeter.composite.vm</TemplateName>
+    <TemplateTargetDir>classes</TemplateTargetDir>
   </Template>                
   <Template>
     <TemplateName>GreeterService.java.vm</TemplateName>
     <TemplateTargetDir>../src/main/java/org/apache/tuscany/sca/itest/sdodatabinding</TemplateTargetDir>
+    <JavaPackage>org.apache.tuscany.sca.itest.sdodatabinding</JavaPackage>
   </Template>                  
   <Template>
     <TemplateName>GreeterServiceImpl.java.vm</TemplateName>
     <TemplateTargetDir>../src/main/java/org/apache/tuscany/sca/itest/sdodatabinding</TemplateTargetDir>
-  </Template>                  
-  <Template>
-    <TemplateName>GreeterServiceClient.java.vm</TemplateName>
-    <TemplateTargetDir>../src/main/java/org/apache/tuscany/sca/itest/sdodatabinding</TemplateTargetDir>
-  </Template>                  
+    <JavaPackage>org.apache.tuscany.sca.itest.sdodatabinding</JavaPackage>
+  </Template>                                 
   <Template>
     <TemplateName>GreeterServiceClientImpl.java.vm</TemplateName>
     <TemplateTargetDir>../src/main/java/org/apache/tuscany/sca/itest/sdodatabinding</TemplateTargetDir>
+    <JavaPackage>org.apache.tuscany.sca.itest.sdodatabinding</JavaPackage>
   </Template>                  
   <Template>
-    <TemplateName>SdoDatabindingTestCase.java.vm</TemplateName>
-    <TemplateTargetDir>../src/test/java/org/apache/tuscany/sca/itest</TemplateTargetDir>
+    <TemplateName>DatabindingTestCase.java.vm</TemplateName>
+    <TemplateTargetDir>../src/test/java/org/apache/tuscany/sca/itest/sdodatabinding</TemplateTargetDir>
+    <JavaPackage>org.apache.tuscany.sca.itest.sdodatabinding</JavaPackage>
   </Template> 
   <Template>
     <TemplateName>Greeter.wsdl.vm</TemplateName>
