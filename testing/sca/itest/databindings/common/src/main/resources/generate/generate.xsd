@@ -46,6 +46,7 @@
         <sequence>
             <element name="TemplateName" type="string"/>
             <element name="TemplateTargetDir" type="string"/>
+            <element name="JavaPackage" type="string"/>
         </sequence>
     </complexType>
         
