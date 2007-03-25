@@ -29,7 +29,7 @@
     <artifactId>iTest-common</artifactId>
     <version>${testing.version}</version>
     <packaging>jar</packaging>
-    <name>Common elements of the test suite for databindings</name>
+    <name>Common elements of Databindings Integration Tests</name>
 
     <repositories>
         <repository>
