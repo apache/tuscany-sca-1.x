@@ -17,7 +17,7 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.itest.sdodatabinding;
+package $template.getJavaPackage();
 
 #foreach($file in $fileList)
 #set($typeList = $file.getType_())
