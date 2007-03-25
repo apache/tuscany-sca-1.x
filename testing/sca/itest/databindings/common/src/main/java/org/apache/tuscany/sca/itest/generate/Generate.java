@@ -69,7 +69,7 @@ public class Generate {
      * @param projectBuildDir the path to the target dir of the project being generated. 
      */
     public static void generate(String projectBuildDir) {
-        System.out.println("Building project from dir: " + projectBuildDir);
+        System.out.println(">> Building project from dir: " + projectBuildDir);
         FileInputStream fis = null;
 
         try {
@@ -99,12 +99,13 @@ public class Generate {
 
             // For each velocity template in the template list pass in the XSD file list
             for ( Object item: templateList){
-            	TemplateType file = (TemplateType)item;
-            	String tmp = file.getTemplateName();
-            	String filename = projectBuildDir + "/" + file.getTemplateTargetDir() + "/" + tmp.substring(0,tmp.length() - 3);
+            	TemplateType template = (TemplateType)item;
+                context.put("template", template);
+            	String tmp = template.getTemplateName();
+            	String filename = projectBuildDir + "/" + template.getTemplateTargetDir() + "/" + tmp.substring(0,tmp.length() - 3);
                 FileWriter fw = new FileWriter(filename);
-            	System.out.println("Processing " + file.getTemplateName() + " to " + filename);
-                Velocity.mergeTemplate(file.getTemplateName(), context, fw );
+            	System.out.println(">> Processing " + template.getTemplateName() + " to " + filename);
+                Velocity.mergeTemplate(template.getTemplateName(), context, fw );
                 fw.flush();
                 fw.close();
             } 
