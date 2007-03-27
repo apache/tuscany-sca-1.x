@@ -26,8 +26,15 @@
     <packaging>pom</packaging>
     <name>Apache Tuscany SCA Interop Testing</name>
 
+    <properties>
+        <sdo.version>1.0-incubator-SNAPSHOT</sdo.version>
+        <specVersionSDO>2.1</specVersionSDO>
+    </properties>
+
     <modules>
         <module>clients</module>
+          <sdo.version>1.0-incubator-SNAPSHOT</sdo.version>
+          <specVersionSDO>2.1</specVersionSDO>
         <module>services</module>
     </modules>
 
