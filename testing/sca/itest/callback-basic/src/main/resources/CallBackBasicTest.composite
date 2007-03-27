@@ -22,7 +22,7 @@
  	      
     <component name="CallBackBasicClient">
 		<implementation.java class="org.apache.tuscany.sca.test.CallBackBasicClientImpl"/>
-		<reference name="aCallBackService"> 
+		<reference name="aCallBackService" target="CallBackBasicService"> 
 		   CallBackBasicService 
 		</reference>
     </component> 

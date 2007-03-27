@@ -40,7 +40,7 @@ import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.BindingBuilderExtension;
 import org.apache.tuscany.spi.host.ServletHost;
 import org.apache.tuscany.spi.idl.InvalidServiceContractException;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.wire.IncompatibleServiceContractException;
@@ -169,7 +169,7 @@ public class Axis2BindingBuilder extends BindingBuilderExtension<WebServiceBindi
     @SuppressWarnings("unchecked")
     public ReferenceBinding build(
         CompositeComponent parent,
-        ReferenceDefinition boundReferenceDefinition,
+        AbstractReferenceDefinition boundReferenceDefinition,
         WebServiceBindingDefinition wsBinding,
         DeploymentContext deploymentContext) {
 

@@ -48,10 +48,11 @@ import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.model.BindingDefinition;
 import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.ComponentType;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.InteractionScope;
 import org.apache.tuscany.spi.model.ModelObject;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.Scope;
 import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.model.ServiceDefinition;
@@ -98,7 +99,8 @@ public class BuilderRegistryImpl implements BuilderRegistry {
     public <I extends Implementation<?>> Component build(CompositeComponent parent,
                                                          ComponentDefinition<I> componentDefinition,
                                                          DeploymentContext context) throws BuilderException {
-        Class<?> implClass = componentDefinition.getImplementation().getClass();
+        
+       Class<?> implClass = componentDefinition.getImplementation().getClass();
         // noinspection SuspiciousMethodCalls
         ComponentBuilder<I> componentBuilder = (ComponentBuilder<I>)componentBuilders.get(implClass);
         try {
@@ -106,7 +108,7 @@ public class BuilderRegistryImpl implements BuilderRegistry {
                 String name = implClass.getName();
                 throw new NoRegisteredBuilderException("No builder registered for implementation", name);
             }
-
+            
             Component component = componentBuilder.build(parent, componentDefinition, context);
             if (component != null) {
                 component.setDefaultPropertyValues(componentDefinition.getPropertyValues());
@@ -117,7 +119,7 @@ public class BuilderRegistryImpl implements BuilderRegistry {
                     // Check for conversational contract if conversational scope
                     if (scope == Scope.CONVERSATION) {
                         boolean hasConversationalContract = false;
-                        ComponentType<ServiceDefinition, ReferenceDefinition, ?> componentType =
+                        ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, ?> componentType =
                             componentDefinition.getImplementation().getComponentType();
                         Map<String, ServiceDefinition> services = componentType.getServices();
                         for (ServiceDefinition serviceDef : services.values()) {
@@ -128,8 +130,8 @@ public class BuilderRegistryImpl implements BuilderRegistry {
                             }
                         }
                         if (!hasConversationalContract) {
-                            Map<String, ReferenceDefinition> references = componentType.getReferences();
-                            for (ReferenceDefinition refDef : references.values()) {
+                            Map<String, ComponentTypeReferenceDefinition> references = componentType.getReferences();
+                            for (AbstractReferenceDefinition refDef : references.values()) {
                                 // TODO check for a conversational callback
                                 // contract
                                 // refDef.getServiceContract() ...
@@ -210,7 +212,7 @@ public class BuilderRegistryImpl implements BuilderRegistry {
 
     @SuppressWarnings("unchecked")
     public Reference build(CompositeComponent parent, 
-                           ReferenceDefinition referenceDefinition, 
+                           AbstractReferenceDefinition referenceDefinition, 
                            DeploymentContext context)
         throws BuilderException {
         String name = referenceDefinition.getName();

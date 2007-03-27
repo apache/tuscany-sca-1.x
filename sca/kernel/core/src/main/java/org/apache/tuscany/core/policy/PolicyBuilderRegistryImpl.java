@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tuscany.spi.builder.BuilderException;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.policy.PolicyBuilderRegistry;
 import org.apache.tuscany.spi.policy.SourcePolicyBuilder;
@@ -60,7 +60,7 @@ public class PolicyBuilderRegistryImpl implements PolicyBuilderRegistry {
     }
 
 
-    public void buildSource(ReferenceDefinition referenceDefinition, OutboundWire wire) throws BuilderException {
+    public void buildSource(AbstractReferenceDefinition referenceDefinition, OutboundWire wire) throws BuilderException {
         for (List<SourcePolicyBuilder> builders : sourceBuilders) {
             for (SourcePolicyBuilder builder : builders) {
                 builder.build(referenceDefinition, wire);

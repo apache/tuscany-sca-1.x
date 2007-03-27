@@ -31,7 +31,7 @@ import java.util.Map;
  * immediately contained in the composite (directly or through an &lt;include&gt; element).</p>
  * <p>A component may define a {@link PropertyValue} that overrides the default value of a {@link Property}
  * defined in the componentType.</p>
- * <p>It may also define a {@link ReferenceTarget} for a {@link ReferenceDefinition} defined in the componentType.
+ * <p>It may also define a {@link ReferenceTarget} for a {@link AbstractReferenceDefinition} defined in the componentType.
  * The ReferenceTarget must resolve to another component or a reference in the enclosing composite.</p>
  * <p>Components may specify an initialization level that will determine the order in which it will be eagerly
  * initialized relative to other components from the enclosing composite that are in the same scope. This can be
@@ -44,9 +44,10 @@ public class ComponentDefinition<I extends Implementation<?>> extends ModelObjec
     private String name;
     private Integer initLevel;
     private final I implementation;
-    private final Map<String, ReferenceTarget> referenceTargets = new HashMap<String, ReferenceTarget>();
+    private final Map<String, ComponentReferenceDefinition> references = new HashMap<String, ComponentReferenceDefinition>();
     private final Map<String, PropertyValue<?>> propertyValues = new HashMap<String, PropertyValue<?>>();
-
+    private boolean autowire;
+    
     /**
      * Constructor specifying the component's name and implementation.
      *
@@ -115,25 +116,6 @@ public class ComponentDefinition<I extends Implementation<?>> extends ModelObjec
     }
 
     /**
-     * Returns a live Map of the {@link ReferenceTarget targets} configured by this component definition.
-     *
-     * @return the reference targets configured by this component
-     */
-    public Map<String, ReferenceTarget> getReferenceTargets() {
-        return referenceTargets;
-    }
-
-    /**
-     * Add a reference target configuration to this component.
-     * Any existing configuration for the reference named in the target is replaced.
-     *
-     * @param target the target to add
-     */
-    public void add(ReferenceTarget target) {
-        referenceTargets.put(target.getReferenceName(), target);
-    }
-
-    /**
      * Returns a live Map of {@link PropertyValue property values} configured by this component definition.
      *
      * @return the property values configured by this component
@@ -150,5 +132,21 @@ public class ComponentDefinition<I extends Implementation<?>> extends ModelObjec
      */
     public void add(PropertyValue<?> value) {
         propertyValues.put(value.getName(), value);
+    }
+    
+    public boolean isAutowire() {
+        return autowire;
+    }
+
+    public void setAutowire(boolean autowire) {
+        this.autowire = autowire;
+    }
+    
+    public Map<String, ComponentReferenceDefinition> getReferences() {
+        return references;
+    }
+    
+    public void add(ComponentReferenceDefinition ref) {
+    	references.put(ref.getName(), ref);
     }
 }

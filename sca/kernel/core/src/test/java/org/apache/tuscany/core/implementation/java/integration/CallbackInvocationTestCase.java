@@ -38,6 +38,7 @@ import org.apache.tuscany.spi.implementation.java.JavaMappedReference;
 import org.apache.tuscany.spi.implementation.java.JavaMappedService;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.model.ComponentDefinition;
+import org.apache.tuscany.spi.model.ComponentReferenceDefinition;
 import org.apache.tuscany.spi.model.ReferenceTarget;
 import org.apache.tuscany.spi.model.Scope;
 import org.apache.tuscany.spi.model.ServiceContract;
@@ -226,7 +227,10 @@ public class CallbackInvocationTestCase extends TestCase {
         impl.setComponentType(type);
         impl.setImplementationClass(FooClient.class);
         ComponentDefinition<JavaImplementation> def = new ComponentDefinition<JavaImplementation>(name, impl);
-        def.getReferenceTargets().put("foo", refTarget);
+        ComponentReferenceDefinition compRef = new ComponentReferenceDefinition(type.getReferences().get("foo"));
+        compRef.addTarget(new URI("foo"));
+        def.add(compRef);
+        //def.getReferenceTargets().put("foo", refTarget);
         return def;
     }
 
@@ -250,7 +254,10 @@ public class CallbackInvocationTestCase extends TestCase {
         refTarget.getTargets().add(new URI("foo"));
         JavaImplementation impl = new JavaImplementation(FooPlainClient.class, type);
         ComponentDefinition<JavaImplementation> def = new ComponentDefinition<JavaImplementation>(name, impl);
-        def.getReferenceTargets().put("foo", refTarget);
+        ComponentReferenceDefinition compRef = new ComponentReferenceDefinition(type.getReferences().get("foo"));
+        compRef.addTarget(new URI("foo"));
+        def.add(compRef);
+        //def.getReferenceTargets().put("foo", refTarget);
         return def;
     }
 

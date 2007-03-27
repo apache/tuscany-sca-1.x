@@ -24,9 +24,6 @@ import static junit.framework.Assert.assertNotNull;
 
 import java.util.Iterator;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
 import org.apache.tuscany.api.SCARuntime;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

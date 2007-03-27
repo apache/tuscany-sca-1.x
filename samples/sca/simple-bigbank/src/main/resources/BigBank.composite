@@ -34,7 +34,7 @@
 
     <component name="AccountServiceComponent">
         <implementation.java class="bigbank.account.AccountServiceImpl"/>
-        <reference name="accountDataService">AccountDataServiceComponent</reference>
+        <reference name="accountDataService" target="AccountDataServiceComponent"></reference>
     </component>
 
     <component name="AccountDataServiceComponent">

@@ -106,53 +106,53 @@
 
     <component name="Component2a3a4a">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component2aImpl"/>
-        <reference name="comp">Component3a4a</reference>
+        <reference name="comp" target="Component3a4a">Component3a4a</reference>
     </component> 
     <component name="Component2a3a4b">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component2aImpl"/>
-        <reference name="comp">Component3a4b</reference>
+        <reference name="comp" target="Component3a4b">Component3a4b</reference>
     </component> 
     <component name="Component2a3b4a">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component2aImpl"/>
-        <reference name="comp">Component3b4a</reference>
+        <reference name="comp" target="Component3b4a">Component3b4a</reference>
     </component> 
     <component name="Component2a3b4b">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component2aImpl"/>
-        <reference name="comp">Component3b4b</reference>
+        <reference name="comp" target="Component3b4b">Component3b4b</reference>
     </component> 
 
     <component name="Component2b3a4a">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component2bImpl"/>
-        <reference name="comp">Component3a4a</reference>
+        <reference name="comp" target="Component3a4a">Component3a4a</reference>
     </component> 
     <component name="Component2b3a4b">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component2bImpl"/>
-        <reference name="comp">Component3a4b</reference>
+        <reference name="comp" target="Component3a4b">Component3a4b</reference>
     </component> 
     <component name="Component2b3b4a">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component2bImpl"/>
-        <reference name="comp">Component3b4a</reference>
+        <reference name="comp" target="Component3b4a">Component3b4a</reference>
     </component> 
     <component name="Component2b3b4b">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component2bImpl"/>
-        <reference name="comp">Component3b4b</reference>
+        <reference name="comp" target="Component3b4b">Component3b4b</reference>
     </component> 
 
     <component name="Component3a4a">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component3aImpl"/>
-        <reference name="comp">Ref4a</reference>
+        <reference name="comp" target="Ref4a">Ref4a</reference>
     </component> 
     <component name="Component3a4b">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component3aImpl"/>
-        <reference name="comp">Ref4b</reference>
+        <reference name="comp" target="Ref4b">Ref4b</reference>
     </component> 
     <component name="Component3b4a">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component3bImpl"/>
-        <reference name="comp">Ref4a</reference>
+        <reference name="comp" target="Ref4a">Ref4a</reference>
     </component> 
     <component name="Component3b4b">
     	<implementation.java class="org.apache.tuscany.sca.itest.Component3bImpl"/>
-        <reference name="comp">Ref4b</reference>
+        <reference name="comp" target="Ref4b">Ref4b</reference>
     </component> 
 
     <reference name="Ref4a">
@@ -187,7 +187,7 @@
 
     <component name="Client1a2a3a4a">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1a2a3a4a</reference>
+      <reference name="helloWorldService"  target="ClientRef1a2a3a4a">ClientRef1a2a3a4a</reference>
     </component>
 
     <reference name="ClientRef1a2a3a4a">
@@ -201,7 +201,7 @@
     
     <component name="Client1a2a3a4b">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1a2a3a4b</reference>
+      <reference name="helloWorldService"  target="ClientRef1a2a3a4b">ClientRef1a2a3a4b</reference>
     </component>
 
     <reference name="ClientRef1a2a3a4b">
@@ -215,7 +215,7 @@
     
     <component name="Client1a2a3b4a">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1a2a3b4a</reference>
+      <reference name="helloWorldService"  target="ClientRef1a2a3b4a">ClientRef1a2a3b4a</reference>
     </component>
 
     <reference name="ClientRef1a2a3b4a">
@@ -229,7 +229,7 @@
     
     <component name="Client1a2a3b4b">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1a2a3b4b</reference>
+      <reference name="helloWorldService"  target="ClientRef1a2a3b4b">ClientRef1a2a3b4b</reference>
     </component>
 
     <reference name="ClientRef1a2a3b4b">
@@ -243,7 +243,7 @@
     
     <component name="Client1a2b3a4a">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1a2b3a4a</reference>
+      <reference name="helloWorldService"  target="ClientRef1a2b3a4a">ClientRef1a2b3a4a</reference>
     </component>
 
     <reference name="ClientRef1a2b3a4a">
@@ -257,7 +257,7 @@
     
     <component name="Client1a2b3a4b">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1a2b3a4b</reference>
+      <reference name="helloWorldService"  target="ClientRef1a2b3a4b">ClientRef1a2b3a4b</reference>
     </component>
 
     <reference name="ClientRef1a2b3a4b">
@@ -271,7 +271,7 @@
     
     <component name="Client1a2b3b4a">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1a2b3b4a</reference>
+      <reference name="helloWorldService"  target="ClientRef1a2b3b4a">ClientRef1a2b3b4a</reference>
     </component>
 
     <reference name="ClientRef1a2b3b4a">
@@ -285,7 +285,7 @@
     
     <component name="Client1a2b3b4b">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1a2b3b4b</reference>
+      <reference name="helloWorldService"  target="ClientRef1a2b3b4b">ClientRef1a2b3b4b</reference>
     </component>
 
     <reference name="ClientRef1a2b3b4b">
@@ -299,7 +299,7 @@
     
     <component name="Client1b2a3a4a">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1b2a3a4a</reference>
+      <reference name="helloWorldService"  target="ClientRef1b2a3a4a">ClientRef1b2a3a4a</reference>
     </component>
 
     <reference name="ClientRef1b2a3a4a">
@@ -313,7 +313,7 @@
     
     <component name="Client1b2a3a4b">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1b2a3a4b</reference>
+      <reference name="helloWorldService"  target="ClientRef1b2a3a4b">ClientRef1b2a3a4b</reference>
     </component>
 
     <reference name="ClientRef1b2a3a4b">
@@ -327,7 +327,7 @@
     
     <component name="Client1b2a3b4a">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1b2a3b4a</reference>
+      <reference name="helloWorldService"  target="ClientRef1b2a3b4a">ClientRef1b2a3b4a</reference>
     </component>
 
     <reference name="ClientRef1b2a3b4a">
@@ -341,7 +341,7 @@
     
     <component name="Client1b2a3b4b">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1b2a3b4b</reference>
+      <reference name="helloWorldService"  target="ClientRef1b2a3b4b">ClientRef1b2a3b4b</reference>
     </component>
 
     <reference name="ClientRef1b2a3b4b">
@@ -355,7 +355,7 @@
     
     <component name="Client1b2b3a4a">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1b2b3a4a</reference>
+      <reference name="helloWorldService"  target="ClientRef1b2b3a4a">ClientRef1b2b3a4a</reference>
     </component>
 
     <reference name="ClientRef1b2b3a4a">
@@ -369,7 +369,7 @@
     
     <component name="Client1b2b3a4b">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1b2b3a4b</reference>
+      <reference name="helloWorldService"  target="ClientRef1b2b3a4b">ClientRef1b2b3a4b</reference>
     </component>
 
     <reference name="ClientRef1b2b3a4b">
@@ -383,7 +383,7 @@
     
     <component name="Client1b2b3b4a">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1b2b3b4a</reference>
+      <reference name="helloWorldService"  target="ClientRef1b2b3b4a">ClientRef1b2b3b4a</reference>
     </component>
 
     <reference name="ClientRef1b2b3b4a">
@@ -397,7 +397,7 @@
     
     <component name="Client1b2b3b4b">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">ClientRef1b2b3b4b</reference>
+      <reference name="helloWorldService"  target="ClientRef1b2b3b4b">ClientRef1b2b3b4b</reference>
     </component>
 
     <reference name="ClientRef1b2b3b4b">

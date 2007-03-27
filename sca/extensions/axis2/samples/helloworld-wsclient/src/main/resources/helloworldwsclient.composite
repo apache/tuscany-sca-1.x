@@ -23,10 +23,10 @@
     
     <component name="HelloWorldServiceComponent">
       <implementation.java class="helloworld.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">HelloWorldService</reference>
+      <reference name="helloWorldService"></reference>
     </component>
 
-    <reference name="HelloWorldService">
+    <reference name="HelloWorldService" promote="HelloWorldServiceComponent">
         <interface.java class="helloworld.HelloWorldService" />
         <!-- interface.wsdl xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance" 
             interface="http://helloworld#wsdl.interface(HelloWorld)" 

@@ -150,7 +150,7 @@ public class ImplementationProcessorServiceImpl implements ImplementationProcess
         JavaMappedReference reference = new JavaMappedReference();
         reference.setName(name);
         reference.setMember(member);
-        reference.setRequired(false);
+        //reference.setRequired(false);
         ServiceContract contract;
         try {
             contract = registry.introspect(paramType, false);
@@ -239,7 +239,7 @@ public class ImplementationProcessorServiceImpl implements ImplementationProcess
         }
         reference.setName(name);
         boolean required = autowireAnnot.required();
-        reference.setRequired(required);
+        //reference.setRequired(required);
         try {
             Class<?> rawType = param;
             if (rawType.isArray() || Collection.class.isAssignableFrom(rawType)) {
@@ -369,7 +369,7 @@ public class ImplementationProcessorServiceImpl implements ImplementationProcess
         }
         reference.setName(name);
         boolean required = refAnnotation.required();
-        reference.setRequired(required);
+        //reference.setRequired(required);
         try {
             Class<?> rawType = param;
             if (rawType.isArray() || Collection.class.isAssignableFrom(rawType)) {

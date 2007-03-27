@@ -19,7 +19,7 @@
 package org.apache.tuscany.spi.policy;
 
 import org.apache.tuscany.spi.builder.BuilderException;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.wire.OutboundWire;
 
 /**
@@ -36,6 +36,6 @@ public interface SourcePolicyBuilder {
      * @param wire       the wire to attach policy to
      * @throws BuilderException
      */
-    void build(ReferenceDefinition definition, OutboundWire wire) throws BuilderException;
+    void build(AbstractReferenceDefinition definition, OutboundWire wire) throws BuilderException;
 
 }

@@ -20,7 +20,7 @@ package org.apache.tuscany.spi.implementation.java;
 
 import java.lang.reflect.Member;
 
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceContract;
 
 /**
@@ -29,7 +29,7 @@ import org.apache.tuscany.spi.model.ServiceContract;
  *
  * @version $Rev$ $Date$
  */
-public class JavaMappedReference extends ReferenceDefinition {
+public class JavaMappedReference extends ComponentTypeReferenceDefinition {
     private Member member;
 
     public JavaMappedReference() {

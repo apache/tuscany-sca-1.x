@@ -21,7 +21,7 @@
 
     <component name="LoanClientComponent">
         <implementation.java class="loanapplication.LoanClientImpl"/>
-        <reference name="loanService">LoanServiceComponent</reference>
+        <reference name="loanService" target="LoanServiceComponent"></reference>
     </component>
     
     <component name="LoanServiceComponent">

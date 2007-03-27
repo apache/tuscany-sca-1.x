@@ -19,7 +19,7 @@
 package org.apache.tuscany.spi.policy;
 
 import org.apache.tuscany.spi.builder.BuilderException;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import static org.apache.tuscany.spi.policy.PolicyBuilderRegistry.EXTENSION;
 import org.apache.tuscany.spi.wire.OutboundWire;
 
@@ -43,7 +43,7 @@ public class SourcePolicyBuilderExtensionTestCase extends TestCase {
 
     private static class MockPolicyBuilderExtension extends SourcePolicyBuilderExtension {
 
-        public void build(ReferenceDefinition definition, OutboundWire wire) throws BuilderException {
+        public void build(AbstractReferenceDefinition definition, OutboundWire wire) throws BuilderException {
 
         }
     }

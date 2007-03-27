@@ -28,12 +28,18 @@ import org.apache.tuscany.spi.model.BindingDefinition;
  *
  * @version $Rev$ $Date$
  */
-public class LocalBindingDefinition extends BindingDefinition {
+public class LocalBindingDefinition extends BindingDefinition implements Cloneable {
 
     public LocalBindingDefinition() {
     }
 
     public LocalBindingDefinition(URI targetUri) {
         super(targetUri);
+    }
+    
+    public Object clone() {
+        LocalBindingDefinition clone = new LocalBindingDefinition();
+        clone.setTargetUri(URI.create(getTargetUri().toString()));
+        return clone;
     }
 }

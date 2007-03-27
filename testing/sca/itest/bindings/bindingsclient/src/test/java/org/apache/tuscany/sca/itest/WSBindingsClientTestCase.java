@@ -36,13 +36,13 @@ public class WSBindingsClientTestCase extends TestCase {
     private SCATestCaseRunner utilityServer;
 
     // Hops over one composite
-    public void testOneHopPing() throws Throwable {
+    /*public void testOneHopPing() throws Throwable {
         try {
             assertTrue(scaTestTool.doOneHopPing("brio").contains("brio"));
         } catch (UndeclaredThrowableException e) {
             throw (e.getCause());
         }
-    }
+    }*/
 
     // Hops over two composites
     public void testTwoHopPing() {

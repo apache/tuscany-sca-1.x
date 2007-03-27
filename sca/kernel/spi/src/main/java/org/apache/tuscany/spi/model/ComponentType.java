@@ -35,7 +35,7 @@ import java.util.Map;
  *
  * @version $Rev$ $Date$
  */
-public class ComponentType<S extends ServiceDefinition, R extends ReferenceDefinition, P extends Property<?>>
+public class ComponentType<S extends ServiceDefinition, R extends ComponentTypeReferenceDefinition, P extends Property<?>>
     extends ModelObject {
     protected Scope implementationScope = Scope.UNDEFINED;
     private int initLevel;

@@ -23,10 +23,10 @@
 
     <component name="HelloWorldServiceComponent">
       <implementation.java class="helloworld.om.HelloWorldServiceComponent"/>
-      <reference name="helloWorldService">HelloWorldService</reference>
+      <reference name="helloWorldService"></reference>
     </component>
 
-    <reference name="HelloWorldService">
+    <reference name="HelloWorldService" promote="HelloWorldServiceComponent">
         <interface.java interface="helloworld.om.HelloWorldService"/>
         <binding.ws wsdlElement="http://helloworld-om#wsdl.port(HelloWorldService/HelloWorldSoapPort)" wsdlLocation="http://helloworld-om wsdl/helloworld-om.wsdl" />
     </reference>

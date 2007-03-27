@@ -22,7 +22,7 @@
 
     <component name="stockTraderSDOComponent">
         <implementation.java class="org.apache.tuscany.sca.test.exceptions.impl.StockTraderSDOImpl" />
-        <reference name="exchangeJaxb">exchangeJaxbComponent</reference>
+        <reference name="exchangeJaxb" target="exchangeJaxbComponent">exchangeJaxbComponent</reference>
     </component>
 
     <component name="exchangeJaxbComponent">

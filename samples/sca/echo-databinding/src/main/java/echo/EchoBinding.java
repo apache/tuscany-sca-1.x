@@ -25,4 +25,8 @@ import org.apache.tuscany.spi.model.BindingDefinition;
  */
 public class EchoBinding extends BindingDefinition {
 
+    public Object clone() {
+        return this;
+    }
+
 }

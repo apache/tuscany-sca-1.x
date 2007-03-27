@@ -18,14 +18,13 @@
  */
 package org.apache.tuscany.core.loader;
 
-import javax.xml.namespace.QName;
 import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
+import static org.osoa.sca.Constants.SCA_NS;
+
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-
-import static org.osoa.sca.Constants.SCA_NS;
-import org.osoa.sca.annotations.Constructor;
 
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.component.CompositeComponent;
@@ -34,10 +33,12 @@ import org.apache.tuscany.spi.extension.LoaderExtension;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
 import org.apache.tuscany.spi.model.ComponentType;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.ModelObject;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
+import org.osoa.sca.annotations.Constructor;
 
 /**
  * @version $Rev$ $Date$
@@ -60,13 +61,13 @@ public class ComponentTypeElementLoader extends LoaderExtension<ComponentType> {
                               XMLStreamReader reader,
                               DeploymentContext deploymentContext) throws XMLStreamException, LoaderException {
         assert COMPONENT_TYPE.equals(reader.getName());
-        ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> componentType;
+        ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> componentType;
         if (object != null) {
             assert object instanceof ComponentType;
             // a specialized component type was passed in
-            componentType = (ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>) object;
+            componentType = (ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>) object;
         } else {
-            componentType = new ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
+            componentType = new ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
         }
 
         while (true) {
@@ -75,8 +76,8 @@ public class ComponentTypeElementLoader extends LoaderExtension<ComponentType> {
                     ModelObject o = registry.load(parent, componentType, reader, deploymentContext);
                     if (o instanceof ServiceDefinition) {
                         componentType.add((ServiceDefinition) o);
-                    } else if (o instanceof ReferenceDefinition) {
-                        componentType.add((ReferenceDefinition) o);
+                    } else if (o instanceof ComponentTypeReferenceDefinition) {
+                        componentType.add((ComponentTypeReferenceDefinition) o);
                     } else if (o instanceof Property) {
                         componentType.add((Property<?>) o);
                     }

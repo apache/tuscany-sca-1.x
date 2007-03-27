@@ -21,7 +21,7 @@
 
     <component name="MyClientComponent">
         <implementation.java class="simplecallback.MyClientImpl"/>
-        <reference name="myService">MyServiceComponent</reference>
+        <reference name="myService" target="MyServiceComponent"></reference>
     </component>
     
     <component name="MyServiceComponent">

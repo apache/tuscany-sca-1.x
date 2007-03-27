@@ -153,7 +153,11 @@ public class LoaderRegistryImpl implements LoaderRegistry {
         if (loader == null) {
             throw new UnrecognizedComponentTypeException(key);
         }
+        try {
         loader.load(parent, implementation, deploymentContext);
+        } catch ( Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static interface Monitor {

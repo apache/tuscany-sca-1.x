@@ -33,9 +33,12 @@ import org.apache.tuscany.spi.implementation.java.JavaMappedReference;
 import org.apache.tuscany.spi.implementation.java.JavaMappedService;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.model.ComponentDefinition;
+import org.apache.tuscany.spi.model.ComponentReferenceDefinition;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.CompositeComponentType;
 import org.apache.tuscany.spi.model.CompositeImplementation;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
+import org.apache.tuscany.spi.model.CompositeReferenceDefinition;
 import org.apache.tuscany.spi.model.ReferenceTarget;
 import org.apache.tuscany.spi.model.Scope;
 import org.apache.tuscany.spi.model.ServiceContract;
@@ -93,8 +96,8 @@ public class CompositeBuilderTestCase extends TestCase {
 
     private ComponentDefinition createTopComponentDef() throws Exception {
 
-        CompositeComponentType<JavaMappedService, JavaMappedReference, JavaMappedProperty<?>> outerType =
-            new CompositeComponentType<JavaMappedService, JavaMappedReference, JavaMappedProperty<?>>();
+        CompositeComponentType<JavaMappedService, CompositeReferenceDefinition, JavaMappedProperty<?>> outerType =
+            new CompositeComponentType<JavaMappedService, CompositeReferenceDefinition, JavaMappedProperty<?>>();
         outerType.add(createSourceComponentDef());
         outerType.add(createTargetComponentDef());
 
@@ -106,10 +109,10 @@ public class CompositeBuilderTestCase extends TestCase {
 
     private ComponentDefinition<CompositeImplementation> createSourceComponentDef() throws Exception {
 
-        CompositeComponentType<ServiceDefinition, ReferenceDefinition, JavaMappedProperty<?>> innerType =
-            new CompositeComponentType<ServiceDefinition, ReferenceDefinition, JavaMappedProperty<?>>();
+        CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, JavaMappedProperty<?>> innerType =
+            new CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, JavaMappedProperty<?>>();
         innerType.add(createInnerSourceComponentDef());
-        ReferenceDefinition reference = new ReferenceDefinition();
+        CompositeReferenceDefinition reference = new CompositeReferenceDefinition();
         reference.setName("TargetComponentRef");
         JavaInterfaceProcessorRegistry registry = new JavaInterfaceProcessorRegistryImpl();
         JavaServiceContract targetContract = registry.introspect(Target.class);
@@ -127,10 +130,15 @@ public class CompositeBuilderTestCase extends TestCase {
 
         ComponentDefinition<CompositeImplementation> sourceComponentDefinition =
             new ComponentDefinition<CompositeImplementation>("SourceComponent", innerImpl);
-        ReferenceTarget refTarget = new ReferenceTarget();
+        
+        /*ReferenceTarget refTarget = new ReferenceTarget();
         refTarget.setReferenceName("TargetComponentRef");
         refTarget.addTarget(new URI("TargetComponent"));
-        sourceComponentDefinition.add(refTarget);
+        sourceComponentDefinition.add(refTarget);*/
+        ComponentReferenceDefinition compRef = new ComponentReferenceDefinition(innerType.getReferences().get("TargetComponentRef"));
+        compRef.setName("TargetComponentRef");
+        compRef.addTarget(new URI("TargetComponent"));
+        sourceComponentDefinition.add(compRef);
 
         return sourceComponentDefinition;
     }
@@ -161,11 +169,16 @@ public class CompositeBuilderTestCase extends TestCase {
         JavaImplementation sourceImpl = new JavaImplementation(SourceImpl.class, sourceType);
         ComponentDefinition<JavaImplementation> innerSourceComponentDefinition =
             new ComponentDefinition<JavaImplementation>("InnerSourceComponent", sourceImpl);
-        ReferenceTarget refTarget = new ReferenceTarget();
+        
+        ComponentReferenceDefinition compRef = new ComponentReferenceDefinition(sourceType.getReferences().get("targetReference"));
+        compRef.setName("targetReference");
+        compRef.addTarget(new URI("TargetComponentRef"));
+        innerSourceComponentDefinition.add(compRef);
+        /*ReferenceTarget refTarget = new ReferenceTarget();
         refTarget.setReferenceName("targetReference");
         refTarget.addTarget(new URI("TargetComponentRef"));
         innerSourceComponentDefinition.add(refTarget);
-
+        */
         return innerSourceComponentDefinition;
     }
 

@@ -94,7 +94,7 @@ public class ReferenceProcessor extends ImplementationProcessorExtension {
         JavaMappedReference reference = new JavaMappedReference();
         reference.setMember(method);
         reference.setAutowire(isAutowire);
-        reference.setRequired(required);
+        //reference.setRequired(required);
         reference.setName(name);
         ServiceContract contract;
         try {
@@ -146,7 +146,7 @@ public class ReferenceProcessor extends ImplementationProcessorExtension {
         }
         JavaMappedReference reference = new JavaMappedReference();
         reference.setMember(field);
-        reference.setRequired(required);
+        //reference.setRequired(required);
         reference.setAutowire(autowire);
         reference.setName(name);
         ServiceContract contract;

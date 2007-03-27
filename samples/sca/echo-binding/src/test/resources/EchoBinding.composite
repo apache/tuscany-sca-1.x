@@ -27,10 +27,9 @@
 
     <component name="Client">
         <implementation.java class="echo.ClientImpl"/>
-        <reference name="echoReference">EchoReference</reference>
     </component>
     
-    <reference name="EchoReference">
+    <reference name="EchoReference" promote="Client">
         <interface.java interface="echo.Echo"/>
         <binding.echo/>
     </reference>

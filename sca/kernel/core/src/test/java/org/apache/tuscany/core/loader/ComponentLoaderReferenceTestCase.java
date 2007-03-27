@@ -13,10 +13,11 @@ import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
 import org.apache.tuscany.spi.loader.UndefinedReferenceException;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.ModelObject;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
 import junit.framework.TestCase;
@@ -48,8 +49,8 @@ public class ComponentLoaderReferenceTestCase extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
         JavaImplementation impl = new JavaImplementation(null, type);
         reader = EasyMock.createMock(XMLStreamReader.class);
         EasyMock.expect(reader.getName()).andReturn(COMPONENT);
@@ -57,6 +58,8 @@ public class ComponentLoaderReferenceTestCase extends TestCase {
             .andReturn(NAME);
         EasyMock.expect(reader.getAttributeValue((String) EasyMock.isNull(), EasyMock.eq("initLevel")))
             .andReturn(null);
+        EasyMock.expect(reader.getAttributeValue((String) isNull(), EasyMock.eq("autowire")))
+        .andReturn("false");
         EasyMock.expect(reader.getAttributeValue(EasyMock.isA(String.class), EasyMock.isA(String.class)))
             .andReturn(null);
         EasyMock.expect(reader.nextTag()).andReturn(0);

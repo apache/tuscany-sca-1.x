@@ -28,8 +28,9 @@ import org.apache.tuscany.spi.implementation.java.ConstructorDefinition;
 import org.apache.tuscany.spi.implementation.java.JavaMappedProperty;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.model.ComponentDefinition;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.PropertyValue;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.Scope;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
@@ -51,8 +52,8 @@ public class JavaBuilderPropertyTestCase extends TestCase {
     public void testPropertyHandling() throws Exception {
         JavaComponentBuilder builder = new JavaComponentBuilder();
         builder.setScopeRegistry(registry);
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, JavaMappedProperty<?>> type =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, JavaMappedProperty<?>>();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, JavaMappedProperty<?>> type =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, JavaMappedProperty<?>>();
         JavaMappedProperty<String> property = new JavaMappedProperty<String>();
         property.setName("test");
         property.setDefaultValueFactory(new SingletonObjectFactory<String>("foo"));
@@ -72,8 +73,8 @@ public class JavaBuilderPropertyTestCase extends TestCase {
     public void testIntPropertyHandling() throws Exception {
         JavaComponentBuilder builder = new JavaComponentBuilder();
         builder.setScopeRegistry(registry);
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, JavaMappedProperty<?>> type =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, JavaMappedProperty<?>>();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, JavaMappedProperty<?>> type =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, JavaMappedProperty<?>>();
         JavaMappedProperty<Integer> property = new JavaMappedProperty<Integer>();
         property.setName("test");
         property.setDefaultValueFactory(new SingletonObjectFactory<Integer>(1));

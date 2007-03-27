@@ -22,7 +22,7 @@
  	      
     <component name="CallBackApiClient">
 		<implementation.java class="org.apache.tuscany.sca.test.CallBackApiClientImpl"/>
-		<reference name="aCallBackService"> 
+		<reference target="CallBackApiService" name="aCallBackService"> 
 		   CallBackApiService 
 		</reference>
     </component> 

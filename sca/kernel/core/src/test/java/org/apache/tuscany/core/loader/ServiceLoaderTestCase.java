@@ -31,8 +31,9 @@ import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
 import org.apache.tuscany.spi.model.BindingDefinition;
 import org.apache.tuscany.spi.model.ComponentType;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
@@ -77,8 +78,8 @@ public class ServiceLoaderTestCase extends TestCase {
         expect(mockReader.next()).andReturn(END_ELEMENT);
         expect(mockReader.getName()).andReturn(SERVICE).anyTimes();
         replay(mockReader);
-        ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
+        ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
         ServiceDefinition serviceDefinition = loader.load(null, type, mockReader, null);
         assertTrue(ServiceDefinition.class.equals(serviceDefinition.getClass()));
     }
@@ -96,6 +97,9 @@ public class ServiceLoaderTestCase extends TestCase {
         replay(mockReader);
 
         BindingDefinition binding = new BindingDefinition() {
+            public Object clone() {
+                return null;
+            }
         };
         expect(mockRegistry.load(null, null, mockReader, null)).andReturn(binding).times(2);
         replay(mockRegistry);

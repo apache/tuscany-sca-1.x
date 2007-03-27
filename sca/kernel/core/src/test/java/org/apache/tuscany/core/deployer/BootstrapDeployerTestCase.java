@@ -33,11 +33,12 @@ import org.apache.tuscany.spi.model.BindingDefinition;
 import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.ComponentType;
 import org.apache.tuscany.spi.model.CompositeComponentType;
+import org.apache.tuscany.spi.model.CompositeReferenceDefinition;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.Include;
 import org.apache.tuscany.spi.model.Property;
 import org.apache.tuscany.spi.model.PropertyValue;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
 import junit.framework.TestCase;
@@ -68,7 +69,7 @@ public class BootstrapDeployerTestCase extends TestCase {
         URL scdl = BootstrapDeployerTestCase.class.getResource("boot1.scdl");
         implementation.setScdlLocation(scdl);
         deployer.load(parent, componentDefinition, deploymentContext);
-        CompositeComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> composite =
+        CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, Property<?>> composite =
             implementation.getComponentType();
         assertNotNull(composite);
         assertEquals("boot1", composite.getName());

@@ -30,7 +30,7 @@
 
     <component name="ComponentA">
         <implementation.java class="echo.ComponentAImpl" />
-        <reference name="componentBReference">ComponentB</reference>
+        <reference name="componentBReference" target="ComponentB"></reference>
         <property name="prefix">ABC</property>
         <property name="prefix1" source="$messagePrefix"></property>
         <property name="bar" source="$complexProperty/*[local-name()='foo']/*[local-name()='bar']"></property>
@@ -39,10 +39,9 @@
 
     <component name="ComponentB">
         <implementation.java class="echo.ComponentBImpl" />
-        <reference name="echoReference">EchoReference</reference>
     </component>
 
-    <reference name="EchoReference">
+    <reference name="EchoReference" promote="ComponentB/echoReference">
         <!-- 
             <interface.java interface="echo.Echo"/>
         -->

@@ -27,8 +27,9 @@ import org.apache.tuscany.spi.component.ReferenceBinding;
 import org.apache.tuscany.spi.component.Service;
 import org.apache.tuscany.spi.component.ServiceBinding;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.Multiplicity;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
 import junit.framework.TestCase;
@@ -60,7 +61,7 @@ public class BuilderRegistryNoBindingsTestCase extends TestCase {
     public void testReferenceBindingBuilderDispatch() throws Exception {
         ReferenceBinding binding = EasyMock.createNiceMock(ReferenceBinding.class);
         EasyMock.replay(binding);
-        ReferenceDefinition definition = new ReferenceDefinition("foo", null, Multiplicity.ONE_ONE);
+        AbstractReferenceDefinition definition = new ComponentTypeReferenceDefinition("foo", null, Multiplicity.ONE_ONE);
         Reference reference = registry.build(parent, definition, deploymentContext);
         assertEquals(1, reference.getReferenceBindings().size());
         assertTrue(reference.getReferenceBindings().get(0) instanceof LocalReferenceBinding);

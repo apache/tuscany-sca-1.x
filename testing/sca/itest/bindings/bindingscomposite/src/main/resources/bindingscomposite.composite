@@ -35,10 +35,10 @@
 
     <component name="SCATestToolWSServiceComponent">
         <implementation.java class="org.apache.tuscany.sca.itest.SCATestToolServiceImpl" />
-        <reference name="scaTestUtil">SCATestUtilityWSReference</reference>
+        <!--reference name="scaTestUtil">SCATestUtilityWSReference</reference-->
     </component>
 
-    <reference name="SCATestUtilityWSReference">
+    <reference name="SCATestUtilityWSReference" promote="SCATestToolWSServiceComponent">
         <interface.java interface="org.apache.tuscany.sca.util.SCATestUtilityService" />
         <binding.ws endpoint="http://scatestutil.scabeta1fvt#wsdl.endpoint(SCATestUtilityService/SCATestUtilityServiceSoapPort)"
             location="wsdl/testutility.wsdl" />

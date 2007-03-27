@@ -18,6 +18,9 @@
  */
 package org.apache.tuscany.core.implementation.java;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.net.URI;
 import java.net.URL;
 import java.util.Iterator;
 
@@ -38,6 +41,8 @@ import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.implementation.java.ProcessingException;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.osoa.sca.annotations.Constructor;
@@ -67,11 +72,11 @@ public class JavaComponentTypeLoader extends ComponentTypeLoaderExtension<JavaIm
     public void load(CompositeComponent parent, JavaImplementation implementation, DeploymentContext deploymentContext)
         throws LoaderException {
         Class<?> implClass = implementation.getImplementationClass();
-        PojoComponentType componentType = loadByIntrospection(parent, implementation, deploymentContext);
+        PojoComponentType<JavaMappedService, ComponentTypeReferenceDefinition, JavaMappedProperty<?>> componentType = loadByIntrospection(parent, implementation, deploymentContext);
         URL resource = implClass.getResource(JavaIntrospectionHelper.getBaseName(implClass) + ".componentType");
         if (resource != null) {
             // TODO: TUSCANY-1111, How to merge the component type loaded from the file into the PojoComponentType
-            PojoComponentType sideFileCT = loadFromSidefile(parent, resource, deploymentContext);
+            PojoComponentType<?, ComponentTypeReferenceDefinition, ?> sideFileCT = loadFromSidefile(parent, resource, deploymentContext);
 
             // TODO: TUSCANY-1111, hack to get the sidefile defined WSDLServiceContract used
             // only works with a single service
@@ -98,6 +103,20 @@ public class JavaComponentTypeLoader extends ComponentTypeLoaderExtension<JavaIm
                 newServiceContract.setInterfaceClass(contract.getInterfaceClass());
                 newServiceContract.setDataBinding(contract.getDataBinding());
                 actualSD.setServiceContract(newServiceContract);
+            }
+            
+            //TODO: if introspection has not yeilded any info, then atleast pick up things in the sidefile
+            //[svkrish] needed this for references overriding verification
+            ComponentTypeReferenceDefinition ctRefSideFile = null;
+            for (ComponentTypeReferenceDefinition ctRefIntrospection : componentType.getReferences().values()) {
+                if(ctRefIntrospection.getTargets() == null | ctRefIntrospection.getTargets().size() == 0) {
+                    ctRefSideFile = sideFileCT.getReferences().get(ctRefIntrospection.getName());
+                    if (ctRefSideFile != null) {
+                        for(URI uri : ctRefSideFile.getTargets()) {
+                            ctRefIntrospection.addTarget(uri);
+                        }
+                    }
+                }
             }
         }
         implementation.setComponentType(componentType);

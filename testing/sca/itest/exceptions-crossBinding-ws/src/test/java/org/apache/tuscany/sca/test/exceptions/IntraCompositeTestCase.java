@@ -43,7 +43,7 @@ public class IntraCompositeTestCase extends TestCase {
             assertEquals("IBM", sp.getSymbol());
         } catch (Exception e) {
 
-            e.printStackTrace();
+            e.printStackTrace(); 
             fail(e + "");
 
         }

@@ -25,7 +25,8 @@ import org.apache.tuscany.spi.implementation.java.ConstructorDefinition;
 import org.apache.tuscany.spi.implementation.java.JavaMappedProperty;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.model.ComponentDefinition;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
 import junit.framework.TestCase;
@@ -48,8 +49,8 @@ public class SystemBuilderPropertyTestCase extends TestCase {
     @SuppressWarnings("unchecked")
     public void testPropertyHandling() throws Exception {
         SystemComponentBuilder builder = new SystemComponentBuilder();
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, JavaMappedProperty<?>> type =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, JavaMappedProperty<?>>();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, JavaMappedProperty<?>> type =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, JavaMappedProperty<?>>();
         type.setConstructorDefinition(new ConstructorDefinition<Foo>(Foo.class.getConstructor((Class[]) null)));
         JavaMappedProperty<String> property = new JavaMappedProperty<String>();
         property.setName("test");

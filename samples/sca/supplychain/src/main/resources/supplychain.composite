@@ -21,22 +21,22 @@
 
     <component name="CustomerComponent">
         <implementation.java class="supplychain.CustomerComponentImpl" />
-        <reference name="retailer">RetailerComponent</reference>
+        <reference name="retailer" target="RetailerComponent"></reference>
     </component>
 
     <component name="RetailerComponent">
         <implementation.java class="supplychain.RetailerComponentImpl" />
-        <reference name="warehouse">WarehouseComponent</reference>
+        <reference name="warehouse" target="WarehouseComponent"></reference>
     </component>
 
     <component name="WarehouseComponent">
         <implementation.java class="supplychain.WarehouseComponentImpl" />
-        <reference name="shipper">ShipperComponent</reference>
+        <reference name="shipper" target="ShipperComponent"></reference>
     </component>
 
     <component name="ShipperComponent">
         <implementation.java class="supplychain.ShipperComponentImpl" />
-        <reference name="customer">CustomerComponent</reference>
+        <reference name="customer" target="CustomerComponent"></reference>
     </component>
 
 </composite>

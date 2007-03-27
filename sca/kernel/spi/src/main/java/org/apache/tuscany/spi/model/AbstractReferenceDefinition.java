@@ -18,40 +18,49 @@
  */
 package org.apache.tuscany.spi.model;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.xml.namespace.QName;
 
 /**
  * Represents a component reference
  *
  * @version $Rev$ $Date$
  */
-public class ReferenceDefinition extends ModelObject {
+public abstract class AbstractReferenceDefinition extends ModelObject {
     private String name;
     private ServiceContract serviceContract;
     private Multiplicity multiplicity;
     private boolean autowire;
-    private boolean required;
     private List<BindingDefinition> bindings;
+    private List<URI> targets = new ArrayList<URI>();
+    private boolean wiredByImpl;
+    private List requiredIntents = new ArrayList<QName>();
+    private List policySets = new ArrayList<QName>();
 
-    public ReferenceDefinition() {
+    public AbstractReferenceDefinition() {
+        autowire = false;
         multiplicity = Multiplicity.ONE_ONE;
         bindings = new ArrayList<BindingDefinition>();
     }
 
-    public ReferenceDefinition(String name, ServiceContract serviceContract) {
+    public AbstractReferenceDefinition(String name, ServiceContract serviceContract) {
         this.name = name;
         this.serviceContract = serviceContract;
         bindings = new ArrayList<BindingDefinition>();
+        autowire = false;
         multiplicity = Multiplicity.ONE_ONE;
     }
 
-    public ReferenceDefinition(String name, ServiceContract serviceContract, Multiplicity multiplicity) {
+    public AbstractReferenceDefinition(String name, ServiceContract serviceContract, Multiplicity multiplicity) {
         this.name = name;
         this.serviceContract = serviceContract;
         this.multiplicity = multiplicity;
         bindings = new ArrayList<BindingDefinition>();
+        autowire = false;
     }
 
     public String getName() {
@@ -86,19 +95,43 @@ public class ReferenceDefinition extends ModelObject {
         this.autowire = autowire;
     }
 
-    public boolean isRequired() {
-        return required;
-    }
-
-    public void setRequired(boolean required) {
-        this.required = required;
-    }
-
     public List<BindingDefinition> getBindings() {
         return Collections.unmodifiableList(bindings);
     }
 
     public void addBinding(BindingDefinition binding) {
         this.bindings.add(binding);
+    }
+    
+    public List<URI> getTargets() {
+        return Collections.unmodifiableList(targets);
+    }
+
+    public void addTarget(URI targetURI) {
+        this.targets.add(targetURI);
+    }
+    
+    public boolean isWiredByImpl() {
+        return wiredByImpl;
+    }
+
+    public void setWiredByImpl(boolean wiredByImpl) {
+        this.wiredByImpl = wiredByImpl;
+    }
+
+    public List getPolicySets() {
+        return policySets;
+    }
+
+    public void setPolicySets(List policySets) {
+        this.policySets = policySets;
+    }
+
+    public List getRequiredIntents() {
+        return requiredIntents;
+    }
+
+    public void setRequiredIntents(List requiredIntents) {
+        this.requiredIntents = requiredIntents;
     }
 }

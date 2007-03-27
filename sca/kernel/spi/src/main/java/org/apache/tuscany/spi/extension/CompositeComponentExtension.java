@@ -364,7 +364,7 @@ public abstract class CompositeComponentExtension extends AbstractComponentExten
             }
         }
         for (SCAObject child : childList) {
-            // connect all children
+           // connect all children
             // TODO for composite wires, should delegate down
             try {
                 connector.connect(child);

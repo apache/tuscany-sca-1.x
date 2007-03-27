@@ -58,7 +58,7 @@ public class JavaComponentBuilder extends ComponentBuilderExtension<JavaImplemen
         this.host = host;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") 
     public AtomicComponent build(CompositeComponent parent,
                                  ComponentDefinition<JavaImplementation> definition,
                                  DeploymentContext deployment) throws BuilderConfigException {
@@ -97,12 +97,17 @@ public class JavaComponentBuilder extends ComponentBuilderExtension<JavaImplemen
         }
 
         // setup reference injection sites
+        try {
+            
         for (JavaMappedReference reference : componentType.getReferences().values()) {
             Member member = reference.getMember();
             if (member != null) {
                 // could be null if the reference is mapped to a constructor
                 configuration.addReferenceSite(reference.getName(), member);
             }
+        }
+        } catch ( Exception e ) {
+            e.printStackTrace();
         }
 
         for (Resource resource : componentType.getResources().values()) {

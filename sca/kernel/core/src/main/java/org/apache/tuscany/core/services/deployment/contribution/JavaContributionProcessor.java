@@ -83,7 +83,6 @@ public class JavaContributionProcessor extends ContributionProcessorExtension im
             cl.addURL(contribution.getLocation());
 
             String clazzName = getClazzName(contribution.getArtifact(artifactURI).getLocation());
-            System.out.println(clazzName);
 
             Class clazz = cl.loadClass(clazzName);
 

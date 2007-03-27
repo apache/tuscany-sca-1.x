@@ -12,9 +12,10 @@ import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.extension.ComponentBuilderExtension;
 import org.apache.tuscany.spi.model.ComponentDefinition;
 import org.apache.tuscany.spi.model.CompositeComponentType;
+import org.apache.tuscany.spi.model.CompositeReferenceDefinition;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.ModelObject;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
 /**
@@ -46,7 +47,7 @@ public abstract class AbstractCompositeBuilder<T extends Implementation<Composit
                 throw new BuilderInstantiationException("Error registering service", e);
             }
         }
-        for (ReferenceDefinition definition : componentType.getReferences().values()) {
+        for (CompositeReferenceDefinition definition : componentType.getReferences().values()) {
             try {
                 Reference child = builderRegistry.build(component, definition, deploymentContext);
                 component.register(child);

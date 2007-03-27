@@ -23,7 +23,7 @@
    
     <component name="main">
         <implementation.java class="org.apache.tuscany.sca.test.exceptions.impl.ExceptionHandlerImpl"/>
-        <reference name="exceptionThrower">exceptionThrower</reference>
+        <reference name="exceptionThrower" target="exceptionThrower">exceptionThrower</reference>
     </component>
     
     <component name="exceptionThrower">

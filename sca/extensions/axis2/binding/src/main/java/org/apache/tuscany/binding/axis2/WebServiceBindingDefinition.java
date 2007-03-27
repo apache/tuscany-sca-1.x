@@ -39,7 +39,7 @@ import org.osoa.sca.Constants;
  *
  * @version $Rev$ $Date$
  */
-public class WebServiceBindingDefinition extends BindingDefinition {
+public class WebServiceBindingDefinition extends BindingDefinition { 
     public static final QName CONVERSATION_ID_REFPARM_QN = new QName(Constants.SCA_NS,"conversationID");
     private Definition definition;
     private Port port;
@@ -194,5 +194,17 @@ public class WebServiceBindingDefinition extends BindingDefinition {
 
     public void setActualURI(URI actualURI) {
         this.actualURI = actualURI;
+    }
+    
+    public Object clone() {
+        WebServiceBindingDefinition clone = 
+            new WebServiceBindingDefinition(this.namespace,
+                                            this.definition,
+                                            this.serviceName,
+                                            this.portName,
+                                            this.bindingName,
+                                            this.uri);
+                                            
+        return clone;
     }
 }

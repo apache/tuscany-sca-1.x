@@ -28,10 +28,11 @@ import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.ModelObject;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
 import junit.framework.TestCase;
@@ -46,7 +47,7 @@ public class ComponentLoaderNoBindingTestCase extends TestCase {
     private ComponentLoader loader;
     private XMLStreamReader reader;
     private ServiceDefinition service;
-    private ReferenceDefinition reference;
+    private ComponentTypeReferenceDefinition reference;
 
     public void testNoServiceBinding() throws Exception {
         loader.load(null, null, reader, null);
@@ -61,9 +62,9 @@ public class ComponentLoaderNoBindingTestCase extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         service = new ServiceDefinition();
-        reference = new ReferenceDefinition();
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
+        reference = new ComponentTypeReferenceDefinition();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
         type.add(service);
         type.add(reference);
         JavaImplementation impl = new JavaImplementation(null, type);
@@ -81,6 +82,7 @@ public class ComponentLoaderNoBindingTestCase extends TestCase {
         EasyMock.expect(reader.getName()).andReturn(COMPONENT).atLeastOnce();
         EasyMock.expect(reader.next()).andReturn(XMLStreamConstants.END_ELEMENT);
         EasyMock.expect(reader.getAttributeValue(null, "name")).andReturn("foo");
+        EasyMock.expect(reader.getAttributeValue(null, "autowire")).andReturn("false");
         EasyMock.expect(reader.getAttributeValue(null, "initLevel")).andReturn("0");
         EasyMock.expect(reader.nextTag()).andReturn(1);
         EasyMock.replay(reader);

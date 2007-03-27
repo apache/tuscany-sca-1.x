@@ -21,6 +21,7 @@ package org.apache.tuscany.core.wire;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,12 +37,14 @@ import org.apache.tuscany.spi.component.ServiceBinding;
 import org.apache.tuscany.spi.component.TargetInvokerCreationException;
 import org.apache.tuscany.spi.component.WorkContext;
 import org.apache.tuscany.spi.model.ComponentDefinition;
+import org.apache.tuscany.spi.model.ComponentReferenceDefinition;
 import org.apache.tuscany.spi.model.ComponentType;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.Multiplicity;
 import org.apache.tuscany.spi.model.Operation;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ReferenceTarget;
 import org.apache.tuscany.spi.model.Scope;
 import org.apache.tuscany.spi.model.ServiceContract;
@@ -101,8 +104,8 @@ public class WireServiceExtensionTestCase extends TestCase {
         EasyMock.verify(invoker);
     }
 
-    public void testCreateReferenceWire() throws Exception {
-        ReferenceDefinition definition = new ReferenceDefinition("foo", contract);
+    /*public void testCreateReferenceWire() throws Exception {
+        AbstractReferenceDefinition definition = new AbstractReferenceDefinition("foo", contract);
         ReferenceTarget target = new ReferenceTarget();
         target.addTarget(new URI("bar"));
         target.setReferenceName("refName");
@@ -130,36 +133,40 @@ public class WireServiceExtensionTestCase extends TestCase {
         msg.setTargetInvoker(invoker);
         assertNotNull(callbackChain.getHeadInterceptor().invoke(msg));
         EasyMock.verify(invoker);
-    }
+    }*/
 
     public void testCreateAutowireReferenceWire() throws Exception {
-        ReferenceDefinition definition = new ReferenceDefinition("foo", contract);
+        ComponentTypeReferenceDefinition definition = new ComponentTypeReferenceDefinition("foo", contract);
         definition.setAutowire(true);
-        ReferenceTarget target = new ReferenceTarget();
-        target.setReferenceName("refName");
-        OutboundWire wire = wireService.createWire(target, definition).get(0);
+        ComponentReferenceDefinition compRef = new ComponentReferenceDefinition(definition);
+        //ReferenceTarget target = new ReferenceTarget();
+        //target.setReferenceName("refName");
+        OutboundWire wire = wireService.createWire(new ArrayList<URI>(), compRef).get(0);
         assertTrue(wire.isAutowire());
-        assertEquals("refName", wire.getReferenceName());
+        assertEquals("foo", wire.getReferenceName());
         assertEquals(contract, wire.getServiceContract());
         assertEquals(Callback.class, wire.getCallbackInterface());
     }
     
     public void testCreateReferenceMultipleWire() throws Exception {
-        ReferenceDefinition definition = new ReferenceDefinition("foo", contract);
+        ComponentTypeReferenceDefinition ctRefDef = new ComponentTypeReferenceDefinition("foo", contract);
+        ComponentReferenceDefinition definition = new ComponentReferenceDefinition(ctRefDef);
         definition.setMultiplicity(Multiplicity.ONE_N);
-        ReferenceTarget target = new ReferenceTarget();
-        target.addTarget(new URI("bar"));
-        target.addTarget(new URI("bar2"));
-        target.setReferenceName("refName");
+        
+        //ReferenceTarget target = new ReferenceTarget();
+        List<URI> target = new ArrayList<URI>();
+        target.add(new URI("bar"));
+        target.add(new URI("bar2"));
+        //target.setReferenceName("refName");
 
         List<OutboundWire> wires = wireService.createWire(target, definition);
         assertEquals(2, wires.size());
     }    
 
     public void testCreateComponentWires() throws Exception {
-        ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
-        ReferenceDefinition referenceDefinition = new ReferenceDefinition("refName", contract);
+        ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
+        ComponentTypeReferenceDefinition referenceDefinition = new ComponentTypeReferenceDefinition("refName", contract);
         type.add(referenceDefinition);
         ServiceDefinition serviceDefinition = new ServiceDefinition("foo", contract, false);
         type.add(serviceDefinition);
@@ -170,11 +177,16 @@ public class WireServiceExtensionTestCase extends TestCase {
 
         ComponentDefinition<Implementation<ComponentType>> definition =
             new ComponentDefinition<Implementation<ComponentType>>("Foo", impl);
-        ReferenceTarget target = new ReferenceTarget();
+        ComponentReferenceDefinition compRef = 
+            new ComponentReferenceDefinition(type.getReferences().get("refName"));
+        compRef.addTarget(new URI("bar"));
+        definition.add(compRef);
+        
+        /*ReferenceTarget target = new ReferenceTarget();
         target.addTarget(new URI("bar"));
         target.setReferenceName("refName");
         definition.add(target);
-
+        */
         AtomicComponent component = EasyMock.createMock(AtomicComponent.class);
         component.addInboundWire(EasyMock.isA(InboundWire.class));
         component.addOutboundWire(EasyMock.isA(OutboundWire.class));
@@ -265,8 +277,8 @@ public class WireServiceExtensionTestCase extends TestCase {
         }
 
 
-        public List<OutboundWire> createWire(ReferenceTarget reference, ReferenceDefinition def) {
-            return super.createWire(reference, def);
+        public List<OutboundWire> createWire(List<URI> refTargetURIs, ComponentReferenceDefinition def) {
+            return super.createWire(refTargetURIs, def);
         }
     }
 

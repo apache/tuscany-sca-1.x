@@ -1,22 +1,22 @@
 package org.apache.tuscany.core.implementation.system.builder;
 
+import junit.framework.TestCase;
+
+import org.apache.tuscany.core.implementation.system.model.SystemImplementation;
+import org.apache.tuscany.spi.component.AtomicComponent;
 import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.component.ScopeContainer;
 import org.apache.tuscany.spi.component.ScopeRegistry;
-import org.apache.tuscany.spi.component.AtomicComponent;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.implementation.java.ConstructorDefinition;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.implementation.java.Resource;
 import org.apache.tuscany.spi.model.ComponentDefinition;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
 import org.apache.tuscany.spi.model.Scope;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.wire.InboundWire;
-
-import junit.framework.TestCase;
-import org.apache.tuscany.core.implementation.system.model.SystemImplementation;
 import org.easymock.EasyMock;
 
 /**
@@ -24,7 +24,7 @@ import org.easymock.EasyMock;
  */
 public class SystemComponentBuilderResourceTestCase extends TestCase {
 
-    @SuppressWarnings("uncjecked")
+    @SuppressWarnings("unchecked")
     public void testResourceInjection() throws Exception {
         ScopeContainer container = EasyMock.createNiceMock(ScopeContainer.class);
         DeploymentContext ctx = EasyMock.createNiceMock(DeploymentContext.class);
@@ -35,8 +35,8 @@ public class SystemComponentBuilderResourceTestCase extends TestCase {
         builder.setScopeRegistry(registry);
         ConstructorDefinition<Foo> ctorDef = new ConstructorDefinition<SystemComponentBuilderResourceTestCase.Foo>(
             SystemComponentBuilderResourceTestCase.Foo.class.getConstructor());
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
         Resource resource = new Resource();
         resource.setType(String.class);
         resource.setName("resource");

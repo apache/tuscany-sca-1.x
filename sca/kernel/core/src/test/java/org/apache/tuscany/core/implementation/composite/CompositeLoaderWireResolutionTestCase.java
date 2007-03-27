@@ -23,11 +23,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
+import org.apache.tuscany.spi.loader.InvalidPromotedReferenceException;
 import org.apache.tuscany.spi.loader.InvalidWireException;
 import org.apache.tuscany.spi.model.ComponentDefinition;
+import org.apache.tuscany.spi.model.ComponentReferenceDefinition;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.CompositeComponentType;
+import org.apache.tuscany.spi.model.CompositeReferenceDefinition;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.model.WireDefinition;
 
@@ -40,11 +44,11 @@ import org.apache.tuscany.core.implementation.java.JavaImplementation;
  * @version $Rev$ $Date$
  */
 public class CompositeLoaderWireResolutionTestCase extends TestCase {
-    private CompositeComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> componentType;
+    private CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, Property<?>> componentType;
     private CompositeLoader compositeLoader = new CompositeLoader(null, null);
 
     public void setUp() throws Exception {
-        componentType = new CompositeComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
+        componentType = new CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, Property<?>>();
         componentType.setName("TestComposite");
         //add a service to the composite
         ServiceDefinition serviceDefn = new ServiceDefinition("compositeService1", null, true);
@@ -56,35 +60,38 @@ public class CompositeLoaderWireResolutionTestCase extends TestCase {
         componentType.add(boundSvcDefn);
         componentType.add(boundSvcDefnWithTarget);
 
-        ReferenceDefinition compositeReference = new ReferenceDefinition("compositeReference", null);
+        CompositeReferenceDefinition compositeReference = new CompositeReferenceDefinition("compositeReference", null);
         componentType.add(compositeReference);
 
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> pojoComponentType1 =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> pojoComponentType1 =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
         ServiceDefinition pojoSvc1 = new ServiceDefinition("pojoSvc1", null, false);
         pojoComponentType1.add(pojoSvc1);
-        ReferenceDefinition pojoRef1 = new ReferenceDefinition("pojoRef1", null);
+        ComponentTypeReferenceDefinition pojoRef1 = new ComponentTypeReferenceDefinition("pojoRef1", null);
         pojoComponentType1.add(pojoRef1);
         JavaImplementation pojoImpl1 = new JavaImplementation(null, pojoComponentType1);
 
         ComponentDefinition<JavaImplementation> component1 =
             new ComponentDefinition<JavaImplementation>("Component1", pojoImpl1);
+        component1.add(new ComponentReferenceDefinition(pojoRef1));
         componentType.add(component1);
 
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> pojoComponentType2 =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> pojoComponentType2 =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
         ServiceDefinition pojoSvc2 = new ServiceDefinition("pojoSvc2", null, false);
         pojoComponentType2.add(pojoSvc2);
         ServiceDefinition pojoSvc3 = new ServiceDefinition("pojoSvc3", null, false);
         pojoComponentType2.add(pojoSvc3);
-        ReferenceDefinition pojoRef2 = new ReferenceDefinition("pojoRef2", null);
+        ComponentTypeReferenceDefinition pojoRef2 = new ComponentTypeReferenceDefinition("pojoRef2", null);
         pojoComponentType2.add(pojoRef2);
-        ReferenceDefinition pojoRef3 = new ReferenceDefinition("pojoRef3", null);
+        ComponentTypeReferenceDefinition pojoRef3 = new ComponentTypeReferenceDefinition("pojoRef3", null);
         pojoComponentType2.add(pojoRef3);
         JavaImplementation pojoImpl2 = new JavaImplementation(null, pojoComponentType2);
 
         ComponentDefinition<JavaImplementation> component2 =
             new ComponentDefinition<JavaImplementation>("Component2", pojoImpl2);
+        component2.add(new ComponentReferenceDefinition(pojoRef2));
+        component2.add(new ComponentReferenceDefinition(pojoRef3));
         componentType.add(component2);
     }
 
@@ -114,7 +121,7 @@ public class CompositeLoaderWireResolutionTestCase extends TestCase {
         compositeLoader.resolveWires(componentType);
     }
 
-    public void testCompositeSvc2ComponentQualifiedInvalid() throws URISyntaxException {
+    public void testCompositeSvc2ComponentQualifiedInvalid() throws URISyntaxException, InvalidPromotedReferenceException {
         //undefined source and targets
         WireDefinition wireDefn = new WireDefinition();
         wireDefn.setSource(new URI("compositeService1"));
@@ -128,7 +135,7 @@ public class CompositeLoaderWireResolutionTestCase extends TestCase {
         }
     }
 
-    public void testCompositeSvc2ComponentUnQualifiedInvalid() throws URISyntaxException {
+    public void testCompositeSvc2ComponentUnQualifiedInvalid() throws URISyntaxException, InvalidPromotedReferenceException {
         //undefined source and targets
         WireDefinition wireDefn = new WireDefinition();
         wireDefn.setSource(new URI("compositeService1"));
@@ -160,7 +167,7 @@ public class CompositeLoaderWireResolutionTestCase extends TestCase {
         compositeLoader.resolveWires(componentType);
     }
 
-    public void testComponent2CompositeReferenceUnQualifiedInvalid() throws URISyntaxException {
+    public void testComponent2CompositeReferenceUnQualifiedInvalid() throws URISyntaxException, InvalidPromotedReferenceException {
         //undefined source and targets
         WireDefinition wireDefn = new WireDefinition();
         wireDefn.setSource(new URI("Component2"));
@@ -184,7 +191,7 @@ public class CompositeLoaderWireResolutionTestCase extends TestCase {
         compositeLoader.resolveWires(componentType);
     }
 
-    public void testComponent2ComponentUnQualifedInvalid() throws URISyntaxException {
+    public void testComponent2ComponentUnQualifedInvalid() throws URISyntaxException, InvalidPromotedReferenceException {
         //undefined source and targets
         WireDefinition wireDefn = new WireDefinition();
         wireDefn.setSource(new URI("Component1"));
@@ -198,7 +205,7 @@ public class CompositeLoaderWireResolutionTestCase extends TestCase {
         }
     }
 
-    public void testInvalidWireDefinitions() throws URISyntaxException {
+    public void testInvalidWireDefinitions() throws URISyntaxException, InvalidPromotedReferenceException {
         //undefined source and targets
         WireDefinition wireDefn = new WireDefinition();
         wireDefn.setSource(new URI("undefinedSource"));

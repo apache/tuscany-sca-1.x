@@ -44,7 +44,6 @@ public class ConstructorReferenceTestCase extends TestCase {
         Constructor<Foo> ctor = Foo.class.getConstructor(String.class);
         processor.visitConstructor(null, ctor, type, null);
         JavaMappedReference reference = type.getReferences().get("myRef");
-        assertTrue(reference.isRequired());
         assertEquals("myRef", reference.getName());
     }
 

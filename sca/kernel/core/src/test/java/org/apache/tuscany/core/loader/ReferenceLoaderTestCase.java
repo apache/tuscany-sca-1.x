@@ -23,21 +23,20 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import org.osoa.sca.Constants;
+import junit.framework.TestCase;
 
+import org.apache.tuscany.core.deployer.RootDeploymentContext;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
 import org.apache.tuscany.spi.model.BindingDefinition;
 import org.apache.tuscany.spi.model.ComponentType;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.model.ServiceDefinition;
-
-import junit.framework.TestCase;
-import org.apache.tuscany.core.deployer.RootDeploymentContext;
 import org.easymock.EasyMock;
+import org.osoa.sca.Constants;
 
 /**
  * Verifies loading of a reference definition from an XML-based assembly
@@ -57,10 +56,13 @@ public class ReferenceLoaderTestCase extends TestCase {
         EasyMock.expect(mockReader.getName()).andReturn(REFERENCE).anyTimes();
         EasyMock.expect(mockReader.getAttributeValue(null, "name")).andReturn(name);
         EasyMock.expect(mockReader.getAttributeValue(null, "multiplicity")).andReturn("0..1");
+        EasyMock.expect(mockReader.getAttributeValue(null, "wiredByImpl")).andReturn("false");
+        EasyMock.expect(mockReader.getAttributeValue(null, "target")).andReturn(null);
         EasyMock.expect(mockReader.next()).andReturn(XMLStreamConstants.END_ELEMENT);
         EasyMock.expect(mockReader.getName()).andReturn(REFERENCE).anyTimes();
         EasyMock.replay(mockReader);
-        ReferenceDefinition referenceDefinition = loader.load(null, null, mockReader, null);
+        ComponentTypeReferenceDefinition referenceDefinition = 
+            loader.load(null, new ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>(), mockReader, null);
         assertNotNull(referenceDefinition);
         assertEquals(name, referenceDefinition.getName());
     }
@@ -70,13 +72,15 @@ public class ReferenceLoaderTestCase extends TestCase {
         EasyMock.expect(mockReader.getName()).andReturn(REFERENCE).anyTimes();
         EasyMock.expect(mockReader.getAttributeValue(null, "name")).andReturn(name);
         EasyMock.expect(mockReader.getAttributeValue(null, "multiplicity")).andReturn("0..1");
+        EasyMock.expect(mockReader.getAttributeValue(null, "wiredByImpl")).andReturn("false");
+        EasyMock.expect(mockReader.getAttributeValue(null, "target")).andReturn(null);
         EasyMock.expect(mockReader.next()).andReturn(XMLStreamConstants.END_ELEMENT);
         EasyMock.expect(mockReader.getName()).andReturn(REFERENCE).anyTimes();
         EasyMock.replay(mockReader);
-        ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
-        ReferenceDefinition referenceDefinition = loader.load(null, type, mockReader, null);
-        assertTrue(ReferenceDefinition.class.equals(referenceDefinition.getClass()));
+        ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
+        ComponentTypeReferenceDefinition referenceDefinition = loader.load(null, type, mockReader, null);
+        assertTrue(ComponentTypeReferenceDefinition.class.equals(referenceDefinition.getClass()));
     }
 
     public void testMultipleBindings() throws LoaderException, XMLStreamException {
@@ -84,17 +88,24 @@ public class ReferenceLoaderTestCase extends TestCase {
         EasyMock.expect(mockReader.getName()).andReturn(REFERENCE).anyTimes();
         EasyMock.expect(mockReader.getAttributeValue(null, "name")).andReturn(name);
         EasyMock.expect(mockReader.getAttributeValue(null, "multiplicity")).andReturn("0..1");
+        EasyMock.expect(mockReader.getAttributeValue(null, "wiredByImpl")).andReturn("false");
+        EasyMock.expect(mockReader.getAttributeValue(null, "target")).andReturn(null);
         EasyMock.expect(mockReader.next()).andReturn(XMLStreamConstants.START_ELEMENT).times(2);
         EasyMock.expect(mockReader.next()).andReturn(XMLStreamConstants.END_ELEMENT);
         EasyMock.expect(mockReader.getName()).andReturn(REFERENCE).anyTimes();
         EasyMock.replay(mockReader);
 
         BindingDefinition binding = new BindingDefinition() {
+            public Object clone() {
+               return null;
+            }
         };
         EasyMock.expect(mockRegistry.load(null, null, mockReader, null)).andReturn(binding).times(2);
         EasyMock.replay(mockRegistry);
 
-        ReferenceDefinition referenceDefinition = loader.load(null, null, mockReader, null);
+        ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
+        ComponentTypeReferenceDefinition referenceDefinition = loader.load(null, type, mockReader, null);
         assertEquals(2, referenceDefinition.getBindings().size());
     }
 
@@ -105,14 +116,18 @@ public class ReferenceLoaderTestCase extends TestCase {
         EasyMock.expect(mockReader.getName()).andReturn(REFERENCE).anyTimes();
         EasyMock.expect(mockReader.getAttributeValue(null, "name")).andReturn(name);
         EasyMock.expect(mockReader.getAttributeValue(null, "multiplicity")).andReturn("0..1");
+        EasyMock.expect(mockReader.getAttributeValue(null, "wiredByImpl")).andReturn("false");
+        EasyMock.expect(mockReader.getAttributeValue(null, "target")).andReturn(null);
         EasyMock.expect(mockReader.next()).andReturn(XMLStreamConstants.START_ELEMENT);
         EasyMock.expect(mockRegistry.load(null, null, mockReader, deploymentContext)).andReturn(sc);
         EasyMock.expect(mockReader.next()).andReturn(XMLStreamConstants.END_ELEMENT);
 
         EasyMock.replay(mockReader);
         EasyMock.replay(mockRegistry);
-
-        ReferenceDefinition referenceDefinition = loader.load(null, null, mockReader, deploymentContext);
+        
+        ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
+        ComponentTypeReferenceDefinition referenceDefinition = loader.load(null, type, mockReader, deploymentContext);
         assertNotNull(referenceDefinition);
         assertEquals(name, referenceDefinition.getName());
         assertSame(sc, referenceDefinition.getServiceContract());

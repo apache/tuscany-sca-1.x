@@ -22,8 +22,8 @@
 
     <component name="SourceComponent">
         <implementation.composite name="InnerComposite" scdlLocation="InnerComposite.composite"/>
-        <reference name="TargetComponentRef">TargetComponent</reference>
-        <reference name="TargetComponentRef2">TargetComponent2/InnerTargetService</reference>
+        <reference name="TargetComponentRef" target="TargetComponent"></reference>
+        <reference name="TargetComponentRef2" target="TargetComponent2/InnerTargetService"></reference>
     </component>
 
     <component name="TargetComponent">

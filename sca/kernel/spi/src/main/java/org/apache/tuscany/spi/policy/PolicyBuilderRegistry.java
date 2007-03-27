@@ -19,7 +19,7 @@
 package org.apache.tuscany.spi.policy;
 
 import org.apache.tuscany.spi.builder.BuilderException;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.wire.InboundWire;
 import org.apache.tuscany.spi.wire.OutboundWire;
@@ -58,7 +58,7 @@ public interface PolicyBuilderRegistry {
      *
      * @throws BuilderException
      */
-    void buildSource(ReferenceDefinition referenceDefinition, OutboundWire wire) throws BuilderException;
+    void buildSource(AbstractReferenceDefinition referenceDefinition, OutboundWire wire) throws BuilderException;
 
     /**
      * Evaluates target-side policy metadata for configured reference and updates the curresponding collection of wire

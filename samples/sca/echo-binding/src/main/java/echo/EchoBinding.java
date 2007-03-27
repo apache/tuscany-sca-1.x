@@ -24,5 +24,8 @@ import org.apache.tuscany.spi.model.BindingDefinition;
  * @version $Rev$ $Date$
  */
 public class EchoBinding extends BindingDefinition {
+    public Object clone() {
+        return this;
+    }
 
 }

@@ -30,7 +30,7 @@ import java.util.Map;
  * @version $Rev$ $Date$
  */
 public class CompositeComponentType<S extends ServiceDefinition,
-    R extends ReferenceDefinition,
+    R extends CompositeReferenceDefinition,
     P extends Property<?>> extends ComponentType<S, R, P> {
 
     private String name;
@@ -38,6 +38,7 @@ public class CompositeComponentType<S extends ServiceDefinition,
         new HashMap<String, ComponentDefinition<? extends Implementation<?>>>();
     private final Map<String, Include> includes = new HashMap<String, Include>();
     private final List<WireDefinition> wires = new ArrayList<WireDefinition>();
+    private boolean autowire;
 
     public CompositeComponentType() {
         implementationScope = Scope.SYSTEM;
@@ -184,5 +185,13 @@ public class CompositeComponentType<S extends ServiceDefinition,
             view.putAll(i.getIncluded().getExtensions());
         }
         return Collections.unmodifiableMap(view);
+    }
+
+    public boolean isAutowire() {
+        return autowire;
+    }
+
+    public void setAutowire(boolean autowire) {
+        this.autowire = autowire;
     }
 }

@@ -22,7 +22,7 @@ import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.implementation.java.PojoComponentType;
 import org.apache.tuscany.spi.implementation.java.ProcessingException;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
 import junit.framework.TestCase;
@@ -58,7 +58,7 @@ public class SystemComponentTypeLoaderTestCase extends TestCase {
         assertEquals(BasicInterface.class, service.getServiceContract().getInterfaceClass());
         Property<?> property = componentType.getProperties().get("publicProperty");
         assertEquals(String.class, property.getJavaType());
-        ReferenceDefinition referenceDefinition = componentType.getReferences().get("protectedReference");
+        AbstractReferenceDefinition referenceDefinition = componentType.getReferences().get("protectedReference");
         assertEquals(BasicInterface.class, referenceDefinition.getServiceContract().getInterfaceClass());
     }
 

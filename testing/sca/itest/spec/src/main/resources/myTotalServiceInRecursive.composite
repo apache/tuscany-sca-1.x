@@ -27,8 +27,8 @@
     
     <component name="MyTotalServiceFromRecursive">
         <implementation.java class="org.apache.tuscany.sca.test.spec.impl.MyTotalServiceImpl"/>
-		<reference name="myService">MyServiceInComposite/MyService</reference>
-		<reference name="myListService">MyServiceInComposite/MyListService</reference>
+		<reference name="myService" target="MyServiceInComposite/MyService"></reference>
+		<reference name="myListService" target="MyServiceInComposite/MyListServic">e</reference>
     </component>
     
  	<service name="MyTotalServiceInCompositeWithRecursiveUseService">
@@ -43,14 +43,14 @@
     
     <component name="MyTotalServiceInCompositeWithRecursive">
         <implementation.composite scdlLocation="myTotalServiceInComposite.composite"/>
-		<reference name="MyServiceRef">MyServiceInComposite/MyService</reference>
-		<reference name="MyListServiceRef">MyServiceInComposite/MyListService</reference>
+		<reference name="MyServiceRef" target="MyServiceInComposite/MyService"></reference>
+		<reference name="MyListServiceRef" target="MyServiceInComposite/MyListService"></reference>
     </component>
 
     <component name="MyTotalServiceInCompositeWithComponentService">
         <implementation.composite scdlLocation="myTotalServiceInComposite.composite"/>
-		<reference name="MyServiceRef">MyServiceInComponent/MyService</reference>
-		<reference name="MyListServiceRef">MyServiceInComponent/MyListService</reference>
+		<reference name="MyServiceRef" target="MyServiceInComponent/MyService"></reference>
+		<reference name="MyListServiceRef" target="MyServiceInComponent/MyListService"></reference>
     </component>
 
     <component name="MyServiceInComponent">

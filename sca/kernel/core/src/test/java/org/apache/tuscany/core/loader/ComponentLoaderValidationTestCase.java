@@ -11,10 +11,12 @@ import org.apache.tuscany.spi.loader.LoaderRegistry;
 import org.apache.tuscany.spi.loader.MissingReferenceException;
 import org.apache.tuscany.spi.loader.PropertyObjectFactory;
 import org.apache.tuscany.spi.model.ComponentDefinition;
+import org.apache.tuscany.spi.model.ComponentReferenceDefinition;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.Multiplicity;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 import org.apache.tuscany.spi.model.ReferenceTarget;
 
@@ -30,25 +32,27 @@ public class ComponentLoaderValidationTestCase extends TestCase {
     private ComponentLoaderValidationTestCase.TestLoader loader;
 
     public void testValidation() throws LoaderException, XMLStreamException {
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
-        ReferenceDefinition refDefinition = new ReferenceDefinition();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
+        ComponentTypeReferenceDefinition refDefinition = new ComponentTypeReferenceDefinition();
         refDefinition.setName("name");
         type.add(refDefinition);
         JavaImplementation impl = new JavaImplementation(null, type);
         ComponentDefinition<Implementation<?>> defn = new ComponentDefinition<Implementation<?>>(impl);
-        ReferenceTarget target = new ReferenceTarget();
+        ComponentReferenceDefinition compRef = new ComponentReferenceDefinition(refDefinition);
+        compRef.addTarget(URI.create("uri"));
+        defn.add(compRef);
+        /*ReferenceTarget target = new ReferenceTarget();
         target.setReferenceName("name");
-        defn.add(target);
+        defn.add(target);*/
         loader.validate(defn);
     }
 
-    public void testReferenceNotSet() throws LoaderException, XMLStreamException {
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
-        ReferenceDefinition refDefinition = new ReferenceDefinition();
+    /*public void testReferenceNotSet() throws LoaderException, XMLStreamException {
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
+        ComponentTypeReferenceDefinition refDefinition = new ComponentTypeReferenceDefinition();
         refDefinition.setName("name");
-        refDefinition.setRequired(true);
         type.add(refDefinition);
         JavaImplementation impl = new JavaImplementation(null, type);
         ComponentDefinition<Implementation<?>> defn = new ComponentDefinition<Implementation<?>>(impl);
@@ -58,14 +62,13 @@ public class ComponentLoaderValidationTestCase extends TestCase {
         } catch (MissingReferenceException e) {
             // expected
         }
-    }
+    }*/
 
     public void testNotRequiredReference() throws LoaderException, XMLStreamException {
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
-        ReferenceDefinition refDefinition = new ReferenceDefinition();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
+        ComponentTypeReferenceDefinition refDefinition = new ComponentTypeReferenceDefinition();
         refDefinition.setName("name");
-        refDefinition.setRequired(false);
         type.add(refDefinition);
         JavaImplementation impl = new JavaImplementation(null, type);
         ComponentDefinition<Implementation<?>> defn = new ComponentDefinition<Implementation<?>>(impl);
@@ -73,20 +76,23 @@ public class ComponentLoaderValidationTestCase extends TestCase {
     }
 
     public void testReferenceMultiplicity() throws LoaderException, XMLStreamException {
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
-        ReferenceDefinition refDefinition = new ReferenceDefinition();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
+        ComponentTypeReferenceDefinition refDefinition = new ComponentTypeReferenceDefinition();
         refDefinition.setName("r1");
-        refDefinition.setRequired(true);
         refDefinition.setMultiplicity(Multiplicity.ONE_N);
         type.add(refDefinition);
         JavaImplementation impl = new JavaImplementation(null, type);
         ComponentDefinition<Implementation<?>> defn = new ComponentDefinition<Implementation<?>>(impl);
-        ReferenceTarget target = new ReferenceTarget();
+        ComponentReferenceDefinition compRef = new ComponentReferenceDefinition(type.getReferences().get("r1"));
+        compRef.addTarget(URI.create("c1"));
+        compRef.addTarget(URI.create("c2"));
+        defn.add(compRef);
+        /*ReferenceTarget target = new ReferenceTarget();
         target.setReferenceName("r1");
         target.addTarget(URI.create("c1"));
         target.addTarget(URI.create("c2"));
-        defn.add(target);
+        defn.add(target);*/
         loader.validate(defn);
 
         refDefinition.setMultiplicity(Multiplicity.ZERO_ONE);
@@ -108,7 +114,9 @@ public class ComponentLoaderValidationTestCase extends TestCase {
             // Expected
         }
 
-        target.getTargets().clear();
+        defn = new ComponentDefinition<Implementation<?>>(impl);
+        compRef = new ComponentReferenceDefinition(type.getReferences().get("r1"));
+        defn.add(compRef);
         refDefinition.setMultiplicity(Multiplicity.ONE_ONE);
         try {
             loader.validate(defn);
@@ -130,9 +138,9 @@ public class ComponentLoaderValidationTestCase extends TestCase {
 
     }    
     public void testAutowire() throws LoaderException, XMLStreamException {
-        PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new PojoComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
-        ReferenceDefinition refDefinition = new ReferenceDefinition();
+        PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new PojoComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
+        ComponentTypeReferenceDefinition refDefinition = new ComponentTypeReferenceDefinition();
         refDefinition.setName("name");
         refDefinition.setAutowire(true);
         type.add(refDefinition);

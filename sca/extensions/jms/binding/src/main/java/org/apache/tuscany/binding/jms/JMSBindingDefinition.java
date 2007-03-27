@@ -254,4 +254,21 @@ public class JMSBindingDefinition extends BindingDefinition {
         this.xmlFormat = b;
     }
 
+    public Object clone() {
+                
+        JMSBindingDefinition clone = new JMSBindingDefinition();
+        clone.destinationType = this.destinationType;
+        clone.destinationType = this.destinationType;
+        clone.connectionFactoryName = this.connectionFactoryName;
+        clone.activationSpecName = this.activationSpecName;
+        clone.initialContextFactoryName = this.initialContextFactoryName;
+        clone.jNDIProviderURL = this.jNDIProviderURL;
+        clone.deliveryMode = this.deliveryMode;
+        clone.timeToLive = this.timeToLive;
+        clone.priority = this.priority;
+        clone.replyTo = this.replyTo;
+
+        return clone();
+    }
+
 }

@@ -82,8 +82,12 @@ public class ContributionProcessorRegistryImpl implements ContributionProcessorR
         if (processor == null) {
             throw new UnsupportedContentTypeException(contentType, locationURL.getPath());
         }
- 
+        try {
         processor.processContent(contribution, source, inputStream);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        }
+        
     }
 
     public void processModel(Contribution contribution, URI source, Object modelObject) throws DeploymentException,

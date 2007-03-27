@@ -30,11 +30,13 @@ import org.apache.tuscany.spi.component.ReferenceBinding;
 import org.apache.tuscany.spi.component.ServiceBinding;
 import org.apache.tuscany.spi.component.WorkContext;
 import org.apache.tuscany.spi.model.ComponentDefinition;
+import org.apache.tuscany.spi.model.ComponentReferenceDefinition;
 import org.apache.tuscany.spi.model.ComponentType;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.Multiplicity;
 import org.apache.tuscany.spi.model.Operation;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ReferenceTarget;
 import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.model.ServiceDefinition;
@@ -95,24 +97,23 @@ public abstract class WireServiceExtension implements WireService {
             component.addInboundWire(wire);
         }
         // create outgoing reference wires
-        for (ReferenceTarget referenceTarget : definition.getReferenceTargets().values()) {
-            Map<String, ? extends ReferenceDefinition> references = componentType.getReferences();
-            ReferenceDefinition mappedReference = references.get(referenceTarget.getReferenceName());
-            assert mappedReference != null;
-            List<OutboundWire> wires = createWire(referenceTarget, mappedReference);
-            Multiplicity multiplicity = mappedReference.getMultiplicity();
-            if (multiplicity == Multiplicity.ZERO_ONE || multiplicity == Multiplicity.ONE_ONE) {
-                // 0..1 or 1..1
-                for (OutboundWire wire : wires) {
-                    wire.setContainer(component);
-                    component.addOutboundWire(wire);
+        for (ComponentReferenceDefinition refDefn : definition.getReferences().values()) {
+            if (!refDefn.isWiredByImpl()) {
+                List<OutboundWire> wires = createWire(refDefn.getTargets(), refDefn);
+                Multiplicity multiplicity = refDefn.getMultiplicity();
+                if (multiplicity == Multiplicity.ZERO_ONE || multiplicity == Multiplicity.ONE_ONE) {
+                    // 0..1 or 1..1
+                    for (OutboundWire wire : wires) {
+                        wire.setContainer(component);
+                        component.addOutboundWire(wire);
+                    }
+                } else {
+                    // 0..N or 1..N
+                    for (OutboundWire wire : wires) {
+                        wire.setContainer(component);
+                    }
+                    component.addOutboundWires(wires);
                 }
-            } else {
-                // 0..N or 1..N
-                for (OutboundWire wire : wires) {
-                    wire.setContainer(component);
-                }
-                component.addOutboundWires(wires);
             }
         }
     }
@@ -260,6 +261,7 @@ public abstract class WireServiceExtension implements WireService {
         }
     }
 
+    
     /**
      * Creates a wire for flowing outbound invocations from a reference
      *
@@ -267,14 +269,14 @@ public abstract class WireServiceExtension implements WireService {
      * @param definition the reference target configuration
      * @return the wire the outbound wire
      */
-    protected List<OutboundWire> createWire(ReferenceTarget target, ReferenceDefinition definition) {
+    protected List<OutboundWire> createWire(List<URI> targetUris, ComponentReferenceDefinition definition) {
         ServiceContract<?> contract = definition.getServiceContract();
         List<OutboundWire> outboundWires = new ArrayList<OutboundWire>();
-        if (definition.isAutowire()) {
+        if (definition.getAssociatedCompTypeRefDefn().isAutowire() || definition.isAutowire()) {
             OutboundWire wire = new OutboundWireImpl();
             wire.setAutowire(true);
             wire.setServiceContract(contract);
-            wire.setReferenceName(target.getReferenceName());
+            wire.setReferenceName(definition.getName());
             for (Operation<?> operation : contract.getOperations().values()) {
                 // TODO handle policy
                 OutboundInvocationChain chain = createOutboundChain(operation);
@@ -291,12 +293,12 @@ public abstract class WireServiceExtension implements WireService {
             }
             outboundWires.add(wire);
         } else {
-            for (URI uri : target.getTargets()) {
+            for (URI uri : targetUris) {
                 OutboundWire wire = new OutboundWireImpl();
                 QualifiedName qName = new QualifiedName(uri.toString());
                 wire.setTargetName(qName);
                 wire.setServiceContract(contract);
-                wire.setReferenceName(target.getReferenceName());
+                wire.setReferenceName(definition.getName());
                 for (Operation<?> operation : contract.getOperations().values()) {
                     // TODO handle policy
                     OutboundInvocationChain chain = createOutboundChain(operation);
@@ -317,5 +319,5 @@ public abstract class WireServiceExtension implements WireService {
         }
         return outboundWires;
     }
-
+    
 }

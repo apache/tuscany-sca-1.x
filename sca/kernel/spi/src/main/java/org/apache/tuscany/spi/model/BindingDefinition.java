@@ -25,7 +25,7 @@ import java.net.URI;
  *
  * @version $Rev$ $Date$
  */
-public abstract class BindingDefinition extends ModelObject {
+public abstract class BindingDefinition extends ModelObject implements Cloneable {
     private URI targetUri;
 
     protected BindingDefinition() {
@@ -42,4 +42,6 @@ public abstract class BindingDefinition extends ModelObject {
     public void setTargetUri(URI targetUri) {
         this.targetUri = targetUri;
     }
+    
+    abstract public Object clone();
 }

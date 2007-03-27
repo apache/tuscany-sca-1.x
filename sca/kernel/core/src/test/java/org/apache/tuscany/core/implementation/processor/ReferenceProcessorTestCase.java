@@ -58,7 +58,6 @@ public class ReferenceProcessorTestCase extends TestCase {
                               null);
         JavaMappedReference prop = type.getReferences().get("fooRequired");
         assertNotNull(prop);
-        assertTrue(prop.isRequired());
     }
 
     public void testMethodName() throws Exception {
@@ -82,7 +81,6 @@ public class ReferenceProcessorTestCase extends TestCase {
         processor.visitField(null, ReferenceProcessorTestCase.Foo.class.getDeclaredField("bazRequired"), type, null);
         JavaMappedReference prop = type.getReferences().get("bazRequired");
         assertNotNull(prop);
-        assertTrue(prop.isRequired());
     }
 
     public void testFieldName() throws Exception {
@@ -199,7 +197,6 @@ public class ReferenceProcessorTestCase extends TestCase {
         assertNotNull(prop);
         assertSame(Ref.class, prop.getServiceContract().getInterfaceClass());
         assertEquals(Multiplicity.ONE_N, prop.getMultiplicity());
-        assertTrue(prop.isRequired());
     }
 
     public void testMultiplicityTo0ToN() throws Exception {
@@ -208,7 +205,6 @@ public class ReferenceProcessorTestCase extends TestCase {
         assertNotNull(prop);
         assertSame(Ref.class, prop.getServiceContract().getInterfaceClass());
         assertEquals(Multiplicity.ZERO_N, prop.getMultiplicity());
-        assertFalse(prop.isRequired());
     }
 
     public void testMultiplicity1ToNMethod() throws Exception {
@@ -217,7 +213,6 @@ public class ReferenceProcessorTestCase extends TestCase {
         assertNotNull(prop);
         assertSame(Ref.class, prop.getServiceContract().getInterfaceClass());
         assertEquals(Multiplicity.ONE_N, prop.getMultiplicity());
-        assertTrue(prop.isRequired());
     }
 
     public void testMultiplicity0ToNMethod() throws Exception {
@@ -226,7 +221,5 @@ public class ReferenceProcessorTestCase extends TestCase {
         assertNotNull(prop);
         assertSame(Ref.class, prop.getServiceContract().getInterfaceClass());
         assertEquals(Multiplicity.ZERO_N, prop.getMultiplicity());
-        assertFalse(prop.isRequired());
     }
-
 }

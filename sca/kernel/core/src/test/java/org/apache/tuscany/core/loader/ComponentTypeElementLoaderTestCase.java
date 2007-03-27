@@ -26,9 +26,10 @@ import org.apache.tuscany.spi.component.CompositeComponent;
 import org.apache.tuscany.spi.deployer.DeploymentContext;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
 import org.apache.tuscany.spi.model.ComponentType;
+import org.apache.tuscany.spi.model.ComponentTypeReferenceDefinition;
 import org.apache.tuscany.spi.model.ModelObject;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ServiceDefinition;
 
 import junit.framework.TestCase;
@@ -40,8 +41,8 @@ import org.easymock.EasyMock;
 public class ComponentTypeElementLoaderTestCase extends TestCase {
 
     public void testSpecializedComponentTypePassedIn() throws Exception {
-        ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
+        ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
         ComponentTypeElementLoader loader = new ComponentTypeElementLoader(null);
         XMLStreamReader reader = EasyMock.createMock(XMLStreamReader.class);
         EasyMock.expect(reader.getName()).andReturn(ComponentTypeElementLoader.COMPONENT_TYPE);
@@ -55,8 +56,8 @@ public class ComponentTypeElementLoaderTestCase extends TestCase {
     }
 
     public void testComponentTypePassedAsContext() throws Exception {
-        ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> type =
-            new ComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
+        ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>> type =
+            new ComponentType<ServiceDefinition, ComponentTypeReferenceDefinition, Property<?>>();
         LoaderRegistry registry = EasyMock.createMock(LoaderRegistry.class);
         EasyMock.expect(registry.load((CompositeComponent) EasyMock.isNull(),
             EasyMock.isA(ComponentType.class),

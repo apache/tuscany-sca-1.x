@@ -18,18 +18,21 @@
  */
 package org.apache.tuscany.core.implementation.composite;
 
+import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
+import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
+import static org.osoa.sca.Constants.SCA_NS;
+
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+
 import javax.xml.namespace.QName;
-import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
-import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import static org.osoa.sca.Constants.SCA_NS;
-
+import org.apache.tuscany.core.property.PropertyHelper;
+import org.apache.tuscany.core.util.ReferenceLoaderHelper;
 import org.apache.tuscany.spi.QualifiedName;
 import org.apache.tuscany.spi.annotation.Autowire;
 import org.apache.tuscany.spi.component.CompositeComponent;
@@ -39,18 +42,24 @@ import org.apache.tuscany.spi.extension.LoaderExtension;
 import org.apache.tuscany.spi.idl.InvalidServiceContractException;
 import org.apache.tuscany.spi.idl.java.JavaInterfaceProcessorRegistry;
 import org.apache.tuscany.spi.idl.java.JavaServiceContract;
+import org.apache.tuscany.spi.loader.InvalidPromotedReferenceException;
 import org.apache.tuscany.spi.loader.InvalidServiceException;
 import org.apache.tuscany.spi.loader.InvalidWireException;
 import org.apache.tuscany.spi.loader.LoaderException;
 import org.apache.tuscany.spi.loader.LoaderRegistry;
+import org.apache.tuscany.spi.loader.ReferenceMultiplicityOverridingException;
+import org.apache.tuscany.spi.model.BindingDefinition;
 import org.apache.tuscany.spi.model.ComponentDefinition;
+import org.apache.tuscany.spi.model.ComponentReferenceDefinition;
 import org.apache.tuscany.spi.model.ComponentType;
 import org.apache.tuscany.spi.model.CompositeComponentType;
+import org.apache.tuscany.spi.model.CompositeReferenceDefinition;
 import org.apache.tuscany.spi.model.Implementation;
 import org.apache.tuscany.spi.model.Include;
 import org.apache.tuscany.spi.model.ModelObject;
+import org.apache.tuscany.spi.model.Multiplicity;
 import org.apache.tuscany.spi.model.Property;
-import org.apache.tuscany.spi.model.ReferenceDefinition;
+import org.apache.tuscany.spi.model.AbstractReferenceDefinition;
 import org.apache.tuscany.spi.model.ReferenceTarget;
 import org.apache.tuscany.spi.model.ServiceContract;
 import org.apache.tuscany.spi.model.ServiceDefinition;
@@ -58,11 +67,9 @@ import org.apache.tuscany.spi.model.WireDefinition;
 import org.apache.tuscany.spi.services.artifact.Artifact;
 import org.apache.tuscany.spi.services.artifact.ArtifactRepository;
 
-import org.apache.tuscany.core.property.PropertyHelper;
-
 /**
  * Loads a composite component definition from an XML-based assembly file
- *
+ * 
  * @version $Rev$ $Date$
  */
 public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
@@ -74,7 +81,9 @@ public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
 
     private final ArtifactRepository artifactRepository;
 
-    public CompositeLoader(@Autowire LoaderRegistry registry, @Autowire ArtifactRepository artifactRepository) {
+    public CompositeLoader(@Autowire
+    LoaderRegistry registry, @Autowire
+    ArtifactRepository artifactRepository) {
         super(registry);
         this.artifactRepository = artifactRepository;
     }
@@ -86,9 +95,10 @@ public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
     public CompositeComponentType load(CompositeComponent parent,
                                        ModelObject object,
                                        XMLStreamReader reader,
-                                       DeploymentContext deploymentContext) throws XMLStreamException, LoaderException {
-        CompositeComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> composite =
-            new CompositeComponentType<ServiceDefinition, ReferenceDefinition, Property<?>>();
+                                       DeploymentContext deploymentContext) throws XMLStreamException,
+                                                                           LoaderException {
+        CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, Property<?>> composite =
+            new CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, Property<?>>();
         composite.setName(reader.getAttributeValue(null, "name"));
         boolean done = false;
         while (!done) {
@@ -96,17 +106,17 @@ public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
                 case START_ELEMENT:
                     ModelObject o = registry.load(parent, composite, reader, deploymentContext);
                     if (o instanceof ServiceDefinition) {
-                        composite.add((ServiceDefinition) o);
-                    } else if (o instanceof ReferenceDefinition) {
-                        composite.add((ReferenceDefinition) o);
+                        composite.add((ServiceDefinition)o);
+                    } else if (o instanceof CompositeReferenceDefinition) {
+                        composite.add((CompositeReferenceDefinition)o);
                     } else if (o instanceof Property<?>) {
-                        composite.add((Property<?>) o);
+                        composite.add((Property<?>)o);
                     } else if (o instanceof ComponentDefinition<?>) {
-                        composite.add((ComponentDefinition<?>) o);
+                        composite.add((ComponentDefinition<?>)o);
                     } else if (o instanceof Include) {
-                        composite.add((Include) o);
+                        composite.add((Include)o);
                     } else if (o instanceof Dependency) {
-                        Artifact artifact = ((Dependency) o).getArtifact();
+                        Artifact artifact = ((Dependency)o).getArtifact();
                         if (artifactRepository != null) {
                             // default to jar type if not specified
                             if (artifact.getType() == null) {
@@ -117,14 +127,14 @@ public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
                         if (artifact.getUrl() != null) {
                             ClassLoader classLoader = deploymentContext.getClassLoader();
                             if (classLoader instanceof CompositeClassLoader) {
-                                CompositeClassLoader ccl = (CompositeClassLoader) classLoader;
+                                CompositeClassLoader ccl = (CompositeClassLoader)classLoader;
                                 for (URL dep : artifact.getUrls()) {
                                     ccl.addURL(dep);
                                 }
                             }
                         }
                     } else if (o instanceof WireDefinition) {
-                        composite.add((WireDefinition) o);
+                        composite.add((WireDefinition)o);
                     } else {
                         // add as an unknown model extension
                         if (o != null) {
@@ -135,22 +145,25 @@ public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
                     break;
                 case END_ELEMENT:
                     if (COMPOSITE.equals(reader.getName())) {
-                        // if there are wire defintions then link them up to the relevant components
+                        // if there are wire defintions then link them up to the
+                        // relevant components
                         resolveWires(composite);
-                        verifyCompositeCompleteness(composite);
+                        validateCompositeDefintion(composite);
+                        //verifyCompositeCompleteness(composite);
                         done = true;
                         break;
                     }
             }
         }
         processJavaInterfaces(composite);
-        for (ComponentDefinition<? extends Implementation<?>> c : composite.getComponents().values()) {
+        for (ComponentDefinition<? extends Implementation<?>> c : composite.getComponents()
+            .values()) {
             processJavaInterfaces(c.getImplementation().getComponentType());
             PropertyHelper.processProperties(composite, c, deploymentContext);
         }
         return composite;
     }
-    
+
     protected void processJavaInterfaces(ComponentType componentType) throws LoaderException {
         if (processorRegistry == null) {
             return;
@@ -160,16 +173,18 @@ public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
                 ServiceContract<?> contract = ((ServiceDefinition)s).getServiceContract();
                 if (JavaServiceContract.class.isInstance(contract)) {
                     contract =
-                        processorRegistry.introspect(contract.getInterfaceClass(), contract.getCallbackClass(), true);
+                        processorRegistry.introspect(contract.getInterfaceClass(), contract
+                            .getCallbackClass(), true);
                     ((ServiceDefinition)s).setServiceContract(contract);
                 }
             }
             for (Object r : componentType.getReferences().values()) {
-                ServiceContract<?> contract = ((ReferenceDefinition)r).getServiceContract();
+                ServiceContract<?> contract = ((AbstractReferenceDefinition)r).getServiceContract();
                 if (JavaServiceContract.class.isInstance(contract)) {
                     contract =
-                        processorRegistry.introspect(contract.getInterfaceClass(), contract.getCallbackClass(), true);
-                    ((ReferenceDefinition)r).setServiceContract(contract);
+                        processorRegistry.introspect(contract.getInterfaceClass(), contract
+                            .getCallbackClass(), true);
+                    ((AbstractReferenceDefinition)r).setServiceContract(contract);
                 }
             }
         } catch (InvalidServiceContractException e) {
@@ -178,8 +193,8 @@ public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
 
     }
 
-    protected void resolveWires(CompositeComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> composite)
-        throws InvalidWireException {
+    protected void resolveWires(CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, Property<?>> composite) throws InvalidWireException,
+                                                                                                                               InvalidPromotedReferenceException {
         QualifiedName sourceName;
         ComponentDefinition componentDefinition;
         ServiceDefinition serviceDefinition;
@@ -194,58 +209,200 @@ public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
             if (serviceDefinition != null) {
                 serviceDefinition.setTarget(wire.getTarget());
             } else {
-                componentDefinition = composite.getDeclaredComponents().get(sourceName.getPartName());
+                componentDefinition =
+                    composite.getDeclaredComponents().get(sourceName.getPartName());
                 if (componentDefinition != null) {
-                    ReferenceTarget referenceTarget = createReferenceTarget(sourceName.getPortName(),
-                        targetUri,
-                        componentDefinition);
-                    componentDefinition.add(referenceTarget);
+                    if (sourceName.getPortName() == null || sourceName.getPortName().length() == 0) {
+                        if (componentDefinition.getReferences().size() > 1 || componentDefinition
+                            .getReferences().isEmpty()) {
+                            throw new InvalidWireException("Unable to determine unique source reference");
+                        } else {
+                            ComponentReferenceDefinition ref =
+                                (ComponentReferenceDefinition)componentDefinition.getReferences()
+                                    .values().iterator().next();
+                            ref.addTarget(targetUri);
+                        }
+                    } else {
+                        ((ComponentReferenceDefinition)componentDefinition.getReferences()
+                            .get(sourceName.getPortName())).addTarget(targetUri);
+                    }
+
                 } else {
                     throw new InvalidWireException("Source not found", sourceName.toString());
                 }
             }
         }
-    }
 
-    private ReferenceTarget createReferenceTarget(String componentReferenceName,
-                                                  URI target,
-                                                  ComponentDefinition componentDefn) throws InvalidWireException {
-        ComponentType componentType = componentDefn.getImplementation().getComponentType();
-        if (componentReferenceName == null) {
-            // if there is ambiguity in determining the source of the wire or there is no reference to be wired
-            if (componentType.getReferences().size() > 1 || componentType.getReferences().isEmpty()) {
-                throw new InvalidWireException("Unable to determine unique source reference");
-            } else {
-                Map references = componentType.getReferences();
-                ReferenceDefinition definition = (ReferenceDefinition) references.values().iterator().next();
-                componentReferenceName = definition.getName();
+        QualifiedName targetName = null;
+        ComponentReferenceDefinition promotedComponentRef = null;
+        for (CompositeReferenceDefinition compositeRefDef : composite.getDeclaredReferences()
+            .values()) {
+            for (URI promotedComponentRefUri : compositeRefDef.getPromotedReferences()) {
+                targetName = new QualifiedName(promotedComponentRefUri.toString());
+                componentDefinition = composite.getComponents().get(targetName.getPartName());
+                if (componentDefinition != null) {
+                    if (targetName.getPortName() != null) {
+                        promotedComponentRef =
+                            (ComponentReferenceDefinition)componentDefinition.getReferences()
+                                .get(targetName.getPortName());
+                    } else {
+                        promotedComponentRef =
+                            (ComponentReferenceDefinition)componentDefinition.getReferences()
+                                .values().iterator().next();
+                    }
+                    if (promotedComponentRef != null) {
+                        promotedComponentRef.addTarget(URI.create(compositeRefDef.getName()));
+                    } else {
+                        throw new InvalidPromotedReferenceException("Invalid promoted reference ",
+                                                                    targetName.toString());
+                    }
+                } else {
+                    throw new InvalidPromotedReferenceException("Invalid promoted reference ",
+                                                                targetName.toString());
+                }
+
             }
         }
+    }
 
-        ReferenceTarget referenceTarget = new ReferenceTarget();
-        referenceTarget.setReferenceName(componentReferenceName);
-        referenceTarget.addTarget(target);
-        return referenceTarget;
+    protected void validateCompositeDefintion(
+        CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, Property<?>> composite) 
+            throws LoaderException {
+        verifyCompositeCompleteness(composite);
+        validateCompositeReferenceDefinition(composite);
     }
 
     protected void verifyCompositeCompleteness(
-        CompositeComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> composite)
-        throws InvalidServiceException {
+        CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, Property<?>> composite) 
+            throws InvalidServiceException {
         // check if all of the composite services have been wired
         for (ServiceDefinition svcDefn : composite.getDeclaredServices().values()) {
             if (svcDefn.getTarget() == null) {
-                throw new InvalidServiceException("Composite service not wired to a target", svcDefn.getName());
+                throw new InvalidServiceException("Composite service not wired to a target",
+                                                  svcDefn.getName());
             }
+        }
+    }
+    
+    protected void verifyReferenceInterfaceCompatibility(CompositeReferenceDefinition compositeRefDefn, 
+                                                ComponentReferenceDefinition componentRefDefn) 
+                                                throws LoaderException {
+        if (compositeRefDefn.getServiceContract() != null) {
+            //TODO : Since the JavaInterfaceProcessorRegistryImpl does not do a deep introspection
+            //this comparison is not possible.  This will be uncommented once that is fixed.
+            /*ReferenceLoaderHelper.checkInterfaceCompatibility(componentRefDefn.getServiceContract(),
+                                                              compositeRefDefn.getServiceContract(),
+                                                              false);*/
+        } else {
+            //FIXME : the wireservice needs a service contract in the composite ref. def
+            //so filling up with one of the promoted component ref. defn's service contract
+            compositeRefDefn.setServiceContract(componentRefDefn.getServiceContract());
+        }
+    }
+    
+    protected Multiplicity deriveReferenceMultiplicity(CompositeReferenceDefinition compositeRefDefn, 
+                                                       ComponentReferenceDefinition componentRefDefn,
+                                                       Multiplicity leastMultiplicity) 
+                                                            throws LoaderException
+    {
+        if (compositeRefDefn.getMultiplicity() != null) {
+            if (!ReferenceLoaderHelper.
+                isValidMultiplicityOverride(componentRefDefn.getMultiplicity(), 
+                                            compositeRefDefn.getMultiplicity())) {
+               throw new ReferenceMultiplicityOverridingException(compositeRefDefn.getName(), 
+                                                                  componentRefDefn.getMultiplicity(),
+                                                                  compositeRefDefn.getMultiplicity());
+           } 
+        } else {
+            if (leastMultiplicity != null) {
+                if (!ReferenceLoaderHelper.isCompatibleMultiplicity(componentRefDefn.getMultiplicity(),
+                                                                    leastMultiplicity)) {
+                    throw new ReferenceMultiplicityOverridingException(compositeRefDefn.getName(), 
+                                                                       componentRefDefn.getMultiplicity(),
+                                                                       leastMultiplicity);
+                } else {
+                    if (!ReferenceLoaderHelper.
+                        isValidMultiplicityOverride(componentRefDefn.getMultiplicity(), 
+                                                    leastMultiplicity)) {
+                        leastMultiplicity = componentRefDefn.getMultiplicity();
+                    }
+                }
+            }
+            else {
+                leastMultiplicity = componentRefDefn.getMultiplicity();
+            }
+        }
+        return leastMultiplicity;
+    }
+    
+    protected void validateCompositeReferenceDefinition(CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, Property<?>> composite) throws LoaderException {
+        QualifiedName promotedName = null;
+        ComponentDefinition promotedComponentDefinition = null;
+        ComponentReferenceDefinition promotedComponentReference = null;
+
+        for (CompositeReferenceDefinition compositeRefDefn : composite.getDeclaredReferences().values()) {
+            // ensure if there is a service contract defined, then it is
+            // compatible with all
+            // promoted component reference interfaces
+            Multiplicity leastMultiplicity = null;
+            boolean bindingsOverriden = compositeRefDefn.getBindings().size() > 0;
+            for (URI promotedRef : compositeRefDefn.getPromotedReferences()) {
+                // check for valid promotions
+                promotedName = new QualifiedName(promotedRef.toString());
+                promotedComponentDefinition =
+                    composite.getComponents().get(promotedName.getPartName());
+                if (promotedComponentDefinition != null) {
+                    if (promotedName.getPortName() != null) {
+                        promotedComponentReference =
+                            (ComponentReferenceDefinition)promotedComponentDefinition
+                                .getReferences().get(promotedName.getPortName());
+                    } else {
+                        promotedComponentReference =
+                            (ComponentReferenceDefinition)promotedComponentDefinition
+                                .getReferences().values().iterator().next();
+                    }
+                    // check for service contract compatibility
+                    if (promotedComponentReference != null) {
+                        verifyReferenceInterfaceCompatibility(compositeRefDefn,
+                                                              promotedComponentReference);
+                        leastMultiplicity =
+                            deriveReferenceMultiplicity(compositeRefDefn,
+                                                        promotedComponentReference,
+                                                        leastMultiplicity);
+
+                        // if bindings have not been overridden int the composite then copy them
+                        // over for convenience so that when accessed, traversing of all promoted
+                        // references can be avoided
+                        if (!bindingsOverriden) {
+                            for (BindingDefinition refBinding : promotedComponentReference
+                                .getBindings()) {
+                                compositeRefDefn.addBinding((BindingDefinition)refBinding.clone());
+                            }
+                        }
+                    } else {
+                        throw new InvalidPromotedReferenceException("Invalid promoted reference ",
+                                                                    promotedRef.toString());
+                    }
+                } else {
+                    throw new InvalidPromotedReferenceException("Invalid promoted reference ",
+                                                                promotedRef.toString());
+                }
+
+            }
+            if (compositeRefDefn.getMultiplicity() == null) {
+                compositeRefDefn.setMultiplicity(leastMultiplicity);
+            }
+
         }
     }
 
     private void validateTarget(URI target,
-                                CompositeComponentType<ServiceDefinition, ReferenceDefinition, Property<?>> composite)
-        throws InvalidWireException {
+                                CompositeComponentType<ServiceDefinition, CompositeReferenceDefinition, Property<?>> composite) throws InvalidWireException {
         QualifiedName targetName = new QualifiedName(target.getPath());
         // if target is not a reference of the composite
         if (composite.getReferences().get(targetName.getPartName()) == null) {
-            ComponentDefinition<?> targetDefinition = composite.getDeclaredComponents().get(targetName.getPartName());
+            ComponentDefinition<?> targetDefinition =
+                composite.getDeclaredComponents().get(targetName.getPartName());
             // if a target component exists in this composite
             if (targetDefinition != null) {
                 Implementation<?> implementation = targetDefinition.getImplementation();
@@ -257,7 +414,8 @@ public class CompositeLoader extends LoaderExtension<CompositeComponentType> {
                     }
                 } else {
                     if (services.get(targetName.getPortName()) == null) {
-                        throw new InvalidWireException("Invalid target service", targetName.toString());
+                        throw new InvalidWireException("Invalid target service", targetName
+                            .toString());
                     }
                 }
             } else {
