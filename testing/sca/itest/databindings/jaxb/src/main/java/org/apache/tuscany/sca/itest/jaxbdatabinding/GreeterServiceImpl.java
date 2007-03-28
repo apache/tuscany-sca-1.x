@@ -35,9 +35,9 @@ public class GreeterServiceImpl implements GreeterService {
      * @see org.apache.tuscany.sca.itest.jaxbdatabinding.GreeterService#greet(javax.xml.bind.JAXBElement)
      */
     public PersonType greet(PersonType who) {
-        System.out.println(who.toString());
+ //       System.out.println(who.toString());
         who.setGreeting("Hello");
-        System.out.println(who.toString());
+ //      System.out.println(who.toString());
         return who;
     }
 

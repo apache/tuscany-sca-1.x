@@ -47,9 +47,9 @@
         <reference name="greeterService">JAXBGreeterServiceDefaultRef</reference>
     </component>
 
-    <reference name="JAXBGreeterServiceDefaultRef">
-        <interface.java class="org.apache.tuscany.sca.itest.jaxbdatabinding.GreeterService" />
-    </reference>
+    <component name="JAXBGreeterServiceDefaultRef">
+        <implementation.java class="org.apache.tuscany.sca.itest.jaxbdatabinding.GreeterServiceImpl" />
+     </component>
 
     <component name="WSJAXBGreeterServiceClient">
         <implementation.java class="org.apache.tuscany.sca.itest.jaxbdatabinding.GreeterServiceClientImpl" />
