@@ -54,7 +54,7 @@ public class MyServiceImpl implements MyService, MyServiceByDate, MyListService,
     private CompositeContext context;
 
     public MyServiceImpl() {
-        System.out.println("creating service instance...");
+   //     System.out.println("creating service instance...");
     }
 
     public Date nextHoliday() {
@@ -94,12 +94,12 @@ public class MyServiceImpl implements MyService, MyServiceByDate, MyListService,
 
     @Init
     public void start() {
-        System.out.println("Start service..");
+ //       System.out.println("Start service..");
     }
 
     @Destroy
     public void stop() {
-        System.out.println("Stop service..");
+ //       System.out.println("Stop service..");
 
     }
 
