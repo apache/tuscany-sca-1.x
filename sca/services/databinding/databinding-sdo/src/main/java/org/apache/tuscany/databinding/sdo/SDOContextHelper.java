@@ -55,7 +55,10 @@ public final class SDOContextHelper {
 //            }
             AtomicComponent child = (AtomicComponent)composite.getSystemChild(HelperContext.class.getName());
             try {
-                helperContext = (HelperContext)child.getTargetInstance();
+                // The child can be null if no import.sdo is declared
+                if (child != null) {
+                    helperContext = (HelperContext)child.getTargetInstance();
+                }
             } catch (TargetResolutionException e) {
                 helperContext = null;
             }
