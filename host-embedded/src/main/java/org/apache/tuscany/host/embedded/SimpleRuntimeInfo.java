@@ -21,7 +21,6 @@ package org.apache.tuscany.host.embedded;
 
 import java.net.URI;
 import java.net.URL;
-import java.util.List;
 
 import org.apache.tuscany.host.RuntimeInfo;
 import org.apache.tuscany.spi.bootstrap.ComponentNames;
@@ -32,22 +31,13 @@ import org.apache.tuscany.spi.bootstrap.ComponentNames;
 public interface SimpleRuntimeInfo extends RuntimeInfo {
     URI DEFAULT_COMPOSITE = ComponentNames.TUSCANY_APPLICATION_ROOT.resolve("default");
 
-    String DEFAULT_SYSTEM_SCDL = "META-INF/tuscany/default-system.composite";
-    String SYSTEM_SCDL = "system.composite";
-    String EXTENSION_SCDL = "META-INF/sca/extension.composite";
-    String SERVICE_SCDL = "META-INF/sca/service.composite";
-    String META_APPLICATION_SCDL = "META-INF/sca/application.composite";
     String APPLICATION_SCDL = "application.composite";
 
     ClassLoader getClassLoader();
 
     String getCompositePath();
 
-    URL getSystemSCDL();
-
     URL getApplicationSCDL();
-
-    List<URL> getExtensionSCDLs();
 
     URL getContributionRoot();
 
