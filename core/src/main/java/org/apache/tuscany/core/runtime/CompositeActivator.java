@@ -16,25 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.implementation.java.context;
 
-import java.net.URI;
+package org.apache.tuscany.core.runtime;
 
-import org.apache.tuscany.spi.component.ScopeContainer;
+import org.apache.tuscany.assembly.Composite;
 
 /**
- * @version $Revision$ $Date$
- * @param <T> the implementation class for the defined component
+ * Start/stop a composite
+ * 
+ * @version $Rev$ $Date$
  */
-public class JavaComponent<T> extends PojoComponent<T> {
-    public JavaComponent(URI componentId,
-                         InstanceFactoryProvider<T> instanceFactoryProvider,
-                         ScopeContainer<?> scopeContainer,
-                         URI groupId,
-                         int initLevel,
-                         long maxIdleTime,
-                         long maxAge) {
-        super(componentId, instanceFactoryProvider, scopeContainer, groupId, initLevel, maxIdleTime, maxAge);
-    }
+public interface CompositeActivator {
+    /**
+     * Start a composite
+     * @param composite
+     */
+    void start(Composite composite) throws ActivationException;
+
+    /**
+     * Stop a composite
+     * @param composite
+     */
+    void stop(Composite composite) throws ActivationException;
 
 }

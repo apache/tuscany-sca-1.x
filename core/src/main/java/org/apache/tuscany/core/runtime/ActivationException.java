@@ -6,31 +6,32 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
-package org.apache.tuscany.container.crud;
+package org.apache.tuscany.core.runtime;
+
 
 /**
- * The service interface implemented by CRUD components.
- * 
+ * Denotes an error starting the runtime
+ *
  * @version $Rev$ $Date$
  */
-public interface CRUD {
+public class ActivationException extends Exception {
+    private static final long serialVersionUID = 8612661660934426123L;
 
-    String create(Object resource);
+    public ActivationException(String message) {
+        super(message);
+    }
 
-    Object retrieve(String id);
-
-    Object update(String id, Object resource);
-
-    void delete(String id);
-
+    public ActivationException(Throwable cause) {
+        super(cause);
+    }
 }
