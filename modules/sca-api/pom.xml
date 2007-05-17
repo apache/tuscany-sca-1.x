@@ -22,10 +22,10 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-modules</artifactId>
-        <version>1.0-incubating-SNAPSHOT</version>
+        <version>0.90-incubating-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <groupId>org.osoa</groupId>
+    <groupId>org.apache.tuscany.sca</groupId>
     <artifactId>sca-api</artifactId>
     <name>Apache Tuscany SCA API</name>
 

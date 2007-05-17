@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.0-incubating-SNAPSHOT</version>
+        <version>0.90-incubating-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>sample-implementation-crud</artifactId>
@@ -37,21 +37,21 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.osoa</groupId>
+            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>sca-api</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.90-incubating-SNAPSHOT</version>
         </dependency>        
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-host-embedded</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.90-incubating-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-interface-java-xml</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.90-incubating-SNAPSHOT</version>
         </dependency>        
 
         <dependency>
