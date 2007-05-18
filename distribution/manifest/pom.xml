@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.0-incubating-SNAPSHOT</version>
+        <version>0.90-incubating-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -231,7 +231,7 @@
             <version>${pom.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.osoa</groupId>
+            <groupId>${pom.groupId}</groupId>
             <artifactId>sca-api</artifactId>
             <version>${pom.version}</version>
         </dependency>
