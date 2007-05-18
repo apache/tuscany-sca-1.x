@@ -8,6 +8,7 @@ tuscany-sca-0.90-incubating
    INSTALL    - this help file
    LICENSE    - the Apache License and any dependecy licenses
    NOTICE     - attribution notices associated with the licenses
+   CHANGES    - A note of the major changes in this version
 
    /doc       - Javadoc for the SCA APIs and the Tuscany SPIs
 
