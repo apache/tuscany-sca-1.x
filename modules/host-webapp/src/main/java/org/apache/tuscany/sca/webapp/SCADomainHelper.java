@@ -19,6 +19,10 @@
 
 package org.apache.tuscany.sca.webapp;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javax.servlet.ServletContext;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
@@ -36,8 +40,27 @@ public class SCADomainHelper {
      */
     public static SCADomain initSCADomain(ServletContext servletContext) {
         SCADomain scaDomain = (SCADomain)servletContext.getAttribute(SCA_DOMAIN_ATTRIBUTE);
+        
+        String domainURI = "http://localhost/" + servletContext.getServletContextName().replace(' ', '.');
+        String contributionRoot = null;
+        
+        try {
+            URL rootURL = servletContext.getResource("/");
+            if (rootURL.getProtocol().equals("jndi")) {
+                //this is tomcat case, we should use getRealPath
+                File warRootFile = new File(servletContext.getRealPath("/"));
+                contributionRoot = warRootFile.toURL().toString();
+            } else {
+                //this is jetty case
+                contributionRoot  = rootURL.toString();
+            }
+        } catch(MalformedURLException mf) {
+            //ignore, pass null
+        }
+                
+        
         if (scaDomain == null) {
-            scaDomain = SCADomain.newInstance();
+            scaDomain = SCADomain.newInstance(domainURI, contributionRoot);
             servletContext.setAttribute(SCA_DOMAIN_ATTRIBUTE, scaDomain);
         }
         return scaDomain;
