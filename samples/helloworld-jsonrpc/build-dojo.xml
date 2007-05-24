@@ -62,7 +62,7 @@
             verbose="true"
             usetimestamp="true"/>
         <copy file="${basedir}/target/dojo-download/dojo-${dojo.version}-${dojo.distro}.zip" 
-              todir="${localRepository}/dojo/dojo-${dojo.distro}/${dojo.version}/"/>
+              tofile="${localRepository}/dojo/dojo-${dojo.distro}/${dojo.version}/dojo-${dojo.distro}-${dojo.version}.zip"/>
     </target>
 	
 

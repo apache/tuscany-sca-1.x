@@ -49,11 +49,6 @@
           <property name="artifactId" value="${artifactId}"/>
         </ant>   
 
-        <ant antfile="./build-dojo.xml" target="clean-dojo-files">
-          <property name="localRepository" value="${settings.localRepository}"/>
-          <property name="artifactId" value="${artifactId}"/>
-        </ant>  
-
         <war destfile="target/sample-helloworldjsonrpc.war" 
              webxml="src/main/webapp/WEB-INF/web.xml">
             <fileset dir="src/main/webapp"/>
@@ -94,7 +89,14 @@
             </lib>
             <classes dir="target/classes"/>
         </war>
+
+        <ant antfile="./build-dojo.xml" target="clean-dojo-files">
+          <property name="localRepository" value="${settings.localRepository}"/>
+          <property name="artifactId" value="${artifactId}"/>
+        </ant> 
      </target>
+
+
 		
     <target name="clean">
         <delete quiet="true" includeemptydirs="true">
