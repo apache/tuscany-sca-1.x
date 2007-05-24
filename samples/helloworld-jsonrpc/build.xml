@@ -16,8 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<project name="calculator-web" default="package">
-    <property name="settings.localRepository" value="./repo" />
+<project name="helloworld-jsonrpc" default="package">
+    <property name="settings.localRepository" value="./target/repo" />
     <property name="artifactId" value="sample-helloworld-jsonrpc" />
 	
     <target name="init">
@@ -40,24 +40,20 @@
     </target>	
 	
     <target name="package" depends="compile">
-        <ant antfile="./build.xml" target="install-dojo">
+        <ant antfile="./build-dojo.xml" target="install-dojo-nomaven">
           <property name="localRepository" value="${settings.localRepository}"/>
         </ant>
         
-        <ant antfile="./build.xml" target="unpack-dojo-files">
+        <ant antfile="./build-dojo.xml" target="unpack-dojo-files">
           <property name="localRepository" value="${settings.localRepository}"/>
           <property name="artifactId" value="${artifactId}"/>
         </ant>   
 
-        <ant antfile="./build.xml" target="clean-dojo-files">
-          <property name="localRepository" value="/repo"/>
-          <property name="artifactId" value="${artifactId}"/>
-        </ant>  
-
-        <war destfile="target/sample-calculator-web.war" 
+        <war destfile="target/sample-helloworldjsonrpc.war" 
              webxml="src/main/webapp/WEB-INF/web.xml">
             <fileset dir="src/main/webapp"/>
             <zipfileset dir="../../modules" prefix="WEB-INF/lib">
+                <include name="sca-api-0.90-incubating.jar"/>
                 <include name="tuscany-assembly-0.90-incubating.jar"/>
                 <include name="tuscany-assembly-xml-0.90-incubating.jar"/>
                 <include name="tuscany-binding-jsonrpc-0.90-incubating.jar"/>
@@ -85,7 +81,6 @@
             <lib dir="../../lib">
                 <include name="commonj-api-0.90-incubating.jar"/>
                 <include name="json-rpc-1.0.jar"/>
-                <include name="sca-api-0.90-incubating.jar"/>
                 <include name="stax-api-1.0.1.jar"/>
                 <include name="wsdl4j-1.6.2.jar"/>
                 <include name="wstx-asl-3.2.0.jar"/>
@@ -94,7 +89,14 @@
             </lib>
             <classes dir="target/classes"/>
         </war>
+
+        <ant antfile="./build-dojo.xml" target="clean-dojo-files">
+          <property name="localRepository" value="${settings.localRepository}"/>
+          <property name="artifactId" value="${artifactId}"/>
+        </ant> 
      </target>
+
+
 		
     <target name="clean">
         <delete quiet="true" includeemptydirs="true">
