@@ -19,7 +19,7 @@ Changed With Apache Tuscany SCA 0.90 (incubating)
 - Extensions now loaded via Java service mechanism
   Refactored extensions to use new SPIs (see below)
 
-- Maven and Ant base sample builds in the binary distribution
+- Maven and Ant based sample builds in the binary distribution
 
 - Implementation Extensions
     Java
@@ -67,3 +67,6 @@ Changed With Apache Tuscany SCA 0.90 (incubating)
 
     Servlet container integration
       org.apache.tuscany.sca.http
+
+- For this point release a partial set of JavaDoc is provided to 
+  be filled out as we close on release 1.0
