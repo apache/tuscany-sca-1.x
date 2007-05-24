@@ -1,6 +1,46 @@
 Changed With Apache Tuscany SCA 0.90 (incubating) 
 =================================================
 
+- Implementations for all of the Java Annotations and API Specification V1.0 found at
+  (http://www.osoa.org/display/Main/Service+Component+Architecture+Specifications) 
+  apart from the following.
+    @ComponentName
+    Conversation
+    RequestContext
+    
+- New assembly model implementation taking into account SCA 1.0 artifacts 
+  Data duplication between assembly model and runtime removed
+
+- Simple single process domain support
+  Contribution support to scope items being deployed into the runtime
+
+- Improved Package/Class naming consistency across modules
+
+- Extensions now loaded via Java service mechanism
+  Refactored extensions to use new SPIs (see below)
+
+- Maven and Ant base sample builds in the binary distribution
+
+- Implementation Extensions
+    Java
+    Script supporting (Ruby, Python, Groovy, JavaScript)
+
+- Binding Extensions
+    Axis2
+    RMI
+    JSONRPC
+
+-Databinding Extensions
+    Axiom
+    JAXB
+    SDO
+
+- Host environments
+    Embedded
+    Tomcat
+    Jetty
+    RMI
+
 - A clear set of SPIs intended to be stable over future releases
     SCA assembly model
       org.apache.tuscany.sca.assembly
@@ -27,43 +67,3 @@ Changed With Apache Tuscany SCA 0.90 (incubating)
 
     Servlet container integration
       org.apache.tuscany.sca.http
-
-- Implementations for all of the Java Annotations and API Specification V1.0 found at
-  (http://www.osoa.org/display/Main/Service+Component+Architecture+Specifications) 
-  apart from the following.
-    @ComponentName
-    Conversation
-    RequestContext
-    
-- Extensions now loaded via Java service mechanism
-  Refactored extensions to use new SPIs (see below)
-
-- Improved Package/Class naming consistency across modules
-
-- New assembly model implementation taking into account SCA 1.0 artifacts 
-  Data duplication between assembly model and runtime removed
-
-- Simple single process domain support
-  Contribution support to scope items being deployed into the runtime
-
-- Maven and Ant base sample builds in the binary distribution
-
-- Implementation Extensions
-    Java
-    Script supporting (Ruby, Python, Groovy, JavaScript)
-
-- Binding Extensions
-    Axis2
-    RMI
-    JSONRPC
-
--Databinding Extensions
-    Axiom
-    JAXB
-    SDO
-
-- Hosting Extension
-    Embedded
-    Tomcat
-    Jetty
-    RMI

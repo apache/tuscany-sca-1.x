@@ -12,7 +12,7 @@ tuscany-sca-0.90-incubating
 
    /doc       - Javadoc for the SCA APIs and the Tuscany SPIs
 
-   /lib       - The Tuscany all and manifest jars and all their dependencies
+   /lib       - The tuscany-sca-all and tuscany-sca-manifest jars and all their dependencies
 
    /modules   - all of the individual Tuscany jars
 
