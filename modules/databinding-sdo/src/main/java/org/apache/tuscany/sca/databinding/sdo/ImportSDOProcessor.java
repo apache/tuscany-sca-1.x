@@ -38,11 +38,12 @@ import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
 import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
-import org.apache.tuscany.sdo.api.SDOUtil;
+import org.apache.tuscany.sdo.util.SDOUtil;
 
 import commonj.sdo.helper.HelperContext;
 import commonj.sdo.helper.XSDHelper;
 import commonj.sdo.impl.HelperProvider;
+
 
 /**
  * Loader that handles &lt;import.sdo&gt; elements.
