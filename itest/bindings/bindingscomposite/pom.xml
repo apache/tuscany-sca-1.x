@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.testing</groupId>
         <artifactId>sca-itest</artifactId>
-        <version>1.0-incubating-SNAPSHOT</version>
+        <version>0.91-incubating-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -35,13 +35,13 @@
         <dependency>
             <groupId>org.apache.tuscany.sca.services.databinding</groupId>
             <artifactId>databinding-sdo</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.91-incubating-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>commonj</groupId>
             <artifactId>sdo-api-r2.1</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.91-incubating-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sdo</groupId>
             <artifactId>tuscany-sdo-impl</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.91-incubating-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
 

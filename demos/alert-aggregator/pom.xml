@@ -25,14 +25,14 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-demos</artifactId>
-        <version>1.0-incubating-SNAPSHOT</version>
+        <version>0.91-incubating-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>org.apache.tuscany.sca</groupId>
     <artifactId>demo-alert-aggregator</artifactId>
     <packaging>war</packaging>
-    <version>1.0-incubating-SNAPSHOT</version>
+    <version>0.91-incubating-SNAPSHOT</version>
     <name>Apache Tuscany Alert Aggregator Demo</name>
     <url>http://cwiki.apache.org/TUSCANY</url>  
 
@@ -52,7 +52,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sdo</groupId>
             <artifactId>tuscany-sdo-impl</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.91-incubating-SNAPSHOT</version>
         </dependency>        
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
@@ -111,18 +111,18 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-host-webapp</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.91-incubating-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-jsonrpc</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.91-incubating-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>    
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-feed</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.91-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>              
         <dependency>
@@ -157,7 +157,7 @@
             <plugin>
                 <groupId>org.apache.tuscany.sdo</groupId>
                 <artifactId>tuscany-sdo-plugin</artifactId>
-                <version>1.0-incubating-SNAPSHOT</version>
+                <version>0.91-incubating-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <id>generate-sdo</id>

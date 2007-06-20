@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-samples</artifactId>
-        <version>1.0-incubating-SNAPSHOT</version>
+        <version>0.91-incubating-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     
@@ -35,33 +35,33 @@
 		<dependency>
 		    <groupId>org.apache.tuscany.sca</groupId>
 		    <artifactId>sca-api</artifactId>
-		    <version>1.0-incubating-SNAPSHOT</version>
+		    <version>0.91-incubating-SNAPSHOT</version>
 		</dependency>        
 
 		<dependency>
 		    <groupId>org.apache.tuscany.sca</groupId>
 		    <artifactId>tuscany-host-embedded</artifactId>
-		    <version>1.0-incubating-SNAPSHOT</version>
+		    <version>0.91-incubating-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 		    <groupId>org.apache.tuscany.sca</groupId>
 		    <artifactId>tuscany-implementation-java-runtime</artifactId>
-		    <version>1.0-incubating-SNAPSHOT</version>
+		    <version>0.91-incubating-SNAPSHOT</version>
 		    <scope>runtime</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.tuscany.sdo</groupId>
 			<artifactId>tuscany-sdo-impl</artifactId>
-			<version>1.0-incubating-SNAPSHOT</version>
+			<version>0.91-incubating-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.tuscany.das</groupId>
 			<artifactId>tuscany-das-rdb</artifactId>
-			<version>1.0-incubating-SNAPSHOT</version>
+			<version>0.91-incubating-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 
