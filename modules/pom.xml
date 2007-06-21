@@ -61,9 +61,6 @@
                 <module>databinding-sdo</module>
                 <module>databinding-sdo-axiom</module>
                 <module>databinding-json</module>
-                <!--
-                <module>discovery-jms</module>
-                -->
                 <module>extension-helper</module>
                 <module>host-embedded</module>
                 <module>host-http</module>
@@ -78,8 +75,6 @@
                 <module>interface-wsdl-xml</module>
                 <module>interface-wsdl-runtime</module>
                 <module>implementation-bpel</module>
-                <!--module>implementation-das</module>
-                <module>implementation-data</module-->
                 <module>implementation-java</module>
                 <module>implementation-java-xml</module>
                 <module>implementation-java-runtime</module>
@@ -87,13 +82,10 @@
                 <module>implementation-script</module>
                 <module>implementation-spring</module>
                 <module>java2wsdl</module>
-                <!--
-                <module>jmx</module>
-                -->
                 <module>maven-java2wsdl</module>
                 <module>maven-wsdl2java</module>
                 <module>policy</module>
-		<module>host-rmi</module>
+                <module>host-rmi</module>
                 <module>sca-api</module>
                 <module>topology</module>
                 <module>topology-xml</module>
