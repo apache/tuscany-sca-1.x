@@ -113,7 +113,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-http-jetty</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.91-incubating-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>        
         <dependency>
@@ -190,7 +190,7 @@
             <plugin>
                 <groupId>org.apache.tuscany.sdo</groupId>
                 <artifactId>tuscany-sdo-plugin</artifactId>
-                <version>1.0-incubating-SNAPSHOT</version>
+                <version>1.0-incubating-beta1</version>
                 <executions>
                     <execution>
                         <id>generate-sdo</id>
