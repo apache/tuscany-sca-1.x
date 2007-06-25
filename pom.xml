@@ -54,6 +54,7 @@
                 <module>modules</module>
                 <module>samples</module>
                 <module>itest</module>
+                <module>demos</module>
             </modules>
         </profile>
 
@@ -63,6 +64,7 @@
                 <module>modules</module>
                 <module>samples</module>
                 <module>itest</module>
+                <module>demos</module>
                 <module>distribution</module>
             </modules>
         </profile>
@@ -73,6 +75,7 @@
                 <module>modules</module>
                 <module>samples</module>
                 <module>itest</module>
+                <module>demos</module>
                 <module>demos</module>
             </modules>
         </profile>
