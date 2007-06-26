@@ -112,6 +112,10 @@
                 <exclude>alert-aggregator/target/demo-alert-aggregator/**/*</exclude>
                 <exclude>alert-aggregator/target/sdo-source</exclude>
                 <exclude>alert-aggregator/target/sdo-source/**/*</exclude>
+                <exclude>bigbank-account/src/main/resources/web/dojo</exclude> 
+                <exclude>bigbank-account/src/main/resources/web/dojo/**/*</exclude>
+                <exclude>mortgage-creditcheck/target/demo-mortgage-creditcheck</exclude>
+                <exclude>mortgage-creditcheck/target/demo-mortgage-creditcheck/**/*</exclude>
                 <exclude>*/.classpath</exclude>
                 <exclude>*/.project</exclude>
                 <exclude>*/target/classes</exclude>
