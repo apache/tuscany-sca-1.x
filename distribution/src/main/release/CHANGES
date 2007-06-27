@@ -1,7 +1,23 @@
-Changed With Apache Tuscany SCA 0.91 (incubating) July 2007 
+Changes With Apache Tuscany SCA 0.91 (incubating) July 2007 
 ===========================================================
 
+The following are the significant additions to release 0.91 
+over and above all of what was offered in release 0.90.
 
+
+- Enhancements to support multiple contributions to the SCA Domain
+
+- The inclusion of a alternative simplified extensions-helper
+SPI layer to faciliate rapid development of extensions
+
+- More Implementation Extenstions
+        Spring
+        WebResource
+
+- More Binding Extensions
+        AJAX
+        EJB
+        RSS/ATOM Feeds
 
 
 

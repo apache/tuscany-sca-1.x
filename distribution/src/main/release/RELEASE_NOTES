@@ -9,11 +9,20 @@ of Open Composite Services Architecture (Open CSA).
 Overview
 --------
 
-This 0.91 release of Apache Tuscany SCA xxx
+        This 0.91 release of Apache Tuscany SCA builds further on 
+        the stability and modularity established with the 
+        previous release by including a few more binding and 
+        implementation extensions.  Another significant addition
+        to this release are the demos.
 
 Key features include:
 
-xxx
+- support for multiple contributions to the SCA Domain
+- an alternative simplified SPI helper extensions for rapid exetension 
+development
+- implementation extension for Spring Framework (implementation.spring) and
+Web Resources.
+- binding extensions for ajax, ejb and integrating RSS/ATOM feeds, 
 
 See the CHANGES file for a detailed list of the features in this release.
 
@@ -46,4 +55,4 @@ appreciated.
 
 Thank you for using Apache Tuscany!
 
-The Tuscany Team.
+- The Tuscany Team.
