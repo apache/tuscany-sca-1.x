@@ -102,6 +102,18 @@
 
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <inherited>true</inherited>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <executions>
+                      <execution>
+                        <goals>
+                          <goal>sign</goal>
+                        </goals>
+                      </execution>
+                    </executions>
+                </plugin>
+
 
                 <!-- compiler plugin configuration -->
                 <plugin>
