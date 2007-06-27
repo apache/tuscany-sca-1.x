@@ -18,8 +18,18 @@ SPI layer to faciliate rapid development of extensions
         AJAX
         EJB
         RSS/ATOM Feeds
+        
+- Demos that demonstrate the use of a mix of extensions
+         alert-aggregator
+         bigbank-account
+         bigbank-calculator
+         bigbank-stockquote
+         mortgage-creditcheck
+         mortgage-loanapproval
 
 
+- Samples
+        Samples to demostrate use of Spring, Resource, AJAX extensions
 
 
 
