@@ -14,7 +14,7 @@ to you web application server.
 
 Once the web app is deployed use your browser to visit the following URL;
 
-http://localhost:8080/sample-helloworldjsonrpc
+http://localhost:8080/sample-helloworld-jsonrpc
 
 The port and hostname will of course vary depending on your local installation. 
 
