@@ -83,8 +83,6 @@
     		 <exclude>itest/databindings/jaxbgen/velocity.log</exclude>
              <exclude>modules/http-tomcat/work</exclude>
              <exclude>modules/http-tomcat/work/**/*</exclude>
-             <exclude>modules/implementation-spring</exclude>
-             <exclude>modules/implementation-spring/**/*</exclude>
              <exclude>samples/das-service</exclude>
              <exclude>samples/das-service/**/*</exclude>
              <exclude>samples/das-service-web</exclude>
