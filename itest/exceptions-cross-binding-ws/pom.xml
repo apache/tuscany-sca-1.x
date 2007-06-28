@@ -154,7 +154,7 @@
 			<plugin>
 				<groupId>org.apache.tuscany.sdo</groupId>
 				<artifactId>tuscany-sdo-plugin</artifactId>
-				<version>${sdo.version}</version>
+				<version>1.0-incubating-beta1</version>
 				<executions>
 					<execution>
 						<configuration>

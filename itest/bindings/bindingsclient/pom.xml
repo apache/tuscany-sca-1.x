@@ -56,7 +56,7 @@
         <dependency>
             <groupId>commonj</groupId>
             <artifactId>sdo-api-r2.1</artifactId>
-            <version>0.91-incubating-SNAPSHOT</version>
+            <version>1.0-incubating-beta1</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>
