@@ -209,7 +209,7 @@ APACHE TUSCANY SUBCOMPONENTS:
 The Apache Tuscany binary distribution includes a number of subcomponents
 with separate copyright notices and license terms. Your use of the
 code for the these subcomponents is subject to the terms and
-conditions of the following licenses. 
+conditions of the following licenses.                             
 
 ===============================================================================
 
@@ -234,19 +234,12 @@ The following components come under Apache Software License 2.0
  commons-io-1.1.jar
  commons-logging-1.1.jar
  coyote-6.0.10.jar
- dwr-2.0.1.jar
  geronimo-ejb_2.1_spec-1.0.1.jar
  geronimo-jms_1.1_spec-1.1.jar
  geronimo-jta_1.0.1B_spec-1.0.1.jar
  jakarta-httpcore-4.0-alpha4.jar
- jaxb-api-2.0.jar
- jaxb-impl-2.0.5.jar
- jaxen-1.1-beta-9.jar
- jaxws-api-2.1.jar
- jdom-1.0.jar
  jetty-6.1.0.jar
  jetty-util-6.1.0.jar
- js-1.6R5.jar
  json-rpc-1.0.jar
  juli-6.0.10.jar
  log4j-1.2.12.jar
@@ -538,7 +531,7 @@ its rights to a jury trial in any resulting litigation.
 
 ===============================================================================
 
-For the Rhino JavaScript engine js.jar:
+For the Rhino JavaScript engine js-1.6R5.jar:
 
                           MOZILLA PUBLIC LICENSE
                                 Version 1.1
