@@ -278,7 +278,7 @@
 
     </dependencies>
 
-	<build>
+    <build>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -288,32 +288,37 @@
             </resource>
         </resources>
 
-		<plugins>
+        <plugins>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>shade-maven-plugin</artifactId>
-				<version>1.0-alpha-7</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-                                        <goal>shade</goal>
-						</goals>
-						<configuration>
-						    <shadedGroupFilter>org.apache.tuscany</shadedGroupFilter>
-						    <shadedArtifactAttached>false</shadedArtifactAttached>
-                                        
-                                        <artifactSet>
-                                           <excludes>
-                                              <exclude>org.apache.tuscany.sdo:tuscany-sdo-impl</exclude>
-                                           </excludes>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>shade-maven-plugin</artifactId>
+                <version>1.0-alpha-7</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedGroupFilter>org.apache.tuscany</shadedGroupFilter>
+                            <shadedArtifactAttached>false</shadedArtifactAttached>
+
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>org.apache.tuscany.sdo:tuscany-sdo-impl</exclude>
+                                </excludes>
                                         </artifactSet>
 
                                         <transformers>
                                            <transformer implementation="org.codehaus.mojo.shade.resource.AppendingTransformer">
                                               <resource>META-INF/services/org.apache.tuscany.sca.core.ModuleActivator</resource>
-                                           </transformer>
+                                              
+<!--resource>META-INF/services/org.apache.tuscany.sca.spi.BindingActivator
+< /resource-->
+                                              
+<resource>META-INF/services/org.apache.tuscany.sca.spi.ImplementationActivator</resource> 
+</transformer>
                                         </transformers>
 
 						</configuration>

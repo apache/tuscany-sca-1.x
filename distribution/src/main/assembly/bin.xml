@@ -95,6 +95,7 @@
                 <exclude>*/target/test-classes/**/*</exclude>
                 <exclude>*/target/surefire-reports</exclude>
                 <exclude>*/target/surefire-reports/**/*</exclude>
+                <exclude>*/**/*.svg</exclude>
             </excludes>
         </fileSet>
         <!-- Add all the demos to the demos directory -->
@@ -124,6 +125,7 @@
                 <exclude>*/target/test-classes/**/*</exclude>
                 <exclude>*/target/surefire-reports</exclude>
                 <exclude>*/target/surefire-reports/**/*</exclude>
+                <exclude>*/**/*.svg</exclude>
             </excludes>
         </fileSet>
         <!-- Add the generated tuscany manifest classpath jar to the lib directory -->

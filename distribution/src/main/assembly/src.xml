@@ -95,6 +95,7 @@
              <exclude>samples/helloworld-ws-service/work/**/*</exclude>
              <exclude>samples/bigbank</exclude>
              <exclude>samples/bigbank/**/*</exclude>
+             <exclude>*/**/*.svg</exclude>
          </excludes>
 	 </fileSet>
      </fileSets>

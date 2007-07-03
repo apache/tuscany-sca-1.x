@@ -213,6 +213,61 @@ conditions of the following licenses.
 
 ===============================================================================
 
+The following components come under Apache Software License 2.0
+
+ annogen-0.1.0.jar
+ annotations-api-6.0.10.jar
+ aopalliance-1.0.jar
+ axiom-api-1.2.4.jar
+ axiom-dom-1.2.4.jar
+ axiom-impl-1.2.4.jar
+ axis2-java2wsdl-1.2.jar
+ axis2-kernel-1.2.jar
+ bsf-all-3.0-beta1.jar
+ catalina-6.0.10.jar
+ cglib-nodep-2.1_3.jar
+ common-2.2.2.jar
+ commonj-api-0.91-incubating-SNAPSHOT.jar
+ commons-codec-1.3.jar
+ commons-fileupload-1.1.1.jar
+ commons-httpclient-3.0.1.jar
+ commons-io-1.1.jar
+ commons-logging-1.1.jar
+ coyote-6.0.10.jar
+ dwr-2.0.1.jar
+ geronimo-ejb_2.1_spec-1.0.1.jar
+ geronimo-jms_1.1_spec-1.1.jar
+ geronimo-jta_1.0.1B_spec-1.0.1.jar
+ jakarta-httpcore-4.0-alpha4.jar
+ jaxb-api-2.0.jar
+ jaxb-impl-2.0.5.jar
+ jaxen-1.1-beta-9.jar
+ jaxws-api-2.1.jar
+ jdom-1.0.jar
+ jetty-6.1.0.jar
+ jetty-util-6.1.0.jar
+ js-1.6R5.jar
+ json-rpc-1.0.jar
+ juli-6.0.10.jar
+ log4j-1.2.12.jar
+ logkit-1.0.1.jar
+ neethi-2.0.1.jar
+ sdo-api-r2.1-1.0-incubating-beta1.jar
+ spring-beans-2.0.3.jar
+ spring-context-2.0.3.jar
+ spring-core-2.0.3.jar
+ stax-api-1.0.1.jar
+ tuscany-sca-all-0.91-incubating-SNAPSHOT.jar
+ tuscany-sca-manifest.jar
+ tuscany-sdo-impl-1.0-incubating-beta1.jar
+ woden-1.0-incubating-M7a.jar
+ wstx-asl-3.2.0.jar
+ xercesImpl-2.8.1.jar
+ xml-apis-1.3.03.jar
+ XmlSchema-1.3.1.jar
+ 
+===============================================================================
+
 jaxen-1.1-beta-9.jar:
 
  Copyright 2003-2006 The Werken Company. All Rights Reserved.
