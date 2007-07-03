@@ -252,30 +252,28 @@
             <artifactId>sca-api</artifactId>
             <version>${pom.version}</version>
         </dependency>
-
-<!-- don't want the tools in the bundle jar? 
-        <dependency>
-            <groupId>${pom.groupId}</groupId>
-            <artifactId>tuscany-wsdl2java</artifactId>
-            <version>${pom.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${pom.groupId}</groupId>
-            <artifactId>tuscany-java2wsdl</artifactId>
-            <version>${pom.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${pom.groupId}</groupId>
-            <artifactId>tuscany-maven-java2wsdl</artifactId>
-            <version>${pom.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${pom.groupId}</groupId>
-            <artifactId>tuscany-maven-wsdl2java</artifactId>
-            <version>${pom.version}</version>
-        </dependency>
--->
-
+        <!-- don't want the tools in the bundle jar? 
+                <dependency>
+                    <groupId>${pom.groupId}</groupId>
+                    <artifactId>tuscany-wsdl2java</artifactId>
+                    <version>${pom.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>${pom.groupId}</groupId>
+                    <artifactId>tuscany-java2wsdl</artifactId>
+                    <version>${pom.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>${pom.groupId}</groupId>
+                    <artifactId>tuscany-maven-java2wsdl</artifactId>
+                    <version>${pom.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>${pom.groupId}</groupId>
+                    <artifactId>tuscany-maven-wsdl2java</artifactId>
+                    <version>${pom.version}</version>
+                </dependency>
+        -->
     </dependencies>
 
     <build>
@@ -308,24 +306,25 @@
                                 <excludes>
                                     <exclude>org.apache.tuscany.sdo:tuscany-sdo-impl</exclude>
                                 </excludes>
-                                        </artifactSet>
+                            </artifactSet>
 
-                                        <transformers>
-                                           <transformer implementation="org.codehaus.mojo.shade.resource.AppendingTransformer">
-                                              <resource>META-INF/services/org.apache.tuscany.sca.core.ModuleActivator</resource>
-                                              
-<!--resource>META-INF/services/org.apache.tuscany.sca.spi.BindingActivator
-< /resource-->
-                                              
-<resource>META-INF/services/org.apache.tuscany.sca.spi.ImplementationActivator</resource> 
-</transformer>
-                                        </transformers>
+                            <transformers>
+                                <transformer implementation="org.codehaus.mojo.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/services/org.apache.tuscany.sca.core.ModuleActivator</resource>
+                                </transformer>
+                                <transformer implementation="org.codehaus.mojo.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/services/org.apache.tuscany.sca.spi.ImplementationActivator</resource>
+                                </transformer>
+                                <transformer implementation="org.codehaus.mojo.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/services/org.apache.tuscany.sca.spi.BindingActivator</resource>
+                                </transformer>
+                            </transformers>
 
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
