@@ -38,7 +38,7 @@
     </target>	
 	
     <target name="package" depends="compile">
-        <war destfile="target/sample-calculator-web.war" 
+        <war destfile="target/sample-calculator-webapp.war" 
              webxml="src/main/webapp/WEB-INF/web.xml">
             <fileset dir="src/main/webapp"/>
             <zipfileset dir="../../modules" prefix="WEB-INF/lib">

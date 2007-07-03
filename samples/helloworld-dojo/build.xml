@@ -18,7 +18,7 @@
 -->
 <project name="helloworld-jsonrpc" default="package">
     <property name="settings.localRepository" value="./target/repo" />
-    <property name="artifactId" value="sample-helloworld-jsonrpc" />
+    <property name="artifactId" value="sample-helloworld-dojo" />
 	
     <target name="init">
         <mkdir dir="target/classes"/>
@@ -49,7 +49,7 @@
           <property name="artifactId" value="${artifactId}"/>
         </ant>   
 
-        <war destfile="target/sample-helloworldjsonrpc.war" 
+        <war destfile="target/sample-helloworld-dojo.war" 
              webxml="src/main/webapp/WEB-INF/web.xml">
             <fileset dir="src/main/webapp"/>
             <zipfileset dir="../../modules" prefix="WEB-INF/lib">

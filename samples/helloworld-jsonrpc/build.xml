@@ -41,7 +41,7 @@
 	
     <target name="package" depends="compile">
 
-        <war destfile="target/sample-helloworldjsonrpc.war" 
+        <war destfile="target/sample-helloworld-jsonrpc.war" 
              webxml="src/main/webapp/WEB-INF/web.xml">
             <fileset dir="src/main/webapp"/>
             <zipfileset dir="../../modules" prefix="WEB-INF/lib">

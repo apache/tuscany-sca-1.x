@@ -50,7 +50,7 @@ public class CalculatorRMIReferenceTestCase extends TestCase {
 
     public void testCalculator() throws Exception {
         // Calculate
-        assertEquals(calculatorService.add(3, 2), 5.0);
+    	assertEquals(calculatorService.add(3, 2), 5.0);
         assertEquals(calculatorService.subtract(3, 2), 1.0);
         assertEquals(calculatorService.multiply(3, 2), 6.0);
         assertEquals(calculatorService.divide(3, 2), 1.5);
