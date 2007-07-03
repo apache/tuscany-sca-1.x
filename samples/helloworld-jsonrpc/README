@@ -35,7 +35,6 @@ helloworl-jsonrpc/
       resources/
         jsonrpc.composite             - the SCA assembly for this sample
       webapp
-        dojo/                         - the Dojo toolkit
         META-INF/
           sca-contribution.xml        - specifies the composite to be deployed
         WEB-INF/
