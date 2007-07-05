@@ -10,6 +10,12 @@ from a simple main() method without the need for a JUnit test case.
 In these notes text that appears in angled brackets like this <example> means 
 that you need to make a choice and provide your own text at that point. 
 
+These simple samples have been created with the intention of illustrating the 
+usage of the SCA API and annotations and certainly not to levels of SCA component 
+abstraction.  In real life situations you should use SCA to assemble real and 
+usually bigger components, and when you do that you'll get all the benefits of 
+SCA, bindings, policies, integration in an SOA environment etc..
+
 Sample Overview
 ---------------
 The samples generally show off different features of the SCA runtime
@@ -142,11 +148,15 @@ this is:
 
 on Windows
 
-java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator.jar calculator.CalculatorClient
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\<sample jar file> <sample runnable class>
+
+for example : java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator.jar calculator.CalculatorClient
 
 on *nix 
 
-java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-calculator.jar calculator.CalculatorClient
+java -cp ../../lib/tuscany-sca-manifest.jar:target/<sample jar file> <sample runnable class>
+
+for example : java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-calculator.jar calculator.CalculatorClient
 
 
 You can use the compiled classes directly using
@@ -157,14 +167,18 @@ The command line version of this is:
 
 on Windows
 
-java -cp ..\..\lib\tuscany-sca-manifest.jar;target\classes calculator.CalculatorClient
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\classes <sample runnable class>
+
+for example : java -cp ..\..\lib\tuscany-sca-manifest.jar;target\classes calculator.CalculatorClient
 
 on *nix 
 
-java -cp ../../lib/tuscany-sca-manifest.jar:target/classes calculator.CalculatorClient
+java -cp ../../lib/tuscany-sca-manifest.jar:target/classes <sample runnable class>
+
+for example : java -cp ../../lib/tuscany-sca-manifest.jar:target/classes calculator.CalculatorClient
 
 The class specified on the command of course depends on which sample you want to 
-run. In this case we are running the CalculatorClient from the calculator sample. 
+run. In the examples we have used we are running the CalculatorClient from the calculator sample. 
 
 
 Building And Running The SCA Samples Using Maven
