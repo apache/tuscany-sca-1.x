@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<project name="helloworld-jsonrpc" default="package">
+<project name="helloworld-dojo" default="package">
     <property name="settings.localRepository" value="./target/repo" />
     <property name="artifactId" value="sample-helloworld-dojo" />
 	
@@ -63,6 +63,7 @@
                 <include name="tuscany-core-databinding-0.91-incubating-SNAPSHOT.jar"/>
                 <include name="tuscany-core-spi-0.91-incubating-SNAPSHOT.jar"/>
                 <include name="tuscany-databinding-0.91-incubating-SNAPSHOT.jar"/>
+                <include name="tuscany-extension-helper-0.91-incubating-SNAPSHOT.jar"/>
                 <include name="tuscany-host-embedded-0.91-incubating-SNAPSHOT.jar"/>
                 <include name="tuscany-host-http-0.91-incubating-SNAPSHOT.jar"/>
                 <include name="tuscany-host-webapp-0.91-incubating-SNAPSHOT.jar"/>
