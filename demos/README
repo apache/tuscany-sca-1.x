@@ -1,0 +1,52 @@
+Tuscany Java SCA Demo Applications
+==================================
+
+The applications demonstrate a wide variety of the Tuscany Java SCA features. 
+This includes different implementation and bindings types
+
+Alert Aggregator
+----------------
+
+An application that aggregates together feed information and provides it to 
+client applications in WebServices, Jsonrpc, RSS and Atom formats. See the 
+README in this module for further instructions.
+
+BigBank
+-------
+
+This application comprises three modules that represent the different aspects 
+of a fictitious banking application. 
+
+Bigbank-account 
+  
+The front end of this demo application this module provides a web app for 
+retrieving account information. It makes calls out to the stockquote and 
+calculator applications to satisfy account requests. See the README in this 
+module for further instructions.
+
+Bigbank-stockquote
+
+A very simple web services based stock quote application which returns random 
+stock quotes on request.
+
+Bigbank-calculator
+
+A calculator application, based on the calculator-script sample that uses a 
+variety of languages to implement a calculator, which the banking application 
+uses for simple value multiplication.
+
+
+Mortgage Application
+--------------------
+
+A loan approval style demonstration split across two SCA applications. 
+
+Mortgage-loanapproval
+
+A loan approval application. Two different composite files show how the 
+credit check can be performed locally or remotely. 
+
+Mortgage-creditcheck
+
+A simple credit check component provided as a web service.
+
