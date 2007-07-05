@@ -24,8 +24,6 @@ SPI layer to faciliate rapid development of extensions
          bigbank-account
          bigbank-calculator
          bigbank-stockquote
-         mortgage-creditcheck
-         mortgage-loanapproval
 
 
 - Samples
