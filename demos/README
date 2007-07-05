@@ -34,19 +34,3 @@ Bigbank-calculator
 A calculator application, based on the calculator-script sample that uses a 
 variety of languages to implement a calculator, which the banking application 
 uses for simple value multiplication.
-
-
-Mortgage Application
---------------------
-
-A loan approval style demonstration split across two SCA applications. 
-
-Mortgage-loanapproval
-
-A loan approval application. Two different composite files show how the 
-credit check can be performed locally or remotely. 
-
-Mortgage-creditcheck
-
-A simple credit check component provided as a web service.
-
