@@ -23,12 +23,18 @@ but uses SCA scaDomain.js script on the client instead of the Dojo Toolkit.
 
 Sample Overview
 ---------------
-The sample provides a single service which with an operation that reflects 
-a greeting back to the called. The service is exposed using the JSONRPC
-binding. The web app provided shows how the service can be called either via 
-via the SCA provided JSON client or by using the DOJO toolkit. 
+The sample provides a single service with an operation that reflects
+a greeting back to the caller. The service is exposed using the JSONRPC
+binding. The web app provided shows how the Dojo Toolkit JSON-RPC support can be 
+used to invoke the SCA service. 
 
-helloworl-dojo/
+The web app provided shows how the service can be called by using the DOJO toolkit. 
+
+helloworld-dojo/
+  build-dojo.xml                      - This file is an Ant script used by the 
+                                        sample build process to download the Dojo Toolkit 
+                                        and get it included in the WAR file 
+                                        for use by the sample.
   src/
     main/
       java/
@@ -38,7 +44,8 @@ helloworl-dojo/
       resources/
         jsonrpc.composite             - the SCA assembly for this sample
       webapp
-        dojo/                         - the Dojo toolkit
+        dojo/                         - the Dojo toolkit (this directory is created only 
+                                        when you build the samples from the source distribution)
         META-INF/
           sca-contribution.xml        - specifies the composite to be deployed
         WEB-INF/

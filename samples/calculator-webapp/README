@@ -98,6 +98,19 @@ using Maven as follows.
 cd calculator-webapp
 mvn
 
+
+You should see the following output from the test phase.
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running calculator.CalculatorTestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.852 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0 
+
 Again this should result in a war file (sample-calculator-webapp.war) in the target 
 directory. Follow the steps described in the previous section for running the web 
 app and for the expected results.

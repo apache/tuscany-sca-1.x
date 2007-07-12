@@ -20,12 +20,12 @@ The port and hostname will of course vary depending on your local installation.
 
 Sample Overview
 ---------------
-The sample provides a single service which with an operation that reflects 
-a greeting back to the called. The service is exposed using the JSONRPC
-binding. The web app provided shows how the service can be called either via 
-via the SCA provided JSON client or by using the DOJO toolkit. 
+The sample provides a single service with an operation that reflects
+a greeting back to the caller. The service is exposed using the JSONRPC
+binding. The web app provided shows how the SCA-provided JSON client can be 
+used to invoke the SCA service. 
 
-helloworl-jsonrpc/
+helloworld-jsonrpc/
   src/
     main/
       java/

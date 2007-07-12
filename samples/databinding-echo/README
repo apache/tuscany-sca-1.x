@@ -51,16 +51,19 @@ databinding-echo/
     main/
       java/
         dbecho/
-          ComponentAImpl.java          - component implementation 
-          ComponentBImpl.java          - component implementation
-          Echo.java                    - service interface with data binding
-          EchoDataBindingClient.java   - sample client code
-          Interface1.java              - service interface with data binding
-          Interface2.java              - service interface with data bindings
+          ComponentAImpl.java                           - component implementation 
+          ComponentBImpl.java                           - component implementation
+          Echo.java                                     - service interface with data binding
+          EchoDataBindingClient.java                    - sample client code
+          Interface1.java                               - service interface with data binding
+          Interface2.java                               - service interface with data bindings
       resources/
-        EchoDataBinding.composite      - composite definition
+        META-INF/
+          services/
+            org.apache.tuscany.sca.core.ModuleActivator - specifies the module activation class to call
+        EchoDataBinding.composite                       - composite definition
         wsdl/
-          echo.wsdl                    - WSDL deinitions
+          echo.wsdl                                     - WSDL deinitions
     test/
       java/ 
         dbecho/
@@ -116,7 +119,7 @@ You should see the following output from the test phase.
 -------------------------------------------------------
  T E S T S
 -------------------------------------------------------
-Running echo.EchoDataBindingTestCase
+Running dbecho.EchoDataBindingTestCase
 [Property] prefix: ABC
 [Property] prefix1: ABC
 [Property] bar: BAR
