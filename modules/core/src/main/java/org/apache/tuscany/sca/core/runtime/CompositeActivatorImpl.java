@@ -200,7 +200,14 @@ public class CompositeActivatorImpl implements CompositeActivator {
                 ReferenceBindingProvider bindingProvider = ((RuntimeComponentReference)reference)
                     .getBindingProvider(binding);
                 if (bindingProvider != null) {
-                    bindingProvider.start();
+                    try {
+                        bindingProvider.start();
+                    } catch (RuntimeException e) {
+                        // TODO: [rfeng] Ignore the self reference if a runtime exception happens
+                        if (!reference.getName().startsWith("$self$.")) {
+                            throw e;
+                        }
+                    }
                 }
             }
         }
@@ -553,14 +560,21 @@ public class CompositeActivatorImpl implements CompositeActivator {
                                        InvocationChain chain,
                                        Operation operation,
                                        boolean isCallback) {
-        ReferenceBindingProvider provider = ((RuntimeComponentReference)reference).getBindingProvider(binding);
-        if (provider != null) {
-            Invoker invoker = provider.createInvoker(operation, isCallback);
-            if (invoker != null) {
-                chain.addInvoker(invoker);
+        try {
+            ReferenceBindingProvider provider = ((RuntimeComponentReference)reference).getBindingProvider(binding);
+            if (provider != null) {
+                Invoker invoker = provider.createInvoker(operation, isCallback);
+                if (invoker != null) {
+                    chain.addInvoker(invoker);
+                }
+            }
+         } catch (RuntimeException e) {
+            // TODO: [rfeng] Ignore the self reference if a runtime exception happens
+            if (!reference.getName().startsWith("$self$.")) {
+                throw e;
             }
         }
-    }
+   }
 
     private void setScopeContainer(Component component) {
         if (!(component instanceof ScopedRuntimeComponent)) {
