@@ -14,7 +14,7 @@ variety of languages to implement a calculator, which the banking application
 uses for simple value multiplication. To run the service do the following:
 
 cd bigbank-calculator
-Ant run
+ant run
 
 Bigbank-stockquote
 
@@ -22,7 +22,7 @@ A very simple web services based stock quote application which returns random
 stock quotes on request.
 
 cd bigbank-stockquote
-Ant run
+ant run
 
 Bigbank-account 
   
@@ -37,7 +37,7 @@ mvn -f pom-runapp.xml
 Maven is used in this last step as there are unresolved issues with running
 this app from the provided ant file. 
 
-To try the app out point you browser at:
+To try the app out point your browser at:
 
 http://localhost:8082/WebResourceComponent/AccountJSON.html
 

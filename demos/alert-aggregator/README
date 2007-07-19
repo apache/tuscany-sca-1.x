@@ -17,7 +17,7 @@ This will build and test the source and generate a war file
 
 demo-alert-aggregator.war
 
-This war can be deployed to you web application container and tested (the war
+This war can be deployed to your web application container and tested (the war
 has been tested with Tomcat 6.0.10). 
 
 The Web Application
@@ -27,11 +27,11 @@ Once deployed point your browser at
 
 http://localhost:8080/demo-alert-aggregator
 
-Taking care to ensure the host name and port number match you local 
+Taking care to ensure the host name and port number match your local 
 configuration. 
 
 This launches a Javascript application in the browser that uses JSONRPC
-to contact the server and retrived a list of alert sources and alerts that
+to contact the server and retrieve a list of alert sources and alerts that
 these sources are providing.
 
 There default sources that you see are stored in a file in the following
@@ -68,7 +68,7 @@ feed reader at
 
 http://localhost:8080/demo-alert-aggregator/services/AlertsFeedServiceRSS
 
-Again taking care to ensure that the host name and port number match you 
+Again taking care to ensure that the host name and port number match your 
 local configuration.
 
 Using Web Services
