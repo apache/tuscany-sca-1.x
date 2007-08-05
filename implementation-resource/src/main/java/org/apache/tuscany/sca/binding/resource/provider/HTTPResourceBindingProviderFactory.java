@@ -20,7 +20,9 @@
 package org.apache.tuscany.sca.binding.resource.provider;
 
 import org.apache.tuscany.sca.binding.resource.HTTPResourceBinding;
+import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.http.ServletHost;
+import org.apache.tuscany.sca.http.ServletHostExtensionPoint;
 import org.apache.tuscany.sca.provider.BindingProviderFactory;
 import org.apache.tuscany.sca.provider.ReferenceBindingProvider;
 import org.apache.tuscany.sca.provider.ServiceBindingProvider;
@@ -36,8 +38,9 @@ public class HTTPResourceBindingProviderFactory implements BindingProviderFactor
     
     private ServletHost servletHost;
     
-    public HTTPResourceBindingProviderFactory(ServletHost servletHost) {
-        this.servletHost = servletHost;
+    public HTTPResourceBindingProviderFactory(ExtensionPointRegistry extensionPoints) {
+        ServletHostExtensionPoint servletHosts = extensionPoints.getExtensionPoint(ServletHostExtensionPoint.class);
+        this.servletHost = servletHosts.getServletHosts().get(0);
     }
 
     public ReferenceBindingProvider createReferenceBindingProvider(RuntimeComponent component, RuntimeComponentReference reference, HTTPResourceBinding binding) {

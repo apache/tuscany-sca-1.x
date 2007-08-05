@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.binding.jms;
+package org.apache.tuscany.sca.binding.jms.provider;
 
 import java.util.Properties;
 
@@ -29,6 +29,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NameNotFoundException;
 import javax.naming.NamingException;
+
+import org.apache.tuscany.sca.binding.jms.JMSBinding;
 
 /**
  * Abstracts away any JMS provide specific feature from the JMS binding

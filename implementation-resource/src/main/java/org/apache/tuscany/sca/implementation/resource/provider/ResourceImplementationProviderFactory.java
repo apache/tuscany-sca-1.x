@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.sca.implementation.resource.provider;
 
+import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.implementation.resource.ResourceImplementation;
 import org.apache.tuscany.sca.provider.ImplementationProvider;
 import org.apache.tuscany.sca.provider.ImplementationProviderFactory;
@@ -31,7 +32,7 @@ public class ResourceImplementationProviderFactory implements ImplementationProv
     /**
      * Constructs a resource implementation.
      */
-    public ResourceImplementationProviderFactory() {
+    public ResourceImplementationProviderFactory(ExtensionPointRegistry extensionPoints) {
     }
 
     public ImplementationProvider createImplementationProvider(RuntimeComponent component, ResourceImplementation implementation) {

@@ -17,10 +17,10 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.binding.jms;
+package org.apache.tuscany.sca.binding.jms.provider;
 
 import org.apache.tuscany.sca.binding.jms.JMSBinding;
-import org.apache.tuscany.sca.http.ServletHost;
+import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.provider.BindingProviderFactory;
 import org.apache.tuscany.sca.provider.ReferenceBindingProvider;
 import org.apache.tuscany.sca.provider.ServiceBindingProvider;
@@ -37,7 +37,7 @@ import org.apache.tuscany.sca.runtime.RuntimeComponentService;
  */
 public class JMSBindingProviderFactory implements BindingProviderFactory<JMSBinding> {
     
-    public JMSBindingProviderFactory() {        
+    public JMSBindingProviderFactory(ExtensionPointRegistry extensionPoints) {        
     }
 
     public ReferenceBindingProvider createReferenceBindingProvider(RuntimeComponent component, RuntimeComponentReference reference, JMSBinding binding) {

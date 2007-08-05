@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.implementation.resource.impl;
+package org.apache.tuscany.sca.implementation.resource;
 
 import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 
@@ -28,15 +28,19 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.contribution.ContributionFactory;
 import org.apache.tuscany.sca.contribution.DeployedArtifact;
+import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
 import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
-import org.apache.tuscany.sca.implementation.resource.ResourceImplementation;
-import org.apache.tuscany.sca.implementation.resource.ResourceImplementationFactory;
+import org.apache.tuscany.sca.interfacedef.java.JavaInterfaceFactory;
+import org.apache.tuscany.sca.interfacedef.java.introspect.DefaultJavaInterfaceIntrospectorExtensionPoint;
+import org.apache.tuscany.sca.interfacedef.java.introspect.ExtensibleJavaInterfaceIntrospector;
+import org.apache.tuscany.sca.interfacedef.java.introspect.JavaInterfaceIntrospector;
 
 
 /**
@@ -45,12 +49,16 @@ import org.apache.tuscany.sca.implementation.resource.ResourceImplementationFact
 public class ResourceImplementationProcessor implements StAXArtifactProcessor<ResourceImplementation> {
     private static final QName IMPLEMENTATION_RESOURCE = new QName("http://www.osoa.org/xmlns/sca/1.0", "implementation.resource");
     
-    private ResourceImplementationFactory resourceFactory;
     private ContributionFactory contributionFactory;
+    private JavaInterfaceIntrospector introspector;
+    private AssemblyFactory assemblyFactory;
+    private JavaInterfaceFactory javaFactory;
     
-    public ResourceImplementationProcessor(ResourceImplementationFactory resourceFactory, ContributionFactory contributionFactory) {
-        this.resourceFactory = resourceFactory;
-        this.contributionFactory = contributionFactory;
+    public ResourceImplementationProcessor(ModelFactoryExtensionPoint modelFactories) {
+        contributionFactory = modelFactories.getFactory(ContributionFactory.class);
+        assemblyFactory = modelFactories.getFactory(AssemblyFactory.class);
+        javaFactory = modelFactories.getFactory(JavaInterfaceFactory.class);
+        introspector = new ExtensibleJavaInterfaceIntrospector(javaFactory, new DefaultJavaInterfaceIntrospectorExtensionPoint());        
     }
 
     public QName getArtifactType() {
@@ -73,7 +81,7 @@ public class ResourceImplementationProcessor implements StAXArtifactProcessor<Re
             String location = reader.getAttributeValue(null, "location");
 
             // Create an initialize the resource implementationmodel
-            ResourceImplementation implementation = resourceFactory.createResourceImplementation();
+            ResourceImplementation implementation = new ResourceImplementation(assemblyFactory, javaFactory, introspector);
             implementation.setLocation(location);
             implementation.setUnresolved(true);
             

@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.binding.jms;
+package org.apache.tuscany.sca.binding.jms.provider;
 
 import java.io.Serializable;
 import java.io.StringReader;
@@ -32,6 +32,8 @@ import javax.xml.stream.XMLStreamReader;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.impl.builder.StAXOMBuilder;
+import org.apache.tuscany.sca.binding.jms.JMSBinding;
+import org.apache.tuscany.sca.binding.jms.JMSBindingException;
 
 public class JMSMessageProcessorImpl implements JMSMessageProcessor {
 
