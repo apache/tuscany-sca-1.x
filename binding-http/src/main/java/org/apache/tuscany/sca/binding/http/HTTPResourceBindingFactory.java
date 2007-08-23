@@ -17,22 +17,19 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.implementation.resource;
-
-import java.net.URL;
+package org.apache.tuscany.sca.binding.http;
 
 /**
- * The service interface of resource implementations.
- * 
- * @version $Rev: 548609 $ $Date: 2007-06-18 23:31:03 -0700 (Mon, 18 Jun 2007) $
+ * Factory for the HTTP resource binding model.
+ *
+ * @version $Rev$ $Date$
  */
-public interface Resource {
+public interface HTTPResourceBindingFactory {
     
     /**
-     * Returns the resource location URL.
-     * 
-     * @return
+     * Creates a new HTTP resource binding.
+     * @return a new HTTP resource binding
      */
-    public URL getLocationURL();
+    HTTPResourceBinding createHTTPResourceBinding();
 
 }
