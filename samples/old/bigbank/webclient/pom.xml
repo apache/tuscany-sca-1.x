@@ -40,7 +40,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sdo</groupId>
             <artifactId>tuscany-sdo-api-r2.1</artifactId>
-            <version>${sdo.version}</version>
+            <version>1.0-incubating</version>
             <scope>compile</scope>
         </dependency>
         <!-- SDO's XMLStreamHelper requires StAX API and impl (it's not pulled by 
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sdo</groupId>
             <artifactId>tuscany-sdo-impl</artifactId>
-            <version>${sdo.version}</version>
+            <version>1.0-incubating</version>
             <scope>compile</scope>
         </dependency>
 
@@ -100,7 +100,7 @@
             <plugin>
                 <groupId>org.apache.tuscany.sdo</groupId>
                 <artifactId>tuscany-sdo-plugin</artifactId>
-                <version>${sdo.version}</version>
+                <version>1.0-incubating</version>
                 <executions>
                     <execution>
                         <configuration>

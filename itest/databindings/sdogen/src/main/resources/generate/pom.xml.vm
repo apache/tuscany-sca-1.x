@@ -27,7 +27,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>itest-databindings-sdo</artifactId>
-    <version>1.0-incubating-SNAPSHOT</version>
+    <version>0.99-incubating-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Apache Tuscany SDO Databinding Integration Test</name>
 
@@ -190,7 +190,7 @@
             <plugin>
                 <groupId>org.apache.tuscany.sdo</groupId>
                 <artifactId>tuscany-sdo-plugin</artifactId>
-                <version>1.0-incubating-SNAPSHOT</version>
+                <version>1.0-incubating</version>
                 <executions>
                     <execution>
                         <id>generate-sdo</id>

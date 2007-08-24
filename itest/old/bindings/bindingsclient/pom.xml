@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-itest</artifactId>
-        <version>1.0-incubating-SNAPSHOT</version>
+        <version>0.99-incubating-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -38,25 +38,25 @@
         <dependency>
             <groupId>org.apache.tuscany.testing.bindingstest</groupId>
             <artifactId>itest-bindings-bindingscomposite</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.99-incubating-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.testing.bindingstest</groupId>
             <artifactId>itest-bindings-bindingsutility</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.99-incubating-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-databinding-sdo</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>0.99-incubating-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sdo</groupId>
             <artifactId>tuscany-sdo-api-r2.1</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
+            <version>1.0-incubating</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>

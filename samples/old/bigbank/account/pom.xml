@@ -64,7 +64,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sdo</groupId>
             <artifactId>tuscany-sdo-impl</artifactId>
-            <version>${sdo.version}</version>
+            <version>1.0-incubatingversion>
             <scope>compile</scope>
         </dependency>
 
@@ -100,7 +100,7 @@
             <plugin>
                 <groupId>org.apache.tuscany.sdo</groupId>
                 <artifactId>tuscany-sdo-plugin</artifactId>
-                <version>${sdo.version}</version>
+                <version>1.0-incubating</version>
                 <executions>
                     <execution>
                         <configuration>
