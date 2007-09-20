@@ -16,29 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.binding.notification.encoding;
+package org.apache.tuscany.tools.java2wsdl.generate;
 
-import javax.xml.namespace.QName;
+import org.osoa.sca.annotations.OneWay;
 
-/**
- * @version $Rev$ $Date$
- */
-public class BrokerProducerReferenceEnDeCoder extends EndpointReferenceWrapperEnDeCoder<BrokerProducerReference> {
+public interface ExampleService {
 
-    // QName for the root element
-    public static final QName QNAME = new QName(Constants.NOTIFICATION_NS, Constants.BrokerProducerReference);
+    void sayHelloTwoWay(String name);
 
-    public BrokerProducerReferenceEnDeCoder(EncodingRegistry registry) {
-        super(registry);
-    }
-
+    @OneWay
+    void sayHelloOneWay(String name);
     
-	public QName getEncodingObjectQName() {
-        return QNAME;
-    }
-
-    
-	public Class<BrokerProducerReference> getEncodingObjectType() {
-        return BrokerProducerReference.class;
-    }
+    String getGreeting();
 }
