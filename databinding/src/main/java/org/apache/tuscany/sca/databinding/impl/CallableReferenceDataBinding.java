@@ -17,9 +17,7 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.databinding.externalizable;
-
-import org.apache.tuscany.sca.databinding.impl.BaseDataBinding;
+package org.apache.tuscany.sca.databinding.impl;
 
 public class CallableReferenceDataBinding extends BaseDataBinding {
     
@@ -29,7 +27,5 @@ public class CallableReferenceDataBinding extends BaseDataBinding {
     public CallableReferenceDataBinding() {
         super(NAME, ALIASES, org.osoa.sca.CallableReference.class);
     }
-
-    
 
 }
