@@ -16,30 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
+package org.apache.tuscany.sca.binding.jms;
 
-package org.apache.tuscany.sca.host.jms.activemq;
+import org.osoa.sca.annotations.OneWay;
+import org.osoa.sca.annotations.Remotable;
 
-import org.apache.tuscany.sca.core.ExtensionPointRegistry;
-import org.apache.tuscany.sca.core.ModuleActivator;
-
-public class ActiveMQModuleActivator implements ModuleActivator {
-
-    private static ActiveMQBroker activeMQHost;
-
-    public void start(ExtensionPointRegistry registry) {
-    }
-
-    public void stop(ExtensionPointRegistry registry) {
-        if (activeMQHost != null) {
-            activeMQHost.stop();
-            activeMQHost = null;
-        }
-    }
-
-    public static void startBroker() {
-        if (activeMQHost == null) {
-            activeMQHost = new ActiveMQBroker();
-            activeMQHost.start();
-        }
-    }
+@Remotable
+public interface OneWayService {
+    
+    @OneWay
+    void sayHello(String name);
 }

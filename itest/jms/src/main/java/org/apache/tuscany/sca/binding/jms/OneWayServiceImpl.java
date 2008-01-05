@@ -17,29 +17,18 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.host.jms.activemq;
+package org.apache.tuscany.sca.binding.jms;
 
-import org.apache.tuscany.sca.core.ExtensionPointRegistry;
-import org.apache.tuscany.sca.core.ModuleActivator;
+public class OneWayServiceImpl implements OneWayService {
 
-public class ActiveMQModuleActivator implements ModuleActivator {
-
-    private static ActiveMQBroker activeMQHost;
-
-    public void start(ExtensionPointRegistry registry) {
-    }
-
-    public void stop(ExtensionPointRegistry registry) {
-        if (activeMQHost != null) {
-            activeMQHost.stop();
-            activeMQHost = null;
+    public static Object mutex = new Object();
+    public static String name;
+    
+    public void sayHello(String name) {
+        OneWayServiceImpl.name = name;
+        synchronized (OneWayServiceImpl.mutex) {
+            OneWayServiceImpl.mutex.notify();
         }
     }
 
-    public static void startBroker() {
-        if (activeMQHost == null) {
-            activeMQHost = new ActiveMQBroker();
-            activeMQHost.start();
-        }
-    }
 }

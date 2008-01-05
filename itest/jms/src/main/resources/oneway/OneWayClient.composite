@@ -18,20 +18,17 @@
  * under the License.    
  -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           name="RPCComposite">
+           name="OneWayComposite">
 
-    <component name="HelloWorldClient">
-        <implementation.java class="org.apache.tuscany.sca.binding.jms.HelloWorldClientImpl"/>
+    <component name="OneWayClient">
+        <implementation.java class="org.apache.tuscany.sca.binding.jms.OneWayClientImpl"/>
         <reference name="serviceA" />
     </component>
 
-    <reference name="serviceA" promote="HelloWorldClient/serviceA">
-        <interface.java interface="org.apache.tuscany.sca.binding.jms.HelloWorldService" />
+    <reference name="serviceA" promote="OneWayClient/serviceA">
+        <interface.java interface="org.apache.tuscany.sca.binding.jms.OneWayService" />
         <binding.jms initialContextFactory="org.apache.activemq.jndi.ActiveMQInitialContextFactory" jndiURL="tcp://localhost:61619">
             <destination name="DestQueueA"/>
-            <response>
-               <destination name="RespQueueA"/>
-            </response>
         </binding.jms>  
     </reference>
 
