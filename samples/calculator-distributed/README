@@ -121,7 +121,7 @@ follows
 
 cd calculator-distributed
 ant compile
-ant runDomainNode
+ant runDomain
 ant runNodeB
 ant runNodeC
 ant runNodeA
