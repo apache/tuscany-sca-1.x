@@ -33,7 +33,7 @@
             <classpath>
             	<pathelement location="../../lib/tuscany-sca-manifest.jar"/>
             </classpath>
-        </javac> 
+        </javac>   	
         <copy todir="target/classes">
             <fileset dir="src/main/resources"/>
         </copy>
