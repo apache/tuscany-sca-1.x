@@ -48,7 +48,7 @@ public class DataObject2NodeInfoTransformer extends BaseTransformer<DataObject, 
     public DataObject2NodeInfoTransformer(Node2NodeInfoTransformer node2NodeInfoTransformer) {
         this.node2NodeInfoTransformer = node2NodeInfoTransformer;
     }
-
+    
     public DataObject2NodeInfoTransformer() {
         this.node2NodeInfoTransformer = new Node2NodeInfoTransformer();
     }

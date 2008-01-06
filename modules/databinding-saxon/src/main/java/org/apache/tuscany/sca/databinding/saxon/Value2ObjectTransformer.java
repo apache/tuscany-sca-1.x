@@ -25,7 +25,6 @@ import org.apache.tuscany.sca.databinding.PullTransformer;
 import org.apache.tuscany.sca.databinding.TransformationContext;
 import org.apache.tuscany.sca.databinding.TransformationException;
 import org.apache.tuscany.sca.databinding.impl.BaseTransformer;
-import org.apache.tuscany.sca.databinding.javabeans.JavaBeansDataBinding;
 
 /**
  * Transforms Value objects to generic java objects
@@ -36,7 +35,7 @@ public class Value2ObjectTransformer extends BaseTransformer<Value, Object> impl
     public Object transform(Value source, TransformationContext context) {
         Object object;
         try {
-            object = Value.convertToJava(Value.asItem(source));
+            object = Value.convert(Value.asItem(source));
         } catch (XPathException e) {
             throw new TransformationException(e);
         }
@@ -51,11 +50,6 @@ public class Value2ObjectTransformer extends BaseTransformer<Value, Object> impl
     @Override
     protected Class getTargetType() {
         return Object.class;
-    }
-    
-    @Override
-    public String getTargetDataBinding() {
-        return JavaBeansDataBinding.NAME;
     }
 
     @Override

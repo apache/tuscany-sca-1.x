@@ -18,14 +18,12 @@
  */
 package org.apache.tuscany.sca.databinding.saxon;
 
-import net.sf.saxon.value.FloatValue;
 import net.sf.saxon.value.ObjectValue;
 import net.sf.saxon.value.Value;
 
 import org.apache.tuscany.sca.databinding.PullTransformer;
 import org.apache.tuscany.sca.databinding.TransformationContext;
 import org.apache.tuscany.sca.databinding.impl.BaseTransformer;
-import org.apache.tuscany.sca.databinding.javabeans.JavaBeansDataBinding;
 
 /**
  * Transforms generic java objects to Value objects needed by Saxon parser
@@ -44,20 +42,11 @@ public class Object2ValueTransformer extends BaseTransformer<Object, Value> impl
     }
 
     @Override
-    public String getSourceDataBinding() {
-        return JavaBeansDataBinding.NAME;
-    }
-
-    @Override
     public int getWeight() {
         return 10000;
     }
 
     public Value transform(Object source, TransformationContext context) {
-        // WORKAROUND for ClassCastException in ObjectValue.toJavaObject(float)
-        if (source instanceof Float) {
-            return new FloatValue(((Float)source).floatValue());
-        }
         return new ObjectValue(source);
     }
 
