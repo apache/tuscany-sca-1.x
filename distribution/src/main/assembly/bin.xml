@@ -77,6 +77,8 @@
                 <exclude>company-das-webapp/**/*</exclude>
                 <exclude>helloworld-dojo-webapp/src/main/webapp/dojo</exclude>
                 <exclude>helloworld-dojo-webapp/src/main/webapp/dojo/**/*</exclude>
+                <exclude>helloworld-ws-deep-webapp</exclude>
+                <exclude>helloworld-ws-deep-webapp/**/*</exclude>
                 <exclude>helloworld-ws-deep-webapp/work</exclude>
                 <exclude>helloworld-ws-deep-webapp/work/**/*</exclude>
                 <exclude>helloworld-ws-reference/work</exclude>
@@ -119,8 +121,8 @@
                 <exclude>osgi-supplychain/target/sample-osgi-supplychain/**/*</exclude>
                 <exclude>loanapplication</exclude>
                 <exclude>loanapplication/**/*</exclude>
-                <exclude>quote-xquery</exclude>
-                <exclude>quote-xquery/**/*</exclude>
+                <!--exclude>quote-xquery</exclude-->
+                <!--exclude>quote-xquery/**/*</exclude-->
                 <exclude>simple-callback-ws/work</exclude>
                 <exclude>simple-callback-ws/work/**/*</exclude>
                 <exclude>spi-implementation-pojo</exclude>

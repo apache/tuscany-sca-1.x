@@ -133,6 +133,8 @@
              <exclude>samples/helloworld-jsonrpc-webapp/src/main/webapp/dojo/**/*</exclude>
              <exclude>samples/helloworld-dojo-webapp/src/main/webapp/dojo</exclude>
              <exclude>samples/helloworld-dojo-webapp/src/main/webapp/dojo/**/*</exclude>
+             <exclude>samples/helloworld-ws-deep-webapp</exclude>
+             <exclude>samples/helloworld-ws-deep-webapp/**/*</exclude>
              <exclude>samples/helloworld-ws-deep-webapp/work</exclude>
              <exclude>samples/helloworld-ws-deep-webapp/work/**/*</exclude>
              <exclude>samples/helloworld-ws-reference/work</exclude>
@@ -149,8 +151,8 @@
              <exclude>samples/helloworld-ws-service-webapp/**/*</exclude>
              <exclude>samples/osgi-supplychain/.felix</exclude>
              <exclude>samples/osgi-supplychain/.felix/**/*</exclude>
-             <exclude>samples/quote-xquery</exclude>
-             <exclude>samples/quote-xquery/**/*</exclude>
+             <!--exclude>samples/quote-xquery</exclude-->
+             <!--exclude>samples/quote-xquery/**/*</exclude-->
              <exclude>samples/spi-implementation-pojo</exclude>
              <exclude>samples/spi-implementation-pojo/**/*</exclude>
              <exclude>samples/simple-callback-ws/work</exclude>
