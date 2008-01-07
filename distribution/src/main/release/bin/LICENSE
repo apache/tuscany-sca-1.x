@@ -229,7 +229,7 @@ The following components come under Apache Software License 2.0
  axis2-java2wsdl-1.3.jar
  axis2-kernel-1.3.jar
  axis2-mtompolicy-1.3.jar
- bsf-all-3.0-beta1.jar
+ bsf-all-3.0-beta2.jar
  catalina-6.0.10.jar
  cglib-nodep-2.1_3.jar
  common-2.2.2.jar
@@ -272,6 +272,7 @@ The following components come under Apache Software License 2.0
  httpcore-4.0-alpha5.jar
  httpcore-nio-4.0-alpha5.jar
  httpcore-niossl-4.0-alpha5.jar
+ jettison-1.0-RC2.jar
  jetty-6.1.3.jar
  jetty-util-6.1.3.jar
  json-rpc-1.0.jar
@@ -305,8 +306,8 @@ The following components come under Apache Software License 2.0
  openjpa-persistence-0.9.7-incubating.jar
  opensaml-1.1.jar
  org.apache.felix.bundlerepository-1.0.0.jar
- org.apache.felix.framework-1.0.0.jar
- org.apache.felix.main-1.0.0.jar
+ org.apache.felix.framework-1.0.1.jar
+ org.apache.felix.main-1.0.1.jar
  org.apache.felix.shell-1.0.0.jar
  org.apache.felix.shell.tui-1.0.0.jar
  plexus-container-default-1.0-alpha-9.jar
@@ -752,7 +753,7 @@ EXHIBIT A.
 
 ===============================================================================
 
-For the Rhino JavaScript engine js-1.6R6.jar:
+For the Rhino JavaScript engine js-1.6R7.jar:
 
                           MOZILLA PUBLIC LICENSE
                                 Version 1.1
@@ -1423,7 +1424,7 @@ JPython version 1.1.x
 
 ===============================================================================
 
-The jars; activation, jaxb-api, jaxb-impl, jaxb-xjc, jsr181-api,
+The jars; activation, jaxb-api, jaxb-impl, jaxb-xjc, jaxb2-reflection, jsr181-api,
 jsr250-api, jaxws-api, mail, saaj-api, servlet-api-2.5.jar:
 
 COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
