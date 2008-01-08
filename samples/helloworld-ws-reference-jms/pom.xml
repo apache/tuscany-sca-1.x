@@ -75,7 +75,14 @@
             <artifactId>apache-activemq</artifactId>
             <version>4.1.1</version>
             <scope>test</scope>
-        </dependency>          
+        </dependency>     
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-host-jms-activemq</artifactId>
+            <version>1.1-incubating-SNAPSHOT</version>
+            <scope>test</scope>            
+        </dependency>
 
     </dependencies>
     
