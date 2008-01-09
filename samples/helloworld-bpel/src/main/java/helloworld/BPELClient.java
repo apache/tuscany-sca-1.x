@@ -37,6 +37,7 @@ public class BPELClient {
         System.out.println(result);
         
         scaDomain.close();
-
+        
+        System.exit(0);
     }
 }
