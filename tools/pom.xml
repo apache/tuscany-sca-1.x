@@ -36,7 +36,6 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>eclipse</module>
                 <module>java2wsdl</module>
                 <module>maven</module>
                 <module>wsdl2java</module>
