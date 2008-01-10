@@ -243,11 +243,11 @@
             <artifactId>tuscany-host-jetty</artifactId>
             <version>${pom.version}</version>
         </dependency>
-        <dependency>
+        <!-- dependency> don't put two servlet hosts in the classpat TUSCANY-1954
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-host-tomcat</artifactId>
             <version>${pom.version}</version>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-interface</artifactId>
