@@ -33,10 +33,12 @@ public class HelloWorldClient {
         String value = helloWorldService.getGreetings("World");
         System.out.println(value);
         
+/*  THe certificates are not currently configured correctly to allow integrity to work   
+    see TUSCANY-1959   
         helloWorldService = scaDomain.getService(HelloWorldService.class, "HelloWorldWsPolicyServiceComponent");
         value = helloWorldService.getGreetings("WsPolicyWorld");
         System.out.println(value);
-
+*/
         scaDomain.close();
     }
 }
