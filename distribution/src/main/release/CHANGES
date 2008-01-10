@@ -48,9 +48,7 @@ Changes With Apache Tuscany SCA 1.1 (incubating) January 2008
   * See implementation.widget
 
 - Evolving support for doman API suggested by assembly spec including a standalone node and nodes running 
-  connected together in a domain.
-  * stand alone nodes can be configured and started without recourse to the domain.
-  * using the domain API contributions can be added and associated with a node. 
+  connected together in a domain. This is still experimental. 
  
 - Class loading and OSGI improvements
   * Enable Tuscany to be run in a multi-classloader environment including inside OSGi. By default,
