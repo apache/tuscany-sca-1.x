@@ -56,10 +56,6 @@ Changes With Apache Tuscany SCA 1.1 (incubating) January 2008
   * Contributions no longer need to be in the CLASSPATH. All import/export dependencies across contributions should be 
     explicitly specified (as described in the spec).
 
-- Support for JSONRPC binding on SCA references
-
-- Support for BPEL references 
-
 - JAXB based POJO transformations
 
 Changes With Apache Tuscany SCA 1.0.1 (incubating) November 2007 
