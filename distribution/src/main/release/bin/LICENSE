@@ -322,7 +322,6 @@ The following components come under Apache Software License 2.0
  spring-beans-2.0.6.jar
  spring-context-2.0.6.jar
  spring-core-2.0.6.jar
- stax-api-1.0.2.jar
  tranql-connector-1.1.jar
  tuscany-sdo-api-r2.1-1.0-incubating.jar
  tuscany-sdo-impl-1.0-incubating.jar
@@ -1427,7 +1426,7 @@ JPython version 1.1.x
 ===============================================================================
 
 The jars; activation, jaxb-api, jaxb-impl, jaxb-xjc, jaxb2-reflection, jsr181-api,
-jsr250-api, jaxws-api, mail, saaj-api, servlet-api-2.5.jar:
+jsr250-api, jaxws-api, mail, saaj-api, servlet-api-2.5.jar, stax-api-1.0.2.jar:
 
 COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
 
