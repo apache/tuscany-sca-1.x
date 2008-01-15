@@ -216,6 +216,8 @@ conditions of the following licenses.
 The following components come under Apache Software License 2.0
 
  activeio-2.0-r118.jar
+ activeio-core-3.0.0-incubator.jar
+ activemq-core-4.1.1.jar
  addressing-1.3.mar
  annogen-0.1.0.jar
  annotations-api-6.0.10.jar
