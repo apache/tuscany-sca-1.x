@@ -16,11 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<!DOCTYPE project [
-<!ENTITY buildDependency SYSTEM "build-dependency.xml">
-]>
-<project name="sample-helloworld-bpel" default="compile">
-	&buildDependency;
+<project name="helloworld-bpel" default="compile">
+    <property name="test.class"   value="helloworld.BPELClient" />
+    <property name="test.jar"     value="sample-helloworld-bpel.jar" />
+    <property name="manifest.jar" value="../../lib/tuscany-sca-manifest.jar" />
 
     <target name="init">
         <mkdir dir="target/classes"/>
@@ -38,8 +37,7 @@
             <arg value="src/main/resources/helloworld.wsdl"/>
 
             <classpath>
-                <fileset refid="tuscany.jars"/>
-                <fileset refid="3rdparty.jars"/>
+                <pathelement location="${manifest.jar}"/>
             </classpath>
         </java>
         
@@ -49,51 +47,61 @@
             <arg value="src/main/resources/helloworld.wsdl"/>
 
             <classpath>
-                <fileset refid="tuscany.jars"/>
-                <fileset refid="3rdparty.jars"/>
+                <pathelement location="${manifest.jar}"/>
             </classpath>
         </java>
     </target>
 
     <target name="unzip-ode-db" depends="init">
-    	<unzip src="../../lib/ode-dao-jpa-ojpa-derby-1.1.zip" dest="target/database"/>
+        <unzip src="../../lib/ode-dao-jpa-ojpa-derby-1.1.zip" dest="target/database"/>
     </target> 
 
     <target name="compile" depends="init,generate-wsdl,unzip-ode-db">
-        <mkdir dir="target/classes"/>
         <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
             <src path="src/main/java"/>
             <src path="target/wsdl2java-source"/>
             <classpath>
-                <fileset refid="tuscany.jars"/>
-                <fileset refid="3rdparty.jars"/>
+                <pathelement location="${manifest.jar}"/>
             </classpath>
         </javac>
         <copy todir="target/classes">
             <fileset dir="src/main/resources"/>
         </copy>
-        <jar destfile="target/sample-helloworld-bpel.jar" basedir="target/classes">
+        <jar destfile="target/${test.jar}" basedir="target/classes">
             <manifest>
-                <attribute name="Main-Class" value="helloworld.BPELClient"/>
+                <attribute name="Main-Class" value="${test.class}" /> 
             </manifest>
-        </jar>
+        </jar>      
     </target>
 
-    <target name="run">
-        <java classname="helloworld.BPELClient" fork="true">
+    <target name="run-classes">
+        <java classname="${test.class}"
+              fork="true">
             <!-- jvmarg value="-Xdebug"/ -->
-        	<!-- jvmarg value="-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y"/ -->
+            <!-- jvmarg value="-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y"/ -->
             <classpath>
-                <pathelement location="target/classes"/>
+                <pathelement path="target/classes"/>
                 <pathelement location="target/database"/>
-                <fileset refid="tuscany.jars"/>
-                <fileset refid="3rdparty.jars"/>
+                <pathelement location="${manifest.jar}"/>
             </classpath>
         </java>
     </target>
+    
+    <target name="run">
+        <java classname="${test.class}"
+              fork="true">
+            <!-- jvmarg value="-Xdebug"/ -->
+            <!-- jvmarg value="-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y"/ -->
+            <classpath>
+                <pathelement path="target/${test.jar}"/>
+                <pathelement location="target/database"/>
+                <pathelement location="${manifest.jar}"/>
+            </classpath>
+        </java>     
+    </target>
 
     <target name="clean">
-        <delete includeemptydirs="true">
+        <delete quiet="true" includeemptydirs="true">
             <fileset dir="target"/>
         </delete>
     </target>
