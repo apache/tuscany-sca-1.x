@@ -74,7 +74,7 @@
         </jar>      
     </target>
 
-    <target name="run-classes">
+    <target name="run">
         <java classname="${test.class}"
               fork="true">
             <!-- jvmarg value="-Xdebug"/ -->
@@ -87,19 +87,6 @@
         </java>
     </target>
     
-    <target name="run">
-        <java classname="${test.class}"
-              fork="true">
-            <!-- jvmarg value="-Xdebug"/ -->
-            <!-- jvmarg value="-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y"/ -->
-            <classpath>
-                <pathelement path="target/${test.jar}"/>
-                <pathelement location="target/database"/>
-                <pathelement location="${manifest.jar}"/>
-            </classpath>
-        </java>     
-    </target>
-
     <target name="clean">
         <delete quiet="true" includeemptydirs="true">
             <fileset dir="target"/>
