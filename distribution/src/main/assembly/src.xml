@@ -119,6 +119,10 @@
              <exclude>samples/old/**/*</exclude>
              <exclude>samples/calculator-distributed/work</exclude>
              <exclude>samples/calculator-distributed/work/**/*</exclude>
+             <exclude>samples/callback-ws-client/work</exclude>
+             <exclude>samples/callback-ws-client/work/**/*</exclude>
+             <exclude>samples/callback-ws-service/work</exclude>
+             <exclude>samples/callback-ws-service/work/**/*</exclude>
              <exclude>samples/company-das</exclude>
              <exclude>samples/company-das/**/*</exclude>
              <exclude>samples/company-das-webapp</exclude>
@@ -139,12 +143,16 @@
              <exclude>samples/helloworld-ws-deep-webapp/work/**/*</exclude>
              <exclude>samples/helloworld-ws-reference/work</exclude>
              <exclude>samples/helloworld-ws-reference/work/**/*</exclude>
+             <exclude>samples/helloworld-ws-reference-jms/activemq-data</exclude>
+             <exclude>samples/helloworld-ws-reference-jms/activemq-data/**/*</exclude>
              <exclude>samples/helloworld-ws-reference-secure/work</exclude>
              <exclude>samples/helloworld-ws-reference-secure/work/**/*</exclude>
              <exclude>samples/helloworld-ws-sdo/work</exclude>
              <exclude>samples/helloworld-ws-sdo/work/**/*</exclude>
              <exclude>samples/helloworld-ws-service/work</exclude>
              <exclude>samples/helloworld-ws-service/work/**/*</exclude>
+             <exclude>samples/helloworld-ws-service-jms/activemq-data</exclude>
+             <exclude>samples/helloworld-ws-service-jms/activemq-data/**/*</exclude>
              <exclude>samples/helloworld-ws-service-secure/work</exclude>
              <exclude>samples/helloworld-ws-service-secure/work/**/*</exclude>
              <exclude>samples/helloworld-ws-service-webapp</exclude>

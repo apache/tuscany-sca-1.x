@@ -83,6 +83,8 @@
                 <exclude>helloworld-ws-deep-webapp/work/**/*</exclude>
                 <exclude>helloworld-ws-reference/work</exclude>
                 <exclude>helloworld-ws-reference/work/**/*</exclude>
+                <exclude>helloworld-ws-reference-jms/activemq-data</exclude>
+                <exclude>helloworld-ws-reference-jms/activemq-data/**/*</exclude>
                 <exclude>helloworld-ws-reference-secure/work</exclude>
                 <exclude>helloworld-ws-reference-secure/work/**/*</exclude>
                 <exclude>helloworld-ws-service-webapp</exclude>
@@ -91,6 +93,8 @@
                 <exclude>helloworld-ws-service/secure/work/**/*</exclude>
                 <exclude>helloworld-ws-service/secure/work</exclude>
                 <exclude>helloworld-ws-service/work/**/*</exclude>
+                <exclude>helloworld-ws-service-jms/activemq-data</exclude>
+                <exclude>helloworld-ws-service-jms/activemq-data/**/*</exclude>
                 <exclude>helloworld-ws-service-secure/work</exclude>
                 <exclude>helloworld-ws-service-secure/work/**/*</exclude>
                 <exclude>helloworld-ws-service-webapp/target/sample-helloworld-ws-service-webapp</exclude>
@@ -105,6 +109,10 @@
                 <exclude>calculator-webapp/target/sample-calculator-webapp/**/*</exclude>
                 <exclude>calculator-ws-webapp/target/sample-calculator-ws-webapp</exclude>
                 <exclude>calculator-ws-webapp/target/sample-calculator-ws-webapp/**/*</exclude>
+                <exclude>callback-ws-client/work</exclude>
+                <exclude>callback-ws-client/work/**/*</exclude>
+                <exclude>callback-ws-service/work</exclude>
+                <exclude>callback-ws-service/work/**/*</exclude>
                 <exclude>chat-webapp/target/sample-chat-webapp</exclude>
                 <exclude>chat-webapp/target/sample-chat-webapp/**/*</exclude>
                 <exclude>domain-webapp</exclude>
