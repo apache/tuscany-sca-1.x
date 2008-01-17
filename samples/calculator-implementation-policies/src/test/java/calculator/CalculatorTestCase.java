@@ -18,6 +18,8 @@
  */
 package calculator;
 
+import javax.security.auth.login.Configuration;
+
 import junit.framework.TestCase;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;

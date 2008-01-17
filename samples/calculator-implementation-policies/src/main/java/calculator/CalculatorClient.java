@@ -19,6 +19,7 @@
 
 package calculator;
 
+import javax.security.auth.login.Configuration;
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 
 /**
