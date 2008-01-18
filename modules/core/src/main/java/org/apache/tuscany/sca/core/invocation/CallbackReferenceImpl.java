@@ -137,8 +137,11 @@ public class CallbackReferenceImpl<B> extends CallableReferenceImpl<B> {
 
     private static RuntimeWire cloneAndBind(Message msgContext, RuntimeWire wire) {
         EndpointReference callback = getCallbackEndpoint(msgContext);
-        if (callback != null && callback.getContract() != null) {
+        if (callback != null) {
             try {
+                if (callback.getContract() == null) {
+                    return (RuntimeWire)wire.clone();  //FIXME: add caching
+                }
                 RuntimeComponentReference ref = null;
                 if (callback.getContract() instanceof RuntimeComponentReference) {
                     ref = (RuntimeComponentReference)callback.getContract();
