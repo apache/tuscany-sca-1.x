@@ -20,7 +20,15 @@ components provide services related to obtaining a customer balance etc.
         
 *) The StockQuote webservice is adorned with 'integrity' i.e. all communications between the bigbank and
 the StockQuote webservice and signed to ensure integrity of data exchanged. To honour this requirement the 
-StockQuote reference of the big-bank is also adorned with 'integrity' as a security requirement.    
+StockQuote reference of the big-bank is also adorned with 'integrity' as a security requirement. 
+
+The overall picture is that when the Customer is requesting account details from the bigbank, the bigbank seeks
+the services of the Savings, Checkings and Stock Account Components. In seeking the service of the Checkings 
+Account compoent the the big-bank compoent authenticates itself.  The Checkings Account component further checks
+if the athenticated user token passed by the bigbank is authorized to access the account in question.  This is one 
+lap where security has been enforced.  Another lap is when the bigbank component refers to the StockQuote webservice
+to compute the stock value for a customer.  Here all communications are signed to ensure integrity of data exchanged
+between the bigbank and StockQuote webservice.
 
 When you run this demo you will observe various console messages that reflect the enforcement of authentication
 and authorization and integrity at varoius points of this application.
