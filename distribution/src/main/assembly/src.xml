@@ -58,8 +58,8 @@
 	     <outputDirectory>tuscany-sca-${tuscany.version}-src</outputDirectory>
 	     <includes>
 	         <include>**/*</include>
-           </includes>
-         <excludes>
+             </includes>
+             <excludes>
     		 <exclude>contrib</exclude>
     		 <exclude>contrib/**/*</exclude>
     		 <exclude>doc</exclude>
@@ -176,6 +176,7 @@
              <exclude>*/**/*.pmd</exclude>
              <exclude>*/**/*.checkstyle</exclude>
              <exclude>*/**/derby.log</exclude>
+             <exclude>*/**/build-dependency.xml</exclude>
              <exclude>derby.log</exclude>
              <exclude>*/**/work</exclude>
              <exclude>*/**/work/**/*</exclude>
@@ -188,7 +189,32 @@
              <exclude>modules/implementation-openjpa/test/**/*</exclude>
              <exclude>itest/transaction/derbydb</exclude>
              <exclude>itest/transaction/derbydb/**/*</exclude>
-         </excludes>
+             <exclude>samples/calculator-webapp/build.xml</exclude>
+             <exclude>samples/calculator-ws-webapp/build.xml</exclude>
+             <exclude>samples/chat-webapp/build.xml</exclude>
+             <exclude>samples/feed-aggregator-webapp/build.xml</exclude>
+             <exclude>samples/helloworld-jsonrpc-webapp/build.xml</exclude>
+             <exclude>itest/databindings/interop/src/test/java/org/apache/tuscany/sca/itest/sdodatabinding/InteropDatabindingTestCase.java</exclude>
+             <exclude>itest/databindings/jaxbgen/src/main/java/org/apache/tuscany/sca/itest/jaxbdatabinding/GreeterService.java</exclude>
+             <exclude>itest/databindings/jaxbgen/src/main/java/org/apache/tuscany/sca/itest/jaxbdatabinding/GreeterServiceClient.java</exclude>
+             <exclude>itest/databindings/jaxbgen/src/main/java/org/apache/tuscany/sca/itest/jaxbdatabinding/GreeterServiceClientImpl.java</exclude>
+             <exclude>itest/databindings/jaxbgen/src/main/java/org/apache/tuscany/sca/itest/jaxbdatabinding/GreeterServiceImpl.java</exclude>
+             <exclude>itest/databindings/jaxbgen/src/test/java/org/apache/tuscany/sca/itest/jaxbdatabinding/DatabindingTestCase.java</exclude>
+             <exclude>itest/databindings/sdogen/src/main/java/org/apache/tuscany/sca/itest/sdodatabinding/GreeterService.java</exclude>
+             <exclude>itest/databindings/sdogen/src/main/java/org/apache/tuscany/sca/itest/sdodatabinding/GreeterServiceClientImpl.java</exclude>
+             <exclude>itest/databindings/sdogen/src/main/java/org/apache/tuscany/sca/itest/sdodatabinding/GreeterServiceImpl.java</exclude>
+             <exclude>itest/databindings/sdogen/src/test/java/org/apache/tuscany/sca/itest/sdodatabinding/DatabindingTestCase.java</exclude>
+           </excludes>
 	 </fileSet>
+	 <fileSet>
+	     <directory>..</directory>
+	     <outputDirectory>tuscany-sca-${tuscany.version}-src</outputDirectory>
+	     <includes>
+	         <include>modules/core/src/main/java/org/apache/tuscany/sca/core/work</include>
+                 <include>modules/core/src/main/java/org/apache/tuscany/sca/core/work/**/*</include>
+                 <include>modules/core-spi/src/main/java/org/apache/tuscany/sca/work</include>
+                 <include>modules/core-spi/src/main/java/org/apache/tuscany/sca/work/**/*</include>
+             </includes>
+         </fileSet>
      </fileSets>
 </assembly>
