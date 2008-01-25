@@ -232,7 +232,6 @@ The following components come under Apache Software License 2.0
  axiom-dom-1.2.5.jar
  axiom-impl-1.2.5.jar
  axis2-adb-1.3.jar
- axis2-adb-codegen-1.3.jar
  axis2-codegen-1.3.jar
  axis2-java2wsdl-1.3.jar
  axis2-kernel-1.3.jar
@@ -249,7 +248,7 @@ The following components come under Apache Software License 2.0
  commons-lang-2.1.jar
  commons-logging-1.1.jar
  coyote-6.0.10.jar
- derby-10.1.3.1.jar
+ derby-10.1.2.1.jar
  geronimo-activation_1.1_spec-1.0-M1.jar
  geronimo-common-1.2-beta.jar
  geronimo-commonj_1.1_spec-1.0.jar
@@ -258,12 +257,12 @@ The following components come under Apache Software License 2.0
  geronimo-deployment-1.2-beta.jar
  geronimo-ejb_3.0_spec-1.0.jar
  geronimo-interceptor-1.2-beta.jar
- geronimo-jms_1.1_spec-1.1.jar
  geronimo-j2ee-1.2-beta.jar
  geronimo-j2ee-connector_1.5_spec-1.1.jar
  geronimo-j2ee-jacc_1.0_spec-1.1.jar
  geronimo-j2ee-management_1.0_spec-1.1.jar
  geronimo-javamail_1.4_spec-1.0-M1.jar
+ geronimo-jms_1.1_spec-1.1.jar
  geronimo-jpa_3.0_spec-1.0.jar
  geronimo-jta_1.0.1B_spec-1.0.jar
  geronimo-kernel-1.2-beta.jar
@@ -285,14 +284,6 @@ The following components come under Apache Software License 2.0
  juli-6.0.10.jar
  log4j-1.2.12.jar
  logkit-1.0.1.jar
- maven-artifact-2.0.2.jar
- maven-artifact-manager-2.0.2.jar
- maven-error-diagnostics-2.0.2.jar
- maven-model-2.0.2.jar
- maven-profile-2.0.2.jar
- maven-project-2.0.2.jar
- maven-repository-metadata-2.0.2.jar
- maven-settings-2.0.2.jar
  neethi-2.0.2.jar
  ode-bpel-api-1.1.jar
  ode-bpel-compiler-1.1.jar
@@ -316,8 +307,6 @@ The following components come under Apache Software License 2.0
  org.apache.felix.main-1.0.1.jar
  org.apache.felix.shell-1.0.0.jar
  org.apache.felix.shell.tui-1.0.0.jar
- plexus-container-default-1.0-alpha-9.jar
- plexus-utils-1.1.jar
  rampart-1.3.mar
  rampart-core-1.3.jar
  rampart-policy-1.3.jar
@@ -331,21 +320,19 @@ The following components come under Apache Software License 2.0
  tuscany-sdo-impl-1.0-incubating.jar
  tuscany-sdo-lib-1.0-incubating.jar
  tuscany-sdo-tools-1.0-incubating.jar
- wagon-file-1.0-alpha-7.jar
- wagon-http-lightweight-1.0-alpha-6.jar
- wagon-provider-api-1.0-alpha-6.jar
  woden-1.0-incubating-M7b.jar
  wss4j-1.5.3.jar
  wstx-asl-3.2.1.jar
  xalan-2.7.0.jar
  xbean-2.1.0.jar
- xmlbeans-2.3.0.jar
  xbean-naming-2.7.jar
  xercesImpl-2.8.1.jar
  xml-apis-1.3.03.jar
  xml-resolver-1.1.jar
- xmlsec-1.4.0.jar
+ xmlbeans-2.3.0.jar
  XmlSchema-1.3.2.jar
+ xmlsec-1.4.0.jar
+
  
 ===============================================================================
 
@@ -759,7 +746,8 @@ EXHIBIT A.
 
 ===============================================================================
 
-For the Rhino JavaScript engine js-1.6R7.jar:
+For the Rhino JavaScript engine 
+   js-1.6R7.jar:
 
                           MOZILLA PUBLIC LICENSE
                                 Version 1.1
@@ -1233,7 +1221,8 @@ EXHIBIT A -Mozilla Public License.
 
 
 ===============================================================================
-Groovy:
+For Groovy:
+  groovy-all-minimal-1.0.jar
 
 /*
  $Id: LICENSE.txt 156 2003-09-26 17:36:37Z jstrachan $
@@ -1283,7 +1272,8 @@ Groovy:
 
 ===============================================================================
 
-Jython:
+For Jython:
+  jython-2.2.jar
 
 A. HISTORY OF THE SOFTWARE
 =======================
@@ -1338,7 +1328,6 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
 OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 
 
 
@@ -1430,8 +1419,19 @@ JPython version 1.1.x
 
 ===============================================================================
 
-The jars; activation, jaxb-api, jaxb-impl, jaxb-xjc, jaxb2-reflection, jsr181-api,
-jsr250-api, jaxws-api, mail, saaj-api, servlet-api-2.5.jar, stax-api-1.0.2.jar:
+For the jars; 
+   activation-1.1.jar, 
+   jaxb-api-2.1.jar, 
+   jaxb-impl-2.1.5.jar, 
+   jaxb-xjc-2.1.4.jar, 
+   jaxb2-reflection-2.1.4.jar, 
+   jsr181-api-1.0-MR1.jar,
+   jsr250-api-1.0.jar, 
+   jaxws-api-2.1.jar, 
+   mail-1.4.jar, 
+   saaj-api-1.3.jar, 
+   servlet-api-2.5.jar, 
+   stax-api-1.0-2.jar:
 
 COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
 
@@ -1820,7 +1820,9 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
 
 ===============================================================================
 
-JRuby, wsdl4j:
+For the jars:
+  jruby-complete-1.0.jar, 
+  wsdl4j-1.6.2.jar
 
 Common Public License - v 1.0
 
@@ -1911,7 +1913,8 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
 ===============================================================================
 
-backport-util-concurrent:
+For backport-util-concurrent:
+  backport-util-concurrent-2.2.jar
 
 The software comprising backport-util-concurrent is based in large
 part on the code from JSR166, and the package dl.util.concurrent.
@@ -1961,7 +1964,8 @@ subject to the following license terms.
     facility."
 
 ===============================================================================
-rome-0.9.jar
+For rome:
+  rome-0.9.jar
 
 Copyright 2004 Sun Microsystems, Inc.
 
@@ -1978,7 +1982,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ===============================================================================
-jdom-1.0.jar :
+For Jdom:
+  jdom-1.0.jar
 
 $Id: LICENSE.txt,v 1.11 2004/02/06 09:32:57 jhunter Exp $
 
@@ -2033,8 +2038,8 @@ $Id: LICENSE.txt,v 1.11 2004/02/06 09:32:57 jhunter Exp $
  on the JDOM Project, please see <http://www.jdom.org/>. 
 
 ========================================================================
-
-dwr-2.0.1.jar :
+For DWR:
+  dwr-2.0.1.jar 
 
 /*
 * Copyright 2005 Joe Walker
@@ -2053,8 +2058,8 @@ dwr-2.0.1.jar :
 */
 
 ==========================================================================
-
-dojotoolkit :
+For the dojotoolkit:
+  dojo-1.0.0.zip
 
 The "New" BSD License:
 **********************
@@ -2127,7 +2132,10 @@ BSD license:
 
 ================================================================================
 
-The serp jar is distributed under the BSD license with the following copyright:
+For SERP:
+   serp-1.12.0.jar 
+
+The jar is distributed under the BSD license with the following copyright:
 
  Copyright (c) 2002, A. Abram White
  All rights reserved.
@@ -2165,7 +2173,12 @@ BSD license:
  DAMAGE. 
 
 ================================================================================
-The axion, javacc, and howl are distributed under the BSD license:
+For the jars
+   axion-1.0-M3-dev.jar, 
+   javacc-3.2.jar
+   howl-1.0.1-1.jar 
+
+The jars are distributed under the BSD license:
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -2192,7 +2205,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ================================================================================
 
-The tuscany-assembly-xsd jar includes XSD files under the following SCA Collaboration license:
+The jar tuscany-assembly-xsd-1.1-incubating.jar includes XSD files under the following SCA Collaboration license:
 
 License for the Service Component Architecture JavaDoc, Interface 
 Definition files and XSD files.
