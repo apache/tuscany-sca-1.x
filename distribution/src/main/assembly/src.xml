@@ -175,6 +175,19 @@
              <exclude>*/**/*.ruleset</exclude>
              <exclude>*/**/*.pmd</exclude>
              <exclude>*/**/*.checkstyle</exclude>
+             <exclude>*/**/derby.log</exclude>
+             <exclude>derby.log</exclude>
+             <exclude>*/**/work</exclude>
+             <exclude>*/**/work/**/*</exclude>
+             <exclude>*/**/activemq-data</exclude>
+             <exclude>*/**/activemq-data/**/*</exclude>
+             <exclude>*/**/db.lck</exclude>
+             <exclude>*/**/.felix</exclude>
+             <exclude>*/**/.felix/**/*</exclude>
+             <exclude>modules/implementation-openjpa/test</exclude>
+             <exclude>modules/implementation-openjpa/test/**/*</exclude>
+             <exclude>itest/transaction/derbydb</exclude>
+             <exclude>itest/transaction/derbydb/**/*</exclude>
          </excludes>
 	 </fileSet>
      </fileSets>

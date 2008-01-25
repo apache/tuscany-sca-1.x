@@ -163,6 +163,15 @@
                 <exclude>helloworld-jsonrpc-webapp/target/sample-helloworld-jsonrpc-webapp.war</exclude>
                 <exclude>chat-webapp/target/sample-chat-webapp.war</exclude>
                 <exclude>feed-aggregator-webapp/target/sample-feed-aggregator-webapp.war</exclude>
+                <exclude>*/**/derby.log</exclude>
+                <exclude>derby.log</exclude>
+                <exclude>*/**/work</exclude>
+                <exclude>*/**/work/**/*</exclude>
+                <exclude>*/**/activemq-data</exclude>
+                <exclude>*/**/activemq-data/**/*</exclude>
+                <exclude>*/**/db.lck</exclude>
+                <exclude>*/**/.felix</exclude>
+                <exclude>*/**/.felix/**/*</exclude>
             </excludes>
         </fileSet>
         <!-- Add all the demos to the demos directory -->
@@ -224,6 +233,15 @@
                 <exclude>xml-bigbank/target/**/*</exclude>
                 <exclude>target</exclude>
                 <exclude>target/**/*</exclude>
+                <exclude>*/**/derby.log</exclude>
+                <exclude>derby.log</exclude>
+                <exclude>*/**/work</exclude>
+                <exclude>*/**/work/**/*</exclude>
+                <exclude>*/**/activemq-data</exclude>
+                <exclude>*/**/activemq-data/**/*</exclude>
+                <exclude>*/**/db.lck</exclude>
+                <exclude>*/**/.felix</exclude>
+                <exclude>*/**/.felix/**/*</exclude>
             </excludes>
         </fileSet>
         <!-- Add the generated tuscany manifest classpath jar to the lib directory -->
