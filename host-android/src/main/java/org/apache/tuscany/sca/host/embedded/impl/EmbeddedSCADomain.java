@@ -19,8 +19,6 @@
 
 package org.apache.tuscany.sca.host.embedded.impl;
 
-import java.util.List;
-
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
@@ -38,7 +36,6 @@ import org.apache.tuscany.sca.contribution.service.ContributionService;
 import org.apache.tuscany.sca.core.assembly.ActivationException;
 import org.apache.tuscany.sca.core.assembly.CompositeActivator;
 import org.apache.tuscany.sca.core.context.ServiceReferenceImpl;
-import org.apache.tuscany.sca.definitions.SCADefinitions;
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.apache.tuscany.sca.host.embedded.management.ComponentManager;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
@@ -53,7 +50,7 @@ import org.osoa.sca.ServiceRuntimeException;
 /**
  * An SCA domain facade implementation.
  * 
- * @version $Rev: 637129 $ $Date: 2008-03-14 08:11:59 -0700 (Fri, 14 Mar 2008) $
+ * @version $Rev: 638890 $ $Date: 2008-03-19 08:52:30 -0700 (Wed, 19 Mar 2008) $
  */
 public class EmbeddedSCADomain extends SCADomain {
 
