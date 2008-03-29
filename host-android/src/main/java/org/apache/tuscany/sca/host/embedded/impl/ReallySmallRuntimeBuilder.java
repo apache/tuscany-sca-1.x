@@ -171,9 +171,6 @@ public class ReallySmallRuntimeBuilder {
                                                                 List scaDefinitionsSink)
         throws ActivationException {
 
-        // Create a new XML input factory
-        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-
         // Create a validation XML schema extension point
         
         /* host-embedded
@@ -183,6 +180,9 @@ public class ReallySmallRuntimeBuilder {
         ValidationSchemaExtensionPoint schemas = new DefaultValidationSchemaExtensionPoint();
         
         schemas.addSchema(ReallySmallRuntimeBuilder.class.getClassLoader().getResource("tuscany-sca.xsd").toString());
+       
+        // Create a new XML input factory
+        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
         
         // Create a validating XML input factory
         XMLInputFactory validatingInputFactory = new DefaultValidatingXMLInputFactory(inputFactory, schemas);
