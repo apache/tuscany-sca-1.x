@@ -18,8 +18,8 @@
  */
 package org.apache.tuscany.sca.core.work;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+/*import javax.naming.InitialContext;
+import javax.naming.NamingException;*/
 
 import org.apache.tuscany.sca.work.NotificationListener;
 import org.apache.tuscany.sca.work.WorkScheduler;

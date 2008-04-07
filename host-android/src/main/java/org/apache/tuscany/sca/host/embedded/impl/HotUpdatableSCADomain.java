@@ -78,7 +78,7 @@ public class HotUpdatableSCADomain extends SCADomain {
     protected static final String REPOSITORY_FOLDER = "sca-contributions";
     
     public HotUpdatableSCADomain(String domainURI, File contributionRepository, int hotupdateInterval) {
-        this.domainURI = domainURI;
+    	this.domainURI = domainURI;
         this.contributionRepository = contributionRepository;
         this.hotUpdateInterval = hotupdateInterval;
         this.originalCCL = Thread.currentThread().getContextClassLoader();

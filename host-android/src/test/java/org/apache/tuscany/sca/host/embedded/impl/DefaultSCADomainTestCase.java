@@ -35,7 +35,7 @@ public class DefaultSCADomainTestCase extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        domain = new DefaultSCADomain(getClass().getClassLoader(), getClass().getClassLoader(),
+        domain = new DefaultSCADomain(getClass().getClassLoader(), null,
                                       "http://localhost", ".", "test.composite");
     }
 

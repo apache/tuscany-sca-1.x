@@ -37,7 +37,7 @@ public class SCADomainTestCase extends TestCase {
     
     @Override
     protected void setUp() throws Exception {
-        domain = SCADomain.newInstance("test.composite");
+        domain = SCADomain.newInstance(null, "test.composite");
     }
 
     public void testInvoke() throws Exception {

@@ -18,7 +18,7 @@
  */
 package org.apache.tuscany.sca.core.work;
 
-import java.rmi.server.UID;
+//import java.rmi.server.UID;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -89,7 +89,7 @@ public class ThreadPoolWorkManager implements WorkManager {
      */
     public WorkItem schedule(Work work, WorkListener workListener) throws IllegalArgumentException {
 
-        WorkItemImpl workItem = new WorkItemImpl(new UID().toString(), work);
+        WorkItemImpl workItem = new WorkItemImpl(null/*new UID().toString()*/, work);
         if (workListener != null) {
             workItems.put(workItem, workListener);
         }

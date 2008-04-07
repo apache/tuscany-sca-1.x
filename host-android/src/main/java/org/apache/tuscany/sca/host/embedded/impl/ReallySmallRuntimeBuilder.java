@@ -40,7 +40,10 @@ import org.apache.tuscany.sca.assembly.xml.ConstrainingTypeProcessor;
 import org.apache.tuscany.sca.context.ContextFactoryExtensionPoint;
 import org.apache.tuscany.sca.context.RequestContextFactory;
 import org.apache.tuscany.sca.contribution.ContributionFactory;
+import org.apache.tuscany.sca.contribution.DefaultModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.DefaultPackageProcessorExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.DefaultURLArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.DefaultValidatingXMLInputFactory;
 import org.apache.tuscany.sca.contribution.processor.DefaultValidationSchemaExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.ExtensiblePackageProcessor;
@@ -51,11 +54,13 @@ import org.apache.tuscany.sca.contribution.processor.PackageProcessorExtensionPo
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.URLArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.ValidationSchemaExtensionPoint;
+import org.apache.tuscany.sca.contribution.resolver.DefaultModelResolverExtensionPoint;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolverExtensionPoint;
 import org.apache.tuscany.sca.contribution.service.ContributionListenerExtensionPoint;
 import org.apache.tuscany.sca.contribution.service.ContributionRepository;
 import org.apache.tuscany.sca.contribution.service.ContributionService;
+import org.apache.tuscany.sca.contribution.service.DefaultContributionListenerExtensionPoint;
 import org.apache.tuscany.sca.contribution.service.ExtensibleContributionListener;
 import org.apache.tuscany.sca.contribution.service.TypeDescriber;
 import org.apache.tuscany.sca.contribution.service.impl.ContributionRepositoryImpl;
@@ -88,6 +93,9 @@ import org.apache.tuscany.sca.provider.ProviderFactoryExtensionPoint;
 import org.apache.tuscany.sca.runtime.RuntimeWireProcessor;
 import org.apache.tuscany.sca.runtime.RuntimeWireProcessorExtensionPoint;
 import org.apache.tuscany.sca.work.WorkScheduler;
+import org.apache.tuscany.sca.contribution.processor.DefaultStAXArtifactProcessorExtensionPoint;
+
+import android.content.Context;
 
 public class ReallySmallRuntimeBuilder {
 
@@ -178,22 +186,27 @@ public class ReallySmallRuntimeBuilder {
          */
         
         ValidationSchemaExtensionPoint schemas = new DefaultValidationSchemaExtensionPoint();
+        registry.addExtensionPoint(schemas);
         
-        schemas.addSchema(ReallySmallRuntimeBuilder.class.getClassLoader().getResource("tuscany-sca.xsd").toString());
+        //schemas.addSchema(ReallySmallRuntimeBuilder.class.getClassLoader().getResource("tuscany-sca.xsd").toString());
        
         // Create a new XML input factory
-        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+        XMLInputFactory inputFactory = null;//XMLInputFactory.newInstance();
         
         // Create a validating XML input factory
-        XMLInputFactory validatingInputFactory = new DefaultValidatingXMLInputFactory(inputFactory, schemas);
+        XMLInputFactory validatingInputFactory = null;//new DefaultValidatingXMLInputFactory(inputFactory, schemas);
         
         // Create STAX artifact processor extension point
-        StAXArtifactProcessorExtensionPoint staxProcessors =
-            registry.getExtensionPoint(StAXArtifactProcessorExtensionPoint.class);
+        //StAXArtifactProcessorExtensionPoint staxProcessors =
+          //  ;
+        
+        registry.addExtensionPoint(new DefaultModelFactoryExtensionPoint());
+        StAXArtifactProcessorExtensionPoint staxProcessors = new DefaultStAXArtifactProcessorExtensionPoint(registry.getExtensionPoint(ModelFactoryExtensionPoint.class));
+        registry.addExtensionPoint(staxProcessors);
 
         // Create and register STAX processors for SCA assembly XML
         ExtensibleStAXArtifactProcessor staxProcessor =
-            new ExtensibleStAXArtifactProcessor(staxProcessors, inputFactory, XMLOutputFactory.newInstance());
+            new ExtensibleStAXArtifactProcessor(staxProcessors, inputFactory, null/*XMLOutputFactory.newInstance()*/);
         staxProcessors.addArtifactProcessor(new CompositeProcessor(contributionFactory, assemblyFactory, policyFactory, staxProcessor));
         staxProcessors.addArtifactProcessor(new ComponentTypeProcessor(assemblyFactory, policyFactory, staxProcessor));
         staxProcessors
@@ -204,9 +217,10 @@ public class ReallySmallRuntimeBuilder {
                                                                               staxProcessor));
 
         // Create URL artifact processor extension point
-        URLArtifactProcessorExtensionPoint documentProcessors =
-            registry.getExtensionPoint(URLArtifactProcessorExtensionPoint.class);
-
+        URLArtifactProcessorExtensionPoint documentProcessors = new DefaultURLArtifactProcessorExtensionPoint(registry.getExtensionPoint(ModelFactoryExtensionPoint.class));
+        registry.addExtensionPoint(documentProcessors);
+            //registry.getExtensionPoint(URLArtifactProcessorExtensionPoint.class);
+        
         // Create and register document processors for SCA assembly XML
         documentProcessors.addArtifactProcessor(new CompositeDocumentProcessor(staxProcessor, validatingInputFactory, scaDefinitionsSink));
         documentProcessors.addArtifactProcessor(new ComponentTypeDocumentProcessor(staxProcessor, validatingInputFactory));
@@ -221,16 +235,18 @@ public class ReallySmallRuntimeBuilder {
         ModelResolver domainModelResolver = definitionsDocumentProcessor.getSCADefinitionsResolver();
 
         // Create Model Resolver extension point
-        ModelResolverExtensionPoint modelResolvers = registry.getExtensionPoint(ModelResolverExtensionPoint.class);
+        ModelResolverExtensionPoint modelResolvers = new DefaultModelResolverExtensionPoint();
 
         // Create contribution package processor extension point
         TypeDescriber describer = new PackageTypeDescriberImpl();
         PackageProcessor packageProcessor =
-            new ExtensiblePackageProcessor(registry.getExtensionPoint(PackageProcessorExtensionPoint.class), describer);
+            new ExtensiblePackageProcessor(new DefaultPackageProcessorExtensionPoint(), describer);
 
         // Get the model factory extension point
         ModelFactoryExtensionPoint modelFactories = registry.getExtensionPoint(ModelFactoryExtensionPoint.class);
 
+        registry.addExtensionPoint(new DefaultContributionListenerExtensionPoint(modelFactories));
+        
         // Create contribution listener
         ExtensibleContributionListener contributionListener =
             new ExtensibleContributionListener(registry.getExtensionPoint(ContributionListenerExtensionPoint.class));

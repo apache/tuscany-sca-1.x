@@ -67,10 +67,10 @@ public class EmbeddedSCADomain extends SCADomain {
      */
     public EmbeddedSCADomain(ClassLoader runtimeClassLoader,
                             String domainURI) {
-        this.uri = domainURI;
+    	this.uri = domainURI;
         
         // Create a runtime
-        runtime = new ReallySmallRuntime(runtimeClassLoader);
+        runtime = new ReallySmallRuntime(null/*runtimeClassLoader*/);
     }
     
     public void start() throws ActivationException {

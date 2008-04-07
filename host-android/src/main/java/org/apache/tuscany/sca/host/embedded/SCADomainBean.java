@@ -34,8 +34,7 @@ public class SCADomainBean extends SCADomain {
     /**
      * Constructs a new SCA domain
      */
-    public SCADomainBean() {
-    }
+    public SCADomainBean() {}
 
     @Override
     public String getURI() {
