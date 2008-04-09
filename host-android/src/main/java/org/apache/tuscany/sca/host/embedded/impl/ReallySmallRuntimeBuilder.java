@@ -85,11 +85,14 @@ import org.apache.tuscany.sca.core.scope.ScopeRegistryImpl;
 import org.apache.tuscany.sca.core.scope.StatelessScopeContainerFactory;
 import org.apache.tuscany.sca.definitions.xml.SCADefinitionsDocumentProcessor;
 import org.apache.tuscany.sca.interfacedef.InterfaceContractMapper;
+import org.apache.tuscany.sca.interfacedef.java.DefaultJavaInterfaceFactory;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterfaceFactory;
 import org.apache.tuscany.sca.invocation.MessageFactory;
 import org.apache.tuscany.sca.policy.IntentAttachPointTypeFactory;
 import org.apache.tuscany.sca.policy.PolicyFactory;
+import org.apache.tuscany.sca.provider.DefaultProviderFactoryExtensionPoint;
 import org.apache.tuscany.sca.provider.ProviderFactoryExtensionPoint;
+import org.apache.tuscany.sca.runtime.DefaultWireProcessorExtensionPoint;
 import org.apache.tuscany.sca.runtime.RuntimeWireProcessor;
 import org.apache.tuscany.sca.runtime.RuntimeWireProcessorExtensionPoint;
 import org.apache.tuscany.sca.work.WorkScheduler;
@@ -122,18 +125,22 @@ public class ReallySmallRuntimeBuilder {
                                                               WorkScheduler workScheduler) {
 
         // Create a wire post processor extension point
-        RuntimeWireProcessorExtensionPoint wireProcessors =
-            registry.getExtensionPoint(RuntimeWireProcessorExtensionPoint.class);
+        RuntimeWireProcessorExtensionPoint wireProcessors = new DefaultWireProcessorExtensionPoint();
+        registry.addExtensionPoint(wireProcessors);
+            //registry.getExtensionPoint(RuntimeWireProcessorExtensionPoint.class);
         RuntimeWireProcessor wireProcessor = new ExtensibleWireProcessor(wireProcessors);
 
         // Retireve the processors extension point
+        registry.addExtensionPoint(new DefaultStAXArtifactProcessorExtensionPoint(registry.getExtensionPoint(ModelFactoryExtensionPoint.class)));
         StAXArtifactProcessorExtensionPoint processors =
             registry.getExtensionPoint(StAXArtifactProcessorExtensionPoint.class);        
 
         // Create a provider factory extension point
-        ProviderFactoryExtensionPoint providerFactories =
-            registry.getExtensionPoint(ProviderFactoryExtensionPoint.class);
+        ProviderFactoryExtensionPoint providerFactories = new DefaultProviderFactoryExtensionPoint(registry.getExtensionPoint(ExtensionPointRegistry.class));
+//            registry.getExtensionPoint(ProviderFactoryExtensionPoint.class);
 
+        registry.getExtensionPoint(ModelFactoryExtensionPoint.class).addFactory(new DefaultJavaInterfaceFactory());
+        
         JavaInterfaceFactory javaInterfaceFactory =
             registry.getExtensionPoint(ModelFactoryExtensionPoint.class).getFactory(JavaInterfaceFactory.class);
         RequestContextFactory requestContextFactory =
@@ -236,6 +243,7 @@ public class ReallySmallRuntimeBuilder {
 
         // Create Model Resolver extension point
         ModelResolverExtensionPoint modelResolvers = new DefaultModelResolverExtensionPoint();
+        registry.addExtensionPoint(modelResolvers);
 
         // Create contribution package processor extension point
         TypeDescriber describer = new PackageTypeDescriberImpl();
@@ -252,11 +260,11 @@ public class ReallySmallRuntimeBuilder {
             new ExtensibleContributionListener(registry.getExtensionPoint(ContributionListenerExtensionPoint.class));
 
         // Create a contribution repository
-        ContributionRepository repository;
+        ContributionRepository repository = null;
         try {
             repository = new ContributionRepositoryImpl("target", inputFactory);
         } catch (IOException e) {
-            throw new ActivationException(e);
+            //throw new ActivationException(e);
         }
 
         ExtensibleURLArtifactProcessor documentProcessor = new ExtensibleURLArtifactProcessor(documentProcessors);

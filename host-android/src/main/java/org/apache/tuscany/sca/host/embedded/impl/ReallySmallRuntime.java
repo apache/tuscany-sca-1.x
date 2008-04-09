@@ -33,11 +33,13 @@ import org.apache.tuscany.sca.assembly.SCABindingFactory;
 import org.apache.tuscany.sca.assembly.builder.CompositeBuilder;
 import org.apache.tuscany.sca.assembly.builder.CompositeBuilderException;
 import org.apache.tuscany.sca.assembly.builder.DomainBuilder;
+import org.apache.tuscany.sca.binding.sca.impl.SCABindingFactoryImpl;
 import org.apache.tuscany.sca.context.ContextFactoryExtensionPoint;
 import org.apache.tuscany.sca.context.DefaultContextFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.ContributionFactory;
 import org.apache.tuscany.sca.contribution.DefaultModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.impl.ContributionFactoryImpl;
 import org.apache.tuscany.sca.contribution.processor.URLArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.contribution.service.ContributionService;
 import org.apache.tuscany.sca.core.DefaultExtensionPointRegistry;
@@ -68,6 +70,7 @@ import org.apache.tuscany.sca.policy.IntentAttachPointType;
 import org.apache.tuscany.sca.policy.IntentAttachPointTypeFactory;
 import org.apache.tuscany.sca.policy.PolicyFactory;
 import org.apache.tuscany.sca.policy.PolicySet;
+import org.apache.tuscany.sca.provider.DefaultSCADefinitionsProviderExtensionPoint;
 import org.apache.tuscany.sca.work.WorkScheduler;
 
 public class ReallySmallRuntime {
@@ -95,6 +98,7 @@ public class ReallySmallRuntime {
     	
         // Create our extension point registry
         registry = new DefaultExtensionPointRegistry();
+        registry.addExtensionPoint(registry);
 
         //Get work scheduler
         
@@ -113,6 +117,7 @@ public class ReallySmallRuntime {
         ModelFactoryExtensionPoint factories = registry.getExtensionPoint(ModelFactoryExtensionPoint.class);*/
         
         ModelFactoryExtensionPoint factories = new DefaultModelFactoryExtensionPoint();
+        registry.addExtensionPoint(factories);
         
         // Create context factory extension point
         ContextFactoryExtensionPoint contextFactories = new DefaultContextFactoryExtensionPoint();
@@ -137,9 +142,13 @@ public class ReallySmallRuntime {
         // Start the runtime modules
         startModules(registry, modules);
         
+        factories.addFactory(new SCABindingFactoryImpl());
         SCABindingFactory scaBindingFactory = factories.getFactory(SCABindingFactory.class);
+        
         IntentAttachPointTypeFactory intentAttachPointTypeFactory = new DefaultIntentAttachPointTypeFactory();
         factories.addFactory(intentAttachPointTypeFactory);
+        
+        factories.addFactory(new ContributionFactoryImpl());
         ContributionFactory contributionFactory = factories.getFactory(ContributionFactory.class); 
         
         // Create a contribution service
@@ -247,6 +256,8 @@ public class ReallySmallRuntime {
     
     private void  loadSCADefinitions(ExtensionPointRegistry registry) throws ActivationException {
         try {
+        	registry.addExtensionPoint(new DefaultSCADefinitionsProviderExtensionPoint(registry));
+        	
             URLArtifactProcessorExtensionPoint documentProcessors = registry.getExtensionPoint(URLArtifactProcessorExtensionPoint.class);
             SCADefinitionsDocumentProcessor definitionsProcessor = (SCADefinitionsDocumentProcessor)documentProcessors.getProcessor(SCADefinitions.class);
             SCADefinitionsProviderExtensionPoint scaDefnProviders = registry.getExtensionPoint(SCADefinitionsProviderExtensionPoint.class);
