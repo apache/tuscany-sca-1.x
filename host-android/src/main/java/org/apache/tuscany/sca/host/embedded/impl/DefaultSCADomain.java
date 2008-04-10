@@ -123,18 +123,24 @@ public class DefaultSCADomain extends SCADomain {
         
         // Contribute the given contribution to an in-memory repository
         ContributionService contributionService = runtime.getContributionService();
-        URL contributionURL;
+        String contributionURL;
         try {
             contributionURL = getContributionLocation(applicationClassLoader, contributionLocation, this.composites);
-            if (contributionURL != null) {
+           /* if (contributionURL != null) {
                 // Make sure the URL is correctly encoded (for example, escape the space characters) 
                 contributionURL = contributionURL.toURI().toURL();
-            }
+            }*/
         } catch (Exception e) {
             throw new ServiceRuntimeException(e);
         }
 
         try {
+			addContribution(contributionService, contributionURL);
+		} catch (IOException e) {
+			throw new ServiceRuntimeException(e);
+		}
+        
+       /* try {
             String scheme = contributionURL.toURI().getScheme();
             if (scheme == null || scheme.equalsIgnoreCase("file")) {
                 File contributionFile = new File(contributionURL.toURI());
@@ -161,7 +167,7 @@ public class DefaultSCADomain extends SCADomain {
             throw new ServiceRuntimeException(e);
         } catch (URISyntaxException e) {
             throw new ServiceRuntimeException(e);
-        }
+        }*/
 
         // Create an in-memory domain level composite
         AssemblyFactory assemblyFactory = runtime.getAssemblyFactory();
@@ -263,13 +269,13 @@ public class DefaultSCADomain extends SCADomain {
 //        }
     }
 
-    protected void addContribution(ContributionService contributionService, URL contributionURL) throws IOException {
+    protected void addContribution(ContributionService contributionService, String contributionURL) throws IOException {
         try {
-            String contributionURI = FileHelper.getName(contributionURL.getPath());
+           /* String contributionURI = FileHelper.getName(contributionURL.getPath());
             if (contributionURI == null || contributionURI.length() == 0) {
                 contributionURI = contributionURL.toString();
-            }
-            contributions.add(contributionService.contribute(contributionURI, contributionURL, false));
+            }*/
+            contributions.add(contributionService.contribute(contributionURL, null, false));
         } catch (ContributionException e) {
             throw new ServiceRuntimeException(e);
         }
@@ -327,28 +333,33 @@ public class DefaultSCADomain extends SCADomain {
      * @return
      * @throws MalformedURLException
      */
-    protected URL getContributionLocation(ClassLoader classLoader, String contributionPath, String[] composites)
+    protected String getContributionLocation(ClassLoader classLoader, String contributionPath, String[] composites)
         throws MalformedURLException {
-        if (contributionPath != null && contributionPath.length() > 0) {
+       /* if (contributionPath != null && contributionPath.length() > 0) {
             //encode spaces as they would cause URISyntaxException
             contributionPath = contributionPath.replace(" ", "%20");
             URI contributionURI = URI.create(contributionPath);
             if (contributionURI.isAbsolute() || composites.length == 0) {
                 return new URL(contributionPath);
             }
-        }
+        }*/
 
         String contributionArtifactPath = null;
-        URL contributionArtifactURL = null;
+        String contributionArtifactURL = null;
         if (composites != null && composites.length > 0 && composites[0].length() > 0) {
+        	String packageName = getContext().getPackageName();
 
             // Here the SCADomain was started with a reference to a composite file
             contributionArtifactPath = composites[0];
-            contributionArtifactURL = classLoader.getResource(contributionArtifactPath);
-            if (contributionArtifactURL == null) {
+            int contributionId = getContext().getResources().getIdentifier(contributionArtifactPath, "raw", packageName);
+            
+            if (contributionId == 0) {
                 throw new IllegalArgumentException("Composite not found: " + contributionArtifactPath);
             }
-        } else {
+            
+            contributionArtifactURL = packageName + "raw" + contributionArtifactPath;
+            
+        } /*else {
 
             // Here the SCADomain was started without any reference to a composite file
             // We are going to look for an sca-contribution.xml or sca-contribution-generated.xml
@@ -368,16 +379,16 @@ public class DefaultSCADomain extends SCADomain {
                 contributionArtifactPath = Contribution.SCA_CONTRIBUTION_DEPLOYABLES;
                 contributionArtifactURL = classLoader.getResource(contributionArtifactPath);
             }
-        }
+        }*/
 
         if (contributionArtifactURL == null) {
             throw new IllegalArgumentException(
                                                "Can't determine contribution deployables. Either specify a composite file, or use an sca-contribution.xml file to specify the deployables.");
         }
 
-        URL contributionURL = null;
+        //URL contributionURL = contributionArtifactURL;
         // "jar:file://....../something.jar!/a/b/c/app.composite"
-        try {
+        /*try {
             String url = contributionArtifactURL.toExternalForm();
             String protocol = contributionArtifactURL.getProtocol();
             if ("file".equals(protocol)) {
@@ -402,9 +413,10 @@ public class DefaultSCADomain extends SCADomain {
             }          
         } catch (MalformedURLException mfe) {
             throw new IllegalArgumentException(mfe);
-        }
+        }*/
 
-        return contributionURL;
+        return contributionArtifactURL;
+        
     }
 
     @Override

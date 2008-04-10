@@ -33,6 +33,8 @@ import org.osoa.sca.CallableReference;
 import org.osoa.sca.ServiceReference;
 import org.osoa.sca.ServiceRuntimeException;
 
+import android.content.Context;
+
 /**
  * A handle to an SCA domain.
  * 
@@ -47,7 +49,16 @@ public abstract class SCADomain {
      */
     // TODO: Temporary support for SCADomain.connect() API
     protected static SCADomain theDomain;
-
+    
+    private static Context context;
+    
+    public static void setContext(Context aContext) {
+    	context = aContext;
+    }
+    
+    public static Context getContext() {
+    	return context;
+    }
     
     /**
      * Returns a new instance of a local SCA domain.
@@ -109,6 +120,8 @@ public abstract class SCADomain {
     public void close() {
         // TODO: temporary to support initial SCADomain.connect capability
         SCADomain.removeInstance(this);
+        
+        
     }
 
     /**
