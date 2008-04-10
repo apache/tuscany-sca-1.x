@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.url.AndroidURLConnection;
 
 import org.apache.tuscany.sca.host.embedded.impl.DefaultSCADomain;
 import org.apache.tuscany.sca.host.embedded.management.ComponentManager;
@@ -54,6 +55,8 @@ public abstract class SCADomain {
     
     public static void setContext(Context aContext) {
     	context = aContext;
+    	AndroidURLConnection.registerContext(context);
+    	
     }
     
     public static Context getContext() {
