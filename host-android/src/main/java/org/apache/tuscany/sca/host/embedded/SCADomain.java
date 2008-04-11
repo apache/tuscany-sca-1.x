@@ -24,11 +24,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
+import java.net.URL;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.url.AndroidURLConnection;
 
+import org.apache.tuscany.sca.host.embedded.impl.ContextRegistry;
 import org.apache.tuscany.sca.host.embedded.impl.DefaultSCADomain;
+import org.apache.tuscany.sca.host.embedded.management.AndroidURLConnection;
+import org.apache.tuscany.sca.host.embedded.management.AndroidURLStreamHandlerFactory;
 import org.apache.tuscany.sca.host.embedded.management.ComponentManager;
 import org.osoa.sca.CallableReference;
 import org.osoa.sca.ServiceReference;
@@ -51,16 +54,55 @@ public abstract class SCADomain {
     // TODO: Temporary support for SCADomain.connect() API
     protected static SCADomain theDomain;
     
-    private static Context context;
+    static {
+    	URL.setURLStreamHandlerFactory(new AndroidURLStreamHandlerFactory());
+    }
     
-    public static void setContext(Context aContext) {
-    	context = aContext;
-    	AndroidURLConnection.registerContext(context);
+    private Context context;
+    
+    public SCADomain() {}
+    
+    public SCADomain(Context context) {
+    	this.context = context;
+    	ContextRegistry.registerContext(context);
     	
     }
     
-    public static Context getContext() {
+    public Context getContext() {
     	return context;
+    }
+    
+    /**
+     * Returns a new instance of a local SCA domain.
+     *  
+     * @return
+     */
+    public static SCADomain newInstance(Context context) {
+        return createNewInstance(context, LOCAL_DOMAIN_URI, null);
+    }
+    
+    /**
+     * Returns a new instance of a local SCA domain. The specified deployable
+     * composite will be included in the SCA domain.
+     * 
+     * @param composite the deployable composite to include in the SCA domain.
+     * @return
+     */
+    public static SCADomain newInstance(Context context, String composite) {
+        return createNewInstance(context, LOCAL_DOMAIN_URI, "/", composite);
+    }
+    
+    /**
+     * Returns a new instance of a local SCA domain. The specified deployable
+     * composites will be included in the SCA domain.
+     * 
+     * @param domainURI the URI of the SCA domain
+     * @param contributionLocation the location of an SCA contribution
+     * @param composites the deployable composites to include in the SCA domain.
+     * @return
+     */
+    public static SCADomain newInstance(Context context, String domainURI, String contributionLocation, String... composites) {
+        return createNewInstance(context, domainURI, contributionLocation, composites);
     }
     
     /**
@@ -124,6 +166,9 @@ public abstract class SCADomain {
         // TODO: temporary to support initial SCADomain.connect capability
         SCADomain.removeInstance(this);
         
+        if (context != null) {
+        	ContextRegistry.unregisterContext(context);
+        }
         
     }
 
@@ -203,6 +248,10 @@ public abstract class SCADomain {
         }
         return null;
     }
+    
+    static SCADomain createNewInstance(String domainURI, String contributionLocation, String... composites) {
+    	return createNewInstance(null, domainURI, contributionLocation, composites);
+    }
 
     /**
      * Returns an SCADomain instance. If the system property
@@ -219,12 +268,12 @@ public abstract class SCADomain {
      * @param composites
      * @return
      */
-    static SCADomain createNewInstance(String domainURI, String contributionLocation, String... composites) {
+    static SCADomain createNewInstance(Context context, String domainURI, String contributionLocation, String... composites) {
 
         SCADomain domain = null;
 
         try {
-            // Determine the runtime and application classloader
+        	// Determine the runtime and application classloader
             final ClassLoader runtimeClassLoader = SCADomain.class.getClassLoader();
             final ClassLoader applicationClassLoader = Thread.currentThread().getContextClassLoader();
             
@@ -244,7 +293,8 @@ public abstract class SCADomain {
                 
                 // Create a default SCA domain implementation
                 domain =
-                    new DefaultSCADomain(runtimeClassLoader,
+                    new DefaultSCADomain(context,
+                    					 runtimeClassLoader,
                                          applicationClassLoader,
                                          domainURI,
                                          contributionLocation,

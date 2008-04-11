@@ -198,10 +198,10 @@ public class ReallySmallRuntimeBuilder {
         //schemas.addSchema(ReallySmallRuntimeBuilder.class.getClassLoader().getResource("tuscany-sca.xsd").toString());
        
         // Create a new XML input factory
-        XMLInputFactory inputFactory = null;//XMLInputFactory.newInstance();
+        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
         
         // Create a validating XML input factory
-        XMLInputFactory validatingInputFactory = null;//new DefaultValidatingXMLInputFactory(inputFactory, schemas);
+        XMLInputFactory validatingInputFactory = new DefaultValidatingXMLInputFactory(inputFactory, schemas);
         
         // Create STAX artifact processor extension point
         //StAXArtifactProcessorExtensionPoint staxProcessors =
@@ -213,7 +213,7 @@ public class ReallySmallRuntimeBuilder {
 
         // Create and register STAX processors for SCA assembly XML
         ExtensibleStAXArtifactProcessor staxProcessor =
-            new ExtensibleStAXArtifactProcessor(staxProcessors, inputFactory, null/*XMLOutputFactory.newInstance()*/);
+            new ExtensibleStAXArtifactProcessor(staxProcessors, inputFactory, XMLOutputFactory.newInstance());
         staxProcessors.addArtifactProcessor(new CompositeProcessor(contributionFactory, assemblyFactory, policyFactory, staxProcessor));
         staxProcessors.addArtifactProcessor(new ComponentTypeProcessor(assemblyFactory, policyFactory, staxProcessor));
         staxProcessors

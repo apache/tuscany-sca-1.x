@@ -67,6 +67,8 @@ import org.osoa.sca.CallableReference;
 import org.osoa.sca.ServiceReference;
 import org.osoa.sca.ServiceRuntimeException;
 
+import android.content.Context;
+
 /**
  * A default SCA domain facade implementation.
  * 
@@ -98,6 +100,32 @@ public class DefaultSCADomain extends SCADomain {
                             String domainURI,
                             String contributionLocation,
                             String... composites) {
+    	this.uri = domainURI;
+        this.composites = composites;
+        this.runtimeClassLoader = runtimeClassLoader;
+        this.applicationClassLoader = applicationClassLoader;
+        this.domainURI = domainURI;
+        this.contributionLocation = contributionLocation;
+        this.composites = composites;
+
+        init();
+    
+    }
+    
+    /**
+     * Constructs a new domain facade.
+     * 
+     * @param domainURI
+     * @param contributionLocation
+     * @param composites
+     */
+    public DefaultSCADomain(Context context, 
+    						ClassLoader runtimeClassLoader,
+                            ClassLoader applicationClassLoader,
+                            String domainURI,
+                            String contributionLocation,
+                            String... composites) {
+    	super(context);
         this.uri = domainURI;
         this.composites = composites;
         this.runtimeClassLoader = runtimeClassLoader;
@@ -123,7 +151,7 @@ public class DefaultSCADomain extends SCADomain {
         
         // Contribute the given contribution to an in-memory repository
         ContributionService contributionService = runtime.getContributionService();
-        String contributionURL;
+        URL contributionURL;
         try {
             contributionURL = getContributionLocation(applicationClassLoader, contributionLocation, this.composites);
            /* if (contributionURL != null) {
@@ -269,13 +297,13 @@ public class DefaultSCADomain extends SCADomain {
 //        }
     }
 
-    protected void addContribution(ContributionService contributionService, String contributionURL) throws IOException {
+    protected void addContribution(ContributionService contributionService, URL contributionURL) throws IOException {
         try {
-           /* String contributionURI = FileHelper.getName(contributionURL.getPath());
+            String contributionURI = FileHelper.getName(contributionURL.getPath());
             if (contributionURI == null || contributionURI.length() == 0) {
                 contributionURI = contributionURL.toString();
-            }*/
-            contributions.add(contributionService.contribute(contributionURL, null, false));
+            }
+            contributions.add(contributionService.contribute(contributionURI, contributionURL, false));
         } catch (ContributionException e) {
             throw new ServiceRuntimeException(e);
         }
@@ -333,7 +361,7 @@ public class DefaultSCADomain extends SCADomain {
      * @return
      * @throws MalformedURLException
      */
-    protected String getContributionLocation(ClassLoader classLoader, String contributionPath, String[] composites)
+    protected URL getContributionLocation(ClassLoader classLoader, String contributionPath, String[] composites)
         throws MalformedURLException {
        /* if (contributionPath != null && contributionPath.length() > 0) {
             //encode spaces as they would cause URISyntaxException
@@ -345,7 +373,7 @@ public class DefaultSCADomain extends SCADomain {
         }*/
 
         String contributionArtifactPath = null;
-        String contributionArtifactURL = null;
+        URL contributionArtifactURL = null;
         if (composites != null && composites.length > 0 && composites[0].length() > 0) {
         	String packageName = getContext().getPackageName();
 
@@ -357,7 +385,7 @@ public class DefaultSCADomain extends SCADomain {
                 throw new IllegalArgumentException("Composite not found: " + contributionArtifactPath);
             }
             
-            contributionArtifactURL = packageName + "raw" + contributionArtifactPath;
+            contributionArtifactURL = new URL("android", packageName, "raw/" + contributionArtifactPath);
             
         } /*else {
 
