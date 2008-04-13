@@ -45,7 +45,7 @@ Building
 Building the distributions
 --------------------------
 
-1) Change to the distributions folder
+1) Change to the distribution folder
 2) Run
 
 	$> mvn
