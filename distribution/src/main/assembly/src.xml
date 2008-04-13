@@ -119,6 +119,8 @@
                 <exclude>modules/implementation-data/**/*</exclude>
                 <exclude>modules/implementation-osgi/.felix</exclude>
                 <exclude>modules/implementation-osgi/.felix/**/*</exclude>
+                <exclude>modules/osgi-runtime/.felix</exclude>
+                <exclude>modules/osgi-runtime/.felix/**/*</exclude>
                 <exclude>samples/old</exclude>
                 <exclude>samples/old/**/*</exclude>
                 <exclude>samples/calculator-distributed/work</exclude>
