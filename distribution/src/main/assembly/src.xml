@@ -104,6 +104,8 @@
                 <exclude>itest/large-sdo-ws/**/*</exclude>
                 <exclude>itest/policy/work</exclude>
                 <exclude>itest/policy/work/**/*</exclude>
+                <exclude>itest/transaction/derbydb</exclude>
+                <exclude>itest/transaction/derbydb/**/*</exclude>
                 <exclude>itest/ws-void-args-return/work</exclude>
                 <exclude>itest/ws-void-args-return/work/**/*</exclude>
                 <exclude>modules/domain-impl/work</exclude>
