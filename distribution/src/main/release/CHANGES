@@ -83,6 +83,7 @@ Changes With Apache Tuscany SCA 1.2 (incubating) April 2008
 
   * Tools
     - Eclipse plugin providing a Tuscany runtime Library and Tuscany launcher in Eclipse environment
+       - An updatesite is also available to facilitate the plugin installation using the Eclipse update manager
 
   * Samples/Tutorial/Demos
     - calculator-distributed migrated to use new Tuscany Distributed Workspace
