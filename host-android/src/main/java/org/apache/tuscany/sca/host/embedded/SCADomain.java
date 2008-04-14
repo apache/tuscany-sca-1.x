@@ -30,8 +30,7 @@ import java.security.PrivilegedAction;
 
 import org.apache.tuscany.sca.host.embedded.impl.ContextRegistry;
 import org.apache.tuscany.sca.host.embedded.impl.DefaultSCADomain;
-import org.apache.tuscany.sca.host.embedded.management.AndroidURLConnection;
-import org.apache.tuscany.sca.host.embedded.management.AndroidURLStreamHandlerFactory;
+import org.apache.tuscany.sca.host.embedded.management.DexURLStreamHandlerFactory;
 import org.apache.tuscany.sca.host.embedded.management.ComponentManager;
 import org.osoa.sca.CallableReference;
 import org.osoa.sca.ServiceReference;
@@ -55,7 +54,7 @@ public abstract class SCADomain {
     protected static SCADomain theDomain;
     
     static {
-    	URL.setURLStreamHandlerFactory(new AndroidURLStreamHandlerFactory());
+    	URL.setURLStreamHandlerFactory(new DexURLStreamHandlerFactory());
     }
     
     private Context context;
@@ -89,7 +88,7 @@ public abstract class SCADomain {
      * @return
      */
     public static SCADomain newInstance(Context context, String composite) {
-        return createNewInstance(context, LOCAL_DOMAIN_URI, "/", composite);
+        return createNewInstance(context, LOCAL_DOMAIN_URI, "dex:/" + context.getPackageName() + "/raw/", composite);
     }
     
     /**

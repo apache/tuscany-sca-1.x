@@ -19,12 +19,8 @@
 
 package org.apache.tuscany.sca.host.embedded.impl;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -363,87 +359,31 @@ public class DefaultSCADomain extends SCADomain {
      */
     protected URL getContributionLocation(ClassLoader classLoader, String contributionPath, String[] composites)
         throws MalformedURLException {
-       /* if (contributionPath != null && contributionPath.length() > 0) {
-            //encode spaces as they would cause URISyntaxException
-            contributionPath = contributionPath.replace(" ", "%20");
-            URI contributionURI = URI.create(contributionPath);
-            if (contributionURI.isAbsolute() || composites.length == 0) {
-                return new URL(contributionPath);
-            }
-        }*/
-
-        String contributionArtifactPath = null;
-        URL contributionArtifactURL = null;
-        if (composites != null && composites.length > 0 && composites[0].length() > 0) {
-        	String packageName = getContext().getPackageName();
-
-            // Here the SCADomain was started with a reference to a composite file
-            contributionArtifactPath = composites[0];
-            int contributionId = getContext().getResources().getIdentifier(contributionArtifactPath, "raw", packageName);
-            
-            if (contributionId == 0) {
-                throw new IllegalArgumentException("Composite not found: " + contributionArtifactPath);
-            }
-            
-            contributionArtifactURL = new URL("android", packageName, "raw/" + contributionArtifactPath);
-            
-        } /*else {
-
-            // Here the SCADomain was started without any reference to a composite file
-            // We are going to look for an sca-contribution.xml or sca-contribution-generated.xml
-
-            // Look for META-INF/sca-contribution.xml
-            contributionArtifactPath = Contribution.SCA_CONTRIBUTION_META;
-            contributionArtifactURL = classLoader.getResource(contributionArtifactPath);
-
-            // Look for META-INF/sca-contribution-generated.xml
-            if (contributionArtifactURL == null) {
-                contributionArtifactPath = Contribution.SCA_CONTRIBUTION_GENERATED_META;
-                contributionArtifactURL = classLoader.getResource(contributionArtifactPath);
-            }
-
-            // Look for META-INF/sca-deployables directory
-            if (contributionArtifactURL == null) {
-                contributionArtifactPath = Contribution.SCA_CONTRIBUTION_DEPLOYABLES;
-                contributionArtifactURL = classLoader.getResource(contributionArtifactPath);
-            }
-        }*/
-
-        if (contributionArtifactURL == null) {
-            throw new IllegalArgumentException(
-                                               "Can't determine contribution deployables. Either specify a composite file, or use an sca-contribution.xml file to specify the deployables.");
+    
+        int colonIndex = contributionPath.indexOf(':');
+        String protocol;
+        
+        if (colonIndex == -1) {
+        	throw new IllegalArgumentException("can't determine the protocol!");
+        	
+        } else {
+        	protocol = contributionPath.substring(0, colonIndex);
         }
-
-        //URL contributionURL = contributionArtifactURL;
-        // "jar:file://....../something.jar!/a/b/c/app.composite"
-        /*try {
-            String url = contributionArtifactURL.toExternalForm();
-            String protocol = contributionArtifactURL.getProtocol();
-            if ("file".equals(protocol)) {
-                // directory contribution
-                if (url.endsWith(contributionArtifactPath)) {
-                    String location = url.substring(0, url.lastIndexOf(contributionArtifactPath));
-                    // workaround from evil url/uri form maven
-                    contributionURL = FileHelper.toFile(new URL(location)).toURI().toURL();
-                }
-
-            } else if ("jar".equals(protocol)) {
-                // jar contribution
-                String location = url.substring(4, url.lastIndexOf("!/"));
-                // workaround for evil url/uri from maven
-                contributionURL = FileHelper.toFile(new URL(location)).toURI().toURL();
-                
-            } else if (protocol != null && (protocol.equals("bundle")||protocol.equals("bundleresource"))){
-                contributionURL = new URL(contributionArtifactURL.getProtocol(), 
-                                          contributionArtifactURL.getHost(), 
-                                          contributionArtifactURL.getPort(), 
-                                          "/");
-            }          
-        } catch (MalformedURLException mfe) {
-            throw new IllegalArgumentException(mfe);
-        }*/
-
-        return contributionArtifactURL;
+        
+        int slashIndex = contributionPath.indexOf('/');
+        
+        if (slashIndex == -1 || slashIndex == contributionPath.length()) {
+        	throw new IllegalArgumentException("can't determine the host!");
+        }
+        
+        String host = contributionPath.substring(slashIndex + 1);
+        slashIndex = host.indexOf('/');
+        
+        if (slashIndex != -1) {
+        	host = host.substring(0, slashIndex);
+        }
+        
+        return new URL(protocol, host, "");
         
     }
 
