@@ -28,9 +28,9 @@ import java.net.URL;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 
-import org.apache.tuscany.sca.host.embedded.impl.ContextRegistry;
+import org.apache.tuscany.sca.android.ContextRegistry;
+import org.apache.tuscany.sca.android.DexURLStreamHandlerFactory;
 import org.apache.tuscany.sca.host.embedded.impl.DefaultSCADomain;
-import org.apache.tuscany.sca.host.embedded.management.DexURLStreamHandlerFactory;
 import org.apache.tuscany.sca.host.embedded.management.ComponentManager;
 import org.osoa.sca.CallableReference;
 import org.osoa.sca.ServiceReference;
