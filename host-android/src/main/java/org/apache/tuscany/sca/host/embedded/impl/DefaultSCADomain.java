@@ -359,31 +359,8 @@ public class DefaultSCADomain extends SCADomain {
      */
     protected URL getContributionLocation(ClassLoader classLoader, String contributionPath, String[] composites)
         throws MalformedURLException {
-    
-        int colonIndex = contributionPath.indexOf(':');
-        String protocol;
-        
-        if (colonIndex == -1) {
-        	throw new IllegalArgumentException("can't determine the protocol!");
-        	
-        } else {
-        	protocol = contributionPath.substring(0, colonIndex);
-        }
-        
-        int slashIndex = contributionPath.indexOf('/');
-        
-        if (slashIndex == -1 || slashIndex == contributionPath.length()) {
-        	throw new IllegalArgumentException("can't determine the host!");
-        }
-        
-        String host = contributionPath.substring(slashIndex + 1);
-        slashIndex = host.indexOf('/');
-        
-        if (slashIndex != -1) {
-        	host = host.substring(0, slashIndex);
-        }
-        
-        return new URL(protocol, host, "");
+    	
+    	return new URL(contributionPath);
         
     }
 
