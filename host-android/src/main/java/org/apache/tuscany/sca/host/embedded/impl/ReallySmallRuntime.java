@@ -209,7 +209,9 @@ public class ReallySmallRuntime {
     public void buildComposite(Composite composite) throws CompositeBuilderException {
         //Get factory extension point
         ModelFactoryExtensionPoint factories = registry.getExtensionPoint(ModelFactoryExtensionPoint.class);
+        factories.addFactory(new SCABindingFactoryImpl());
         SCABindingFactory scaBindingFactory = factories.getFactory(SCABindingFactory.class);
+        factories.addFactory(new DefaultIntentAttachPointTypeFactory());
         IntentAttachPointTypeFactory intentAttachPointTypeFactory = factories.getFactory(IntentAttachPointTypeFactory.class);
         InterfaceContractMapper mapper = new InterfaceContractMapperImpl();
         
