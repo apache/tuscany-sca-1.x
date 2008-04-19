@@ -383,7 +383,9 @@ public class ContributionServiceImpl implements ContributionService {
         }
 
         // store the contribution on the registry
-        this.contributionRepository.addContribution(contribution);
+        if (this.contributionRepository != null) {
+        	this.contributionRepository.addContribution(contribution);
+        }
 
         return contribution;
     }
