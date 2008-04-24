@@ -17,31 +17,10 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.interfacedef.wsdl.interface2wsdl;
+package org.apache.tuscany.sca.interfacedef.wsdl;
 
-import javax.jws.WebMethod;
-import javax.jws.WebService;
-
-import org.osoa.sca.annotations.OneWay;
-import org.osoa.sca.annotations.Remotable;
-
-@Remotable
-@WebService
-public interface TestJavaInterface {
-    String m1(String str);
-
-    @OneWay
-    @WebMethod
-    void m2(int i);
-
-    @WebMethod
-    String m3();
-
-    void m4();
-
-    @WebMethod
-    String m5(String str, int i);
-
-    @WebMethod(exclude = true)
-    void dummy();
+public class TestJavaClass {
+    public String name;
+    public int number;
+    public float balance;
 }
