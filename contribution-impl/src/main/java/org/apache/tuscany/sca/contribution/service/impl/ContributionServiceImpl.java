@@ -35,6 +35,7 @@ import java.util.List;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 
+import org.apache.tuscany.sca.android.ContextRegistry;
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.assembly.Composite;
 import org.apache.tuscany.sca.contribution.Artifact;
@@ -53,6 +54,9 @@ import org.apache.tuscany.sca.contribution.service.ContributionService;
 import org.apache.tuscany.sca.contribution.service.ExtensibleContributionListener;
 import org.apache.tuscany.sca.contribution.service.util.IOHelper;
 import org.apache.tuscany.sca.contribution.xml.ContributionMetadataDocumentProcessor;
+import org.apache.tuscany.sca.definitions.SCADefinitions;
+
+import android.content.Context;
 
 /**
  * Service interface that manages artifacts contributed to a Tuscany runtime.
@@ -309,7 +313,7 @@ public class ContributionServiceImpl implements ContributionService {
 
         //initialize contribution based on it's metadata if available
         Contribution contribution = readContributionMetadata(locationURL);
-
+        
         // Create contribution model resolver
         if (modelResolver == null) {
             //FIXME Remove this domain resolver, visibility of policy declarations should be handled by
@@ -321,6 +325,12 @@ public class ContributionServiceImpl implements ContributionService {
         contribution.setURI(contributionURI.toString());
         contribution.setLocation(locationURL.toString());
         contribution.setModelResolver(modelResolver);
+        
+        Context[] contexts = ContextRegistry.getContexts(new URL(contribution.getLocation()).getHost());
+        
+        if (contexts.length > 0) {
+        	contribution.setClassLoader(contexts[0].getClassLoader());
+        }
         
         List<URI> contributionArtifacts = null;
 
