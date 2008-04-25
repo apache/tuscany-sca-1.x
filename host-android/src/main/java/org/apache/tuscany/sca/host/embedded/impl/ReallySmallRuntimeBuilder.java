@@ -207,7 +207,6 @@ public class ReallySmallRuntimeBuilder {
         //StAXArtifactProcessorExtensionPoint staxProcessors =
           //  ;
         
-        registry.addExtensionPoint(new DefaultModelFactoryExtensionPoint());
         StAXArtifactProcessorExtensionPoint staxProcessors = new DefaultStAXArtifactProcessorExtensionPoint(registry.getExtensionPoint(ModelFactoryExtensionPoint.class));
         registry.addExtensionPoint(staxProcessors);
 

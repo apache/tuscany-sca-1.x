@@ -60,6 +60,7 @@ import org.apache.tuscany.sca.extensibility.ServiceDeclaration;
 import org.apache.tuscany.sca.extensibility.ServiceDiscovery;
 import org.apache.tuscany.sca.interfacedef.InterfaceContractMapper;
 import org.apache.tuscany.sca.interfacedef.impl.InterfaceContractMapperImpl;
+import org.apache.tuscany.sca.interfacedef.java.DefaultJavaInterfaceFactory;
 import org.apache.tuscany.sca.invocation.MessageFactory;
 import org.apache.tuscany.sca.policy.DefaultIntentAttachPointTypeFactory;
 import org.apache.tuscany.sca.policy.DefaultPolicyFactory;
@@ -138,6 +139,8 @@ public class ReallySmallRuntime {
         
         // Load the runtime modules
         modules = loadModules(registry);
+        
+        registry.getExtensionPoint(ModelFactoryExtensionPoint.class).addFactory(new DefaultJavaInterfaceFactory());
         
         // Start the runtime modules
         startModules(registry, modules);
