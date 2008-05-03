@@ -136,8 +136,8 @@ public class ReallySmallRuntimeBuilder {
             registry.getExtensionPoint(StAXArtifactProcessorExtensionPoint.class);        
 
         // Create a provider factory extension point
-        ProviderFactoryExtensionPoint providerFactories = new DefaultProviderFactoryExtensionPoint(registry.getExtensionPoint(ExtensionPointRegistry.class));
-//            registry.getExtensionPoint(ProviderFactoryExtensionPoint.class);
+        ProviderFactoryExtensionPoint providerFactories = 
+            registry.getExtensionPoint(ProviderFactoryExtensionPoint.class);
 
         registry.getExtensionPoint(ModelFactoryExtensionPoint.class).addFactory(new DefaultJavaInterfaceFactory());
         
