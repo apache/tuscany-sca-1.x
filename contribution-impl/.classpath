@@ -5,6 +5,7 @@
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
 	<classpathentry excluding="**/*.java" kind="src" output="target/test-classes" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Android"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.2/junit-4.2.jar"/>
 	<classpathentry kind="src" path="/tuscany-contribution"/>
 	<classpathentry kind="src" path="/tuscany-assembly"/>
@@ -22,6 +23,6 @@
 	<classpathentry kind="src" path="/tuscany-contribution-resource"/>
 	<classpathentry kind="src" path="/tuscany-contribution-xml"/>
 	<classpathentry kind="var" path="M2_REPO/org/easymock/easymock/2.2/easymock-2.2.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/JavaClasses"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/android-jdk-classes"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
