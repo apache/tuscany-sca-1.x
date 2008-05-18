@@ -112,6 +112,7 @@ public class Axis2BindingInvoker implements Invoker, DataExchangeSemantics {
 
         // ensure connections are tracked so that they can be closed by the reference binding
         MessageContext requestMC = operationClient.getMessageContext(WSDLConstants.MESSAGE_LABEL_OUT_VALUE);
+        try {
         requestMC.getOptions().setProperty(HTTPConstants.REUSE_HTTP_CLIENT, Boolean.TRUE);
         requestMC.getOptions().setTimeOutInMilliSeconds(120000L);
 
@@ -128,9 +129,11 @@ public class Axis2BindingInvoker implements Invoker, DataExchangeSemantics {
             response.build();
         }
 
-        operationClient.complete(requestMC);
 
         return response;
+        } finally {
+        operationClient.complete(requestMC);
+        }
     }
 
     @SuppressWarnings("deprecation")
