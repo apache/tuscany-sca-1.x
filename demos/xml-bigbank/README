@@ -12,10 +12,10 @@ Buildfile: build.xml
 clean:
 
 compile:
-    [mkdir] Created dir: /home/lresende/apache/tuscany/java-sca-1.2/distribution/target/apache-tuscany-sca-1.2-incubating-SNAPSHOT.dir/tuscany-sca-1.2-incubating-SNAPSHOT/demos/xml-bigbank/target/classes
-    [javac] Compiling 11 source files to /home/lresende/apache/tuscany/java-sca-1.2/distribution/target/apache-tuscany-sca-1.2-incubating-SNAPSHOT.dir/tuscany-sca-1.2-incubating-SNAPSHOT/demos/xml-bigbank/target/classes
-     [copy] Copying 5 files to /home/lresende/apache/tuscany/java-sca-1.2/distribution/target/apache-tuscany-sca-1.2-incubating-SNAPSHOT.dir/tuscany-sca-1.2-incubating-SNAPSHOT/demos/xml-bigbank/target/classes
-      [jar] Building jar: /home/lresende/apache/tuscany/java-sca-1.2/distribution/target/apache-tuscany-sca-1.2-incubating-SNAPSHOT.dir/tuscany-sca-1.2-incubating-SNAPSHOT/demos/xml-bigbank/target/demo-xml-bigbank.jar
+    [mkdir] Created dir: /home/lresende/apache/tuscany/java-sca-1.2/distribution/target/apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir/tuscany-sca-1.2.1-incubating-SNAPSHOT/demos/xml-bigbank/target/classes
+    [javac] Compiling 11 source files to /home/lresende/apache/tuscany/java-sca-1.2/distribution/target/apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir/tuscany-sca-1.2.1-incubating-SNAPSHOT/demos/xml-bigbank/target/classes
+     [copy] Copying 5 files to /home/lresende/apache/tuscany/java-sca-1.2/distribution/target/apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir/tuscany-sca-1.2.1-incubating-SNAPSHOT/demos/xml-bigbank/target/classes
+      [jar] Building jar: /home/lresende/apache/tuscany/java-sca-1.2/distribution/target/apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir/tuscany-sca-1.2.1-incubating-SNAPSHOT/demos/xml-bigbank/target/demo-xml-bigbank.jar
 
 run:
      [java] Retrieving exchange rate...
