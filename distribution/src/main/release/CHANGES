@@ -1,5 +1,5 @@
-Changes With Apache Tuscany SCA 1.2.1 (incubating) May 2008 
-===========================================================
+Changes With Apache Tuscany SCA 1.2.1 (incubating) June 2008 
+============================================================
 
 Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
   * TUSCANY-2304 SCA client Hang Forver after getting exceptions from remote web service
