@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,14 +15,24 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           targetNamespace="http://scatours"
-           xmlns:sample="http://scatours"
-           name="currencyconverter">
+ */
+package client;
 
-    <component name="CurrencyConverterComponent">
-		<implementation.java class="currencyconverter.CurrencyConverterImpl"/>
-    </component>
+import org.apache.tuscany.sca.host.embedded.SCADomain;
+import currencyconverter.CurrencyConverter;
 
-</composite>
+/**
+ * This shows how to run the CurrencyConverter component.
+ */
+public class CurrencyConverterClient {
+ 
+    public  final static void main(String[] args) throws Exception {
+        SCADomain scaDomain = 
+            SCADomain.newInstance("currencyconverter.composite");
+        CurrencyConverter currencyConverter = 
+            scaDomain.getService(CurrencyConverter.class, 
+                                 "CurrencyConverterComponent");
+        System.out.println(currencyConverter.convert("GBP", "USD", 10.00));
+        scaDomain.close();
+    }    
+}

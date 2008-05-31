@@ -23,6 +23,7 @@ import org.osoa.sca.annotations.Remotable;
 /**
  * The CurrencyConverter service interface
  */
+@Remotable
 public interface CurrencyConverter {
     double convert(String fromCurrencyCode, 
                    String toCurrencyCode, 

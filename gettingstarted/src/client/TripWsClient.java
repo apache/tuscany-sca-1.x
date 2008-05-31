@@ -19,20 +19,22 @@
 package client;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
-import currencyconverter.CurrencyConverter;
+
+import trip.Trip;
 
 /**
  * This shows how to run the CurrencyConverter component.
  */
-public class CurrencyConverterClient {
+public class TripWsClient {
  
     public  final static void main(String[] args) throws Exception {
-        SCADomain scaDomain = 
-            SCADomain.newInstance("currencyconverter.composite");
-        CurrencyConverter currencyConverter = 
-            scaDomain.getService(CurrencyConverter.class, 
-                                 "CurrencyConverterComponent");
-        System.out.println(currencyConverter.convert("GBP", "USD", 27.65));
+        SCADomain scaDomain = SCADomain.newInstance("tripws.composite");
+        Trip trip = scaDomain.getService(Trip.class, "TripComponent");
+        System.out.println(trip.getTotalPrice());
+
+        System.out.println("press enter to continue");
+        System.in.read();
+        
         scaDomain.close();
     }    
 }
