@@ -26,8 +26,7 @@ public class CurrencyConverterImpl implements CurrencyConverter {
     public double convert(String fromCurrencyCode, 
                           String toCurrencyCode, 
                           double amount){
-        // regardless of which currencies are specified the 
-        // conversion is the same!
+        // this currency conversion is pretty dumb
         return amount * 1.23;
     }
 }

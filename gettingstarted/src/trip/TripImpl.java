@@ -27,17 +27,13 @@ import currencyconverter.CurrencyConverter;
  */
 public class TripImpl implements Trip {
     
-    private CurrencyConverter currencyConverter;
+    @Reference
+    protected CurrencyConverter currencyConverter;
     
-    private double totalPrice = 123.45;
+    private double totalPrice = 100.00;
     private String supplierCurrency = "USD";
     private String quoteCurrency = "GBP";
-    
-    @Reference
-    public void setCurrencyConverter(CurrencyConverter currencyConverter){
-        this.currencyConverter = currencyConverter;
-    }
-    
+       
     public double getTotalPrice(){
         return currencyConverter.convert(supplierCurrency, 
                                          quoteCurrency, 
