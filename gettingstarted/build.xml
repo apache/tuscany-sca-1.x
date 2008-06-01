@@ -32,7 +32,6 @@
     <target name="run">
         <java classname="client.CurrencyConverterClient" fork="true">
             <classpath>
-                <pathelement path="resources"/>
                 <pathelement path="target/classes"/>
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
@@ -42,7 +41,6 @@
     <target name="runtrip">
         <java classname="client.TripClient" fork="true">
             <classpath>
-            	<pathelement path="resources"/>
                 <pathelement path="target/classes"/>
             	<pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
@@ -52,7 +50,6 @@
     <target name="runtripws">
         <java classname="client.TripWsClient" fork="true">
             <classpath>
-                <pathelement path="resources"/>
                 <pathelement path="target/classes"/>
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
