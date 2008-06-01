@@ -157,12 +157,12 @@ gerLauncher main
      [java] 26-Mar-2008 12:55:13 org.apache.tuscany.sca.node.launcher.NodeLaunch
 erUtil collectJARFiles
      [java] INFO: Runtime classpath: 147 JARs from C:\simon\tuscany\sca-java-1.2
-\distribution\target\apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir\tuscany-sca-
-1.2.1-incubating-SNAPSHOT\lib
+\distribution\target\apache-tuscany-sca-1.2.1-incubating.dir\tuscany-sca-
+1.2.1-incubating\lib
      [java] 26-Mar-2008 12:55:13 org.apache.tuscany.sca.node.launcher.NodeLaunch
 erUtil collectJARFiles
      [java] INFO: Runtime classpath: 89 JARs from C:\simon\tuscany\sca-java-1.2\
-distribution\target\apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir\tuscany-sca-1
+distribution\target\apache-tuscany-sca-1.2.1-incubating.dir\tuscany-sca-1
 .2-incubating-SNAPSHOT\modules
      [java] 26-Mar-2008 12:55:19 org.apache.catalina.core.StandardEngine start
      [java] INFO: Starting Servlet Engine: Apache Tomcat/6.0.14
@@ -284,12 +284,12 @@ er main
      [java] 26-Mar-2008 12:55:42 org.apache.tuscany.sca.node.launcher.NodeLaunch
 erUtil collectJARFiles
      [java] INFO: Runtime classpath: 147 JARs from C:\simon\tuscany\sca-java-1.2
-\distribution\target\apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir\tuscany-sca-
-1.2.1-incubating-SNAPSHOT\lib
+\distribution\target\apache-tuscany-sca-1.2.1-incubating.dir\tuscany-sca-
+1.2.1-incubating\lib
      [java] 26-Mar-2008 12:55:42 org.apache.tuscany.sca.node.launcher.NodeLaunch
 erUtil collectJARFiles
      [java] INFO: Runtime classpath: 89 JARs from C:\simon\tuscany\sca-java-1.2\
-distribution\target\apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir\tuscany-sca-1
+distribution\target\apache-tuscany-sca-1.2.1-incubating.dir\tuscany-sca-1
 .2-incubating-SNAPSHOT\modules
      [java] 26-Mar-2008 12:55:42 org.apache.tuscany.sca.node.impl.NodeImpl <init
 >
@@ -297,7 +297,7 @@ distribution\target\apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir\tuscany-sca
      [java] 26-Mar-2008 12:55:45 org.apache.tuscany.sca.node.impl.NodeImpl confi
 gureNode
      [java] INFO: Loading contribution: file:/C:/simon/tuscany/sca-java-1.2/dist
-ribution/target/apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir/tuscany-sca-1.2-i
+ribution/target/apache-tuscany-sca-1.2.1-incubating.dir/tuscany-sca-1.2-i
 ncubating-SNAPSHOT/samples/calculator-distributed/./src/main/resources/nodeB/
      [java] 26-Mar-2008 12:55:46 org.apache.tuscany.sca.node.impl.NodeImpl confi
 gureNode
@@ -330,12 +330,12 @@ er main
      [java] 26-Mar-2008 12:56:01 org.apache.tuscany.sca.node.launcher.NodeLaunch
 erUtil collectJARFiles
      [java] INFO: Runtime classpath: 147 JARs from C:\simon\tuscany\sca-java-1.2
-\distribution\target\apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir\tuscany-sca-
-1.2.1-incubating-SNAPSHOT\lib
+\distribution\target\apache-tuscany-sca-1.2.1-incubating.dir\tuscany-sca-
+1.2.1-incubating\lib
      [java] 26-Mar-2008 12:56:01 org.apache.tuscany.sca.node.launcher.NodeLaunch
 erUtil collectJARFiles
      [java] INFO: Runtime classpath: 89 JARs from C:\simon\tuscany\sca-java-1.2\
-distribution\target\apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir\tuscany-sca-1
+distribution\target\apache-tuscany-sca-1.2.1-incubating.dir\tuscany-sca-1
 .2-incubating-SNAPSHOT\modules
      [java] 26-Mar-2008 12:56:01 org.apache.tuscany.sca.node.impl.NodeImpl <init
 >
@@ -343,7 +343,7 @@ distribution\target\apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir\tuscany-sca
      [java] 26-Mar-2008 12:56:03 org.apache.tuscany.sca.node.impl.NodeImpl confi
 gureNode
      [java] INFO: Loading contribution: file:/C:/simon/tuscany/sca-java-1.2/dist
-ribution/target/apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir/tuscany-sca-1.2-i
+ribution/target/apache-tuscany-sca-1.2.1-incubating.dir/tuscany-sca-1.2-i
 ncubating-SNAPSHOT/samples/calculator-distributed/./src/main/resources/nodeC/
      [java] 26-Mar-2008 12:56:04 org.apache.tuscany.sca.node.impl.NodeImpl confi
 gureNode
@@ -372,7 +372,7 @@ runNodeA:
      [java] 26-Mar-2008 12:56:12 org.apache.tuscany.sca.node.impl.NodeImpl confi
 gureNode
      [java] INFO: Loading contribution: file:/C:/simon/tuscany/sca-java-1.2/dist
-ribution/target/apache-tuscany-sca-1.2.1-incubating-SNAPSHOT.dir/tuscany-sca-1.2-i
+ribution/target/apache-tuscany-sca-1.2.1-incubating.dir/tuscany-sca-1.2-i
 ncubating-SNAPSHOT/samples/calculator-distributed/./src/main/resources/nodeA/
      [java] 26-Mar-2008 12:56:13 org.apache.tuscany.sca.node.impl.NodeImpl confi
 gureNode

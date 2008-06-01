@@ -46,10 +46,10 @@ public class TuscanyClasspathContainer implements IClasspathContainer {
         "features/org.apache.tuscany.sca.feature_1.2.1";
     
     private static final String TUSCANY_FEATURE_RUNTIME = TUSCANY_FEATURE +
-        "/runtime/apache-tuscany-sca-1.2.1-incubating-SNAPSHOT/" +
-        "tuscany-sca-1.2.1-incubating-SNAPSHOT"; 
+        "/runtime/apache-tuscany-sca-1.2.1-incubating/" +
+        "tuscany-sca-1.2.1-incubating"; 
     private static final String TUSCANY_FEATURE_SRC = TUSCANY_FEATURE +
-        "/src/apache-tuscany-sca-1.2.1-incubating-SNAPSHOT-src.zip"; 
+        "/src/apache-tuscany-sca-1.2.1-incubating-src.zip"; 
 
     public TuscanyClasspathContainer() {
     }
