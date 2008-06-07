@@ -17,7 +17,7 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.provider;
+package org.apache.tuscany.sca.endpointresolver;
 
 
 /**
@@ -26,19 +26,30 @@ package org.apache.tuscany.sca.provider;
  * 
  * @version $Rev$ $Date$
  */
-public interface EndpointProvider {
+public interface EndpointResolver {
 
     /**
      * This method will be invoked when the endpoint is
-     * activated. The provider will attempt to resolve the 
-     * endpoint against available services. 
+     * activated. It gives the resolver the opportunity
+     * to do any set up ready for when it is asked to 
+     * resolve the endpoint when a message arrives
      */
     void start();
+    
+    /**
+     * This method will be invoked when the endpoint is
+     * to be resolved. The resolver will attempt to resolve the 
+     * endpoint against available services. The resolvers extending
+     * this interface will provide environment or binding specific 
+     * resolution processing
+     */
+    void resolve();
 
     /**
      * This method will be invoked when the endpont is
-     * deactivated.
+     * deactivated. It gives the resolver the opportunity
+     * to take and required resolver shutdown actions
      */
-    void stop();
+    void stop();    
 
 }

@@ -19,33 +19,28 @@
 
 package org.apache.tuscany.sca.endpoint.impl;
 
+import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.Endpoint;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
-import org.apache.tuscany.sca.provider.BindingProviderFactory;
-import org.apache.tuscany.sca.provider.EndpointProvider;
-import org.apache.tuscany.sca.provider.EndpointProviderFactory;
-import org.apache.tuscany.sca.provider.ReferenceBindingProvider;
-import org.apache.tuscany.sca.provider.ServiceBindingProvider;
-import org.apache.tuscany.sca.runtime.RuntimeComponent;
-import org.apache.tuscany.sca.runtime.RuntimeComponentReference;
-import org.apache.tuscany.sca.runtime.RuntimeComponentService;
+import org.apache.tuscany.sca.endpointresolver.EndpointResolver;
+import org.apache.tuscany.sca.endpointresolver.EndpointResolverFactory;
 
 /**
  * The factory for creating endpoint Binding providers
  * 
  * @version $Rev$ $Date$
  */
-public class EndpointProviderFactoryImpl implements EndpointProviderFactory<Endpoint> {
+public class EndpointResolverFactoryImpl implements EndpointResolverFactory<Endpoint> {
     
     private ExtensionPointRegistry extensionPoints;
     
-    public EndpointProviderFactoryImpl(ExtensionPointRegistry extensionPoints) {
+    public EndpointResolverFactoryImpl(ExtensionPointRegistry extensionPoints) {
         this.extensionPoints = extensionPoints;     
     } 
     
-    public EndpointProvider createEndpointProvider(Endpoint endpoint) {
+    public EndpointResolver createEndpointResolver(Endpoint endpoint, Binding binding) {
               
-        return  new EndpointProviderImpl(extensionPoints, endpoint);
+        return  new EndpointResolverImpl(extensionPoints, endpoint);
     }
 
     public Class<Endpoint> getModelType() {

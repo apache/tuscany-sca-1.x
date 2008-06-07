@@ -17,25 +17,28 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.provider;
+package org.apache.tuscany.sca.endpointresolver;
 
+import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.Endpoint;
 
 /**
- * A factory for creating the runtime artifacts that represent endpoints.
+ * A factory for creating the runtime artifacts that resolve endpoints.
  * 
  * @version $Rev$ $Date$
  */
-public interface EndpointProviderFactory<M extends Endpoint> extends ProviderFactory<M> {
+public interface EndpointResolverFactory <M>{
 
     /**
-     * Creates a new endpoint provider for the given component and
-     * reference.
+     * Creates a new endpoint resolver for the given component,
+     * reference and binding.
      * 
      * @param component The runtime component
      * @param reference The reference on the runtime component
      * @param enpoint The endpoint assembly model object
      * @return The endpoint provider
      */
-    EndpointProvider createEndpointProvider(M endpoint);
+    EndpointResolver createEndpointResolver(Endpoint endpoint, Binding binding);
+    
+    Class<M> getModelType();
 }
