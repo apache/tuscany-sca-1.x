@@ -26,27 +26,34 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tuscany-implementation-resource</artifactId>
-    <name>Apache Tuscany SCA Resource Implementation Model</name>
+    <artifactId>tuscany-implementation-resource-runtime</artifactId>
+    <name>Apache Tuscany SCA Resource Implementation Runtime</name>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-assembly</artifactId>
+            <artifactId>tuscany-implementation-resource</artifactId>
             <version>2.0-incubating-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-interface-java-xml</artifactId>
+            <artifactId>tuscany-core-spi</artifactId>
             <version>2.0-incubating-SNAPSHOT</version>
-        </dependency>        
+        </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-data-api</artifactId>
             <version>2.0-incubating-SNAPSHOT</version>
-        </dependency>        
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-host-embedded</artifactId>
+            <version>2.0-incubating-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -67,7 +74,7 @@
                 <configuration>
                     <instructions>
                         <Bundle-Version>${tuscany.version}</Bundle-Version>
-                        <Bundle-SymbolicName>org.apache.tuscany.sca.implementation.resource</Bundle-SymbolicName>
+                        <Bundle-SymbolicName>org.apache.tuscany.sca.implementation.resource.runtime</Bundle-SymbolicName>
                         <Bundle-Description>${pom.name}</Bundle-Description>
                         <Export-Package>org.apache.tuscany.sca.implementation.resource*</Export-Package>
                     </instructions>
