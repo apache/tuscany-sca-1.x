@@ -40,16 +40,23 @@ import org.apache.tuscany.sca.implementation.java.DefaultJavaImplementationFacto
 import org.apache.tuscany.sca.implementation.java.JavaImplementationFactory;
 import org.apache.tuscany.sca.implementation.java.injection.JavaPropertyValueObjectFactory;
 import org.apache.tuscany.sca.implementation.java.introspect.JavaClassVisitor;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.AllowsPassByReferenceProcessor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.BaseJavaClassVisitor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.ComponentNameProcessor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.ConstructorProcessor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.ContextProcessor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.ConversationIDProcessor;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.ConversationProcessor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.DestroyProcessor;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.EagerInitProcessor;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.HeuristicPojoProcessor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.InitProcessor;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.PolicyProcessor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.PropertyProcessor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.ReferenceProcessor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.ResourceProcessor;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.ScopeProcessor;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.ServiceProcessor;
 import org.apache.tuscany.sca.implementation.java.invocation.JavaCallbackRuntimeWireProcessor;
 import org.apache.tuscany.sca.implementation.java.invocation.JavaImplementationProviderFactory;
 import org.apache.tuscany.sca.interfacedef.InterfaceContractMapper;
@@ -97,7 +104,7 @@ public class JavaRuntimeModuleActivator implements ModuleActivator {
                                         // should not be loaded when running on Android platform, cause 
         								// this class uses the Class.isAnnotationPresent method, which is 
         								// not supported yet by the Android platform
-        								//new AllowsPassByReferenceProcessor(assemblyFactory),
+        								new AllowsPassByReferenceProcessor(assemblyFactory),
                                         
                                         new ComponentNameProcessor(assemblyFactory),
                                         new ContextProcessor(assemblyFactory),
@@ -106,14 +113,14 @@ public class JavaRuntimeModuleActivator implements ModuleActivator {
                                         // should not be loaded when running on Android platform, cause 
         								// this class uses the Class.getAnnotation method, which is 
         								// not supported yet by the Android platform
-        								//new ConversationProcessor(assemblyFactory),
+        								new ConversationProcessor(assemblyFactory),
                                         
                                         new DestroyProcessor(assemblyFactory),
                                         
                                         // should not be loaded when running on Android platform, cause 
         								// this class uses the Class.getAnnotation method, which is 
         								// not supported yet by the Android platform
-                                        //new EagerInitProcessor(assemblyFactory),
+                                        new EagerInitProcessor(assemblyFactory),
                                         
                                         new InitProcessor(assemblyFactory), 
                                         new PropertyProcessor(assemblyFactory),
@@ -123,7 +130,7 @@ public class JavaRuntimeModuleActivator implements ModuleActivator {
                                         // should not be loaded when running on Android platform, cause 
         								// this class uses the Class.getAnnotation method, which is 
         								// not supported yet by the Android platform
-                                        //new ScopeProcessor(assemblyFactory),
+                                        new ScopeProcessor(assemblyFactory),
                                         
                                         // this class uses the org.osoa.sca.annotations.Service class, but
                                         // Android seems not being able to convert this class to its internal class
@@ -140,17 +147,17 @@ public class JavaRuntimeModuleActivator implements ModuleActivator {
                                          [2008-04-25 19:36:26 - CalculatorAndroid] 1 warning*/
                                          
                                         // So, the class will not be loaded
-                                        //new ServiceProcessor(assemblyFactory, javaFactory),
+                                        new ServiceProcessor(assemblyFactory, javaFactory),
                                         
                                         // should not be loaded when running on Android platform, cause 
         								// this class uses the Class.getAnnotation method, which is 
         								// not supported yet by the Android platform
-                                        //new HeuristicPojoProcessor(assemblyFactory, javaFactory)
+                                        new HeuristicPojoProcessor(assemblyFactory, javaFactory),
                                         
                                         // should not be loaded when running on Android platform, cause 
         								// this class uses the Class.getAnnotation method, which is 
         								// not supported yet by the Android platform
-                                        //new PolicyProcessor(assemblyFactory, policyFactory)
+                                        new PolicyProcessor(assemblyFactory, policyFactory)
             };
         
         for (JavaClassVisitor extension : extensions) {
