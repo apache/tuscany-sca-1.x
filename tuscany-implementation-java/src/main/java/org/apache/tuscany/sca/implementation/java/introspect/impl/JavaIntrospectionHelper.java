@@ -306,7 +306,18 @@ public final class JavaIntrospectionHelper {
         if (!name.startsWith("set")) {
             return name;
         }
-        return Introspector.decapitalize(name.substring(3));
+        
+        if (name == null || name.length() == 0) {
+    	    return name;
+    	}
+    	if (name.length() > 1 && Character.isUpperCase(name.charAt(1)) &&
+    			Character.isUpperCase(name.charAt(0))){
+    	    return name;
+    	}
+    	char chars[] = name.toCharArray();
+    	chars[0] = Character.toLowerCase(chars[0]);
+    	return new String(chars);
+    	
     }
 
     public static Class<?> getErasure(Type type) {
