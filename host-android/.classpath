@@ -53,12 +53,10 @@
 	<classpathentry kind="var" path="M2_REPO/org/apache/ws/commons/axiom/axiom-impl/1.2.5/axiom-impl-1.2.5.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/mail/mail/1.4/mail-1.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1/commons-logging-1.1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/wsdl4j/wsdl4j/1.6.1/wsdl4j-1.6.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/easymock/easymock/2.2/easymock-2.2.jar"/>
-	<classpathentry kind="lib" path="E:/Adriano/softwares/android-sdk_m5-rc15_windows/android.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/tuscany-policy"/>
 	<classpathentry kind="var" path="M2_REPO/stax/stax-api/1.0.1/stax-api-1.0.1.jar"/>
-	<classpathentry kind="lib" path="E:/Adriano/Libs/stax-1.2.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/android-jdk-classes"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Android"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
