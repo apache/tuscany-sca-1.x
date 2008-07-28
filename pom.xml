@@ -22,8 +22,8 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>2.0-incubating-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>1.4-SNAPSHOT</version>
+        <!--relativePath>../pom.xml</relativePath-->
     </parent>
     <artifactId>tuscany-scatours</artifactId>
     <packaging>pom</packaging>
@@ -36,8 +36,17 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>calendar</module>
-                <module>currencyconverter</module>
+                <module>calendar-contribution</module>
+                <module>common-contribution</module>
+                <module>currency-contribution</module>
+                <module>hotel-contribution</module>
+                <module>payment-contribution</module>
+                <module>trip-contribution</module>
+                <module>ui-contribution</module>
+
+                <module>domain</module>
+                <module>node</module>
+
                 <module>gettingstarted</module>
             </modules>
         </profile>

@@ -25,36 +25,21 @@
         <version>1.4-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>scatours-gettingstarted</artifactId>
-    <name>Apache Tuscany SCA Tours Getting Started</name>
+    <artifactId>scatours-common-contribution</artifactId>
+    <name>Apache Tuscany SCA Tours Common Artefacts Contribution</name>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-embedded</artifactId>
+            <artifactId>tuscany-sca-api</artifactId>
             <version>1.4-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-java-runtime</artifactId>
+            <artifactId>tuscany-data-api</artifactId>
             <version>1.4-SNAPSHOT</version>
-            <scope>test</scope>
         </dependency>
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-ws-axis2</artifactId>
-            <version>1.4-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>  
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-tomcat</artifactId>
-            <version>1.4-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency> 
 
         <dependency>
             <groupId>junit</groupId>

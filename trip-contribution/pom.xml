@@ -25,35 +25,32 @@
         <version>1.4-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>scatours-gettingstarted</artifactId>
-    <name>Apache Tuscany SCA Tours Getting Started</name>
+    <artifactId>scatours-trip-contribution</artifactId>
+    <name>Apache Tuscany SCA Tours Trip Contribution</name>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-embedded</artifactId>
+            <artifactId>tuscany-sca-api</artifactId>
             <version>1.4-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-java-runtime</artifactId>
+            <artifactId>tuscany-data-api</artifactId>
             <version>1.4-SNAPSHOT</version>
-            <scope>test</scope>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-ws-axis2</artifactId>
+            <artifactId>scatours-common-contribution</artifactId>
             <version>1.4-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>  
+        </dependency>   
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-tomcat</artifactId>
+            <artifactId>scatours-currency-contribution</artifactId>
             <version>1.4-SNAPSHOT</version>
-            <scope>test</scope>
         </dependency> 
 
         <dependency>
@@ -68,5 +65,18 @@
     <build>
        <finalName>${artifactId}</finalName>
        <sourceDirectory>${basedir}/src</sourceDirectory>
+       <resources>
+          <resource>
+              <directory>${basedir}</directory>
+              <excludes>
+                  <exclude>**/*.java</exclude>
+                  <exclude>**/.*/**</exclude>
+                  <exclude>pom.xml</exclude>
+                  <exclude>build.xml</exclude>
+                  <exclude>target/**</exclude>
+                  <exclude>src/**</exclude>
+              </excludes>
+          </resource>
+       </resources>
     </build>
 </project>

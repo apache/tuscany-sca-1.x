@@ -1,0 +1,109 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.    
+ */
+
+package scatours;
+
+import java.io.IOException;
+
+import org.apache.tuscany.sca.node.SCAContribution;
+import org.apache.tuscany.sca.node.SCANode2;
+import org.apache.tuscany.sca.node.SCANode2Factory;
+import org.apache.tuscany.sca.node.launcher.NodeLauncher;
+
+public class LaunchNode {
+    public static void main(String[] args) throws Exception {
+        LaunchNode.launchFromFileSystemDir();
+    }
+
+    // OK for development but you must launch the node from this module 
+    public static void launchFromFileSystemJar(){
+        SCANode2 node = null; 
+        
+        try {
+            node = SCANode2Factory.newInstance().createSCANode("scatours.composite", 
+                                                               new SCAContribution("common", "../common-contribution/target/scatours-common-contribution.jar"),
+                                                               new SCAContribution("currency", "../currency-contribution/target/scatours-currency-contribution.jar"),
+                                                               new SCAContribution("hotel", "../hotel-contribution/target/scatours-hotel-contribution.jar"),
+                                                               new SCAContribution("trip", "../trip-contribution/target/scatours-trip-contribution.jar"),
+                                                               new SCAContribution("ui", "../ui-contribution/target/scatours-ui-contribution.jar"));
+
+            node.start();
+            
+            System.out.println("Node started - Press enter to shutdown.");
+            try {
+                System.in.read();
+            } catch (IOException e) {}
+            
+            node.stop();
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }
+    
+    // OK for development but you must launch the node from this module 
+    public static void launchFromFileSystemDir(){
+        SCANode2 node = null; 
+        
+        try {
+            node = SCANode2Factory.newInstance().createSCANode("scatours.composite", 
+                                                               new SCAContribution("common", "../common-contribution/target/classes"),
+                                                               new SCAContribution("currency", "../currency-contribution/target/classes"),
+                                                               new SCAContribution("hotel", "../hotel-contribution/target/classes"),
+                                                               new SCAContribution("trip", "../trip-contribution/target/classes"),
+                                                               new SCAContribution("ui", "../ui-contribution/target/classes"));
+            node.start();
+            
+            System.out.println("Node started - Press enter to shutdown.");
+            try {
+                System.in.read();
+            } catch (IOException e) {}
+            
+            node.stop();
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }    
+    
+    // OK for samples but you can only load one contribution 
+    public static void launchFromClasspath(){
+        SCANode2 node = null; 
+        
+        try {
+            node = SCANode2Factory.newInstance().createSCANodeFromClassLoader("scatours.composite", null);
+            node.start();
+            
+            System.out.println("Node started - Press enter to shutdown.");
+            try {
+                System.in.read();
+            } catch (IOException e) {}
+            
+            node.stop();
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }    
+    
+    // have to be running the domain in this case
+    public static void launchFromDomain()throws Exception {  
+        NodeLauncher.main(new String[] {"http://localhost:9990/node-config/SCAToursNode"});
+    }
+}

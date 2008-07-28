@@ -25,8 +25,8 @@
         <version>1.4-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>scatours-gettingstarted</artifactId>
-    <name>Apache Tuscany SCA Tours Getting Started</name>
+    <artifactId>scatours-ui-contribution</artifactId>
+    <name>Apache Tuscany SCA Tours User Interface Contribution</name>
 
     <dependencies>
         <dependency>
@@ -68,5 +68,35 @@
     <build>
        <finalName>${artifactId}</finalName>
        <sourceDirectory>${basedir}/src</sourceDirectory>
+       <resources>
+          <resource>
+              <directory>${basedir}</directory>
+              <excludes>
+                  <exclude>**/*.java</exclude>
+                  <exclude>**/.*/**</exclude>
+                  <exclude>pom.xml</exclude>
+                  <exclude>build.xml</exclude>
+                  <exclude>target/**</exclude>
+                  <exclude>src/**</exclude>
+              </excludes>
+          </resource>
+       </resources>
+       <plugins>
+            <plugin>
+                <groupId>org.apache.tuscany.sca</groupId>
+                <artifactId>tuscany-maven-ant-generator</artifactId>
+                <version>1.4-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <mainClass>launch.LaunchTutorialAdmin</mainClass>
+                        </configuration>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+       </plugins>
     </build>
 </project>
