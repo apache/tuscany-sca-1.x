@@ -16,32 +16,18 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package currencyconverter;
-
-import junit.framework.TestCase;
-
-import org.apache.tuscany.sca.host.embedded.SCADomain;
+package scatours.currencyconverter;
 
 /**
- * This shows how to test the Calculator service component.
+ * The CurrencyConverter service interface
  */
-public class CurrencyConverterTestCase extends TestCase {
+public interface CurrencyConverter {
 
-    private CurrencyConverter currencyConverter;
-    private SCADomain scaDomain;
+    double getExchangeRate(String fromCurrencyCode, 
+                           String toCurrencyCode);
+    
+    double convert(String fromCurrencyCode, 
+                   String toCurrencyCode, 
+                   double amount);    
 
-    @Override
-    protected void setUp() throws Exception {
-        scaDomain = SCADomain.newInstance("currencyconverter.composite");
-        currencyConverter = scaDomain.getService(CurrencyConverter.class, "CurrencyConverterComponent");
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        scaDomain.close();
-    }
-
-    public void testCurrecncyConverter() throws Exception {
-        System.out.println(currencyConverter.getExchangeRate("GBP", "USD"));
-    }
 }

@@ -16,12 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package currencyconverter;
+package scatours.currencyconverter;
 
+import org.osoa.sca.annotations.Service;
 
 /**
  * An implementation of the CurrencyConverter service
  */
+@Service(interfaces={CurrencyConverter.class})
 public class CurrencyConverterImpl implements CurrencyConverter {
 
     public double getExchangeRate(String fromCurrencyCode, String toCurrencyCode){
