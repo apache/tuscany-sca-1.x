@@ -24,10 +24,7 @@
            name="scatours">
            
     <component name="SCATours">
-        <tuscany:implementation.widget location="scatours.html"/>
-        <service name="Widget">
-            <tuscany:binding.http uri="/scatours"/>
-        </service>
+        <implementation.web web-uri=""/>
         <reference name="hotel" target="HotelComponent">
             <tuscany:binding.jsonrpc/>
         </reference>

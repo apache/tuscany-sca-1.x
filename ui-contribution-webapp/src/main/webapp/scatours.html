@@ -22,15 +22,13 @@
 
 <link rel="stylesheet" type="text/css" href="style.css" />
 
-<script type="text/javascript" src="scatours.js"></script>
+<script type="text/javascript" src="org.apache.tuscany.sca.componentContext.js"></script>
 
 <script language="JavaScript">
 
-	//@Reference
-	var hotel = new Reference("hotel");
+    var hotel = componentContext.getService("hotel");
 	
-    //@Reference
-    var trip = new Reference("trip");
+    var trip = componentContext.getService("trip");
     
     //local state
     var hotels;
