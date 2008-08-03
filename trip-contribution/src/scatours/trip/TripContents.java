@@ -30,5 +30,6 @@ import scatours.common.TripItem;
 public interface TripContents extends Collection<String, TripItem> {
     
     void addTripItem(String id);
+    void removeTripItem(String id);
     double getTotalPrice();
 }

@@ -59,6 +59,8 @@ public class TripImpl implements TripSearch, SearchCallback, TripContents{
     @Property
     public String quoteCurrencyCode = "USD";
     
+    private int responsesReceived = 0;
+    
     private List<TripItem> searchResults = new ArrayList<TripItem>();
     private Map<String, TripItem> tripItems = new HashMap<String, TripItem>();
     
@@ -67,15 +69,22 @@ public class TripImpl implements TripSearch, SearchCallback, TripContents{
     public TripItem[] search(TripLeg tripLeg) {
         
         searchResults.clear();
+        responsesReceived = 0;
         
         hotelSearch.searchAsynch(tripLeg);
         flightSearch.searchAsynch(tripLeg);
         carSearch.searchAsynch(tripLeg);
         
-        // TODO - wait for searches to complete
+        while (responsesReceived < 3){
+            try {
+                this.wait();
+            } catch (InterruptedException ex){
+                // do nothing
+            }
+        }
         
         for (TripItem tripItem : searchResults){
-            tripItem.setId(String.valueOf(searchResults.indexOf(tripItem)));
+            tripItem.setId(UUID.randomUUID().toString());
             tripItem.setPrice(currencyConverter.convert(tripItem.getCurrency(), 
                                                         quoteCurrencyCode, 
                                                         tripItem.getPrice()));
@@ -91,6 +100,12 @@ public class TripImpl implements TripSearch, SearchCallback, TripContents{
         for(int i = 0; i < items.length; i++ ){
             searchResults.add(items[i]);
         }
+        
+        responsesReceived++;
+        try {
+            this.notifyAll();
+        } catch (Exception ex) {
+        }
     }    
 
     // TripContents methods
@@ -102,6 +117,9 @@ public class TripImpl implements TripSearch, SearchCallback, TripContents{
         }
     }
     
+    public void removeTripItem(String id){
+        tripItems.remove(id);
+    }     
     
     // Not using the DataCollection iface yet as it seems like a 
     // likely attach vector to be passing complete tripItem records in
