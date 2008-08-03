@@ -27,22 +27,34 @@ public class TripItem {
     private String name;
     private String description;
     private String location;
+    private String fromDate;
+    private String toDate;
+    private double price;
+    private String currency;
     private String link;
     
     public TripItem() {
     }  
     
     public TripItem(String id, 
-                        String type, 
-                        String name, 
-                        String description, 
-                        String location, 
-                        String link) {
+                    String type, 
+                    String name, 
+                    String description, 
+                    String location, 
+                    String fromDate, 
+                    String toDate, 
+                    double price, 
+                    String currency, 
+                    String link) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.description = description;
         this.location = location;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.price = price;
+        this.currency = currency;
         this.link = link;
     }  
     
@@ -84,6 +96,38 @@ public class TripItem {
     
     public void setLocation(String location) {
         this.location = location;
+    }
+    
+    public String getFromDate() {
+        return fromDate;
+    }
+    
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
+    }
+    
+    public String getToDate() {
+        return toDate;
+    }
+    
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
+    }
+    
+    public double getPrice() {
+        return price;
+    }
+    
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    
+    public String getCurrency() {
+        return currency;
+    }
+    
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
     
     public String getLink() {

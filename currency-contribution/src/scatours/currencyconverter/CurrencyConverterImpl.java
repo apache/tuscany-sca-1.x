@@ -18,6 +18,9 @@
  */
 package scatours.currencyconverter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.osoa.sca.annotations.Service;
 
 /**
@@ -25,10 +28,24 @@ import org.osoa.sca.annotations.Service;
  */
 @Service(interfaces={CurrencyConverter.class})
 public class CurrencyConverterImpl implements CurrencyConverter {
+    
+    // currency index
+    private Map<String, Integer> currencyIndex = new HashMap<String, Integer>();
+    
+    // exchange rates
+    private final double rates [][] = {{ 1.00, 0.50, 0.66 },
+                                       { 2.00, 1.00, 1.33 },
+                                       { 1.50, 0.75, 1.00 } } ;  
+    
+    public CurrencyConverterImpl(){
+        currencyIndex.put("USD", new Integer(0));
+        currencyIndex.put("GBP", new Integer(1));
+        currencyIndex.put("EUR", new Integer(2));
+    }
 
     public double getExchangeRate(String fromCurrencyCode, String toCurrencyCode){
-        // regardless of which currencies are specified return the same value
-        return 1.98;
+        return rates[currencyIndex.get(fromCurrencyCode).intValue()]
+                    [currencyIndex.get(toCurrencyCode).intValue()];
     } 
 
     public double convert(String fromCurrencyCode, String toCurrencyCode, double amount){

@@ -18,7 +18,6 @@
  */
 package scatours.trip;
 
-import org.apache.tuscany.sca.data.collection.Item;
 import org.osoa.sca.annotations.Remotable;
 
 import scatours.common.TripItem;
@@ -28,7 +27,6 @@ import scatours.common.TripLeg;
  * The Trip service interface
  */
 @Remotable
-public interface Trip {
+public interface TripSearch {
     TripItem[] search(TripLeg tripLeg);
-    double getTotalPrice();
 }

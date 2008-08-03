@@ -28,14 +28,22 @@
 
 	//@Reference
 	var hotel = new Reference("hotel");
+    
+    //@Reference
+    var flight = new Reference("flight");
+    
+    //@Reference
+    var car = new Reference("car");    
 	
     //@Reference
-    var trip = new Reference("trip");
+    var tripSearch = new Reference("tripSearch");
     
+    //@Reference
+    var tripContents = new Reference("tripContents");
+        
     //local state
-    var hotels;
-    var flights;
-    var cars;
+    var searchResponseItems;
+    var tripItems;
     
     //the constructor for trip leg beans
     function TripLegType(id,
@@ -74,8 +82,16 @@
         hotel.searchSynch(getTripLeg(), search_response);
     }
     
+    function searchFlights() {       
+        flight.searchSynch(getTripLeg(), search_response);
+    }    
+    
+    function searchCars() {       
+        car.searchSynch(getTripLeg(), search_response);
+    } 
+        
     function searchTrip() {        
-        trip.search(getTripLeg(), search_response);
+        tripSearch.search(getTripLeg(), search_response);
     }
         
     function search_response(items, exception) {
@@ -83,15 +99,48 @@
             alert(exception.javaStack);
             return;
         }
-        var hotelsHTML = "";
+        var responseHTML = '<table border="0">';
+        responseHTML    += '<tr>';
+        responseHTML    += '<td>Select</td><td>Name</td><td>Description</td><td>Location</td><td>From - To</td><td>Price</td>';
+        responseHTML    += '</tr>';
+        
         for (var i=0; i<items.length; i++) {
-            var item = items[i].name + ' - ' + items[i].description;
-            hotelsHTML += '<input name="items" type="checkbox" value="' + 
-                        item + '">' + item + ' <br>';
+            responseHTML += '<tr>';
+            responseHTML += '<td><input onClick="processSelection()" name="items" type="checkbox" value="' + items[i].id + '"></td>'
+            responseHTML += '<td>' +  items[i].name + '</td>';
+            responseHTML += '<td>' +  items[i].description + '</td>';
+            responseHTML += '<td>' +  items[i].location + '</td>';
+            responseHTML += '<td>' +  items[i].fromDate + ' - ' + items[i].toDate +'</td>';
+            responseHTML += '<td>' +  items[i].price + ' ' + items[i].currency + '</td>';
+            responseHTML += '</tr>';
         }
-        document.getElementById('searchResponse').innerHTML = hotelsHTML;
-        hotels = items;
+        
+        responseHTML    += '</table>';
+        
+        document.getElementById('searchResponse').innerHTML = responseHTML;
+        
+        searchResponseItems = items;
     }  
+    
+    function processSelection() {        
+        var items  = document.tripForm.items;
+        var j = 0;
+        for (var i=0; i<items.length; i++) {
+            if (items[i].checked == true) {
+                tripContents.addTripItem(items[i].value);
+            }
+        }
+        
+        tripContents.getTotalPrice(totalPrice_response);
+    }    
+    
+    function totalPrice_response(totalPrice, exception) {
+        if(exception){
+            alert(exception.javaStack);
+            return;
+        }
+        document.getElementById('totalPrice').innerHTML = totalPrice;
+    }
 	
 </script>
 
@@ -113,7 +162,7 @@
                     <td>Start Date:</td>
                     <td><input type="text" name="fromDate" value="06/12/08"></td>
                     <td>End Date:</td>
-                    <td><input type="text" name="toDate" value="06/12/08"></td>
+                    <td><input type="text" name="toDate" value="13/12/08"></td>
                 </tr>
                 <tr>
                     <td>Number of people:</td>
@@ -127,18 +176,21 @@
                     <td/>
                 </tr>
             </table>
-            <input type="button" onClick="searchHotels()" value="SearchHotels"> 
+            <input type="button" onClick="searchHotels()" value="Search Hotels">
+            <input type="button" onClick="searchFlights()" value="Search Flights">
+            <input type="button" onClick="searchHotels()" value="Search Cars"> 
+            <br/>
             <input type="button" onClick="searchTrip()" value="SearchTrip"> 
         </form>
-        <div id="searchResponse"></div>
-        <br>
-        <form name="tripForm">   
-            <input type="button" onClick="bookTrip()" value="BookTrip"> 
+        <form name="tripForm"> 
+            <div id="searchResponse"></div>
+            <br>  
+            <div id="totalPrice"></div>
+            <br>
+            <input type="button" onClick="bookTrip()" value="Book Trip"> 
         </form> 
-        <br> 
-        <div id="trip"></div>
-        <br>
-        <div id="total"></div>
+        
+        
 	</div>
   
 </body>

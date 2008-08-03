@@ -31,21 +31,40 @@
         <reference name="hotel" target="HotelComponent">
             <tuscany:binding.jsonrpc/>
         </reference>
-        <reference name="trip" target="TripComponent">
+        <reference name="flight" target="FlightComponent">
             <tuscany:binding.jsonrpc/>
         </reference>
+        <reference name="car" target="CarComponent">
+            <tuscany:binding.jsonrpc/>
+        </reference>
+        <reference name="tripSearch" target="TripComponent/TripSearch">
+            <tuscany:binding.jsonrpc/>
+        </reference>
+        <reference name="tripContents" target="TripComponent/TripContents">
+            <tuscany:binding.jsonrpc/>
+        </reference>  
     </component>
     
     <component name="TripComponent">
         <implementation.java class="scatours.trip.TripImpl"/>
-        <service name="Trip">
+        <service name="TripSearch">
+            <tuscany:binding.jsonrpc/>
+        </service>
+        <service name="TripContents">
             <tuscany:binding.jsonrpc/>
         </service>
         <reference name="hotelSearch" target="HotelComponent">
             <binding.sca/>
         </reference>
+        <reference name="flightSearch" target="FlightComponent">
+            <binding.sca/>
+        </reference> 
+        <reference name="carSearch" target="CarComponent">
+            <binding.sca/>
+        </reference>        
         <reference name="currencyConverter" target="CurrencyConverterComponent">
         </reference>
+        <property name="quoteCurrencyCode">GBP</property>
     </component>
         
     <component name="HotelComponent">
@@ -54,7 +73,23 @@
             <binding.sca/>
             <tuscany:binding.jsonrpc/>
         </service>
-    </component>    
+    </component>  
+    
+    <component name="FlightComponent">
+        <implementation.java class="scatours.flight.FlightImpl"/>
+        <service name="Search">
+            <binding.sca/>
+            <tuscany:binding.jsonrpc/>
+        </service>
+    </component> 
+    
+    <component name="CarComponent">
+        <implementation.java class="scatours.car.CarImpl"/>
+        <service name="Search">
+            <binding.sca/>
+            <tuscany:binding.jsonrpc/>
+        </service>
+    </component>     
     
     <component name="CurrencyConverterComponent">
         <implementation.java class="scatours.currencyconverter.CurrencyConverterImpl"/>

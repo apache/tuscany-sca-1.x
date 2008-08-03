@@ -48,18 +48,34 @@ public class HotelImpl implements Search {
         hotels.add(new HotelInfo("Deep Bay Hotel", 
                              "Wonderful sea views and a relaxed atmosphere", 
                              "ANU", 
+                             "06/12/08",
+                             "200",
+                             100,
+                             "USD",
                              "http://localhost:8085/tbd" ));
         hotels.add(new HotelInfo("Long Bay Hotel", 
                              "Friendly staff and an ocean breeze", 
                              "ANU", 
+                             "06/12/08",
+                             "200",
+                             100,
+                             "USD",
                              "http://localhost:8085/tbd" ));
         hotels.add(new HotelInfo("City Hotel", 
                              "Smart rooms and early breakfasts", 
                              "NY", 
+                             "06/12/08",
+                             "200",
+                             100,
+                             "USD",
                              "http://localhost:8085/tbd" ));
         hotels.add(new HotelInfo("County Hotel", 
                              "The smell of the open country", 
                              "SOU", 
+                             "06/12/08",
+                             "200",
+                             100,
+                             "USD",
                              "http://localhost:8085/tbd" ));
     }
     
@@ -74,6 +90,10 @@ public class HotelImpl implements Search {
                                              hotel.getName(), 
                                              hotel.getDescription(), 
                                              hotel.getLocation(), 
+                                             tripLeg.getFromDate(),
+                                             tripLeg.getToDate(),
+                                             hotel.getPricePerBed(),
+                                             hotel.getCurrency(),
                                              hotel.getLink());
                 items.add(item);
             }

@@ -161,7 +161,6 @@
         <include name="commons-logging-1.1.jar"/>
         <include name="derby-10.3.1.4.jar"/>
         <include name="dom4j-1.6.1.jar"/>
-        <include name="geronimo-activation_1.0.2_spec-1.1.jar"/>
         <include name="geronimo-activation_1.1_spec-1.0-M1.jar"/>
         <include name="geronimo-commonj_1.1_spec-1.0.jar"/>
         <include name="geronimo-ejb_3.0_spec-1.0.jar"/>
@@ -175,7 +174,7 @@
         <include name="jaxen-1.1.1.jar"/>
         <include name="jaxws-api-2.1.jar"/>
         <include name="jdom-1.0.jar"/>
-        <include name="jettison-1.0.jar"/>
+        <include name="jettison-1.0.1.jar"/>
         <include name="jetty-6.1.7.jar"/>
         <include name="jetty-util-6.1.7.jar"/>
         <include name="json-rpc-1.0.jar"/>

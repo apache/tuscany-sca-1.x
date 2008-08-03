@@ -40,6 +40,8 @@ public class LaunchNode {
                                                                new SCAContribution("common", "../common-contribution/target/scatours-common-contribution.jar"),
                                                                new SCAContribution("currency", "../currency-contribution/target/scatours-currency-contribution.jar"),
                                                                new SCAContribution("hotel", "../hotel-contribution/target/scatours-hotel-contribution.jar"),
+                                                               new SCAContribution("flight", "../flight-contribution/target/scatours-flight-contribution.jar"),
+                                                               new SCAContribution("car", "../car-contribution/target/scatours-car-contribution.jar"),
                                                                new SCAContribution("trip", "../trip-contribution/target/scatours-trip-contribution.jar"),
                                                                new SCAContribution("ui", "../ui-contribution/target/scatours-ui-contribution.jar"));
 
@@ -66,6 +68,8 @@ public class LaunchNode {
                                                                new SCAContribution("common", "../common-contribution/target/classes"),
                                                                new SCAContribution("currency", "../currency-contribution/target/classes"),
                                                                new SCAContribution("hotel", "../hotel-contribution/target/classes"),
+                                                               new SCAContribution("flight", "../flight-contribution/target/classes"),
+                                                               new SCAContribution("car", "../car-contribution/target/classes"),
                                                                new SCAContribution("trip", "../trip-contribution/target/classes"),
                                                                new SCAContribution("ui", "../ui-contribution/target/classes"));
             node.start();

@@ -25,6 +25,10 @@ public class HotelInfo {
     private String name;
     private String description;
     private String location;
+    private String date;
+    private String beds;
+    private double pricePerBed;
+    private String currency;
     private String link;
     
     public HotelInfo() {
@@ -33,11 +37,19 @@ public class HotelInfo {
     public HotelInfo(String name, 
                  String description, 
                  String location,
+                 String date,
+                 String beds,
+                 double pricePerBed,
+                 String currency,
                  String link) {
 
         this.name = name;
         this.description = description;
         this.location = location;
+        this.date = date;
+        this.beds = beds;
+        this.pricePerBed = pricePerBed;
+        this.currency = currency;
         this.link = link;
     }  
     
@@ -64,6 +76,38 @@ public class HotelInfo {
     
     public void setLocation(String location) {
         this.location = location;
+    }
+    
+    public String getDate() {
+        return date;
+    }
+    
+    public void setDate(String date) {
+        this.date = date;
+    }
+    
+    public String getBeds() {
+        return beds;
+    }   
+    
+    public void setBeds(String beds) {
+        this.beds = beds;
+    }
+    
+    public double getPricePerBed() {
+        return pricePerBed;
+    }
+    
+    public void setPricePerBed(double pricePerBed) {
+        this.pricePerBed = pricePerBed;
+    }
+    
+    public String getCurrency() {
+        return currency;
+    }
+    
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
     
     public String getLink() {

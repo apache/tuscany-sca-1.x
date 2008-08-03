@@ -22,6 +22,8 @@
    <import.java package="scatours.common"/>
    <import.java package="scatours.currencyconverter"/>
    <import.java package="scatours.hotel"/>
+   <import.java package="scatours.flight"/>
+   <import.java package="scatours.car"/>
    <import.java package="scatours.trip"/>
    <deployable composite="scatours:scatours"/>
 </contribution>
