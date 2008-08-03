@@ -43,4 +43,8 @@ public interface CorbaBinding extends Binding {
     void setId(String id);
     
     String getCorbaname();
+    
+    boolean isProvideNameServer();
+    
+    void setProvideNameServer(boolean provideNameServer);
 }
