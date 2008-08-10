@@ -69,7 +69,8 @@ public class CarImpl implements Search {
         // find available hotels
         for(CarInfo car : cars){
             if (car.getLocation().equals(tripLeg.getToLocation())){
-                TripItem item = new TripItem("1", 
+                TripItem item = new TripItem("",
+                                             "",
                                              "Car",
                                              car.getName(), 
                                              car.getDescription(), 

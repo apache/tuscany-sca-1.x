@@ -85,7 +85,8 @@ public class HotelImpl implements Search {
         // find available hotels
         for(HotelInfo hotel : hotels){
             if (hotel.getLocation().equals(tripLeg.getToLocation())){
-                TripItem item = new TripItem("1", 
+                TripItem item = new TripItem("",
+                                             "",
                                              "Hotel",
                                              hotel.getName(), 
                                              hotel.getDescription(), 

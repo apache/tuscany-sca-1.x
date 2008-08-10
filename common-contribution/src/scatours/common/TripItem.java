@@ -22,7 +22,8 @@ package scatours.common;
 
 public class TripItem {
     
-    private String id;    
+    private String id; 
+    private String tripId;
     private String type;
     private String name;
     private String description;
@@ -37,6 +38,7 @@ public class TripItem {
     }  
     
     public TripItem(String id, 
+                    String tripId,
                     String type, 
                     String name, 
                     String description, 
@@ -47,6 +49,7 @@ public class TripItem {
                     String currency, 
                     String link) {
         this.id = id;
+        this.tripId = tripId;
         this.type = type;
         this.name = name;
         this.description = description;
@@ -64,6 +67,14 @@ public class TripItem {
     
     public void setId(String id) {
         this.id = id;
+    }
+    
+    public String getTripId() {
+        return tripId;
+    }
+    
+    public void setTripId(String tripId) {
+        this.tripId = tripId;
     }
     
     public String getType() {

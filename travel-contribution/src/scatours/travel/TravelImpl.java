@@ -72,7 +72,7 @@ public class TravelImpl implements TravelSearch, SearchCallback, TravelBooking{
     private int responsesReceived = 0;
     
     private List<TripItem> searchResults = new ArrayList<TripItem>();
-    private Map<String,ServiceReference<Trip>> trips = new HashMap<String,ServiceReference<Trip>>();
+    private Map<String,Trip> trips = new HashMap<String,Trip>();
     
     // TravelSearch methods
     
@@ -95,6 +95,7 @@ public class TravelImpl implements TravelSearch, SearchCallback, TravelBooking{
         
         for (TripItem tripItem : searchResults){
             tripItem.setId(UUID.randomUUID().toString());
+            tripItem.setTripId(tripLeg.getId());
             tripItem.setPrice(currencyConverter.convert(tripItem.getCurrency(), 
                                                         quoteCurrencyCode, 
                                                         tripItem.getPrice()));
@@ -124,28 +125,32 @@ public class TravelImpl implements TravelSearch, SearchCallback, TravelBooking{
         String tripId = UUID.randomUUID().toString();
         ServiceReference<Trip> tripReference = componentContext.getServiceReference(Trip.class, 
                                                                                     "trip");
-        //tripReference.setConversationID(tripId);
-        trips.put(tripId, tripReference);
+        tripReference.setConversationID(tripId);
+        trips.put(tripId, tripReference.getService());
         return tripId;
     }
     
-    public void addTripItem(String id){
+    public void addTripItem(String tripId, String id){
         for (TripItem tripItem : searchResults) {
             if (tripItem.getId().equals(id)){
-                trip.addTripItem(tripItem);
+                trips.get(tripId).addTripItem(tripItem);
             }
         }
     }
     
-    public void removeTripItem(String id){
-        trip.removeTripItem(id);
-    }     
+    public void removeTripItem(String tripId, String id){
+        trips.get(tripId).removeTripItem(id);
+    } 
     
-    public double getTotalPrice(){ 
-        return trip.getTripPrice();
+    public TripItem[] getTripItems(String tripId) {
+        return trips.get(tripId).getTripItems();
     }
     
-    public void purchaseTrip() {
-        trip.purchaseTrip();
+    public double getTotalPrice(String tripId){ 
+        return trips.get(tripId).getTripPrice();
+    }
+    
+    public void purchaseTrip(String tripId) {
+        trips.get(tripId).purchaseTrip();
     }
 }

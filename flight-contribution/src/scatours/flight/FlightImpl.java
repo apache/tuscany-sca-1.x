@@ -76,7 +76,8 @@ public class FlightImpl implements Search {
             if ((flight.getFromLocation().equals(tripLeg.getFromLocation())) &&
                 (flight.getToLocation().equals(tripLeg.getToLocation())) &&
                 (flight.getFromDate().equals(tripLeg.getFromDate()))){
-                TripItem item = new TripItem("1", 
+                TripItem item = new TripItem("",
+                                             "",
                                              "Flight",
                                              flight.getName(), 
                                              flight.getDescription(), 
@@ -95,7 +96,8 @@ public class FlightImpl implements Search {
             if ((flight.getFromLocation().equals(tripLeg.getToLocation())) &&
                 (flight.getToLocation().equals(tripLeg.getFromLocation())) &&
                 (flight.getFromDate().equals(tripLeg.getToDate()))){
-                TripItem item = new TripItem("1", 
+                TripItem item = new TripItem("",
+                                             "",
                                              "Flight",
                                              flight.getName(), 
                                              flight.getDescription(), 

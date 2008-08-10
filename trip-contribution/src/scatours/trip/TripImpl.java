@@ -68,7 +68,11 @@ public class TripImpl implements Trip{
     
     public void removeTripItem(String id){
         tripItems.remove(id);
-    }     
+    }  
+    
+    public TripItem[] getTripItems() {
+        return tripItems.values().toArray(new TripItem[tripItems.size()]);
+    }
     
     public double getTripPrice(){ 
         double totalPrice = 0.0;

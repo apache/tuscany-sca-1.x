@@ -39,6 +39,8 @@ public interface Trip {
     
     void removeTripItem(String id);
     
+    TripItem[] getTripItems();
+    
     double getTripPrice();
     
     @EndsConversation

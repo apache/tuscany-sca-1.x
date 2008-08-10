@@ -29,8 +29,10 @@ import scatours.common.TripItem;
 @Remotable
 public interface TravelBooking {
        
-    void addTripItem(String id);
-    void removeTripItem(String id);
-    double getTotalPrice();
-    void purchaseTrip();
+    String newTrip();
+    void addTripItem(String tripId, String id);
+    void removeTripItem(String tripId, String id);
+    TripItem[] getTripItems(String tripId);
+    double getTotalPrice(String tripId);
+    void purchaseTrip(String tripId);
 }
