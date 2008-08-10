@@ -17,14 +17,9 @@
     * specific language governing permissions and limitations
     * under the License.    
 -->
-<contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
-   xmlns:scatours="http://scatours">
+<contribution xmlns="http://www.osoa.org/xmlns/sca/1.0">
    <import.java package="scatours.common"/>
    <import.java package="scatours.currencyconverter"/>
-   <import.java package="scatours.hotel"/>
-   <import.java package="scatours.flight"/>
-   <import.java package="scatours.car"/>
    <import.java package="scatours.trip"/>
-   <import.java package="scatours.travel"/>
-   <deployable composite="scatours:scatours"/>
+   <export.java package="scatours.travel"/>
 </contribution>

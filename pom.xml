@@ -44,6 +44,7 @@
                 <module>car-contribution</module>
                 <module>payment-contribution</module>
                 <module>trip-contribution</module>
+                <module>travel-contribution</module>
                 <module>ui-contribution</module>
 
                 <module>domain</module>

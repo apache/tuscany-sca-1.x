@@ -16,17 +16,21 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package scatours.trip;
+package scatours.travel;
+
 
 import org.osoa.sca.annotations.Remotable;
 
 import scatours.common.TripItem;
-import scatours.common.TripLeg;
 
 /**
- * The Trip service interface
+ * The TravelBooking service interface
  */
 @Remotable
-public interface TripSearch {
-    TripItem[] search(TripLeg tripLeg);
+public interface TravelBooking {
+       
+    void addTripItem(String id);
+    void removeTripItem(String id);
+    double getTotalPrice();
+    void purchaseTrip();
 }

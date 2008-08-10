@@ -18,7 +18,10 @@
  */
 package scatours.trip;
 
-import org.apache.tuscany.sca.data.collection.Collection;
+import org.osoa.sca.annotations.Conversational;
+import org.osoa.sca.annotations.Destroy;
+import org.osoa.sca.annotations.EndsConversation;
+import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Remotable;
 
 import scatours.common.TripItem;
@@ -27,9 +30,17 @@ import scatours.common.TripItem;
  * The Trip service interface
  */
 @Remotable
-public interface TripContents extends Collection<String, TripItem> {
+@Conversational
+public interface Trip {
+       
+    void startTrip(String id);
+
+    void addTripItem(TripItem tripItem);
     
-    void addTripItem(String id);
     void removeTripItem(String id);
-    double getTotalPrice();
+    
+    double getTripPrice();
+    
+    @EndsConversation
+    void purchaseTrip();
 }

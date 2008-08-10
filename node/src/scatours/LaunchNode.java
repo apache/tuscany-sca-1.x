@@ -43,6 +43,7 @@ public class LaunchNode {
                                                                new SCAContribution("flight", "../flight-contribution/target/scatours-flight-contribution.jar"),
                                                                new SCAContribution("car", "../car-contribution/target/scatours-car-contribution.jar"),
                                                                new SCAContribution("trip", "../trip-contribution/target/scatours-trip-contribution.jar"),
+                                                               new SCAContribution("travel", "../trip-contribution/target/scatours-travel-contribution.jar"),
                                                                new SCAContribution("ui", "../ui-contribution/target/scatours-ui-contribution.jar"));
 
             node.start();
@@ -71,6 +72,7 @@ public class LaunchNode {
                                                                new SCAContribution("flight", "../flight-contribution/target/classes"),
                                                                new SCAContribution("car", "../car-contribution/target/classes"),
                                                                new SCAContribution("trip", "../trip-contribution/target/classes"),
+                                                               new SCAContribution("travel", "../travel-contribution/target/classes"),
                                                                new SCAContribution("ui", "../ui-contribution/target/classes"));
             node.start();
             

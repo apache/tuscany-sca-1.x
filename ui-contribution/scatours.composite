@@ -37,23 +37,23 @@
         <reference name="car" target="CarComponent">
             <tuscany:binding.jsonrpc/>
         </reference>
-        <reference name="tripSearch" target="TripComponent/TripSearch">
+        <reference name="travelSearch" target="TravelComponent/TravelSearch">
             <tuscany:binding.jsonrpc/>
         </reference>
-        <reference name="tripContents" target="TripComponent/TripContents">
+        <reference name="travelBooking" target="TravelComponent/TravelBooking">
             <tuscany:binding.jsonrpc/>
         </reference>  
     </component>
     
-    <component name="TripComponent">
-        <implementation.java class="scatours.trip.TripImpl"/>
-        <service name="TripSearch">
+    <component name="TravelComponent">
+        <implementation.java class="scatours.travel.TravelImpl"/>
+        <service name="TravelSearch">
             <tuscany:binding.jsonrpc/>
         </service>
-        <service name="TripContents">
+        <service name="TravelBooking">
             <tuscany:binding.jsonrpc/>
         </service>
-        <reference name="hotelSearch" target="HotelComponent">
+        <reference name="hotelSearch" target="HotelComponent/Search">
             <binding.sca/>
         </reference>
         <reference name="flightSearch" target="FlightComponent">
@@ -64,8 +64,15 @@
         </reference>        
         <reference name="currencyConverter" target="CurrencyConverterComponent">
         </reference>
+        <reference name="trip" target="TripComponent">
+        </reference> 
         <property name="quoteCurrencyCode">GBP</property>
     </component>
+    <component name="TripComponent">
+        <implementation.java class="scatours.trip.TripImpl"/>
+        <service name="Trip">
+        </service>
+    </component>    
         
     <component name="HotelComponent">
         <implementation.java class="scatours.hotel.HotelImpl"/>

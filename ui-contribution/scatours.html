@@ -36,10 +36,10 @@
     var car = new Reference("car");    
 	
     //@Reference
-    var tripSearch = new Reference("tripSearch");
+    var travelSearch = new Reference("travelSearch");
     
     //@Reference
-    var tripContents = new Reference("tripContents");
+    var travelBooking = new Reference("travelBooking");
         
     //local state
     var searchResponseItems;
@@ -62,11 +62,11 @@
     
     function getTripLeg(){
         return new TripLegType("X",
-                               document.searchForm.fromLocation.value,
-                               document.searchForm.toLocation.value,
-                               document.searchForm.fromDate.value,
-                               document.searchForm.toDate.value,
-                               document.searchForm.noOfPeople.value);
+                               document.travelForm.fromLocation.value,
+                               document.travelForm.toLocation.value,
+                               document.travelForm.fromDate.value,
+                               document.travelForm.toDate.value,
+                               document.travelForm.noOfPeople.value);
     }
 		
     function init() {
@@ -90,8 +90,8 @@
         car.searchSynch(getTripLeg(), search_response);
     } 
         
-    function searchTrip() {        
-        tripSearch.search(getTripLeg(), search_response);
+    function searchPackages() {        
+        travelSearch.search(getTripLeg(), search_response);
     }
         
     function search_response(items, exception) {
@@ -127,13 +127,13 @@
         var j = 0;
         for (var i=0; i<items.length; i++) {
             if (items[i].checked == true) {
-                tripContents.addTripItem(items[i].value);
+                travelBooking.addTripItem(items[i].value);
             } else {
-                tripContents.removeTripItem(items[i].value);
+                travelBooking.removeTripItem(items[i].value);
             }
         }
         
-        tripContents.getTotalPrice(totalPrice_response);
+        travelBooking.getTotalPrice(totalPrice_response);
     }    
     
     function totalPrice_response(totalPrice, exception) {
@@ -143,6 +143,19 @@
         }
         document.getElementById('totalPrice').innerHTML = totalPrice;
     }
+    
+    function newTrip() { 
+    
+    }
+    
+    function purchaseTrip() {        
+        travelBooking.purchaseTrip();
+        
+        document.getElementById('tripItems').innerHTML = "Thank you for shopping with SCA Tours";
+        document.getElementById('totalPrice').innerHTML = "";
+        searchResponseItems = null;
+        tripItems = null;
+    }    
 	
 </script>
 
@@ -152,7 +165,7 @@
 	<img src="scatours.png" border="0" />
 	<div id="scatours">
         <br>
-        <form name="searchForm">   
+        <form name="travelForm">   
             <table border="0">
                 <tr>
                     <td>From Location:</td>
@@ -178,18 +191,21 @@
                     <td/>
                 </tr>
             </table>
+            <input type="button" onClick="searchPackages()" value="SearchPackages"> 
             <input type="button" onClick="searchHotels()" value="Search Hotels">
             <input type="button" onClick="searchFlights()" value="Search Flights">
             <input type="button" onClick="searchHotels()" value="Search Cars"> 
-            <br/>
-            <input type="button" onClick="searchTrip()" value="SearchTrip"> 
         </form>
         <form name="tripForm"> 
             <div id="searchResponse"></div>
-            <br>  
+            <br> 
+            <input type="button" onClick="newTrip()" value="Create New Trip">  
+            <br>
             <div id="totalPrice"></div>
             <br>
-            <input type="button" onClick="bookTrip()" value="Book Trip"> 
+            <div id="tripItems"></div>
+            <br>
+            <input type="button" onClick="purchaseTrip()" value="Purchase Trip"> 
         </form> 
         
         
