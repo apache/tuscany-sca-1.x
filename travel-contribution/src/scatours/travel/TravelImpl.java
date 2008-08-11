@@ -87,7 +87,9 @@ public class TravelImpl implements TravelSearch, SearchCallback, TravelBooking{
         
         while (responsesReceived < 3){
             try {
-                this.wait();
+                synchronized (this) {
+                    this.wait();
+                }
             } catch (InterruptedException ex){
                 // do nothing
             }
@@ -114,7 +116,9 @@ public class TravelImpl implements TravelSearch, SearchCallback, TravelBooking{
         
         responsesReceived++;
         try {
-            this.notifyAll();
+            synchronized (this) {
+                this.notifyAll();
+            }
         } catch (Exception ex) {
         }
     }    

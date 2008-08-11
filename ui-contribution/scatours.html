@@ -206,7 +206,7 @@
 	<img src="scatours.png" border="0" />
 	<div id="scatours">
         <form name="travelForm"> 
-            <h3><div id="tripId"></h3>
+            <h3>Search for hotels, flights and cars</h3>
             <br/>
             <table border="0">
                 <tr>
@@ -233,16 +233,17 @@
                     <td/>
                 </tr>
             </table>
+            <br/>
             <input type="button" onClick="searchPackages()" value="SearchPackages"> 
             <input type="button" onClick="searchHotels()" value="Search Hotels">
             <input type="button" onClick="searchFlights()" value="Search Flights">
-            <input type="button" onClick="searchHotels()" value="Search Cars"> 
+            <input type="button" onClick="searchCars()" value="Search Cars"> 
         </form>
         <form name="tripForm">
             <h3>Search Results</h3> 
             <div id="searchResponse"></div>
             <br> 
-            <h3>You Trip</h3>
+            <h3><div id="tripId"></h3>
             <div id="tripItems"></div>
             <br>            
             <div id="totalPrice"></div>

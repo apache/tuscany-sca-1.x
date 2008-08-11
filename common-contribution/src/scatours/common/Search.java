@@ -30,6 +30,6 @@ import org.osoa.sca.annotations.Remotable;
 public interface Search {
     TripItem[] searchSynch(TripLeg tripLeg);
     
-    // TODO - Use to run searches in parallel @OneWay
+    @OneWay
     void searchAsynch(TripLeg tripLeg);
 }
