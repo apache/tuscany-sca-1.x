@@ -52,20 +52,4 @@ public interface CorbaHost {
      * @throws CorbaHostException
      */
     Object lookup(String uri) throws CorbaHostException;
-
-    /**
-     * Provides name server under given port.
-     * 
-     * @param port
-     * @throws CorbaHostException
-     */
-    void createLocalNameServer(int port) throws CorbaHostException;
-
-    /**
-     * Stops name server but only if every client released previously created NS.
-     * 
-     * @param port
-     * @throws CorbaHostException
-     */
-    void releaseLocalNameServer(int port) throws CorbaHostException;
 }
