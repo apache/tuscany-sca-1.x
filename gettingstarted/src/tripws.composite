@@ -18,8 +18,8 @@
  * under the License.    
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           targetNamespace="http://scatours"
-           xmlns:sample="http://scatours"
+           targetNamespace="http://tuscanyscatours"
+           xmlns:sample="http://tuscanyscatours"
            name="tripws">
 
     <component name="TripComponent">

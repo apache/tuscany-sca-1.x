@@ -53,11 +53,16 @@
         <service name="TravelBooking">
             <tuscany:binding.jsonrpc/>
         </service>
-        <reference name="hotelSearch" target="HotelComponent/Search">
+        <reference name="hotelSearch" target="HotelComponent">
             <binding.sca/>
         </reference>
-        <reference name="flightSearch" target="FlightComponent">
-            <binding.sca/>
+        <reference name="flightSearch">
+            <interface.java interface="scatours.common.Search" 
+                            callbackInterface="scatours.common.SearchCallback"/>
+            <binding.ws uri="http://localhost:8080/Flight/Search"/>
+            <callback>
+                <binding.ws uri="http://localhost:8080/Flight/SearchCallback"/>
+            </callback>
         </reference> 
         <reference name="carSearch" target="CarComponent">
             <binding.sca/>
@@ -68,6 +73,7 @@
         </reference> 
         <property name="quoteCurrencyCode">GBP</property>
     </component>
+    
     <component name="TripComponent">
         <implementation.java class="scatours.trip.TripImpl"/>
         <service name="Trip">
@@ -85,8 +91,13 @@
     <component name="FlightComponent">
         <implementation.java class="scatours.flight.FlightImpl"/>
         <service name="Search">
-            <binding.sca/>
+            <interface.java interface="scatours.common.Search" 
+                            callbackInterface="scatours.common.SearchCallback"/>
+            <binding.ws uri="http://localhost:8080/Flight/Search"/>
             <tuscany:binding.jsonrpc/>
+            <callback>
+                <binding.ws uri="http://localhost:8080/Flight/SearchCallback"/>
+            </callback>            
         </service>
     </component> 
     

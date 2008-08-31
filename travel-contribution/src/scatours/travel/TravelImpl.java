@@ -26,7 +26,9 @@ import java.util.UUID;
 
 import org.apache.tuscany.sca.data.collection.Entry;
 import org.apache.tuscany.sca.data.collection.NotFoundException;
+import org.osoa.sca.CallableReference;
 import org.osoa.sca.ComponentContext;
+import org.osoa.sca.RequestContext;
 import org.osoa.sca.ServiceReference;
 import org.osoa.sca.annotations.Context;
 import org.osoa.sca.annotations.Property;
@@ -81,7 +83,12 @@ public class TravelImpl implements TravelSearch, SearchCallback, TravelBooking{
         searchResults.clear();
         responsesReceived = 0;
         
-        hotelSearch.searchAsynch(tripLeg);
+        ServiceReference<Search> dynamicHotelSearch = 
+            componentContext.getServiceReference(Search.class, "hotelSearch");
+        
+        dynamicHotelSearch.setCallbackID("HotelSearchCallbackID-" + tripLeg.getId());        
+        dynamicHotelSearch.getService().searchAsynch(tripLeg);
+        
         flightSearch.searchAsynch(tripLeg);
         carSearch.searchAsynch(tripLeg);
         
@@ -110,6 +117,10 @@ public class TravelImpl implements TravelSearch, SearchCallback, TravelBooking{
     // SearchCallback methods
     
     public void searchResults(TripItem[] items){
+        RequestContext requestContext = componentContext.getRequestContext();
+        Object callbackID = requestContext.getServiceReference().getCallbackID();
+        System.out.println(callbackID);
+        
         for(int i = 0; i < items.length; i++ ){
             searchResults.add(items[i]);
         }

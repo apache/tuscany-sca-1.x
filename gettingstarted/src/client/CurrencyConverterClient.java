@@ -19,6 +19,11 @@
 package client;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
+import org.apache.tuscany.sca.node.SCAClient;
+import org.apache.tuscany.sca.node.SCANode2;
+import org.apache.tuscany.sca.node.SCANode2Factory;
+
+import trip.Trip;
 import currencyconverter.CurrencyConverter;
 
 /**
@@ -27,12 +32,17 @@ import currencyconverter.CurrencyConverter;
 public class CurrencyConverterClient {
  
     public  final static void main(String[] args) throws Exception {
-        SCADomain scaDomain = 
-            SCADomain.newInstance("currencyconverter.composite");
+        SCANode2Factory factory = SCANode2Factory.newInstance();
+        SCANode2 node = factory.createSCANodeFromClassLoader("currencyconverter.composite", 
+                                                             null);
+        node.start();
+        
         CurrencyConverter currencyConverter = 
-            scaDomain.getService(CurrencyConverter.class, 
-                                 "CurrencyConverterComponent");
+            ((SCAClient)node).getService(CurrencyConverter.class, 
+                                         "CurrencyConverterComponent");
+
         System.out.println(currencyConverter.convert("GBP", "USD", 10.00));
-        scaDomain.close();
+
+        node.stop();        
     }    
 }

@@ -18,7 +18,9 @@
  */
 package client;
 
-import org.apache.tuscany.sca.host.embedded.SCADomain;
+import org.apache.tuscany.sca.node.SCAClient;
+import org.apache.tuscany.sca.node.SCANode2;
+import org.apache.tuscany.sca.node.SCANode2Factory;
 
 import trip.Trip;
 
@@ -28,10 +30,16 @@ import trip.Trip;
 public class TripClient {
  
     public  final static void main(String[] args) throws Exception {
-        SCADomain scaDomain = SCADomain.newInstance("trip.composite");
-        Trip trip = scaDomain.getService(Trip.class, "TripComponent");
+        SCANode2Factory factory = SCANode2Factory.newInstance();
+        SCANode2 node = factory.createSCANodeFromClassLoader("trip.composite", 
+                                                             null);
+        node.start();
+        
+        Trip trip = ((SCAClient)node).getService(Trip.class, 
+                                                 "TripComponent");
+
         System.out.println(trip.getTotalPrice());
 
-        scaDomain.close();
+        node.stop();
     }    
 }
