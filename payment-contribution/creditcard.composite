@@ -25,8 +25,14 @@
             <binding.ws uri="http://localhost:8080/CreditCardPayment" />
         </reference>
         <service name="CreditCardPayment">
-            <t:binding.jsonrpc uri="/jsonrpc/CreditCardPayment">
-            </t:binding.jsonrpc>
+            <t:binding.jsonrpc uri="/jsonrpc/CreditCardPayment" />
+            <binding.sca />
+        </service>
+    </component>
+    <component name="CreditCardPaymentWS">
+        <implementation.java class="payment.creditcard.ws.impl.CreditCardPaymentWSImpl" />
+        <service name="CreditCardPayment">
+            <binding.ws uri="http://localhost:8080/CreditCardPayment" />
         </service>
     </component>
 </composite>
