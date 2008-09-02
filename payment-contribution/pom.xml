@@ -50,8 +50,68 @@
         </dependency>
 
     </dependencies>
-
     <build>
-       <finalName>${artifactId}</finalName>
+        <finalName>${artifactId}</finalName>
+        <sourceDirectory>${basedir}/src</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>${basedir}</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                    <exclude>**/.*/**</exclude>
+                    <exclude>pom.xml</exclude>
+                    <exclude>build.xml</exclude>
+                    <exclude>target/**</exclude>
+                    <exclude>src/**</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>1.0</version>
+            <executions>
+                <execution>
+                    <id>add-test-source</id>
+                    <phase>generate-sources</phase>
+                    <goals>
+                        <goal>add-test-source</goal>
+                    </goals>
+                    <configuration>
+                        <sources>
+                            <source>target/jaxws-source</source>
+                        </sources>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>jaxws-maven-plugin</artifactId>
+            <version>1.9</version>
+            <executions>
+                <execution>
+                    <id>wsimport</id>
+                    <phase>generate-test-sources</phase>
+                    <goals>
+                        <goal>wsimport</goal>
+                    </goals>
+                    <configuration>
+                        <packageName>payment.creditcard</packageName>
+                        <wsdlDirectory>${basedir}/wsdl
+                        </wsdlDirectory>
+                        <wsdlFiles>
+                            <wsdlFile>CreditCardPayment.wsdl</wsdlFile>
+                        </wsdlFiles>
+                        <sourceDestDir>${project.build.directory}/jaxws-source
+                        </sourceDestDir>
+                        <verbose>false</verbose>
+                        <xnocompile>true</xnocompile>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
     </build>
 </project>
