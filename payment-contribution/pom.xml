@@ -73,10 +73,10 @@
             <version>1.0</version>
             <executions>
                 <execution>
-                    <id>add-test-source</id>
+                    <id>add-source</id>
                     <phase>generate-sources</phase>
                     <goals>
-                        <goal>add-test-source</goal>
+                        <goal>add-source</goal>
                     </goals>
                     <configuration>
                         <sources>
@@ -93,7 +93,7 @@
             <executions>
                 <execution>
                     <id>wsimport</id>
-                    <phase>generate-test-sources</phase>
+                    <phase>generate-sources</phase>
                     <goals>
                         <goal>wsimport</goal>
                     </goals>
