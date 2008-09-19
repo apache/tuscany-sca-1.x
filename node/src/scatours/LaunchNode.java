@@ -22,8 +22,8 @@ package scatours;
 import java.io.IOException;
 
 import org.apache.tuscany.sca.node.SCAContribution;
-import org.apache.tuscany.sca.node.SCANode2;
-import org.apache.tuscany.sca.node.SCANode2Factory;
+import org.apache.tuscany.sca.node.SCANode;
+import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.apache.tuscany.sca.node.launcher.NodeLauncher;
 
 public class LaunchNode {
@@ -33,10 +33,10 @@ public class LaunchNode {
 
     // OK for development but you must launch the node from this module 
     public static void launchFromFileSystemJar(){
-        SCANode2 node = null; 
+        SCANode node = null; 
         
         try {
-            node = SCANode2Factory.newInstance().createSCANode("scatours.composite", 
+            node = SCANodeFactory.newInstance().createSCANode("scatours.composite", 
                                                                new SCAContribution("common", "../common-contribution/target/scatours-common-contribution.jar"),
                                                                new SCAContribution("currency", "../currency-contribution/target/scatours-currency-contribution.jar"),
                                                                new SCAContribution("hotel", "../hotel-contribution/target/scatours-hotel-contribution.jar"),
@@ -62,10 +62,10 @@ public class LaunchNode {
     
     // OK for development but you must launch the node from this module 
     public static void launchFromFileSystemDir(){
-        SCANode2 node = null; 
+        SCANode node = null; 
         
         try {
-            node = SCANode2Factory.newInstance().createSCANode("scatours.composite", 
+            node = SCANodeFactory.newInstance().createSCANode("scatours.composite", 
                                                                new SCAContribution("common", "../common-contribution/target/classes"),
                                                                new SCAContribution("currency", "../currency-contribution/target/classes"),
                                                                new SCAContribution("hotel", "../hotel-contribution/target/classes"),
@@ -90,10 +90,10 @@ public class LaunchNode {
     
     // OK for samples but you can only load one contribution 
     public static void launchFromClasspath(){
-        SCANode2 node = null; 
+        SCANode node = null; 
         
         try {
-            node = SCANode2Factory.newInstance().createSCANodeFromClassLoader("scatours.composite", null);
+            node = SCANodeFactory.newInstance().createSCANodeFromClassLoader("scatours.composite", null);
             node.start();
             
             System.out.println("Node started - Press enter to shutdown.");
