@@ -43,8 +43,10 @@
                 <module>flight-contribution</module>
                 <module>car-contribution</module>
                 <module>payment-contribution</module>
-                <module>trip-contribution</module>
-                <module>travel-contribution</module>
+                <module>travelcatalog-contribution</module>
+                <module>tripbooking-contribution</module>
+                <module>shoppingcart-contribution</module>
+                <module>scatours-contribution</module>
                 <module>ui-contribution</module>
 
                 <module>domain</module>

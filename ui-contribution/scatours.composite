@@ -23,36 +23,35 @@
            xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
            name="scatours">
            
-    <component name="SCATours">
+    <component name="UserInterfaceComponent">
         <tuscany:implementation.widget location="scatours.html"/>
         <service name="Widget">
             <tuscany:binding.http uri="/scatours"/>
         </service>
-        <reference name="hotel" target="HotelComponent">
+        <reference name="scaToursSearch" target="SCAToursComponent/TravelCatalogSearch">
+            <tuscany:binding.jsonrpc/>
+        </reference> 
+        <reference name="scaToursBooking" target="SCAToursComponent/SCAToursBooking">
             <tuscany:binding.jsonrpc/>
         </reference>
-        <reference name="flight" target="FlightComponent">
-            <tuscany:binding.jsonrpc/>
-        </reference>
-        <reference name="car" target="CarComponent">
-            <tuscany:binding.jsonrpc/>
-        </reference>
-        <reference name="travelSearch" target="TravelComponent/TravelSearch">
-            <tuscany:binding.jsonrpc/>
-        </reference>
-        <reference name="travelBooking" target="TravelComponent/TravelBooking">
-            <tuscany:binding.jsonrpc/>
-        </reference>  
     </component>
     
-    <component name="TravelComponent">
-        <implementation.java class="scatours.travel.TravelImpl"/>
-        <service name="TravelSearch">
+    <component name="SCAToursComponent">
+        <implementation.java class="scatours.SCAToursImpl"/>
+        <service name="TravelCatalogSearch">
             <tuscany:binding.jsonrpc/>
         </service>
-        <service name="TravelBooking">
+        <service name="SCAToursBooking">
             <tuscany:binding.jsonrpc/>
         </service>
+        <reference name="travelCatalogSearch" target="TravelCatalogComponent/TravelCatalogSearch"/>
+        <reference name="tripBooking" target="TripBookingComponent/TripBooking"/>
+        <!--reference name="shoppingCart" target="ShoppingCartComponent/shoppingCart"/-->
+    </component>
+    
+    <component name="TravelCatalogComponent">
+        <implementation.java class="scatours.travelcatalog.TravelCatalogImpl"/>
+        <service name="TravelCatalogSearch"/>
         <reference name="hotelSearch" target="HotelComponent">
             <binding.sca/>
         </reference>
@@ -69,15 +68,12 @@
         </reference>        
         <reference name="currencyConverter" target="CurrencyConverterComponent">
         </reference>
-        <reference name="trip" target="TripComponent">
-        </reference> 
         <property name="quoteCurrencyCode">GBP</property>
     </component>
     
-    <component name="TripComponent">
-        <implementation.java class="scatours.trip.TripImpl"/>
-        <service name="Trip">
-        </service>
+    <component name="TripBookingComponent">
+        <implementation.java class="scatours.tripbooking.TripBookingImpl"/>
+        <service name="TripBooking"/>
     </component>    
         
     <component name="HotelComponent">
@@ -114,5 +110,17 @@
         <service name="CurrencyConverter">
         </service>
     </component>
+    
+    <!-- component name="ShoppingCartComponent">
+        <implementation.java class="scatours.shoppingcart.ShoppingCartImpl"/>
+        <service name="CurrencyConverter">
+        </service>
+    </component>    
+    
+    <component name="PaymentComponent">
+        <implementation.java class="scatours.payment.PaymentImpl"/>
+        <service name="CurrencyConverter">
+        </service>
+    </component-->  
 
 </composite>
