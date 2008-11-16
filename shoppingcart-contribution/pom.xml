@@ -55,7 +55,7 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-trip-contribution</artifactId>
+            <artifactId>scatours-tripbooking-contribution</artifactId>
             <version>1.4-SNAPSHOT</version>
         </dependency> 
 

@@ -18,7 +18,6 @@
  */
 package client;
 
-import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCANode2;
 import org.apache.tuscany.sca.node.SCANode2Factory;

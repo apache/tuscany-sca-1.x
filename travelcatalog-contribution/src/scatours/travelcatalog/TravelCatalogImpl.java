@@ -41,7 +41,6 @@ import scatours.common.SearchCallback;
 import scatours.common.TripItem;
 import scatours.common.TripLeg;
 import scatours.currencyconverter.CurrencyConverter;
-import scatours.trip.Trip;
 
 /**
  * An implementation of the Trip service

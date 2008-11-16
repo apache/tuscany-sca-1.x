@@ -42,7 +42,6 @@ import scatours.common.TripItem;
 import scatours.common.TripLeg;
 import scatours.currencyconverter.CurrencyConverter;
 import scatours.travelcatalog.TravelCatalogSearch;
-import scatours.trip.Trip;
 import scatours.tripbooking.TripBooking;
 
 /**
