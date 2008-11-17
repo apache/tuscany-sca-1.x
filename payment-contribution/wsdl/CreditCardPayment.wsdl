@@ -17,9 +17,14 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<wsdl:definitions name="CreditCardPayment" targetNamespace="http://www.example.org/CreditCardPayment/"
-    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.example.org/CreditCardPayment/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<wsdl:definitions name="CreditCardPayment" 
+                  targetNamespace="http://www.example.org/CreditCardPayment/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+                  xmlns:tns="http://www.example.org/CreditCardPayment/" 
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:bpws="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
+                  xmlns:plnk="http://schemas.xmlsoap.org/ws/2004/03/partner-link/">
     <wsdl:types>
         <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/CreditCardPayment/"
             xmlns:tns="http://www.example.org/CreditCardPayment/">
@@ -102,4 +107,8 @@
             <soap:address location="http://localhost:8080/CreditCardPayment" />
         </wsdl:port>
     </wsdl:service>
+    
+    <plnk:partnerLinkType name="CreditCardPaymentLinkType">
+        <plnk:role name="forward" portType="tns:CreditCardPayment"/>
+    </plnk:partnerLinkType>    
 </wsdl:definitions>

@@ -122,5 +122,12 @@
         <service name="CurrencyConverter">
         </service>
     </component-->  
+    
+    <component name="CreditCardGateway">
+        <implementation.java class="creditcard.CreditCardGatewayImpl" />
+        <service name="CreditCardGateway">
+            <binding.ws uri="http://localhost:8080/CreditCardGateway" />
+        </service>
+    </component>    
 
 </composite>
