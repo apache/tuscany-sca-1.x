@@ -27,5 +27,11 @@
 		<provide partnerLink="paymentProcessPartnerLink">
 			<service name="tus:paymentProcessPartnerLink" port="PaymentProcess"/>
 		</provide>
+        <invoke partnerLink="creditCardPaymentPartnerLink">
+            <service name="wns:creditCardPaymentPartnerLink" port="CreditCardPayment"/>
+        </invoke>	
+        <invoke partnerLink="emailGatewayPartnerLink">
+            <service name="wns:emailGatewayPartnerLink" port="EmailGateway"/>
+        </invoke>   	
 	</process>
 </deploy>

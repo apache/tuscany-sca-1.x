@@ -19,22 +19,29 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
            xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
-           xmlns:c="http://paymentprocess" 
-           xmlns:pp="http://tuscany.apache.org/PaymentProcess"
-           targetNamespace="http://paymentprocess" 
+           xmlns:pp="http://www.example.org/PaymentProcess" 
+           targetNamespace="http://www.example.org/PaymentProcess" 
            name="paymentprocess">
+           
     <component name="PaymentProcessClient">
         <implementation.java class="scatours.paymentprocess.PaymentProcessClientImpl" />
         <reference name="paymentProcess">
             <binding.ws uri="http://localhost:8080/PaymentProcess" />
         </reference>
     </component>
+    
     <component name="PaymentProcess">
         <implementation.bpel process="pp:PaymentProcess"/>
         <service name="paymentProcessPartnerLink">
             <interface.wsdl interface="http://www.example.org/PaymentProcess/#wsdl.interface(PaymentProcess)" />
             <binding.ws uri="http://localhost:8080/PaymentProcess" wsdlElement="http://www.example.org/PaymentProcess/#wsdl.service(PaymentProcessService)"/>
         </service>
+        <reference name="creditCardPaymentPartnerLink">
+            <binding.ws uri="http://localhost:8081/CreditCardPayment"/>
+        </reference>
+        <reference name="emailGatewayPartnerLink">
+            <binding.ws uri="http://localhost:8082/EmailGateway"/>
+        </reference>        
     </component>    
 
 </composite>

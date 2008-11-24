@@ -17,7 +17,7 @@
   ~ under the License.
   -->
 <process name="PaymentProcess"
-    targetNamespace="http://tuscany.apache.org/PaymentProcess"
+    targetNamespace="http://www.example.org/PaymentProcess"
     xmlns="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
     xmlns:bpws="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
     xmlns:tns="http://tuscany.apache.org/PaymentProcess"    
@@ -30,28 +30,31 @@
 
   <import location="PaymentProcess.wsdl" 
           importType="http://schemas.xmlsoap.org/wsdl/"
-          namespace="http://www.example.org/PaymentProcess/"/>
+          namespace="http://www.example.org/PaymentProcess/"/>     
 
-  <!--import location="CreditCardPayment.wsdl" 
+  <import location="CreditCardPayment.wsdl" 
           importType="http://schemas.xmlsoap.org/wsdl/"
           namespace="http://www.example.org/CreditCardPayment/"/>
           
   <import location="EmailGateway.wsdl" 
           importType="http://schemas.xmlsoap.org/wsdl/"
-          namespace="http://www.example.org/EmailGateway/"/-->          
+          namespace="http://www.example.org/EmailGateway/"/>          
           
-
    <partnerLinks>
       <partnerLink name="paymentProcessPartnerLink" partnerLinkType="pp:PaymentProcessLinkType" myRole="forward" />
-      <!--partnerLink name="creditCardpaymentPartnerLink" partnerLinkType="ccp:CreditCardPaymentLinkType" myRole="forward" />
-      <partnerLink name="emailGatewayPartnerLink" partnerLinkType="eg:EmailGatewayLinkType" myRole="forward" /-->
+      <partnerLink name="creditCardPaymentPartnerLink" partnerLinkType="ccp:CreditCardPaymentLinkType" partnerRole="forward" initializePartnerRole="yes" />
+      <partnerLink name="emailGatewayPartnerLink" partnerLinkType="eg:EmailGatewayLinkType" partnerRole="forward" initializePartnerRole="yes" />
    </partnerLinks>
     
    <variables>
-     <variable name="paymentProcessMessage" messageType="pp:makePaymentRequest"/>
-     <variable name="paymentProcessResponseMessage" messageType="pp:makePaymentResponse"/>
-     <!--variable name="creditCardMessage" messageType="ccp:authorizeRequest"/>
-     <variable name="emailMessage" messageType="eg:sendEmailRequest"/-->
+     <variable name="makePaymentRequestMessage" messageType="pp:MakePaymentRequest"/>
+     <variable name="makePaymentResponseMessage" messageType="pp:MakePaymentResponse"/>
+     <variable name="makePaymentResponse" type="pp:MakePaymentResponseType"/>
+     <variable name="authorizeRequestMessage" messageType="ccp:AuthorizeRequest"/>
+     <variable name="authorizeResponseMessage" messageType="ccp:AuthorizeResponse"/>
+     <variable name="authorizeRequest" type="ccp:AuthorizeType"/>
+     <variable name="sendEmailRequestMessage" messageType="eg:SendEmailRequest"/>
+     <variable name="sendEmailResponseMessage" messageType="eg:SendEmailResponse"/>
    </variables>
 
    <sequence>
@@ -59,29 +62,79 @@
                 partnerLink="paymentProcessPartnerLink"
                 portType="pp:PaymentProcess"
            	    operation="makePayment"
-                variable="paymentProcessMessage"
+                variable="makePaymentRequestMessage"
                 createInstance="yes"/>
 
-       <!--assign name="assign1">
+       <!-- set up call to payments service -->
+       <assign name="assign1">
           <copy>
-              <from>$paymentProcessMessage.parameters.CustomerId</from>
-              <to>$emailMessage.parameters.Email.To</to>
+              <from>
+                  <literal>
+                    <ccp:Authorize>
+                        <ccp:CreditCard>
+                            <ccp:CreditCardType>Visa</ccp:CreditCardType>
+                            <ccp:CreditCardNumber>12345678</ccp:CreditCardNumber>
+                            <ccp:ExpMonth>2</ccp:ExpMonth>
+                            <ccp:ExpYear>2010</ccp:ExpYear>
+                            <ccp:CardOwner>
+                                <ccp:Name>Empty</ccp:Name>
+                                <ccp:Address>
+                                    <ccp:Street>1 The Road</ccp:Street>
+                                    <ccp:City>Winchester</ccp:City>
+                                    <ccp:State>Hampshire</ccp:State>
+                                    <ccp:ZipCode>AB1 2CD</ccp:ZipCode>
+                                    <ccp:HomePhone>12345678</ccp:HomePhone>
+                                </ccp:Address>
+                            </ccp:CardOwner>
+                        </ccp:CreditCard>                    
+                        <ccp:Amount>0.0</ccp:Amount>
+                    </ccp:Authorize>
+                  </literal>
+              </from>
+              <to>$authorizeRequestMessage.parameters</to>
           </copy>
-       </assign-->
-       
-       <!-- execute -->
-       
-       <assign name="assign2">
           <copy>
-              <from><literal>OK</literal></from>
-              <to>$paymentProcessResponseMessage.parameters.Status</to>
+              <from>$makePaymentRequestMessage.parameters/CustomerId/text()</from>
+              <to>$authorizeRequestMessage.parameters/ccp:CreditCard/ccp:CardOwner/ccp:Name</to>
+          </copy>
+          <copy>
+              <from>$makePaymentRequestMessage.parameters/Amount/text()</from>
+              <to>$authorizeRequestMessage.parameters/ccp:Amount</to>
+          </copy>                    
+       </assign>
+       
+       
+       <invoke name="invokeCreditCardPayment"
+               operation="authorize"
+               inputVariable="authorizeRequestMessage"
+               outputVariable="authorizeResponseMessage"
+               partnerLink="creditCardPaymentPartnerLink"
+               portType="ccp:CreditCardPayment" />
+       
+       <!-- set up call to email gateway service -->
+       
+       <!-- call the email gateway to send a confirmation -->
+       
+       
+       <!-- set up the response -->
+       <assign name="assign2">
+          <!--copy>
+              <from><literal><Status>OK</Status></literal></from>
+              <to>$makePaymentResponse</to>
+          </copy-->
+          <copy>
+              <from>$authorizeResponseMessage.parameters</from>
+              <to>$makePaymentResponseMessage.parameters</to>
           </copy>
        </assign>
+       
+       <!-- email a confirmation -->
        
        <reply name="end"  
               partnerLink="paymentProcessPartnerLink"
               portType="pp:PaymentProcess" 
               operation="makePayment"
-              variable="paymentProcessResponseMessage"/>
+              variable="makePaymentResponseMessage">
+       </reply>
    </sequence>
 </process>

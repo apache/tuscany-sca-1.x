@@ -29,33 +29,34 @@
         <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
                     targetNamespace="http://www.example.org/PaymentProcess/"
                     xmlns:tns="http://www.example.org/PaymentProcess/">
-            <xsd:element name="makePayment">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="CustomerId" type="xsd:string"></xsd:element>
-                        <xsd:element name="Amount" type="xsd:float"></xsd:element>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="makePaymentResponse">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="Status" type="xsd:string"></xsd:element>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
+
+            <xsd:complexType name="MakePaymentType">
+                <xsd:sequence>
+                    <xsd:element name="CustomerId" type="xsd:string"></xsd:element>
+                    <xsd:element name="Amount" type="xsd:float"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>                    
+            <xsd:element name="makePayment" type="tns:MakePaymentType"/>
+      
+            <xsd:complexType name="MakePaymentResponseType">
+                <xsd:sequence>
+                    <xsd:element name="Status" type="xsd:string"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="makePaymentResponse" type="tns:MakePaymentResponseType"/>
+            
         </xsd:schema>
     </wsdl:types>
-    <wsdl:message name="makePaymentRequest">
+    <wsdl:message name="MakePaymentRequest">
         <wsdl:part name="parameters" element="tns:makePayment"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="makePaymentResponse">
+    <wsdl:message name="MakePaymentResponse">
         <wsdl:part name="parameters" element="tns:makePaymentResponse"></wsdl:part>
     </wsdl:message>
     <wsdl:portType name="PaymentProcess">
         <wsdl:operation name="makePayment">
-            <wsdl:input message="tns:makePaymentRequest"></wsdl:input>
-            <wsdl:output message="tns:makePaymentResponse"></wsdl:output>
+            <wsdl:input message="tns:MakePaymentRequest"></wsdl:input>
+            <wsdl:output message="tns:MakePaymentResponse"></wsdl:output>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="PaymentProcessBinding" type="tns:PaymentProcess">

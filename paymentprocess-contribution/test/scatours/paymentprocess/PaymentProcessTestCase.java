@@ -46,7 +46,7 @@ public class PaymentProcessTestCase {
     public void testPaymentProcess() {
         SCAClient client = (SCAClient) node;
         PaymentProcess pp = client.getService(PaymentProcess.class, "PaymentProcessClient");
-        System.out.println(pp.makePayment("Fred", 100.00f));
+        System.out.println("Result = " + pp.makePayment("Fred", 100.00f));
     }
 
     /**
