@@ -30,6 +30,7 @@ import payment.creditcard.CreditCardPayment;
  */
 @Service(CreditCardPayment.class)
 public class CreditCardPaymentImpl implements CreditCardPayment {
+    
     @Reference
     protected CreditCardPayment creditCardPayment;
 

@@ -83,7 +83,7 @@
         </wsdl:port>
     </wsdl:service>
     
-    <plnk:partnerLinkType name="EmailGatewayLinkType">
+    <!--plnk:partnerLinkType name="EmailGatewayLinkType">
         <plnk:role name="forward" portType="tns:EmailGateway"/>
-    </plnk:partnerLinkType>
+    </plnk:partnerLinkType-->
 </wsdl:definitions>

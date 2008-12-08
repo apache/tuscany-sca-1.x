@@ -28,9 +28,10 @@
     <wsdl:types>
         <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
                     targetNamespace="http://www.example.org/CreditCardPayment/"
-                    xmlns:tns="http://www.example.org/CreditCardPayment/">
+                    xmlns:tns="http://www.example.org/CreditCardPayment/"
+                    elementFormDefault="unqualified">
             
-            <xsd:element name="Authorize" type="tns:AuthorizeType"/>
+            <xsd:element name="authorize" type="tns:AuthorizeType"/>
             <xsd:complexType name="AuthorizeType">
                 <xsd:sequence>
                     <xsd:element name="CreditCard" type="tns:CreditCardDetailsType"></xsd:element>
@@ -38,7 +39,7 @@
                 </xsd:sequence>
             </xsd:complexType>
 
-            <xsd:element name="AuthorizeResponse" type="tns:AuthorizeResponseType"/>
+            <xsd:element name="authorizeResponse" type="tns:AuthorizeResponseType"/>
             <xsd:complexType name="AuthorizeResponseType">
                 <xsd:sequence>
                     <xsd:element name="Status" type="xsd:string"></xsd:element>
@@ -81,10 +82,10 @@
         </xsd:schema>
     </wsdl:types>
     <wsdl:message name="AuthorizeRequest">
-        <wsdl:part name="parameters" element="tns:Authorize"></wsdl:part>
+        <wsdl:part name="parameters" element="tns:authorize"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="AuthorizeResponse">
-        <wsdl:part name="parameters" element="tns:AuthorizeResponse"></wsdl:part>
+        <wsdl:part name="parameters" element="tns:authorizeResponse"></wsdl:part>
     </wsdl:message>
     <wsdl:portType name="CreditCardPayment">
         <wsdl:operation name="authorize">

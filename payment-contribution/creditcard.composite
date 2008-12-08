@@ -19,20 +19,20 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
     xmlns:c="http://creditcard" targetNamespace="http://creditcard" name="creditcard">
-    <component name="CreditCardPayment">
+    <component name="CreditCardPaymentWSClient">
         <implementation.java class="payment.creditcard.impl.CreditCardPaymentImpl" />
         <reference name="creditCardPayment">
-            <binding.ws uri="http://localhost:8080/CreditCardPayment" />
+            <binding.ws uri="http://localhost:8081/CreditCardPayment" />
         </reference>
         <service name="CreditCardPayment">
-            <t:binding.jsonrpc uri="/jsonrpc/CreditCardPayment" />
+            <!--t:binding.jsonrpc uri="/jsonrpc/CreditCardPayment" /-->
             <binding.sca />
         </service>
     </component>
     <component name="CreditCardPaymentWS">
         <implementation.java class="payment.creditcard.ws.impl.CreditCardPaymentWSImpl" />
         <service name="CreditCardPayment">
-            <binding.ws uri="http://localhost:8080/CreditCardPayment" />
+            <binding.ws uri="http://localhost:8081/CreditCardPayment" />
         </service>
     </component>
 </composite>

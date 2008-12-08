@@ -50,6 +50,16 @@ public class EmailGatewayTestCase {
         EmailType email = objectFactory.createEmailType();
         System.out.println(cc.sendEmail(email));
     }
+    
+    @Test
+    public void testWaitForInput() {
+        System.out.println("Press a key to end");
+        try {
+            System.in.read();
+        } catch (Exception ex) {
+        }
+        System.out.println("Shutting down");
+    }
 
     /**
      * @throws java.lang.Exception

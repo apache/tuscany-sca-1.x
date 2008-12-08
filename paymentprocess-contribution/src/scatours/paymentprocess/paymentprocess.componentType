@@ -30,9 +30,9 @@
         <interface.wsdl interface="http://www.example.org/CrecitCardPayment/#wsdl.interface(CreditCardPayment)" />
   </reference>
   
-  <reference name="emailGatewayPartnerLink">
+  <!--reference name="emailGatewayPartnerLink">
         <interface.wsdl interface="http://www.example.org/EmailGateway/#wsdl.interface(EmailGateway)" />
-  </reference>
+  </reference-->
 
 </componentType>              
        

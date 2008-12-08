@@ -22,6 +22,7 @@
     xmlns:bpws="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
     xmlns:tns="http://tuscany.apache.org/PaymentProcess"    
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:pp="http://www.example.org/PaymentProcess/"
     xmlns:ccp="http://www.example.org/CreditCardPayment/"
     xmlns:eg="http://www.example.org/EmailGateway/"
@@ -36,14 +37,14 @@
           importType="http://schemas.xmlsoap.org/wsdl/"
           namespace="http://www.example.org/CreditCardPayment/"/>
           
-  <import location="EmailGateway.wsdl" 
+  <!--import location="EmailGateway.wsdl" 
           importType="http://schemas.xmlsoap.org/wsdl/"
-          namespace="http://www.example.org/EmailGateway/"/>          
+          namespace="http://www.example.org/EmailGateway/"/-->          
           
    <partnerLinks>
       <partnerLink name="paymentProcessPartnerLink" partnerLinkType="pp:PaymentProcessLinkType" myRole="forward" />
       <partnerLink name="creditCardPaymentPartnerLink" partnerLinkType="ccp:CreditCardPaymentLinkType" partnerRole="forward" initializePartnerRole="yes" />
-      <partnerLink name="emailGatewayPartnerLink" partnerLinkType="eg:EmailGatewayLinkType" partnerRole="forward" initializePartnerRole="yes" />
+      <!--partnerLink name="emailGatewayPartnerLink" partnerLinkType="eg:EmailGatewayLinkType" partnerRole="forward" initializePartnerRole="yes" /-->
    </partnerLinks>
     
    <variables>
@@ -53,8 +54,8 @@
      <variable name="authorizeRequestMessage" messageType="ccp:AuthorizeRequest"/>
      <variable name="authorizeResponseMessage" messageType="ccp:AuthorizeResponse"/>
      <variable name="authorizeRequest" type="ccp:AuthorizeType"/>
-     <variable name="sendEmailRequestMessage" messageType="eg:SendEmailRequest"/>
-     <variable name="sendEmailResponseMessage" messageType="eg:SendEmailResponse"/>
+     <!--variable name="sendEmailRequestMessage" messageType="eg:SendEmailRequest"/>
+     <variable name="sendEmailResponseMessage" messageType="eg:SendEmailResponse"/-->
    </variables>
 
    <sequence>
@@ -70,39 +71,38 @@
           <copy>
               <from>
                   <literal>
-                    <ccp:Authorize>
-                        <ccp:CreditCard>
-                            <ccp:CreditCardType>Visa</ccp:CreditCardType>
-                            <ccp:CreditCardNumber>12345678</ccp:CreditCardNumber>
-                            <ccp:ExpMonth>2</ccp:ExpMonth>
-                            <ccp:ExpYear>2010</ccp:ExpYear>
-                            <ccp:CardOwner>
-                                <ccp:Name>Empty</ccp:Name>
-                                <ccp:Address>
-                                    <ccp:Street>1 The Road</ccp:Street>
-                                    <ccp:City>Winchester</ccp:City>
-                                    <ccp:State>Hampshire</ccp:State>
-                                    <ccp:ZipCode>AB1 2CD</ccp:ZipCode>
-                                    <ccp:HomePhone>12345678</ccp:HomePhone>
-                                </ccp:Address>
-                            </ccp:CardOwner>
-                        </ccp:CreditCard>                    
-                        <ccp:Amount>0.0</ccp:Amount>
-                    </ccp:Authorize>
+                  <authorize xmlns="http://www.example.org/CreditCardPayment/">
+                    <CreditCard xmlns="">
+                      <CreditCardType>Visa</CreditCardType>
+                      <CreditCardNumber>12345678</CreditCardNumber>
+                      <ExpMonth>2</ExpMonth>
+                      <ExpYear>2010</ExpYear>
+                      <CardOwner>
+                        <Name>Empty</Name>
+                        <Address>
+                           <Street>1 The Road</Street>
+                           <City>Winchester</City>
+                           <State>Hampshire</State>
+                           <ZipCode>AB1 2CD</ZipCode>
+                           <HomePhone>12345678</HomePhone>
+                        </Address>
+                      </CardOwner>                      
+                    </CreditCard>
+                    <Amount xmlns="">0.0</Amount>
+                  </authorize>
                   </literal>
               </from>
               <to>$authorizeRequestMessage.parameters</to>
           </copy>
           <copy>
               <from>$makePaymentRequestMessage.parameters/CustomerId/text()</from>
-              <to>$authorizeRequestMessage.parameters/ccp:CreditCard/ccp:CardOwner/ccp:Name</to>
+              <to>$authorizeRequestMessage.parameters/CreditCard/CardOwner/Name</to>
           </copy>
           <copy>
               <from>$makePaymentRequestMessage.parameters/Amount/text()</from>
-              <to>$authorizeRequestMessage.parameters/ccp:Amount</to>
+              <to>$authorizeRequestMessage.parameters/Amount</to>
           </copy>                    
        </assign>
-       
        
        <invoke name="invokeCreditCardPayment"
                operation="authorize"

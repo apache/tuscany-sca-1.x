@@ -45,11 +45,27 @@ public class CreditCardPaymentTestCase {
     @Test
     public void testCreditCardPayment() {
         SCAClient client = (SCAClient) node;
-        CreditCardPayment cc = client.getService(CreditCardPayment.class, "CreditCardPayment");
+        CreditCardPayment cc = client.getService(CreditCardPayment.class, "CreditCardPaymentWSClient");
+        
         ObjectFactory objectFactory = new ObjectFactory();
         CreditCardDetailsType ccDetails = objectFactory.createCreditCardDetailsType();
+        ccDetails.setCreditCardType(CreditCardTypeType.fromValue("Visa"));
+        PayerType ccOwner = objectFactory.createPayerType();
+        ccOwner.setName("Fred");
+        ccDetails.setCardOwner(ccOwner);
+        
         System.out.println(cc.authorize(ccDetails, 100.00f));
     }
+    
+    @Test
+    public void testWaitForInput() {
+        System.out.println("Press a key to end");
+        try {
+            System.in.read();
+        } catch (Exception ex) {
+        }
+        System.out.println("Shutting down");
+    }    
 
     /**
      * @throws java.lang.Exception

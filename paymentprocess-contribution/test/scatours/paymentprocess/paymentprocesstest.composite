@@ -37,11 +37,11 @@
             <binding.ws uri="http://localhost:8080/PaymentProcess" wsdlElement="http://www.example.org/PaymentProcess/#wsdl.service(PaymentProcessService)"/>
         </service>
         <reference name="creditCardPaymentPartnerLink">
-            <binding.ws uri="http://localhost:8081/CreditCardPayment"/>
+            <binding.ws uri="http://localhost:8082/CreditCardPayment"/>
         </reference>
-        <reference name="emailGatewayPartnerLink">
+        <!--reference name="emailGatewayPartnerLink">
             <binding.ws uri="http://localhost:8082/EmailGateway"/>
-        </reference>        
+        </reference-->       
     </component>    
 
 </composite>
