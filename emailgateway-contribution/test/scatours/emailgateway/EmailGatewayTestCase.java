@@ -48,6 +48,9 @@ public class EmailGatewayTestCase {
         EmailGateway cc = client.getService(EmailGateway.class, "EmailGatewayClient");
         ObjectFactory objectFactory = new ObjectFactory();
         EmailType email = objectFactory.createEmailType();
+        email.setTo("Fred");
+        email.setTitle("An email");
+        email.setBody("A message");
         System.out.println(cc.sendEmail(email));
     }
     

@@ -27,12 +27,12 @@
   </service>
   
   <reference name="creditCardPaymentPartnerLink">
-        <interface.wsdl interface="http://www.example.org/CrecitCardPayment/#wsdl.interface(CreditCardPayment)" />
+        <interface.wsdl interface="http://www.example.org/CreditCardPayment/#wsdl.interface(CreditCardPayment)" />
   </reference>
   
-  <!--reference name="emailGatewayPartnerLink">
+  <reference name="emailGatewayPartnerLink">
         <interface.wsdl interface="http://www.example.org/EmailGateway/#wsdl.interface(EmailGateway)" />
-  </reference-->
+  </reference>
 
 </componentType>              
        

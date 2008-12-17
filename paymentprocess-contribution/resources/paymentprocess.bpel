@@ -37,25 +37,23 @@
           importType="http://schemas.xmlsoap.org/wsdl/"
           namespace="http://www.example.org/CreditCardPayment/"/>
           
-  <!--import location="EmailGateway.wsdl" 
+  <import location="EmailGateway.wsdl" 
           importType="http://schemas.xmlsoap.org/wsdl/"
-          namespace="http://www.example.org/EmailGateway/"/-->          
+          namespace="http://www.example.org/EmailGateway/"/>          
           
    <partnerLinks>
       <partnerLink name="paymentProcessPartnerLink" partnerLinkType="pp:PaymentProcessLinkType" myRole="forward" />
       <partnerLink name="creditCardPaymentPartnerLink" partnerLinkType="ccp:CreditCardPaymentLinkType" partnerRole="forward" initializePartnerRole="yes" />
-      <!--partnerLink name="emailGatewayPartnerLink" partnerLinkType="eg:EmailGatewayLinkType" partnerRole="forward" initializePartnerRole="yes" /-->
+      <partnerLink name="emailGatewayPartnerLink" partnerLinkType="eg:EmailGatewayLinkType" partnerRole="forward" initializePartnerRole="yes" />
    </partnerLinks>
     
    <variables>
      <variable name="makePaymentRequestMessage" messageType="pp:MakePaymentRequest"/>
      <variable name="makePaymentResponseMessage" messageType="pp:MakePaymentResponse"/>
-     <variable name="makePaymentResponse" type="pp:MakePaymentResponseType"/>
      <variable name="authorizeRequestMessage" messageType="ccp:AuthorizeRequest"/>
      <variable name="authorizeResponseMessage" messageType="ccp:AuthorizeResponse"/>
-     <variable name="authorizeRequest" type="ccp:AuthorizeType"/>
-     <!--variable name="sendEmailRequestMessage" messageType="eg:SendEmailRequest"/>
-     <variable name="sendEmailResponseMessage" messageType="eg:SendEmailResponse"/-->
+     <variable name="sendEmailRequestMessage" messageType="eg:SendEmailRequest"/>
+     <variable name="sendEmailResponseMessage" messageType="eg:SendEmailResponse"/>
    </variables>
 
    <sequence>
@@ -112,23 +110,49 @@
                portType="ccp:CreditCardPayment" />
        
        <!-- set up call to email gateway service -->
+       <assign name="assign2">
+          <copy>
+              <from>
+                  <literal>
+                  <sendEmail xmlns="http://www.example.org/EmailGateway/">
+                    <Email xmlns="">
+                      <To>Default</To>
+                      <Title>Payment Confirmation</Title>
+                      <Body>Your payment has been confirmed</Body>
+                    </Email>
+                  </sendEmail>
+                  </literal>
+              </from>
+              <to>$sendEmailRequestMessage.parameters</to>
+          </copy>
+          <copy>
+              <from>$makePaymentRequestMessage.parameters/CustomerId/text()</from>
+              <to>$sendEmailRequestMessage.parameters/Email/To</to>
+          </copy>                   
+       </assign>                  
        
        <!-- call the email gateway to send a confirmation -->
-       
+       <invoke name="invokeEmailGateway"
+               operation="sendEmail"
+               inputVariable="sendEmailRequestMessage"
+               outputVariable="sendEmailResponseMessage"
+               partnerLink="emailGatewayPartnerLink"
+               portType="eg:EmailGateway" />
        
        <!-- set up the response -->
-       <assign name="assign2">
-          <!--copy>
-              <from><literal><Status>OK</Status></literal></from>
-              <to>$makePaymentResponse</to>
-          </copy-->
+       <assign name="assign3">
           <copy>
-              <from>$authorizeResponseMessage.parameters</from>
+              <from>
+                  <literal> 
+                  <makePaymentResponse xmlns="http://www.example.org/PaymentProcess/">
+                    <Status xmlns="">OK</Status>
+                  </makePaymentResponse>
+                  </literal>
+              </from>
               <to>$makePaymentResponseMessage.parameters</to>
           </copy>
        </assign>
        
-       <!-- email a confirmation -->
        
        <reply name="end"  
               partnerLink="paymentProcessPartnerLink"

@@ -29,6 +29,7 @@ import org.osoa.sca.annotations.Service;
 public class EmailGatewayImpl implements EmailGateway {
 
     public String sendEmail(EmailType email) {
+        System.out.println("Sending mail to " + email.getTo());
         return "SENT";
     }
 
