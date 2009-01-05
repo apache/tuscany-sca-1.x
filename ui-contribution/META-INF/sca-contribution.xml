@@ -27,5 +27,10 @@
    <import.java package="scatours.car"/>
    <import.java package="scatours.tripbooking"/>
    <import.java package="scatours.travelcatalog"/>
+   <import.java package="payment.creditcard.ws.impl"/>
+   <import.java package="scatours.emailgateway"/>
+   <import.java package="scatours.paymentprocess"/>
+   <import.java package="scatours.shoppingcart"/>
    <import.java package="scatours"/>
+   <import namespace="http://www.example.org/PaymentProcess/"/>
 </contribution>

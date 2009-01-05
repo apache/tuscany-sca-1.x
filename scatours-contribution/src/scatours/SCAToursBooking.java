@@ -28,9 +28,12 @@ import scatours.common.TripItem;
  */
 @Remotable
 public interface SCAToursBooking {
-    String newTrip();
-    void addTripItem(String tripId, String tripItemId);
-    void removeTripItem(String tripId, String tripItemId);
-    TripItem[] getTripItems(String tripId);
-    double getTotalPrice(String tripId);
+    String addCart();
+    String addTrip(String cartId);
+    void removeTrip(String cartId, String tripId);
+    void addTripItem(String cartId, String tripId, String tripItemId);
+    void removeTripItem(String cartId, String tripId, String tripItemId);
+    TripItem[] getTripItems(String cartId);
+    double getTotalPrice(String cartId);
+    void checkout(String name);
 }

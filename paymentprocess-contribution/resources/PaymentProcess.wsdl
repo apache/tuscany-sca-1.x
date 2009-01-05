@@ -73,7 +73,7 @@
     </wsdl:binding>
     <wsdl:service name="PaymentProcessService">
         <wsdl:port name="PaymentProcessPort" binding="tns:PaymentProcessBinding">
-            <soap:address location="http://localhost:8080/PaymentProcess" />
+            <soap:address location="http://localhost:8083/PaymentProcess" />
         </wsdl:port>
     </wsdl:service>
     

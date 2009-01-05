@@ -16,17 +16,18 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package scatours.travel;
+package scatours.shoppingcart;
 
+import org.osoa.sca.annotations.Conversational;
 import org.osoa.sca.annotations.Remotable;
 
-import scatours.common.TripItem;
-import scatours.common.TripLeg;
-
 /**
- * The Trip service interface
+ * The ShoppingCart service interface
  */
 @Remotable
-public interface TravelSearch {
-    TripItem[] search(TripLeg tripLeg);
+@Conversational
+public interface ShoppingCart{
+    void addItem(String itemId);
+    void removeItem(String itemId);
+    String[] getItems();
 }

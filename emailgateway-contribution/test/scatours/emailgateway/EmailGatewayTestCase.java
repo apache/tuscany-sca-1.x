@@ -24,6 +24,7 @@ import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -55,6 +56,7 @@ public class EmailGatewayTestCase {
     }
     
     @Test
+    //@Ignore
     public void testWaitForInput() {
         System.out.println("Press a key to end");
         try {

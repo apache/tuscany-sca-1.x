@@ -37,6 +37,20 @@ public class TripItem {
     public TripItem() {
     }  
     
+    public TripItem(TripItem item) {
+        this.id = item.getId();
+        this.tripId = item.getTripId();
+        this.type = item.getType();
+        this.name = item.getName();
+        this.description = item.getDescription();
+        this.location = item.getLocation();
+        this.fromDate = item.getFromDate();
+        this.toDate = item.getToDate();
+        this.price = item.getPrice();
+        this.currency = item.getCurrency();
+        this.link = item.getLink();
+    } 
+    
     public TripItem(String id, 
                     String tripId,
                     String type, 

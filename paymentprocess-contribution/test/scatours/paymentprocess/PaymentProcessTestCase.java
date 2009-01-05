@@ -24,6 +24,7 @@ import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -43,11 +44,23 @@ public class PaymentProcessTestCase {
     }
     
     @Test
+    @Ignore
     public void testPaymentProcess() {
         SCAClient client = (SCAClient) node;
         PaymentProcess pp = client.getService(PaymentProcess.class, "PaymentProcessClient");
         System.out.println("Result = " + pp.makePayment("Fred", 100.00f));
     }
+    
+    @Test
+    //@Ignore
+    public void testWaitForInput() {
+        System.out.println("Press a key to end");
+        try {
+            System.in.read();
+        } catch (Exception ex) {
+        }
+        System.out.println("Shutting down");
+    }    
 
     /**
      * @throws java.lang.Exception

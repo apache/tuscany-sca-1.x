@@ -79,14 +79,19 @@
             <resource>
                 <directory>${basedir}/resources</directory>
             </resource>
-            <resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>${basedir}/resources</directory>
+            </testResource>
+            <testResource>
                 <directory>${basedir}</directory>
                 <includes>
                     <include>*.composite</include>
                     <include>*.properties</include>
                 </includes>
-            </resource>
-        </resources>
+            </testResource>
+        </testResources>
     <plugins>
         <plugin>
             <groupId>org.codehaus.mojo</groupId>
@@ -120,7 +125,7 @@
                     </goals>
                     <configuration>
                         <packageName>scatours.paymentprocess</packageName>
-                        <wsdlDirectory>${basedir}/src/scatours/paymentprocess
+                        <wsdlDirectory>${basedir}/resources
                         </wsdlDirectory>
                         <wsdlFiles>
                             <wsdlFile>PaymentProcess.wsdl</wsdlFile>

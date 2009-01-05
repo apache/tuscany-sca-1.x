@@ -19,28 +19,23 @@
 package scatours;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.apache.tuscany.sca.data.collection.Entry;
-import org.apache.tuscany.sca.data.collection.NotFoundException;
-import org.osoa.sca.CallableReference;
 import org.osoa.sca.ComponentContext;
-import org.osoa.sca.RequestContext;
 import org.osoa.sca.ServiceReference;
 import org.osoa.sca.annotations.Context;
-import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
-import scatours.common.Search;
-import scatours.common.SearchCallback;
 import scatours.common.TripItem;
 import scatours.common.TripLeg;
-import scatours.currencyconverter.CurrencyConverter;
+import scatours.paymentprocess.PaymentProcess;
+import scatours.shoppingcart.ShoppingCart;
 import scatours.travelcatalog.TravelCatalogSearch;
 import scatours.tripbooking.TripBooking;
 
@@ -57,13 +52,20 @@ public class SCAToursImpl implements TravelCatalogSearch, SCAToursBooking{
     @Reference 
     protected TripBooking tripBooking;
     
+    @Reference 
+    protected ShoppingCart shoppingCart;
+    
+    @Reference
+    protected PaymentProcess paymentProcess;    
+    
     @Context
     protected ComponentContext componentContext;  
     
+    private Map<String,ShoppingCart> carts = new HashMap<String,ShoppingCart>();
     private Map<String,TripBooking> trips = new HashMap<String,TripBooking>();
     private Map<String, TripItem> searchItemsCache = new HashMap<String, TripItem>();
     
-    // TravelSearch methods
+    // TravelCatalogSearch methods
     
     public TripItem[] search(TripLeg tripLeg) {
         
@@ -75,34 +77,70 @@ public class SCAToursImpl implements TravelCatalogSearch, SCAToursBooking{
         return searchItems;
     } 
 
-    // TravelBooking methods
+    // SCAToursBooking methods
     
-    public String newTrip(){
+    public String addCart(){
+        String cartId = UUID.randomUUID().toString();
+        ServiceReference<ShoppingCart> shoppingCart = componentContext.getServiceReference(ShoppingCart.class, 
+                                                                                           "shoppingCart");
+        shoppingCart.setConversationID(cartId);
+        carts.put(cartId, shoppingCart.getService());
+        
+        return cartId;
+    }     
+    
+    public String addTrip(String cartId){
         String tripId = UUID.randomUUID().toString();
         ServiceReference<TripBooking> tripReference = componentContext.getServiceReference(TripBooking.class, 
                                                                                           "tripBooking");
         tripReference.setConversationID(tripId);
         trips.put(tripId, tripReference.getService());
+        
+        carts.get(cartId).addItem(tripId);
         return tripId;
     }
     
-    public void addTripItem(String tripId, String tripItemId){
-        trips.get(tripId).addTripItem(searchItemsCache.get(tripItemId));
+    public void removeTrip(String cartId, String tripId) {
+        carts.get(cartId).removeItem(tripId);
     }
     
-    public void removeTripItem(String tripId, String tripItemId){
+    public void addTripItem(String cartId, String tripId, String tripItemId){
+        TripItem item = searchItemsCache.get(tripItemId);
+        TripItem itemCopy = new TripItem(item);
+        itemCopy.setTripId(tripId);
+        trips.get(tripId).addTripItem(itemCopy);
+    }
+    
+    public void removeTripItem(String cartId, String tripId, String tripItemId){
         trips.get(tripId).removeTripItem(tripItemId);
     } 
     
-    public TripItem[] getTripItems(String tripId) {
-        return trips.get(tripId).getTripItems();
+    public TripItem[] getTripItems(String cartId) {
+        List<TripItem> returnTripItems = new ArrayList<TripItem>();
+        
+        for( String tripId : carts.get(cartId).getItems()){
+            returnTripItems.addAll(Arrays.asList(trips.get(tripId).getTripItems()));
+        }
+
+        return returnTripItems.toArray(new TripItem[returnTripItems.size()]);
     }
     
-    public double getTotalPrice(String tripId){ 
-        return trips.get(tripId).getTripPrice();
+    public double getTotalPrice(String cartId){ 
+        double total = 0.0;
+        
+        for( String tripId : carts.get(cartId).getItems()){
+            total += trips.get(tripId).getTripPrice();
+        }
+
+        return total;
     }
     
-    public void bookTrip(String tripId) {
-        trips.get(tripId).bookTrip();
+    public void checkout(String cartId){ 
+        // get users credentials. Hard coded for now but should
+        // come from the security context
+        String customerId = "Fred Bloggs";
+        float amount = (float)getTotalPrice(cartId);
+        
+        paymentProcess.makePayment(customerId, amount);
     }
 }

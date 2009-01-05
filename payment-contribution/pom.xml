@@ -86,9 +86,24 @@
                     <exclude>target/**</exclude>
                     <exclude>src/**</exclude>
                     <exclude>test/**</exclude>
+                    <exclude>*.composite</exclude>
                 </excludes>
             </resource>
         </resources>
+        <testResources>
+            <testResource>
+                <directory>${basedir}</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                    <exclude>**/.*/**</exclude>
+                    <exclude>pom.xml</exclude>
+                    <exclude>build.xml</exclude>
+                    <exclude>target/**</exclude>
+                    <exclude>src/**</exclude>
+                    <exclude>test/**</exclude>
+                </excludes>
+            </testResource>
+        </testResources>        
     <plugins>
         <plugin>
             <groupId>org.codehaus.mojo</groupId>

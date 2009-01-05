@@ -18,5 +18,8 @@
     * under the License.    
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0">
-   <export.java package="scatours.payment"/>
+   <export.java package="payment.creditcard"/>
+   <export.java package="payment.creditcard.impl"/>
+   <export.java package="payment.creditcard.ws"/>
+   <export.java package="payment.creditcard.ws.impl"/>
 </contribution>

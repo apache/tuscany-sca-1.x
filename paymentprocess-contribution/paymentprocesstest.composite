@@ -26,7 +26,7 @@
     <component name="PaymentProcessClient">
         <implementation.java class="scatours.paymentprocess.PaymentProcessClientImpl" />
         <reference name="paymentProcess">
-            <binding.ws uri="http://localhost:8080/PaymentProcess" />
+            <binding.ws uri="http://localhost:8083/PaymentProcess" />
         </reference>
     </component>
     
@@ -34,7 +34,7 @@
         <implementation.bpel process="pp:PaymentProcess"/>
         <service name="paymentProcessPartnerLink">
             <interface.wsdl interface="http://www.example.org/PaymentProcess/#wsdl.interface(PaymentProcess)" />
-            <binding.ws uri="http://localhost:8080/PaymentProcess" wsdlElement="http://www.example.org/PaymentProcess/#wsdl.service(PaymentProcessService)"/>
+            <binding.ws uri="http://localhost:8083/PaymentProcess" wsdlElement="http://www.example.org/PaymentProcess/#wsdl.service(PaymentProcessService)"/>
         </service>
         <reference name="creditCardPaymentPartnerLink">
             <binding.ws uri="http://localhost:8081/CreditCardPayment"/>

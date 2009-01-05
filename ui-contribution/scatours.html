@@ -33,7 +33,9 @@
     var scaToursBooking = new Reference("scaToursBooking");
         
     //local state
-    var currentTripId;
+    var currentCartId;
+    var tripIds = [];
+    var currentTripIdIndex = -1;
     var searchItems;
     var cartItems;
          
@@ -53,7 +55,7 @@
     }
     
     function getTripLeg(){
-        return new TripLegType(currentTripId,
+        return new TripLegType(tripIds[currentTripIdIndex],
                                document.travelForm.fromLocation.value,
                                document.travelForm.toLocation.value,
                                document.travelForm.fromDate.value,
@@ -63,7 +65,7 @@
 		
     function init() {
 	   try {
-           newTrip(); 
+           addCart(); 
 	   }
 	   catch(e) {
 	       alert(e);
@@ -113,13 +115,17 @@
             
             // notify the server of the change
             if (items[i].checked == true) {
-                scaToursBooking.addTripItem(currentTripId, items[i].value);
+                scaToursBooking.addTripItem(currentCartId, tripIds[currentTripIdIndex], items[i].value);
             } else {
-                scaToursBooking.removeTripItem(currentTripId, items[i].value);
+                scaToursBooking.removeTripItem(currentCartId, tripIds[currentTripIdIndex], items[i].value);
             }
         }
         
-        scaToursBooking.getTripItems(currentTripId,getTripItems_response);
+        scaToursBooking.getTripItems(currentCartId, getTripItems_response);
+    }
+    
+    function getTripItems() {
+        scaToursBooking.getTripItems(currentCartId, getTripItems_response);
     }
     
     function getTripItems_response(items, exception) {
@@ -127,26 +133,34 @@
             alert(exception.javaStack);
             return;
         }
-        var itemsHTML = '<table border="0">';
-        itemsHTML    += '<tr>';
-        itemsHTML    += '<td>Name</td><td>Description</td><td>Location</td><td>From - To</td><td>Price</td>';
-        itemsHTML    += '</tr>';
+        var itemsHTML = '';
         
-        for (var i=0; i<items.length; i++) {
+        for (var x=0; x<=currentTripIdIndex; x++){
+            var tripId = tripIds[x]
+            itemsHTML += '<h3>Trip - ' + tripId + '</h3>';
+            itemsHTML += '<table border="0">';
             itemsHTML += '<tr>';
-            itemsHTML += '<td>' +  items[i].name + '</td>';
-            itemsHTML += '<td>' +  items[i].description + '</td>';
-            itemsHTML += '<td>' +  items[i].location + '</td>';
-            itemsHTML += '<td>' +  items[i].fromDate + ' - ' + items[i].toDate +'</td>';
-            itemsHTML += '<td>' +  items[i].price + ' ' + items[i].currency + '</td>';
+            itemsHTML += '<td>Name</td><td>Description</td><td>Location</td><td>From - To</td><td>Price</td>';
             itemsHTML += '</tr>';
+            
+            for (var i=0; i<items.length; i++) {
+                if (items[i].tripId == tripId) {
+                    itemsHTML += '<tr>';
+                    itemsHTML += '<td>' +  items[i].name + '</td>';
+                    itemsHTML += '<td>' +  items[i].description + '</td>';
+                    itemsHTML += '<td>' +  items[i].location + '</td>';
+                    itemsHTML += '<td>' +  items[i].fromDate + ' - ' + items[i].toDate +'</td>';
+                    itemsHTML += '<td>' +  items[i].price + ' ' + items[i].currency + '</td>';
+                    itemsHTML += '</tr>';
+                }
+            }
+            
+            itemsHTML    += '</table>';
         }
-        
-        itemsHTML    += '</table>';
         
         document.getElementById('tripItems').innerHTML = itemsHTML;  
           
-        scaToursBooking.getTotalPrice(currentTripId, getTotalPrice_response);
+        scaToursBooking.getTotalPrice(currentCartId, getTotalPrice_response);
     }    
     
     function getTotalPrice_response(totalPrice, exception) {
@@ -157,25 +171,44 @@
         document.getElementById('totalPrice').innerHTML = totalPrice;
     }
     
-    function newTrip() { 
-        scaToursBooking.newTrip(newTrip_response);
+    function addCart() { 
+        scaToursBooking.addCart(addCart_response);
         
         document.getElementById('searchResponse').innerHTML = "";
         document.getElementById('tripItems').innerHTML = "";
         document.getElementById('totalPrice').innerHTML = "";
+        currentTripIdIndex = -1;
+        tripIds = [];
     }
     
-    function newTrip_response(tripId, exception) { 
+    function addCart_response(cartId, exception) { 
         if(exception){
             alert(exception.javaStack);
             return;
         }
-        currentTripId = tripId
-        document.getElementById('tripId').innerHTML = "Trip Reference: " + tripId;
+        currentCartId = cartId
+        
+        if (currentTripIdIndex == -1){
+            addTrip();
+        }
     }    
     
-    function bookTrip() {        
-        travelBooking.bookTrip(currentTripId);
+    function addTrip() { 
+        scaToursBooking.addTrip(currentCartId, addTrip_response);
+    }
+    
+    function addTrip_response(tripId, exception) { 
+        if(exception){
+            alert(exception.javaStack);
+            return;
+        }
+        currentTripIdIndex++;
+        tripIds[currentTripIdIndex] = tripId;
+        getTripItems();
+    }    
+    
+    function checkout() {        
+        scaToursBooking.checkout(currentCartId);
         
         document.getElementById('searchResponse').innerHTML = "";
         document.getElementById('tripItems').innerHTML = "Thank you for shopping with SCA Tours";
@@ -232,13 +265,15 @@
             <input type="button" onClick="addItemsToCart()" value="Add Items"> 
             <br/>
             <h3>Shopping Cart</h3>
-            <h3><div id="tripId"></h3>
+            <h3><div id="cartId"></h3>
             <div id="tripItems"></div>
-            <br/>            
-            <div id="totalPrice"></div>
-            <br/>            
-            <input type="button" onClick="bookTrip()" value="Book"> 
-            <input type="button" onClick="newTrip()" value="Create New Trip"> 
+            <br/>
+            <h3>Cart Totals</h3>            
+            Total Price: <div id="totalPrice"></div>
+            <br/>    
+            <input type="button" onClick="addCart()" value="Reset Cart">         
+            <input type="button" onClick="addTrip()" value="Create New Trip"> 
+            <input type="button" onClick="checkout()" value="Checkout"> 
         </form> 
 	</div>
   

@@ -18,8 +18,5 @@
     * under the License.    
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0">
-   <import.java package="scatours.common"/>
-   <import.java package="scatours.currencyconverter"/>
-   <import.java package="scatours.tripbooking"/>
    <export.java package="scatours.shoppingcart"/>
 </contribution>

@@ -21,6 +21,7 @@
            targetNamespace="http://scatours"
            xmlns:scatours="http://scatours"
            xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
+           xmlns:pp="http://www.example.org/PaymentProcess"
            name="scatours">
            
     <component name="UserInterfaceComponent">
@@ -46,7 +47,10 @@
         </service>
         <reference name="travelCatalogSearch" target="TravelCatalogComponent/TravelCatalogSearch"/>
         <reference name="tripBooking" target="TripBookingComponent/TripBooking"/>
-        <!--reference name="shoppingCart" target="ShoppingCartComponent/shoppingCart"/-->
+        <reference name="shoppingCart" target="ShoppingCartComponent/ShoppingCart"/>
+        <reference name="paymentProcess">
+            <binding.ws uri="http://localhost:8083/PaymentProcess" />
+        </reference>        
     </component>
     
     <component name="TravelCatalogComponent">
@@ -111,23 +115,38 @@
         </service>
     </component>
     
-    <!-- component name="ShoppingCartComponent">
+    <component name="ShoppingCartComponent">
         <implementation.java class="scatours.shoppingcart.ShoppingCartImpl"/>
-        <service name="CurrencyConverter">
+        <service name="ShoppingCart">
         </service>
-    </component>    
+    </component>   
     
-    <component name="PaymentComponent">
-        <implementation.java class="scatours.payment.PaymentImpl"/>
-        <service name="CurrencyConverter">
+    <!--component name="PaymentProcessComponent">
+        <implementation.bpel process="pp:PaymentProcess"/>
+        <service name="paymentProcessPartnerLink">
+            <interface.wsdl interface="http://www.example.org/PaymentProcess/#wsdl.interface(PaymentProcess)" />
+            <binding.ws uri="http://localhost:8080/PaymentProcess" wsdlElement="http://www.example.org/PaymentProcess/#wsdl.service(PaymentProcessService)"/>
+        </service>
+        <reference name="creditCardPaymentPartnerLink">
+            <binding.ws uri="http://localhost:8081/CreditCardPayment"/>
+        </reference>
+        <reference name="emailGatewayPartnerLink">
+            <binding.ws uri="http://localhost:8082/EmailGateway"/>
+        </reference>       
+    </component>  
+           
+    <component name="CreditCardPaymentWS">
+        <implementation.java class="payment.creditcard.ws.impl.CreditCardPaymentWSImpl" />
+        <service name="CreditCardPayment">
+            <binding.ws uri="http://localhost:8081/CreditCardPayment" />
+        </service>
+    </component> 
+    
+    <component name="EmailGateway">
+        <implementation.java class="scatours.emailgateway.EmailGatewayImpl" />
+        <service name="EmailGateway">
+            <binding.ws uri="http://localhost:8082/EmailGateway" />
         </service>
     </component-->  
-    
-    <component name="CreditCardGateway">
-        <implementation.java class="creditcard.CreditCardGatewayImpl" />
-        <service name="CreditCardGateway">
-            <binding.ws uri="http://localhost:8080/CreditCardGateway" />
-        </service>
-    </component>    
 
 </composite>
