@@ -42,6 +42,7 @@
                 <module>hotel-contribution</module>
                 <module>flight-contribution</module>
                 <module>car-contribution</module>
+                <module>trip-contribution</module>
                 <module>payment-contribution</module>
                 <module>paymentprocess-contribution</module>
                 <module>emailgateway-contribution</module>

@@ -26,6 +26,7 @@ import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
+import scatours.common.Book;
 import scatours.common.Search;
 import scatours.common.SearchCallback;
 import scatours.common.TripItem;
@@ -35,8 +36,8 @@ import scatours.common.TripLeg;
  * An implementation of the Hotel service
  */
 @Scope("STATELESS")
-@Service(interfaces={Search.class})
-public class FlightImpl implements Search {
+@Service(interfaces={Search.class, Book.class})
+public class FlightImpl implements Search, Book {
     
     private List<FlightInfo> flights = new ArrayList<FlightInfo>();
     
@@ -45,25 +46,25 @@ public class FlightImpl implements Search {
 
     @Init
     public void init() {
-        flights.add(new FlightInfo("IA26", 
-                                   "Island Airlines Boeing 747",
+        flights.add(new FlightInfo("EA26", 
+                                   "Europe Airlines Airbus A300",
                                    "LGW",
-                                   "ANU",
-                                   "06/12/08",
-                                   "06/12/08",
+                                   "FLR",
+                                   "06/12/09",
+                                   "06/12/09",
                                    "350",
                                    250,
-                                   "USD",
+                                   "EUR",
                                    "http://localhost:8085/tbd" ));
-        flights.add(new FlightInfo("IA27", 
-                                   "Island Airlines Boeing 747",
-                                   "ANU",
+        flights.add(new FlightInfo("EA27", 
+                                   "Europe Airlines Airbus A300",
+                                   "FLR",
                                    "LGW",
-                                   "13/12/08",
-                                   "13/12/08",
+                                   "13/12/09",
+                                   "13/12/09",
                                    "350",
                                    250,
-                                   "USD",
+                                   "EUR",
                                    "http://localhost:8085/tbd" ));
 
     }
@@ -78,7 +79,7 @@ public class FlightImpl implements Search {
                 (flight.getFromDate().equals(tripLeg.getFromDate()))){
                 TripItem item = new TripItem("",
                                              "",
-                                             "Flight",
+                                             TripItem.FLIGHT,
                                              flight.getName(), 
                                              flight.getDescription(), 
                                              flight.getFromLocation() + " - " + flight.getToLocation(),
@@ -98,7 +99,7 @@ public class FlightImpl implements Search {
                 (flight.getFromDate().equals(tripLeg.getToDate()))){
                 TripItem item = new TripItem("",
                                              "",
-                                             "Flight",
+                                             TripItem.FLIGHT,
                                              flight.getName(), 
                                              flight.getDescription(), 
                                              flight.getFromLocation() + " - " + flight.getToLocation(),
@@ -118,5 +119,9 @@ public class FlightImpl implements Search {
         
         // return available hotels
         searchCallback.searchResults(searchSynch(tripLeg));  
+    }
+    
+    public String book(TripItem tripItem) {
+        return "flight1";
     }
 }

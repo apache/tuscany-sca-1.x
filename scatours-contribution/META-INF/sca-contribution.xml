@@ -19,10 +19,8 @@
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0">
    <import.java package="scatours.common"/>
-   <import.java package="scatours.currencyconverter"/>
    <import.java package="scatours.travelcatalog"/>
    <import.java package="scatours.tripbooking"/>
-   <import.java package="scatours.paymentprocess"/>
    <import.java package="scatours.shoppingcart"/>
    <export.java package="scatours"/>
 </contribution>

@@ -16,21 +16,19 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package scatours.tripbooking;
+package scatours;
 
 import org.osoa.sca.annotations.Conversational;
-import org.osoa.sca.annotations.Destroy;
-import org.osoa.sca.annotations.EndsConversation;
-import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Remotable;
 
 import scatours.common.TripItem;
 
 /**
- * The Trip service interface
+ * The ShoppingCart service interface
  */
 @Remotable
-public interface TripBooking {
-       
-    TripItem bookTrip(String cartId, TripItem trip);
+public interface SCAToursCart{
+    String newCart();
+    TripItem[] getTrips(String cartId);
+    void checkout(String cartId);  
 }

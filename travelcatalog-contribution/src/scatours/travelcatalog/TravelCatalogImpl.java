@@ -57,6 +57,9 @@ public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
     
     @Reference 
     protected Search carSearch;
+    
+    @Reference 
+    protected Search tripSearch;    
            
     @Property
     public String quoteCurrencyCode = "USD";
@@ -86,8 +89,9 @@ public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
         
         flightSearch.searchAsynch(tripLeg);
         carSearch.searchAsynch(tripLeg);
+        tripSearch.searchAsynch(tripLeg);
         
-        while (responsesReceived < 3){
+        while (responsesReceived < 4){
             try {
                 synchronized (this) {
                     this.wait();
@@ -116,8 +120,10 @@ public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
         Object callbackID = requestContext.getServiceReference().getCallbackID();
         System.out.println(callbackID);
         
-        for(int i = 0; i < items.length; i++ ){
-            searchResults.add(items[i]);
+        if (items != null) {
+            for(int i = 0; i < items.length; i++ ){
+                searchResults.add(items[i]);
+            }
         }
         
         responsesReceived++;

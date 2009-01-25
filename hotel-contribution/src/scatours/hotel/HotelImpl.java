@@ -26,6 +26,7 @@ import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
+import scatours.common.Book;
 import scatours.common.Search;
 import scatours.common.SearchCallback;
 import scatours.common.TripItem;
@@ -35,8 +36,8 @@ import scatours.common.TripLeg;
  * An implementation of the Hotel service
  */
 @Scope("STATELESS")
-@Service(interfaces={Search.class})
-public class HotelImpl implements Search {
+@Service(interfaces={Search.class, Book.class})
+public class HotelImpl implements Search, Book {
     
     private List<HotelInfo> hotels = new ArrayList<HotelInfo>();
     
@@ -47,35 +48,35 @@ public class HotelImpl implements Search {
     public void init() {
         hotels.add(new HotelInfo("Deep Bay Hotel", 
                              "Wonderful sea views and a relaxed atmosphere", 
-                             "ANU", 
-                             "06/12/08",
+                             "FLR", 
+                             "06/12/09",
                              "200",
                              100,
-                             "USD",
+                             "EUR",
                              "http://localhost:8085/tbd" ));
         hotels.add(new HotelInfo("Long Bay Hotel", 
                              "Friendly staff and an ocean breeze", 
-                             "ANU", 
-                             "06/12/08",
+                             "FLR", 
+                             "06/12/09",
                              "200",
                              100,
-                             "USD",
+                             "EUR",
                              "http://localhost:8085/tbd" ));
         hotels.add(new HotelInfo("City Hotel", 
                              "Smart rooms and early breakfasts", 
-                             "NY", 
-                             "06/12/08",
+                             "FLR", 
+                             "06/12/09",
                              "200",
                              100,
-                             "USD",
+                             "EUR",
                              "http://localhost:8085/tbd" ));
         hotels.add(new HotelInfo("County Hotel", 
                              "The smell of the open country", 
-                             "SOU", 
-                             "06/12/08",
+                             "FLR", 
+                             "06/12/09",
                              "200",
                              100,
-                             "USD",
+                             "EUR",
                              "http://localhost:8085/tbd" ));
     }
     
@@ -87,7 +88,7 @@ public class HotelImpl implements Search {
             if (hotel.getLocation().equals(tripLeg.getToLocation())){
                 TripItem item = new TripItem("",
                                              "",
-                                             "Hotel",
+                                             TripItem.HOTEL,
                                              hotel.getName(), 
                                              hotel.getDescription(), 
                                              hotel.getLocation(), 
@@ -107,5 +108,9 @@ public class HotelImpl implements Search {
         
         // return available hotels
         searchCallback.searchResults(searchSynch(tripLeg));  
+    }
+    
+    public String book(TripItem tripItem) {
+        return "hotel1";
     }
 }

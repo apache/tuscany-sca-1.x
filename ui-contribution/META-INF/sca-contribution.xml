@@ -25,6 +25,7 @@
    <import.java package="scatours.hotel"/>
    <import.java package="scatours.flight"/>
    <import.java package="scatours.car"/>
+   <import.java package="scatours.trip"/>
    <import.java package="scatours.tripbooking"/>
    <import.java package="scatours.travelcatalog"/>
    <import.java package="payment.creditcard.ws.impl"/>

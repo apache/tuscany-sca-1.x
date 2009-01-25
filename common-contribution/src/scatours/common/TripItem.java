@@ -19,8 +19,15 @@
 
 package scatours.common;
 
+import java.util.List;
+
 
 public class TripItem {
+    
+    public static String FLIGHT = "Flight";
+    public static String HOTEL = "Hotel";
+    public static String CAR = "Car";
+    public static String TRIP = "Trip";
     
     private String id; 
     private String tripId;
@@ -33,6 +40,10 @@ public class TripItem {
     private double price;
     private String currency;
     private String link;
+    private TripItem[] tripItems; // used for a trip made up of trip items
+    private String customerDetails;
+    private String agentDetails;
+    private String bookingCode;
     
     public TripItem() {
     }  
@@ -161,5 +172,49 @@ public class TripItem {
     
     public void setLink(String link) {
         this.link = link;
+    }
+    
+    public TripItem[] getTripItems() {
+        return tripItems;
+    }
+    
+    public void setTripItems(TripItem[] tripItems) {
+        this.tripItems = tripItems;
+    }
+    
+    public String getCustomerDetails() {
+        return customerDetails;
+    }
+    
+    public void setCustomerDetails(String customerDetails) {
+        this.customerDetails = customerDetails;
+    }
+    
+    public String getAgentDetails() {
+        return agentDetails;
+    }
+    
+    public void setAgentDetails(String agentDetails) {
+        this.agentDetails = agentDetails;
+    }
+    
+    public String getBookingCode() {
+        return bookingCode;
+    }
+    
+    public void setBookingCode(String bookingCode) {
+        this.bookingCode = bookingCode;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        
+        if (obj instanceof TripItem){
+            if (((TripItem)obj).getId().equals(getId())){
+                return true;
+            }
+        }
+
+        return super.equals(obj);
     }
 }

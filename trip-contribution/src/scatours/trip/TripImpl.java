@@ -26,6 +26,7 @@ import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
+import scatours.common.Book;
 import scatours.common.Search;
 import scatours.common.SearchCallback;
 import scatours.common.TripItem;
@@ -35,8 +36,8 @@ import scatours.common.TripLeg;
  * An implementation of the Hotel service
  */
 @Scope("STATELESS")
-@Service(interfaces={Search.class})
-public class TripImpl implements Search {
+@Service(interfaces={Search.class, Book.class})
+public class TripImpl implements Search, Book {
     
     private List<TripInfo> trips = new ArrayList<TripInfo>();
     
@@ -45,14 +46,24 @@ public class TripImpl implements Search {
 
     @Init
     public void init() {
-        trips.add(new TripInfo("FS1APR4", 
+        trips.add(new TripInfo("FS1DEC06", 
                                "Florence and Siena pre-packaged tour",
                                "LGW",
                                "FLR",
-                               "04/04/09",
-                               "11/04/09",
+                               "06/12/09",
+                               "13/12/09",
                                "27",
                                450,
+                               "EUR",
+                               "http://localhost:8085/tbd" ));
+        trips.add(new TripInfo("FS1DEC13", 
+                               "Florence and Siena pre-packaged tour 2",
+                               "LGW",
+                               "FLR",
+                               "13/12/09",
+                               "20/12/09",
+                               "27",
+                               550,
                                "EUR",
                                "http://localhost:8085/tbd" ));
     }
@@ -67,7 +78,7 @@ public class TripImpl implements Search {
                 (trip.getFromDate().equals(tripLeg.getFromDate()))){
                 TripItem item = new TripItem("",
                                              "",
-                                             "Trip",
+                                             TripItem.TRIP,
                                              trip.getName(), 
                                              trip.getDescription(), 
                                              trip.getFromLocation() + " - " + trip.getToLocation(),
@@ -88,4 +99,8 @@ public class TripImpl implements Search {
         // return available hotels
         searchCallback.searchResults(searchSynch(tripLeg));  
     }
+    
+    public String book(TripItem tripItem) {
+        return "trip1";
+    }      
 }

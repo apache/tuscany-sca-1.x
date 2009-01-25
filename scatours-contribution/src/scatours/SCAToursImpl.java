@@ -43,8 +43,8 @@ import scatours.tripbooking.TripBooking;
  * An implementation of the Trip service
  */
 @Scope("COMPOSITE")
-@Service(interfaces={TravelCatalogSearch.class, SCAToursBooking.class})
-public class SCAToursImpl implements TravelCatalogSearch, SCAToursBooking{
+@Service(interfaces={SCAToursSearch.class, SCAToursBooking.class, SCAToursCart.class})
+public class SCAToursImpl implements SCAToursSearch, SCAToursBooking, SCAToursCart{
     
     @Reference
     protected TravelCatalogSearch travelCatalogSearch;
@@ -53,33 +53,38 @@ public class SCAToursImpl implements TravelCatalogSearch, SCAToursBooking{
     protected TripBooking tripBooking;
     
     @Reference 
-    protected ShoppingCart shoppingCart;
-    
-    @Reference
-    protected PaymentProcess paymentProcess;    
+    protected ShoppingCart shoppingCart; 
     
     @Context
     protected ComponentContext componentContext;  
     
     private Map<String,ShoppingCart> carts = new HashMap<String,ShoppingCart>();
     private Map<String,TripBooking> trips = new HashMap<String,TripBooking>();
-    private Map<String, TripItem> searchItemsCache = new HashMap<String, TripItem>();
+    //private Map<String, TripItem> searchItemsCache = new HashMap<String, TripItem>();
     
-    // TravelCatalogSearch methods
+    // SCAToursSearch methods
     
     public TripItem[] search(TripLeg tripLeg) {
         
         TripItem[] searchItems = travelCatalogSearch.search(tripLeg);
         
-        for (int i =0; i< searchItems.length; i++){
-            searchItemsCache.put(searchItems[i].getId(), searchItems[i]);
-        }
+        //for (int i =0; i< searchItems.length; i++){
+        //    searchItemsCache.put(searchItems[i].getId(), searchItems[i]);
+        //}
         return searchItems;
     } 
 
     // SCAToursBooking methods
     
-    public String addCart(){
+    public String bookTrip(String cartId, TripItem trip){
+        TripItem bookedTrip = tripBooking.bookTrip(cartId, trip);
+        carts.get(cartId).addTrip(bookedTrip);
+        return bookedTrip.getBookingCode();
+    }
+    
+    // SCAToursCart methods
+    
+    public String newCart(){
         String cartId = UUID.randomUUID().toString();
         ServiceReference<ShoppingCart> shoppingCart = componentContext.getServiceReference(ShoppingCart.class, 
                                                                                            "shoppingCart");
@@ -87,8 +92,17 @@ public class SCAToursImpl implements TravelCatalogSearch, SCAToursBooking{
         carts.put(cartId, shoppingCart.getService());
         
         return cartId;
-    }     
+    }  
     
+    public TripItem[] getTrips(String cartId){
+        return carts.get(cartId).getTrips();
+    }
+    
+    public void checkout(String cartId){
+        shoppingCart.checkout("Fred");
+    }
+    
+/*    
     public String addTrip(String cartId){
         String tripId = UUID.randomUUID().toString();
         ServiceReference<TripBooking> tripReference = componentContext.getServiceReference(TripBooking.class, 
@@ -143,4 +157,6 @@ public class SCAToursImpl implements TravelCatalogSearch, SCAToursBooking{
         
         paymentProcess.makePayment(customerId, amount);
     }
+    
+*/    
 }

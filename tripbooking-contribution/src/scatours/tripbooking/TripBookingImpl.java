@@ -22,23 +22,84 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+import org.osoa.sca.ComponentContext;
+import org.osoa.sca.ServiceReference;
+import org.osoa.sca.annotations.Context;
 import org.osoa.sca.annotations.ConversationID;
 import org.osoa.sca.annotations.Destroy;
 import org.osoa.sca.annotations.Init;
+import org.osoa.sca.annotations.Reference;
 
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
 
+import scatours.common.Book;
+import scatours.common.Search;
 import scatours.common.TripItem;
+import scatours.shoppingcart.ShoppingCart;
 
 /**
  * An implementation of the Trip service
  */
-@Scope("CONVERSATION")
 @Service(interfaces={TripBooking.class})
 public class TripBookingImpl implements TripBooking{
 
+    @Reference 
+    protected Book hotelBook;
+    
+    @Reference 
+    protected Book flightBook;
+    
+    @Reference 
+    protected Book carBook;
+    
+    @Reference 
+    protected Book tripBook;   
+    
+    @Reference 
+    protected ShoppingCart shoppingCart;
+    
+    @Context
+    protected ComponentContext componentContext;     
+    
+    public TripItem bookTrip(String cartId, TripItem trip) {
+        
+        String bookingCode = "";
+        
+        // book any nested items
+        TripItem[] nestedItems = trip.getTripItems();
+        if (nestedItems != null){
+            for(int i = 0; i < nestedItems.length; i++ ){
+                TripItem tripItem = nestedItems[i];
+                if (tripItem.getType().equals(TripItem.CAR)){
+                    tripItem.setBookingCode(carBook.book(tripItem));
+                } else if (tripItem.getType().equals(TripItem.FLIGHT)){
+                    tripItem.setBookingCode(flightBook.book(tripItem));
+                } else if (tripItem.getType().equals(TripItem.HOTEL)){
+                    tripItem.setBookingCode(hotelBook.book(tripItem));
+                } else {
+                    tripItem.setBookingCode(tripItem.getType() + " is invalid");
+                }
+            }
+        }
+        
+        // book the top level item if it's a packaged trip
+        if (trip.getType().equals(TripItem.TRIP)){
+            bookingCode = tripBook.book(trip);
+            trip.setBookingCode(bookingCode);
+        }
+        
+        // add trip to the shopping cart
+        //ServiceReference<ShoppingCart> cart = componentContext.getServiceReference(ShoppingCart.class, 
+        //                                                                           "shoppingCart");
+        //cart.setConversationID(cartId);
+        //cart.getService().addTrip(trip);
+        
+        return trip;
+    }
+ 
+    /*
     @ConversationID
     protected String conversationId;
     
@@ -82,4 +143,5 @@ public class TripBookingImpl implements TripBooking{
     public void bookTrip() {
         // TODO
     }
+    */
 }

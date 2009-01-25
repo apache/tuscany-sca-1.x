@@ -27,12 +27,14 @@ import java.util.Map;
 import org.osoa.sca.annotations.ConversationID;
 import org.osoa.sca.annotations.Destroy;
 import org.osoa.sca.annotations.Init;
+import org.osoa.sca.annotations.Reference;
 
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
 
 import scatours.common.TripItem;
+import scatours.paymentprocess.PaymentProcess;
 
 /**
  * An implementation of the Trip service
@@ -40,34 +42,48 @@ import scatours.common.TripItem;
 @Scope("CONVERSATION")
 @Service(interfaces={ShoppingCart.class})
 public class ShoppingCartImpl implements ShoppingCart{
+    
+    @Reference
+    protected PaymentProcess paymentProcess;   
 
     @ConversationID
-    protected String conversationId;
+    protected String cartId;
     
-    private List<String> itemIds = new ArrayList<String>();
+    private List<TripItem> trips = new ArrayList<TripItem>();
      
     // Trip methods
     
     @Init
-    public void initTrip() {
-        System.out.println("Cart init for id: " + conversationId);
+    public void initCart() {
+        System.out.println("Cart init for id: " + cartId);
     }
     
     @Destroy
-    public void destroyTrip() {
-        System.out.println("Cart destroy for id: " + conversationId);
+    public void destroyCart() {
+        System.out.println("Cart destroy for id: " + cartId);
     }
     
-    
-    public void addItem(String itemId){
-        itemIds.add(itemId);
+    public void addTrip(TripItem trip) {
+        trips.add(trip);
     }
     
-    public void removeItem(String itemId){
-        itemIds.remove(itemId);
+    public void removeTrip(TripItem trip) {
+        trips.remove(trip);
+    }
+    
+    public TripItem[] getTrips(){
+        return trips.toArray(new TripItem[trips.size()]);
+    }
+    
+    public void checkout(String customerName){ 
+        // get users credentials. Hard coded for now but should
+        // come from the security context
+        String customerId = customerName;
+       
+        // get the total for all the trips
+        float amount = (float)0.0;
+        
+        paymentProcess.makePayment(customerId, amount);
     }  
     
-    public String[] getItems() {
-        return itemIds.toArray(new String[itemIds.size()]);
-    }
 }

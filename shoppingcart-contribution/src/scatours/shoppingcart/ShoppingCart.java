@@ -19,7 +19,10 @@
 package scatours.shoppingcart;
 
 import org.osoa.sca.annotations.Conversational;
+import org.osoa.sca.annotations.EndsConversation;
 import org.osoa.sca.annotations.Remotable;
+
+import scatours.common.TripItem;
 
 /**
  * The ShoppingCart service interface
@@ -27,7 +30,10 @@ import org.osoa.sca.annotations.Remotable;
 @Remotable
 @Conversational
 public interface ShoppingCart{
-    void addItem(String itemId);
-    void removeItem(String itemId);
-    String[] getItems();
+    void addTrip(TripItem trip);
+    void removeTrip(TripItem trip);
+    TripItem[] getTrips();
+    
+    @EndsConversation
+    void checkout(String name);  
 }

@@ -72,6 +72,7 @@ public class LaunchNode {
                                                                new SCAContribution("hotel", "../hotel-contribution/target/classes"),
                                                                new SCAContribution("flight", "../flight-contribution/target/classes"),
                                                                new SCAContribution("car", "../car-contribution/target/classes"),
+                                                               new SCAContribution("trip", "../trip-contribution/target/classes"),
                                                                new SCAContribution("tripbooking", "../tripbooking-contribution/target/classes"),
                                                                new SCAContribution("travelcatalog", "../travelcatalog-contribution/target/classes"),
                                                                new SCAContribution("payment", "../payment-contribution/target/classes"),

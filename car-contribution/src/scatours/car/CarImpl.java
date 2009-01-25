@@ -26,6 +26,7 @@ import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
+import scatours.common.Book;
 import scatours.common.Search;
 import scatours.common.SearchCallback;
 import scatours.common.TripItem;
@@ -35,8 +36,8 @@ import scatours.common.TripLeg;
  * An implementation of the Hotel service
  */
 @Scope("STATELESS")
-@Service(interfaces={Search.class})
-public class CarImpl implements Search {
+@Service(interfaces={Search.class, Book.class})
+public class CarImpl implements Search, Book {
     
     private List<CarInfo> cars = new ArrayList<CarInfo>();
     
@@ -47,19 +48,19 @@ public class CarImpl implements Search {
     public void init() {
         cars.add(new CarInfo("Premier Cars", 
                              "BMW 5 Series", 
-                             "ANU", 
-                             "06/12/08",
+                             "FLR", 
+                             "06/12/09",
                              "5",
                              100.00,
-                             "USD",
+                             "EUR",
                              "http://localhost:8085/tbd" ));
         cars.add(new CarInfo("Premier Cars", 
                              "Ford Focus", 
-                             "ANU", 
-                             "06/12/08",
+                             "FLR", 
+                             "06/12/09",
                              "4",
                              60.00,
-                             "USD",
+                             "EUR",
                              "http://localhost:8085/tbd" ));
     }
     
@@ -71,7 +72,7 @@ public class CarImpl implements Search {
             if (car.getLocation().equals(tripLeg.getToLocation())){
                 TripItem item = new TripItem("",
                                              "",
-                                             "Car",
+                                             TripItem.CAR,
                                              car.getName(), 
                                              car.getDescription(), 
                                              car.getLocation(), 
@@ -92,4 +93,8 @@ public class CarImpl implements Search {
         // return available hotels
         searchCallback.searchResults(searchSynch(tripLeg));  
     }
+    
+    public String book(TripItem tripItem) {
+        return "car1";
+    }    
 }
