@@ -29,7 +29,7 @@
         </javac>   	
     </target>
 	
-    <target name="run">
+    <target name="runcurrencyconverter">
         <java classname="client.CurrencyConverterClient" fork="true">
             <classpath>
             	<pathelement path="src"/>
@@ -48,14 +48,5 @@
             </classpath>
         </java>    	
     </target>	
-	
-    <target name="runtripws">
-        <java classname="client.TripWsClient" fork="true">
-            <classpath>
-            	<pathelement path="src"/>
-                <pathelement path="target/classes"/>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </java>     
-    </target>   	
+	 	
 </project>

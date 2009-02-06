@@ -19,27 +19,28 @@
 package client;
 
 import org.apache.tuscany.sca.node.SCAClient;
-import org.apache.tuscany.sca.node.SCANode2;
-import org.apache.tuscany.sca.node.SCANode2Factory;
+import org.apache.tuscany.sca.node.SCANode;
+import org.apache.tuscany.sca.node.SCANodeFactory;
 
-import trip.Trip;
+import currencyconverter.CurrencyConverter;
 
 /**
  * This shows how to run the CurrencyConverter component.
  */
-public class TripClient {
+public class CurrencyConverterClient {
  
     public  final static void main(String[] args) throws Exception {
-        SCANode2Factory factory = SCANode2Factory.newInstance();
-        SCANode2 node = factory.createSCANodeFromClassLoader("trip.composite", 
-                                                             null);
+        SCANodeFactory factory = SCANodeFactory.newInstance();
+        SCANode node = factory.createSCANodeFromClassLoader("currencyconverter.composite", 
+                                                            null);
         node.start();
         
-        Trip trip = ((SCAClient)node).getService(Trip.class, 
-                                                 "TripComponent");
+        CurrencyConverter currencyConverter = 
+            ((SCAClient)node).getService(CurrencyConverter.class, 
+                                         "CurrencyConverterComponent");
 
-        System.out.println(trip.getTotalPrice());
+        System.out.println(currencyConverter.convert("GBP", "USD", 10.00));
 
-        node.stop();
+        node.stop();        
     }    
 }
