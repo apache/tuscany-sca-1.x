@@ -25,8 +25,8 @@
         <version>1.5-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>scatours-node</artifactId>
-    <name>Apache Tuscany SCA Tours Node</name>
+    <artifactId>scatours-chapter-05-node</artifactId>
+    <name>Apache Tuscany SCA Tours Chapter 05 Node</name>
 
     <dependencies>
             <dependency>

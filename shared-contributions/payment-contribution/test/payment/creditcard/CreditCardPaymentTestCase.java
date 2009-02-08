@@ -17,7 +17,7 @@
  * under the License.    
  */
 
-package scatours.emailgateway;
+package payment.creditcard;
 
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCANode;
@@ -30,7 +30,7 @@ import org.junit.Test;
 /**
  * 
  */
-public class EmailGatewayTestCase {
+public class CreditCardPaymentTestCase {
     private static SCANode node;
 
     /**
@@ -39,32 +39,37 @@ public class EmailGatewayTestCase {
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         SCANodeFactory factory = SCANodeFactory.newInstance();
-        node = factory.createSCANodeFromClassLoader("emailgatewaytest.composite", EmailGateway.class.getClassLoader());
+        node = factory.createSCANodeFromClassLoader("creditcard.composite", CreditCardPayment.class.getClassLoader());
         node.start();
     }
     
     @Test
-    public void testEmailGateway() {
+    public void testCreditCardPayment() {
         SCAClient client = (SCAClient) node;
-        EmailGateway cc = client.getService(EmailGateway.class, "EmailGatewayClient");
+        CreditCardPayment cc = client.getService(CreditCardPayment.class, "CreditCardPaymentWSClient");
+        
         ObjectFactory objectFactory = new ObjectFactory();
-        EmailType email = objectFactory.createEmailType();
-        email.setTo("Fred");
-        email.setTitle("An email");
-        email.setBody("A message");
-        System.out.println(cc.sendEmail(email));
+        CreditCardDetailsType ccDetails = objectFactory.createCreditCardDetailsType();
+        ccDetails.setCreditCardType(CreditCardTypeType.fromValue("Visa"));
+        PayerType ccOwner = objectFactory.createPayerType();
+        ccOwner.setName("Fred");
+        ccDetails.setCardOwner(ccOwner);
+        
+        System.out.println(cc.authorize(ccDetails, 100.00f));
     }
     
     @Test
     //@Ignore
     public void testWaitForInput() {
+/*
         System.out.println("Press a key to end");
         try {
             System.in.read();
         } catch (Exception ex) {
         }
         System.out.println("Shutting down");
-    }
+*/
+    }    
 
     /**
      * @throws java.lang.Exception

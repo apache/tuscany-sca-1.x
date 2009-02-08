@@ -43,8 +43,8 @@ import scatours.paymentprocess.PaymentProcess;
 @Service(interfaces={ShoppingCart.class})
 public class ShoppingCartImpl implements ShoppingCart{
     
-    @Reference
-    protected PaymentProcess paymentProcess;   
+ //   @Reference
+ //   protected PaymentProcess paymentProcess;   
 
     @ConversationID
     protected String cartId;
@@ -83,7 +83,7 @@ public class ShoppingCartImpl implements ShoppingCart{
         // get the total for all the trips
         float amount = (float)0.0;
         
-        paymentProcess.makePayment(customerId, amount);
+        //paymentProcess.makePayment(customerId, amount);
     }  
     
 }

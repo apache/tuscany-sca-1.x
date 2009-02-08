@@ -142,9 +142,9 @@
         <implementation.java class="scatours.shoppingcart.ShoppingCartImpl"/>
         <service name="ShoppingCart">
         </service>
-        <reference name="paymentProcess">
+        <!--reference name="paymentProcess">
             <binding.ws uri="http://localhost:8083/PaymentProcess" />
-        </reference> 
+        </reference--> 
     </component>   
     
     <!--component name="PaymentProcessComponent">

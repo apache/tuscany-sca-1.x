@@ -25,9 +25,9 @@
         <version>1.4-SNAPSHOT</version>
         <!--relativePath>../pom.xml</relativePath-->
     </parent>
-    <artifactId>tuscany-scatours</artifactId>
+    <artifactId>tuscany-scatours-common-contributions</artifactId>
     <packaging>pom</packaging>
-    <name>Apache Tuscany SCA Tours Assembly Examples</name>
+    <name>Apache Tuscany SCA Tours Common Contributions</name>
 
     <profiles>
         <profile>
@@ -36,18 +36,19 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>shared-contributions</module>
-                <module>chapter-01</module>
-                <!--module>chapter-02</module-->
-                <!--module>chapter-03</module-->
-                <!--module>chapter-04</module-->
-                <module>chapter-05</module>
-                <!--module>chapter-06</module-->
-                <!--module>chapter-07</module-->
-                <!--module>chapter-08</module-->
-                <!--module>chapter-09</module-->
-                <!--module>chapter-10</module-->
-                <!--module>chapter-11</module-->
+                <module>calendar-contribution</module>
+                <module>car-contribution</module>
+                <module>common-contribution</module>
+                <module>currency-contribution</module>
+                <module>emailgateway-contribution</module>
+                <module>flight-contribution</module>
+                <module>hotel-contribution</module>
+                <module>payment-contribution</module>   
+                <module>shoppingcart-contribution</module>   
+                <module>travelcatalog-contribution</module>         
+                <module>tripbooking-contribution</module>
+                <module>trip-contribution</module>
+                <module>scatours-contribution</module>
             </modules>
         </profile>
 

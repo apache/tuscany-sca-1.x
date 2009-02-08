@@ -17,7 +17,7 @@
  * under the License.
 -->
 
-<project name="scatours-node" default="compile">
+<project name="scatours-chapter-05-node" default="compile">
 
     <target name="compile">
         <mkdir dir="target/classes"/>
@@ -31,7 +31,7 @@
         <copy todir="target/classes">
             <fileset dir="." excludes="**/*.java, pom.xml, build.xml, target"/>
         </copy>
-        <jar destfile="target/scatours-node.jar" basedir="target/classes">
+        <jar destfile="target/scatours-chapter-05-node.jar" basedir="target/classes">
             <manifest>
                 <attribute name="Main-Class" value="launch.LaunchTutorialAdmin"/>
             </manifest>
@@ -43,7 +43,7 @@
     <target name="run">
         <java classname="launch.LaunchTutorialAdmin" fork="true">
             <classpath>
-                <pathelement location="target/scatours-node.jar"/>
+                <pathelement location="target/scatours-chapter-05-node.jar"/>
                 <fileset refid="tuscany.jars"/>
                 <fileset refid="3rdparty.jars"/>
             </classpath>
