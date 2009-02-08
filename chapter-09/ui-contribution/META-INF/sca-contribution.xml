@@ -17,31 +17,21 @@
     * specific language governing permissions and limitations
     * under the License.    
 -->
-<project>
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.apache.tuscany.sca</groupId>
-        <artifactId>tuscany-sca</artifactId>
-        <version>1.4-SNAPSHOT</version>
-        <!--relativePath>../pom.xml</relativePath-->
-    </parent>
-    <artifactId>tuscany-scatours-chapter-09</artifactId>
-    <packaging>pom</packaging>
-    <name>Apache Tuscany SCA Tours Chapter 09 Examples</name>
-
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>node</module>
-                <module>ui-contribution</module>
-                <module>payment-contribution</module>
-            </modules>
-        </profile>
-
-    </profiles>
-
-</project>
+<contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
+   xmlns:scatours="http://scatours">
+   <deployable composite="scatours:scatours"/>
+   <import.java package="scatours.common"/>
+   <import.java package="scatours.currencyconverter"/>
+   <import.java package="scatours.hotel"/>
+   <import.java package="scatours.flight"/>
+   <import.java package="scatours.car"/>
+   <import.java package="scatours.trip"/>
+   <import.java package="scatours.tripbooking"/>
+   <import.java package="scatours.travelcatalog"/>
+   <import.java package="payment.creditcard.ws.impl"/>
+   <import.java package="scatours.emailgateway"/>
+   <import.java package="scatours.paymentprocess"/>
+   <import.java package="scatours.shoppingcart"/>
+   <import.java package="scatours"/>
+   <import namespace="http://www.example.org/PaymentProcess/"/>
+</contribution>
