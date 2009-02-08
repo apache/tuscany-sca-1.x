@@ -77,30 +77,19 @@
         <testSourceDirectory>${basedir}/test</testSourceDirectory>
         <resources>
             <resource>
-                <directory>${basedir}</directory>
+                <directory>${basedir}/src</directory>
                 <excludes>
                     <exclude>**/*.java</exclude>
                     <exclude>**/.*/**</exclude>
-                    <exclude>pom.xml</exclude>
-                    <exclude>build.xml</exclude>
-                    <exclude>target/**</exclude>
-                    <exclude>src/**</exclude>
-                    <exclude>test/**</exclude>
-                    <exclude>*.composite</exclude>
                 </excludes>
             </resource>
         </resources>
         <testResources>
             <testResource>
-                <directory>${basedir}</directory>
+                <directory>${basedir}/test</directory>
                 <excludes>
                     <exclude>**/*.java</exclude>
                     <exclude>**/.*/**</exclude>
-                    <exclude>pom.xml</exclude>
-                    <exclude>build.xml</exclude>
-                    <exclude>target/**</exclude>
-                    <exclude>src/**</exclude>
-                    <exclude>test/**</exclude>
                 </excludes>
             </testResource>
         </testResources>
@@ -137,7 +126,7 @@
                     </goals>
                     <configuration>
                         <packageName>scatours.emailgateway</packageName>
-                        <wsdlDirectory>${basedir}/wsdl
+                        <wsdlDirectory>${basedir}/src/wsdl
                         </wsdlDirectory>
                         <wsdlFiles>
                             <wsdlFile>EmailGateway.wsdl</wsdlFile>

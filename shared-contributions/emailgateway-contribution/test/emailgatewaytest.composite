@@ -23,7 +23,7 @@
            targetNamespace="http://creditcard" 
            name="emailgateway">
     <component name="EmailGatewayClient">
-        <implementation.java class="scatours.emailgateway.EmailGatewayClientImpl" />
+        <implementation.java class="scatours.emailgateway.client.EmailGatewayClientImpl" />
         <reference name="emailGateway">
             <binding.ws uri="http://localhost:8082/EmailGateway" />
         </reference>

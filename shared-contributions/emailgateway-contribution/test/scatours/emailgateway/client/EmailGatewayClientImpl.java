@@ -17,10 +17,13 @@
  * under the License.    
  */
 
-package scatours.emailgateway;
+package scatours.emailgateway.client;
 
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
+
+import scatours.emailgateway.EmailGateway;
+import scatours.emailgateway.EmailType;
 
 /**
  * 
