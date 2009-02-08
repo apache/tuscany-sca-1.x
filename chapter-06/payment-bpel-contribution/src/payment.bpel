@@ -16,22 +16,22 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-<process name="PaymentProcess"
-    targetNamespace="http://www.example.org/PaymentProcess"
+<process name="Payment"
+    targetNamespace="http://www.example.org/Payment"
     xmlns="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
     xmlns:bpws="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
-    xmlns:tns="http://tuscany.apache.org/PaymentProcess"    
+    xmlns:tns="http://tuscany.apache.org/Payment"    
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:pp="http://www.example.org/PaymentProcess/"
+    xmlns:pp="http://www.example.org/Payment/"
     xmlns:ccp="http://www.example.org/CreditCardPayment/"
     xmlns:eg="http://www.example.org/EmailGateway/"
     queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
 
-  <import location="PaymentProcess.wsdl" 
+  <import location="Payment.wsdl" 
           importType="http://schemas.xmlsoap.org/wsdl/"
-          namespace="http://www.example.org/PaymentProcess/"/>     
+          namespace="http://www.example.org/Payment/"/>     
 
   <import location="CreditCardPayment.wsdl" 
           importType="http://schemas.xmlsoap.org/wsdl/"
@@ -42,7 +42,7 @@
           namespace="http://www.example.org/EmailGateway/"/>          
           
    <partnerLinks>
-      <partnerLink name="paymentProcessPartnerLink" partnerLinkType="pp:PaymentProcessLinkType" myRole="forward" />
+      <partnerLink name="paymentPartnerLink" partnerLinkType="pp:PaymentLinkType" myRole="forward" />
       <partnerLink name="creditCardPaymentPartnerLink" partnerLinkType="ccp:CreditCardPaymentLinkType" partnerRole="forward" initializePartnerRole="yes" />
       <partnerLink name="emailGatewayPartnerLink" partnerLinkType="eg:EmailGatewayLinkType" partnerRole="forward" initializePartnerRole="yes" />
    </partnerLinks>
@@ -58,8 +58,8 @@
 
    <sequence>
        <receive name="start"
-                partnerLink="paymentProcessPartnerLink"
-                portType="pp:PaymentProcess"
+                partnerLink="paymentPartnerLink"
+                portType="pp:Payment"
            	    operation="makePayment"
                 variable="makePaymentRequestMessage"
                 createInstance="yes"/>
@@ -144,7 +144,7 @@
           <copy>
               <from>
                   <literal> 
-                  <makePaymentResponse xmlns="http://www.example.org/PaymentProcess/">
+                  <makePaymentResponse xmlns="http://www.example.org/Payment">
                     <Status xmlns="">OK</Status>
                   </makePaymentResponse>
                   </literal>
@@ -155,8 +155,8 @@
        
        
        <reply name="end"  
-              partnerLink="paymentProcessPartnerLink"
-              portType="pp:PaymentProcess" 
+              partnerLink="paymentPartnerLink"
+              portType="pp:Payment" 
               operation="makePayment"
               variable="makePaymentResponseMessage">
        </reply>

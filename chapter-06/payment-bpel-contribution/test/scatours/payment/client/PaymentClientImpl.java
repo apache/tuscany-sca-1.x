@@ -17,22 +17,21 @@
  * under the License.    
  */
 
-package scatours.paymentprocess;
+package scatours.payment.client;
 
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
-/**
- * 
- */
-@Service(PaymentProcess.class)
-public class PaymentProcessClientImpl implements PaymentProcess {
+import scatours.payment.Payment;
+
+@Service(Payment.class)
+public class PaymentClientImpl implements Payment {
     @Reference
-    protected PaymentProcess paymentProcess;
+    protected Payment payment;
 
     public String makePayment(String customerId, float amount) {
         // Delegate the external web service
-        return paymentProcess.makePayment(customerId, amount);
+        return payment.makePayment(customerId, amount);
     }
 
 }

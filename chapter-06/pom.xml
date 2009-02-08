@@ -37,7 +37,7 @@
             </activation>
             <modules>
                 <module>node</module>
-                <module>ui-contribution</module>
+                <module>payment-bpel-contribution</module>
             </modules>
         </profile>
 

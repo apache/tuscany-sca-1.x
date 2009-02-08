@@ -39,7 +39,7 @@ public class EmailGatewayTestCase {
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         SCANodeFactory factory = SCANodeFactory.newInstance();
-        node = factory.createSCANodeFromClassLoader("emailgatewaytest.composite", EmailGateway.class.getClassLoader());
+        node = factory.createSCANodeFromClassLoader("emailgateway.composite", EmailGateway.class.getClassLoader());
         node.start();
     }
     

@@ -25,8 +25,8 @@
         <version>1.5-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>scatours-paymentprocess-contribution</artifactId>
-    <name>Apache Tuscany SCA Tours Payment Process Contribution</name>
+    <artifactId>scatours-chapter-06-payment-bpel-contribution</artifactId>
+    <name>Apache Tuscany SCA Tours Chapter 06 Payment BPEL Contribution</name>
 
     <dependencies>
         <dependency>
@@ -64,6 +64,20 @@
         </dependency>
         
         <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-emailgateway-contribution</artifactId>
+            <version>1.5-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-creditcardpayment-contribution</artifactId>
+            <version>1.5-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>        
+        
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.5</version>
@@ -77,19 +91,23 @@
         <testSourceDirectory>${basedir}/test</testSourceDirectory>
         <resources>
             <resource>
-                <directory>${basedir}/resources</directory>
+                <directory>${basedir}/src</directory>
             </resource>
         </resources>
         <testResources>
             <testResource>
-                <directory>${basedir}/resources</directory>
+                <directory>${basedir}/src</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                    <exclude>**/.*/**</exclude>
+                </excludes>
             </testResource>
             <testResource>
-                <directory>${basedir}</directory>
-                <includes>
-                    <include>*.composite</include>
-                    <include>*.properties</include>
-                </includes>
+                <directory>${basedir}/test</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                    <exclude>**/.*/**</exclude>
+                </excludes>
             </testResource>
         </testResources>
     <plugins>
@@ -124,11 +142,11 @@
                         <goal>wsimport</goal>
                     </goals>
                     <configuration>
-                        <packageName>scatours.paymentprocess</packageName>
-                        <wsdlDirectory>${basedir}/resources
+                        <packageName>scatours.payment</packageName>
+                        <wsdlDirectory>${basedir}/src
                         </wsdlDirectory>
                         <wsdlFiles>
-                            <wsdlFile>PaymentProcess.wsdl</wsdlFile>
+                            <wsdlFile>Payment.wsdl</wsdlFile>
                         </wsdlFiles>
                         <sourceDestDir>${project.build.directory}/jaxws-source
                         </sourceDestDir>

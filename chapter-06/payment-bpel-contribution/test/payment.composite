@@ -19,22 +19,22 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
            xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
-           xmlns:pp="http://www.example.org/PaymentProcess" 
-           targetNamespace="http://www.example.org/PaymentProcess" 
-           name="paymentprocess">
+           xmlns:pp="http://www.example.org/Payment" 
+           targetNamespace="http://www.example.org/Payment" 
+           name="payment">
            
-    <component name="PaymentProcessClient">
-        <implementation.java class="scatours.paymentprocess.PaymentProcessClientImpl" />
-        <reference name="paymentProcess">
-            <binding.ws uri="http://localhost:8083/PaymentProcess" />
+    <component name="PaymentClient">
+        <implementation.java class="scatours.payment.client.PaymentClientImpl" />
+        <reference name="payment">
+            <binding.ws uri="http://localhost:8083/Payment" />
         </reference>
     </component>
     
-    <component name="PaymentProcess">
-        <implementation.bpel process="pp:PaymentProcess"/>
-        <service name="paymentProcessPartnerLink">
-            <interface.wsdl interface="http://www.example.org/PaymentProcess/#wsdl.interface(PaymentProcess)" />
-            <binding.ws uri="http://localhost:8083/PaymentProcess" wsdlElement="http://www.example.org/PaymentProcess/#wsdl.service(PaymentProcessService)"/>
+    <component name="Payment">
+        <implementation.bpel process="pp:Payment"/>
+        <service name="paymentPartnerLink">
+            <interface.wsdl interface="http://www.example.org/Payment/#wsdl.interface(Payment)" />
+            <binding.ws uri="http://localhost:8083/Payment" wsdlElement="http://www.example.org/Payment/#wsdl.service(PaymentService)"/>
         </service>
         <reference name="creditCardPaymentPartnerLink">
             <binding.ws uri="http://localhost:8081/CreditCardPayment"/>

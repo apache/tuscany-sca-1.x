@@ -18,6 +18,6 @@
     * under the License.    
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0">
-   <export.java package="scatours.paymentprocess"/>
-   <export namespace="http://www.example.org/PaymentProcess/"/>
+   <export.java package="scatours.payment"/>
+   <export namespace="http://www.example.org/Payment"/>
 </contribution>
