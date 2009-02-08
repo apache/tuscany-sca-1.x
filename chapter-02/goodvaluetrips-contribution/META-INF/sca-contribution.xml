@@ -17,31 +17,8 @@
     * specific language governing permissions and limitations
     * under the License.    
 -->
-<project>
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.apache.tuscany.sca</groupId>
-        <artifactId>tuscany-sca</artifactId>
-        <version>1.4-SNAPSHOT</version>
-        <!--relativePath>../pom.xml</relativePath-->
-    </parent>
-    <artifactId>tuscany-scatours-chapter-02</artifactId>
-    <packaging>pom</packaging>
-    <name>Apache Tuscany SCA Tours Chapter 02 Examples</name>
-
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>goodvaluetrips-contribution</module>
-                <module>tuscanyscatours-contribution</module>
-                <module>node</module>
-            </modules>
-        </profile>
-
-    </profiles>
-
-</project>
+<contribution xmlns="http://www.osoa.org/xmlns/sca/1.0">
+   <import.java package="scatours.common"/>
+   <import.java package="scatours.paymentprocess"/>
+   <export.java package="scatours.shoppingcart"/>
+</contribution>
