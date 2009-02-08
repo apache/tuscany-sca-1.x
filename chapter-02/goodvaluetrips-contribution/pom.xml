@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.4</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
     <artifactId>scatours-chapter-02-goodvaluetrips-contribution</artifactId>
@@ -32,14 +32,16 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-sca-api</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
         </dependency>
-        
+
+        <!--        
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-common-contribution</artifactId>
-            <version>1.5-SNAPSHOT</version>
-        </dependency>           
+            <version>1.4</version>
+        </dependency>
+        -->
 
         <dependency>
             <groupId>junit</groupId>
@@ -47,24 +49,25 @@
             <version>4.5</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
-       <finalName>${artifactId}</finalName>
-       <sourceDirectory>${basedir}/src</sourceDirectory>
-       <resources>
-          <resource>
-              <directory>${basedir}</directory>
-              <excludes>
-                  <exclude>**/*.java</exclude>
-                  <exclude>**/.*/**</exclude>
-                  <exclude>pom.xml</exclude>
-                  <exclude>build.xml</exclude>
-                  <exclude>target/**</exclude>
-                  <exclude>src/**</exclude>
-              </excludes>
-          </resource>
-       </resources>
+        <finalName>${artifactId}</finalName>
+        <!--
+        <sourceDirectory>${basedir}/src</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>${basedir}</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                    <exclude>**/.*/**</exclude>
+                    <exclude>pom.xml</exclude>
+                    <exclude>build.xml</exclude>
+                    <exclude>target/**</exclude>
+                    <exclude>src/**</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        -->
     </build>
 </project>
