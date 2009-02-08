@@ -34,7 +34,7 @@ import org.osoa.sca.annotations.Service;
 
 import scatours.common.TripItem;
 import scatours.common.TripLeg;
-import scatours.paymentprocess.PaymentProcess;
+//import scatours.paymentprocess.PaymentProcess;
 import scatours.shoppingcart.ShoppingCart;
 import scatours.travelcatalog.TravelCatalogSearch;
 import scatours.tripbooking.TripBooking;

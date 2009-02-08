@@ -34,7 +34,7 @@ import org.osoa.sca.annotations.Service;
 
 
 import scatours.common.TripItem;
-import scatours.paymentprocess.PaymentProcess;
+//import scatours.paymentprocess.PaymentProcess;
 
 /**
  * An implementation of the Trip service
