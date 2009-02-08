@@ -39,11 +39,11 @@
                 <module>calendar-contribution</module>
                 <module>car-contribution</module>
                 <module>common-contribution</module>
+                <module>creditcardpayment-contribution</module>
                 <module>currency-contribution</module>
                 <module>emailgateway-contribution</module>
                 <module>flight-contribution</module>
                 <module>hotel-contribution</module>
-                <module>payment-contribution</module>   
                 <module>shoppingcart-contribution</module>   
                 <module>travelcatalog-contribution</module>         
                 <module>tripbooking-contribution</module>

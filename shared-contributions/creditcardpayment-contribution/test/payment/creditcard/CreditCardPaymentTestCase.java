@@ -46,7 +46,7 @@ public class CreditCardPaymentTestCase {
     @Test
     public void testCreditCardPayment() {
         SCAClient client = (SCAClient) node;
-        CreditCardPayment cc = client.getService(CreditCardPayment.class, "CreditCardPaymentWSClient");
+        CreditCardPayment cc = client.getService(CreditCardPayment.class, "CreditCardPaymentComponent/CreditCardPayment");
         
         ObjectFactory objectFactory = new ObjectFactory();
         CreditCardDetailsType ccDetails = objectFactory.createCreditCardDetailsType();
@@ -59,16 +59,14 @@ public class CreditCardPaymentTestCase {
     }
     
     @Test
-    //@Ignore
+    @Ignore
     public void testWaitForInput() {
-/*
         System.out.println("Press a key to end");
         try {
             System.in.read();
         } catch (Exception ex) {
         }
         System.out.println("Shutting down");
-*/
     }    
 
     /**

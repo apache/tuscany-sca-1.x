@@ -17,9 +17,8 @@
  * under the License.    
  */
 
-package payment.creditcard.impl;
+package payment.creditcard;
 
-import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
 import payment.creditcard.CreditCardDetailsType;
@@ -31,16 +30,18 @@ import payment.creditcard.CreditCardPayment;
 @Service(CreditCardPayment.class)
 public class CreditCardPaymentImpl implements CreditCardPayment {
     
-    @Reference
-    protected CreditCardPayment creditCardPayment;
-
     public String authorize(CreditCardDetailsType creditCard, float amount) {
-        // Validate some of the fields in CreditCardDetailsType
-        if (creditCard.getCreditCardType() == null) {
-            return "UnknownCreditCardType";
+        if (creditCard != null){
+            System.out.println("Checking card: name = " + 
+                               creditCard.getCardOwner().getName() +
+                               " number = " +
+                               creditCard.getCreditCardNumber() +
+                               " for amount " + 
+                               amount);
+        } else {
+            System.out.println("Checking card is null");
         }
-        // Delegate the external web service
-        return creditCardPayment.authorize(creditCard, amount);
+        
+        return "OK";
     }
-
 }
