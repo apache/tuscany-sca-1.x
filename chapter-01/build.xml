@@ -21,7 +21,7 @@
 	
     <target name="compile">
     	<mkdir dir="target/classes"/>
-        <javac srcdir="src" destdir="target/classes" 
+        <javac srcdir="src/main/java" destdir="target/classes" 
         	           debug="on" source="1.5" target="1.5">
             <classpath>
             	<pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
@@ -32,7 +32,7 @@
     <target name="runcurrencyconverter">
         <java classname="client.CurrencyConverterClient" fork="true">
             <classpath>
-            	<pathelement path="src"/>
+            	<pathelement path="src/main/resources"/>
                 <pathelement path="target/classes"/>
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
@@ -42,7 +42,7 @@
     <target name="runtrip">
         <java classname="client.TripClient" fork="true">
             <classpath>
-            	<pathelement path="src"/>
+            	<pathelement path="src/main/resources"/>
                 <pathelement path="target/classes"/>
             	<pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
