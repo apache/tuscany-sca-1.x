@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.4</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
     <artifactId>scatours-chapter-09-payment-contribution</artifactId>
@@ -32,34 +32,34 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-host-embedded</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-java-runtime</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-jsonrpc-runtime</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-ws-axis2</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-host-jetty</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
             <scope>runtime</scope>
         </dependency>
         
@@ -73,6 +73,7 @@
     </dependencies>
     <build>
         <finalName>${artifactId}</finalName>
+        <!--
         <sourceDirectory>${basedir}/src</sourceDirectory>
         <testSourceDirectory>${basedir}/test</testSourceDirectory>
         <resources>
@@ -92,7 +93,8 @@
                     <exclude>**/.*/**</exclude>
                 </excludes>
             </testResource>
-        </testResources>        
+        </testResources>
+        -->
     <plugins>
         <plugin>
             <groupId>org.codehaus.mojo</groupId>
@@ -126,7 +128,7 @@
                     </goals>
                     <configuration>
                         <packageName>payment.creditcard</packageName>
-                        <wsdlDirectory>${basedir}/src/wsdl
+                        <wsdlDirectory>${basedir}/src/main/resources
                         </wsdlDirectory>
                         <wsdlFiles>
                             <wsdlFile>CreditCardPayment.wsdl</wsdlFile>
