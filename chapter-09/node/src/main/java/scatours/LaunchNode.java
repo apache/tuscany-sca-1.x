@@ -45,7 +45,7 @@ public class LaunchNode {
                                                                new SCAContribution("trip", "../../shared-contributions/trip-contribution/target/classes"),
                                                                new SCAContribution("tripbooking", "../../shared-contributions/tripbooking-contribution/target/classes"),
                                                                new SCAContribution("travelcatalog", "../../shared-contributions/travelcatalog-contribution/target/classes"),
-                                                               new SCAContribution("payment", "../../shared-contributions/payment-contribution/target/classes"),
+                                                               new SCAContribution("payment", "../payment-contribution/target/classes"),
                                                                new SCAContribution("emailgateway", "../../shared-contributions/emailgateway-contribution/target/classes"),
                                                                new SCAContribution("shoppingcart", "../../shared-contributions/shoppingcart-contribution/target/classes"),
                                                                new SCAContribution("scatours", "../../shared-contributions/scatours-contribution/target/classes"),
