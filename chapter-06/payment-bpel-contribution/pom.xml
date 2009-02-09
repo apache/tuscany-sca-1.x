@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.4</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
     <artifactId>scatours-chapter-06-payment-bpel-contribution</artifactId>
@@ -32,48 +32,48 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-host-embedded</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-java-runtime</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-bpel-ode</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-ws-axis2</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-host-jetty</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
             <scope>runtime</scope>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-emailgateway-contribution</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
             <scope>test</scope>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-creditcardpayment-contribution</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.4</version>
             <scope>test</scope>
         </dependency>        
         
@@ -87,6 +87,7 @@
     </dependencies>
     <build>
         <finalName>${artifactId}</finalName>
+        <!--
         <sourceDirectory>${basedir}/src</sourceDirectory>
         <testSourceDirectory>${basedir}/test</testSourceDirectory>
         <resources>
@@ -94,16 +95,17 @@
                 <directory>${basedir}/src</directory>
             </resource>
         </resources>
+        -->
         <testResources>
             <testResource>
-                <directory>${basedir}/src</directory>
+                <directory>${basedir}/src/main/resources</directory>
                 <excludes>
                     <exclude>**/*.java</exclude>
                     <exclude>**/.*/**</exclude>
                 </excludes>
             </testResource>
             <testResource>
-                <directory>${basedir}/test</directory>
+                <directory>${basedir}/src/test/resources</directory>
                 <excludes>
                     <exclude>**/*.java</exclude>
                     <exclude>**/.*/**</exclude>
@@ -143,7 +145,7 @@
                     </goals>
                     <configuration>
                         <packageName>scatours.payment</packageName>
-                        <wsdlDirectory>${basedir}/src
+                        <wsdlDirectory>${basedir}/src/main/resources
                         </wsdlDirectory>
                         <wsdlFiles>
                             <wsdlFile>Payment.wsdl</wsdlFile>
