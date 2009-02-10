@@ -87,31 +87,6 @@
     </dependencies>
     <build>
         <finalName>${artifactId}</finalName>
-        <!--
-        <sourceDirectory>${basedir}/src</sourceDirectory>
-        <testSourceDirectory>${basedir}/test</testSourceDirectory>
-        <resources>
-            <resource>
-                <directory>${basedir}/src</directory>
-            </resource>
-        </resources>
-        -->
-        <testResources>
-            <testResource>
-                <directory>${basedir}/src/main/resources</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                    <exclude>**/.*/**</exclude>
-                </excludes>
-            </testResource>
-            <testResource>
-                <directory>${basedir}/src/test/resources</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                    <exclude>**/.*/**</exclude>
-                </excludes>
-            </testResource>
-        </testResources>
     <plugins>
         <plugin>
             <groupId>org.codehaus.mojo</groupId>

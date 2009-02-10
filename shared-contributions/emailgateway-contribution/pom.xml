@@ -62,7 +62,7 @@
             <version>1.4</version>
             <scope>runtime</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -73,74 +73,52 @@
     </dependencies>
     <build>
         <finalName>${artifactId}</finalName>
-        <!--
-        <sourceDirectory>${basedir}/src</sourceDirectory>
-        <testSourceDirectory>${basedir}/test</testSourceDirectory>
-        <resources>
-            <resource>
-                <directory>${basedir}/src</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                    <exclude>**/.*/**</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>${basedir}/test</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                    <exclude>**/.*/**</exclude>
-                </excludes>
-            </testResource>
-        </testResources>
-        -->
-    <plugins>
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <version>1.0</version>
-            <executions>
-                <execution>
-                    <id>add-source</id>
-                    <phase>generate-sources</phase>
-                    <goals>
-                        <goal>add-source</goal>
-                    </goals>
-                    <configuration>
-                        <sources>
-                            <source>target/jaxws-source</source>
-                        </sources>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>jaxws-maven-plugin</artifactId>
-            <version>1.9</version>
-            <executions>
-                <execution>
-                    <id>wsimport</id>
-                    <phase>generate-sources</phase>
-                    <goals>
-                        <goal>wsimport</goal>
-                    </goals>
-                    <configuration>
-                        <packageName>scatours.emailgateway</packageName>
-                        <wsdlDirectory>${basedir}/src/main/resources
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/jaxws-source</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>1.9</version>
+                <executions>
+                    <execution>
+                        <id>wsimport</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>scatours.emailgateway</packageName>
+                            <wsdlDirectory>${basedir}/src/main/resources
                         </wsdlDirectory>
-                        <wsdlFiles>
-                            <wsdlFile>EmailGateway.wsdl</wsdlFile>
-                        </wsdlFiles>
-                        <sourceDestDir>${project.build.directory}/jaxws-source
-                        </sourceDestDir>
-                        <verbose>false</verbose>
-                        <xnocompile>true</xnocompile>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
+                            <wsdlFiles>
+                                <wsdlFile>EmailGateway.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <sourceDestDir>${project.build.directory}/jaxws-source
+                            </sourceDestDir>
+                            <verbose>false</verbose>
+                            <xnocompile>true</xnocompile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>

@@ -52,6 +52,5 @@
 
     <build>
        <finalName>${artifactId}</finalName>
-       <sourceDirectory>${basedir}/src</sourceDirectory>
     </build>
 </project>
