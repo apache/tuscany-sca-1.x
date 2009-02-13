@@ -39,7 +39,7 @@
                 <module>node</module>
                 <module>ui-contribution</module>
                 <module>payment-contribution</module>
-                <module>creditcard-payment-contribution</module>
+                <module>creditcard-payment-sdo-contribution</module>
             </modules>
         </profile>
 

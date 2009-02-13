@@ -39,7 +39,7 @@
                 <module>calendar-contribution</module>
                 <module>car-contribution</module>
                 <module>common-contribution</module>
-                <module>creditcardpayment-contribution</module>
+                <module>creditcard-payment-jaxb-contribution</module>
                 <module>currency-contribution</module>
                 <module>emailgateway-contribution</module>
                 <module>flight-contribution</module>
