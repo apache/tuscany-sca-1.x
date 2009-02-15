@@ -31,8 +31,15 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-embedded</artifactId>
+            <artifactId>tuscany-nodea-api</artifactId>
             <version>1.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-node-impl</artifactId>
+            <version>1.4</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -72,7 +79,7 @@
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-creditcardpayment-contribution</artifactId>
+            <artifactId>scatours-creditcard-payment-jaxb-contribution</artifactId>
             <version>1.4</version>
             <scope>test</scope>
         </dependency>        
