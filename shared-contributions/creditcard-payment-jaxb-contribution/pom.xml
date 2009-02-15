@@ -25,7 +25,7 @@
         <version>1.4</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>scatours-credit-cardpayment-jaxb-contribution</artifactId>
+    <artifactId>scatours-creditcard-payment-jaxb-contribution</artifactId>
     <name>Apache Tuscany SCA Tours Credit Card Payment Contribution</name>
 
     <dependencies>
