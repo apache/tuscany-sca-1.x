@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.4</version>
+        <version>1.5-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
     <artifactId>scatours-car-contribution</artifactId>
@@ -32,19 +32,19 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-sca-api</artifactId>
-            <version>1.4</version>
+            <version>1.5-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-data-api</artifactId>
-            <version>1.4</version>
+            <version>1.5-SNAPSHOT</version>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-common-contribution</artifactId>
-            <version>1.4</version>
+            <version>1.5-SNAPSHOT</version>
         </dependency> 
 
         <dependency>
