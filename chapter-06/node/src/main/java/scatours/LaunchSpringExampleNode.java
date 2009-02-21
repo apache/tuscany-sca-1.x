@@ -24,11 +24,10 @@ import java.io.IOException;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
-import org.apache.tuscany.sca.node.launcher.NodeLauncher;
 
-public class LaunchNode {
+public class LaunchSpringExampleNode {
     public static void main(String[] args) throws Exception {
-        LaunchNode.launchFromFileSystemDir();
+        LaunchSpringExampleNode.launchFromFileSystemDir();
     }
     
     // OK for development but you must launch the node from this module 
@@ -45,11 +44,12 @@ public class LaunchNode {
                                                                new SCAContribution("trip", "../../shared-contributions/trip-contribution/target/classes"),
                                                                new SCAContribution("tripbooking", "../../shared-contributions/tripbooking-contribution/target/classes"),
                                                                new SCAContribution("travelcatalog", "../../shared-contributions/travelcatalog-contribution/target/classes"),
-                                                               new SCAContribution("payment", "../../shared-contributions/payment-contribution/target/classes"),
+                                                               new SCAContribution("creditcardpayment", "../../shared-contributions/creditcard-payment-jaxb-contribution/target/classes"),
                                                                new SCAContribution("emailgateway", "../../shared-contributions/emailgateway-contribution/target/classes"),
                                                                new SCAContribution("shoppingcart", "../../shared-contributions/shoppingcart-contribution/target/classes"),
                                                                new SCAContribution("scatours", "../../shared-contributions/scatours-contribution/target/classes"),
-                                                               new SCAContribution("ui", "../ui-contribution/target/classes"));
+                                                               new SCAContribution("payment", "../payment-spring-annotation-contribution/target/classes"),
+                                                               new SCAContribution("ui", "../ui-spring-contribution/target/classes"));
             node.start();
             
             System.out.println("Node started - Press enter to shutdown.");
@@ -62,5 +62,5 @@ public class LaunchNode {
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
-    }    
+    }     
 }

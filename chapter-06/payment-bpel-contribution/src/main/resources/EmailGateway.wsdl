@@ -18,17 +18,17 @@
  * under the License.    
 -->
 <wsdl:definitions name="EmailGateway" 
-                  targetNamespace="http://www.example.org/EmailGateway/"
+                  targetNamespace="http://www.tuscanyscatours.com/EmailGateway/"
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-                  xmlns:tns="http://www.example.org/EmailGateway/" 
+                  xmlns:tns="http://www.tuscanyscatours.com/EmailGateway/" 
                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
                   xmlns:bpws="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
                   xmlns:plnk="http://schemas.xmlsoap.org/ws/2004/03/partner-link/">
     <wsdl:types>
         <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-                    targetNamespace="http://www.example.org/EmailGateway/"
-                    xmlns:tns="http://www.example.org/EmailGateway/">
+                    targetNamespace="http://www.tuscanyscatours.com/EmailGateway/"
+                    xmlns:tns="http://www.tuscanyscatours.com/EmailGateway/">
                     
             <xsd:element name="sendEmail" type="tns:SendEmailType"/>
             <xsd:complexType name="SendEmailType">
@@ -68,7 +68,7 @@
     <wsdl:binding name="EmailGatwayBinding" type="tns:EmailGateway">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
         <wsdl:operation name="sendEmail">
-            <soap:operation soapAction="http://www.example.org/EmailGateway/sendEmail" />
+            <soap:operation soapAction="http://www.tuscanyscatours.com/EmailGateway/sendEmail" />
             <wsdl:input>
                 <soap:body use="literal" />
             </wsdl:input>

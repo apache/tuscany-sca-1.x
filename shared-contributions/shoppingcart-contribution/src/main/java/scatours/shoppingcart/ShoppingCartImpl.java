@@ -32,9 +32,10 @@ import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
+import payment.Payment;
+
 
 import scatours.common.TripItem;
-//import scatours.paymentprocess.PaymentProcess;
 
 /**
  * An implementation of the Trip service
@@ -43,8 +44,8 @@ import scatours.common.TripItem;
 @Service(interfaces={ShoppingCart.class})
 public class ShoppingCartImpl implements ShoppingCart{
     
- //   @Reference
- //   protected PaymentProcess paymentProcess;   
+    @Reference
+    protected Payment payment;   
 
     @ConversationID
     protected String cartId;
@@ -83,7 +84,18 @@ public class ShoppingCartImpl implements ShoppingCart{
         // get the total for all the trips
         float amount = (float)0.0;
         
-        //paymentProcess.makePayment(customerId, amount);
+        for (TripItem trip : trips){
+            if (trip.getType().equals(TripItem.TRIP)){
+                amount += trip.getPrice();
+            } else {
+                for (TripItem tripItem : trip.getTripItems()){
+                    amount += tripItem.getPrice();
+                }
+            }
+        }
+        
+        // Take the payment from the customer
+        payment.makePaymentMember(customerId, amount);
     }  
     
 }

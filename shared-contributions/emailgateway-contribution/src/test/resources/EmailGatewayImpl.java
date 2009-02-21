@@ -17,21 +17,20 @@
  * under the License.    
  */
 
-package scatours.payment.client;
+package scatours.emailgateway;
 
-import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
-import scatours.payment.Payment;
 
-@Service(Payment.class)
-public class PaymentClientImpl implements Payment {
-    @Reference
-    protected Payment payment;
+/**
+ * 
+ */
+@Service(EmailGateway.class)
+public class EmailGatewayImpl implements EmailGateway {
 
-    public String makePaymentMember(String customerId, float amount) {
-        // Delegate the external web service
-        return payment.makePaymentMember(customerId, amount);
+    public String sendEmail(EmailType email) {
+        System.out.println("Sending mail to " + email.getTo());
+        return "SENT";
     }
 
 }

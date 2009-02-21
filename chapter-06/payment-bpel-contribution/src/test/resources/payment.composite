@@ -19,8 +19,8 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
            xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
-           xmlns:pp="http://www.example.org/Payment" 
-           targetNamespace="http://www.example.org/Payment" 
+           xmlns:pp="http://www.tuscanyscatours.com/Payment" 
+           targetNamespace="http://www.tuscanyscatours.com/Payment" 
            name="payment">
            
     <component name="PaymentClient">
@@ -33,8 +33,8 @@
     <component name="Payment">
         <implementation.bpel process="pp:Payment"/>
         <service name="paymentPartnerLink">
-            <interface.wsdl interface="http://www.example.org/Payment/#wsdl.interface(Payment)" />
-            <binding.ws uri="http://localhost:8083/Payment" wsdlElement="http://www.example.org/Payment/#wsdl.service(PaymentService)"/>
+            <interface.wsdl interface="http://www.tuscanyscatours.com/Payment/#wsdl.interface(Payment)" />
+            <binding.ws uri="http://localhost:8083/Payment" wsdlElement="http://www.tuscanyscatours.com/Payment/#wsdl.service(PaymentService)"/>
         </service>
         <reference name="creditCardPaymentPartnerLink">
             <binding.ws uri="http://localhost:8081/CreditCardPayment"/>

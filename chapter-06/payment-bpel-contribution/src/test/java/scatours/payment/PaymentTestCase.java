@@ -37,25 +37,28 @@ public class PaymentTestCase {
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {  
-        
-        creditCardNode = SCANodeFactory.newInstance().createSCANode("creditcard.composite", 
-            new SCAContribution("creditcard", "../../shared-contributions/creditcardpayment-contribution/target/test-classes"));        
-        emailGatewayNode = SCANodeFactory.newInstance().createSCANode("emailgateway.composite", 
-                new SCAContribution("creditcard", "../../shared-contributions/emailgateway-contribution/target/test-classes"));
-        paymentNode = SCANodeFactory.newInstance().createSCANode("payment.composite", 
-                new SCAContribution("payment", "./target/test-classes"));
-
-        creditCardNode.start();
-        emailGatewayNode.start();
-        paymentNode.start();
+        try {
+            creditCardNode = SCANodeFactory.newInstance().createSCANode("creditcard.composite", 
+                new SCAContribution("creditcard", "../../shared-contributions/creditcard-payment-jaxb-contribution/target/test-classes"));        
+            emailGatewayNode = SCANodeFactory.newInstance().createSCANode("emailgateway.composite", 
+                    new SCAContribution("creditcard", "../../shared-contributions/emailgateway-contribution/target/test-classes"));
+            paymentNode = SCANodeFactory.newInstance().createSCANode("payment.composite", 
+                    new SCAContribution("payment-bpel", "./target/classes"),
+                    new SCAContribution("payment-bpel-test", "./target/test-classes"));
+    
+            creditCardNode.start();
+            emailGatewayNode.start();
+            paymentNode.start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     
     @Test
     public void testPayment() {
         SCAClient client = (SCAClient) paymentNode;
         Payment payment = client.getService(Payment.class, "PaymentClient");
-        //[nash] Following line is disabled  because of NPE problem
-        //System.out.println("Result = " + payment.makePayment("Fred", 100.00f));
+        System.out.println("Result = " + payment.makePaymentMember("Fred", 100.00f));
     }
 
     @AfterClass

@@ -17,29 +17,29 @@
   ~ under the License.
   -->
 <process name="Payment"
-    targetNamespace="http://www.example.org/Payment"
+    targetNamespace="http://www.tuscanyscatours.com/Payment"
     xmlns="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
     xmlns:bpws="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
     xmlns:tns="http://tuscany.apache.org/Payment"    
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:pp="http://www.example.org/Payment/"
-    xmlns:ccp="http://www.example.org/CreditCardPayment/"
-    xmlns:eg="http://www.example.org/EmailGateway/"
+    xmlns:pp="http://www.tuscanyscatours.com/Payment/"
+    xmlns:ccp="http://www.tuscanyscatours.com/CreditCardPayment/"
+    xmlns:eg="http://www.tuscanyscatours.com/EmailGateway/"
     queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
 
   <import location="Payment.wsdl" 
           importType="http://schemas.xmlsoap.org/wsdl/"
-          namespace="http://www.example.org/Payment/"/>     
+          namespace="http://www.tuscanyscatours.com/Payment/"/>     
 
   <import location="CreditCardPayment.wsdl" 
           importType="http://schemas.xmlsoap.org/wsdl/"
-          namespace="http://www.example.org/CreditCardPayment/"/>
+          namespace="http://www.tuscanyscatours.com/CreditCardPayment/"/>
           
   <import location="EmailGateway.wsdl" 
           importType="http://schemas.xmlsoap.org/wsdl/"
-          namespace="http://www.example.org/EmailGateway/"/>          
+          namespace="http://www.tuscanyscatours.com/EmailGateway/"/>          
           
    <partnerLinks>
       <partnerLink name="paymentPartnerLink" partnerLinkType="pp:PaymentLinkType" myRole="forward" />
@@ -48,8 +48,8 @@
    </partnerLinks>
     
    <variables>
-     <variable name="makePaymentRequestMessage" messageType="pp:MakePaymentRequest"/>
-     <variable name="makePaymentResponseMessage" messageType="pp:MakePaymentResponse"/>
+     <variable name="makePaymentMemberRequestMessage" messageType="pp:MakePaymentMemberRequest"/>
+     <variable name="makePaymentMemberResponseMessage" messageType="pp:MakePaymentMemberResponse"/>
      <variable name="authorizeRequestMessage" messageType="ccp:AuthorizeRequest"/>
      <variable name="authorizeResponseMessage" messageType="ccp:AuthorizeResponse"/>
      <variable name="sendEmailRequestMessage" messageType="eg:SendEmailRequest"/>
@@ -60,8 +60,8 @@
        <receive name="start"
                 partnerLink="paymentPartnerLink"
                 portType="pp:Payment"
-           	    operation="makePayment"
-                variable="makePaymentRequestMessage"
+           	    operation="makePaymentMember"
+                variable="makePaymentMemberRequestMessage"
                 createInstance="yes"/>
 
        <!-- set up call to payments service -->
@@ -69,7 +69,7 @@
           <copy>
               <from>
                   <literal>
-                  <authorize xmlns="http://www.example.org/CreditCardPayment/">
+                  <authorize xmlns="http://www.tuscanyscatours.com/CreditCardPayment/">
                     <CreditCard xmlns="">
                       <CreditCardType>Visa</CreditCardType>
                       <CreditCardNumber>12345678</CreditCardNumber>
@@ -93,11 +93,11 @@
               <to>$authorizeRequestMessage.parameters</to>
           </copy>
           <copy>
-              <from>$makePaymentRequestMessage.parameters/CustomerId/text()</from>
+              <from>$makePaymentMemberRequestMessage.parameters/CustomerId/text()</from>
               <to>$authorizeRequestMessage.parameters/CreditCard/CardOwner/Name</to>
           </copy>
           <copy>
-              <from>$makePaymentRequestMessage.parameters/Amount/text()</from>
+              <from>$makePaymentMemberRequestMessage.parameters/Amount/text()</from>
               <to>$authorizeRequestMessage.parameters/Amount</to>
           </copy>                    
        </assign>
@@ -114,7 +114,7 @@
           <copy>
               <from>
                   <literal>
-                  <sendEmail xmlns="http://www.example.org/EmailGateway/">
+                  <sendEmail xmlns="http://www.tuscanyscatours.com/EmailGateway/">
                     <Email xmlns="">
                       <To>Default</To>
                       <Title>Payment Confirmation</Title>
@@ -126,7 +126,7 @@
               <to>$sendEmailRequestMessage.parameters</to>
           </copy>
           <copy>
-              <from>$makePaymentRequestMessage.parameters/CustomerId/text()</from>
+              <from>$makePaymentMemberRequestMessage.parameters/CustomerId/text()</from>
               <to>$sendEmailRequestMessage.parameters/Email/To</to>
           </copy>                   
        </assign>                  
@@ -144,12 +144,12 @@
           <copy>
               <from>
                   <literal> 
-                  <makePaymentResponse xmlns="http://www.example.org/Payment">
+                  <makePaymentMemberResponse xmlns="http://www.tuscanyscatours.com/Payment">
                     <Status xmlns="">OK</Status>
-                  </makePaymentResponse>
+                  </makePaymentMemberResponse>
                   </literal>
               </from>
-              <to>$makePaymentResponseMessage.parameters</to>
+              <to>$makePaymentMemberResponseMessage.parameters</to>
           </copy>
        </assign>
        
@@ -157,8 +157,8 @@
        <reply name="end"  
               partnerLink="paymentPartnerLink"
               portType="pp:Payment" 
-              operation="makePayment"
-              variable="makePaymentResponseMessage">
+              operation="makePaymentMember"
+              variable="makePaymentMemberResponseMessage">
        </reply>
    </sequence>
 </process>

@@ -142,37 +142,26 @@
         <implementation.java class="scatours.shoppingcart.ShoppingCartImpl"/>
         <service name="ShoppingCart">
         </service>
-        <!--reference name="paymentProcess">
-            <binding.ws uri="http://localhost:8083/PaymentProcess" />
-        </reference--> 
+        <reference name="payment">
+            <binding.ws uri="http://localhost:8080/Payment" />
+        </reference> 
     </component>   
     
-    <!--component name="PaymentProcessComponent">
-        <implementation.bpel process="pp:PaymentProcess"/>
-        <service name="paymentProcessPartnerLink">
-            <interface.wsdl interface="http://www.example.org/PaymentProcess/#wsdl.interface(PaymentProcess)" />
-            <binding.ws uri="http://localhost:8080/PaymentProcess" wsdlElement="http://www.example.org/PaymentProcess/#wsdl.service(PaymentProcessService)"/>
+    <component name="PaymentComponent">
+        <implementation.java class="payment.PaymentImpl" />
+        <service name="Payment">
+            <binding.ws uri="http://localhost:8080/Payment" />
         </service>
-        <reference name="creditCardPaymentPartnerLink">
-            <binding.ws uri="http://localhost:8081/CreditCardPayment"/>
+        <reference name="creditCardPayment">
+            <binding.ws uri="http://localhost:8080/CreditCardPayment" />
         </reference>
-        <reference name="emailGatewayPartnerLink">
-            <binding.ws uri="http://localhost:8082/EmailGateway"/>
-        </reference>       
-    </component>  
-           
-    <component name="CreditCardPaymentWS">
-        <implementation.java class="payment.creditcard.ws.impl.CreditCardPaymentWSImpl" />
-        <service name="CreditCardPayment">
-            <binding.ws uri="http://localhost:8081/CreditCardPayment" />
-        </service>
-    </component> 
+    </component>
     
-    <component name="EmailGateway">
-        <implementation.java class="scatours.emailgateway.EmailGatewayImpl" />
-        <service name="EmailGateway">
-            <binding.ws uri="http://localhost:8082/EmailGateway" />
+    <component name="CreditCardPaymentComponent">
+        <implementation.java class="payment.creditcard.CreditCardPaymentImpl" />
+        <service name="CreditCardPayment">
+            <binding.ws uri="http://localhost:8080/CreditCardPayment" />
         </service>
-    </component-->  
+    </component>     
 
 </composite>

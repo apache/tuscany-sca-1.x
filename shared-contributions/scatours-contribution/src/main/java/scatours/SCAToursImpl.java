@@ -40,7 +40,10 @@ import scatours.travelcatalog.TravelCatalogSearch;
 import scatours.tripbooking.TripBooking;
 
 /**
- * An implementation of the Trip service
+ * An implementation of the SCA tours component. This component currently provides
+ * a front end to the components that the UI communicated with. It allows a conversation
+ * to be held with the shopping cart as javascript doesn't support conversations. 
+ * Other than that it's just a pass through so we could look to remove it.
  */
 @Scope("COMPOSITE")
 @Service(interfaces={SCAToursSearch.class, SCAToursBooking.class, SCAToursCart.class})
@@ -60,18 +63,13 @@ public class SCAToursImpl implements SCAToursSearch, SCAToursBooking, SCAToursCa
     
     private Map<String,ShoppingCart> carts = new HashMap<String,ShoppingCart>();
     private Map<String,TripBooking> trips = new HashMap<String,TripBooking>();
-    //private Map<String, TripItem> searchItemsCache = new HashMap<String, TripItem>();
     
     // SCAToursSearch methods
     
     public TripItem[] search(TripLeg tripLeg) {
         
-        TripItem[] searchItems = travelCatalogSearch.search(tripLeg);
-        
-        //for (int i =0; i< searchItems.length; i++){
-        //    searchItemsCache.put(searchItems[i].getId(), searchItems[i]);
-        //}
-        return searchItems;
+        return travelCatalogSearch.search(tripLeg);
+ 
     } 
 
     // SCAToursBooking methods
@@ -99,64 +97,7 @@ public class SCAToursImpl implements SCAToursSearch, SCAToursBooking, SCAToursCa
     }
     
     public void checkout(String cartId){
-        shoppingCart.checkout("Fred");
-    }
-    
-/*    
-    public String addTrip(String cartId){
-        String tripId = UUID.randomUUID().toString();
-        ServiceReference<TripBooking> tripReference = componentContext.getServiceReference(TripBooking.class, 
-                                                                                          "tripBooking");
-        tripReference.setConversationID(tripId);
-        trips.put(tripId, tripReference.getService());
-        
-        carts.get(cartId).addItem(tripId);
-        return tripId;
-    }
-    
-    public void removeTrip(String cartId, String tripId) {
-        carts.get(cartId).removeItem(tripId);
-    }
-    
-    public void addTripItem(String cartId, String tripId, String tripItemId){
-        TripItem item = searchItemsCache.get(tripItemId);
-        TripItem itemCopy = new TripItem(item);
-        itemCopy.setTripId(tripId);
-        trips.get(tripId).addTripItem(itemCopy);
-    }
-    
-    public void removeTripItem(String cartId, String tripId, String tripItemId){
-        trips.get(tripId).removeTripItem(tripItemId);
-    } 
-    
-    public TripItem[] getTripItems(String cartId) {
-        List<TripItem> returnTripItems = new ArrayList<TripItem>();
-        
-        for( String tripId : carts.get(cartId).getItems()){
-            returnTripItems.addAll(Arrays.asList(trips.get(tripId).getTripItems()));
-        }
-
-        return returnTripItems.toArray(new TripItem[returnTripItems.size()]);
-    }
-    
-    public double getTotalPrice(String cartId){ 
-        double total = 0.0;
-        
-        for( String tripId : carts.get(cartId).getItems()){
-            total += trips.get(tripId).getTripPrice();
-        }
-
-        return total;
-    }
-    
-    public void checkout(String cartId){ 
-        // get users credentials. Hard coded for now but should
-        // come from the security context
-        String customerId = "Fred Bloggs";
-        float amount = (float)getTotalPrice(cartId);
-        
-        paymentProcess.makePayment(customerId, amount);
-    }
-    
-*/    
+        // need to get the user id from the context here
+        carts.get(cartId).checkout("Fred");
+    }   
 }

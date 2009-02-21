@@ -322,7 +322,8 @@
     function checkout() {        
         scaToursCart.checkout(cartId);
         
-        document.getElementById('searchResponse').innerHTML = "";
+        document.getElementById('packagedTripItems').innerHTML = "";
+        document.getElementById('bespokeTripItems').innerHTML = "";
         document.getElementById('cartItems').innerHTML = "Thank you for shopping with SCA Tours";
         document.getElementById('cartPrice').innerHTML = "";
         searchResponseItems = null;
