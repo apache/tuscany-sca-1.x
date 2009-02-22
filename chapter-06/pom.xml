@@ -40,6 +40,7 @@
                 <module>payment-bpel-contribution</module>
                 <module>payment-spring-contribution</module>
                 <module>payment-spring-annotation-contribution</module>
+                <module>payment-javascript-contribution</module>
                 <module>ui-bpel-contribution</module>
                 <module>ui-spring-contribution</module>
             </modules>
