@@ -22,7 +22,6 @@ import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
-
 import trip.Trip;
 
 /**

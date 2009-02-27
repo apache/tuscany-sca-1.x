@@ -24,13 +24,7 @@ import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import payment.creditcard.CreditCardDetailsType;
-import payment.creditcard.CreditCardTypeType;
-import payment.creditcard.ObjectFactory;
-import payment.creditcard.PayerType;
 
 /**
  * 

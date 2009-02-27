@@ -19,9 +19,6 @@
 
 package scatours.common;
 
-import java.util.List;
-
-import org.apache.tuscany.sca.data.collection.Item;
 import org.osoa.sca.annotations.Remotable;
 
 @Remotable

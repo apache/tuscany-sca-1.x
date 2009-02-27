@@ -21,9 +21,6 @@ package payment.creditcard;
 
 import org.osoa.sca.annotations.Service;
 
-import payment.creditcard.CreditCardDetailsType;
-import payment.creditcard.CreditCardPayment;
-
 @Service(CreditCardPayment.class)
 public class CreditCardPaymentImpl implements CreditCardPayment {
     

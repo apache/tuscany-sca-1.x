@@ -19,7 +19,6 @@
 
 package scatours.common;
 
-import java.util.List;
 
 
 public class TripItem {

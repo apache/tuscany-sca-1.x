@@ -18,10 +18,6 @@
  */
 package scatours.tripbooking;
 
-import org.osoa.sca.annotations.Conversational;
-import org.osoa.sca.annotations.Destroy;
-import org.osoa.sca.annotations.EndsConversation;
-import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Remotable;
 
 import scatours.common.TripItem;

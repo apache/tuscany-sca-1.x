@@ -18,7 +18,6 @@
  */
 package scatours;
 
-import org.osoa.sca.annotations.Conversational;
 import org.osoa.sca.annotations.Remotable;
 
 import scatours.common.TripItem;

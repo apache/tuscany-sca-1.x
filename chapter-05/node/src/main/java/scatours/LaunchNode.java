@@ -24,7 +24,6 @@ import java.io.IOException;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
-import org.apache.tuscany.sca.node.launcher.NodeLauncher;
 
 public class LaunchNode {
     public static void main(String[] args) throws Exception {

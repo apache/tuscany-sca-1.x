@@ -18,10 +18,7 @@
  */
 package scatours;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -34,7 +31,6 @@ import org.osoa.sca.annotations.Service;
 
 import scatours.common.TripItem;
 import scatours.common.TripLeg;
-//import scatours.paymentprocess.PaymentProcess;
 import scatours.shoppingcart.ShoppingCart;
 import scatours.travelcatalog.TravelCatalogSearch;
 import scatours.tripbooking.TripBooking;
