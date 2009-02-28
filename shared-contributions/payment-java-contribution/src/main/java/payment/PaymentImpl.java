@@ -19,35 +19,47 @@
 
 package payment;
 
+import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
 import payment.creditcard.CreditCardDetailsType;
 import payment.creditcard.CreditCardPayment;
-import payment.creditcard.CreditCardTypeType;
-import payment.creditcard.ObjectFactory;
-import payment.creditcard.PayerType;
+import scatours.customer.Customer;
+import scatours.customer.CustomerRegistry;
+import scatours.emailgateway.EmailGateway;
 
 /**
- * 
+ * The payment implementation
  */
 @Service(Payment.class)
 public class PaymentImpl implements Payment {
 
     @Reference
+    protected CustomerRegistry customerRegistry;
+
+    @Reference
     protected CreditCardPayment creditCardPayment;
-    
+
+    @Reference
+    protected EmailGateway emailGateway;
+
+    @Property
+    protected float transactionFeeRate = 0.01f;
+
     public String makePaymentMember(String customerId, float amount) {
-        
-        ObjectFactory objectFactory = new ObjectFactory();
-        CreditCardDetailsType ccDetails = objectFactory.createCreditCardDetailsType();
-        ccDetails.setCreditCardType(CreditCardTypeType.fromValue("Visa"));
-        PayerType ccOwner = objectFactory.createPayerType();
-        ccOwner.setName(customerId);
-        ccDetails.setCardOwner(ccOwner);
-        
+        Customer customer = customerRegistry.getCustomer(customerId);
+
+        CreditCardDetailsType ccDetails = customer.getCreditCard();
+
         String status = creditCardPayment.authorize(ccDetails, amount);
-        
+
+        StringBuffer body = new StringBuffer();
+        body.append(customer);
+        body.append("\n").append("Status: ").append(status).append("\n");
+        emailGateway.sendEmail("order@tuscanyscatours.com", customer.getEmail(), "Status for your payment", body
+            .toString());
+
         return status;
     }
 
