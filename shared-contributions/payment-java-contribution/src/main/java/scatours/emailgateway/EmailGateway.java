@@ -27,5 +27,4 @@ import org.osoa.sca.annotations.Remotable;
 @Remotable
 public interface EmailGateway {
     public boolean sendEmail(String sender, String recipient, String subject, String body);
-
 }

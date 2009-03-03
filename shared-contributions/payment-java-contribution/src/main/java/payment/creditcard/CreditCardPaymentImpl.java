@@ -23,19 +23,18 @@ import org.osoa.sca.annotations.Service;
 
 @Service(CreditCardPayment.class)
 public class CreditCardPaymentImpl implements CreditCardPayment {
-    
+
     public String authorize(CreditCardDetailsType creditCard, float amount) {
-        if (creditCard != null){
-            System.out.println("Checking card: name = " + 
-                               creditCard.getCardOwner().getName() +
-                               " number = " +
-                               creditCard.getCreditCardNumber() +
-                               " for amount " + 
-                               amount);
+        if (creditCard != null) {
+            System.out.println("Checking card: name = " + creditCard.getCardOwner().getName()
+                + " number = "
+                + creditCard.getCreditCardNumber()
+                + " for amount "
+                + amount);
         } else {
             System.out.println("Checking card is null");
         }
-        
+
         return "OK";
     }
 }
