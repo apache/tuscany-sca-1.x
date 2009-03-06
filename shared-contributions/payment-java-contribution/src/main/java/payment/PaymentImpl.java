@@ -19,6 +19,7 @@
 
 package payment;
 
+import org.osoa.sca.annotations.Authentication;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
@@ -39,6 +40,7 @@ public class PaymentImpl implements Payment {
     protected CustomerRegistry customerRegistry;
 
     @Reference
+    @Authentication
     protected CreditCardPayment creditCardPayment;
 
     @Reference

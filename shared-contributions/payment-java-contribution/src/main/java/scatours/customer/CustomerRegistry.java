@@ -24,7 +24,7 @@ import java.util.Collection;
 import payment.creditcard.CreditCardDetailsType;
 
 /**
- * 
+ * Customer registry interface
  */
 public interface CustomerRegistry {
     Customer createCustomer(String name, String email, CreditCardDetailsType creditCard);

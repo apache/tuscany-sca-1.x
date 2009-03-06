@@ -19,9 +19,14 @@
 
 package payment.creditcard;
 
+import javax.annotation.security.RolesAllowed;
+
+import org.osoa.sca.annotations.Requires;
 import org.osoa.sca.annotations.Service;
 
 @Service(CreditCardPayment.class)
+@Requires("{http://www.osoa.org/xmlns/sca/1.0}authorization")
+@RolesAllowed("Admin")
 public class CreditCardPaymentImpl implements CreditCardPayment {
 
     public String authorize(CreditCardDetailsType creditCard, float amount) {
