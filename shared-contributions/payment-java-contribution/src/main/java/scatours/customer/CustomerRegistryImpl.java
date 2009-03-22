@@ -85,15 +85,24 @@ public class CustomerRegistryImpl implements CustomerRegistry {
         return customers.values();
     }
 
-    public Customer getCustomer(String id) {
-        return customers.get(id);
+    public Customer getCustomer(String id) throws CustomerNotFoundException {
+        Customer customer = customers.get(id);
+        
+        if (customer == null){
+            throw new CustomerNotFoundException("Customer " + id + " not found");
+        }
+        
+        return customer;
     }
 
     public boolean updateCustomer(Customer customer) {
-        Customer current = getCustomer(customer.getId());
-        if (current == null) {
+        Customer current = null;
+        try {
+            current = getCustomer(customer.getId());
+        } catch (Exception ex) {
             return false;
         }
+
         current.setEmail(customer.getEmail());
         current.setName(customer.getName());
         current.setCreditCard(customer.getCreditCard());

@@ -27,6 +27,7 @@ import org.osoa.sca.annotations.Service;
 import payment.creditcard.CreditCardDetailsType;
 import payment.creditcard.CreditCardPayment;
 import scatours.customer.Customer;
+import scatours.customer.CustomerNotFoundException;
 import scatours.customer.CustomerRegistry;
 import scatours.emailgateway.EmailGateway;
 
@@ -50,7 +51,15 @@ public class PaymentImpl implements Payment {
     protected float transactionFeeRate = 0.01f;
 
     public String makePaymentMember(String customerId, float amount) {
-        Customer customer = customerRegistry.getCustomer(customerId);
+        Customer customer = null;
+        
+        try {
+            customer = customerRegistry.getCustomer(customerId);
+        } catch (CustomerNotFoundException ex) {
+            return "Payment failed due to " + ex.getMessage();
+        } catch (Throwable t) {   
+            return "Payment failed due to system error " + t.getMessage();
+        }
 
         CreditCardDetailsType ccDetails = customer.getCreditCard();
 

@@ -19,21 +19,40 @@
 
 package scatours.customer;
 
-import java.util.Collection;
 
-import payment.creditcard.CreditCardDetailsType;
+public class CustomerNotFoundException extends Exception {
+    private static final long serialVersionUID = -129752837478357452L;
 
-/**
- * Customer registry interface
- */
-public interface CustomerRegistry {
-    Customer createCustomer(String name, String email, CreditCardDetailsType creditCard);
+    /**
+     * 
+     */
+    public CustomerNotFoundException() {
 
-    boolean updateCustomer(Customer customer);
+    }
 
-    Customer getCustomer(String id) throws CustomerNotFoundException;
+    /**
+     * @param message
+     */
+    public CustomerNotFoundException(String message) {
+        super(message);
 
-    Collection<Customer> getAllCustomers();
+    }
 
-    boolean deleteCustomer(String id);
+    /**
+     * @param cause
+     */
+    public CustomerNotFoundException(Throwable cause) {
+        super(cause);
+
+    }
+
+    /**
+     * @param message
+     * @param cause
+     */
+    public CustomerNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+
+    }
+
 }
