@@ -33,7 +33,7 @@ public class HelloWorldServer {
         BrokerService jmsBroker = new BrokerService();
         jmsBroker.setPersistent(false);
         jmsBroker.setUseJmx(false);
-        jmsBroker.addConnector("tcp://localhost:61619");
+        jmsBroker.addConnector("tcp://localhost:61613");
         jmsBroker.start();
         return jmsBroker;
     }
