@@ -44,6 +44,12 @@
 			<artifactId>org.apache.felix.framework</artifactId>
 			<version>1.0.4</version>
 			<scope>test</scope>
+			<exclusions>
+			    <exclusion>
+			        <groupId>org.apache.felix</groupId>
+                    <artifactId>org.osgi.foundation</artifactId>
+                </exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 	<build>
