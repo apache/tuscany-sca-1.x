@@ -55,6 +55,7 @@ public class AttributeUnrecognizedNamespaceTestCase extends TestCase {
     	Problem problem = ((DefaultMonitorImpl)monitor).getLastLoggedProblem();
         
     	assertNotNull(problem);
+        System.out.println("AttributeUnrecognizedNamespaceTestCase problem:" +  problem.getMessageId());
         assertEquals("AttributeUnrecognizedNamespace", problem.getMessageId());
     }
 }
