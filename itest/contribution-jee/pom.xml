@@ -83,6 +83,12 @@
             <artifactId>tuscany-implementation-web-runtime</artifactId>
             <version>1.5-SNAPSHOT</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples</artifactId>
+            <version>1.5-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.myfaces.core</groupId>
@@ -95,6 +101,7 @@
             <artifactId>myfaces-impl</artifactId>
             <version>1.2.3</version>
         </dependency>
+        
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-jsp_2.1_spec</artifactId>
