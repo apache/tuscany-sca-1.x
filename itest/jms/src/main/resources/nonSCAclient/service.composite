@@ -23,7 +23,7 @@
     <component name="DefaultService">
         <implementation.java class="org.apache.tuscany.sca.binding.jms.OneWayServiceImpl"/>
         <service name="OneWayService">
-            <binding.jms initialContextFactory="org.apache.activemq.jndi.ActiveMQInitialContextFactory" jndiURL="tcp://localhost:61618"
+            <binding.jms initialContextFactory="org.apache.activemq.jndi.ActiveMQInitialContextFactory" jndiURL="tcp://localhost:61623"
                          messageProcessor="XMLTextMessage">
             </binding.jms>
         </service>
@@ -32,7 +32,7 @@
     <component name="TextService">
         <implementation.java class="org.apache.tuscany.sca.binding.jms.OneWayServiceImpl"/>
         <service name="OneWayService">
-            <binding.jms initialContextFactory="org.apache.activemq.jndi.ActiveMQInitialContextFactory" jndiURL="tcp://localhost:61618"
+            <binding.jms initialContextFactory="org.apache.activemq.jndi.ActiveMQInitialContextFactory" jndiURL="tcp://localhost:61623"
                          messageProcessor="TextMessage"
                          uri="jms:TextDest" />
         </service>
@@ -41,7 +41,7 @@
     <component name="ObjectService">
         <implementation.java class="org.apache.tuscany.sca.binding.jms.OneWayObjectServiceImpl"/>
         <service name="OneWayObjectService">
-            <binding.jms initialContextFactory="org.apache.activemq.jndi.ActiveMQInitialContextFactory" jndiURL="tcp://localhost:61618"
+            <binding.jms initialContextFactory="org.apache.activemq.jndi.ActiveMQInitialContextFactory" jndiURL="tcp://localhost:61623"
                          messageProcessor="ObjectMessage"
                          uri="jms:ObjectDest" />
         </service>
