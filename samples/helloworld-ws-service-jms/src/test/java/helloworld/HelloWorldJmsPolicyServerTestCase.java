@@ -47,7 +47,7 @@ public class HelloWorldJmsPolicyServerTestCase{
         jmsBroker = new BrokerService(); 
         jmsBroker.setPersistent(false);
         jmsBroker.setUseJmx(false);
-        jmsBroker.addConnector("tcp://localhost:61613");
+        jmsBroker.addConnector("tcp://localhost:61982");
         jmsBroker.start();
     }
 
