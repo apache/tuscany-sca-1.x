@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.sca.binding.erlang.testing;
 
+import java.lang.annotation.Annotation;
+
 import org.apache.tuscany.sca.binding.erlang.impl.types.TypeHelpersProxy;
 
 import com.ericsson.otp.erlang.OtpErlangObject;
@@ -53,14 +55,16 @@ public class MboxListener implements Runnable {
 			Thread.sleep(duration);
 			OtpErlangPid senderPid = null;
 			if (response != null) {
-				Object[] args = new Object[1];
-				args[0] = response;
-				if (msg.getMsg().getClass().equals(OtpErlangTuple.class) && ((OtpErlangTuple) msg.getMsg()).elementAt(0).getClass().equals(OtpErlangPid.class)) {
-					senderPid = (OtpErlangPid) ((OtpErlangTuple) msg.getMsg()).elementAt(0);
+				if (msg.getMsg().getClass().equals(OtpErlangTuple.class)
+						&& ((OtpErlangTuple) msg.getMsg()).elementAt(0)
+								.getClass().equals(OtpErlangPid.class)) {
+					senderPid = (OtpErlangPid) ((OtpErlangTuple) msg.getMsg())
+							.elementAt(0);
 				} else {
 					senderPid = msg.getSenderPid();
 				}
-				mbox.send(senderPid, TypeHelpersProxy.toErlang(args));
+				mbox.send(senderPid, TypeHelpersProxy.toErlang(response,
+						new Annotation[0]));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,9 +88,9 @@ public class MboxListener implements Runnable {
 					}
 				}
 			}
-			return msg.getMsg();
+			return ((OtpErlangTuple) msg.getMsg()).elementAt(1);
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		return null;
 	}

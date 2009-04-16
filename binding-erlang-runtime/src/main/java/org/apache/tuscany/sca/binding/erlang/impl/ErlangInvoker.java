@@ -19,12 +19,14 @@
 
 package org.apache.tuscany.sca.binding.erlang.impl;
 
+import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.tuscany.sca.binding.erlang.ErlangBinding;
 import org.apache.tuscany.sca.binding.erlang.impl.exceptions.ErlangException;
 import org.apache.tuscany.sca.binding.erlang.impl.types.TypeHelpersProxy;
+import org.apache.tuscany.sca.interfacedef.java.JavaOperation;
 import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
 
@@ -81,9 +83,13 @@ public class ErlangInvoker implements Invoker {
 			}
 			tmpMbox = node.createMbox();
 			Object[] args = msg.getBody();
+			Method jmethod = ((JavaOperation) msg.getOperation())
+					.getJavaMethod();
 			// create and send msg with self pid in the beginning
-			OtpErlangObject[] argsArray = { tmpMbox.self(),
-					TypeHelpersProxy.toErlang(args) };
+			OtpErlangObject[] argsArray = {
+					tmpMbox.self(),
+					TypeHelpersProxy.toErlang(args, jmethod
+							.getParameterAnnotations()) };
 			OtpErlangObject otpArgs = new OtpErlangTuple(argsArray);
 			tmpMbox.send(msg.getOperation().getName(), binding.getNode(),
 					otpArgs);
@@ -96,7 +102,8 @@ public class ErlangInvoker implements Invoker {
 				}
 				OtpErlangObject result = resultMsg.getMsg();
 				msg.setBody(TypeHelpersProxy.toJava(result, msg.getOperation()
-						.getOutputType().getPhysical()));
+						.getOutputType().getPhysical(), jmethod
+						.getAnnotations()));
 			}
 		} catch (InterruptedException e) {
 			// TODO: externalize message?
@@ -129,8 +136,10 @@ public class ErlangInvoker implements Invoker {
 			}
 			other = new OtpPeer(binding.getNode());
 			connection = self.connect(other);
-			OtpErlangList params = TypeHelpersProxy
-					.toErlangAsList((Object[]) msg.getBody());
+			Method jmethod = ((JavaOperation) msg.getOperation())
+					.getJavaMethod();
+			OtpErlangList params = TypeHelpersProxy.toErlangAsList(msg
+					.getBody(), jmethod.getParameterAnnotations());
 			OtpErlangTuple message = MessageHelper.rpcMessage(self.pid(), self
 					.createRef(), binding.getModule(), msg.getOperation()
 					.getName(), params);
@@ -152,8 +161,10 @@ public class ErlangInvoker implements Invoker {
 				reportProblem(msg, e);
 				msg.setBody(null);
 			} else if (msg.getOperation().getOutputType() != null) {
+				jmethod.getAnnotations();
 				msg.setBody(TypeHelpersProxy.toJava(result, msg.getOperation()
-						.getOutputType().getPhysical()));
+						.getOutputType().getPhysical(), jmethod
+						.getAnnotations()));
 			}
 		} catch (OtpAuthException e) {
 			// TODO: externalize message?

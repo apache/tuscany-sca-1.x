@@ -21,45 +21,10 @@ package org.apache.tuscany.sca.binding.erlang.testing;
 
 import org.apache.tuscany.sca.binding.erlang.meta.ErlangAtom;
 
-/**
- * @version $Rev$ $Date$
- */
-public interface MboxInterface {
-
-	String sendArgs(String arg) throws Exception;
-
-	boolean sendArgs(boolean arg) throws Exception;
-
-	float sendArgs(float arg) throws Exception;
-
-	double sendArgs(double arg) throws Exception;
-
-	long sendArgs(long arg) throws Exception;
-
-	int sendArgs(int arg) throws Exception;
-
-	char sendArgs(char arg) throws Exception;
-
-	short sendArgs(short arg) throws Exception;
-
-	byte sendArgs(byte arg) throws Exception;
-
-	void sendArgs(int arg1, String arg2) throws Exception;
-
-	StructuredTuple sendArgs(StructuredTuple arg) throws Exception;
-
-	String[] sendArgs(String[] arg) throws Exception;
-
-	String[][] sendArgs(String[][] arg);
-
-	byte[] sendArgs(byte[] arg);
+public class AtomTuple {
 
 	@ErlangAtom
-	String[] sendArgs(@ErlangAtom String arg1, AtomTuple arg2);
-
-	@ErlangAtom
-	String[][] sendArgs(@ErlangAtom String[][] arg1, int arg2);
-
-	void sendArgs();
+	public String field1;
+	public int field2;
 
 }

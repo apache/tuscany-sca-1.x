@@ -19,47 +19,21 @@
 
 package org.apache.tuscany.sca.binding.erlang.impl.types;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.ericsson.otp.erlang.OtpErlangList;
+import com.ericsson.otp.erlang.OtpErlangAtom;
 import com.ericsson.otp.erlang.OtpErlangObject;
 
 /**
  * @version $Rev$ $Date$
  */
-public class ListTypeHelper implements TypeHelper {
+public class AtomTypeHelper implements TypeHelper {
 
 	public OtpErlangObject toErlang(Object object) {
-		int i = 0;
-		List<OtpErlangObject> elements = new ArrayList<OtpErlangObject>();
-		while (true) {
-			try {
-				elements.add(TypeHelpersProxy.toErlang(Array.get(object, i),
-						new Annotation[0]));
-				i++;
-			} catch (ArrayIndexOutOfBoundsException e) {
-				// expected
-				break;
-			}
-		}
-		return new OtpErlangList(elements.toArray(new OtpErlangObject[elements
-				.size()]));
+		return new OtpErlangAtom((String) object);
 	}
 
 	public Object toJava(OtpErlangObject object, Class<?> forClass)
 			throws Exception {
-		OtpErlangList erlangList = (OtpErlangList) object;
-		Object result = Array.newInstance(forClass.getComponentType(),
-				erlangList.arity());
-		for (int i = 0; i < erlangList.arity(); i++) {
-			Array.set(result, i, TypeHelpersProxy.toJava(erlangList
-					.elementAt(i), forClass.getComponentType(),
-					new Annotation[0]));
-		}
-		return result;
+		return ((OtpErlangAtom) object).atomValue();
 	}
 
 }

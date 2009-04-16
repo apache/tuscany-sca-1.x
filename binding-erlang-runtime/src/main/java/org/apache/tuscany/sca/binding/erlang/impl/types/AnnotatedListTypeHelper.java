@@ -19,50 +19,51 @@
 
 package org.apache.tuscany.sca.binding.erlang.impl.types;
 
-import java.lang.reflect.Field;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ericsson.otp.erlang.OtpErlangList;
 import com.ericsson.otp.erlang.OtpErlangObject;
-import com.ericsson.otp.erlang.OtpErlangTuple;
 
 /**
  * @version $Rev$ $Date$
  */
-public class TupleTypeHelper implements TypeHelper {
+public class AnnotatedListTypeHelper implements TypeHelper {
+
+	private Annotation[] notes;
+
+	public AnnotatedListTypeHelper(Annotation[] notes) {
+		this.notes = notes;
+	}
 
 	public OtpErlangObject toErlang(Object object) {
-		Class<?> forClass = object.getClass();
-		List<OtpErlangObject> tupleMembers = new ArrayList<OtpErlangObject>();
-		Field[] fields = forClass.getFields();
-		for (int i = 0; i < fields.length; i++) {
+		int i = 0;
+		List<OtpErlangObject> elements = new ArrayList<OtpErlangObject>();
+		while (true) {
 			try {
-				OtpErlangObject member = TypeHelpersProxy.toErlang(fields[i]
-						.get(object), fields[i].getAnnotations());
-				tupleMembers.add(member);
-			} catch (IllegalArgumentException e) {
-				// no problem should occur here
-			} catch (IllegalAccessException e) {
-				// and here
+				elements.add(TypeHelpersProxy.toErlang(Array.get(object, i),
+						notes));
+				i++;
+			} catch (ArrayIndexOutOfBoundsException e) {
+				// expected
+				break;
 			}
 		}
-		OtpErlangObject result = new OtpErlangTuple(tupleMembers
-				.toArray(new OtpErlangObject[tupleMembers.size()]));
-		return result;
+		return new OtpErlangList(elements.toArray(new OtpErlangObject[elements
+				.size()]));
 	}
 
 	public Object toJava(OtpErlangObject object, Class<?> forClass)
 			throws Exception {
-		Object result = null;
-		OtpErlangTuple tuple = (OtpErlangTuple) object;
-		Field[] fields = forClass.getFields();
-		result = forClass.newInstance();
-		for (int i = 0; i < tuple.arity(); i++) {
-			OtpErlangObject tupleMember = tuple.elementAt(i);
-			Object javaMember = TypeHelpersProxy.toJava(tupleMember, fields[i]
-					.getType(), fields[i].getAnnotations());
-			fields[i].setAccessible(true);
-			fields[i].set(result, javaMember);
+		OtpErlangList erlangList = (OtpErlangList) object;
+		Object result = Array.newInstance(forClass.getComponentType(),
+				erlangList.arity());
+		for (int i = 0; i < erlangList.arity(); i++) {
+			Array.set(result, i, TypeHelpersProxy.toJava(erlangList
+					.elementAt(i), forClass.getComponentType(),
+					new Annotation[0]));
 		}
 		return result;
 	}
