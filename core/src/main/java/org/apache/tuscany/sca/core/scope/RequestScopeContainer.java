@@ -62,6 +62,14 @@ public class RequestScopeContainer extends AbstractScopeContainer<Thread> {
         // synchronized (destroyQueues) {
         // destroyQueues.clear();
         // }
+        for (InstanceWrapper ctx : wrappers.values()) {
+            try {
+                ctx.stop();
+            } catch (ThreadDeath td) {
+                throw td;
+            } catch (Throwable e2) {
+            }
+        }
         lifecycleState = STOPPED;
     }
 
@@ -72,8 +80,20 @@ public class RequestScopeContainer extends AbstractScopeContainer<Thread> {
         }
         if (ctx == null) {
             ctx = super.createInstanceWrapper();
-            ctx.start();
-            wrappers.put(Thread.currentThread(), ctx);
+            try {
+                ctx.start();
+                wrappers.put(Thread.currentThread(), ctx);
+            } catch (ThreadDeath td) {
+                throw td;
+            } catch (Throwable e) {
+                try {
+                    ctx.stop();
+                } catch (ThreadDeath td) {
+                    throw td;
+                } catch (Throwable e2) {
+                }
+                throw new TargetInitializationException(e);
+            }
         }
         return ctx;
     }

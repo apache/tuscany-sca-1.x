@@ -36,7 +36,19 @@ public class StatelessScopeContainer<KEY> extends AbstractScopeContainer<KEY> {
     public  InstanceWrapper getWrapper(KEY contextId)
         throws TargetResolutionException {
         InstanceWrapper ctx = createInstanceWrapper();
-        ctx.start();
+        try {
+            ctx.start();
+        } catch (ThreadDeath td) {
+            throw td;
+        } catch (Throwable e) {
+            try {
+                ctx.stop();
+            } catch (ThreadDeath td) {
+                throw td;
+            } catch (Throwable e2) {
+            }
+            throw new TargetInitializationException(e);
+        }
         return ctx;
     }
 
