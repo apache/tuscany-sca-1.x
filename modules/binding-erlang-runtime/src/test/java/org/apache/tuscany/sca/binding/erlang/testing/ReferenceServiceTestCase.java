@@ -649,6 +649,21 @@ public class ReferenceServiceTestCase {
 				.getMsg();
 		assertEquals("Hello world !", result.stringValue());
 	}
+	
+	/**
+	 * Tests receiving reply without sending self PID
+	 * @throws Exception
+	 */
+	@Test(timeout = 1000)
+	public void testMsgWithoutPid() throws Exception {
+		OtpErlangObject[] args = new OtpErlangObject[2];
+		args[0] = new OtpErlangString("world");
+		args[1] = new OtpErlangString("!");
+		refMbox.send("sayHello", "RPCServerMbox", new OtpErlangTuple(args));
+		OtpErlangString result = (OtpErlangString) refMbox.receiveMsg()
+				.getMsg();
+		assertEquals("Hello world !", result.stringValue());
+	}
 
 	/**
 	 * Tests service mbox receiving complex message
@@ -814,7 +829,6 @@ public class ReferenceServiceTestCase {
 
 		// testing correct cookie
 		cookieModuleReference.sayHellos();
-
 	}
 
 }

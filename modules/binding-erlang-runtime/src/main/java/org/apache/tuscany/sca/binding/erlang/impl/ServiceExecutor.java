@@ -214,14 +214,17 @@ public class ServiceExecutor implements Runnable {
 			if (msg.getMsg().getClass().equals(OtpErlangTuple.class)
 					&& (((OtpErlangTuple) msg.getMsg()).elementAt(0))
 							.getClass().equals(OtpErlangPid.class)) {
+				// PID provided by client
 				senderPid = (OtpErlangPid) ((OtpErlangTuple) msg.getMsg())
 						.elementAt(0);
 				msgNoSender = ((OtpErlangTuple) msg.getMsg()).elementAt(1);
 			} else {
+				// PID obtained from jinterface
+				senderPid = msg.getSenderPid();
 				msgNoSender = msg.getMsg();
 			}
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 		if (operations == null) {
@@ -265,13 +268,32 @@ public class ServiceExecutor implements Runnable {
 					if (response != null && senderPid != null) {
 						connection.send(senderPid, response);
 					} else if (response != null && senderPid == null) {
-						// FIXME: cannot send reply - sender didn't provided
-						// pid. Use PID obtained by jinteface or log this error?
-						// connection.send(msg.getSenderPid(), response);
+						// TODO: externalize message?
+						// TODO: do we need to send this reply?
+						logger
+								.log(
+										Level.WARNING,
+										"Cannot send reply - Erlang client didn't provide it's PID and couldn't obtain sender PID from jinterface");
 					}
 				} catch (InvocationTargetException e) {
-					// FIXME: use linking feature? send some error?
-					e.printStackTrace();
+					if (e.getCause() != null
+							&& e.getCause().getClass().equals(
+									IllegalArgumentException.class)) {
+						// arguments number or type mismatch
+						try {
+							// TODO: externalize message?
+							connection
+									.send(
+											senderPid,
+											new OtpErlangString(
+													"Operation name found in SCA component, but parameters types didn't match."));
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} else {
+						e.printStackTrace();
+					}
 					// } catch (IOException e) {
 				} catch (Exception e) {
 					// FIXME: log this problem? use linking feature? send error?

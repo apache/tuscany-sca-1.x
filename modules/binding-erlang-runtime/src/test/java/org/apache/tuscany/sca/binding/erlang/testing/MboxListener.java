@@ -22,6 +22,7 @@ package org.apache.tuscany.sca.binding.erlang.testing;
 import org.apache.tuscany.sca.binding.erlang.impl.types.TypeHelpersProxy;
 
 import com.ericsson.otp.erlang.OtpErlangObject;
+import com.ericsson.otp.erlang.OtpErlangPid;
 import com.ericsson.otp.erlang.OtpErlangTuple;
 import com.ericsson.otp.erlang.OtpMbox;
 import com.ericsson.otp.erlang.OtpMsg;
@@ -50,10 +51,16 @@ public class MboxListener implements Runnable {
 		try {
 			msg = mbox.receiveMsg();
 			Thread.sleep(duration);
+			OtpErlangPid senderPid = null;
 			if (response != null) {
 				Object[] args = new Object[1];
 				args[0] = response;
-				mbox.send(msg.getSenderPid(), TypeHelpersProxy.toErlang(args));
+				if (msg.getMsg().getClass().equals(OtpErlangTuple.class) && ((OtpErlangTuple) msg.getMsg()).elementAt(0).getClass().equals(OtpErlangPid.class)) {
+					senderPid = (OtpErlangPid) ((OtpErlangTuple) msg.getMsg()).elementAt(0);
+				} else {
+					senderPid = msg.getSenderPid();
+				}
+				mbox.send(senderPid, TypeHelpersProxy.toErlang(args));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
