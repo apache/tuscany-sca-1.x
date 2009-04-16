@@ -30,8 +30,14 @@
         <implementation.java class="itest.ConstructorException"/>
     </component>       
 
-    <component name="InitException">
-        <implementation.java class="itest.InitException"/>
+    <component name="InitCompositeScopeException">
+        <implementation.java class="itest.InitCompositeScopeException"/>
+    </component>       
+    <component name="InitRequestScopeException">
+        <implementation.java class="itest.InitRequestScopeException"/>
+    </component>       
+    <component name="InitStatelessScopeException">
+        <implementation.java class="itest.InitStatelessScopeException"/>
     </component>       
 
 </composite>

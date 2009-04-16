@@ -21,18 +21,32 @@ package itest;
 
 import org.osoa.sca.annotations.Destroy;
 import org.osoa.sca.annotations.Init;
+import org.osoa.sca.annotations.Scope;
 
-public class InitException implements Service {
+@Scope("STATELESS")
+public class InitStatelessScopeException implements Service {
 
     public static boolean initRun;
     public static boolean destroyRun;
+    public static boolean doitRun;
+    public static int count = 0;
     
     public void doit() {
+        doitRun = true;
+        if (!initRun) {
+            throw new RuntimeException("initRun false");
+        }
+        if (destroyRun) {
+            throw new RuntimeException("destroyRun true");
+        }
     }
     
     @Init
     public void init() {
-        throw new RuntimeException();
+        initRun = true;
+        if (count++ < 1) {
+            throw new RuntimeException("bang");
+        }
     }
     
     @Destroy

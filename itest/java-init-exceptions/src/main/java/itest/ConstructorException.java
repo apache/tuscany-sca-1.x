@@ -26,12 +26,14 @@ public class ConstructorException implements Service {
 
     public static boolean initRun;
     public static boolean destroyRun;
+    public static boolean doitRun;
     
     public ConstructorException() {
         throw new RuntimeException();
     }
     
     public void doit() {
+        doitRun = true;
     }
     
     @Init

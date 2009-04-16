@@ -18,7 +18,9 @@
  */
 package itest;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.junit.After;
@@ -41,20 +43,102 @@ public class InitTestCase {
         Service client1 = scaDomain.getService(Service.class, "OkService");
         client1.doit();
         assertTrue(OkImpl.initRun);
+        assertTrue(OkImpl.destroyRun); // its stateless so destory is called after every service invocations
     }
 
-    //@Test
+    @Test
     public void testConstructorException() throws Exception {
         Service client1 = scaDomain.getService(Service.class, "ConstructorException");
-        client1.doit();
-        assertTrue(OkImpl.initRun);
+        try {
+            client1.doit();
+            fail();
+        } catch (RuntimeException e) {
+            // expected
+        }
+        assertFalse(ConstructorException.initRun);
+        assertFalse(ConstructorException.doitRun);
+        assertFalse(ConstructorException.destroyRun);
     }
 
-    //@Test
-    public void testInitException() throws Exception {
-        Service client1 = scaDomain.getService(Service.class, "InitException");
+    @Test
+    public void testInitCompositeScopeException() throws Exception {
+        Service client1 = scaDomain.getService(Service.class, "InitCompositeScopeException");
+        try {
+            client1.doit();
+            fail();
+        } catch (RuntimeException e) {
+            // expected
+        }
+        assertTrue(InitCompositeScopeException.initRun);
+        assertFalse(InitCompositeScopeException.doitRun);
+        assertTrue(InitCompositeScopeException.destroyRun);
+
+        // reset and try again to verify init init still gets run again
+        InitCompositeScopeException.initRun = false;    
+        InitCompositeScopeException.doitRun = false;    
+        InitCompositeScopeException.destroyRun = false;    
+
         client1.doit();
-        assertTrue(OkImpl.initRun);
+
+        assertTrue(InitCompositeScopeException.initRun);
+        assertTrue(InitCompositeScopeException.doitRun);
+        scaDomain.close();
+        scaDomain = null;
+        assertTrue(InitCompositeScopeException.destroyRun);
+    }
+
+    @Test
+    public void testInitStatelessScopeException() throws Exception {
+        Service client1 = scaDomain.getService(Service.class, "InitStatelessScopeException");
+        try {
+            client1.doit();
+            fail();
+        } catch (RuntimeException e) {
+            // expected
+        }
+        assertTrue(InitStatelessScopeException.initRun);
+        assertFalse(InitStatelessScopeException.doitRun);
+        assertTrue(InitStatelessScopeException.destroyRun);
+
+        // reset and try again to verify init init still gets run again
+        InitStatelessScopeException.initRun = false;    
+        InitStatelessScopeException.doitRun = false;    
+        InitStatelessScopeException.destroyRun = false;    
+
+        client1.doit();
+
+        assertTrue(InitStatelessScopeException.initRun);
+        assertTrue(InitStatelessScopeException.doitRun);
+        scaDomain.close();
+        scaDomain = null;
+        assertTrue(InitStatelessScopeException.destroyRun);
+    }
+
+    @Test
+    public void testInitRequestScopeException() throws Exception {
+        Service client1 = scaDomain.getService(Service.class, "InitRequestScopeException");
+        try {
+            client1.doit();
+            fail();
+        } catch (RuntimeException e) {
+            // expected
+        }
+        assertTrue(InitRequestScopeException.initRun);
+        assertFalse(InitRequestScopeException.doitRun);
+        assertTrue(InitRequestScopeException.destroyRun);
+
+        // reset and try again to verify init init still gets run again
+        InitRequestScopeException.initRun = false;    
+        InitRequestScopeException.doitRun = false;    
+        InitRequestScopeException.destroyRun = false;    
+
+        client1.doit();
+
+        assertTrue(InitRequestScopeException.initRun);
+        assertTrue(InitRequestScopeException.doitRun);
+        scaDomain.close();
+        scaDomain = null;
+        assertTrue(InitRequestScopeException.destroyRun);
     }
 
     @After
