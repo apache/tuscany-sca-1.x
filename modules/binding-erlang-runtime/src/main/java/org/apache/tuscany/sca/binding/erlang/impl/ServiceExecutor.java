@@ -20,7 +20,9 @@
 package org.apache.tuscany.sca.binding.erlang.impl;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -30,6 +32,7 @@ import org.apache.tuscany.sca.binding.erlang.ErlangBinding;
 import org.apache.tuscany.sca.binding.erlang.impl.types.TypeHelpersProxy;
 import org.apache.tuscany.sca.interfacedef.DataType;
 import org.apache.tuscany.sca.interfacedef.Operation;
+import org.apache.tuscany.sca.interfacedef.java.JavaOperation;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 
 import com.ericsson.otp.erlang.OtpAuthException;
@@ -104,6 +107,7 @@ public class ServiceExecutor implements Runnable {
 				argsList = new OtpErlangList(args);
 			}
 			if (!nodeElement.getBinding().getModule().equals(module)) {
+				// module not found
 				// TODO: externalize message?
 				OtpErlangObject errorMsg = MessageHelper.functionUndefMessage(
 						module, function, argsList,
@@ -111,6 +115,7 @@ public class ServiceExecutor implements Runnable {
 				sendMessage(connection, senderPid, senderRef,
 						MessageHelper.ATOM_BADRPC, errorMsg);
 			} else {
+				// module found, looking for operation
 				RuntimeComponentService service = nodeElement.getService();
 				ErlangBinding binding = nodeElement.getBinding();
 				List<Operation> operations = service.getInterfaceContract()
@@ -123,6 +128,7 @@ public class ServiceExecutor implements Runnable {
 					}
 				}
 				if (operation != null) {
+					// operation found
 					List<DataType> iTypes = operation.getInputType()
 							.getLogical();
 					Class<?>[] forClasses = new Class<?>[iTypes.size()];
@@ -130,22 +136,35 @@ public class ServiceExecutor implements Runnable {
 						forClasses[i] = iTypes.get(i).getPhysical();
 					}
 					try {
+						// invoke operation
+						Method jmethod = ((JavaOperation) operation)
+								.getJavaMethod();
 						Object result = service.getRuntimeWire(binding,
 								service.getInterfaceContract()).invoke(
 								operation,
 								TypeHelpersProxy.toJavaFromList(argsList,
-										forClasses));
+										forClasses, jmethod
+												.getParameterAnnotations()));
 						OtpErlangObject response = null;
+
+						// send reply
 						if (operation.getOutputType() != null
 								&& operation.getOutputType().getPhysical()
 										.isArray()) {
-							response = TypeHelpersProxy.toErlangAsList(result);
+							// output type is array
+							Annotation[][] outNotes = new Annotation[][] { jmethod
+									.getAnnotations() };
+							response = TypeHelpersProxy.toErlangAsList(result,
+									outNotes);
 						} else if (operation.getOutputType() == null) {
+							// output type is void, create empty reply
 							Object[] arrArg = new Object[] {};
-							response = TypeHelpersProxy.toErlang(arrArg);
+							response = TypeHelpersProxy.toErlang(arrArg,
+									new Annotation[0][0]);
 						} else {
-							Object[] arrArg = new Object[] { result };
-							response = TypeHelpersProxy.toErlang(arrArg);
+							// output type is not void and not array
+							response = TypeHelpersProxy.toErlang(result,
+									jmethod.getAnnotations());
 						}
 						sendMessage(connection, senderPid, senderRef, null,
 								response);
@@ -156,6 +175,7 @@ public class ServiceExecutor implements Runnable {
 										IllegalArgumentException.class))
 								|| e.getClass().equals(
 										TypeMismatchException.class)) {
+							// wrong params
 							// TODO: externalize message?
 							OtpErlangObject errorMsg = MessageHelper
 									.functionUndefMessage(module, function,
@@ -164,10 +184,12 @@ public class ServiceExecutor implements Runnable {
 							sendMessage(connection, senderPid, senderRef,
 									MessageHelper.ATOM_BADRPC, errorMsg);
 						} else {
+							// unexpected error
 							throw e;
 						}
 					}
 				} else {
+					// operation not found
 					// TODO: externalize message?
 					OtpErlangObject errorMsg = MessageHelper
 							.functionUndefMessage(module, function, argsList,
@@ -177,6 +199,7 @@ public class ServiceExecutor implements Runnable {
 				}
 			}
 		} catch (ClassCastException e) {
+			// invalid request
 			// TODO: externalize message?
 			try {
 				logger
@@ -189,6 +212,7 @@ public class ServiceExecutor implements Runnable {
 			} catch (OtpErlangDecodeException e1) {
 			}
 		} catch (Exception e) {
+			// unknown error
 			try {
 				sendMessage(connection, senderPid, senderRef,
 						MessageHelper.ATOM_ERROR, new OtpErlangString(
@@ -224,10 +248,12 @@ public class ServiceExecutor implements Runnable {
 				msgNoSender = msg.getMsg();
 			}
 		} catch (Exception e) {
+			// TODO: check when this exception can occur
 			e.printStackTrace();
 		}
 
 		if (operations == null) {
+			// operation name not found
 			// TODO: externalize message?
 			// NOTE: I assume in Erlang sender doesn't get confirmation so
 			// no message will be send
@@ -235,7 +261,9 @@ public class ServiceExecutor implements Runnable {
 					+ "' received message addressed to non exising mbox: "
 					+ msg.getRecipientName());
 		} else {
+			// find proper operation for received parameters
 			for (Operation operation : operations) {
+				Method method = ((JavaOperation) operation).getJavaMethod();
 				List<DataType> iTypes = operation.getInputType().getLogical();
 				Class<?>[] forClasses = new Class<?>[iTypes.size()];
 				for (int i = 0; i < iTypes.size(); i++) {
@@ -243,7 +271,7 @@ public class ServiceExecutor implements Runnable {
 				}
 				try {
 					args = TypeHelpersProxy.toJavaAsArgs(msgNoSender,
-							forClasses);
+							forClasses, method.getParameterAnnotations());
 					matchedOperation = operation;
 					break;
 				} catch (Exception e) {
@@ -252,22 +280,33 @@ public class ServiceExecutor implements Runnable {
 				}
 			}
 			if (matchedOperation != null) {
+				// operation found, invoke it
 				try {
+					Method jmethod = ((JavaOperation) matchedOperation)
+							.getJavaMethod();
 					Object result = nodeElement.getService().getRuntimeWire(
 							nodeElement.getBinding()).invoke(matchedOperation,
 							args);
 					OtpErlangObject response = null;
+
+					// create and send send reply
 					if (matchedOperation.getOutputType() != null
 							&& matchedOperation.getOutputType().getPhysical()
 									.isArray()) {
-						response = TypeHelpersProxy.toErlangAsList(result);
+						// result type is array
+						Annotation[][] outNotes = new Annotation[][] { jmethod
+								.getAnnotations() };
+						response = TypeHelpersProxy.toErlangAsList(result,
+								outNotes);
 					} else if (matchedOperation.getOutputType() != null) {
-						Object[] arrArg = new Object[] { result };
-						response = TypeHelpersProxy.toErlang(arrArg);
+						// result type is not array and not void
+						response = TypeHelpersProxy.toErlang(result, jmethod
+								.getAnnotations());
 					}
 					if (response != null && senderPid != null) {
 						connection.send(senderPid, response);
 					} else if (response != null && senderPid == null) {
+						// couldn't send reply - sender pid unavailable
 						// TODO: externalize message?
 						// TODO: do we need to send this reply?
 						logger
@@ -288,13 +327,13 @@ public class ServiceExecutor implements Runnable {
 											new OtpErlangString(
 													"Operation name found in SCA component, but parameters types didn't match."));
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					} else {
+						// unknown/unhandled error
+						// TODO: decide what to do with this exception
 						e.printStackTrace();
 					}
-					// } catch (IOException e) {
 				} catch (Exception e) {
 					// FIXME: log this problem? use linking feature? send error?
 					e.printStackTrace();
@@ -319,6 +358,7 @@ public class ServiceExecutor implements Runnable {
 			} else {
 				msg = connection.receiveMsg();
 			}
+			// check if request is message or RPC
 			if (msg.getRecipientName().equals(MessageHelper.RPC_MBOX)
 					&& !nodeElement.getBinding().isMbox()) {
 				handleRpc(msg);

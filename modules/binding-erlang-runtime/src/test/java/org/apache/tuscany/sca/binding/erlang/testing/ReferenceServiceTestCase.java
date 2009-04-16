@@ -32,6 +32,7 @@ import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -292,6 +293,11 @@ public class ReferenceServiceTestCase {
 		String testString = "TupleString";
 		int testInt = 10;
 		mboxReference.sendArgs(testInt, testString);
+		// FIXME:
+		// without following sleep an exception occurs:
+		// com.ericsson.otp.erlang.OtpErlangDecodeException: Cannot read from
+		// input stream
+		Thread.sleep(100);
 		assertEquals(testInt, ((OtpErlangLong) ((OtpErlangTuple) mboxListener
 				.getMsg()).elementAt(0)).longValue());
 		assertEquals(testString,
@@ -409,6 +415,52 @@ public class ReferenceServiceTestCase {
 								.elementAt(i)).elementAt(j)).stringValue()));
 			}
 		}
+	}
+
+	/**
+	 * Tests passing Erlang atoms. It provides cases for annotating result
+	 * types, parameters and fields in java classes - tuples.
+	 * 
+	 * @throws Exception
+	 */
+	@Test(timeout = 1000)
+	public void testAtoms() throws Exception {
+		AtomTuple arg2 = new AtomTuple();
+		arg2.field1 = "test";
+		String arg1 = "First arg";
+		String[] strResult = { "Hello", "World" };
+		MboxListener mboxListener = new MboxListener(serMbox, strResult);
+		Thread mboxThread = new Thread(mboxListener);
+		mboxThread.start();
+		String[] testResult = mboxReference.sendArgs(arg1, arg2);
+		assertEquals(strResult[0], testResult[0]);
+		assertEquals(strResult[1], testResult[1]);
+
+		assertEquals(arg1, ((OtpErlangAtom) ((OtpErlangTuple) mboxListener
+				.getMsg()).elementAt(0)).atomValue());
+
+		assertEquals(
+				arg2.field1,
+				((OtpErlangAtom) ((OtpErlangTuple) ((OtpErlangTuple) mboxListener
+						.getMsg()).elementAt(1)).elementAt(0)).atomValue());
+
+		// test multi dimensional arrays
+		String[][] arg = { { "this", "is" }, { "a" }, { "test" } };
+		mboxListener = new MboxListener(serMbox, arg);
+		mboxThread = new Thread(mboxListener);
+		mboxThread.start();
+		String[][] multiDimRes = mboxReference.sendArgs(arg, 1);
+		for (int i = 0; i < arg.length; i++) {
+			for (int j = 0; j < arg[i].length; j++) {
+				assertEquals(arg[i][j], multiDimRes[i][j]);
+				assertEquals(
+						arg[i][j],
+						((OtpErlangAtom) ((OtpErlangList) ((OtpErlangList) ((OtpErlangTuple) mboxListener
+								.getMsg()).elementAt(0)).elementAt(i))
+								.elementAt(j)).atomValue());
+			}
+		}
+
 	}
 
 	/**
@@ -644,14 +696,16 @@ public class ReferenceServiceTestCase {
 		OtpErlangObject[] argsWithSender = new OtpErlangObject[2];
 		argsWithSender[0] = refMbox.self();
 		argsWithSender[1] = tuple;
-		refMbox.send("sayHello", "RPCServerMbox", new OtpErlangTuple(argsWithSender));
+		refMbox.send("sayHello", "RPCServerMbox", new OtpErlangTuple(
+				argsWithSender));
 		OtpErlangString result = (OtpErlangString) refMbox.receiveMsg()
 				.getMsg();
 		assertEquals("Hello world !", result.stringValue());
 	}
-	
+
 	/**
 	 * Tests receiving reply without sending self PID
+	 * 
 	 * @throws Exception
 	 */
 	@Test(timeout = 1000)
@@ -698,7 +752,8 @@ public class ReferenceServiceTestCase {
 		OtpErlangObject[] withSender = new OtpErlangObject[2];
 		withSender[0] = refMbox.self();
 		withSender[1] = args;
-		refMbox.send("passComplexArgs", "RPCServerMbox", new OtpErlangTuple(withSender));
+		refMbox.send("passComplexArgs", "RPCServerMbox", new OtpErlangTuple(
+				withSender));
 		OtpErlangObject result = refMbox.receiveMsg().getMsg();
 		assertEquals(arg1,
 				((OtpErlangLong) ((OtpErlangTuple) ((OtpErlangTuple) result)
@@ -829,6 +884,14 @@ public class ReferenceServiceTestCase {
 
 		// testing correct cookie
 		cookieModuleReference.sayHellos();
+	}
+
+	@Test(timeout = 1000)
+	@Ignore("Nothing to test yet")
+	public void testMboxNoArgs() throws Exception {
+		// FIXME: decide what to do while invoking mbox reference with no params
+		// exception? log?
+		mboxReference.sendArgs();
 	}
 
 }
