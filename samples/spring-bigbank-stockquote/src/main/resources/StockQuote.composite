@@ -25,7 +25,7 @@
     
     <service name="StockQuoteService" promote="StockQuoteServiceComponent">
         <interface.java interface="bigbank.stockquote.StockQuoteService"/>
-        <binding.ws uri="http://localhost:8081/services/StockQuoteWebService"/>
+        <binding.ws uri="http://localhost:8085/services/StockQuoteWebService"/>
     </service>
 
     <component name="StockQuoteServiceComponent">
