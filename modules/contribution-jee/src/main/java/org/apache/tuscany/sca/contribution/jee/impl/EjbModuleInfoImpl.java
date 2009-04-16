@@ -29,6 +29,7 @@ public class EjbModuleInfoImpl implements EjbModuleInfo {
 
     private URI uri;
     private String moduleName;
+    private ClassLoader moduleClassLoader;
     private Map<String, EjbInfo> ejbInfos = new HashMap<String, EjbInfo>();
     
     public EjbInfo getEjbInfo(String beanName) {
@@ -54,4 +55,12 @@ public class EjbModuleInfoImpl implements EjbModuleInfo {
     public void setUri(URI uri) {
         this.uri = uri;
     }
+    
+    public ClassLoader getModuleClassloader() {
+        return moduleClassLoader;
+    }
+    
+    public void setmoduleClassloader(ClassLoader classLoader) {
+        this.moduleClassLoader = classLoader;        
+    }    
 }

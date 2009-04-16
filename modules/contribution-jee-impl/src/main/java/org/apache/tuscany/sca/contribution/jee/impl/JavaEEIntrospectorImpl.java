@@ -89,6 +89,7 @@ public class JavaEEIntrospectorImpl implements JavaEEIntrospector {
 
         WebApp webApp = webModule.getWebApp();
         ClassLoader classLoader = webModule.getClassLoader();
+        wmInfo.setmoduleClassloader(classLoader);
 
         // Process Remote EJB References
         for (Map.Entry<String, EjbRef> entry : webApp.getEjbRefMap().entrySet()) {
