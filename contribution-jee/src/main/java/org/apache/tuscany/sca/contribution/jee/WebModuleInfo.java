@@ -32,6 +32,9 @@ public interface WebModuleInfo {
     String getModuleName();
     void setModuleName(String moduleName);
     
+    ClassLoader getModuleClassloader();
+    void setmoduleClassloader(ClassLoader classLoader);
+    
     Map<String, EjbReferenceInfo> getEjbReferences();
     Map<String, EnvEntryInfo> getEnvEntries();
     

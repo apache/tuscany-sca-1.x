@@ -16,24 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.contribution.jee;
 
-import java.net.URI;
-import java.util.Map;
+package org.apache.tuscany.sca.contribution.jee.impl;
+
+import org.apache.tuscany.sca.contribution.Contribution;
+import org.apache.tuscany.sca.contribution.java.ContributionClassLoaderProvider;
+import org.apache.tuscany.sca.contribution.java.impl.ContributionClassLoader;
+import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 
 /**
- * @version $Rev$ $Date$
+ * The default implementation of the ContributionClassLoaderProvider
  */
-public interface EjbModuleInfo {
-    URI getUri();
-    void setUri(URI uri);
-    
-    String getModuleName();
-    void setModuleName(String moduleName);
-    
-    ClassLoader getModuleClassloader();
-    void setmoduleClassloader(ClassLoader classLoader);
+public class JEEClassLoaderProvider implements ContributionClassLoaderProvider {
 
-    Map<String, EjbInfo> getEjbInfos();
-    EjbInfo getEjbInfo(String beanName);
+    public JEEClassLoaderProvider(ExtensionPointRegistry registry) {
+        super();
+    }
+
+    public ClassLoader getClassLoader(Contribution contribution, ClassLoader parent) {
+        ContributionClassLoader ccl = new ContributionClassLoader(contribution, parent);
+        return new JEEClassLoader(contribution, ccl);
+    }
+
 }

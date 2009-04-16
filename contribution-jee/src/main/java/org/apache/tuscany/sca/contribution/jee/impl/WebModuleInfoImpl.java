@@ -33,6 +33,7 @@ public class WebModuleInfoImpl implements WebModuleInfo {
     
     private URI uri;
     private String moduleName;
+    private ClassLoader moduleClassLoader;
     
     private Collection<Class<?>> servletClasses = new ArrayList<Class<?>>();
     private Collection<Class<?>> listenerClasses = new ArrayList<Class<?>>();
@@ -96,5 +97,13 @@ public class WebModuleInfoImpl implements WebModuleInfo {
     
     public void setUri(URI uri) {
         this.uri = uri;
+    }
+    
+    public ClassLoader getModuleClassloader() {
+        return moduleClassLoader;
+    }
+    
+    public void setmoduleClassloader(ClassLoader classLoader) {
+        this.moduleClassLoader = classLoader;        
     }
 }
