@@ -72,13 +72,23 @@ public class TypeHelpersProxy {
 		for (int i = 0; i < notes.length; i++) {
 			typeHelper = primitiveTypes.get(notes[i].annotationType());
 			if (typeHelper != null) {
-				// annotation found, check if it points to array
-				// FIXME: check if annotation points to proper type
-				// ie. ErlangAtom -> String. If not, then log? exception?
-				if (forClass.isArray()) {
-					typeHelper = new AnnotatedListTypeHelper(notes);
+				// get type which is annotated, reduce array if needed
+				Class<?> annotatedType = forClass;
+				while (annotatedType.isArray()) {
+					annotatedType = annotatedType.getComponentType();
 				}
-				break;
+				if (notes[i].annotationType().equals(ErlangAtom.class)
+						&& !annotatedType.equals(String.class)) {
+					// NOTE: @ErlangAtom atom will be ignored if not annotates
+					// string
+					typeHelper = null;
+				} else {
+					// check if annotation points to array
+					if (forClass.isArray()) {
+						typeHelper = new AnnotatedListTypeHelper(notes);
+					}
+					break;
+				}
 			}
 		}
 		// check for standard types
@@ -145,24 +155,42 @@ public class TypeHelpersProxy {
 	 * Creates Erlang list basing on unknown Java arrays
 	 * 
 	 * @param array
+	 * @param notes
 	 * @return
 	 */
 	public static OtpErlangList toErlangAsList(Object array,
 			Annotation[][] notes) {
+		return toErlangAsList(array, notes, false);
+	}
+
+	/**
+	 * Creates Erlang list of result elements
+	 * 
+	 * @param array
+	 * @param notes
+	 * @return
+	 */
+	public static OtpErlangList toErlangAsResultList(Object array,
+			Annotation[] notes) {
+		return toErlangAsList(array, new Annotation[][] { notes }, true);
+	}
+
+	/**
+	 * 
+	 * @param array
+	 * @param notes
+	 * @param isArray
+	 * @return
+	 */
+	private static OtpErlangList toErlangAsList(Object array,
+			Annotation[][] notes, boolean isArray) {
 		OtpErlangList result = null;
 		if (array != null) {
 			List<OtpErlangObject> attrsList = new ArrayList<OtpErlangObject>();
 			int i = 0;
 			while (true) {
 				try {
-					// FIXME: if notes.length == 1 then its used to annotate
-					// array. Clean up.
-					Annotation[] currNotes = null;
-					if (notes.length == 1) {
-						currNotes = notes[0];
-					} else {
-						currNotes = notes[i];
-					}
+					Annotation[] currNotes = isArray ? notes[0] : notes[i];
 					TypeHelper helper = getTypeHelper(Array.get(array, i)
 							.getClass(), currNotes);
 					attrsList.add(helper.toErlang(Array.get(array, i)));

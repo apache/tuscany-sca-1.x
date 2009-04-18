@@ -41,4 +41,8 @@ public class ServiceTestComponentImplClone implements ServiceTestComponent {
 
 	}
 
+	public String[] sayAtoms(String[] arg) {
+		return arg;
+	}
+
 }

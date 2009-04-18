@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.sca.binding.erlang.testing;
 
+import org.apache.tuscany.sca.binding.erlang.meta.ErlangAtom;
+
 /**
  * @version $Rev$ $Date$
  */
@@ -27,6 +29,9 @@ public interface ServiceTestComponent {
 	String sayHello(String arg1, String arg2);
 
 	String[] sayHellos() throws Exception;
+
+	@ErlangAtom
+	String[] sayAtoms(@ErlangAtom String[] arg);
 
 	StructuredTuple passComplexArgs(StructuredTuple arg1, String[] arg2);
 
