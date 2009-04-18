@@ -30,7 +30,7 @@
     <packaging>pom</packaging>
     <name>Apache Tuscany SCA Implementation Project (1.x)</name>
     <url>http://tuscany.apache.org</url>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.6-SNAPSHOT</version>
 
     <scm>
         <connection>scm:svn:http://svn.eu.apache.org/repos/asf/tuscany/branches/sca-java-1.x</connection>
@@ -268,7 +268,7 @@
                 <plugin>
                     <groupId>org.apache.tuscany.sca</groupId>
                     <artifactId>tuscany-maven-osgi-junit</artifactId>
-                    <version>1.5-SNAPSHOT</version>
+                    <version>1.6-SNAPSHOT</version>
                     <executions>
                         <execution>
                             <id>osgi-test</id>
@@ -296,7 +296,7 @@
                     <plugin>
                         <groupId>org.apache.tuscany.sca</groupId>
                         <artifactId>tuscany-maven-dependency-lister</artifactId>
-                        <version>1.5-SNAPSHOT</version>
+                        <version>1.6-SNAPSHOT</version>
                         <executions>
                             <execution>
                                 <phase>process-resources</phase>
