@@ -60,6 +60,6 @@ public interface MboxInterface {
 	@ErlangAtom
 	String[][] sendArgs(@ErlangAtom String[][] arg1, int arg2);
 
-	void sendArgs();
+	void sendArgs() throws Exception;
 
 }

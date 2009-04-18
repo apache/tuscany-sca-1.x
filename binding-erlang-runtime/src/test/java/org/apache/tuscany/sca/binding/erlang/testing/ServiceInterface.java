@@ -41,5 +41,5 @@ public interface ServiceInterface {
 	void notExistWithException() throws Exception;
 
 	void notExist();
-	
+
 }

@@ -32,7 +32,6 @@ import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -464,6 +463,30 @@ public class ReferenceServiceTestCase {
 	}
 
 	/**
+	 * Tests Erlang Atom types on service side
+	 * 
+	 * @throws Exception
+	 */
+	@Test(timeout = 1000)
+	public void testServiceAtoms() throws Exception {
+		String[] args = { "Say", "Atoms" };
+		OtpErlangObject[] toList = new OtpErlangObject[2];
+		toList[0] = new OtpErlangString(args[0]);
+		toList[1] = new OtpErlangString(args[1]);
+		OtpErlangList list = new OtpErlangList(toList);
+		OtpErlangObject[] toTuple = new OtpErlangObject[2];
+		toTuple[0] = refMbox.self();
+		toTuple[1] = list;
+		refMbox.send("sayAtoms", "RPCServerMbox", new OtpErlangTuple(toTuple));
+		OtpErlangObject result = refMbox.receiveMsg().getMsg();
+		assertEquals(args.length, ((OtpErlangList) result).arity());
+		for (int i = 0; i < args.length; i++) {
+			assertEquals(args[i], ((OtpErlangAtom) ((OtpErlangList) result)
+					.elementAt(i)).atomValue());
+		}
+	}
+
+	/**
 	 * Tests mismatched interface
 	 * 
 	 * @throws Exception
@@ -886,12 +909,16 @@ public class ReferenceServiceTestCase {
 		cookieModuleReference.sayHellos();
 	}
 
+	/**
+	 * Tests fix which allow to send message with no user specified content (in
+	 * fact always will be some content - senders PID at the content beginning).
+	 * 
+	 * @throws Exception
+	 */
 	@Test(timeout = 1000)
-	@Ignore("Nothing to test yet")
 	public void testMboxNoArgs() throws Exception {
-		// FIXME: decide what to do while invoking mbox reference with no params
-		// exception? log?
 		mboxReference.sendArgs();
+		// no exception should occur
 	}
 
 }

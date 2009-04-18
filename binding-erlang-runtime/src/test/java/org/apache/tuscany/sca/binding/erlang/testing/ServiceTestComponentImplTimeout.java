@@ -25,7 +25,7 @@ package org.apache.tuscany.sca.binding.erlang.testing;
 public class ServiceTestComponentImplTimeout implements ServiceTestComponent {
 
 	private long duration = 1000;
-	
+
 	public String sayHello(String arg1, String arg2) {
 		try {
 			Thread.sleep(duration);
@@ -56,6 +56,10 @@ public class ServiceTestComponentImplTimeout implements ServiceTestComponent {
 
 	public void doNothing() {
 
+	}
+
+	public String[] sayAtoms(String[] arg) {
+		return arg;
 	}
 
 }

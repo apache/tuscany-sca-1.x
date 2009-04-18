@@ -152,10 +152,8 @@ public class ServiceExecutor implements Runnable {
 								&& operation.getOutputType().getPhysical()
 										.isArray()) {
 							// output type is array
-							Annotation[][] outNotes = new Annotation[][] { jmethod
-									.getAnnotations() };
-							response = TypeHelpersProxy.toErlangAsList(result,
-									outNotes);
+							response = TypeHelpersProxy.toErlangAsResultList(
+									result, jmethod.getAnnotations());
 						} else if (operation.getOutputType() == null) {
 							// output type is void, create empty reply
 							Object[] arrArg = new Object[] {};
@@ -248,8 +246,7 @@ public class ServiceExecutor implements Runnable {
 				msgNoSender = msg.getMsg();
 			}
 		} catch (Exception e) {
-			// TODO: check when this exception can occur
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Unexpected error", e);
 		}
 
 		if (operations == null) {
@@ -294,10 +291,8 @@ public class ServiceExecutor implements Runnable {
 							&& matchedOperation.getOutputType().getPhysical()
 									.isArray()) {
 						// result type is array
-						Annotation[][] outNotes = new Annotation[][] { jmethod
-								.getAnnotations() };
-						response = TypeHelpersProxy.toErlangAsList(result,
-								outNotes);
+						response = TypeHelpersProxy.toErlangAsResultList(
+								result, jmethod.getAnnotations());
 					} else if (matchedOperation.getOutputType() != null) {
 						// result type is not array and not void
 						response = TypeHelpersProxy.toErlang(result, jmethod
@@ -330,13 +325,10 @@ public class ServiceExecutor implements Runnable {
 							e1.printStackTrace();
 						}
 					} else {
-						// unknown/unhandled error
-						// TODO: decide what to do with this exception
-						e.printStackTrace();
+						logger.log(Level.WARNING, "Unexpected error", e);
 					}
 				} catch (Exception e) {
-					// FIXME: log this problem? use linking feature? send error?
-					e.printStackTrace();
+					logger.log(Level.WARNING, "Unexpected error", e);
 				}
 			} else {
 				// TODO: externalize message?
