@@ -843,8 +843,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         }
         
         // Connection factory and activation Specification are mutually exclusive.
-        if (( connectionFactoryName != null ) && ( connectionFactoryName.length() > 0 ) 
-            && !JMSBindingConstants.DEFAULT_CONNECTION_FACTORY_NAME.equals(connectionFactoryName) ) {
+        if (( connectionFactoryName != null ) && ( connectionFactoryName.length() > 0 )) {
             String activationSpecName = jmsBinding.getActivationSpecName();
             if ((activationSpecName != null) && (activationSpecName.length() > 0 )) {
                 error("ConnectionFactoryActivationSpecContradiction", jmsBinding, connectionFactoryName, activationSpecName );                
@@ -939,9 +938,9 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         String responseDestName = jmsBinding.getResponseDestinationName();
         String responseCFName = jmsBinding.getResponseConnectionFactoryName();
         String responseASName = jmsBinding.getResponseActivationSpecName();
-        if (( responseDestName != null ) || 
-             (responseCFName != null && !responseCFName.equals(JMSBindingConstants.DEFAULT_CONNECTION_FACTORY_NAME)) ||
-             responseASName != null ) {
+        if (  responseDestName != null  || 
+              responseCFName != null  ||
+              responseASName != null ) {
             
            writer.writeStartElement("response");
            writeResponseDestinationProperties( jmsBinding, writer );       
@@ -1277,9 +1276,6 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         if (cfName == null || (cfName.length() < 1)) {
             return;
         }
-        if ( cfName.equals(JMSBindingConstants.DEFAULT_CONNECTION_FACTORY_NAME) ) {
-            return;
-        }
 
         writer.writeStartElement("connectionFactory");
 
@@ -1385,9 +1381,6 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
     private void writeResponseConnectionFactoryProperties( JMSBinding jmsBinding, XMLStreamWriter writer) throws XMLStreamException {       
         String cfName = jmsBinding.getResponseConnectionFactoryName();
         if (cfName == null || (cfName.length() < 1)) {
-            return;
-        }
-        if (cfName.equals(JMSBindingConstants.DEFAULT_CONNECTION_FACTORY_NAME)) {
             return;
         }
 
