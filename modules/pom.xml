@@ -130,7 +130,6 @@
                 <module>host-openejb</module>
                 <module>host-rmi</module>
                 <module>host-webapp</module>
-                <module>host-webapp-junit</module>
                 <module>host-jetty</module>
                 <module>host-tomcat</module>
                 <module>interface</module>
@@ -141,7 +140,6 @@
                 <module>interface-wsdl-xml</module>
                 <module>implementation-bpel</module>
                 <module>implementation-bpel-ode</module>
-                <module>implementation-das</module>
                 <module>implementation-data-xml</module>
                 <module>implementation-ejb</module>
                 <module>implementation-java</module>
