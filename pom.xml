@@ -140,7 +140,6 @@
                 <module>interface-wsdl-xml</module>
                 <module>implementation-bpel</module>
                 <module>implementation-bpel-ode</module>
-                <module>implementation-data-xml</module>
                 <module>implementation-ejb</module>
                 <module>implementation-java</module>
                 <module>implementation-java-xml</module>
@@ -163,14 +162,9 @@
                 <module>implementation-xquery</module>
                 <module>monitor</module>
                 <module>node-api</module>
-                <module>node-dynamic</module>
                 <module>node-impl</module>
                 <module>node-launcher</module>
-                <!--
-                <module>node-launcher-equinox</module>
-                -->
                 <module>node-launcher-osgi</module>
-                <module>node-launcher-webapp</module>
                 <module>node-manager</module>
                 <module>osgi-runtime</module>
                 <module>policy</module>
@@ -182,9 +176,6 @@
                 <module>policy-security-http</module>
                 <module>policy-security-jsr250</module>
                 <module>policy-transaction</module>
-                <module>runtime</module>
-                <module>runtime-tomcat</module>
-                <!--module>runtime-war</module-->
                 <module>sca-api</module>
                 <module>sca-api-extension</module>
                 <module>web-javascript</module>
