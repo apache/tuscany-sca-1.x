@@ -27,22 +27,14 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>itest-contribution-jee-samples-6-war-appcomp-contrib-implicit</artifactId>
-    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 6</name>
-    <packaging>war</packaging>
+    <artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</artifactId>
+    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 7</name>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-sca-api</artifactId>
             <version>1.6-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
             <scope>provided</scope>
         </dependency>
 

@@ -27,9 +27,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>itest-contribution-jee-samples-6-war-appcomp-contrib-implicit</artifactId>
-    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 6</name>
-    <packaging>war</packaging>
+    <artifactId>itest-contribution-jee-samples-13-ear-nonenhanced</artifactId>
+    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 13</name>
+    <packaging>ear</packaging>
 
     <dependencies>
         <dependency>
@@ -40,25 +40,48 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-ejb_3.0_spec</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-1-war-nonenhanced</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <type>war</type>
+            <scope>provided</scope>
+        </dependency>
+                
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <modules>
+                        <jarModule>
+                            <groupId>org.apache.tuscany.sca</groupId>
+                            <artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</artifactId>
+                            <bundleDir>/</bundleDir>
+                        </jarModule>
+                        <webModule>
+                            <groupId>org.apache.tuscany.sca</groupId>
+                            <artifactId>itest-contribution-jee-samples-1-war-nonenhanced</artifactId>
+                            <bundleDir>/</bundleDir>
+                        </webModule>
+                    </modules>
+                </configuration>
             </plugin>
         </plugins>
         <finalName>${artifactId}</finalName>

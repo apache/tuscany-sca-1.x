@@ -39,7 +39,10 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>war-nonenhanced</module>
                 <module>war-appcomp-contrib-implicit</module>
+                <module>ejb-nonenhanced</module>
+                <module>ear-nonenhanced</module>
             </modules>
         </profile>
     </profiles>
