@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.apache.tuscany.sca.contribution.Contribution;
 import org.apache.tuscany.sca.contribution.java.ContributionClassLoaderProvider;
+import org.apache.tuscany.sca.contribution.java.ContributionClassloaderProviderExtensionPoint;
 import org.apache.tuscany.sca.contribution.java.DefaultContributionClassLoaderProvider;
 import org.apache.tuscany.sca.contribution.resolver.ClassReference;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
@@ -70,14 +71,16 @@ public class ClassReferenceModelResolver implements ModelResolver {
                 ClassLoader contextClassLoader = ServiceDiscovery.getInstance().getServiceDiscoverer().getClass().getClassLoader();
                 ContributionClassLoaderProvider provider = null;
                 try {
-                    provider =
-                        registry.getExtensionPoint(UtilityExtensionPoint.class)
-                            .getUtility(ContributionClassLoaderProvider.class);
+                    ContributionClassloaderProviderExtensionPoint providers = 
+                        registry.getExtensionPoint(ContributionClassloaderProviderExtensionPoint.class);
+                    
+                    provider = providers.getProvider(contribution.getType());
+
                 } catch (Throwable e) {
                     // Ignore errors
                 }
                 if (provider == null) {
-                    provider = new DefaultContributionClassLoaderProvider(registry);
+                    provider = new DefaultContributionClassLoaderProvider();
                 }
                 cl = provider.getClassLoader(contribution, contextClassLoader);
                 contribution.setClassLoader(cl);

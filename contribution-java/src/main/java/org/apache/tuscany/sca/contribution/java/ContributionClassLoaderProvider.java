@@ -25,6 +25,15 @@ import org.apache.tuscany.sca.contribution.Contribution;
  * A pluggable utility to provide a classloader for a given contribution
  */
 public interface ContributionClassLoaderProvider {
+    
+    /**
+     * Get the contribution type that this object will provide 
+     * classloaders for. Takes values from o.a.t.s.contribution.PackageType
+     * 
+     * @return
+     */
+    String getContributionType();
+    
     /**
      * Get the classloader for the given contribution
      * @param contribution

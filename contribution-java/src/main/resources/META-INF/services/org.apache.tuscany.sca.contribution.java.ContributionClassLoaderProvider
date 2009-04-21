@@ -14,5 +14,8 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License. 
-org.apache.tuscany.sca.contribution.jee.impl.EJBContributionClassLoaderProvider;type=application/ear
-org.apache.tuscany.sca.contribution.jee.impl.WARContributionClassLoaderProvider;type=application/war
+org.apache.tuscany.sca.contribution.java.DefaultContributionClassLoaderProvider;type=application/x-compressed
+org.apache.tuscany.sca.contribution.java.DefaultContributionClassLoaderProvider;type=application/vnd.tuscany.folder
+org.apache.tuscany.sca.contribution.java.DefaultContributionClassLoaderProvider;type=application/osgi.bundle
+
+

@@ -55,6 +55,7 @@ import org.apache.tuscany.sca.contribution.service.ContributionException;
 import org.apache.tuscany.sca.contribution.service.ContributionRepository;
 import org.apache.tuscany.sca.contribution.service.ContributionService;
 import org.apache.tuscany.sca.contribution.service.ExtensibleContributionListener;
+import org.apache.tuscany.sca.contribution.service.TypeDescriber;
 import org.apache.tuscany.sca.contribution.service.util.IOHelper;
 import org.apache.tuscany.sca.contribution.xml.ContributionMetadataDocumentProcessor;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
@@ -135,7 +136,9 @@ public class ContributionServiceImpl implements ContributionService {
     
     private Monitor monitor;
     
-    private String COMPOSITE_FILE_EXTN = ".composite";    
+    private String COMPOSITE_FILE_EXTN = ".composite";  
+    
+    private TypeDescriber packageTypeDescriber;
 
     public ContributionServiceImpl(ContributionRepository repository,
                                    PackageProcessor packageProcessor,
@@ -166,6 +169,8 @@ public class ContributionServiceImpl implements ContributionService {
         this.policyDefinitionsResolver = policyDefinitionsResolver;
         this.policyDefinitions = policyDefinitions;
         this.monitor = monitor;
+        
+        this.packageTypeDescriber = new PackageTypeDescriberImpl();
     }
     
     /**
@@ -370,6 +375,7 @@ public class ContributionServiceImpl implements ContributionService {
         contribution.setURI(contributionURI);
         contribution.setLocation(locationURL.toString());
         contribution.setModelResolver(modelResolver);
+        contribution.setType(packageTypeDescriber.getType(locationURL, null));
         
         List<URI> contributionArtifacts = null;
 
