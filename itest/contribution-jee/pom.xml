@@ -86,7 +86,7 @@
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>itest-contribution-jee-samples</artifactId>
+            <artifactId>itest-contribution-jee-samples-6</artifactId>
             <version>1.6-SNAPSHOT</version>
         </dependency>
 

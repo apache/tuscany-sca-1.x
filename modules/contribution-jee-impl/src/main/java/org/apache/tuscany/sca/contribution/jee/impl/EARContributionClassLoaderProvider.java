@@ -20,6 +20,7 @@
 package org.apache.tuscany.sca.contribution.jee.impl;
 
 import org.apache.tuscany.sca.contribution.Contribution;
+import org.apache.tuscany.sca.contribution.PackageType;
 import org.apache.tuscany.sca.contribution.java.ContributionClassLoaderProvider;
 import org.apache.tuscany.sca.contribution.java.impl.ContributionClassLoader;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
@@ -27,15 +28,22 @@ import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 /**
  * The default implementation of the ContributionClassLoaderProvider
  */
-public class JEEClassLoaderProvider implements ContributionClassLoaderProvider {
+public class EARContributionClassLoaderProvider implements ContributionClassLoaderProvider {
 
-    public JEEClassLoaderProvider(ExtensionPointRegistry registry) {
+    public EARContributionClassLoaderProvider() {
         super();
+    }
+    
+    public String getContributionType() {
+        return PackageType.EAR;
     }
 
     public ClassLoader getClassLoader(Contribution contribution, ClassLoader parent) {
+        // TODO - This is not quite right at the CCL will load up the nested jars
+        //        also. However we do need to pick up the import processing so 
+        //        need a bit of a refactor
         ContributionClassLoader ccl = new ContributionClassLoader(contribution, parent);
-        return new JEEClassLoader(contribution, ccl);
+        return new EARContributionClassLoader(contribution, ccl);
     }
 
 }

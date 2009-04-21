@@ -139,4 +139,13 @@ class WorkspaceImpl implements Workspace {
     public void setModelResolver(ModelResolver modelResolver) {
         this.modelResolver = modelResolver;
     }
+    
+    public String getType() {
+        // TODO type only used to determine contribution classloader
+        return null;
+    }
+    
+    public void setType(String contributionType) {
+        // TODO type only used to determine contribution classloader
+    }
 }

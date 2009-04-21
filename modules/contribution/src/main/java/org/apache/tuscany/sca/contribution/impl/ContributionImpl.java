@@ -35,6 +35,7 @@ import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
  * @version $Rev$ $Date$
  */
 class ContributionImpl implements Contribution {
+    private String type;
     private String uri;
     private String location;
     private Object model;
@@ -149,6 +150,14 @@ class ContributionImpl implements Contribution {
     public String toString() {
     	return "Contribution : " + uri + " \n" +
     	       "from: " + location;
+    }
+    
+    public String getType() {
+        return type;
+    }
+    
+    public void setType(String contributionType) {
+        this.type = contributionType;
     }
 
 }

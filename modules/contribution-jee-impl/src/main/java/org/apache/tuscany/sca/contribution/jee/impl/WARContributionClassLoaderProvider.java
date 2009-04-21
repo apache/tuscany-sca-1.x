@@ -17,31 +17,33 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.contribution.java;
+package org.apache.tuscany.sca.contribution.jee.impl;
 
 import org.apache.tuscany.sca.contribution.Contribution;
+import org.apache.tuscany.sca.contribution.PackageType;
+import org.apache.tuscany.sca.contribution.java.ContributionClassLoaderProvider;
 import org.apache.tuscany.sca.contribution.java.impl.ContributionClassLoader;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 
 /**
  * The default implementation of the ContributionClassLoaderProvider
  */
-public class DefaultContributionClassLoaderProvider implements ContributionClassLoaderProvider {
+public class WARContributionClassLoaderProvider implements ContributionClassLoaderProvider {
 
-    public DefaultContributionClassLoaderProvider() {
+    public WARContributionClassLoaderProvider() {
         super();
     }
     
-    /**
-     * returns null as it is the default provider and applies when no specific
-     * provider has been specified
-     */
     public String getContributionType() {
-        return null;
+        return PackageType.EAR;
     }
 
     public ClassLoader getClassLoader(Contribution contribution, ClassLoader parent) {
-        return new ContributionClassLoader(contribution, parent);
+        // TODO - This is not quite right at the CCL will load up the nested jars
+        //        also. However we do need to pick up the import processing so 
+        //        need a bit of a refactor
+        ContributionClassLoader ccl = new ContributionClassLoader(contribution, parent);
+        return new WARContributionClassLoader(contribution, ccl);
     }
 
 }

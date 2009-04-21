@@ -113,4 +113,19 @@ public interface Contribution extends Artifact {
      */
     void setClassLoader(ClassLoader classLoader);
     
+    /**
+     * Returns the type string based on the types that appear in 
+     * o.a.t.s.contribution.PackageType
+     * 
+     * @return the contribution type string
+     */
+    String getType();
+    
+    /**
+     * Sets the type string based on the types that appear in 
+     * o.a.t.s.contribution.PackageType
+     * 
+     * @param contributionType the contribution type string
+     */
+    void setType(String contributionType);
 }
