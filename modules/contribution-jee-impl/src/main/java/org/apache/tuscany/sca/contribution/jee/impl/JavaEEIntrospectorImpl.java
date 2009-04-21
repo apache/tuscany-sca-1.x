@@ -239,6 +239,7 @@ public class JavaEEIntrospectorImpl implements JavaEEIntrospector {
         }
 
         ClassLoader classLoader = ejbModule.getClassLoader();
+        ejbModuleInfo.setmoduleClassloader(classLoader);
         Map<String, EnterpriseBean> beansMap = ejbJar.getEnterpriseBeansByEjbName();
         for (Map.Entry<String, EnterpriseBean> entry : beansMap.entrySet()) {
             EnterpriseBean bean = entry.getValue();
