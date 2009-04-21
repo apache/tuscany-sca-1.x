@@ -96,7 +96,6 @@
                 <module>core</module>
                 <module>core-databinding</module>
                 <module>core-spi</module>
-                <module>core-spring</module>
                 <module>data-api</module>
                 <module>databinding</module>
                 <module>databinding-axiom</module>
