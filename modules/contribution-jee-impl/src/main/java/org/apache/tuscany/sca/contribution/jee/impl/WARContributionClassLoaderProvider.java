@@ -35,7 +35,7 @@ public class WARContributionClassLoaderProvider implements ContributionClassLoad
     }
     
     public String getContributionType() {
-        return PackageType.EAR;
+        return PackageType.WAR;
     }
 
     public ClassLoader getClassLoader(Contribution contribution, ClassLoader parent) {
