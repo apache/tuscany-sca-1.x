@@ -28,7 +28,7 @@ import org.junit.Test;
 
 /**
  */
-public class JeeTestCaseFIXME {
+public class JeeTestCase {
 
 
     @Before
