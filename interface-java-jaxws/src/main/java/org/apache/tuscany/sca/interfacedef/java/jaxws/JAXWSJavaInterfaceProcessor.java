@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.interfacedef.java.jaxws;
@@ -33,6 +33,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.jws.WebParam.Mode;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 import javax.xml.namespace.QName;
@@ -47,6 +48,7 @@ import org.apache.tuscany.sca.interfacedef.DataType;
 import org.apache.tuscany.sca.interfacedef.FaultExceptionMapper;
 import org.apache.tuscany.sca.interfacedef.InvalidInterfaceException;
 import org.apache.tuscany.sca.interfacedef.Operation;
+import org.apache.tuscany.sca.interfacedef.ParameterMode;
 import org.apache.tuscany.sca.interfacedef.impl.DataTypeImpl;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterface;
 import org.apache.tuscany.sca.interfacedef.java.JavaOperation;
@@ -59,7 +61,7 @@ import org.apache.tuscany.sca.interfacedef.util.XMLType;
 
 /**
  * Introspect the java class/interface with JSR-181 and JAXWS annotations
- * 
+ *
  * @version $Rev$ $Date$
  */
 public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
@@ -88,6 +90,16 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
             return name;
         } else {
             return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        }
+    }
+
+    private ParameterMode getParameterMode(WebParam.Mode mode) {
+        if (mode == Mode.INOUT) {
+            return ParameterMode.INOUT;
+        } else if (mode == Mode.OUT) {
+            return ParameterMode.OUT;
+        } else {
+            return ParameterMode.IN;
         }
     }
 
@@ -170,6 +182,7 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                         if (logical instanceof XMLType) {
                             ((XMLType)logical).setElementName(element);
                         }
+                        operation.getParameterModes().set(i, getParameterMode(param.mode()));
                     }
                 }
                 WebResult result = method.getAnnotation(WebResult.class);
@@ -279,6 +292,9 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                         type = ((XMLType)logical).getTypeName();
                     }
                     inputElements.add(new ElementInfo(element, new TypeInfo(type, false, null)));
+                    if (param != null) {
+                        operation.getParameterModes().set(i, getParameterMode(param.mode()));
+                    }
                 }
 
                 List<ElementInfo> outputElements = new ArrayList<ElementInfo>();
@@ -301,11 +317,11 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                 }
 
                 String db = inputWrapperDT != null ? inputWrapperDT.getDataBinding() : JAXB_DATABINDING;
-                
+
                 WrapperInfo inputWrapperInfo =
                     new WrapperInfo(db, new ElementInfo(inputWrapper, null), inputElements);
                 WrapperInfo outputWrapperInfo =
-                    new WrapperInfo(db, new ElementInfo(outputWrapper, null), outputElements);  
+                    new WrapperInfo(db, new ElementInfo(outputWrapper, null), outputElements);
 
                 inputWrapperInfo.setWrapperType(inputWrapperDT);
                 outputWrapperInfo.setWrapperType(outputWrapperDT);
