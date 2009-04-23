@@ -17,16 +17,17 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.binding.http;
-
-import org.apache.tuscany.sca.assembly.BindingRRB;
-
+package org.apache.tuscany.sca.binding.http.wireformat.jsonrpc;
 
 /**
- * HTTP binding model.
- * 
+ *
  * @version $Rev$ $Date$
-*/
-public interface HTTPBinding extends BindingRRB {
-    
+ */
+public interface JSONRPCWireFormatFactory {
+
+    /**
+     * Create a new JSONRPC Wire Format
+     * @return
+     */
+    JSONRPCWireFormat createJSONRPCWireFormat();
 }

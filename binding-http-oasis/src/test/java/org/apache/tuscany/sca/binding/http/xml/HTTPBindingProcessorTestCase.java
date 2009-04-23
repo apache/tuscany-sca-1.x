@@ -31,7 +31,8 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
-import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.ExtensibleStAXArtifactProcessor;
+import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.core.DefaultExtensionPointRegistry;
 import org.apache.tuscany.sca.core.UtilityExtensionPoint;
 import org.apache.tuscany.sca.monitor.Monitor;
@@ -45,20 +46,22 @@ import org.junit.Test;
  * @version $Rev$ $Date$
  */
 public class HTTPBindingProcessorTestCase {
-
-    private static final String XML = "<binding.http name=\"name\" uri=\"uri\" />";
+    private static final String XML = "<binding.http xmlns=\"http://www.osoa.org/xmlns/sca/1.0\" xmlns:ns1=\"http://www.osoa.org/xmlns/sca/1.0\" name=\"name\" uri=\"uri\" />";
     
     private static XMLInputFactory inputFactory;
     private static XMLOutputFactory outputFactory;
 
     private static Monitor monitor;
 
+    private static ExtensibleStAXArtifactProcessor staxProcessor;
     private static HTTPBindingProcessor httpBindingProcessor;
     
     @BeforeClass
     public static void setUp() throws Exception {
         inputFactory = XMLInputFactory.newInstance();
+        
         outputFactory = XMLOutputFactory.newInstance();
+        outputFactory.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES, Boolean.TRUE);
         
         DefaultExtensionPointRegistry extensionPoints = new DefaultExtensionPointRegistry();
         // Create a monitor
@@ -69,8 +72,10 @@ public class HTTPBindingProcessorTestCase {
                 utilities.addUtility(monitorFactory);
         }
         
-        ModelFactoryExtensionPoint modelFactories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);
-        httpBindingProcessor = new HTTPBindingProcessor(modelFactories, monitor);
+        StAXArtifactProcessorExtensionPoint staxProcessors = extensionPoints.getExtensionPoint(StAXArtifactProcessorExtensionPoint.class);
+        staxProcessor = new ExtensibleStAXArtifactProcessor(staxProcessors, inputFactory, XMLOutputFactory.newInstance(), null);
+        
+        httpBindingProcessor = new HTTPBindingProcessor(extensionPoints, staxProcessor, null, monitor);
     }
     
     
@@ -96,8 +101,8 @@ public class HTTPBindingProcessorTestCase {
         writer.writeEndDocument();
         
         // used for debug comparison
-        // System.out.println(XML);
-        // System.out.println(bos.toString());
+         System.out.println(XML);
+         System.out.println(bos.toString());
 
         assertEquals(XML, bos.toString());      
     }

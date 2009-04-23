@@ -17,16 +17,19 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.binding.http;
+package org.apache.tuscany.sca.binding.http.wireformat.jsonrpc;
 
-import org.apache.tuscany.sca.assembly.BindingRRB;
+import javax.xml.namespace.QName;
 
+import org.apache.tuscany.sca.assembly.WireFormat;
+import org.apache.tuscany.sca.assembly.xml.Constants;
 
 /**
- * HTTP binding model.
- * 
- * @version $Rev$ $Date$
+*
+* @version $Rev$ $Date$
 */
-public interface HTTPBinding extends BindingRRB {
-    
+public interface JSONRPCWireFormat extends WireFormat {
+    public static final QName WIRE_FORMAT_HTTP_JSONRPC_QNAME = new QName(Constants.SCA10_NS, "wireFormat.jsonrpc");
+
+    QName getSchemaName();
 }

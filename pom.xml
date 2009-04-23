@@ -62,6 +62,7 @@
                 <module>binding-http</module>
                 <module>binding-http-runtime</module>
                 <module>binding-http-oasis</module>
+                <module>binding-http-oasis-jsonrpc</module>
                 <module>binding-http-oasis-runtime</module>
                 <module>binding-jms</module>
                 <module>binding-jms-runtime</module>
