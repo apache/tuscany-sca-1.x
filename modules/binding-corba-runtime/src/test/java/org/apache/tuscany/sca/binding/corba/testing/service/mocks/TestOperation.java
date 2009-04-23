@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.binding.corba.testing.service.mocks;
@@ -28,6 +28,7 @@ import org.apache.tuscany.sca.interfacedef.ConversationSequence;
 import org.apache.tuscany.sca.interfacedef.DataType;
 import org.apache.tuscany.sca.interfacedef.Interface;
 import org.apache.tuscany.sca.interfacedef.Operation;
+import org.apache.tuscany.sca.interfacedef.ParameterMode;
 import org.apache.tuscany.sca.interfacedef.util.WrapperInfo;
 import org.apache.tuscany.sca.interfacedef.util.XMLType;
 import org.apache.tuscany.sca.policy.Intent;
@@ -78,7 +79,7 @@ public class TestOperation implements Operation {
     public WrapperInfo getInputWrapper() {
         return null;
     }
-    
+
     public WrapperInfo getOutputWrapper() {
         return null;
     }
@@ -98,7 +99,7 @@ public class TestOperation implements Operation {
     public boolean isInputWrapperStyle() {
         return false;
     }
-    
+
     public boolean isOutputWrapperStyle() {
         return false;
     }
@@ -150,7 +151,7 @@ public class TestOperation implements Operation {
     public void setInputWrapper(WrapperInfo wrapperInfo) {
 
     }
-    
+
     public void setOutputWrapper(WrapperInfo wrapperInfo) {
 
     }
@@ -158,7 +159,7 @@ public class TestOperation implements Operation {
     public void setInputWrapperStyle(boolean wrapperStyle) {
 
     }
-    
+
     public void setOutputWrapperStyle(boolean wrapperStyle) {
 
     }
@@ -185,6 +186,10 @@ public class TestOperation implements Operation {
     }
 
     public void setType(IntentAttachPointType type) {
+    }
+
+    public List<ParameterMode> getParameterModes() {
+        return null;
     }
 
 }

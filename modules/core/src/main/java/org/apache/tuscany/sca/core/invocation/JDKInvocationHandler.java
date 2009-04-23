@@ -46,6 +46,7 @@ import org.apache.tuscany.sca.interfacedef.DataType;
 import org.apache.tuscany.sca.interfacedef.Interface;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
 import org.apache.tuscany.sca.interfacedef.Operation;
+import org.apache.tuscany.sca.interfacedef.ParameterMode;
 import org.apache.tuscany.sca.interfacedef.java.JavaOperation;
 import org.apache.tuscany.sca.invocation.InvocationChain;
 import org.apache.tuscany.sca.invocation.Invoker;
@@ -154,18 +155,15 @@ public class JDKInvocationHandler implements InvocationHandler, Serializable {
 
         Object result = invoke(chain, args, wire, source);
 
-        Operation operation = chain.getTargetOperation();
+        Operation operation = chain.getSourceOperation();
         if (operation != null && operation.getInterface().isRemotable()) {
+            List<DataType> inputTypes = operation.getInputType().getLogical();
             // Returned Holder data <T> are placed back in Holder<T>.
-            Class<?>[] parameters = method.getParameterTypes();
-            if (parameters != null) {
-                for (int i = 0; i < parameters.length; i++) {
-                    Class<?> parameterType = parameters[i];
-                    if (Holder.class == parameterType) {
-                        // Pop results and place in holder (demote).
-                        Holder holder = (Holder)args[i];
-                        holder.value = result;
-                    }
+            for (int i = 0, size = inputTypes.size(); i < size; i++) {
+                if (operation.getParameterModes().get(i) != ParameterMode.IN) {
+                    // Pop results and place in holder (demote).
+                    Holder holder = (Holder)args[i];
+                    holder.value = result;
                 }
             }
         }
@@ -295,7 +293,7 @@ public class JDKInvocationHandler implements InvocationHandler, Serializable {
         // Holder pattern. Items stored in a Holder<T> are promoted to T.
         // After the invoke, the returned data <T> are placed back in Holder<T>.
         if (operation != null && operation.getInterface().isRemotable()) {
-            args = promoteHolderArgs(args);
+            args = promoteHolderArgs(chain.getSourceOperation(), args);
         }
         msg.setBody(args);
 
@@ -543,16 +541,16 @@ public class JDKInvocationHandler implements InvocationHandler, Serializable {
      * @param args containing Holders and other objects.
      * @return Object []
      */
-    protected static Object[] promoteHolderArgs(Object[] args) {
+    protected static Object[] promoteHolderArgs(Operation operation, Object[] args) {
         if (args == null)
             return args;
 
         Object[] promotedArgs = new Object[args.length];
-
+        List<ParameterMode> modes = operation.getParameterModes();
         for (int i = 0; i < args.length; i++) {
             Object argument = args[i];
             if (argument != null) {
-                if (isHolder(argument)) {
+                if (modes.get(i) != ParameterMode.IN) {
                     promotedArgs[i] = ((Holder)argument).value;
                 } else {
                     promotedArgs[i] = args[i];

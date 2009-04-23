@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 package org.apache.tuscany.sca.interfacedef.java.impl;
 
@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.Holder;
 
 import org.apache.tuscany.sca.interfacedef.ConversationSequence;
 import org.apache.tuscany.sca.interfacedef.DataType;
@@ -41,6 +42,7 @@ import org.apache.tuscany.sca.interfacedef.InvalidInterfaceException;
 import org.apache.tuscany.sca.interfacedef.InvalidOperationException;
 import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.interfacedef.OverloadedOperationException;
+import org.apache.tuscany.sca.interfacedef.ParameterMode;
 import org.apache.tuscany.sca.interfacedef.impl.DataTypeImpl;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterface;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterfaceFactory;
@@ -55,7 +57,7 @@ import org.osoa.sca.annotations.Remotable;
 
 /**
  * Default implementation of a Java interface introspector.
- * 
+ *
  * @version $Rev$ $Date$
  */
 public class JavaInterfaceIntrospectorImpl {
@@ -219,6 +221,9 @@ public class JavaInterfaceIntrospectorImpl {
                 conversationSequence = ConversationSequence.CONVERSATION_CONTINUE;
             }
 
+            JavaOperation operation = new JavaOperationImpl();
+            operation.setName(name);
+
             // Set outputType to null for void
             XMLType xmlReturnType = new XMLType(new QName(ns, "return"), null);
             DataType<XMLType> returnDataType =
@@ -233,16 +238,19 @@ public class JavaInterfaceIntrospectorImpl {
                 XMLType xmlParamType = new XMLType(new QName(ns, "arg" + i), null);
                 DataTypeImpl<XMLType> xmlDataType = new DataTypeImpl<XMLType>(
                     UNKNOWN_DATABINDING, paramType, genericParamTypes[i],xmlParamType);
+                ParameterMode mode = ParameterMode.IN;
                 // Holder pattern. Physical types of Holder<T> classes are updated to <T> to aid in transformations.
-                if ( isHolder( paramType )) {
+                if ( Holder.class == paramType ) {
                     Type firstActual = getFirstActualType( genericParamTypes[ i ] );
                     if ( firstActual != null ) {
                         xmlDataType.setPhysical( (Class<?>)firstActual );
+                        mode = ParameterMode.INOUT;
                     }
                 }
                 paramDataTypes.add( xmlDataType);
+                operation.getParameterModes().add(mode);
             }
-            
+
             // Fault types
             List<DataType> faultDataTypes = new ArrayList<DataType>(faultTypes.length);
             Type[] genericFaultTypes = method.getGenericExceptionTypes();
@@ -262,8 +270,6 @@ public class JavaInterfaceIntrospectorImpl {
 
             DataType<List<DataType>> inputType =
                 new DataTypeImpl<List<DataType>>(IDL_INPUT, Object[].class, paramDataTypes);
-            JavaOperation operation = new JavaOperationImpl();
-            operation.setName(name);
             operation.setInputType(inputType);
             operation.setOutputType(returnDataType);
             operation.setFaultTypes(faultDataTypes);
@@ -273,18 +279,6 @@ public class JavaInterfaceIntrospectorImpl {
             operations.add(operation);
         }
         return operations;
-    }
-
-    /**
-     * Given a Class, tells if it is a Holder by comparing to "javax.xml.ws.Holder"
-     * @param testClass
-     * @return boolean whether testClass is Holder type.
-     */
-    protected static boolean isHolder( Class testClass ) {
-        if ( testClass.getName().startsWith( "javax.xml.ws.Holder" )) {
-            return true;
-        }
-        return false;        
     }
 
     /**
