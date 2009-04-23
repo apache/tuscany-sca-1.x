@@ -152,7 +152,6 @@ public class ReadWriteAnyAttributeTestCase {
     
 
     @Test
-    //@Ignore()
     public void testReadWriteCompositeWithBindings() throws Exception {
         init(null);
         
