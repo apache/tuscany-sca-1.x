@@ -17,16 +17,28 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.binding.http;
+package org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.impl;
 
-import org.apache.tuscany.sca.assembly.BindingRRB;
+import javax.xml.namespace.QName;
 
+import org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormat;
 
 /**
- * HTTP binding model.
- * 
- * @version $Rev$ $Date$
+*
+* @version $Rev$ $Date$
 */
-public interface HTTPBinding extends BindingRRB {
+public class JSONRPCWireFormatImpl implements JSONRPCWireFormat {
     
+    public QName getSchemaName() {
+        return WIRE_FORMAT_HTTP_JSONRPC_QNAME;
+    }
+    
+    public boolean isUnresolved() {
+        return false;
+    }
+
+    public void setUnresolved(boolean unresolved) {
+
+    }
+
 }
