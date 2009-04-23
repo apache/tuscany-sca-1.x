@@ -48,8 +48,8 @@
                 <module>binding-dwr</module>
                 <module>binding-ejb</module>
                 <module>binding-ejb-runtime</module>
-		<module>binding-erlang</module>
-		<module>binding-erlang-runtime</module>
+                <module>binding-erlang</module>
+                <module>binding-erlang-runtime</module>
                 <!-- obsolete -->
                 <module>binding-feed</module>
                 <!-- new bindings -->
@@ -61,6 +61,8 @@
                 <module>binding-gdata-runtime</module>
                 <module>binding-http</module>
                 <module>binding-http-runtime</module>
+                <module>binding-http-oasis</module>
+                <module>binding-http-oasis-runtime</module>
                 <module>binding-jms</module>
                 <module>binding-jms-runtime</module>
                 <module>binding-jms-policy</module>
