@@ -20,7 +20,6 @@ package org.apache.tuscany.sca.implementation.jee.xml;
 
 import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 
-import java.io.File;
 import java.net.URI;
 
 import javax.xml.namespace.QName;
@@ -33,9 +32,9 @@ import org.apache.tuscany.sca.assembly.ComponentType;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.jee.EjbModuleInfo;
+import org.apache.tuscany.sca.contribution.jee.ExternalEarInfo;
 import org.apache.tuscany.sca.contribution.jee.JavaEEApplicationInfo;
 import org.apache.tuscany.sca.contribution.jee.JavaEEExtension;
-import org.apache.tuscany.sca.contribution.jee.JavaEEIntrospector;
 import org.apache.tuscany.sca.contribution.jee.JavaEEOptionalExtension;
 import org.apache.tuscany.sca.contribution.jee.WebModuleInfo;
 import org.apache.tuscany.sca.contribution.jee.impl.EjbModuleInfoImpl;
@@ -47,7 +46,6 @@ import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
 import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
-import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.implementation.jee.JEEImplementation;
 import org.apache.tuscany.sca.implementation.jee.JEEImplementationFactory;
 import org.apache.tuscany.sca.monitor.Monitor;
@@ -60,17 +58,13 @@ import org.apache.tuscany.sca.monitor.Monitor;
 public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<JEEImplementation> {
     private static final QName IMPLEMENTATION_JEE = new QName(Constants.SCA10_NS, "implementation.jee");
     
-    private ExtensionPointRegistry extensionPoints;
     private AssemblyFactory assemblyFactory;
     private JEEImplementationFactory implementationFactory;
     private JavaEEExtension jeeExtension;
     private JavaEEOptionalExtension jeeOptionalExtension;
     private Monitor monitor;
-
     
-    public JEEImplementationProcessor(ExtensionPointRegistry extensionPoints, Monitor monitor) {
-        this.extensionPoints = extensionPoints;
-        ModelFactoryExtensionPoint modelFactories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);
+    public JEEImplementationProcessor(ModelFactoryExtensionPoint modelFactories, Monitor monitor) {
         this.assemblyFactory = modelFactories.getFactory(AssemblyFactory.class);
         this.implementationFactory = modelFactories.getFactory(JEEImplementationFactory.class);
         this.jeeExtension = modelFactories.getFactory(JavaEEExtension.class);
@@ -117,7 +111,6 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
         // Resolve the component type
         String uri = implementation.getURI();
         String archive = implementation.getArchive();
-        boolean unresolvedEar = false;;
         if (uri != null) {
             Object moduleInfo = null;
             if(uri.equals("")) {
@@ -156,11 +149,14 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                 ejbModuleInfo = resolver.resolveModel(EjbModuleInfo.class, ejbModuleInfo);
                 moduleInfo = ejbModuleInfo;
             } else if(uri.endsWith(".ear")) {
-                JavaEEApplicationInfo appInfo = new JavaEEApplicationInfoImpl();
+                final JavaEEApplicationInfo appInfo = new JavaEEApplicationInfoImpl();
                 appInfo.setUri(URI.create(archive));
-                JavaEEApplicationInfo resolved = resolver.resolveModel(JavaEEApplicationInfo.class, appInfo);
-                unresolvedEar = resolved == appInfo;
-                moduleInfo = appInfo;
+                ExternalEarInfo ee = new ExternalEarInfo() {
+                    public JavaEEApplicationInfo getAppInfo() {
+                        return appInfo;
+                    }};
+                ee = resolver.resolveModel(ExternalEarInfo.class, ee);
+                moduleInfo = ee.getAppInfo();
             }
             
             if(moduleInfo instanceof WebModuleInfo) {
@@ -183,16 +179,6 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                 }
                 // TODO: check for ejb-jar composite
             } else if(moduleInfo instanceof JavaEEApplicationInfo) {
-                if (unresolvedEar) {
-                    JavaEEIntrospector jeeIntrospector = extensionPoints.getExtensionPoint(JavaEEIntrospector.class);
-                    try {
-                        File f = new File(((JavaEEApplicationInfo)moduleInfo).getUri().toString());
-                        moduleInfo = jeeIntrospector.introspectJeeArchive(f.toURI().toURL());
-                    } catch (Exception e) {
-                        throw new ContributionResolveException(e);
-                    }
-                }
-
                 if(jeeExtension != null) {
                     ComponentType ct = jeeExtension.createImplementationJeeComponentType((JavaEEApplicationInfo)moduleInfo);
                     implementation.getServices().addAll(ct.getServices());
