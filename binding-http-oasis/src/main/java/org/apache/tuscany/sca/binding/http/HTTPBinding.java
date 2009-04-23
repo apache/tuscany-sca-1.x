@@ -28,4 +28,5 @@ import org.apache.tuscany.sca.assembly.Binding;
  * @version $Rev$ $Date$
 */
 public interface HTTPBinding extends Binding {
+    
 }
