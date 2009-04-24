@@ -25,6 +25,8 @@ import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBindingException;
 import org.apache.tuscany.sca.binding.jms.transport.TransportServiceInterceptor;
+import org.apache.tuscany.sca.binding.jms.wire.CallbackDestinationInterceptor;
+import org.apache.tuscany.sca.binding.jms.wire.OperationPropertiesInterceptor;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.host.jms.JMSServiceListener;
@@ -180,6 +182,10 @@ public class JMSBindingServiceBindingProvider implements ServiceBindingProviderR
         bindingChain.addInterceptor(operationSelectorProvider.getPhase(), 
                                     operationSelectorProvider.createInterceptor());
         
+        // add callback destination interceptor after operation selector
+        bindingChain.addInterceptor(Phase.SERVICE_BINDING_WIREFORMAT,
+                                    new CallbackDestinationInterceptor(runtimeWire));
+
         // add request wire format
         bindingChain.addInterceptor(requestWireFormatProvider.getPhase(), 
                                     requestWireFormatProvider.createInterceptor());
