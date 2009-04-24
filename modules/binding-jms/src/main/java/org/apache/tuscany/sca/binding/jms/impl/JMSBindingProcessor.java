@@ -44,6 +44,7 @@ import org.apache.tuscany.sca.assembly.xml.ConfiguredOperationProcessor;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
 import org.apache.tuscany.sca.binding.jms.operationselector.jmsdefault.OperationSelectorJMSDefault;
+import org.apache.tuscany.sca.binding.jms.wireformat.jmsdefault.WireFormatJMSDefault;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmsobject.WireFormatJMSObject;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmstext.WireFormatJMSText;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmstextxml.WireFormatJMSTextXML;
@@ -240,18 +241,22 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             if ("XMLTextMessage".equalsIgnoreCase(messageProcessorName)) {
                 // may be overwritten be real wire format later
                 jmsBinding.setRequestWireFormat(new WireFormatJMSTextXML());
-                jmsBinding.setResponseWireFormat(new WireFormatJMSTextXML());
+                jmsBinding.setResponseWireFormat(jmsBinding.getRequestWireFormat());
             } else if ("TextMessage".equalsIgnoreCase(messageProcessorName)) {
                 // may be overwritten be real wire format later
                 jmsBinding.setRequestWireFormat(new WireFormatJMSText());
-                jmsBinding.setResponseWireFormat(new WireFormatJMSText());
+                jmsBinding.setResponseWireFormat(jmsBinding.getRequestWireFormat());
             } else if ("ObjectMessage".equalsIgnoreCase(messageProcessorName)) {
                 // may be overwritten be real wire format later
                 jmsBinding.setRequestWireFormat(new WireFormatJMSObject());
-                jmsBinding.setResponseWireFormat(new WireFormatJMSObject());
+                jmsBinding.setResponseWireFormat(jmsBinding.getRequestWireFormat());
             } else {
                 jmsBinding.setRequestMessageProcessorName(messageProcessorName);
                 jmsBinding.setResponseMessageProcessorName(messageProcessorName);
+                // exploit the text wire format code to drive the user selected 
+                // message processor
+                jmsBinding.setRequestWireFormat(new WireFormatJMSText());
+                jmsBinding.setResponseWireFormat(jmsBinding.getRequestWireFormat());
             }
         }
 
@@ -309,8 +314,9 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
                 case END_ELEMENT:
                     QName x = reader.getName();
                     if (Constants.OPERATION.equals(x.getLocalPart())) break;
-                    if (x.getLocalPart().equals("wireFormat.jmsBytes") || x.getLocalPart().equals("wireFormat.jmsText")
-                    		|| x.getLocalPart().equals("wireFormat.jmsObject") || x.getLocalPart().equals("wireFormat.jmsTextXML")) {
+                    // This assumption is not captured in schema, which isn't good, but will probably be fine for now.
+                    // A better solution might be to require each processor to advance to its own END_ELEMENT.
+                    if (x.getLocalPart().startsWith("wireFormat.") || x.getLocalPart().startsWith("operationSelector.")) {                         
                         break;
                     }
                     if (x.equals(JMSBindingConstants.BINDING_JMS_QNAME)) {
@@ -329,10 +335,10 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         
         // if no request wire format specified then assume the default
         if (jmsBinding.getRequestWireFormat() == null){
-            jmsBinding.setRequestWireFormat(new WireFormatJMSTextXML());
+            jmsBinding.setRequestWireFormat(new WireFormatJMSDefault());
         }
         
-        // if no response wire format specific then assume the default
+        // if no response wire format specific then assume the same as the request
         if (jmsBinding.getResponseWireFormat() == null){
             jmsBinding.setResponseWireFormat(jmsBinding.getRequestWireFormat());
          }

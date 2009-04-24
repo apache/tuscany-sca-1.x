@@ -49,8 +49,6 @@ public class RRBJMSBindingInvoker implements Invoker, DataExchangeSemantics {
 
     protected JMSBinding jmsBinding;
     protected JMSResourceFactory jmsResourceFactory;
-    protected JMSMessageProcessor requestMessageProcessor;
-    protected JMSMessageProcessor responseMessageProcessor;
     protected Destination bindingRequestDest;
     protected Destination bindingReplyDest;
     protected RuntimeComponentReference reference;
@@ -65,9 +63,7 @@ public class RRBJMSBindingInvoker implements Invoker, DataExchangeSemantics {
         this.jmsResourceFactory = jmsResourceFactory;
         this.reference = reference;
         this.runtimeWire = reference.getRuntimeWire(jmsBinding);
-        this.requestMessageProcessor = JMSMessageProcessorUtil.getRequestMessageProcessor(jmsBinding);
-        this.responseMessageProcessor = JMSMessageProcessorUtil.getResponseMessageProcessor(jmsBinding);
-        
+       
         try {
             // If this is a callback reference, the destination is determined dynamically based on
             // properties of the inbound service request.  We should not look for or require a

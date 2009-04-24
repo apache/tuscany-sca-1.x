@@ -49,8 +49,6 @@ public class TransportReferenceInterceptor implements Interceptor {
     private RuntimeWire runtimeWire;
     private JMSResourceFactory jmsResourceFactory;
     private JMSBinding jmsBinding;
-    private JMSMessageProcessor requestMessageProcessor;
-    private JMSMessageProcessor responseMessageProcessor;
     private RuntimeComponentReference reference;    
 
     public TransportReferenceInterceptor(JMSBinding jmsBinding, JMSResourceFactory jmsResourceFactory, RuntimeWire runtimeWire) {
@@ -58,8 +56,6 @@ public class TransportReferenceInterceptor implements Interceptor {
         this.jmsBinding = jmsBinding;
         this.runtimeWire = runtimeWire;
         this.jmsResourceFactory = jmsResourceFactory;
-        this.requestMessageProcessor = JMSMessageProcessorUtil.getRequestMessageProcessor(jmsBinding);
-        this.responseMessageProcessor = JMSMessageProcessorUtil.getResponseMessageProcessor(jmsBinding);
         this.reference = (RuntimeComponentReference)runtimeWire.getSource().getContract();        
     }
     

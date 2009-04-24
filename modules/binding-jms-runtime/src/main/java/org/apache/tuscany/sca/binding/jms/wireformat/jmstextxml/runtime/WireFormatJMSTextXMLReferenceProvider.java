@@ -60,17 +60,14 @@ public class WireFormatJMSTextXMLReferenceProvider implements WireFormatProvider
         // currently maintaining the message processor structure which 
         // contains the details of jms message processing so set the message
         // type here if not set explicitly in SCDL
-        //
-        // defaults to JMSBindingConstants.XML_MP_CLASSNAME so no need to set it 
-/*        
+
         if (this.binding.getRequestWireFormat() instanceof WireFormatJMSTextXML){
             this.binding.setRequestMessageProcessorName(JMSBindingConstants.XML_MP_CLASSNAME);
         }
         if (this.binding.getResponseWireFormat() instanceof WireFormatJMSTextXML){
             this.binding.setResponseMessageProcessorName(JMSBindingConstants.XML_MP_CLASSNAME);
         }
-*/        
-         
+
         // create a local interface contract that is configured specifically to 
         // deal with the data format that this wire format is expecting to sent to 
         // and receive from the databinding interceptor. The request/response parts of 

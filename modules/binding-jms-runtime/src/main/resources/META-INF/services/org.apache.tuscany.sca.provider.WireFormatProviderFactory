@@ -16,6 +16,7 @@
 # under the License. 
 
 # Implementation class for the binding extension
+org.apache.tuscany.sca.binding.jms.wireformat.jmsdefault.runtime.WireFormatJMSDefaultProviderFactory;model=org.apache.tuscany.sca.binding.jms.wireformat.jmsdefault.WireFormatJMSDefault
 org.apache.tuscany.sca.binding.jms.wireformat.jmstextxml.runtime.WireFormatJMSTextXMLProviderFactory;model=org.apache.tuscany.sca.binding.jms.wireformat.jmstextxml.WireFormatJMSTextXML
 org.apache.tuscany.sca.binding.jms.wireformat.jmsbytes.runtime.WireFormatJMSBytesProviderFactory;model=org.apache.tuscany.sca.binding.jms.wireformat.jmsbytes.WireFormatJMSBytes
 org.apache.tuscany.sca.binding.jms.wireformat.jmstext.runtime.WireFormatJMSTextProviderFactory;model=org.apache.tuscany.sca.binding.jms.wireformat.jmstext.WireFormatJMSText
