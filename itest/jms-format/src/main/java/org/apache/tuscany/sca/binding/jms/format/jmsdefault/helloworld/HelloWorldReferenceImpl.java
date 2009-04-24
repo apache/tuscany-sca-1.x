@@ -31,17 +31,22 @@ public class HelloWorldReferenceImpl implements HelloWorldService {
     
     @Reference
     protected HelloWorldService helloWorldService3;
+    
+    @Reference
+    protected HelloWorldService helloWorldService4;
 
     public String getGreetings(String name){
         return helloWorldService1.getGreetings(name) + " " +
                helloWorldService2.getGreetings(name) + " " +
-               helloWorldService3.getGreetings(name);
+               helloWorldService3.getGreetings(name) + " " +
+               helloWorldService4.getGreetings(name);
     }
     
     public String getPersonGreetings(Person person){
         return helloWorldService1.getPersonGreetings(person) + " " + 
                helloWorldService2.getPersonGreetings(person) + " " +
-               helloWorldService3.getPersonGreetings(person);
+               helloWorldService3.getPersonGreetings(person) + " " +
+               helloWorldService4.getPersonGreetings(person);
     }
 }
 

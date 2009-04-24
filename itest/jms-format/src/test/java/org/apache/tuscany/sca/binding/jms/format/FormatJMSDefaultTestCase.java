@@ -51,12 +51,12 @@ public class FormatJMSDefaultTestCase {
     public void testHelloWorldCreate() throws Exception {
         HelloWorldService helloWorldService = ((SCAClient)node).getService(HelloWorldService.class, "HelloWorldReferenceComponent");
         
-        assertEquals("Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs", helloWorldService.getGreetings("Fred Bloggs"));
+        assertEquals("Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs", helloWorldService.getGreetings("Fred Bloggs"));
         
         Person person = new Person();
         person.setFirstName("Fred");
         person.setLastName("Bloggs");
-        assertEquals("Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs", helloWorldService.getPersonGreetings(person));
+        assertEquals("Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs", helloWorldService.getPersonGreetings(person));
     }
 
     @After
