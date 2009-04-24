@@ -33,7 +33,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.xml.namespace.QName;
-import javax.xml.ws.Holder;
 
 import org.apache.tuscany.sca.interfacedef.ConversationSequence;
 import org.apache.tuscany.sca.interfacedef.DataType;
@@ -239,14 +238,7 @@ public class JavaInterfaceIntrospectorImpl {
                 DataTypeImpl<XMLType> xmlDataType = new DataTypeImpl<XMLType>(
                     UNKNOWN_DATABINDING, paramType, genericParamTypes[i],xmlParamType);
                 ParameterMode mode = ParameterMode.IN;
-                // Holder pattern. Physical types of Holder<T> classes are updated to <T> to aid in transformations.
-                if ( Holder.class == paramType ) {
-                    Type firstActual = getFirstActualType( genericParamTypes[ i ] );
-                    if ( firstActual != null ) {
-                        xmlDataType.setPhysical( (Class<?>)firstActual );
-                        mode = ParameterMode.INOUT;
-                    }
-                }
+
                 paramDataTypes.add( xmlDataType);
                 operation.getParameterModes().add(mode);
             }
@@ -281,19 +273,4 @@ public class JavaInterfaceIntrospectorImpl {
         return operations;
     }
 
-    /**
-     * Given a Class<T>, returns T, otherwise null.
-     * @param testClass
-     * @return
-     */
-    protected static Type getFirstActualType(Type genericType) {
-        if (genericType instanceof ParameterizedType) {
-            ParameterizedType pType = (ParameterizedType)genericType;
-            Type[] actualTypes = pType.getActualTypeArguments();
-            if ((actualTypes != null) && (actualTypes.length > 0)) {
-                return actualTypes[0];
-            }
-        }
-        return null;
-    }
 }
