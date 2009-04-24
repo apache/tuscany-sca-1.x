@@ -22,6 +22,8 @@ package org.apache.tuscany.sca.interfacedef.java.jaxws;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ import javax.jws.WebParam.Mode;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 import javax.xml.namespace.QName;
+import javax.xml.ws.Holder;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
@@ -70,7 +73,6 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
     private DataBindingExtensionPoint dataBindingExtensionPoint;
     private FaultExceptionMapper faultExceptionMapper;
     private XMLAdapterExtensionPoint xmlAdapterExtensionPoint;
-
 
     public JAXWSJavaInterfaceProcessor(DataBindingExtensionPoint dataBindingExtensionPoint,
                                        FaultExceptionMapper faultExceptionMapper,
@@ -138,7 +140,7 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
             boolean bare = false;
             if (methodSOAPBinding != null) {
                 bare = methodSOAPBinding.parameterStyle() == SOAPBinding.ParameterStyle.BARE;
-                if(bare) {
+                if (bare) {
                     // For BARE parameter style, the data won't be unwrapped
                     // The wrapper should be null
                     operation.setInputWrapperStyle(false);
@@ -169,6 +171,8 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                 operation.setNonBlocking(true);
             }
 
+            List<ParameterMode> parameterModes = operation.getParameterModes();
+
             // Handle BARE mapping
             if (bare) {
                 for (int i = 0; i < method.getParameterTypes().length; i++) {
@@ -182,7 +186,7 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                         if (logical instanceof XMLType) {
                             ((XMLType)logical).setElementName(element);
                         }
-                        operation.getParameterModes().set(i, getParameterMode(param.mode()));
+                        parameterModes.set(i, getParameterMode(param.mode()));
                     }
                 }
                 WebResult result = method.getAnnotation(WebResult.class);
@@ -229,8 +233,8 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                             return dt;
                         } catch (ClassNotFoundException e) {
                             GeneratedClassLoader cl = new GeneratedClassLoader(clazz.getClassLoader());
-                            return new GeneratedDataTypeImpl(xmlAdapterExtensionPoint, method, inputWrapperClassName, inputNS, inputName, true,
-                                                             cl);
+                            return new GeneratedDataTypeImpl(xmlAdapterExtensionPoint, method, inputWrapperClassName,
+                                                             inputNS, inputName, true, cl);
                         }
                     }
                 });
@@ -269,8 +273,8 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                             return dt;
                         } catch (ClassNotFoundException e) {
                             GeneratedClassLoader cl = new GeneratedClassLoader(clazz.getClassLoader());
-                            return new GeneratedDataTypeImpl(xmlAdapterExtensionPoint, method, outputWrapperClassName, outputNS, outputName,
-                                                             false, cl);
+                            return new GeneratedDataTypeImpl(xmlAdapterExtensionPoint, method, outputWrapperClassName,
+                                                             outputNS, outputName, false, cl);
                         }
                     }
                 });
@@ -293,7 +297,7 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                     }
                     inputElements.add(new ElementInfo(element, new TypeInfo(type, false, null)));
                     if (param != null) {
-                        operation.getParameterModes().set(i, getParameterMode(param.mode()));
+                        parameterModes.set(i, getParameterMode(param.mode()));
                     }
                 }
 
@@ -318,8 +322,7 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
 
                 String db = inputWrapperDT != null ? inputWrapperDT.getDataBinding() : JAXB_DATABINDING;
 
-                WrapperInfo inputWrapperInfo =
-                    new WrapperInfo(db, new ElementInfo(inputWrapper, null), inputElements);
+                WrapperInfo inputWrapperInfo = new WrapperInfo(db, new ElementInfo(inputWrapper, null), inputElements);
                 WrapperInfo outputWrapperInfo =
                     new WrapperInfo(db, new ElementInfo(outputWrapper, null), outputElements);
 
@@ -329,7 +332,37 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                 operation.setInputWrapper(inputWrapperInfo);
                 operation.setOutputWrapper(outputWrapperInfo);
             }
+
+            List<DataType> inputTypes = operation.getInputType().getLogical();
+            for (int i = 0, size = parameterModes.size(); i < size; i++) {
+                // Holder pattern. Physical types of Holder<T> classes are updated to <T> to aid in transformations.
+                if (Holder.class == inputTypes.get(i).getPhysical()) {
+                    Type firstActual = getFirstActualType(inputTypes.get(i).getGenericType());
+                    if (firstActual != null) {
+                        inputTypes.get(i).setPhysical((Class<?>)firstActual);
+                        if (parameterModes.get(i) == ParameterMode.IN) {
+                            parameterModes.set(i, ParameterMode.INOUT);
+                        }
+                    }
+                }
+            }
         }
+    }
+
+    /**
+     * Given a Class<T>, returns T, otherwise null.
+     * @param testClass
+     * @return
+     */
+    protected static Type getFirstActualType(Type genericType) {
+        if (genericType instanceof ParameterizedType) {
+            ParameterizedType pType = (ParameterizedType)genericType;
+            Type[] actualTypes = pType.getActualTypeArguments();
+            if ((actualTypes != null) && (actualTypes.length > 0)) {
+                return actualTypes[0];
+            }
+        }
+        return null;
     }
 
     @SuppressWarnings("unchecked")
