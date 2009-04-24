@@ -181,7 +181,11 @@ public class JMSBindingServiceBindingProvider implements ServiceBindingProviderR
         // add operation selector interceptor
         bindingChain.addInterceptor(operationSelectorProvider.getPhase(), 
                                     operationSelectorProvider.createInterceptor());
-        
+
+        // add operationProperties interceptor after operation selector
+        bindingChain.addInterceptor(Phase.SERVICE_BINDING_OPERATION_SELECTOR,
+                                    new OperationPropertiesInterceptor(jmsBinding, runtimeWire));
+
         // add callback destination interceptor after operation selector
         bindingChain.addInterceptor(Phase.SERVICE_BINDING_WIREFORMAT,
                                     new CallbackDestinationInterceptor(runtimeWire));
