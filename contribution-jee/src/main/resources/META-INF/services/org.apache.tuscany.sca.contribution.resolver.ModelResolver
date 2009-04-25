@@ -18,3 +18,4 @@
 org.apache.tuscany.sca.contribution.jee.WebModuleModelResolver;model=org.apache.tuscany.sca.contribution.jee.WebModuleInfo
 org.apache.tuscany.sca.contribution.jee.EjbModuleModelResolver;model=org.apache.tuscany.sca.contribution.jee.EjbModuleInfo
 org.apache.tuscany.sca.contribution.jee.JavaEEApplicationModelResolver;model=org.apache.tuscany.sca.contribution.jee.JavaEEApplicationInfo
+org.apache.tuscany.sca.contribution.jee.ModelObjectModelResolver;model=org.apache.tuscany.sca.contribution.jee.ModelObject

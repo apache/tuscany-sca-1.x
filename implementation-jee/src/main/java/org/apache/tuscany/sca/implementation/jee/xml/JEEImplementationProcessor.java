@@ -29,14 +29,17 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.assembly.ComponentType;
+import org.apache.tuscany.sca.assembly.Composite;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.jee.ModelObject;
 import org.apache.tuscany.sca.contribution.jee.EjbModuleInfo;
 import org.apache.tuscany.sca.contribution.jee.ExternalEarInfo;
 import org.apache.tuscany.sca.contribution.jee.JavaEEApplicationInfo;
 import org.apache.tuscany.sca.contribution.jee.JavaEEExtension;
 import org.apache.tuscany.sca.contribution.jee.JavaEEOptionalExtension;
 import org.apache.tuscany.sca.contribution.jee.WebModuleInfo;
+import org.apache.tuscany.sca.contribution.jee.impl.ModelObjectImpl;
 import org.apache.tuscany.sca.contribution.jee.impl.EjbModuleInfoImpl;
 import org.apache.tuscany.sca.contribution.jee.impl.JavaEEApplicationInfoImpl;
 import org.apache.tuscany.sca.contribution.jee.impl.WebModuleInfoImpl;
@@ -160,36 +163,84 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
             }
             
             if(moduleInfo instanceof WebModuleInfo) {
-                if(jeeOptionalExtension != null) {
-                    ComponentType ct = jeeOptionalExtension.createImplementationJeeComponentType((WebModuleInfo)moduleInfo);
-                    implementation.getReferences().addAll(ct.getReferences());
-                    implementation.getProperties().addAll(ct.getProperties());
+                // Check for web composite
+                ModelObject unresolved = new ModelObjectImpl();
+                unresolved.setUri(URI.create("WEB-INF/web.composite"));
+                ModelObject resolved = resolver.resolveModel(ModelObject.class, unresolved);
+                if(resolved != unresolved) {
+                    // Found web composite
+                    Composite appComposite = (Composite)resolved.getObject();
+                    implementation.getServices().addAll(appComposite.getServices());
+                    implementation.getReferences().addAll(appComposite.getReferences());
+                    implementation.getProperties().addAll(appComposite.getProperties());
                 }
-                // TODO: check for web composite
+
+                // TODO: Obtain includeDefaults value from the composite
+                boolean includeDefaults = false;
+                
+                if(includeDefaults || resolved == unresolved) {
+                    if(jeeOptionalExtension != null) {
+                        ComponentType ct = jeeOptionalExtension.createImplementationJeeComponentType((WebModuleInfo)moduleInfo);
+                        implementation.getReferences().addAll(ct.getReferences());
+                        implementation.getProperties().addAll(ct.getProperties());
+                    }
+                }
             } else if(moduleInfo instanceof EjbModuleInfo) {
-                if(jeeExtension != null) {
-                    ComponentType ct = jeeExtension.createImplementationJeeComponentType((EjbModuleInfo)moduleInfo);
-                    implementation.getServices().addAll(ct.getServices());
+                // Check for ejb-jar composite
+                ModelObject unresolved = new ModelObjectImpl();
+                unresolved.setUri(URI.create("META-INF/ejb-jar.composite"));
+                ModelObject resolved = resolver.resolveModel(ModelObject.class, unresolved);
+                if(resolved != unresolved) {
+                    // Found ejb-jar composite
+                    Composite appComposite = (Composite)resolved.getObject();
+                    implementation.getServices().addAll(appComposite.getServices());
+                    implementation.getReferences().addAll(appComposite.getReferences());
+                    implementation.getProperties().addAll(appComposite.getProperties());
                 }
-                if(jeeOptionalExtension != null) {
-                    ComponentType ct = jeeOptionalExtension.createImplementationJeeComponentType((EjbModuleInfo)moduleInfo);
-                    implementation.getServices().addAll(ct.getServices());
-                    implementation.getReferences().addAll(ct.getReferences());
-                    implementation.getProperties().addAll(ct.getProperties());
+
+                // TODO: Obtain includeDefaults value from the composite
+                boolean includeDefaults = false;
+                
+                if(includeDefaults || resolved == unresolved) {
+                    if(jeeExtension != null) {
+                        ComponentType ct = jeeExtension.createImplementationJeeComponentType((EjbModuleInfo)moduleInfo);
+                        implementation.getServices().addAll(ct.getServices());
+                    }
+                    if(jeeOptionalExtension != null) {
+                        ComponentType ct = jeeOptionalExtension.createImplementationJeeComponentType((EjbModuleInfo)moduleInfo);
+                        implementation.getServices().addAll(ct.getServices());
+                        implementation.getReferences().addAll(ct.getReferences());
+                        implementation.getProperties().addAll(ct.getProperties());
+                    }
                 }
-                // TODO: check for ejb-jar composite
             } else if(moduleInfo instanceof JavaEEApplicationInfo) {
-                if(jeeExtension != null) {
-                    ComponentType ct = jeeExtension.createImplementationJeeComponentType((JavaEEApplicationInfo)moduleInfo);
-                    implementation.getServices().addAll(ct.getServices());
+                // Check for application composite
+                ModelObject unresolved = new ModelObjectImpl();
+                unresolved.setUri(URI.create("META-INF/application.composite"));
+                ModelObject resolved = resolver.resolveModel(ModelObject.class, unresolved);
+                if(resolved != unresolved) {
+                    // Found application composite
+                    Composite appComposite = (Composite)resolved.getObject();
+                    implementation.getServices().addAll(appComposite.getServices());
+                    implementation.getReferences().addAll(appComposite.getReferences());
+                    implementation.getProperties().addAll(appComposite.getProperties());
                 }
-                if(jeeOptionalExtension != null) {
-                    ComponentType ct = jeeOptionalExtension.createImplementationJeeComponentType((JavaEEApplicationInfo)moduleInfo);
-                    implementation.getServices().addAll(ct.getServices());
-                    implementation.getReferences().addAll(ct.getReferences());
-                    implementation.getProperties().addAll(ct.getProperties());
+                
+                // TODO: Obtain includeDefaults value from the composite
+                boolean includeDefaults = false;
+                
+                if(includeDefaults || resolved == unresolved) {
+                    if(jeeExtension != null) {
+                        ComponentType ct = jeeExtension.createImplementationJeeComponentType((JavaEEApplicationInfo)moduleInfo);
+                        implementation.getServices().addAll(ct.getServices());
+                    }
+                    if(jeeOptionalExtension != null) {
+                        ComponentType ct = jeeOptionalExtension.createImplementationJeeComponentType((JavaEEApplicationInfo)moduleInfo);
+                        implementation.getServices().addAll(ct.getServices());
+                        implementation.getReferences().addAll(ct.getReferences());
+                        implementation.getProperties().addAll(ct.getProperties());
+                    }
                 }
-                // TODO: check for application composite
             }
         }
         implementation.setUnresolved(false);
