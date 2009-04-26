@@ -17,13 +17,10 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.binding.jms.operationselector.userprop.runtime;
+package org.apache.tuscany.sca.binding.jms.operationselector.jmsuserprop.runtime;
 
 import org.apache.tuscany.sca.assembly.Binding;
-import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
-import org.apache.tuscany.sca.binding.jms.operationselector.userprop.OperationSelectorJMSUserProp;
-import org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactory;
-import org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactoryExtensionPoint;
+import org.apache.tuscany.sca.binding.jms.operationselector.jmsuserprop.OperationSelectorJMSUserProp;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.provider.OperationSelectorProvider;
 import org.apache.tuscany.sca.provider.OperationSelectorProviderFactory;

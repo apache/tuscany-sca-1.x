@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.binding.jms.operationselector.userprop;
+package org.apache.tuscany.sca.binding.jms.operationselector.jmsuserprop;
 
 import javax.xml.namespace.QName;
 
@@ -31,7 +31,7 @@ import org.apache.tuscany.sca.assembly.OperationSelector;
  * @version $Rev$ $Date$
  */
 public class OperationSelectorJMSUserProp implements OperationSelector {
-    public static final QName OPERATION_SELECTOR_JMS_USERPROP_QNAME = new QName(Constants.SCA10_TUSCANY_NS, "operationSelector.jmsUser");
+    public static final QName OPERATION_SELECTOR_JMS_USERPROP_QNAME = new QName(Constants.SCA10_TUSCANY_NS, "operationSelector.jmsUserProp");
     public static final String OPERATION_SELECTOR_JMS_USERPROP_ATTR  = "propertyName";
     
     private String propertyName;
