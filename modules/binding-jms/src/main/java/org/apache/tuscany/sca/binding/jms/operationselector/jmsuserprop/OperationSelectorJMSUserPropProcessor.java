@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.binding.jms.operationselector.userprop;
+package org.apache.tuscany.sca.binding.jms.operationselector.jmsuserprop;
 
 
 import javax.xml.namespace.QName;

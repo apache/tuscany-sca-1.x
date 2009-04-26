@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.binding.jms.operationselector.userprop.runtime;
+package org.apache.tuscany.sca.binding.jms.operationselector.jmsuserprop.runtime;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import javax.jms.JMSException;
 import org.apache.tuscany.sca.binding.jms.context.JMSBindingContext;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBindingException;
-import org.apache.tuscany.sca.binding.jms.operationselector.userprop.OperationSelectorJMSUserProp;
+import org.apache.tuscany.sca.binding.jms.operationselector.jmsuserprop.OperationSelectorJMSUserProp;
 import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
@@ -74,12 +74,16 @@ public class OperationSelectorJMSUserPropServiceInterceptor implements Intercept
 
     protected Operation getTargetOperation(javax.jms.Message jmsMsg) {
         String operationName = null;
-        String opSelectorPropertyName =operationSelector.getPropertyName();
+        String opSelectorPropertyName = operationSelector.getPropertyName();
         
         try {
             operationName = jmsMsg.getStringProperty(opSelectorPropertyName);
         } catch(JMSException e) {
             throw new JMSBindingException(e);
+        }
+        
+        if (operationName == null){
+            throw new JMSBindingException("Property " + opSelectorPropertyName + " not found in message header");
         }
         
         for (Operation op : serviceOperations) {

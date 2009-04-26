@@ -16,30 +16,23 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.binding.jms.operationselector.jmsdefault;
+package org.apache.tuscany.sca.binding.jms.operationselector.jmsuserprop;
 
-import javax.xml.namespace.QName;
-
-import org.apache.tuscany.sca.assembly.xml.Constants;
-import org.apache.tuscany.sca.assembly.OperationSelector;
+import org.osoa.sca.annotations.Remotable;
 
 /**
- * Implementation for policies that could be injected as parameter
- * into the axis2config.
- *
- * @version $Rev$ $Date$
+ * This is the business interface of the HelloWorld greetings service.
  */
-public class OperationSelectorJMSDefault implements OperationSelector {
-    public static final QName OPERATION_SELECTOR_JMS_DEFAULT_QNAME = new QName(Constants.SCA10_TUSCANY_NS, "operationSelector.jmsdefault");
+@Remotable
+public interface HelloWorldService {
+
+    public String getGreetingsOne(String name);
     
-    public QName getSchemaName() {
-        return OPERATION_SELECTOR_JMS_DEFAULT_QNAME;
-    }
-
-    public boolean isUnresolved() {
-        return false;
-    }
-
-    public void setUnresolved(boolean unresolved) {
-    }
+    public String getGreetingsTwo(String name);
+    
+    public String getGreetingsThree(String name);
+    
+    public String getGreetingsFour(String name);
+    
 }
+

@@ -18,28 +18,30 @@
  */
 package org.apache.tuscany.sca.binding.jms.operationselector.jmsdefault;
 
-import javax.xml.namespace.QName;
+public class HelloWorldServiceImpl implements HelloWorldService {
 
-import org.apache.tuscany.sca.assembly.xml.Constants;
-import org.apache.tuscany.sca.assembly.OperationSelector;
-
-/**
- * Implementation for policies that could be injected as parameter
- * into the axis2config.
- *
- * @version $Rev$ $Date$
- */
-public class OperationSelectorJMSDefault implements OperationSelector {
-    public static final QName OPERATION_SELECTOR_JMS_DEFAULT_QNAME = new QName(Constants.SCA10_TUSCANY_NS, "operationSelector.jmsdefault");
+    public String getGreetingsOne(String name){
+        String response =  "Hello One " + name;
+        System.out.println("getGreetingsOne: " + response);
+        return response;
+    }
+ 
+    public String getGreetingsTwo(String name){
+        String response =  "Hello Two " + name;
+        System.out.println("getGreetingsTwo: " + response);
+        return response;
+    }
     
-    public QName getSchemaName() {
-        return OPERATION_SELECTOR_JMS_DEFAULT_QNAME;
+    public String getGreetingsThree(String name){
+        String response =  "Hello Three " + name;
+        System.out.println("getGreetingsThree: " + response);
+        return response;
     }
-
-    public boolean isUnresolved() {
-        return false;
-    }
-
-    public void setUnresolved(boolean unresolved) {
+    
+    public String getGreetingsFour(String name){
+        String response =  "Hello Four " + name;
+        System.out.println("getGreetingsFour: " + response);
+        return response;
     }
 }
+
