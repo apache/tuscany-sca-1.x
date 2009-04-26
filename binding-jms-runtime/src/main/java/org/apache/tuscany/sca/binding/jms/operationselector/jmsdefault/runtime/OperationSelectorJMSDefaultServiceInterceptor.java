@@ -143,6 +143,7 @@ public class OperationSelectorJMSDefaultServiceInterceptor implements Intercepto
                     long noOfBytes = ((BytesMessage) jmsMsg).getBodyLength();
                     byte[] bytes = new byte[(int) noOfBytes];
                     ((BytesMessage) jmsMsg).readBytes(bytes);
+                    ((BytesMessage) jmsMsg).reset();
 
                     if (bytes != null) {
                         XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(new ByteArrayInputStream(bytes));
