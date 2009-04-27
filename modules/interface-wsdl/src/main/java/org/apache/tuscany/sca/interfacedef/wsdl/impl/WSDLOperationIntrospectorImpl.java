@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.interfacedef.wsdl.impl;
@@ -38,6 +38,7 @@ import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.interfacedef.ConversationSequence;
 import org.apache.tuscany.sca.interfacedef.DataType;
 import org.apache.tuscany.sca.interfacedef.Operation;
+import org.apache.tuscany.sca.interfacedef.ParameterMode;
 import org.apache.tuscany.sca.interfacedef.impl.DataTypeImpl;
 import org.apache.tuscany.sca.interfacedef.util.ElementInfo;
 import org.apache.tuscany.sca.interfacedef.util.FaultException;
@@ -46,9 +47,8 @@ import org.apache.tuscany.sca.interfacedef.util.WrapperInfo;
 import org.apache.tuscany.sca.interfacedef.util.XMLType;
 import org.apache.tuscany.sca.interfacedef.wsdl.WSDLDefinition;
 import org.apache.tuscany.sca.interfacedef.wsdl.WSDLOperation;
-import org.apache.tuscany.sca.xsd.XSDefinition;
 import org.apache.tuscany.sca.xsd.XSDFactory;
-
+import org.apache.tuscany.sca.xsd.XSDefinition;
 import org.apache.ws.commons.schema.XmlSchemaComplexType;
 import org.apache.ws.commons.schema.XmlSchemaElement;
 import org.apache.ws.commons.schema.XmlSchemaObject;
@@ -60,7 +60,7 @@ import org.apache.ws.commons.schema.XmlSchemaType;
 
 /**
  * Metadata for a WSDL operation
- * 
+ *
  * @version $Rev$ $Date$
  */
 public class WSDLOperationIntrospectorImpl {
@@ -105,7 +105,7 @@ public class WSDLOperationIntrospectorImpl {
     /**
      * Test if the operation qualifies wrapper style as defined by the JAX-WS
      * 2.0 Specification
-     * 
+     *
      * @return true if the operation qualifies wrapper style, otherwise false
      */
     public boolean isWrapperStyle() throws InvalidWSDLException {
@@ -219,6 +219,11 @@ public class WSDLOperationIntrospectorImpl {
             operationModel.setConversationSequence(ConversationSequence.CONVERSATION_NONE);
             operationModel.setInputType(getInputType());
             operationModel.setOutputType(getOutputType());
+
+            // FIXME: [rfeng] How to determine the parameter mode?
+            for (DataType d : operationModel.getInputType().getLogical()) {
+                operationModel.getParameterModes().add(ParameterMode.IN);
+            }
 
             operationModel.setInputWrapperStyle(isWrapperStyle());
             operationModel.setOutputWrapperStyle(isWrapperStyle());
@@ -429,7 +434,7 @@ public class WSDLOperationIntrospectorImpl {
 
         /**
          * Return a list of child XSD elements under the wrapped request element
-         * 
+         *
          * @return a list of child XSD elements or null if if the request
          *         element is not wrapped
          */
@@ -471,7 +476,7 @@ public class WSDLOperationIntrospectorImpl {
         /**
          * Return a list of child XSD elements under the wrapped response
          * element
-         * 
+         *
          * @return a list of child XSD elements or null if if the response
          *         element is not wrapped
          */

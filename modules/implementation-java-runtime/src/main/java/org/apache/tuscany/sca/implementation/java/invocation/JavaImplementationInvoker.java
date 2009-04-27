@@ -124,7 +124,7 @@ public class JavaImplementationInvoker implements Invoker, DataExchangeSemantics
             Method imethod = method;
             if (imethod == null || !imethod.getDeclaringClass().isInstance(instance)) {
                 try {
-                    imethod = JavaInterfaceUtil.findMethod(instance.getClass(), operation);
+                    imethod = JavaInterfaceUtil.findMethod(instance.getClass(), op);
                 } catch (NoSuchMethodException e) {
                     throw new IllegalArgumentException("Callback object does not provide method " + e.getMessage());
                 }
@@ -134,10 +134,10 @@ public class JavaImplementationInvoker implements Invoker, DataExchangeSemantics
 
             // Holder pattern. Any payload parameters <T> which are should be in holders are placed in Holder<T>.
             // Only check Holder for remotable interfaces
-            if (imethod != null && op.getInterface().isRemotable()) {
-                List<DataType> inputTypes = op.getInputType().getLogical();
+            if (imethod != null && operation.getInterface().isRemotable()) {
+                List<DataType> inputTypes = operation.getInputType().getLogical();
                 for (int i = 0, size = inputTypes.size(); i < size; i++) {
-                    if (ParameterMode.IN != op.getParameterModes().get(i)) {
+                    if (ParameterMode.IN != operation.getParameterModes().get(i)) {
                         // Promote array params from [<T>] to [Holder<T>]
                         Object[] payloadArray = (Object[])payload;
                         for (int j = 0; payloadArray != null && j < payloadArray.length; j++) {
@@ -169,9 +169,9 @@ public class JavaImplementationInvoker implements Invoker, DataExchangeSemantics
                 // Holder pattern. Any payload Holder<T> types are returned as the message body.
                 List returnArgs = new ArrayList<Object>();
                 if (imethod != null) {
-                    for (int i = 0, size = op.getParameterModes().size(); i < size; i++) {
+                    for (int i = 0, size = operation.getParameterModes().size(); i < size; i++) {
                         // System.out.println( "JavaImplementationInvoker.invoke return parameter " + i + " type=" + parameter.getClass().getName() );
-                        if (ParameterMode.IN != op.getParameterModes().get(i)) {
+                        if (ParameterMode.IN != operation.getParameterModes().get(i)) {
                             // Demote array params from Holder<T> to <T>.
                             Object[] payloadArray = (Object[])payload;
                             for (int j = 0; j < payloadArray.length; j++) {
@@ -195,7 +195,7 @@ public class JavaImplementationInvoker implements Invoker, DataExchangeSemantics
         } catch (InvocationTargetException e) {
             Throwable cause = e.getTargetException();
             boolean isChecked = false;
-            for (DataType<?> d : operation.getFaultTypes()) {
+            for (DataType<?> d : op.getFaultTypes()) {
                 if (d.getPhysical().isInstance(cause)) {
                     isChecked = true;
                     msg.setFaultBody(cause);
