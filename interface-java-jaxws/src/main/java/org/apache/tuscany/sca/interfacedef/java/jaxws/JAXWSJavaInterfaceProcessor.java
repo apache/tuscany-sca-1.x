@@ -95,13 +95,19 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
         }
     }
 
-    private ParameterMode getParameterMode(WebParam.Mode mode) {
-        if (mode == Mode.INOUT) {
+    private ParameterMode getParameterMode(Class<?> javaType, WebParam.Mode mode) {
+        if (javaType != Holder.class) {
+            return ParameterMode.IN;
+        }
+        if (mode == Mode.IN) {
+            return ParameterMode.IN;
+        } else if (mode == Mode.INOUT) {
             return ParameterMode.INOUT;
         } else if (mode == Mode.OUT) {
             return ParameterMode.OUT;
         } else {
-            return ParameterMode.IN;
+            // null
+            return ParameterMode.INOUT;
         }
     }
 
@@ -173,9 +179,10 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
 
             List<ParameterMode> parameterModes = operation.getParameterModes();
 
+            Class<?>[] parameterTypes = method.getParameterTypes();
             // Handle BARE mapping
             if (bare) {
-                for (int i = 0; i < method.getParameterTypes().length; i++) {
+                for (int i = 0; i < parameterTypes.length; i++) {
                     WebParam param = getAnnotation(method, i, WebParam.class);
                     if (param != null) {
                         String ns = getValue(param.targetNamespace(), tns);
@@ -186,7 +193,9 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                         if (logical instanceof XMLType) {
                             ((XMLType)logical).setElementName(element);
                         }
-                        parameterModes.set(i, getParameterMode(param.mode()));
+                        parameterModes.set(i, getParameterMode(parameterTypes[i], param.mode()));
+                    } else {
+                        parameterModes.set(i, getParameterMode(parameterTypes[i], null));
                     }
                 }
                 WebResult result = method.getAnnotation(WebResult.class);
@@ -281,7 +290,7 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                 QName outputWrapper = outputWrapperDT.getLogical().getElementName();
 
                 List<ElementInfo> inputElements = new ArrayList<ElementInfo>();
-                for (int i = 0; i < method.getParameterTypes().length; i++) {
+                for (int i = 0; i < parameterTypes.length; i++) {
                     WebParam param = getAnnotation(method, i, WebParam.class);
                     ns = param != null ? param.targetNamespace() : "";
                     // Default to "" for doc-lit-wrapped && non-header
@@ -297,7 +306,9 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                     }
                     inputElements.add(new ElementInfo(element, new TypeInfo(type, false, null)));
                     if (param != null) {
-                        parameterModes.set(i, getParameterMode(param.mode()));
+                        parameterModes.set(i, getParameterMode(parameterTypes[i], param.mode()));
+                    } else {
+                        parameterModes.set(i, getParameterMode(parameterTypes[i], null));
                     }
                 }
 
