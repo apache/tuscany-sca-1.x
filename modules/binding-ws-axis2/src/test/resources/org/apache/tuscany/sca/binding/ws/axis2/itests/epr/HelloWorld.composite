@@ -24,9 +24,9 @@
     <service name="helloWorld" promote="HelloWorldService">
         <interface.wsdl interface="http://helloworld#wsdl.interface(HelloWorld)" />
         <binding.ws>
-           <wsa:EndpointReference xmlns:wsa="http://www.w3.org/2005/08/addressing">
-              <wsa:Address>http://localhost:8085/myService</wsa:Address>
-           </wsa:EndpointReference>
+           <EndpointReference>
+              <wsa:Address xmlns:wsa="http://www.w3.org/2005/08/addressing">http://localhost:8085/myService</wsa:Address>
+           </EndpointReference>
         </binding.ws>
     </service>
 
