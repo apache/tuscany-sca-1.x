@@ -146,7 +146,7 @@ public class DojoJavaScriptComponentGeneratorImpl implements ComponentJavaScript
         for(ComponentProperty property : component.getProperties()) {
             String propertyName = property.getName();
 
-            pw.println("tuscany.sca.propertyMap." + propertyName + " = \"" + getPropertyValue(property) + "\"");
+            pw.println("tuscany.sca.propertyMap." + propertyName + " = new String(\"" + getPropertyValue(property) + "\");");
         }
         
         pw.println("tuscany.sca.Property = function (name) {");
