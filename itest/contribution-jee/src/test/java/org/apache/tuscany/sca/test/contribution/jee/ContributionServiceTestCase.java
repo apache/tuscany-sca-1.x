@@ -247,6 +247,7 @@ public class ContributionServiceTestCase {
      * This method tests a JAR containing an EAR as a contribution.
      * non-enhanced EAR containing non-enhanced WAR, non-enhanced EJB JAR.
      */
+    @Ignore
     @Test
     public void testContributeEAR_NonEnhanced() throws Exception {
         URL contributionLocation = getClass().getResource(EAR_NONENHANCED_CONTRIBUTION);
