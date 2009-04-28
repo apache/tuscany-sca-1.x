@@ -17,7 +17,6 @@
  * under the License.    
  */
 dojo.provide("tuscany.AtomService");
-dojo.require("dojo._base.xhr");
 dojo.declare("tuscany.AtomService", null, {
    url:null,
    contentType: "application/atom+xml" /*application/atom+json*/, 
