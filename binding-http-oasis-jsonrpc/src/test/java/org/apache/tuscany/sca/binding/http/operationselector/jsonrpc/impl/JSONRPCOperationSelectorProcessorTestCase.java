@@ -17,7 +17,7 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.impl;
+package org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -28,9 +28,9 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 
 import org.apache.tuscany.sca.assembly.Composite;
-import org.apache.tuscany.sca.assembly.WireFormat;
+import org.apache.tuscany.sca.assembly.OperationSelector;
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
-import org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormat;
+import org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelector;
 import org.apache.tuscany.sca.contribution.processor.DefaultStAXArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.ExtensibleStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
@@ -45,12 +45,12 @@ import org.junit.Test;
 
 
 /**
-* JSON RPC wire format processor tests
+* JSON RPC operation selector processor tests
 * 
 * @version $Rev$ $Date$
 */
-public class JSONRPCWireFormatProcessorTestCase {
-    
+public class JSONRPCOperationSelectorProcessorTestCase {
+
     public static final String WIRE_FORMAT =
         "<?xml version=\"1.0\" encoding=\"ASCII\"?>" 
         + "<composite xmlns=\"http://www.osoa.org/xmlns/sca/1.0\" targetNamespace=\"http://binding-http\" xmlns:tuscany=\"http://tuscany.apache.org/xmlns/sca/1.0\" name=\"binding-http\">"
@@ -58,7 +58,7 @@ public class JSONRPCWireFormatProcessorTestCase {
             + "   <implementation.java class=\"services.HelloWorld\"/>"
             + "      <service name=\"HelloWorldService\">"
             + "          <binding.http uri=\"http://localhost:8080/uri\" >"
-            + "              <wireFormat.jsonrpc/>"
+            + "              <operationSelector.jsonrpc/>"
             + "          </binding.http>"
             + "      </service>"
             + " </component>"
@@ -86,8 +86,7 @@ public class JSONRPCWireFormatProcessorTestCase {
     
     /**
      * Tests the APIs:
-     *     public WireFormat getRequstWireFormat();
-     *     public WireFormat getResponseWireFormat();
+     *     public OperationSelector getOperationSelector();
      * 
      * @throws Exception
      */
@@ -99,10 +98,7 @@ public class JSONRPCWireFormatProcessorTestCase {
         HTTPBinding binding = (HTTPBinding)   composite.getComponents().get(0).getServices().get(0).getBindings().get(0);        
         assertNotNull(binding);
         
-        WireFormat requestWireFormat = binding.getRequestWireFormat();
-        assertEquals(JSONRPCWireFormat.class, requestWireFormat.getClass().getInterfaces()[0]);
-        
-        WireFormat responseWireFormat = binding.getResponseWireFormat();
-        assertEquals(JSONRPCWireFormat.class, responseWireFormat.getClass().getInterfaces()[0]);
-    }    
+        OperationSelector operationSelector = binding.getOperationSelector();
+        assertEquals(JSONRPCOperationSelector.class, operationSelector.getClass().getInterfaces()[0]);
+    } 
 }
