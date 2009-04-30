@@ -6,23 +6,25 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 package org.apache.tuscany.sca.databinding.impl;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.databinding.DataBindingExtensionPoint;
 import org.apache.tuscany.sca.databinding.DataPipe;
 import org.apache.tuscany.sca.databinding.DataPipeTransformer;
@@ -43,13 +45,19 @@ import org.apache.tuscany.sca.interfacedef.impl.DataTypeImpl;
  * @version $Rev$ $Date$
  */
 public class MediatorImpl implements Mediator {
-
+    private ExtensionPointRegistry registry;
     private DataBindingExtensionPoint dataBindings;
     private TransformerExtensionPoint transformers;
 
-    public MediatorImpl(DataBindingExtensionPoint dataBindings, TransformerExtensionPoint transformers) {
+    MediatorImpl(DataBindingExtensionPoint dataBindings, TransformerExtensionPoint transformers) {
         this.dataBindings = dataBindings;
         this.transformers = transformers;
+    }
+
+    public MediatorImpl(ExtensionPointRegistry registry) {
+        this.registry = registry;
+        this.dataBindings = registry.getExtensionPoint(DataBindingExtensionPoint.class);
+        this.transformers = registry.getExtensionPoint(TransformerExtensionPoint.class);
     }
 
     @SuppressWarnings("unchecked")
@@ -103,7 +111,7 @@ public class MediatorImpl implements Mediator {
         DataType targetType =
             (index == size - 1) ? targetDataType : new DataTypeImpl<Object>(transformer.getTargetDataBinding(),
                                                                             Object.class, targetDataType.getLogical());
-        
+
         //FIXME The ClassLoader should be passed in
         // Allow privileged access to get ClassLoader. Requires RuntimePermission in security
         // policy.
@@ -111,9 +119,15 @@ public class MediatorImpl implements Mediator {
             public ClassLoader run() {
                 return Thread.currentThread().getContextClassLoader();
             }
-        });           
-        
-        TransformationContext context = new TransformationContextImpl(sourceType, targetType, classLoader, metadata);
+        });
+
+        Map<String, Object> copy = new HashMap<String, Object>();
+        if (metadata != null) {
+            copy.putAll(metadata);
+        }
+        copy.put(ExtensionPointRegistry.class.getName(), registry);
+
+        TransformationContext context = new TransformationContextImpl(sourceType, targetType, classLoader, copy);
         return context;
     }
 
