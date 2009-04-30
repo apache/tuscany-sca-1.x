@@ -23,6 +23,7 @@ import org.apache.axiom.om.OMElement;
 import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBindingConstants;
+import org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactory;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmsbytes.WireFormatJMSBytes;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmsbytesxml.WireFormatJMSBytesXML;
 import org.apache.tuscany.sca.binding.ws.WebServiceBinding;
@@ -41,17 +42,20 @@ public class WireFormatJMSBytesXMLServiceProvider implements WireFormatProvider 
     private RuntimeComponent component;
     private RuntimeComponentService service;
     private JMSBinding binding;
+    private JMSResourceFactory jmsResourceFactory;
     private InterfaceContract interfaceContract; 
 
     public WireFormatJMSBytesXMLServiceProvider(ExtensionPointRegistry registry,
                                              RuntimeComponent component, 
                                              RuntimeComponentService service, 
-                                             Binding binding) {
+                                               Binding binding, 
+                                               JMSResourceFactory jmsResourceFactory) {
         super();
         this.registry = registry;
         this.component = component;
         this.service = service;
         this.binding = (JMSBinding)binding;
+        this.jmsResourceFactory = jmsResourceFactory;
         
         // configure the service based on this wire format
         
@@ -97,7 +101,7 @@ public class WireFormatJMSBytesXMLServiceProvider implements WireFormatProvider 
      */
     public Interceptor createInterceptor() {
         return new WireFormatJMSBytesXMLServiceInterceptor((JMSBinding)binding,
-                                                         null,
+                                                          jmsResourceFactory,
                                                         service.getRuntimeWire(binding));
     }
 

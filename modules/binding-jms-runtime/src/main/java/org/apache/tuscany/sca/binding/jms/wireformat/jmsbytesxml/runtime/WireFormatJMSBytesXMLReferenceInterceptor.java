@@ -18,17 +18,20 @@
  */
 package org.apache.tuscany.sca.binding.jms.wireformat.jmsbytesxml.runtime;
 
-import java.lang.reflect.InvocationTargetException;
 import javax.jms.JMSException;
 import javax.jms.Session;
+import javax.xml.namespace.QName;
 
+import org.apache.axiom.om.OMElement;
 import org.apache.tuscany.sca.binding.jms.context.JMSBindingContext;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
+import org.apache.tuscany.sca.binding.jms.impl.JMSBindingConstants;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBindingException;
 import org.apache.tuscany.sca.binding.jms.provider.JMSMessageProcessor;
 import org.apache.tuscany.sca.binding.jms.provider.JMSMessageProcessorUtil;
 import org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactory;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmsbytesxml.WireFormatJMSBytesXML;
+import org.apache.tuscany.sca.interfacedef.util.FaultException;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
@@ -73,13 +76,7 @@ public class WireFormatJMSBytesXMLReferenceInterceptor implements Interceptor {
             JMSBindingContext context = msg.getBindingContext();
             Session session = context.getJmsSession();
             
-            Object[] requestParams = msg.getBody();
-            javax.jms.Message requestMsg = null;
-            if (requestParams != null && requestParams.length > 0 ){
-                requestMsg = requestMessageProcessor.insertPayloadIntoJMSMessage(session, requestParams[0]);
-            } else {
-                requestMsg = requestMessageProcessor.insertPayloadIntoJMSMessage(session, null);
-            }
+            javax.jms.Message requestMsg = requestMessageProcessor.insertPayloadIntoJMSMessage(session, msg.getBody());
             
             msg.setBody(requestMsg);
             
@@ -93,20 +90,27 @@ public class WireFormatJMSBytesXMLReferenceInterceptor implements Interceptor {
     
     public Message invokeResponse(Message msg) {
         if (msg.getBody() != null){
-            Object response = responseMessageProcessor.extractPayloadFromJMSMessage((javax.jms.Message)msg.getBody());
-            if (response instanceof InvocationTargetException) {
-                msg.setFaultBody(((InvocationTargetException) response).getCause());
-            } else {
-                if (response != null){
-                    msg.setBody(response);
-                } else {
-                    msg.setBody(null);
+            javax.jms.Message jmsMsg = (javax.jms.Message)msg.getBody();
+            Object response = responseMessageProcessor.extractPayloadFromJMSMessage(jmsMsg);
+            if (response != null ){
+                msg.setBody(response);
+                try {
+                    if (jmsMsg.getBooleanProperty(JMSBindingConstants.FAULT_PROPERTY)) {
+                        FaultException e = new FaultException("remote exception", response);
+                        OMElement om = (OMElement) response;
+                        e.setFaultName(new QName(om.getNamespace().getNamespaceURI(), om.getLocalName()));
+                        msg.setFaultBody(e);
+                    }
+                } catch (JMSException e) {
+                    throw new JMSBindingException(e);
                 }
+            } else {
+                msg.setBody(null);
             }
         }
 
         return msg;
-    }     
+    }    
 
     public Invoker getNext() {
         return next;

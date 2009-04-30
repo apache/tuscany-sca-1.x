@@ -20,6 +20,9 @@
 package org.apache.tuscany.sca.binding.jms.wireformat.jmsbytesxml.runtime;
 
 import org.apache.tuscany.sca.assembly.Binding;
+import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
+import org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactory;
+import org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactoryExtensionPoint;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmsbytes.WireFormatJMSBytes;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.provider.WireFormatProvider;
@@ -31,10 +34,12 @@ import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 
 public class WireFormatJMSBytesXMLProviderFactory implements WireFormatProviderFactory<WireFormatJMSBytes> {
     private ExtensionPointRegistry registry;
+    private JMSResourceFactoryExtensionPoint jmsRFEP;
     
     public WireFormatJMSBytesXMLProviderFactory(ExtensionPointRegistry registry) {
         super();
         this.registry = registry;
+        jmsRFEP = (JMSResourceFactoryExtensionPoint)registry.getExtensionPoint(JMSResourceFactoryExtensionPoint.class);
     }
 
     /**
@@ -50,7 +55,8 @@ public class WireFormatJMSBytesXMLProviderFactory implements WireFormatProviderF
     public WireFormatProvider createServiceWireFormatProvider(RuntimeComponent component,
                                                               RuntimeComponentService service,
                                                               Binding binding) {
-        return new WireFormatJMSBytesXMLServiceProvider(registry, component, service, binding);
+        JMSResourceFactory jmsRF = jmsRFEP.createJMSResourceFactory((JMSBinding)binding);
+        return new WireFormatJMSBytesXMLServiceProvider(registry, component, service, binding, jmsRF);
     }
 
     /**
