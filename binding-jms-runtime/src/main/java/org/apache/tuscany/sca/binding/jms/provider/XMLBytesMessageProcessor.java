@@ -32,13 +32,15 @@ import javax.xml.stream.XMLStreamReader;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
+import org.apache.tuscany.sca.binding.jms.impl.JMSBindingConstants;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBindingException;
+import org.apache.tuscany.sca.interfacedef.util.FaultException;
 
 /**
  * MessageProcessor for sending/receiving XML javax.jms.BytesMessage with the JMSBinding.
  */
 public class XMLBytesMessageProcessor extends AbstractMessageProcessor {
-    private static final Logger logger = Logger.getLogger(AbstractMessageProcessor.class.getName());
+    private static final Logger logger = Logger.getLogger(XMLBytesMessageProcessor.class.getName());
 
     public XMLBytesMessageProcessor(JMSBinding jmsBinding) {
         super(jmsBinding);
@@ -55,6 +57,7 @@ public class XMLBytesMessageProcessor extends AbstractMessageProcessor {
             long noOfBytes = ((BytesMessage)msg).getBodyLength();
             byte [] bytes = new byte[(int)noOfBytes];
             ((BytesMessage)msg).readBytes(bytes);
+            ((BytesMessage)msg).reset();
             
             Object os;
             if (noOfBytes > 0) {
@@ -69,6 +72,15 @@ public class XMLBytesMessageProcessor extends AbstractMessageProcessor {
             throw new JMSBindingException(e);
         } catch (JMSException e) {
             throw new JMSBindingException(e);
+        }
+    }
+
+    @Override
+    public Object extractPayloadFromJMSMessage(Message msg) {
+        if (msg instanceof BytesMessage) {
+            return extractPayload(msg);
+        } else {
+            return super.extractPayloadFromJMSMessage(msg);
         }
     }
 
@@ -93,6 +105,29 @@ public class XMLBytesMessageProcessor extends AbstractMessageProcessor {
 
         } catch (JMSException e) {
             throw new JMSBindingException(e);
+        }
+    }
+    
+    @Override
+    public Message createFaultMessage(Session session, Throwable o) {
+
+        if (session == null) {
+            logger.fine("no response session to create fault message: " + String.valueOf(o));
+            return null;
+        }
+        if (o instanceof FaultException) {
+            try {
+
+                BytesMessage message = session.createBytesMessage();
+                message.writeBytes(String.valueOf(((FaultException) o).getFaultInfo()).getBytes());
+                message.setBooleanProperty(JMSBindingConstants.FAULT_PROPERTY, true);
+                return message;
+
+            } catch (JMSException e) {
+                throw new JMSBindingException(e);
+            }
+        } else {
+            return super.createFaultMessage(session, o);
         }
     }
 
