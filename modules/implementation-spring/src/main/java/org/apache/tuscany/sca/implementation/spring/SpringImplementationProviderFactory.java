@@ -21,12 +21,11 @@ package org.apache.tuscany.sca.implementation.spring;
 import java.util.List;
 
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
+import org.apache.tuscany.sca.core.UtilityExtensionPoint;
 import org.apache.tuscany.sca.core.invocation.ExtensibleProxyFactory;
 import org.apache.tuscany.sca.core.invocation.ProxyFactory;
 import org.apache.tuscany.sca.core.invocation.ProxyFactoryExtensionPoint;
-import org.apache.tuscany.sca.databinding.DataBindingExtensionPoint;
-import org.apache.tuscany.sca.databinding.TransformerExtensionPoint;
-import org.apache.tuscany.sca.databinding.impl.MediatorImpl;
+import org.apache.tuscany.sca.databinding.Mediator;
 import org.apache.tuscany.sca.implementation.java.injection.JavaPropertyValueObjectFactory;
 import org.apache.tuscany.sca.policy.util.PolicyHandlerDefinitionsLoader;
 import org.apache.tuscany.sca.policy.util.PolicyHandlerTuple;
@@ -36,7 +35,7 @@ import org.apache.tuscany.sca.runtime.RuntimeComponent;
 
 /**
  * ImplementationProviderFactory for Spring implementation type
- * @version $Rev: 511195 $ $Date: 2007-02-24 02:29:46 +0000 (Sat, 24 Feb 2007) $ 
+ * @version $Rev: 511195 $ $Date: 2007-02-24 02:29:46 +0000 (Sat, 24 Feb 2007) $
  *
  */
 public class SpringImplementationProviderFactory implements ImplementationProviderFactory<SpringImplementation> {
@@ -51,16 +50,13 @@ public class SpringImplementationProviderFactory implements ImplementationProvid
      */
     public SpringImplementationProviderFactory(ExtensionPointRegistry extensionPoints) {
         super();
-        
-        ProxyFactoryExtensionPoint proxyFactories = extensionPoints.getExtensionPoint(ProxyFactoryExtensionPoint.class); 
-        proxyFactory = new ExtensibleProxyFactory(proxyFactories); 
 
-        // TODO: could the runtime have a default PropertyValueObjectFactory?
-        DataBindingExtensionPoint dataBindings = extensionPoints.getExtensionPoint(DataBindingExtensionPoint.class);
-        TransformerExtensionPoint transformers = extensionPoints.getExtensionPoint(TransformerExtensionPoint.class);
-        MediatorImpl mediator = new MediatorImpl(dataBindings, transformers);
+        ProxyFactoryExtensionPoint proxyFactories = extensionPoints.getExtensionPoint(ProxyFactoryExtensionPoint.class);
+        proxyFactory = new ExtensibleProxyFactory(proxyFactories);
+
+        Mediator mediator = extensionPoints.getExtensionPoint(UtilityExtensionPoint.class).getUtility(Mediator.class);
         propertyFactory = new JavaPropertyValueObjectFactory(mediator);
-        
+
         policyHandlerClassNames = PolicyHandlerDefinitionsLoader.loadPolicyHandlerClassnames();
     }
 
@@ -73,10 +69,10 @@ public class SpringImplementationProviderFactory implements ImplementationProvid
      */
     public ImplementationProvider createImplementationProvider(RuntimeComponent component,
                                                                SpringImplementation implementation) {
-        return new SpringImplementationProvider(component, 
-                                                implementation, 
-                                                proxyFactory, 
-                                                propertyFactory, 
+        return new SpringImplementationProvider(component,
+                                                implementation,
+                                                proxyFactory,
+                                                propertyFactory,
                                                 policyHandlerClassNames);
     }
 
