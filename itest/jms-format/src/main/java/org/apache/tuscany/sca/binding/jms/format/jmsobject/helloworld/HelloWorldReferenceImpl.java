@@ -24,22 +24,77 @@ import org.osoa.sca.annotations.Reference;
 public class HelloWorldReferenceImpl implements HelloWorldReference {
     
     @Reference
-    protected HelloWorldService helloWorldService;
+    protected HelloWorldService helloWorldServiceWrapSingle;
     
-    public String getGreetings(String firstName, String lastName){ 
+    @Reference
+    protected HelloWorldService helloWorldServiceDontWrapSingle;
+    
+    public String getGreetingsWrapSingle(String firstName, String lastName){ 
     	Person person = new Person();
     	person.setFirstName(firstName);
     	person.setLastName(lastName);
-        Person returnPerson =  helloWorldService.getGreetings(person); 
-        Person returnNullPerson = helloWorldService.getNullGreetings(person); 
+    	
+    	String returnString = "";
+    	
+        Person returnPerson =  helloWorldServiceWrapSingle.getPersonGreetings(person);
+        returnString = returnPerson.getFirstName() + " " + returnPerson.getLastName();
         
-        String returnString = returnPerson.getFirstName() + " " + returnPerson.getLastName();
+        Person returnNullPerson = helloWorldServiceWrapSingle.getNullReturnGreetings(person); 
         
         if (returnNullPerson == null){
-            returnString += " null";
+            returnString += " Hello2 null";
         }
         
+        String returnGreeting = helloWorldServiceWrapSingle.getArrayGreeting(new String[]{firstName, lastName});
+        returnString += " " + returnGreeting;
+        
+        returnGreeting = helloWorldServiceWrapSingle.getMultiArrayGreetings(new String[]{firstName, firstName},new String[]{lastName, lastName});
+        returnString += " " + returnGreeting;
+        
+        returnGreeting = helloWorldServiceWrapSingle.getMultiGreetings(firstName, lastName);
+        returnString += " " + returnGreeting;        
+
+        returnGreeting = helloWorldServiceWrapSingle.getObjectGreeting(person);
+        returnString += " " + returnGreeting; 
+        
+        returnGreeting = helloWorldServiceWrapSingle.getObjectArrayGreeting(new Object[]{person});
+        returnString += " " + returnGreeting; 
+        
         return returnString;
-    }    
+    }  
+    
+    public String getGreetingsDontWrapSingle(String firstName, String lastName){ 
+        Person person = new Person();
+        person.setFirstName(firstName);
+        person.setLastName(lastName);
+        
+        String returnString = "";
+        
+        Person returnPerson =  helloWorldServiceDontWrapSingle.getPersonGreetings(person);
+        returnString = returnPerson.getFirstName() + " " + returnPerson.getLastName();
+        
+        Person returnNullPerson = helloWorldServiceDontWrapSingle.getNullReturnGreetings(person); 
+        
+        if (returnNullPerson == null){
+            returnString += " Hello2 null";
+        }
+        
+        String returnGreeting = helloWorldServiceDontWrapSingle.getArrayGreeting(new String[]{firstName, lastName});
+        returnString += " " + returnGreeting;
+        
+        returnGreeting = helloWorldServiceDontWrapSingle.getMultiArrayGreetings(new String[]{firstName, firstName},new String[]{lastName, lastName});
+        returnString += " " + returnGreeting;
+        
+        returnGreeting = helloWorldServiceDontWrapSingle.getMultiGreetings(firstName, lastName);
+        returnString += " " + returnGreeting;        
+
+        returnGreeting = helloWorldServiceDontWrapSingle.getObjectGreeting(person);
+        returnString += " " + returnGreeting; 
+        
+        returnGreeting = helloWorldServiceDontWrapSingle.getObjectArrayGreeting(new Object[]{person});
+        returnString += " " + returnGreeting; 
+        
+        return returnString;
+    }     
 }
 

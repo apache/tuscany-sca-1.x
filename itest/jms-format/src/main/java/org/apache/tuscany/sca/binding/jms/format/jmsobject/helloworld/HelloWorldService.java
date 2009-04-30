@@ -26,8 +26,13 @@ import org.osoa.sca.annotations.Remotable;
 @Remotable
 public interface HelloWorldService {
 
-    public Person getGreetings(Person person);
-    public Person getNullGreetings(Person person);
-    
+    public Person getPersonGreetings(Person person);
+    public Person getNullReturnGreetings(Person person);
+    public String getArrayGreeting(String[] names);
+    public String getMultiArrayGreetings(String[] firstName, String[] lastName);
+    public String getMultiGreetings(String firstName, String lastName);
+    public String getObjectGreeting(Object person);
+    public String getObjectArrayGreeting(Object[] pearson);
+  
 }
 

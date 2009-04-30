@@ -26,7 +26,7 @@ import org.osoa.sca.annotations.Remotable;
 @Remotable
 public interface HelloWorldReference {
 
-    public String getGreetings(String firstName, String lastName);
-    
+    public String getGreetingsWrapSingle(String firstName, String lastName);
+    public String getGreetingsDontWrapSingle(String firstName, String lastName);
 }
 
