@@ -6,24 +6,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.core.databinding.wire;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
@@ -46,7 +44,7 @@ import org.osoa.sca.ServiceRuntimeException;
 
 /**
  * An interceptor to transform data across databindings on the wire
- * 
+ *
  * @version $Rev$ $Date$
  */
 public class DataTransformationInterceptor implements Interceptor, DataExchangeSemantics {
@@ -71,17 +69,7 @@ public class DataTransformationInterceptor implements Interceptor, DataExchangeS
             JavaOperation javaOp = (JavaOperation) sourceOperation;
             Method sourceMethod = javaOp.getJavaMethod();
         }
-        // Holder pattern. In order to perform data mediation on Holder return types, it is
-        // necessary to set up a data transformation on the Holder<T> class T. on return.
-        DataType<DataType> returnTargetType = getFirstHolderType( sourceOperation.getInputType() );
-        if ( returnTargetType != null ) {
-           this.sourceOperation.setOutputType(returnTargetType);               
-        }
-        returnTargetType = getFirstHolderType( targetOperation.getInputType() );
-        if ( returnTargetType != null ) {
-           this.targetOperation.setOutputType(returnTargetType);               
-        }
-        
+
         this.mediator = mediator;
         this.wire = wire;
         this.faultExceptionMapper = faultExceptionMapper;
@@ -283,32 +271,4 @@ public class DataTransformationInterceptor implements Interceptor, DataExchangeS
         return true;
     }
 
-    /**
-     * Returns return type for first Holder in input list.
-     * Returns null if the inputs do not contain a Holder.
-     */
-    protected static DataType<DataType> getFirstHolderType( DataType<List<DataType>> inputTypes ) {
-       if (inputTypes != null) {
-            List<DataType> logicalType = inputTypes.getLogical();
-            if (logicalType != null) {
-                for (int i = 0; i < logicalType.size(); i++) {
-                    DataType dataType = logicalType.get(i);
-                    if (isHolder(dataType.getGenericType())) {
-                        // Fix up output from void to returned data type.
-                        // System.out.println("DataTransformationInterceptor.<> source input[" + i + "] is Holder, logicalType=" + dataType);
-                        return dataType;
-                    }
-                }
-            }
-        }
-       return null;
-    }
-
-    protected static boolean isHolder( Type type ) {
-        String typeString = type.toString();
-        if ( typeString.startsWith( "javax.xml.ws.Holder" ) ) {
-            return true;
-        }
-        return false;        
-    }
 }

@@ -356,6 +356,12 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                         }
                     }
                 }
+                // FIXME: We only handle one Holder
+                // Set the output type to the parameter type
+                ParameterMode mode = parameterModes.get(i);
+                if (mode == ParameterMode.OUT || mode == ParameterMode.INOUT) {
+                    operation.setOutputType(inputTypes.get(i));
+                }
             }
         }
     }
