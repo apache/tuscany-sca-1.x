@@ -195,7 +195,7 @@ public class JavaImplementationInvoker implements Invoker, DataExchangeSemantics
         } catch (InvocationTargetException e) {
             Throwable cause = e.getTargetException();
             boolean isChecked = false;
-            for (DataType<?> d : op.getFaultTypes()) {
+            for (DataType<?> d : operation.getFaultTypes()) {
                 if (d.getPhysical().isInstance(cause)) {
                     isChecked = true;
                     msg.setFaultBody(cause);
