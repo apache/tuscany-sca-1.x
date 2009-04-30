@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.xsd.xml;
@@ -45,7 +45,7 @@ import org.xml.sax.InputSource;
 
 /**
  * A Model Resolver for XSD models.
- * 
+ *
  * @version $Rev$ $Date$
  */
 public class XSDModelResolver implements ModelResolver {
@@ -85,8 +85,8 @@ public class XSDModelResolver implements ModelResolver {
     public <T> T resolveModel(Class<T> modelClass, T unresolved) {
 
         XSDefinition definition = (XSDefinition)unresolved;
-        String namespace = definition.getNamespace();        
-        
+        String namespace = definition.getNamespace();
+
         // Lookup a definition for the given namespace within the
         // current contribution.
         List<XSDefinition> list = map.get(namespace);
@@ -175,6 +175,7 @@ public class XSDModelResolver implements ModelResolver {
         } else if (definition.getLocation() != null) {
             if (definition.getLocation().getFragment() != null) {
                 // It's an inline schema
+                // FIXME: We need to trigger the loading of the enclosing WSDL models
                 return;
             }
             // Read an XSD document
@@ -216,7 +217,7 @@ public class XSDModelResolver implements ModelResolver {
 
     /**
      * Create a facade XmlSchema which includes all the definitions
-     * 
+     *
      * @param definitions A list of the XmlSchema under the same target
      *                namespace
      * @return The aggregated XmlSchema
@@ -235,7 +236,7 @@ public class XSDModelResolver implements ModelResolver {
             loadOnDemand(d);
         }
         String ns = definitions.get(0).getNamespace();
-        
+
         XmlSchema facade = null;
         // Check if the facade XSD is already in the collection
         for (XmlSchema s : schemaCollection.getXmlSchema(AGGREGATED_XSD)) {
