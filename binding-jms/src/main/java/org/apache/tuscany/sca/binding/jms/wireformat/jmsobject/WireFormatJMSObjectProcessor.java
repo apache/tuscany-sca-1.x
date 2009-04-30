@@ -52,7 +52,13 @@ public class WireFormatJMSObjectProcessor extends BaseStAXArtifactProcessor impl
     
     public WireFormatJMSObject read(XMLStreamReader reader) throws ContributionReadException, XMLStreamException {
         WireFormatJMSObject wireFormat = new WireFormatJMSObject();
-         
+        
+        String wrappedSingleInput = reader.getAttributeValue(null, WireFormatJMSObject.WIRE_FORMAT_JMS_OBJECT_WRAP_SINGLE_ATTR);
+        if (wrappedSingleInput != null && wrappedSingleInput.length() > 0) {
+            if ("true".equalsIgnoreCase(wrappedSingleInput)) {
+                wireFormat.setWrappedSingleInput(true);
+            }
+        }
         return wireFormat;
     }
 
@@ -63,6 +69,8 @@ public class WireFormatJMSObjectProcessor extends BaseStAXArtifactProcessor impl
                                  getArtifactType().getLocalPart(),
                                  getArtifactType().getNamespaceURI());
         writer.writeNamespace("tuscany", Constants.SCA10_TUSCANY_NS); 
+        
+        writer.writeAttribute(WireFormatJMSObject.WIRE_FORMAT_JMS_OBJECT_WRAP_SINGLE_ATTR, String.valueOf(wireFormat.isWrappedSingleInput()));
         
         writer.writeEndElement();
     }

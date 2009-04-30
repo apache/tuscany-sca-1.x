@@ -92,9 +92,18 @@
    
    <complexType name="WireFormatJMSObjectType">
       <complexContent>
-         <extension base="t:WireFormat"/>
+         <extension base="t:WireFormat">
+             <attribute name="wrapSingle" default="false">
+                  <simpleType>
+                      <restriction base="string">
+                         <enumeration value="true"/>
+                         <enumeration value="false"/>
+                      </restriction>
+                  </simpleType>             
+             </attribute>
+         </extension>
       </complexContent>
-   </complexType>
+   </complexType>       
    <element name="wireFormat.jmsObject" 
             type="t:WireFormatJMSObjectType"
             substitutionGroup="t:wireFormat"/>   
