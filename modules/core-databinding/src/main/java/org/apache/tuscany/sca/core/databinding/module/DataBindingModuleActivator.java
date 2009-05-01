@@ -62,6 +62,7 @@ public class DataBindingModuleActivator implements ModuleActivator {
         xmlAdapterExtensionPoint.addAdapter(CallableReference.class, CallableReferenceXMLAdapter.class);
         xmlAdapterExtensionPoint.addAdapter(OMElement.class, OMElementXMLAdapter.class);
         FaultExceptionMapper faultExceptionMapper = new JAXWSFaultExceptionMapper(dataBindings, xmlAdapterExtensionPoint);
+        registry.getExtensionPoint(UtilityExtensionPoint.class).addUtility(faultExceptionMapper);
 
         Mediator mediator = registry.getExtensionPoint(UtilityExtensionPoint.class).getUtility(Mediator.class);
 
