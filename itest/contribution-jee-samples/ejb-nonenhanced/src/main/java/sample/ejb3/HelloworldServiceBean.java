@@ -17,14 +17,7 @@
 
 package sample.ejb3;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
-
-import org.osoa.sca.ComponentContext;
-import org.osoa.sca.annotations.ComponentName;
-import org.osoa.sca.annotations.Context;
-import org.osoa.sca.annotations.Property;
-import org.osoa.sca.annotations.Reference;
 
 /**
  * HelloworldService EJB implementation with no SCA enhancement
@@ -38,5 +31,5 @@ public class HelloworldServiceBean implements HelloworldService {
         System.out.println(greeting);
         return greeting;
     }
-    
+
 }
