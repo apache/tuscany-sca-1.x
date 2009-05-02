@@ -41,14 +41,11 @@ public class HelloworldEjbServlet extends HttpServlet {
 	@EJB
     private HelloworldService service;
 
-    @Reference
-    protected HelloworldService helloworldSca;
-
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
         String greeting = service.getGreetings(name);
-        String greeting2 = helloworldSca.getGreetings(name.toUpperCase());
+        //String greeting2 = helloworldSca.getGreetings(name.toUpperCase());
 
         Writer out = response.getWriter();
         out.write("<html><head><title>Apache Tuscany Helloworld Web Sample</title></head><body>");
@@ -58,7 +55,7 @@ public class HelloworldEjbServlet extends HttpServlet {
         out.write(greeting);
         out.write("The following is got by invoking the HelloworldService SCA service provided by the HelloworldServiceBean");
         out.write("<br>Parameter sent to HelloworldService.getGreeting: "+name.toUpperCase());
-        out.write(greeting2);
+        //out.write(greeting2);
         out.write("</body></html>");
         out.flush();
         out.close();

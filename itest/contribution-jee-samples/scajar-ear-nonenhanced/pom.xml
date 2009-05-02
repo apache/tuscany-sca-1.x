@@ -17,19 +17,23 @@
     * specific language governing permissions and limitations
     * under the License.    
 -->
-
 <project>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
-        <artifactId>itest-contribution-jee-samples</artifactId>
+        <artifactId>tuscany-sca</artifactId>
         <version>1.6-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
+    <artifactId>itest-contribution-jee-samples-35-scajar-ear-nonenhanced</artifactId>
+    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 35</name>
 
-    <artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</artifactId>
-    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 7</name>
-    <packaging>ejb</packaging>
+    <repositories>
+       <repository>
+          <id>apache.incubator</id>
+          <url>http://people.apache.org/repo/m2-incubating-repository</url>
+       </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -38,31 +42,31 @@
             <version>1.6-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-implementation-java-runtime</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+        
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-ejb_3.0_spec</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>        
+
         <dependency>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-annotation_1.0_spec</artifactId>
-            <version>1.1.1</version>
-            <scope>provided</scope>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.5</version>
+            <scope>test</scope>
         </dependency>
+
     </dependencies>
-    
+
     <build>
        <finalName>${artifactId}</finalName>
-       <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-ejb-plugin</artifactId>
-            <configuration>
-              <ejbVersion>3.0</ejbVersion>
-            </configuration>
-          </plugin>
-        </plugins>
     </build>
 </project>

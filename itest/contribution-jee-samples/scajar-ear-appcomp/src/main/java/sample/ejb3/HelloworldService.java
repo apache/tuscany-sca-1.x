@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -12,21 +11,23 @@
  * 
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY"src/main/resources/META-INF/application.xml"
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<ejb:openejb-jar xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2" xmlns:ejb="http://openejb.apache.org/xml/ns/openejb-jar-2.2">
-    <dep:environment>
-        <dep:moduleId>
-            <dep:groupId>test</dep:groupId>
-            <dep:artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</dep:artifactId>
-            <dep:version>1.0</dep:version>
-            <dep:type>jar</dep:type>
-        </dep:moduleId>
-        <dep:dependencies/>
-        <dep:hidden-classes/>
-        <dep:non-overridable-classes/>
-    </dep:environment>
-</ejb:openejb-jar>
+ */
+
+package sample.ejb3;
+
+import javax.ejb.Remote;
+
+/**
+ * HelloworldService EJB interface.
+ * 
+ * @version $Rev$ $Date$
+ */
+
+@Remote
+public interface HelloworldService {
+	String getGreetings(String name);
+}

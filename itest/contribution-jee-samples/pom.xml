@@ -43,6 +43,9 @@
                 <module>war-appcomp-contrib-implicit</module>
                 <module>ejb-nonenhanced</module>
                 <module>ear-nonenhanced</module>
+                <module>ear-appcomp-contrib-implicit</module>
+                <module>scajar-ear-nonenhanced</module>
+                <module>scajar-ear-appcomp</module>
             </modules>
         </profile>
     </profiles>
