@@ -24,6 +24,8 @@
         elementFormDefault="qualified">
 
    <import namespace="http://www.osoa.org/xmlns/sca/1.0" schemaLocation="sca-binding-jms.xsd"/>
+   
+   <include schemaLocation="tuscany-core.xsd"/>
         
    <!-- these schema types are not actually used at the moment as we rely on 
         any elements in the underlying JMS binding schema to pull in wireFormat 
@@ -32,9 +34,6 @@
         
         
    <!--  wire formats -->
-   
-   <element name="wireFormat" type="t:WireFormat" abstract="true"/>
-   <complexType name="WireFormat" abstract="true"/>
     
    <complexType name="WireFormatJMSDefaultType">
       <complexContent>
@@ -109,11 +108,7 @@
             substitutionGroup="t:wireFormat"/>   
                    
                    
-    <!--  operation selectors -->   
-    
-   <element name="operationSelector" type="t:OperationSelector" abstract="true"/>
-   <complexType name="OperationSelector" abstract="true"/>
-    
+    <!--  operation selectors -->      
    <complexType name="OperationSelectorJMSDefaultType">
       <complexContent>
          <extension base="t:OperationSelector"/>

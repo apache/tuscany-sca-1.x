@@ -17,27 +17,21 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
+
 <schema xmlns="http://www.w3.org/2001/XMLSchema" 
     targetNamespace="http://tuscany.apache.org/xmlns/sca/1.0" 
     xmlns:sca="http://www.osoa.org/xmlns/sca/1.0"
     xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0" 
     elementFormDefault="qualified">
-
-    <import namespace="http://www.osoa.org/xmlns/sca/1.0" schemaLocation="sca-core.xsd"/>
-
-    <include schemaLocation="tuscany-core.xsd"/>
+   
+    <!--  wire formats -->
+    <element name="wireFormat" type="t:WireFormat" abstract="true"/>
     
-    <element name="binding.http" type="t:HTTPBinding"/>
+    <complexType name="WireFormat" abstract="true"/>
     
-    <complexType name="HTTPBinding">
-        <complexContent>
-            <extension base="sca:Binding">
-                <sequence>
-                    <any namespace="##targetNamespace" processContents="lax" minOccurs="0"
-                         maxOccurs="unbounded"/>
-                </sequence>
-                <anyAttribute namespace="##any" processContents="lax"/>
-            </extension>
-        </complexContent>
-    </complexType>
+    <!--  operation selectors -->
+    <element name="operationSelector" type="t:OperationSelector" abstract="true"/>
+    
+    <complexType name="OperationSelector" abstract="true"/>
+    
 </schema>
