@@ -51,15 +51,15 @@ import org.junit.Test;
 */
 public class JSONRPCWireFormatProcessorTestCase {
     
-    public static final String WIRE_FORMAT =
+    public static final String COMPOSITE_WITH_WIRE_FORMAT =
         "<?xml version=\"1.0\" encoding=\"ASCII\"?>" 
         + "<composite xmlns=\"http://www.osoa.org/xmlns/sca/1.0\" targetNamespace=\"http://binding-http\" xmlns:tuscany=\"http://tuscany.apache.org/xmlns/sca/1.0\" name=\"binding-http\">"
             + " <component name=\"HelloWorldComponent\">"
             + "   <implementation.java class=\"services.HelloWorld\"/>"
             + "      <service name=\"HelloWorldService\">"
-            + "          <binding.http uri=\"http://localhost:8080/uri\" >"
-            + "              <wireFormat.jsonrpc/>"
-            + "          </binding.http>"
+            + "          <tuscany:binding.http uri=\"http://localhost:8080/uri\" >"
+            + "              <tuscany:wireFormat.jsonrpc/>"
+            + "          </tuscany:binding.http>"
             + "      </service>"
             + " </component>"
             + "</composite>";
@@ -93,7 +93,7 @@ public class JSONRPCWireFormatProcessorTestCase {
      */
     @Test
     public void testWireFormat() throws Exception {
-        XMLStreamReader reader = inputFactory.createXMLStreamReader(new StringReader(WIRE_FORMAT));
+        XMLStreamReader reader = inputFactory.createXMLStreamReader(new StringReader(COMPOSITE_WITH_WIRE_FORMAT));
         
         Composite composite = (Composite)staxProcessor.read(reader);
         HTTPBinding binding = (HTTPBinding)   composite.getComponents().get(0).getServices().get(0).getBindings().get(0);        

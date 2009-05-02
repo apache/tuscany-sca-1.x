@@ -46,7 +46,7 @@ import org.junit.Test;
  * @version $Rev$ $Date$
  */
 public class HTTPBindingProcessorTestCase {
-    private static final String XML = "<binding.http xmlns=\"http://www.osoa.org/xmlns/sca/1.0\" xmlns:ns1=\"http://www.osoa.org/xmlns/sca/1.0\" name=\"name\" uri=\"uri\" />";
+    private static final String XML = "<ns1:binding.http xmlns:ns1=\"http://tuscany.apache.org/xmlns/sca/1.0\" name=\"name\" uri=\"uri\" />";
     
     private static XMLInputFactory inputFactory;
     private static XMLOutputFactory outputFactory;
