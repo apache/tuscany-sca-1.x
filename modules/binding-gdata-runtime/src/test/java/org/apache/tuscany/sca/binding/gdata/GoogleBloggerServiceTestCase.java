@@ -21,11 +21,12 @@ package org.apache.tuscany.sca.binding.gdata;
 
 import java.net.URL;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gdata.client.Query;
@@ -34,18 +35,13 @@ import com.google.gdata.data.Entry;
 import com.google.gdata.data.Feed;
 import com.google.gdata.data.PlainTextConstruct;
 
-public class GoogleBloggerServiceTestCase extends TestCase{
+public class GoogleBloggerServiceTestCase {
 
-    private SCADomain scaDomainConsumer = null;
-    private CustomerClient testService = null;    
+    private static SCADomain scaDomainConsumer = null;
+    private static CustomerClient testService = null;    
     
-    public GoogleBloggerServiceTestCase(){
-
-    }
-    
-    @Before
-    @Override
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         System.out.println("Method Test Start-----------------------------------------------------------------------");
         
         //Initialize the GData client service (Reference Binding test)
@@ -53,9 +49,8 @@ public class GoogleBloggerServiceTestCase extends TestCase{
         testService = scaDomainConsumer.getService(CustomerClient.class, "CustomerClient");  
     }
 
-    @After
-    @Override
-    public void tearDown(){
+    @AfterClass
+    public static void tearDown(){
         System.out.println("Method Test End------------------------------------------------------------------------");
         System.out.println("\n\n");
     }        
@@ -64,7 +59,7 @@ public class GoogleBloggerServiceTestCase extends TestCase{
     public void testClientGetFeed() throws Exception {
         Feed feed = testService.clientGetFeed();
         System.out.println("feed title: " + feed.getTitle().getPlainText());        
-        assertEquals("gdata binding tuscany test", feed.getTitle().getPlainText());
+        Assert.assertEquals("gdata binding tuscany test", feed.getTitle().getPlainText());
      }
     
     
@@ -73,7 +68,7 @@ public class GoogleBloggerServiceTestCase extends TestCase{
         String entryID = "8308734583601887890";
         Entry blogEntry = testService.clientGetEntry(entryID);
         System.out.println("Entry ID: " + blogEntry.getId());
-        assertTrue(blogEntry.getId().endsWith(entryID));
+        Assert.assertTrue(blogEntry.getId().endsWith(entryID));
         System.out.println("------------------------------------------------------------\n\n");
     }
     
@@ -85,23 +80,25 @@ public class GoogleBloggerServiceTestCase extends TestCase{
         testService.clientPut(entryID, newBlogEntryTitle);      //update the title
         Thread.sleep(300);            
         Entry updatedEntry = testService.clientGetEntry(entryID);         
-        assertEquals(newBlogEntryTitle, updatedEntry.getTitle().getPlainText());
+        Assert.assertEquals(newBlogEntryTitle, updatedEntry.getTitle().getPlainText());
     }
     
     
 
-    @Test
+    //@Test
+    @Ignore("TUSCANY-3006")
     public void testClientPost() throws Exception {
         String blogEntryTitle = "titleByBloogerTestcase000";
         Entry newEntry = new Entry();
         newEntry.setTitle(new PlainTextConstruct(blogEntryTitle));
         newEntry.setContent(new PlainTextConstruct("contentByBloggerTestCase000"));
         Entry postedEntry = testService.clientPost(newEntry);        
-        assertEquals(blogEntryTitle, postedEntry.getTitle().getPlainText());
+        Assert.assertEquals(blogEntryTitle, postedEntry.getTitle().getPlainText());
     }
 
     
-    @Test
+    //@Test
+    @Ignore("TUSCANY-3006")
     public void testClientDelete() throws Exception {
         
         //This test case might fail
