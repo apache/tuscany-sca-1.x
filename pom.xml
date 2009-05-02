@@ -61,10 +61,10 @@
                 <module>binding-gdata-runtime</module>
                 <module>binding-http</module>
                 <module>binding-http-runtime</module>
-                <module>binding-http-oasis</module>
-                <module>binding-http-oasis-runtime</module>
-                <module>binding-http-oasis-jsonrpc</module>
-                <module>binding-http-oasis-jsonrpc-runtime</module>
+                <module>binding-http-new</module>
+                <module>binding-http-new-runtime</module>
+                <module>binding-http-new-jsonrpc</module>
+                <module>binding-http-new-jsonrpc-runtime</module>
                 <module>binding-jms</module>
                 <module>binding-jms-runtime</module>
                 <module>binding-jms-policy</module>
