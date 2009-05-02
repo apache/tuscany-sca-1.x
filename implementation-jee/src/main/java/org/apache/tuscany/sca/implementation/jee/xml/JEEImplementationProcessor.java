@@ -116,6 +116,7 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
         String archive = implementation.getArchive();
         if (uri != null) {
             Object moduleInfo = null;
+            ExternalEarInfo extEar = null;            
             if(uri.equals("")) {
                 if(moduleInfo == null) {
                     WebModuleInfo unresolved = new WebModuleInfoImpl();
@@ -154,12 +155,19 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
             } else if(uri.endsWith(".ear")) {
                 final JavaEEApplicationInfo appInfo = new JavaEEApplicationInfoImpl();
                 appInfo.setUri(URI.create(archive));
-                ExternalEarInfo ee = new ExternalEarInfo() {
+                ExternalEarInfo unresolved = new ExternalEarInfo() {
                     public JavaEEApplicationInfo getAppInfo() {
                         return appInfo;
+                    }
+                    public Composite getAppComposite() {
+                        return null;
                     }};
-                ee = resolver.resolveModel(ExternalEarInfo.class, ee);
-                moduleInfo = ee.getAppInfo();
+
+                ExternalEarInfo resolved = resolver.resolveModel(ExternalEarInfo.class, unresolved);
+                if(resolved != unresolved) {
+                    extEar = resolved;
+                }
+                moduleInfo = resolved.getAppInfo();                
             }
             
             if(moduleInfo instanceof WebModuleInfo) {
@@ -215,21 +223,30 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                 }
             } else if(moduleInfo instanceof JavaEEApplicationInfo) {
                 // Check for application composite
-                ModelObject unresolved = new ModelObjectImpl();
-                unresolved.setUri(URI.create("META-INF/application.composite"));
-                ModelObject resolved = resolver.resolveModel(ModelObject.class, unresolved);
-                if(resolved != unresolved) {
+                Composite appComposite = null;
+                if(extEar != null) { 
+                    appComposite = extEar.getAppComposite();
+                } else {
+                    ModelObject unresolved = new ModelObjectImpl();
+                    unresolved.setUri(URI.create("META-INF/application.composite"));
+                    ModelObject resolved = resolver.resolveModel(ModelObject.class, unresolved);
+                    if(resolved != unresolved) {
+                       // Found application composite
+                       appComposite = (Composite)resolved.getObject();
+                    }
+                }
+                
+                if(appComposite != null) {
                     // Found application composite
-                    Composite appComposite = (Composite)resolved.getObject();
                     implementation.getServices().addAll(appComposite.getServices());
                     implementation.getReferences().addAll(appComposite.getReferences());
                     implementation.getProperties().addAll(appComposite.getProperties());
-                }
+                }                    
                 
                 // TODO: Obtain includeDefaults value from the composite
                 boolean includeDefaults = false;
                 
-                if(includeDefaults || resolved == unresolved) {
+                if(includeDefaults || appComposite == null) {
                     if(jeeExtension != null) {
                         ComponentType ct = jeeExtension.createImplementationJeeComponentType((JavaEEApplicationInfo)moduleInfo);
                         implementation.getServices().addAll(ct.getServices());
