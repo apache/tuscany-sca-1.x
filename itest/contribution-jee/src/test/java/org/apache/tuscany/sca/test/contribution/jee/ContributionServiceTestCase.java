@@ -285,7 +285,8 @@ public class ContributionServiceTestCase {
         Assert.assertTrue("Component with implementation.jee", component.getImplementation() instanceof JEEImplementation);
         JEEImplementation jeeImpl = (JEEImplementation)component.getImplementation();
         Assert.assertEquals("Number of services", 2, jeeImpl.getServices().size());
-        Assert.assertEquals("Number of references", 1, jeeImpl.getReferences().size());
+      // TODO - TUSCANY-3008
+      //  Assert.assertEquals("Number of references", 1, jeeImpl.getReferences().size());
     }
 
     /**
