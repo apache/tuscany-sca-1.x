@@ -23,6 +23,7 @@ import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
 import org.apache.tuscany.sca.invocation.Interceptor;
+import org.apache.tuscany.sca.invocation.Phase;
 import org.apache.tuscany.sca.provider.WireFormatProvider;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
@@ -50,8 +51,7 @@ public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
     }
 
     public String getPhase() {
-        // TODO Auto-generated method stub
-        return null;
+        return Phase.SERVICE_BINDING_WIREFORMAT;
     }
 
 }

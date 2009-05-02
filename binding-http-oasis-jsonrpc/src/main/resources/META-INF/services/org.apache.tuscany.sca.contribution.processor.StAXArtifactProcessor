@@ -16,5 +16,5 @@
 # under the License. 
 
 # Implementation class for the artifact processor extension
-org.apache.tuscany.sca.assembly.xml.DefaultBeanModelProcessor;qname=http://www.osoa.org/xmlns/sca/1.0#wireFormat.jsonrpc,model=org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormat,factory=org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormatFactory
-org.apache.tuscany.sca.assembly.xml.DefaultBeanModelProcessor;qname=http://www.osoa.org/xmlns/sca/1.0#operationSelector.jsonrpc,model=org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelector,factory=org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelectorFactory
+org.apache.tuscany.sca.assembly.xml.DefaultBeanModelProcessor;qname=http://tuscany.apache.org/xmlns/sca/1.0#wireFormat.jsonrpc,model=org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormat,factory=org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormatFactory
+org.apache.tuscany.sca.assembly.xml.DefaultBeanModelProcessor;qname=http://tuscany.apache.org/xmlns/sca/1.0#operationSelector.jsonrpc,model=org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelector,factory=org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelectorFactory

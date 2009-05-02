@@ -37,7 +37,7 @@ import com.meterware.httpunit.WebResponse;
 /**
  * @version $Rev$ $Date$
  */
-public class JSONRPCServiceTestCase{
+public class JSONRPCServiceTestCase {
 
     private static final String SERVICE_PATH = "/EchoService";
 

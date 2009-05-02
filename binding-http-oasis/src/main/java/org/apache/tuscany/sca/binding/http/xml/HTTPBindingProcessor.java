@@ -48,7 +48,7 @@ import org.apache.tuscany.sca.monitor.Problem.Severity;
 
 public class HTTPBindingProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<HTTPBinding> {
     private static final String BINDING_HTTP = "binding.http";
-    private static final QName BINDING_HTTP_QNAME = new QName(Constants.SCA10_NS, BINDING_HTTP);
+    private static final QName BINDING_HTTP_QNAME = new QName(Constants.SCA10_TUSCANY_NS, BINDING_HTTP);
     
     private static final String NAME = "name";
     private static final String URI = "uri";
@@ -158,7 +158,7 @@ public class HTTPBindingProcessor extends BaseStAXArtifactProcessor implements S
      */
     private void error(String message, Object model, Object... messageParameters) {
          if (monitor != null) {
-                Problem problem = new ProblemImpl(this.getClass().getName(), "impl-bpel-validation-messages", Severity.ERROR, model, message, (Object[])messageParameters);
+                Problem problem = new ProblemImpl(this.getClass().getName(), "binding-http-validation-messages", Severity.ERROR, model, message, (Object[])messageParameters);
                 monitor.problem(problem);
          }
     }

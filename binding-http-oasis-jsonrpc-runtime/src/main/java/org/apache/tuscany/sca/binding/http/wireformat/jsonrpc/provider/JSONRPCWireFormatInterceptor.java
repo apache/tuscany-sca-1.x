@@ -23,7 +23,7 @@ import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
 
-public class JSONRPCWireFormatServiceInterceptor implements Interceptor {
+public class JSONRPCWireFormatInterceptor implements Interceptor {
 
     public Invoker getNext() {
         // TODO Auto-generated method stub
