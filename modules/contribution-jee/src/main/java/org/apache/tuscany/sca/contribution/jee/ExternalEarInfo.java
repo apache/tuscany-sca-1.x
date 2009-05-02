@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.sca.contribution.jee;
 
+import org.apache.tuscany.sca.assembly.Composite;
+
 
 /**
  * @version $Rev: 755722 $ $Date: 2009-03-18 20:23:02 +0000 (Wed, 18 Mar 2009) $
@@ -25,4 +27,5 @@ package org.apache.tuscany.sca.contribution.jee;
 public interface ExternalEarInfo {
     
     JavaEEApplicationInfo getAppInfo();
+    Composite getAppComposite();
 }

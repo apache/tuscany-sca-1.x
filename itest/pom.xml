@@ -79,6 +79,7 @@
  <module>contribution-classloader</module> -->
                 <module>contribution-jee-samples</module>
                 <module>contribution-jee</module>
+                <module>contribution-jee-samples</module>
                 <module>conversations</module>
                 <module>corba</module>
                 <module>conversations-ws</module>

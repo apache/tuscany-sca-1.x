@@ -150,7 +150,6 @@ public class RuntimeBootStrapper {
             monitorFactory = new DefaultMonitorFactoryImpl();
             monitor = monitorFactory.createMonitor();
             utilities.addUtility(monitorFactory);
-            //logger.fine("No MonitorFactory is found on the classpath.");
         }
 
         // Create a contribution service
@@ -166,6 +165,9 @@ public class RuntimeBootStrapper {
                                                      policyDefinitions,
                                                      policyDefinitionsResolver,
                                                      monitor);
+        
+        // add the contribution service into the utility extension point
+        utilities.addUtility(contributionService);
 
         // Create the ScopeRegistry
         scopeRegistry = RuntimeBuilder.createScopeRegistry(registry);

@@ -83,13 +83,6 @@
             <artifactId>tuscany-implementation-web-runtime</artifactId>
             <version>1.6-SNAPSHOT</version>
         </dependency>
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>itest-contribution-jee-samples-6-war-appcomp-contrib-implicit</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <type>war</type>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.myfaces.core</groupId>
@@ -114,5 +107,57 @@
             <artifactId>geronimo-el_1.0_spec</artifactId>
             <version>1.0.1</version>
         </dependency>
+        
+        <!-- the sample war, jar and ear files that are used to test JEE contribution processing -->
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-1-war-nonenhanced</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+                
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-6-war-appcomp-contrib-implicit</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>        
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-13-ear-nonenhanced</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <type>ear</type>
+        </dependency> 
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-29-ear-appcomp-contrib-implicit</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <type>ear</type>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-35-scajar-ear-nonenhanced</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>        
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-41-scajar-ear-appcomp</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+                        
     </dependencies>
 </project>
