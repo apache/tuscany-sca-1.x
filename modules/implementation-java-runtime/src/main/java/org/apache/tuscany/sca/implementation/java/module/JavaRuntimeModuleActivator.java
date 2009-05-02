@@ -35,7 +35,6 @@ import org.apache.tuscany.sca.core.invocation.ExtensibleProxyFactory;
 import org.apache.tuscany.sca.core.invocation.ProxyFactory;
 import org.apache.tuscany.sca.core.invocation.ProxyFactoryExtensionPoint;
 import org.apache.tuscany.sca.databinding.DataBindingExtensionPoint;
-import org.apache.tuscany.sca.databinding.Mediator;
 import org.apache.tuscany.sca.implementation.java.invocation.JavaCallbackRuntimeWireProcessor;
 import org.apache.tuscany.sca.implementation.java.invocation.JavaImplementationProviderFactory;
 import org.apache.tuscany.sca.interfacedef.InterfaceContractMapper;
@@ -74,7 +73,6 @@ public class JavaRuntimeModuleActivator implements ModuleActivator {
         JavaInterfaceFactory javaFactory = factories.getFactory(JavaInterfaceFactory.class);
 
         DataBindingExtensionPoint dataBindings = registry.getExtensionPoint(DataBindingExtensionPoint.class);
-        Mediator mediator = utilities.getUtility(Mediator.class);
         PropertyValueFactory factory = utilities.getUtility(PropertyValueFactory.class);
 
         ContextFactoryExtensionPoint contextFactories = registry.getExtensionPoint(ContextFactoryExtensionPoint.class);
