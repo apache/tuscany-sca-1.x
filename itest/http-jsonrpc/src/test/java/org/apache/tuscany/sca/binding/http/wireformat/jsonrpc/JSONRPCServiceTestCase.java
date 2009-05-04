@@ -41,13 +41,13 @@ public class JSONRPCServiceTestCase {
 
     private static final String SERVICE_PATH = "/EchoService";
 
-    private static final String SERVICE_URL = "http://localhost:8085/SCADomain" + SERVICE_PATH;
+    private static final String SERVICE_URL = "http://localhost:8085/" + SERVICE_PATH;
 
     private SCADomain domain;
 
     //@Before
     public void setUp() throws Exception {
-        domain = SCADomain.newInstance("JSONRPCBinding.composite");
+        domain = SCADomain.newInstance("org/apache/tuscany/sca/binding/http/wireformat/jsonrpc/JSONRPCBinding.composite");
     }
 
     //@After

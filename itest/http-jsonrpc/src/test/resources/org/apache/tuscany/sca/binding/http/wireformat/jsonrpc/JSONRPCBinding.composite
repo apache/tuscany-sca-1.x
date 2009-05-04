@@ -25,7 +25,7 @@
 
     <service name="EchoService" promote="EchoComponent">
         <interface.java interface="echo.Echo"/>
-        <tuscany:binding.http uri="http://localhost:8085/SCADomain/EchoService">
+        <tuscany:binding.http uri="http://localhost:8085/EchoService">
            <tuscany:wireFormat.jsonrpc/>
            <tuscany:operationSelector.jsonrpc/>
         </tuscany:binding.http>

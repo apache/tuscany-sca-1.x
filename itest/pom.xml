@@ -75,8 +75,9 @@
                 <module>contribution</module>
                 <module>contribution-multiple</module>
                 <module>contribution-import-export</module>
-              <!--  
- <module>contribution-classloader</module> -->
+                <!-- 
+                <module>contribution-classloader</module> 
+                -->
                 <module>contribution-jee-samples</module>
                 <module>contribution-jee</module>
                 <module>contribution-jee-samples</module>
@@ -90,6 +91,7 @@
                 <module>exceptions-cross-binding-ws</module>
                 <module>exceptions-simple-ws</module>
                 <module>extended-api</module>
+                <module>http-jsonrpc</module>
                 <module>interfaces</module>
                 <!--
                 <module>interop-soap-client</module>
