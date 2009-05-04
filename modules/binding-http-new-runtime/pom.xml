@@ -26,13 +26,13 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tuscany-binding-http-oasis-runtime</artifactId>
-    <name>Apache Tuscany SCA HTTP OASIS Binding Runtime</name>
+    <artifactId>tuscany-binding-http-new-runtime</artifactId>
+    <name>Apache Tuscany SCA HTTP Binding Runtime</name>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-http-oasis</artifactId>
+            <artifactId>tuscany-binding-http-new</artifactId>
             <version>1.6-SNAPSHOT</version>
         </dependency>
 
