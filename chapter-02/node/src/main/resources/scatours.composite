@@ -18,13 +18,14 @@
  * under the License.    
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-    targetNamespace="http://goodvaluetrips.com/"
-    name="Trips">
+    targetNamespace="http://scatours"
+    xmlns:client="http://client.scatours/"
+    xmlns:tours="http://tuscanyscatours.com/"
+    xmlns:trips="http://goodvaluetrips.com/"
+    name="scatours">
 
-    <component name="TripProvider">
-        <implementation.java class="com.goodvaluetrips.TripProvider" />
-        <service name="Trips">
-            <interface.java interface="com.goodvaluetrips.Trips" />
-        </service>
-    </component>
+    <include name="client:Client" />
+    <include name="tours:Tours" />
+    <include name="trips:Trips" />
+
 </composite>

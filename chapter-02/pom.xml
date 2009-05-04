@@ -38,9 +38,8 @@
             <modules>
                 <module>goodvaluetrips-contribution</module>
                 <module>tuscanyscatours-contribution</module>
-                <!--
+                <module>client-contribution</module>
                 <module>node</module>
-                -->
             </modules>
         </profile>
 

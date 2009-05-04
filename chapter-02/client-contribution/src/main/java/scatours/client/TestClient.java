@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,15 +15,32 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-    targetNamespace="http://goodvaluetrips.com/"
-    name="Trips">
+ */
 
-    <component name="TripProvider">
-        <implementation.java class="com.goodvaluetrips.TripProvider" />
-        <service name="Trips">
-            <interface.java interface="com.goodvaluetrips.Trips" />
-        </service>
-    </component>
-</composite>
+package scatours.client;
+
+import com.tuscanyscatours.Bookings;
+import com.tuscanyscatours.Checkout;
+
+import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Service;
+
+@Service(Runnable.class)
+public class TestClient {
+    @Reference
+    protected Bookings bookings;
+
+    @Reference
+    protected Checkout checkout;
+
+    public TestClient() {
+    }
+
+    public void run() {
+        String bookingCode = bookings.newBooking("FS1APR4", 1);
+        System.out.println("Booking code is " + bookingCode);
+
+        checkout.makePayment(1995.00, "1234567843218765 10/10");
+        System.out.println("Paid $1995.00");
+    }
+}

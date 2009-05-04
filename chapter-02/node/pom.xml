@@ -29,23 +29,10 @@
     <name>Apache Tuscany SCA Tours Chapter 02 Node</name>
 
     <dependencies>
-            <dependency>
+        <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-node-api</artifactId>
             <version>1.5-SNAPSHOT</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-node-launcher</artifactId>
-            <version>1.5-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-node-runtime</artifactId>
-            <version>1.5-SNAPSHOT</version>
-            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -57,81 +44,20 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-resource-runtime</artifactId>
+            <artifactId>tuscany-implementation-node-runtime</artifactId>
             <version>1.5-SNAPSHOT</version>
-            <scope>runtime</scope>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-jsonrpc-runtime</artifactId>
-            <version>1.5-SNAPSHOT</version>
-            <scope>runtime</scope>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.5</version>
+            <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-http-runtime</artifactId>
-            <version>1.5-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-ws-axis2</artifactId>
-            <version>1.5-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-sca-axis2</artifactId>
-            <version>1.5-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-     
-
-        <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <version>10.3.1.5-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-
     </dependencies>
     
     <build>
        <finalName>${artifactId}</finalName>
-       <sourceDirectory>${basedir}/src</sourceDirectory>
-       <resources>
-          <resource>
-              <directory>${basedir}</directory>
-              <excludes>
-                  <exclude>**/*.java</exclude>
-                  <exclude>**/.*/**</exclude>
-                  <exclude>pom.xml</exclude>
-                  <exclude>build.xml</exclude>
-                  <exclude>target/**</exclude>
-                  <exclude>src/**</exclude>
-              </excludes>
-          </resource>
-       </resources>
-       <plugins>
-            <plugin>
-                <groupId>org.apache.tuscany.sca</groupId>
-                <artifactId>tuscany-maven-ant-generator</artifactId>
-                <version>1.5-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <mainClass>launch.LaunchTutorialAdmin</mainClass>
-                        </configuration>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-       </plugins>
     </build>
 </project>

@@ -19,7 +19,7 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
     targetNamespace="http://tuscanyscatours.com/"
-    name="tours">
+    name="Tours">
 
     <component name="TripBooking">
         <implementation.java class="com.tuscanyscatours.TripBooking" />

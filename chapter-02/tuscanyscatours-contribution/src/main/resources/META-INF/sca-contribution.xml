@@ -18,6 +18,8 @@
     * under the License.    
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
-              xmlns:scatours="http://tuscanyscatours.com/">
-    <deployable composite="scatours:tours"/>
+              xmlns:tst="http://tuscanyscatours.com/">
+    <export namespace="http://tuscanyscatours.com/" />
+    <export.java package="com.tuscanyscatours" />
+    <deployable composite="tst:Tours" />
 </contribution>

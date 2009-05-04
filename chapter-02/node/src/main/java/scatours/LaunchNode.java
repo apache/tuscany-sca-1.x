@@ -19,48 +19,34 @@
 
 package scatours;
 
-import java.io.IOException;
-
+import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
-import org.apache.tuscany.sca.node.launcher.NodeLauncher;
 
 public class LaunchNode {
+
     public static void main(String[] args) throws Exception {
         LaunchNode.launchFromFileSystemDir();
     }
     
     // OK for development but you must launch the node from this module 
     public static void launchFromFileSystemDir(){
-        SCANode node = null; 
-        
         try {
-            node = SCANodeFactory.newInstance().createSCANode("scatours.composite", 
-                                                               new SCAContribution("common", "../../shared-contributions/common-contribution/target/classes"),
-                                                               new SCAContribution("currency", "../../shared-contributions/currency-contribution/target/classes"),
-                                                               new SCAContribution("hotel", "../../shared-contributions/hotel-contribution/target/classes"),
-                                                               new SCAContribution("flight", "../../shared-contributions/flight-contribution/target/classes"),
-                                                               new SCAContribution("car", "../../shared-contributions/car-contribution/target/classes"),
-                                                               new SCAContribution("trip", "../../shared-contributions/trip-contribution/target/classes"),
-                                                               new SCAContribution("tripbooking", "../../shared-contributions/tripbooking-contribution/target/classes"),
-                                                               new SCAContribution("travelcatalog", "../../shared-contributions/travelcatalog-contribution/target/classes"),
-                                                               new SCAContribution("payment", "../../shared-contributions/payment-contribution/target/classes"),
-                                                               new SCAContribution("emailgateway", "../../shared-contributions/emailgateway-contribution/target/classes"),
-                                                               new SCAContribution("shoppingcart", "../../shared-contributions/shoppingcart-contribution/target/classes"),
-                                                               new SCAContribution("scatours", "../../shared-contributions/scatours-contribution/target/classes"),
-                                                               new SCAContribution("ui", "../ui-contribution/target/classes"));
+            SCANode node = SCANodeFactory.newInstance().createSCANode("scatours.composite", 
+                new SCAContribution("goodvaluetrips", "../goodvaluetrips-contribution/target/classes"),
+                new SCAContribution("tuscanyscatours", "../tuscanyscatours-contribution/target/classes"),
+                new SCAContribution("client", "../client-contribution/target/classes"),
+                new SCAContribution("node", "./target/classes"));
             node.start();
-            
-            System.out.println("Node started - Press enter to shutdown.");
-            try {
-                System.in.read();
-            } catch (IOException e) {}
-            
+
+            Runnable runner = ((SCAClient)node).getService(Runnable.class, "TestClient/Runnable");
+            runner.run();
+
             node.stop();
             
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
+        } catch (Throwable th) {
+            th.printStackTrace();
         }
-    }    
+    }
 }

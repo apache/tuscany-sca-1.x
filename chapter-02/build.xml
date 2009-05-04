@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -15,16 +14,32 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
 -->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-    targetNamespace="http://goodvaluetrips.com/"
-    name="Trips">
 
-    <component name="TripProvider">
-        <implementation.java class="com.goodvaluetrips.TripProvider" />
-        <service name="Trips">
-            <interface.java interface="com.goodvaluetrips.Trips" />
-        </service>
-    </component>
-</composite>
+<project name="scatours-chapter-02" default="compile">
+
+    <target name="compile">
+        <antcall target="allsubdirs">
+            <param name="target" value="compile"/>
+        </antcall>
+    </target>
+
+    <target name="run">
+        <ant dir="node" target="run"/>
+    </target>
+
+    <target name="clean">
+        <antcall target="allsubdirs">
+            <param name="target" value="clean"/>
+        </antcall>
+    </target>
+
+    <target name="allsubdirs">
+        <ant dir="goodvaluetrips-contribution" target="${target}"/>
+        <ant dir="tuscanyscatours-contribution" target="${target}"/>
+        <ant dir="client-contribution" target="${target}"/>
+        <ant dir="node" target="${target}"/>
+    </target>
+
+</project>
