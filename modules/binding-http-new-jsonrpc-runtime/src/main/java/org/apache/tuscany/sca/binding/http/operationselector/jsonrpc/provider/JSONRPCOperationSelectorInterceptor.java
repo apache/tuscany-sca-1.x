@@ -38,15 +38,15 @@ public class JSONRPCOperationSelectorInterceptor implements Interceptor {
     }
 
     public Invoker getNext() {
-        return null;
+        return this.next;
     }
 
     public void setNext(Invoker next) {
-        
+        this.next = next;
     }
 
     public Message invoke(Message msg) {
-        return null;
+        return getNext().invoke(msg);
     }
 
 }

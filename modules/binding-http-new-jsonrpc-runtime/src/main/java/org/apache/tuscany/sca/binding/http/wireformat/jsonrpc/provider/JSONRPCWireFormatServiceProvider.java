@@ -20,6 +20,10 @@
 package org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.provider;
 
 import org.apache.tuscany.sca.assembly.Binding;
+import org.apache.tuscany.sca.assembly.BindingRRB;
+import org.apache.tuscany.sca.assembly.WireFormat;
+import org.apache.tuscany.sca.binding.http.HTTPBinding;
+import org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormat;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
 import org.apache.tuscany.sca.invocation.Interceptor;
@@ -32,12 +36,19 @@ import org.apache.tuscany.sca.runtime.RuntimeComponentService;
  * @version $Rev$ $Date$
  */
 public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
+    private RuntimeComponent component;
+    private RuntimeComponentService service;
+    private Binding binding;
 
     public JSONRPCWireFormatServiceProvider(ExtensionPointRegistry extensionPoints,
                                             RuntimeComponent component, 
                                             RuntimeComponentService service, 
                                             Binding binding) {
         
+        super();
+        this.component = component;
+        this.service = service;
+        this.binding = binding;
     }
     
     public InterfaceContract configureWireFormatInterfaceContract(InterfaceContract interfaceContract) {
@@ -46,7 +57,14 @@ public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
     }
 
     public Interceptor createInterceptor() {
-        // TODO Auto-generated method stub
+        if(binding instanceof BindingRRB) {
+            BindingRRB rrbBinding = (BindingRRB) binding;
+            WireFormat wireFormat = rrbBinding.getRequestWireFormat();
+            if(wireFormat != null && wireFormat instanceof JSONRPCWireFormat) {
+                return new JSONRPCWireFormatInterceptor((HTTPBinding) binding, service.getRuntimeWire(binding));
+            }
+        }
+        
         return null;
     }
 

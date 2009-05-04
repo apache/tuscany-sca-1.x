@@ -21,6 +21,7 @@ package org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.provider;
 
 import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelector;
+import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.provider.OperationSelectorProvider;
 import org.apache.tuscany.sca.provider.OperationSelectorProviderFactory;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
@@ -28,6 +29,11 @@ import org.apache.tuscany.sca.runtime.RuntimeComponentReference;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 
 public class JSONRPCOperationSelectorProviderFactory implements OperationSelectorProviderFactory<JSONRPCOperationSelector> {
+    private ExtensionPointRegistry extensionPoints;
+
+    public JSONRPCOperationSelectorProviderFactory(ExtensionPointRegistry extensionPoints) {
+        this.extensionPoints = extensionPoints;
+    }
 
     public OperationSelectorProvider createReferenceOperationSelectorProvider(RuntimeComponent component,
                                                                               RuntimeComponentReference reference,

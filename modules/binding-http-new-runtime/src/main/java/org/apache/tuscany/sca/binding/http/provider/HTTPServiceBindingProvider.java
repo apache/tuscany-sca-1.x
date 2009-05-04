@@ -37,7 +37,7 @@ import org.apache.tuscany.sca.policy.PolicySet;
 import org.apache.tuscany.sca.policy.PolicySetAttachPoint;
 import org.apache.tuscany.sca.policy.authentication.AuthenticationConfigurationPolicy;
 import org.apache.tuscany.sca.policy.confidentiality.ConfidentialityPolicy;
-import org.apache.tuscany.sca.provider.ServiceBindingProvider;
+import org.apache.tuscany.sca.provider.ServiceBindingProviderRRB;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 import org.apache.tuscany.sca.runtime.RuntimeWire;
@@ -47,7 +47,7 @@ import org.apache.tuscany.sca.runtime.RuntimeWire;
  *
  * @version $Rev$ $Date$
  */
-public class HTTPServiceBindingProvider implements ServiceBindingProvider {
+public class HTTPServiceBindingProvider implements ServiceBindingProviderRRB {
     private static final QName AUTEHTICATION_INTENT = new QName("http://www.osoa.org/xmlns/sca/1.0","authentication");
     private static final QName CONFIDENTIALITY_INTENT = new QName("http://www.osoa.org/xmlns/sca/1.0","confidentiality");
     
@@ -184,6 +184,16 @@ public class HTTPServiceBindingProvider implements ServiceBindingProvider {
     
     public boolean supportsOneWayInvocation() {
         return false;
+    }
+    
+    /**
+     * Add specific http interceptor to invocation chain
+     * @param runtimeWire
+     */
+    public void configureBindingChain(RuntimeWire runtimeWire) {
+        InvocationChain bindingChain = runtimeWire.getBindingInvocationChain();
+        
+        
     }
 
 }

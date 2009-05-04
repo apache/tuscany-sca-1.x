@@ -24,8 +24,6 @@ import junit.framework.Assert;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.json.JSONObject;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -45,12 +43,12 @@ public class JSONRPCServiceTestCase {
 
     private SCADomain domain;
 
-    //@Before
+    //@BeforeClass
     public void setUp() throws Exception {
         domain = SCADomain.newInstance("org/apache/tuscany/sca/binding/http/wireformat/jsonrpc/JSONRPCBinding.composite");
     }
 
-    //@After
+    //@AfterClass
     public void tearDown() throws Exception {
     	domain.close();
     }
