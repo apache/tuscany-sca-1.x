@@ -19,25 +19,35 @@
 
 package org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.provider;
 
+import org.apache.tuscany.sca.binding.http.HTTPBinding;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
+import org.apache.tuscany.sca.runtime.RuntimeWire;
 
 public class JSONRPCWireFormatInterceptor implements Interceptor {
+   private Invoker next;
+    
+    private RuntimeWire runtimeWire;
+    private HTTPBinding binding;
+    
+    public JSONRPCWireFormatInterceptor(HTTPBinding binding, RuntimeWire runtimeWire) {
+        this.binding = binding;
+        this.runtimeWire = runtimeWire;
+        
+    }
 
     public Invoker getNext() {
-        // TODO Auto-generated method stub
-        return null;
+        return next;
     }
 
     public void setNext(Invoker next) {
-        // TODO Auto-generated method stub
+        this.next = next;
         
     }
 
     public Message invoke(Message msg) {
-        // TODO Auto-generated method stub
-        return null;
+        return getNext().invoke(msg);
     }
 
 }

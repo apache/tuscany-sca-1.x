@@ -20,7 +20,10 @@
 package org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.provider;
 
 import org.apache.tuscany.sca.assembly.Binding;
+import org.apache.tuscany.sca.assembly.BindingRRB;
+import org.apache.tuscany.sca.assembly.OperationSelector;
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
+import org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelector;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Phase;
 import org.apache.tuscany.sca.provider.OperationSelectorProvider;
@@ -40,7 +43,15 @@ public class JSONRPCOperationSelectorServiceProvider implements OperationSelecto
     }
     
     public Interceptor createInterceptor() {
-        return new JSONRPCOperationSelectorInterceptor((HTTPBinding) binding, service.getRuntimeWire(binding));
+        if(binding instanceof BindingRRB) {
+            BindingRRB rrbBinding = (BindingRRB) binding;
+            OperationSelector operationSelector = rrbBinding.getOperationSelector();
+            if(operationSelector != null && operationSelector instanceof JSONRPCOperationSelector) {
+                return new JSONRPCOperationSelectorInterceptor((HTTPBinding) binding, service.getRuntimeWire(binding));
+            }
+        }
+        
+        return null;
     }
 
     public String getPhase() {
