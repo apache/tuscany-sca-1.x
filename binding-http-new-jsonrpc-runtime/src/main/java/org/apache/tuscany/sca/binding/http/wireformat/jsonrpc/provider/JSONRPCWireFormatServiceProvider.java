@@ -52,8 +52,7 @@ public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
     }
     
     public InterfaceContract configureWireFormatInterfaceContract(InterfaceContract interfaceContract) {
-        // TODO Auto-generated method stub
-        return null;
+        return interfaceContract;
     }
 
     public Interceptor createInterceptor() {

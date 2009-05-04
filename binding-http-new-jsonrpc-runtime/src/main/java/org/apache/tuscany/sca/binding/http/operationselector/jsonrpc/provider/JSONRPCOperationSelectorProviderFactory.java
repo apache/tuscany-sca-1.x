@@ -44,7 +44,7 @@ public class JSONRPCOperationSelectorProviderFactory implements OperationSelecto
     public OperationSelectorProvider createServiceOperationSelectorProvider(RuntimeComponent component,
                                                                             RuntimeComponentService service,
                                                                             Binding binding) {
-        return new JSONRPCOperationSelectorServiceProvider(component, service, binding);
+        return new JSONRPCOperationSelectorServiceProvider(extensionPoints, component, service, binding);
     }
 
     public Class<JSONRPCOperationSelector> getModelType() {

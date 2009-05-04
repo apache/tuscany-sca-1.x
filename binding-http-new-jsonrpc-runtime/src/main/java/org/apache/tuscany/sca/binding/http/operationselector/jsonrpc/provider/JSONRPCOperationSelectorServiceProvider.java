@@ -24,6 +24,7 @@ import org.apache.tuscany.sca.assembly.BindingRRB;
 import org.apache.tuscany.sca.assembly.OperationSelector;
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
 import org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelector;
+import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Phase;
 import org.apache.tuscany.sca.provider.OperationSelectorProvider;
@@ -35,7 +36,10 @@ public class JSONRPCOperationSelectorServiceProvider implements OperationSelecto
     private RuntimeComponentService service;
     private Binding binding;
 
-    public JSONRPCOperationSelectorServiceProvider(RuntimeComponent component, RuntimeComponentService service, Binding binding) {
+    public JSONRPCOperationSelectorServiceProvider(ExtensionPointRegistry extensionPoints,
+                                                   RuntimeComponent component, 
+                                                   RuntimeComponentService service, 
+                                                   Binding binding) {
         super();
         this.component = component;
         this.service = service;
