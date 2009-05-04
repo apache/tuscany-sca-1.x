@@ -19,15 +19,16 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
 	targetNamespace="http://jsonrpc"
+	xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
 	xmlns:jsonrpc="http://jsonrpc"
 	name="JSONRPCBinding">
 
     <service name="EchoService" promote="EchoComponent">
         <interface.java interface="echo.Echo"/>
-        <binding.http uri="http://localhost:8085/SCADomain/EchoService">
-           <wireFormat.jsonrpc/>
-           <operationSelector.jsonrpc/>
-        </binding.http>
+        <tuscany:binding.http uri="http://localhost:8085/SCADomain/EchoService">
+           <tuscany:wireFormat.jsonrpc/>
+           <tuscany:operationSelector.jsonrpc/>
+        </tuscany:binding.http>
     </service>
 
     <component name="EchoComponent">
