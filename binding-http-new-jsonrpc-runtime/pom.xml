@@ -106,14 +106,6 @@
             <version>4.5</version>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-	        <groupId>httpunit</groupId>
-	        <artifactId>httpunit</artifactId>
-	        <version>1.6.1</version>
-	        <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
 
