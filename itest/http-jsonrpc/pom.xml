@@ -68,6 +68,18 @@
             <version>1.6-SNAPSHOT</version>
         </dependency>
 
+       <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-databinding</artifactId>
+            <version>1.6-SNAPSHOT</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-databinding-json</artifactId>
+            <version>1.6-SNAPSHOT</version>
+        </dependency>       
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
