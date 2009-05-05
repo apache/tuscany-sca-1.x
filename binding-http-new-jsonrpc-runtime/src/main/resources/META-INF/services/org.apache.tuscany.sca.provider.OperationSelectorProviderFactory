@@ -15,4 +15,4 @@
 # specific language governing permissions and limitations
 # under the License. 
 
-org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.provider.JSONRPCOperationSelectorPropProviderFactory;model=org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelector
+org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.provider.JSONRPCOperationSelectorProviderFactory;model=org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelector

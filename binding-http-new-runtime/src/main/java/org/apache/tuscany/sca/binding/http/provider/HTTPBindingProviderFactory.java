@@ -39,11 +39,12 @@ import org.apache.tuscany.sca.runtime.RuntimeComponentService;
  * @version $Rev$ $Date$
  */
 public class HTTPBindingProviderFactory implements BindingProviderFactory<HTTPBinding> {
-
+    private ExtensionPointRegistry extensionPoints;
     private MessageFactory messageFactory;
     private ServletHost servletHost;
     
     public HTTPBindingProviderFactory(ExtensionPointRegistry extensionPoints) {
+        this.extensionPoints = extensionPoints;
         ServletHostExtensionPoint servletHosts = extensionPoints.getExtensionPoint(ServletHostExtensionPoint.class);
         this.servletHost = servletHosts.getServletHosts().get(0);
         ModelFactoryExtensionPoint modelFactories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);
@@ -55,7 +56,7 @@ public class HTTPBindingProviderFactory implements BindingProviderFactory<HTTPBi
     }
 
     public ServiceBindingProvider createServiceBindingProvider(RuntimeComponent component, RuntimeComponentService service, HTTPBinding binding) {
-        return new HTTPServiceBindingProvider(component, service, binding, messageFactory, servletHost);
+        return new HTTPServiceBindingProvider(component, service, binding, extensionPoints, messageFactory, servletHost);
     }
     
     public Class<HTTPBinding> getModelType() {
