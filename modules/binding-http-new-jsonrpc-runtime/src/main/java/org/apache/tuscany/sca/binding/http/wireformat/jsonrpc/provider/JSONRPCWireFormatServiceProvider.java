@@ -19,13 +19,20 @@
 
 package org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.provider;
 
+import java.util.List;
+
 import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.BindingRRB;
 import org.apache.tuscany.sca.assembly.WireFormat;
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
 import org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormat;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
+import org.apache.tuscany.sca.databinding.javabeans.SimpleJavaDataBinding;
+import org.apache.tuscany.sca.databinding.json.JSONDataBinding;
+import org.apache.tuscany.sca.interfacedef.DataType;
+import org.apache.tuscany.sca.interfacedef.Interface;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
+import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Phase;
 import org.apache.tuscany.sca.provider.WireFormatProvider;
@@ -52,6 +59,19 @@ public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
     }
     
     public InterfaceContract configureWireFormatInterfaceContract(InterfaceContract interfaceContract) {
+        InterfaceContract configuredContract = null;
+        //clone the service contract to avoid databinding issues
+        try {
+            configuredContract = (InterfaceContract) interfaceContract.clone();
+        } catch(CloneNotSupportedException e) {
+            configuredContract = interfaceContract;
+        }
+        
+        setDataBinding(configuredContract.getInterface());
+        
+        // Set default databinding to json
+        configuredContract.getInterface().resetDataBinding(JSONDataBinding.NAME);
+        
         return interfaceContract;
     }
 
@@ -69,6 +89,29 @@ public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
 
     public String getPhase() {
         return Phase.SERVICE_BINDING_WIREFORMAT;
+    }
+    
+
+    private void setDataBinding(Interface interfaze) {
+        List<Operation> operations = interfaze.getOperations();
+        for (Operation operation : operations) {
+            operation.setDataBinding(JSONDataBinding.NAME);
+            DataType<List<DataType>> inputType = operation.getInputType();
+            if (inputType != null) {
+                List<DataType> logical = inputType.getLogical();
+                for (DataType inArg : logical) {
+                    if (!SimpleJavaDataBinding.NAME.equals(inArg.getDataBinding())) {
+                        inArg.setDataBinding(JSONDataBinding.NAME);
+                    } 
+                }
+            }
+            DataType outputType = operation.getOutputType();
+            if (outputType != null) {
+                if (!SimpleJavaDataBinding.NAME.equals(outputType.getDataBinding())) {
+                    outputType.setDataBinding(JSONDataBinding.NAME);
+                }
+            }
+        }
     }
 
 }
