@@ -45,6 +45,7 @@ import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
     private RuntimeComponent component;
     private RuntimeComponentService service;
+    private InterfaceContract serviceContract;
     private Binding binding;
 
     public JSONRPCWireFormatServiceProvider(ExtensionPointRegistry extensionPoints,
@@ -55,22 +56,17 @@ public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
         super();
         this.component = component;
         this.service = service;
+        this.serviceContract = service.getInterfaceContract();
         this.binding = binding;
     }
     
     public InterfaceContract configureWireFormatInterfaceContract(InterfaceContract interfaceContract) {
-        InterfaceContract configuredContract = null;
-        //clone the service contract to avoid databinding issues
-        try {
-            configuredContract = (InterfaceContract) interfaceContract.clone();
-        } catch(CloneNotSupportedException e) {
-            configuredContract = interfaceContract;
-        }
+        this.serviceContract = interfaceContract;
         
-        setDataBinding(configuredContract.getInterface());
+        setDataBinding(serviceContract.getInterface());
         
         // Set default databinding to json
-        configuredContract.getInterface().resetDataBinding(JSONDataBinding.NAME);
+        serviceContract.getInterface().resetDataBinding(JSONDataBinding.NAME);
         
         return interfaceContract;
     }

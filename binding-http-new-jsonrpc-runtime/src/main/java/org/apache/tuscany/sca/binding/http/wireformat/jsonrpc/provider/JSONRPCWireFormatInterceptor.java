@@ -60,13 +60,6 @@ public class JSONRPCWireFormatInterceptor implements Interceptor {
     }
 
     public Message invoke(Message msg) {
-        
-        // Configure JSON Databding
-        setDataBinding(runtimeWire.getTarget().getInterfaceContract().getInterface());
-        
-        // Set default databinding to json
-        runtimeWire.getTarget().getInterfaceContract().getInterface().resetDataBinding(JSONDataBinding.NAME);
-        
         JSONObject jsonReq = (JSONObject) msg.getBody();
         String method = null;
         Object[] args = null;
@@ -130,28 +123,5 @@ public class JSONRPCWireFormatInterceptor implements Interceptor {
         
         
         return responseMessage;
-    }
-
-    
-    private void setDataBinding(Interface interfaze) {
-        List<Operation> operations = interfaze.getOperations();
-        for (Operation operation : operations) {
-            operation.setDataBinding(JSONDataBinding.NAME);
-            DataType<List<DataType>> inputType = operation.getInputType();
-            if (inputType != null) {
-                List<DataType> logical = inputType.getLogical();
-                for (DataType inArg : logical) {
-                    if (!SimpleJavaDataBinding.NAME.equals(inArg.getDataBinding())) {
-                        inArg.setDataBinding(JSONDataBinding.NAME);
-                    } 
-                }
-            }
-            DataType outputType = operation.getOutputType();
-            if (outputType != null) {
-                if (!SimpleJavaDataBinding.NAME.equals(outputType.getDataBinding())) {
-                    outputType.setDataBinding(JSONDataBinding.NAME);
-                }
-            }
-        }
     }
 }
