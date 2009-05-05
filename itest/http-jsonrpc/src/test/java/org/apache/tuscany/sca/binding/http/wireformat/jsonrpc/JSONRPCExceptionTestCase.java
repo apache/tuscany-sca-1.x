@@ -45,18 +45,18 @@ public class JSONRPCExceptionTestCase{
 
     private static SCADomain domain;
 
-    //@BeforeClass
+    @BeforeClass
     public static void setUp() throws Exception {
         domain = SCADomain.newInstance("org/apache/tuscany/sca/binding/http/wireformat/jsonrpc/JSONRPCBinding.composite");
     }
 
-    //@AfterClass
+    @AfterClass
     public static void tearDown() throws Exception {
     	domain.close();
     }
     
-    //@Test
-    @Ignore("Work in progress")
+    @Test
+    //@Ignore("Work in progress")
     public void testRuntimeException() throws Exception{
     	JSONObject jsonRequest = new JSONObject("{ \"method\": \"echoRuntimeException\", \"params\": [], \"id\": 2}");
     	
@@ -71,8 +71,8 @@ public class JSONRPCExceptionTestCase{
         Assert.assertEquals("Runtime Exception", jsonErr.getString("msg"));
     }
     
-    //@Test
-    @Ignore("Work in progress")
+    @Test
+    //@Ignore("Work in progress")
     public void testBusinessException() throws Exception{
     	JSONObject jsonRequest = new JSONObject("{ \"method\": \"echoBusinessException\", \"params\": [], \"id\": 3}");
     	
