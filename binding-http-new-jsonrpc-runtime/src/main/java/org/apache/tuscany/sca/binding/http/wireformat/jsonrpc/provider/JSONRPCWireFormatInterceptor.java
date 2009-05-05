@@ -64,6 +64,9 @@ public class JSONRPCWireFormatInterceptor implements Interceptor {
         // Configure JSON Databding
         setDataBinding(runtimeWire.getTarget().getInterfaceContract().getInterface());
         
+        // Set default databinding to json
+        runtimeWire.getTarget().getInterfaceContract().getInterface().resetDataBinding(JSONDataBinding.NAME);
+        
         JSONObject jsonReq = (JSONObject) msg.getBody();
         String method = null;
         Object[] args = null;
