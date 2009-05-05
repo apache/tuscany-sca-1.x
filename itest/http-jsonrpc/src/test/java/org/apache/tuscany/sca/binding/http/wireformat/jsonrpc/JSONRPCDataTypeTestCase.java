@@ -24,8 +24,8 @@ import junit.framework.Assert;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.json.JSONObject;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -40,21 +40,22 @@ import com.meterware.httpunit.WebResponse;
 public class JSONRPCDataTypeTestCase {
 
 	private static final String SERVICE_PATH = "/EchoService";
-	private static final String SERVICE_URL = "http://localhost:8085/SCADomain" + SERVICE_PATH;
-	private SCADomain domain;
+	private static final String SERVICE_URL = "http://localhost:8085/" + SERVICE_PATH;
+	
+	private static SCADomain domain;
 
-	//@Before
-	public void setUp() throws Exception {
-		domain = SCADomain.newInstance("JSONRPCBinding.composite");
+	@BeforeClass
+	public static void setUp() throws Exception {
+	    domain = SCADomain.newInstance("org/apache/tuscany/sca/binding/http/wireformat/jsonrpc/JSONRPCBinding.composite");
 	}
 
-	//@After
-	public void tearDown() throws Exception {
+	@AfterClass
+	public static void tearDown() throws Exception {
 		domain.close();
 	}
 
-	//@Test
-	@Ignore("Work in progress")
+	@Test
+	//@Ignore("Work in progress")
 	public void testInt() throws Exception {
 		JSONObject jsonRequest = new JSONObject(
 				"{ \"method\": \"echoInt\", \"params\": [12345], \"id\": 4}");
@@ -71,8 +72,8 @@ public class JSONRPCDataTypeTestCase {
 		Assert.assertEquals(12345, jsonResp.getInt("result"));
 	}
 
-        //@Test
-        @Ignore("Work in progress")
+        @Test
+        //@Ignore("Work in progress")
 	public void testBoolean() throws Exception {
 		JSONObject jsonRequest = new JSONObject(
 				"{ \"method\": \"echoBoolean\", \"params\": [true], \"id\": 5}");

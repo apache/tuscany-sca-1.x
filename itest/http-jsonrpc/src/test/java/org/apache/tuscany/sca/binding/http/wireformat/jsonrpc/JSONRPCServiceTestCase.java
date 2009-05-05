@@ -52,7 +52,7 @@ public class JSONRPCServiceTestCase {
 
     @AfterClass
     public static void tearDown() throws Exception {
-    	domain.close();
+        domain.close();
     }
 
     @Test
@@ -65,13 +65,13 @@ public class JSONRPCServiceTestCase {
         WebResponse response = wc.getResource(request);
 
         Assert.assertEquals(200, response.getResponseCode());
-        
+
         JSONObject jsonResp = new JSONObject(response.getText());
         Assert.assertEquals("echo: Hello JSON-RPC", jsonResp.getString("result"));
     }   
-    
+
     @Test
     public void testDummy() throws Exception {
-        
+
     }    
 }
