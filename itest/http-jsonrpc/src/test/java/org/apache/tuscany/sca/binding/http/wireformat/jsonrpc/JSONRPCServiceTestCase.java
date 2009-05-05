@@ -45,18 +45,18 @@ public class JSONRPCServiceTestCase {
 
     private static SCADomain domain;
 
-    //@BeforeClass
+    @BeforeClass
     public static void setUp() throws Exception {
         domain = SCADomain.newInstance("org/apache/tuscany/sca/binding/http/wireformat/jsonrpc/JSONRPCBinding.composite");
     }
 
-    //@AfterClass
+    @AfterClass
     public static void tearDown() throws Exception {
     	domain.close();
     }
 
-    //@Test
-    @Ignore("Work in progress")
+    @Test
+    //@Ignore("Work in progress")
     public void testJSONRPCBinding() throws Exception {
         JSONObject jsonRequest = new JSONObject("{ \"method\": \"echo\", \"params\": [\"Hello JSON-RPC\"], \"id\": 1}");
 
