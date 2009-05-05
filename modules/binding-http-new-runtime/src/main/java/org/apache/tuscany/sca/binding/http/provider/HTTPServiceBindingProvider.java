@@ -58,12 +58,17 @@ public class HTTPServiceBindingProvider implements ServiceBindingProviderRRB {
     private static final QName AUTEHTICATION_INTENT = new QName("http://www.osoa.org/xmlns/sca/1.0","authentication");
     private static final QName CONFIDENTIALITY_INTENT = new QName("http://www.osoa.org/xmlns/sca/1.0","confidentiality");
     
+    private ExtensionPointRegistry extensionPoints;
+    
     private RuntimeComponent component;
     private RuntimeComponentService service;  
+    private InterfaceContract serviceContract;
     private HTTPBinding binding;
     private MessageFactory messageFactory;
     
-    private ExtensionPointRegistry extensionPoints;
+    private OperationSelectorProvider osProvider;
+    private WireFormatProvider wfProvider;
+    
     private ServletHost servletHost;
     private String servletMapping;
     private HTTPBindingListenerServlet bindingListenerServlet;
@@ -76,10 +81,41 @@ public class HTTPServiceBindingProvider implements ServiceBindingProviderRRB {
                                       ServletHost servletHost) {
         this.component = component;
         this.service = service;
+        
         this.binding = binding;
         this.extensionPoints = extensionPoints;
         this.messageFactory = messageFactory;
         this.servletHost = servletHost;
+        
+        // retrieve operation selector and wire format service providers
+        
+        ProviderFactoryExtensionPoint  providerFactories = extensionPoints.getExtensionPoint(ProviderFactoryExtensionPoint.class);
+
+        // Configure the interceptors for operation selection
+        OperationSelectorProviderFactory osProviderFactory = (OperationSelectorProviderFactory) providerFactories.getProviderFactory(binding.getOperationSelector().getClass());
+        if (osProviderFactory != null) {
+            this.osProvider = osProviderFactory.createServiceOperationSelectorProvider(component, service, binding);
+        }
+
+        // Configure the interceptors for wire format
+        WireFormatProviderFactory wfProviderFactory = (WireFormatProviderFactory) providerFactories.getProviderFactory(binding.getRequestWireFormat().getClass());
+        if (wfProviderFactory != null) {
+            this.wfProvider = wfProviderFactory.createServiceWireFormatProvider(component, service, binding);
+        }
+        
+        
+        //clone the service contract to avoid databinding issues
+        try {
+            this.serviceContract = (InterfaceContract) service.getInterfaceContract().clone();
+            
+            // configure data binding
+            if (this.wfProvider != null) {
+                wfProvider.configureWireFormatInterfaceContract(service.getInterfaceContract());
+            }
+        } catch(CloneNotSupportedException e) {
+            this.serviceContract = service.getInterfaceContract();
+        }
+        
     }
 
     public void start() {
@@ -195,7 +231,7 @@ public class HTTPServiceBindingProvider implements ServiceBindingProviderRRB {
     }
 
     public InterfaceContract getBindingInterfaceContract() {
-        return null;
+        return service.getInterfaceContract();
     }
     
     public boolean supportsOneWayInvocation() {
@@ -210,25 +246,8 @@ public class HTTPServiceBindingProvider implements ServiceBindingProviderRRB {
 
         InvocationChain bindingChain = runtimeWire.getBindingInvocationChain();
 
-        ProviderFactoryExtensionPoint  providerFactories = extensionPoints.getExtensionPoint(ProviderFactoryExtensionPoint.class);
-
-        // Configure the interceptors for operation selection
-        OperationSelectorProviderFactory osProviderFactory = (OperationSelectorProviderFactory) providerFactories.getProviderFactory(binding.getOperationSelector().getClass());
-        OperationSelectorProvider osProvider = null;
-        if (osProviderFactory != null) {
-            osProvider = osProviderFactory.createServiceOperationSelectorProvider(component, service, binding);
-        }
-
         if(osProvider != null) {
             bindingChain.addInterceptor(Phase.SERVICE_BINDING_OPERATION_SELECTOR, osProvider.createInterceptor());    
-        }
-
-
-        // Configure the interceptors for wire format
-        WireFormatProviderFactory wfProviderFactory = (WireFormatProviderFactory) providerFactories.getProviderFactory(binding.getRequestWireFormat().getClass());
-        WireFormatProvider wfProvider = null;
-        if (wfProviderFactory != null) {
-            wfProvider = wfProviderFactory.createServiceWireFormatProvider(component, service, binding);
         }
 
         if (wfProvider != null) {
