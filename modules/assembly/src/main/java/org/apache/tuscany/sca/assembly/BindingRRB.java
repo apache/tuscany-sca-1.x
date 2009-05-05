@@ -20,9 +20,7 @@ package org.apache.tuscany.sca.assembly;
 
 
 /**
- * TODO RRB experiment. 
- * Represents a binding implemented using Requst/Response binding chains
- * Used to test the RRB idea hence no integrated into the Binding interface, yet
+ * Represents a binding implemented using Request/Response binding chains
  * 
  * @version $Rev$ $Date$
  */
