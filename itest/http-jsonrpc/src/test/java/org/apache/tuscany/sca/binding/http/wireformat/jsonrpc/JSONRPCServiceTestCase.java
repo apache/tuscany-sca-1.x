@@ -26,7 +26,6 @@ import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.json.JSONObject;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.meterware.httpunit.PostMethodWebRequest;
@@ -56,7 +55,6 @@ public class JSONRPCServiceTestCase {
     }
 
     @Test
-    //@Ignore("Work in progress")
     public void testJSONRPCBinding() throws Exception {
         JSONObject jsonRequest = new JSONObject("{ \"method\": \"echo\", \"params\": [\"Hello JSON-RPC\"], \"id\": 1}");
 
@@ -68,10 +66,5 @@ public class JSONRPCServiceTestCase {
 
         JSONObject jsonResp = new JSONObject(response.getText());
         Assert.assertEquals("echo: Hello JSON-RPC", jsonResp.getString("result"));
-    }   
-
-    @Test
-    public void testDummy() throws Exception {
-
-    }    
+    }
 }

@@ -26,7 +26,6 @@ import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.json.JSONObject;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.meterware.httpunit.PostMethodWebRequest;
@@ -56,7 +55,6 @@ public class JSONRPCExceptionTestCase{
     }
     
     @Test
-    //@Ignore("Work in progress")
     public void testRuntimeException() throws Exception{
     	JSONObject jsonRequest = new JSONObject("{ \"method\": \"echoRuntimeException\", \"params\": [], \"id\": 2}");
     	
@@ -72,7 +70,6 @@ public class JSONRPCExceptionTestCase{
     }
     
     @Test
-    //@Ignore("Work in progress")
     public void testBusinessException() throws Exception{
     	JSONObject jsonRequest = new JSONObject("{ \"method\": \"echoBusinessException\", \"params\": [], \"id\": 3}");
     	
@@ -85,10 +82,5 @@ public class JSONRPCExceptionTestCase{
         JSONObject jsonErr = new JSONObject(response.getText()).getJSONObject("error");
         
         Assert.assertEquals("Business Exception", jsonErr.getString("msg"));
-    }   
-    
-    @Test
-    public void testDummy() throws Exception {
-        
-    }    
+    }
 }
