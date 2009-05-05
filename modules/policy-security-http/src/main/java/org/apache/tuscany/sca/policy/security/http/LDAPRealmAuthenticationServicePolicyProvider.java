@@ -59,7 +59,12 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
     }
 
     public Interceptor createInterceptor(Operation operation) {
-        List<LDAPRealmAuthenticationPolicy> policies = findPolicies(operation);
+        List<LDAPRealmAuthenticationPolicy> policies = null;
+
+        if (operation != null) {
+            policies = findPolicies(operation);
+        }
+
         if (policies == null || policies.isEmpty()) {
             return null;
         } else {
