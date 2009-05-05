@@ -26,6 +26,7 @@ import org.apache.tuscany.sca.assembly.BindingRRB;
 import org.apache.tuscany.sca.assembly.WireFormat;
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
 import org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormat;
+import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.databinding.javabeans.SimpleJavaDataBinding;
 import org.apache.tuscany.sca.databinding.json.JSONDataBinding;
@@ -34,6 +35,7 @@ import org.apache.tuscany.sca.interfacedef.Interface;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
 import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.Interceptor;
+import org.apache.tuscany.sca.invocation.MessageFactory;
 import org.apache.tuscany.sca.invocation.Phase;
 import org.apache.tuscany.sca.provider.WireFormatProvider;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
@@ -43,6 +45,8 @@ import org.apache.tuscany.sca.runtime.RuntimeComponentService;
  * @version $Rev$ $Date$
  */
 public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
+    private MessageFactory messageFactory;
+    
     private RuntimeComponent component;
     private RuntimeComponentService service;
     private InterfaceContract serviceContract;
@@ -53,7 +57,10 @@ public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
                                             RuntimeComponentService service, 
                                             Binding binding) {
         
-        super();
+
+        ModelFactoryExtensionPoint modelFactories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);
+        messageFactory = modelFactories.getFactory(MessageFactory.class);
+        
         this.component = component;
         this.service = service;
         this.serviceContract = service.getInterfaceContract();
@@ -76,7 +83,7 @@ public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
             BindingRRB rrbBinding = (BindingRRB) binding;
             WireFormat wireFormat = rrbBinding.getRequestWireFormat();
             if(wireFormat != null && wireFormat instanceof JSONRPCWireFormat) {
-                return new JSONRPCWireFormatInterceptor((HTTPBinding) binding, service.getRuntimeWire(binding));
+                return new JSONRPCWireFormatInterceptor((HTTPBinding) binding, service.getRuntimeWire(binding), messageFactory);
             }
         }
         

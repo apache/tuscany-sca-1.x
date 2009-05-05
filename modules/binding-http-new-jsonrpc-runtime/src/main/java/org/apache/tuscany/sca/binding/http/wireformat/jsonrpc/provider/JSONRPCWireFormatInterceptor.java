@@ -19,17 +19,11 @@
 
 package org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.provider;
 
-import java.util.List;
-
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
-import org.apache.tuscany.sca.databinding.javabeans.SimpleJavaDataBinding;
-import org.apache.tuscany.sca.databinding.json.JSONDataBinding;
-import org.apache.tuscany.sca.interfacedef.DataType;
-import org.apache.tuscany.sca.interfacedef.Interface;
-import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
+import org.apache.tuscany.sca.invocation.MessageFactory;
 import org.apache.tuscany.sca.runtime.RuntimeWire;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,16 +32,18 @@ import org.osoa.sca.ServiceRuntimeException;
 import com.metaparadigm.jsonrpc.JSONRPCResult;
 
 public class JSONRPCWireFormatInterceptor implements Interceptor {
-   private Invoker next;
+    private Invoker next;
     
     private RuntimeWire runtimeWire;
     private HTTPBinding binding;
     
-    //TODO: Pass messageFactory to create fault messages when error occur
-    public JSONRPCWireFormatInterceptor(HTTPBinding binding, RuntimeWire runtimeWire) {
+    private MessageFactory messageFactory;
+    
+    public JSONRPCWireFormatInterceptor(HTTPBinding binding, RuntimeWire runtimeWire, MessageFactory messageFactory) {
         this.binding = binding;
         this.runtimeWire = runtimeWire;
         
+        this.messageFactory = messageFactory;
     }
 
     public Invoker getNext() {
@@ -92,11 +88,14 @@ public class JSONRPCWireFormatInterceptor implements Interceptor {
             // They should be reported to the client JavaScript as proper
             // JavaScript exceptions.
 
-            throw new RuntimeException("Error invoking service :" + re.getMessage(), re);
+            //throw new RuntimeException("Error invoking service :" + re.getMessage(), re);
 
             //FIXME should create a fault message and stuff the JSON Result in the body of the message
             //JSONRPCResult errorResult = new JSONRPCResult(JSONRPCResult.CODE_REMOTE_EXCEPTION, id, re);
             //return errorResult.toString().getBytes("UTF-8");
+            
+            Throwable exception = new RuntimeException("Error invoking service :" + re.getMessage(), re);
+            return createJSONFaultMessage(re);
         }
 
         Object result = null;
@@ -117,11 +116,19 @@ public class JSONRPCWireFormatInterceptor implements Interceptor {
             //exception thrown while executing the invocation
             //FIXME should create a fault message and stuff the JSON Result in the body of the message
             Throwable exception = (Throwable)responseMessage.getBody();
+            return createJSONFaultMessage( exception);
             //JSONRPCResult errorResult = new JSONRPCResult(JSONRPCResult.CODE_REMOTE_EXCEPTION, id, exception );
             //return errorResult.toString().getBytes("UTF-8");
         }
         
+    }
+    
+    private Message createJSONFaultMessage(Throwable throwable) {
+        Message jsonFaultMessage = messageFactory.createMessage();
         
-        return responseMessage;
+        JSONRPCResult jsonFault = new JSONRPCResult(JSONRPCResult.CODE_REMOTE_EXCEPTION, null, throwable);
+        jsonFaultMessage.setBody(jsonFault);
+        
+        return jsonFaultMessage;
     }
 }
