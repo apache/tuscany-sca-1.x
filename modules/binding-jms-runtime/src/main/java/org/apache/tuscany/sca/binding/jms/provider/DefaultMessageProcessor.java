@@ -93,7 +93,9 @@ public class DefaultMessageProcessor extends AbstractMessageProcessor {
                     //don't modify the original wrapper since it will be reused
                     //clone the wrapper
                     OMElement newWrapper = wrapper.cloneOMElement();
-                    newWrapper.addChild((OMNode)os);
+                    if (os != null){
+                        newWrapper.addChild((OMNode)os);
+                    }
                     return newWrapper;
                 }
                 
@@ -119,16 +121,23 @@ public class DefaultMessageProcessor extends AbstractMessageProcessor {
             if (o instanceof OMElement) {
                 
                 if (unwrap){
-                    if (((OMElement)o).getFirstElement() != null ){
-                        message.setText(((OMElement)o).getFirstElement().toString());
+                    OMElement firstElement = ((OMElement)o).getFirstElement();
+                    if (firstElement == null ) {
+                        message.setText(null);
+                    } else {
+                        message.setText(firstElement.toString());
                     }
                 }else {
                     message.setText(o.toString());
                 }
             } else if ((o instanceof Object[]) && ((Object[]) o)[0] instanceof OMElement) {
                 if (unwrap){
-                    message.setText(((OMElement)((Object[]) o)[0]).getFirstElement().toString());
-                    //message.setText((((Object[]) o)[0]).toString());
+                    OMElement firstElement = ((OMElement)((Object[]) o)[0]).getFirstElement();
+                    if (firstElement == null ) {
+                        message.setText(null);
+                    } else {
+                        message.setText(firstElement.toString());
+                    }
                 }else {
                     message.setText(((Object[]) o)[0].toString());
                 }
@@ -218,16 +227,26 @@ public class DefaultMessageProcessor extends AbstractMessageProcessor {
 
             if (o instanceof OMElement) {
                 if (unwrap) {
-                    if (((OMElement)o).getFirstElement() != null){
-                        message.writeBytes(((OMElement)o).getFirstElement().toString().getBytes());
+                    OMElement firstElement = ((OMElement)o).getFirstElement();
+                    if (firstElement == null ) {
+                        //do nothing, the message will just be set with a byte[0]
+                    } else {
+                        message.writeBytes(firstElement.toString().getBytes());
                     }
+
                 } else {
                     message.writeBytes(o.toString().getBytes());                    
                 }
 
             } else if ((o instanceof Object[]) && ((Object[]) o)[0] instanceof OMElement) {
                 if (unwrap){
-                    message.writeBytes(((OMElement)((Object[]) o)[0]).getFirstElement().toString().getBytes());
+                    OMElement firstElement = ((OMElement)((Object[]) o)[0]).getFirstElement();
+                    if (firstElement == null ) {
+                        //do nothing, the message will just be set with a byte[0]
+                    } else {
+                        message.writeBytes(firstElement.toString().getBytes());
+                    }
+
                 }else {
                     message.writeBytes(((Object[]) o)[0].toString().getBytes());
                 }

@@ -21,12 +21,14 @@ package org.apache.tuscany.sca.binding.jms.format;
 import static org.junit.Assert.assertEquals;
 
 import org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld.HelloWorldService;
+import org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld.HelloWorldServiceImpl;
 import org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld.Person;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,6 +59,10 @@ public class FormatJMSDefaultTestCase {
         person.setFirstName("Fred");
         person.setLastName("Bloggs");
         assertEquals("Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs", helloWorldService.getPersonGreetings(person));
+        
+        // this just makes sure that there are no exceptions thrown for this case
+        helloWorldService.nullInVoidOut();
+        Assert.assertEquals(4, HelloWorldServiceImpl.nullInVoidOutCalled);
     }
 
     @After

@@ -19,6 +19,8 @@
 package org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld;
 
 public class HelloWorldServiceImpl implements HelloWorldService {
+    
+    public static int nullInVoidOutCalled = 0;
 
     public String getGreetings(String name){
         String response =  "Hello " + name;
@@ -30,6 +32,11 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         String response =  "Hello " + person.getFirstName() + " " + person.getLastName();
         System.out.println("getPersonGreetings: " + response);
         return response;
+    }
+    
+    public void nullInVoidOut() {
+        System.out.println("nullInVoidOut");
+        nullInVoidOutCalled++;
     }
 }
 

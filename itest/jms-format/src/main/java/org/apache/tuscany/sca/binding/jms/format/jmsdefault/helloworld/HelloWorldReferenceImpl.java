@@ -48,5 +48,13 @@ public class HelloWorldReferenceImpl implements HelloWorldService {
                helloWorldService3.getPersonGreetings(person) + " " +
                helloWorldService4.getPersonGreetings(person);
     }
+    
+    public void nullInVoidOut() {
+        helloWorldService1.nullInVoidOut();  
+        helloWorldService2.nullInVoidOut();
+        helloWorldService3.nullInVoidOut();
+        helloWorldService4.nullInVoidOut();
+        
+    }
 }
 

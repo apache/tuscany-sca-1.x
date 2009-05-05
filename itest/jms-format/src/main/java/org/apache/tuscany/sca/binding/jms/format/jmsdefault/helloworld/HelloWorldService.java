@@ -29,5 +29,7 @@ public interface HelloWorldService {
     public String getGreetings(String name);
     
     public String getPersonGreetings(Person person);
+    
+    public void nullInVoidOut();
 }
 
