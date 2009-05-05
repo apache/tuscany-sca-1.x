@@ -90,8 +90,8 @@ public class JSONRPCDataTypeTestCase {
 		Assert.assertEquals(true, jsonResp.getBoolean("result"));
 	}
 
-        //@Test
-        @Ignore("Work in progress")
+        @Test
+        //@Ignore("Work in progress")
 	public void testMap() throws Exception {
 		JSONObject jsonRequest = new JSONObject(
 				"{ \"method\": \"echoMap\", \"params\": [ {\"javaClass\": \"java.util.HashMap\", \"map\": { \"Binding\": \"JSON-RPC\"}}], \"id\": 6}");
@@ -108,8 +108,8 @@ public class JSONRPCDataTypeTestCase {
 		Assert.assertEquals("JSON-RPC", jsonResp.getJSONObject("result").getJSONObject("map").getString("Binding"));
 	}
 	
-        //@Test
-        @Ignore("Work in progress")
+        @Test
+        //@Ignore("Work in progress")
 	public void testBean() throws Exception {
 		JSONObject jsonRequest = new JSONObject(
 				"{ \"method\": \"echoBean\", \"params\": [ {\"javaClass\": \"bean.TestBean\", \"testString\": \"JSON-RPC\", \"testInt\":1234}], \"id\": 7}");
@@ -126,8 +126,8 @@ public class JSONRPCDataTypeTestCase {
 		Assert.assertEquals("JSON-RPC", jsonResp.getJSONObject("result").getString("testString"));
 	}	
 
-        //@Test
-        @Ignore("Work in progress")
+        @Test
+        //@Ignore("Work in progress")
 	public void testList() throws Exception {
 		JSONObject jsonRequest = new JSONObject(
 				"{ \"method\": \"echoList\", \"params\": [ {\"javaClass\": \"java.util.ArrayList\", \"list\": [0,1,2,3,4]}], \"id\": 8}");
@@ -144,8 +144,8 @@ public class JSONRPCDataTypeTestCase {
 		Assert.assertEquals(0, jsonResp.getJSONObject("result").getJSONArray("list").get(0));
 	}
 	
-        //@Test
-        @Ignore("Work in progress")
+        @Test
+        //@Ignore("Work in progress")
 	public void testArrayString() throws Exception {
 		JSONObject jsonRequest = new JSONObject(
 				"{\"params\":[[\"1\",\"2\"]],\"method\":\"echoArrayString\",\"id\":9}");
@@ -163,8 +163,8 @@ public class JSONRPCDataTypeTestCase {
 	}	
 
 	
-        //@Test
-        @Ignore("Work in progress")
+        @Test
+        //@Ignore("Work in progress")
 	public void testArrayInt() throws Exception {
 		JSONObject jsonRequest = new JSONObject(
 				"{\"params\":[[1,2]],\"method\":\"echoArrayInt\",\"id\":10}");
@@ -182,8 +182,8 @@ public class JSONRPCDataTypeTestCase {
 	}	
 
 	
-        //@Test
-        @Ignore("Work in progress")
+        @Test
+        //@Ignore("Work in progress")
 	public void testSet() throws Exception {
 		JSONObject jsonRequest = new JSONObject(
 				"{ \"method\": \"echoSet\", \"params\": [ {\"javaClass\": \"java.util.HashSet\", \"set\": {\"1\": \"red\", \"2\": \"blue\"}}],\"id\": 11}");
