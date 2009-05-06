@@ -91,17 +91,23 @@ public class HTTPServiceBindingProvider implements ServiceBindingProviderRRB {
         
         ProviderFactoryExtensionPoint  providerFactories = extensionPoints.getExtensionPoint(ProviderFactoryExtensionPoint.class);
 
-        // Configure the interceptors for operation selection
-        OperationSelectorProviderFactory osProviderFactory = (OperationSelectorProviderFactory) providerFactories.getProviderFactory(binding.getOperationSelector().getClass());
-        if (osProviderFactory != null) {
-            this.osProvider = osProviderFactory.createServiceOperationSelectorProvider(component, service, binding);
+        
+        if (binding.getOperationSelector() != null) {
+            // Configure the interceptors for operation selection
+            OperationSelectorProviderFactory osProviderFactory = (OperationSelectorProviderFactory) providerFactories.getProviderFactory(binding.getOperationSelector().getClass());
+            if (osProviderFactory != null) {
+                this.osProvider = osProviderFactory.createServiceOperationSelectorProvider(component, service, binding);
+            }            
+        }
+        
+        if (binding.getRequestWireFormat() != null && binding.getResponseWireFormat() != null) {
+            // Configure the interceptors for wire format
+            WireFormatProviderFactory wfProviderFactory = (WireFormatProviderFactory) providerFactories.getProviderFactory(binding.getRequestWireFormat().getClass());
+            if (wfProviderFactory != null) {
+                this.wfProvider = wfProviderFactory.createServiceWireFormatProvider(component, service, binding);
+            }            
         }
 
-        // Configure the interceptors for wire format
-        WireFormatProviderFactory wfProviderFactory = (WireFormatProviderFactory) providerFactories.getProviderFactory(binding.getRequestWireFormat().getClass());
-        if (wfProviderFactory != null) {
-            this.wfProvider = wfProviderFactory.createServiceWireFormatProvider(component, service, binding);
-        }
         
         
         //clone the service contract to avoid databinding issues
