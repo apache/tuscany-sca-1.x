@@ -18,11 +18,11 @@
  */
 package org.apache.tuscany.sca.implementation.spring.introspect;
 
-import static org.apache.tuscany.sca.implementation.java.introspect.JavaIntrospectionHelper.getAllInterfaces;
-import static org.apache.tuscany.sca.implementation.java.introspect.JavaIntrospectionHelper.getAllPublicAndProtectedFields;
-import static org.apache.tuscany.sca.implementation.java.introspect.JavaIntrospectionHelper.getAllUniquePublicProtectedMethods;
-import static org.apache.tuscany.sca.implementation.java.introspect.JavaIntrospectionHelper.getPrivateFields;
-import static org.apache.tuscany.sca.implementation.java.introspect.JavaIntrospectionHelper.toPropertyName;
+import static org.apache.tuscany.sca.implementation.java.introspect.impl.JavaIntrospectionHelper.getAllInterfaces;
+import static org.apache.tuscany.sca.implementation.java.introspect.impl.JavaIntrospectionHelper.getAllPublicAndProtectedFields;
+import static org.apache.tuscany.sca.implementation.java.introspect.impl.JavaIntrospectionHelper.getAllUniquePublicProtectedMethods;
+import static org.apache.tuscany.sca.implementation.java.introspect.impl.JavaIntrospectionHelper.getPrivateFields;
+import static org.apache.tuscany.sca.implementation.java.introspect.impl.JavaIntrospectionHelper.toPropertyName;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -44,14 +44,14 @@ import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.assembly.Contract;
 import org.apache.tuscany.sca.assembly.Multiplicity;
 import org.apache.tuscany.sca.implementation.java.IntrospectionException;
-import org.apache.tuscany.sca.implementation.java.JavaConstructorImpl;
-import org.apache.tuscany.sca.implementation.java.JavaElementImpl;
+import org.apache.tuscany.sca.implementation.java.impl.JavaConstructorImpl;
+import org.apache.tuscany.sca.implementation.java.impl.JavaElementImpl;
 import org.apache.tuscany.sca.implementation.java.JavaImplementation;
-import org.apache.tuscany.sca.implementation.java.JavaParameterImpl;
-import org.apache.tuscany.sca.implementation.java.introspect.BaseJavaClassVisitor;
-import org.apache.tuscany.sca.implementation.java.introspect.JavaIntrospectionHelper;
+import org.apache.tuscany.sca.implementation.java.impl.JavaParameterImpl;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.BaseJavaClassVisitor;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.JavaIntrospectionHelper;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.AmbiguousConstructorException;
-import org.apache.tuscany.sca.implementation.java.introspect.impl.InvalidServiceTypeException;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.InvalidServiceType;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.NoConstructorException;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.Resource;
 import org.apache.tuscany.sca.implementation.spring.SpringConstructorArgElement;
@@ -61,11 +61,11 @@ import org.apache.tuscany.sca.interfacedef.java.JavaInterface;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterfaceContract;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterfaceFactory;
 import org.apache.tuscany.sca.interfacedef.util.JavaXMLMapper;
-import org.oasisopen.sca.annotation.Callback;
-import org.oasisopen.sca.annotation.Context;
-import org.oasisopen.sca.annotation.Property;
-import org.oasisopen.sca.annotation.Reference;
-import org.oasisopen.sca.annotation.Remotable;
+import org.osoa.sca.annotations.Callback;
+import org.osoa.sca.annotations.Context;
+import org.osoa.sca.annotations.Property;
+import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Remotable;
 
 /**
  * Heuristically evaluates an un-annotated Java implementation type to determine
@@ -106,7 +106,7 @@ public class SpringBeanPojoProcessor extends BaseJavaClassVisitor {
              * interfaces is remotable, then by default the implementation offers a single service whose type 
              * is the implementation class.
              */
-            Set<Class<?>> interfaces = getAllInterfaces(clazz);
+            Set<Class> interfaces = getAllInterfaces(clazz);
             for (Class<?> i : interfaces) {
                 if (i.isAnnotationPresent(Remotable.class) || i.isAnnotationPresent(WebService.class)) {
                     addService(type, i);
@@ -287,7 +287,7 @@ public class SpringBeanPojoProcessor extends BaseJavaClassVisitor {
         Constructor constructor;
         boolean explict = false;
         if (definition != null && definition.getConstructor()
-            .isAnnotationPresent(org.oasisopen.sca.annotation.Constructor.class)) {
+            .isAnnotationPresent(org.osoa.sca.annotations.Constructor.class)) {
             // the constructor was already defined explicitly
             return;
         } else if (definition != null) {
@@ -599,7 +599,7 @@ public class SpringBeanPojoProcessor extends BaseJavaClassVisitor {
         // FIXME:  This part seems to have already been taken care above!!
         try {
             processCallback(paramType, reference);
-        } catch (InvalidServiceTypeException e) {
+        } catch (InvalidServiceType e) {
             throw new IntrospectionException(e);
         }
         return reference;
@@ -625,7 +625,7 @@ public class SpringBeanPojoProcessor extends BaseJavaClassVisitor {
         return service;
     }
 
-    public void processCallback(Class<?> interfaze, Contract contract) throws InvalidServiceTypeException {
+    public void processCallback(Class<?> interfaze, Contract contract) throws InvalidServiceType {
         Callback callback = interfaze.getAnnotation(Callback.class);
         if (callback != null && !Void.class.equals(callback.value())) {
             Class<?> callbackClass = callback.value();
@@ -634,10 +634,10 @@ public class SpringBeanPojoProcessor extends BaseJavaClassVisitor {
                 javaInterface = javaFactory.createJavaInterface(callbackClass);
                 contract.getInterfaceContract().setCallbackInterface(javaInterface);
             } catch (InvalidInterfaceException e) {
-                throw new InvalidServiceTypeException("Invalid callback interface "+callbackClass, interfaze);
+                throw new InvalidServiceType("Invalid callback interface "+callbackClass, interfaze);
             }
         } else if (callback != null && Void.class.equals(callback.value())) {
-            throw new InvalidServiceTypeException("No callback interface specified on annotation", interfaze);
+            throw new InvalidServiceType("No callback interface specified on annotation", interfaze);
         }
     }
 

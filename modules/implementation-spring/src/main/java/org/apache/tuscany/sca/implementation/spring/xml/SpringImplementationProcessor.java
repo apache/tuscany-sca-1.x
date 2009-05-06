@@ -28,14 +28,15 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.assembly.ComponentType;
+import org.apache.tuscany.sca.assembly.builder.impl.ProblemImpl;
 import org.apache.tuscany.sca.assembly.xml.Constants;
-import org.apache.tuscany.sca.assembly.xml.PolicySubjectProcessor;
-import org.apache.tuscany.sca.contribution.processor.ContributionReadException;
-import org.apache.tuscany.sca.contribution.processor.ContributionResolveException;
-import org.apache.tuscany.sca.contribution.processor.ContributionWriteException;
+import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
+import org.apache.tuscany.sca.contribution.service.ContributionReadException;
+import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
+import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
-import org.apache.tuscany.sca.core.FactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.implementation.spring.SpringImplementation;
 import org.apache.tuscany.sca.implementation.spring.introspect.SpringXMLComponentTypeLoader;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterfaceFactory;
@@ -54,20 +55,20 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
 
     private static final String LOCATION = "location";
     private static final String IMPLEMENTATION_SPRING = "implementation.spring";
-    private static final QName IMPLEMENTATION_SPRING_QNAME = new QName(Constants.SCA11_NS, IMPLEMENTATION_SPRING);
+    private static final QName IMPLEMENTATION_SPRING_QNAME = new QName(Constants.SCA10_NS, IMPLEMENTATION_SPRING);
     private static final String MSG_LOCATION_MISSING = "Reading implementation.spring - location attribute missing";
 
     private AssemblyFactory assemblyFactory;
     private JavaInterfaceFactory javaFactory;
     private PolicyFactory policyFactory;
-    private PolicySubjectProcessor policyProcessor;
+    private PolicyAttachPointProcessor policyProcessor;
     private Monitor monitor;
     
-    public SpringImplementationProcessor(FactoryExtensionPoint modelFactories, Monitor monitor) {
+    public SpringImplementationProcessor(ModelFactoryExtensionPoint modelFactories, Monitor monitor) {
         this.assemblyFactory = modelFactories.getFactory(AssemblyFactory.class);
         this.javaFactory = modelFactories.getFactory(JavaInterfaceFactory.class);
         this.policyFactory = modelFactories.getFactory(PolicyFactory.class);
-        this.policyProcessor = new PolicySubjectProcessor(policyFactory);
+        this.policyProcessor = new PolicyAttachPointProcessor(policyFactory);
         this.monitor = monitor;
     }
     
@@ -80,7 +81,7 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
      */
     private void error(String message, Object model, Exception ex) {
     	 if (monitor != null) {
-	        Problem problem = monitor.createProblem(this.getClass().getName(), "impl-spring-validation-messages", Severity.ERROR, model, message, ex);
+	        Problem problem = new ProblemImpl(this.getClass().getName(), "impl-spring-validation-messages", Severity.ERROR, model, message, ex);
 	        monitor.problem(problem);
     	 }
     }
@@ -94,7 +95,7 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
      */
     private void error(String message, Object model, Object... messageParameters) {
     	 if (monitor != null) {
-	        Problem problem = monitor.createProblem(this.getClass().getName(), "impl-spring-validation-messages", Severity.ERROR, model, message, (Object[])messageParameters);
+	        Problem problem = new ProblemImpl(this.getClass().getName(), "impl-spring-validation-messages", Severity.ERROR, model, message, (Object[])messageParameters);
 	        monitor.problem(problem);
     	 }
     }
@@ -170,7 +171,7 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
 
         // Write <implementation.spring>
         policyProcessor.writePolicyPrefixes(springImplementation, writer);
-        writer.writeStartElement(Constants.SCA11_NS, IMPLEMENTATION_SPRING);
+        writer.writeStartElement(Constants.SCA10_NS, IMPLEMENTATION_SPRING);
         policyProcessor.writePolicyAttributes(springImplementation, writer);
         
         if (springImplementation.getLocation() != null) {
