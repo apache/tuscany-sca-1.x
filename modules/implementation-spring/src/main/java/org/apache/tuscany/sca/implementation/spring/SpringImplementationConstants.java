@@ -17,14 +17,14 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.implementation.spring.xml;
+package org.apache.tuscany.sca.implementation.spring;
 
 import javax.xml.namespace.QName;
 
 /**
  * Constants used in Spring Application Context XML files.
  */
-public interface Constants {
+public interface SpringImplementationConstants {
     
     String SCA_NS = "http://www.springframework.org/schema/sca";
     String SPRING_NS = "http://www.springframework.org/schema/beans";

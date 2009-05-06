@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.tuscany.sca.implementation.spring.xml;
+package org.apache.tuscany.sca.implementation.spring;
 
 import java.util.ArrayList;
 import java.util.List;
