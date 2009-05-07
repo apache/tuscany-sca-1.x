@@ -25,7 +25,7 @@
         <version>1.6-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>tuscany-implementation-spring</artifactId>
+    <artifactId>tuscany-implementation-spring-old</artifactId>
     <name>Apache Tuscany SCA Spring Framework Implementation Extension</name>
 
     <dependencies>
