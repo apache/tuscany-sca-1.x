@@ -134,6 +134,7 @@
                 <module>validation</module>
                 <module>wires</module>
                 <module>wsdl</module>
+                <module>wsdlgen</module>
                 <module>wsdlless</module>
                 <module>wsdl2java</module>
                 <module>wsdl-multiple</module>
