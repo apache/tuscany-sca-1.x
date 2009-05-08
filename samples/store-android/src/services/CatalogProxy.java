@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import services.json.rpc.JSONRpc;
 
 public class CatalogProxy implements Catalog {
-	private static final String jsonRPCServiceURI = "http://192.168.1.104:8080/Catalog";
+	private static final String jsonRPCServiceURI = "http://192.168.1.102:8080/Catalog";
     private static final String jsonRPCRequest = "{\"id\": 3, \"method\": \"Service.get\", \"params\": []}";
 	
     private List<Item> catalog = new ArrayList<Item>();
