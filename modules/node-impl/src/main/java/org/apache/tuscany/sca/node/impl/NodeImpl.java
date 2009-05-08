@@ -531,6 +531,21 @@ public class NodeImpl implements SCANode, SCAClient {
         }
 
         composite = configuration.getComposite();
+        
+        if(composite != null && composite.isUnresolved()) {
+            ContributionFactory contributionFactory = modelFactories.getFactory(ContributionFactory.class);
+            Artifact compositeFile = contributionFactory.createArtifact();
+            compositeFile.setUnresolved(true);
+            compositeFile.setURI(composite.getURI());
+            for (Contribution c : contributions) {
+                ModelResolver resolver = c.getModelResolver();
+                Artifact resolved = resolver.resolveModel(Artifact.class, compositeFile);
+                if (resolved != null && resolved.isUnresolved() == false) {
+                    composite = (Composite) resolved.getModel();
+                    break;
+                }
+            }
+        }
 
         // FIXME: This is a hack to get a list of deployable composites. By design, the deployment composite should
         // has been configured
