@@ -22,6 +22,8 @@ package org.apache.tuscany.sca.binding.http.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tuscany.sca.assembly.OperationSelector;
+import org.apache.tuscany.sca.assembly.WireFormat;
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
 import org.apache.tuscany.sca.policy.Intent;
 import org.apache.tuscany.sca.policy.IntentAttachPointType;
@@ -38,6 +40,9 @@ class HTTPBindingImpl implements HTTPBinding, PolicySetAttachPoint {
     
     private String name;
     private String uri;
+    
+    private WireFormat wireFormat;
+    private OperationSelector operationSelector;    
     
     private List<Intent> requiredIntents = new ArrayList<Intent>();
     private List<PolicySet> policySets = new ArrayList<PolicySet>();
@@ -69,6 +74,32 @@ class HTTPBindingImpl implements HTTPBinding, PolicySetAttachPoint {
     public void setUnresolved(boolean unresolved) {
         // The sample binding is always resolved
     }
+    
+// Wireformat and Operation selection
+    
+    public WireFormat getRequestWireFormat() {
+        return wireFormat;
+    }
+    
+    public void setRequestWireFormat(WireFormat wireFormat) {
+        this.wireFormat = wireFormat;
+    }
+    
+    public WireFormat getResponseWireFormat() {
+        return wireFormat;
+    }
+    
+    public void setResponseWireFormat(WireFormat wireFormat) {
+        this.wireFormat = wireFormat;
+    }    
+    
+    public OperationSelector getOperationSelector() {
+        return operationSelector;
+    }
+    
+    public void setOperationSelector(OperationSelector operationSelector) {
+        this.operationSelector = operationSelector;
+    }    
     
     //Policy related getters/setters
     

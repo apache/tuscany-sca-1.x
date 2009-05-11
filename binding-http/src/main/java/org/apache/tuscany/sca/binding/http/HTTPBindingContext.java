@@ -19,13 +19,29 @@
 
 package org.apache.tuscany.sca.binding.http;
 
-import org.apache.tuscany.sca.assembly.BindingRRB;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * HTTP binding model.
- * 
+ * HTTP Binding Context
+ *
  * @version $Rev$ $Date$
-*/
-public interface HTTPBinding extends BindingRRB {
+ */
+public class HTTPBindingContext {
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    
+    public HttpServletRequest getHttpRequest() {
+        return request;
+    }
+    public void setHttpRequest(HttpServletRequest request) {
+        this.request = request;
+    }
+    public HttpServletResponse getHttpResponse() {
+        return response;
+    }
+    public void setHttpResponse(HttpServletResponse response) {
+        this.response = response;
+    }
+
 }
