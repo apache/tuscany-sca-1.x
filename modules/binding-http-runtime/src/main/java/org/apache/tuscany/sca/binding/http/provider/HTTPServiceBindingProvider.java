@@ -25,6 +25,7 @@ import javax.servlet.Servlet;
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
+import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.host.http.SecurityContext;
 import org.apache.tuscany.sca.host.http.ServletHost;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
@@ -32,12 +33,18 @@ import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.InvocationChain;
 import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.MessageFactory;
+import org.apache.tuscany.sca.invocation.Phase;
 import org.apache.tuscany.sca.policy.Intent;
 import org.apache.tuscany.sca.policy.PolicySet;
 import org.apache.tuscany.sca.policy.PolicySetAttachPoint;
 import org.apache.tuscany.sca.policy.authentication.AuthenticationConfigurationPolicy;
 import org.apache.tuscany.sca.policy.confidentiality.ConfidentialityPolicy;
-import org.apache.tuscany.sca.provider.ServiceBindingProvider;
+import org.apache.tuscany.sca.provider.OperationSelectorProvider;
+import org.apache.tuscany.sca.provider.OperationSelectorProviderFactory;
+import org.apache.tuscany.sca.provider.ProviderFactoryExtensionPoint;
+import org.apache.tuscany.sca.provider.ServiceBindingProviderRRB;
+import org.apache.tuscany.sca.provider.WireFormatProvider;
+import org.apache.tuscany.sca.provider.WireFormatProviderFactory;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 import org.apache.tuscany.sca.runtime.RuntimeWire;
@@ -47,27 +54,74 @@ import org.apache.tuscany.sca.runtime.RuntimeWire;
  *
  * @version $Rev$ $Date$
  */
-public class HTTPServiceBindingProvider implements ServiceBindingProvider {
+public class HTTPServiceBindingProvider implements ServiceBindingProviderRRB {
     private static final QName AUTEHTICATION_INTENT = new QName("http://www.osoa.org/xmlns/sca/1.0","authentication");
     private static final QName CONFIDENTIALITY_INTENT = new QName("http://www.osoa.org/xmlns/sca/1.0","confidentiality");
     
+    private ExtensionPointRegistry extensionPoints;
+    
+    private RuntimeComponent component;
     private RuntimeComponentService service;  
+    private InterfaceContract serviceContract;
     private HTTPBinding binding;
     private MessageFactory messageFactory;
+    
+    private OperationSelectorProvider osProvider;
+    private WireFormatProvider wfProvider;
     
     private ServletHost servletHost;
     private String servletMapping;
     private HTTPBindingListenerServlet bindingListenerServlet;
    
     public HTTPServiceBindingProvider(RuntimeComponent component,
-                                              RuntimeComponentService service,
-                                              HTTPBinding binding,
-                                              MessageFactory messageFactory,
-                                              ServletHost servletHost) {
+                                      RuntimeComponentService service,
+                                      HTTPBinding binding,
+                                      ExtensionPointRegistry extensionPoints,
+                                      MessageFactory messageFactory,
+                                      ServletHost servletHost) {
+        this.component = component;
         this.service = service;
+        
         this.binding = binding;
+        this.extensionPoints = extensionPoints;
         this.messageFactory = messageFactory;
         this.servletHost = servletHost;
+        
+        // retrieve operation selector and wire format service providers
+        
+        ProviderFactoryExtensionPoint  providerFactories = extensionPoints.getExtensionPoint(ProviderFactoryExtensionPoint.class);
+
+        
+        if (binding.getOperationSelector() != null) {
+            // Configure the interceptors for operation selection
+            OperationSelectorProviderFactory osProviderFactory = (OperationSelectorProviderFactory) providerFactories.getProviderFactory(binding.getOperationSelector().getClass());
+            if (osProviderFactory != null) {
+                this.osProvider = osProviderFactory.createServiceOperationSelectorProvider(component, service, binding);
+            }            
+        }
+        
+        if (binding.getRequestWireFormat() != null && binding.getResponseWireFormat() != null) {
+            // Configure the interceptors for wire format
+            WireFormatProviderFactory wfProviderFactory = (WireFormatProviderFactory) providerFactories.getProviderFactory(binding.getRequestWireFormat().getClass());
+            if (wfProviderFactory != null) {
+                this.wfProvider = wfProviderFactory.createServiceWireFormatProvider(component, service, binding);
+            }            
+        }
+
+        
+        
+        //clone the service contract to avoid databinding issues
+        try {
+            this.serviceContract = (InterfaceContract) service.getInterfaceContract().clone();
+            
+            // configure data binding
+            if (this.wfProvider != null) {
+                wfProvider.configureWireFormatInterfaceContract(service.getInterfaceContract());
+            }
+        } catch(CloneNotSupportedException e) {
+            this.serviceContract = service.getInterfaceContract();
+        }
+        
     }
 
     public void start() {
@@ -114,6 +168,10 @@ public class HTTPServiceBindingProvider implements ServiceBindingProvider {
             } else if (operationName.equals("service")) {
                 Invoker serviceInvoker = invocationChain.getHeadInvoker();
                 servlet = new HTTPServiceListenerServlet(binding, serviceInvoker, messageFactory);
+                break;
+            } else if (binding.getOperationSelector() != null || binding.getRequestWireFormat() != null) {
+                Invoker bindingInvoker = wire.getBindingInvocationChain().getHeadInvoker();
+                servlet = new HTTPRRBListenerServlet(binding, bindingInvoker, messageFactory);
                 break;
             }
         }
@@ -179,11 +237,29 @@ public class HTTPServiceBindingProvider implements ServiceBindingProvider {
     }
 
     public InterfaceContract getBindingInterfaceContract() {
-        return null;
+        return service.getInterfaceContract();
     }
     
     public boolean supportsOneWayInvocation() {
         return false;
+    }
+    
+    /**
+     * Add specific http interceptor to invocation chain
+     * @param runtimeWire
+     */
+    public void configureBindingChain(RuntimeWire runtimeWire) {
+
+        InvocationChain bindingChain = runtimeWire.getBindingInvocationChain();
+
+        if(osProvider != null) {
+            bindingChain.addInterceptor(Phase.SERVICE_BINDING_OPERATION_SELECTOR, osProvider.createInterceptor());    
+        }
+
+        if (wfProvider != null) {
+            bindingChain.addInterceptor(Phase.SERVICE_BINDING_WIREFORMAT, wfProvider.createInterceptor());
+        }
+
     }
 
 }
