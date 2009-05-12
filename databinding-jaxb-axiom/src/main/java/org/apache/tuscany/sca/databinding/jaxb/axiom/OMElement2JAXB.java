@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 package org.apache.tuscany.sca.databinding.jaxb.axiom;
 
@@ -45,7 +45,6 @@ public class OMElement2JAXB extends BaseTransformer<OMElement, Object> implement
         return org.apache.axiom.om.OMElement.class.getName();
     }
 
-    @SuppressWarnings("unchecked")
     public Object transform(final OMElement source, final TransformationContext context) throws TransformationException {
         try {
             return AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
@@ -53,14 +52,13 @@ public class OMElement2JAXB extends BaseTransformer<OMElement, Object> implement
                     Unmarshaller unmarshaller = null;
                     XMLStreamReader reader = null;
                     Object result = null;
-                    // Marshalling directly to the output stream is faster than marshalling through the
-                    // XMLStreamWriter. 
-                    // Take advantage of this optimization if there is an output stream.
+
                     JAXBContext jaxbContext = JAXBContextHelper.createJAXBContext(context, false);
                     try {
+                        Class<?> type = JAXBContextHelper.getJavaType(context.getTargetDataType());
                         unmarshaller = JAXBContextHelper.getUnmarshaller(jaxbContext);
                         reader = source.getXMLStreamReaderWithoutCaching();
-                        result = unmarshaller.unmarshal(reader, JAXBContextHelper.getJavaType(context.getTargetDataType()));
+                        result = unmarshaller.unmarshal(reader, type);
                     } finally {
                         if (reader != null) {
                             reader.close();

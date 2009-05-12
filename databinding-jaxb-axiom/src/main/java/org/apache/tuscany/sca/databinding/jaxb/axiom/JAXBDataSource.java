@@ -105,6 +105,8 @@ public class JAXBDataSource extends OMDataSourceExtBase {
                 public Object run() throws Exception {
                     try {
                         Marshaller marshaller = getMarshaller();
+                        // Marshalling directly to the output stream is faster than marshalling through the
+                        // XMLStreamWriter. Take advantage of this optimization if there is an output stream.
                         OutputStream os = getOutputStream(xmlWriter);
                         if (os != null) {
                             marshaller.marshal(element, os);
