@@ -22,8 +22,6 @@ package org.apache.tuscany.sca.databinding.jaxb.axiom.ext;
 import java.io.OutputStream;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -42,13 +40,10 @@ import org.apache.tuscany.sca.databinding.jaxb.JAXBContextHelper;
  * To marshal or unmarshal a JAXB object, the JAXBContext is necessary.
  * In addition, access to the MessageContext and other context objects may be necessary
  * to get classloader information, store attachments etc.
- * 
+ *
  * The JAXBDSContext bundles all of this information together.
  */
 public class JAXBDSContext {
-
-    private static final Logger log = Logger.getLogger(JAXBDSContext.class.getName());
-    private static final boolean DEBUG_ENABLED = log.isLoggable(Level.FINER);
 
     private JAXBContext jaxbContext = null; // JAXBContext
 
@@ -74,16 +69,15 @@ public class JAXBDSContext {
      */
     public Object unmarshal(XMLStreamReader reader) throws JAXBException {
 
-        Unmarshaller u = JAXBContextHelper.getUnmarshaller(getJAXBContext());
+        Unmarshaller u = JAXBContextHelper.getUnmarshaller(jaxbContext);
 
         Object jaxb = null;
 
         // Unmarshal into the business object.
-        jaxb = unmarshalElement(u, reader); // preferred and always used for
-        // style=document
+        jaxb = unmarshalElement(u, reader); // preferred and always used for style=document
 
         // Successfully unmarshalled the object
-        // JAXBUtils.releaseJAXBUnmarshaller(getJAXBContext(cl), u);
+        JAXBContextHelper.releaseJAXBUnmarshaller(jaxbContext, u);
 
         // Don't close the reader.  The reader is owned by the caller, and it
         // may contain other xml instance data (other than this JAXB object)
@@ -110,7 +104,7 @@ public class JAXBDSContext {
 
     /**
      * Preferred way to marshal objects.
-     * 
+     *
      * @param b Object that can be rendered as an element and the element name is known by the
      * Marshaller
      * @param m Marshaller
@@ -123,7 +117,7 @@ public class JAXBDSContext {
         AccessController.doPrivileged(new PrivilegedAction<Object>() {
             public Object run() {
                 // Marshalling directly to the output stream is faster than marshalling through the
-                // XMLStreamWriter. 
+                // XMLStreamWriter.
                 // Take advantage of this optimization if there is an output stream.
                 try {
                     OutputStream os = (optimize) ? getOutputStream(writer) : null;
@@ -160,7 +154,7 @@ public class JAXBDSContext {
 
     /**
      * Preferred way to unmarshal objects
-     * 
+     *
      * @param u Unmarshaller
      * @param reader XMLStreamReader
      * @return Object that represents an element

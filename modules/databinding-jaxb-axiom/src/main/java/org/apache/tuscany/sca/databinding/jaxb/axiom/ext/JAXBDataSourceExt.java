@@ -33,20 +33,17 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.apache.axiom.om.OMDataSourceExt;
 import org.apache.axiom.om.OMException;
 import org.apache.axiom.om.OMOutputFormat;
+import org.apache.axiom.om.ds.OMDataSourceExtBase;
 import org.apache.axiom.om.impl.MTOMXMLStreamWriter;
 import org.apache.axiom.om.util.StAXUtils;
 
 /**
  * OMDataSource backed by a jaxb object
  */
-public class JAXBDataSourceExt
-
-//FIXME: [rfeng] Re-enable it after we move to AXIOM 1.2.7
-// extends OMDataSourceExtBase  
-{
-
+public class JAXBDataSourceExt extends OMDataSourceExtBase {
     private static final Logger log = Logger.getLogger(JAXBDataSourceExt.class.getName());
 
     private Object jaxb;
@@ -61,10 +58,9 @@ public class JAXBDataSourceExt
     public void close() {
     }
 
-    // FIXME: [rfeng] Re-enable it after we move to AXIOM 1.2.7
-    //    public OMDataSourceExt copy() {
-    //        return new JAXBDataSourceExt(jaxb, context);
-    //    }
+    public OMDataSourceExt copy() {
+        return new JAXBDataSourceExt(jaxb, context);
+    }
 
     public Object getObject() {
         return jaxb;
@@ -92,7 +88,7 @@ public class JAXBDataSourceExt
         try {
             writer.close();
         } catch (XMLStreamException e) {
-            // An exception can occur if nothing is written to the 
+            // An exception can occur if nothing is written to the
             // writer.  This is possible if the underlying data source
             // writers to the output stream directly.
             if (log.isLoggable(Level.FINER)) {
