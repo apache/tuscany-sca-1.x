@@ -43,6 +43,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.io.UrlResource;
+import org.springframework.core.SpringVersion;
 
 /**
  * This is the runtime side tie for the corresponding tuscany side stub class.
@@ -55,8 +56,11 @@ public class SpringContextTie {
     private AbstractApplicationContext springContext;
     private SpringImplementationStub implementation;
     
-    public SpringContextTie(SpringImplementationStub implementation, URL resource) {
+    public SpringContextTie(SpringImplementationStub implementation, URL resource) throws Exception {
         this.implementation = implementation;
+        if (! SpringVersion.getVersion().equals("2.5.5")) {
+        	throw new RuntimeException("Unsupported version: Use only Spring Framework Version 2.5.5");
+        }
         SCAParentApplicationContext scaParentContext = new SCAParentApplicationContext(implementation);
         springContext = createApplicationContext(scaParentContext, resource);  
     }
