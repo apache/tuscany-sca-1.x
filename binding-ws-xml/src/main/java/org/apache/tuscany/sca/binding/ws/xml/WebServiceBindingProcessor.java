@@ -427,11 +427,11 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
             	// Introspect the WSDL portType and validate the input/output messages.
             	List<OperationImpl> operations = portType.getOperations();
             	for (OperationImpl operation : operations) {
-            		if (operation.getInput().getMessage() == null) {
+            		if (operation.getInput() != null && operation.getInput().getMessage() == null) {
             			ContributionResolveException ce = new ContributionResolveException("WSDL binding operation input name " + operation.getInput().getName() + " does not match with PortType Definition");
                         error("ContributionResolveException", wsdlDefinition, ce);
             		}
-            		if (operation.getOutput().getMessage() == null) {
+            		if (operation.getOutput() != null && operation.getOutput().getMessage() == null) {
             			ContributionResolveException ce = new ContributionResolveException("WSDL binding operation output name " + operation.getOutput().getName() + " does not match with PortType Definition");
                         error("ContributionResolveException", wsdlDefinition, ce);
             		}
