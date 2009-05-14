@@ -1,0 +1,14 @@
+The classes in this package are a copy of the same classes from the 
+Axis2 package org.apache.axis2.transport.jms in the Axis2 1.4.1 release.
+
+The only change is in the listenOnDestination method in JMSConnectionFactory
+to use Tuscany threads instead of the setMessageListener call approach when
+running in a JEE container where setMessageListener is prohibited. There are
+several classes copied in this Tuscany package as many of the constructors
+and methods are not public so we can't just subclass to fix the problem.
+
+In Axis2 1.5 and the new separately released JMS transport will fix this
+problem so when we move up to that in Tuscany we can get rid of this package. 
+
+
+
