@@ -31,6 +31,7 @@ import org.apache.tuscany.sca.policy.util.PolicyHandlerTuple;
 import org.apache.tuscany.sca.provider.ServiceBindingProvider;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
+import org.apache.tuscany.sca.work.WorkScheduler;
 import org.osoa.sca.ServiceRuntimeException;
 
 public class Axis2ServiceBindingProvider implements ServiceBindingProvider {
@@ -44,7 +45,8 @@ public class Axis2ServiceBindingProvider implements ServiceBindingProvider {
                                        ServletHost servletHost,
                                        ModelFactoryExtensionPoint modelFactories,
                                        List<PolicyHandlerTuple> policyHandlerClassnames,
-                                       DataBindingExtensionPoint dataBindings) {
+                                       DataBindingExtensionPoint dataBindings,
+                                       WorkScheduler workScheduler) {
 
         if (servletHost == null) {
             throw new ServiceRuntimeException("No Servlet host is avaible for HTTP web services");
@@ -62,7 +64,7 @@ public class Axis2ServiceBindingProvider implements ServiceBindingProvider {
         InterfaceContract contract = wsBinding.getBindingInterfaceContract();
         contract.getInterface().resetDataBinding(OMElement.class.getName());
 
-        axisProvider = new Axis2ServiceProvider(component, service, wsBinding, servletHost, messageFactory, policyHandlerClassnames);
+        axisProvider = new Axis2ServiceProvider(component, service, wsBinding, servletHost, messageFactory, policyHandlerClassnames, workScheduler);
     }
 
     public void start() {

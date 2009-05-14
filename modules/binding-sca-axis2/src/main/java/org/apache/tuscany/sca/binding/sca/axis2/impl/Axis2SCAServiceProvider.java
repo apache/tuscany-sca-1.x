@@ -25,11 +25,13 @@ import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.SCABinding;
 import org.apache.tuscany.sca.binding.ws.WebServiceBinding;
 import org.apache.tuscany.sca.binding.ws.axis2.Axis2ServiceProvider;
+import org.apache.tuscany.sca.core.UtilityExtensionPoint;
 import org.apache.tuscany.sca.host.http.ServletHost;
 import org.apache.tuscany.sca.invocation.MessageFactory;
 import org.apache.tuscany.sca.policy.util.PolicyHandlerTuple;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
+import org.apache.tuscany.sca.work.WorkScheduler;
 
 /**
  * A specialization of the Axis2BindingProvider that just switches in the SCABinding model
@@ -58,14 +60,16 @@ public class Axis2SCAServiceProvider extends Axis2ServiceProvider {
                                    WebServiceBinding wsBinding,
                                    ServletHost servletHost,
                                    MessageFactory messageFactory,
-                                   List<PolicyHandlerTuple> policyHandlerClassnames)  {
+                                   List<PolicyHandlerTuple> policyHandlerClassnames,
+                                   WorkScheduler workScheduler)  {
         
         super(component, 
                 service, 
                 wsBinding, 
                 servletHost,
                 messageFactory,
-                policyHandlerClassnames);
+                policyHandlerClassnames,
+                workScheduler);
 
         this.binding = binding;
     }

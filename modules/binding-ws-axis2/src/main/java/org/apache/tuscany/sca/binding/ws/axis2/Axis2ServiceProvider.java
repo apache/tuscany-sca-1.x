@@ -100,6 +100,7 @@ import org.apache.tuscany.sca.runtime.ReferenceParameters;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 import org.apache.tuscany.sca.runtime.RuntimeWire;
+import org.apache.tuscany.sca.work.WorkScheduler;
 import org.apache.tuscany.sca.xsd.XSDefinition;
 import org.apache.ws.commons.schema.XmlSchema;
 import org.apache.ws.commons.schema.XmlSchemaExternal;
@@ -134,6 +135,7 @@ public class Axis2ServiceProvider {
     private BasicAuthenticationPolicy basicAuthenticationPolicy = null;
     private Axis2TokenAuthenticationPolicy axis2TokenAuthenticationPolicy = null;
     private List<Axis2HeaderPolicy> axis2HeaderPolicies = new ArrayList<Axis2HeaderPolicy>();
+    private WorkScheduler workScheduler;
 
     public static final QName QNAME_WSA_ADDRESS =
         new QName(AddressingConstants.Final.WSA_NAMESPACE, AddressingConstants.EPR_ADDRESS);
@@ -166,7 +168,8 @@ public class Axis2ServiceProvider {
                                 WebServiceBinding wsBinding,
                                 ServletHost servletHost,
                                 MessageFactory messageFactory,
-                                List<PolicyHandlerTuple> policyHandlerClassnames) {
+                                List<PolicyHandlerTuple> policyHandlerClassnames,
+                                WorkScheduler workScheduler) {
 
         this.component = component; 
         this.contract = contract; 
@@ -174,6 +177,7 @@ public class Axis2ServiceProvider {
         this.servletHost = servletHost;
         this.messageFactory = messageFactory;
         this.policyHandlerClassnames = policyHandlerClassnames;
+        this.workScheduler = workScheduler;
 
         final boolean isRampartRequired = AxisPolicyHelper.isRampartRequired(wsBinding);
         try {
@@ -324,7 +328,7 @@ public class Axis2ServiceProvider {
                 } else if (endpointURL.startsWith("jms")) {
                     logger.log(Level.INFO,"Axis2 JMS URL=" + endpointURL);
                     
-                    jmsListener = new JMSListener();
+                    jmsListener = new JMSListener(workScheduler);
                     jmsSender = new JMSSender();
                     ListenerManager listenerManager = configContext.getListenerManager();
                     TransportInDescription trsIn = configContext.getAxisConfiguration().getTransportIn(Constants.TRANSPORT_JMS);
