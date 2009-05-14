@@ -49,6 +49,7 @@ import org.apache.axis2.transport.jms.JMSConstants;
 import org.apache.axis2.transport.jms.JMSUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.tuscany.sca.work.WorkScheduler;
 
 import edu.emory.mathcs.backport.java.util.concurrent.ExecutorService;
 import edu.emory.mathcs.backport.java.util.concurrent.LinkedBlockingQueue;
@@ -109,6 +110,12 @@ public class JMSListener implements TransportListener {
     
     private ExecutorService workerPool;
 
+    private WorkScheduler workScheduler;
+
+    public JMSListener(WorkScheduler workScheduler) {
+        this.workScheduler = workScheduler;
+    }
+    
     /**
      * This is the TransportListener initialization method invoked by Axis2
      *
@@ -221,7 +228,7 @@ public class JMSListener implements TransportListener {
 
             Parameter param = (Parameter) conFacIter.next();
             JMSConnectionFactory jmsConFactory =
-                    new JMSConnectionFactory(param.getName());
+                    new JMSConnectionFactory(param.getName(), workScheduler);
 
             ParameterIncludeImpl pi = new ParameterIncludeImpl();
             try {

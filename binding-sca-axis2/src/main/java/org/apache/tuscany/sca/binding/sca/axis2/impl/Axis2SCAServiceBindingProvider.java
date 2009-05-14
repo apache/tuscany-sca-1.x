@@ -31,6 +31,7 @@ import org.apache.tuscany.sca.binding.ws.axis2.Axis2ServiceProvider;
 import org.apache.tuscany.sca.binding.ws.wsdlgen.BindingWSDLGenerator;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
+import org.apache.tuscany.sca.core.UtilityExtensionPoint;
 import org.apache.tuscany.sca.databinding.DataBindingExtensionPoint;
 import org.apache.tuscany.sca.host.http.ServletHost;
 import org.apache.tuscany.sca.host.http.ServletHostExtensionPoint;
@@ -40,6 +41,7 @@ import org.apache.tuscany.sca.policy.util.PolicyHandlerTuple;
 import org.apache.tuscany.sca.provider.ServiceBindingProvider;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
+import org.apache.tuscany.sca.work.WorkScheduler;
 
 /**
  * The service binding provider for the remote sca binding implementation. Relies on the 
@@ -69,6 +71,8 @@ public class Axis2SCAServiceBindingProvider implements ServiceBindingProvider {
         ModelFactoryExtensionPoint modelFactories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);
         MessageFactory messageFactory = modelFactories.getFactory(MessageFactory.class); 
         DataBindingExtensionPoint dataBindings = extensionPoints.getExtensionPoint(DataBindingExtensionPoint.class);
+        UtilityExtensionPoint utilities = extensionPoints.getExtensionPoint(UtilityExtensionPoint.class);
+        WorkScheduler workScheduler = utilities.getUtility(WorkScheduler.class);
 
         this.binding = binding.getSCABinding();
         wsBinding = modelFactories.getFactory(WebServiceBindingFactory.class).createWebServiceBinding();
@@ -88,7 +92,8 @@ public class Axis2SCAServiceBindingProvider implements ServiceBindingProvider {
                                                    wsBinding,
                                                    servletHost,
                                                    messageFactory,
-                                                   policyHandlerClassnames);
+                                                   policyHandlerClassnames,
+                                                   workScheduler);
     }
 
     public InterfaceContract getBindingInterfaceContract() {
