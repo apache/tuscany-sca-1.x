@@ -61,7 +61,7 @@ public class JmsTransportTestCase{
         assertEquals("Hello Smith", helloWorldService.getGreetings("Smith"));
     }
     
-    @Ignore
+    //@Ignore
     @Test
     public void testComponent2() throws IOException {
         HelloWorldService helloWorldService = scaDomain.getService(HelloWorldService.class, "HelloWorldServiceComponent2/HelloWorldService");
