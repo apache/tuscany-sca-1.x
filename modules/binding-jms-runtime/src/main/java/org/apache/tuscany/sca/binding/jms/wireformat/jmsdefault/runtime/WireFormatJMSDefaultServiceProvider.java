@@ -138,7 +138,7 @@ public class WireFormatJMSDefaultServiceProvider implements WireFormatProvider {
             }
 
         } else {            
-            interfaceContract = service.getInterfaceContract();
+            interfaceContract = service.getService().getInterfaceContract();
         }
     }
 

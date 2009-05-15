@@ -59,6 +59,17 @@ public class FormatJMSObjectTestCase {
                 helloWorldService.getGreetingsDontWrapSingle("Fred", "Bloggs"));        
 
     }
+    
+    @Ignore
+    @Test
+    public void testWaitForInput() {
+        System.out.println("Press a key to end");
+        try {
+            System.in.read();
+        } catch (Exception ex) {
+        }
+        System.out.println("Shutting down");
+    }     
 
     @After
     public void end() {

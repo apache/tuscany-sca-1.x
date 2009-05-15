@@ -84,7 +84,7 @@ public class WireFormatJMSObjectReferenceProvider implements WireFormatProvider 
         
         // just point to the reference interface contract so no 
         // databinding transformation takes place
-        interfaceContract = reference.getInterfaceContract();
+        interfaceContract = reference.getReference().getInterfaceContract();
     }
     
     public InterfaceContract configureWireFormatInterfaceContract(InterfaceContract interfaceContract){

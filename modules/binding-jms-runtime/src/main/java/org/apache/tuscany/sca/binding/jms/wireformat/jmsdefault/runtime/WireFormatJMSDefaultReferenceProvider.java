@@ -139,7 +139,7 @@ public class WireFormatJMSDefaultReferenceProvider implements WireFormatProvider
                 } 
             }
         } else {
-            interfaceContract = reference.getInterfaceContract();
+            interfaceContract = reference.getReference().getInterfaceContract();
         }
 
     }

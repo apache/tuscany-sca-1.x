@@ -21,7 +21,7 @@
 	targetNamespace="http://helloworld"
 	xmlns:hw="http://helloworld"
 	xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0" 
-    name="helloworld">
+    name="jmsobject">
 
     <component name="HelloWorldReferenceComponent">
         <implementation.java class="org.apache.tuscany.sca.binding.jms.format.jmsobject.helloworld.HelloWorldReferenceImpl" />
@@ -42,6 +42,7 @@
     <component name="HelloWorldServiceComponent1">
         <implementation.java class="org.apache.tuscany.sca.binding.jms.format.jmsobject.helloworld.HelloWorldServiceImpl" />
         <service name="HelloWorldService">
+            <interface.wsdl interface="http://helloworld.jmsobject.format.jms.binding.sca.tuscany.apache.org/#wsdl.interface(HelloWorldService)"/>
             <binding.jms>
                 <destination name="HelloWorldService1"/>
                  <tuscany:wireFormat.jmsObject wrapSingle="true"/>
