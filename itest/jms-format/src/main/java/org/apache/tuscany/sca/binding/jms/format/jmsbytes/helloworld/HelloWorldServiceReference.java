@@ -24,11 +24,11 @@ import org.osoa.sca.annotations.Remotable;
  * This is the business interface of the HelloWorld greetings service.
  */
 @Remotable
-public interface HelloWorldService {
+public interface HelloWorldServiceReference {
 
     public byte[] getByteArrayGreetings(byte[] msg);
     
-    public void throwChecked(byte[] msg) throws CheckedException;
+    public void throwChecked(byte[] msg) ;
     public void throwUnChecked(byte[] msg);
     
 }

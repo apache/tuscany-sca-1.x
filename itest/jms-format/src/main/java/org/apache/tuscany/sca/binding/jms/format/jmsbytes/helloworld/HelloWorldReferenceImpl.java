@@ -24,11 +24,23 @@ import org.osoa.sca.annotations.Reference;
 public class HelloWorldReferenceImpl implements HelloWorldReference {
     
     @Reference
-    protected HelloWorldService helloWorldService1;
+    protected HelloWorldServiceReference helloWorldService1;
     
     public String getGreetings(String name){     
         byte[] bytesValue = helloWorldService1.getByteArrayGreetings(name.getBytes());
-        String stringValue = new String(bytesValue);  
+        String stringValue = new String(bytesValue);
+        
+        try {
+            helloWorldService1.throwChecked(null);
+        } catch (Exception e) {
+            stringValue += " CheckedException";
+        }
+        
+        try {
+            helloWorldService1.throwUnChecked(null);
+        } catch (Exception e) {
+            stringValue += " UncheckedException";
+        }
         return stringValue; 
     }    
 }

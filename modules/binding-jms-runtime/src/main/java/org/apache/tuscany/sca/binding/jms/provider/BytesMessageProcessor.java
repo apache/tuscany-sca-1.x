@@ -18,16 +18,20 @@
  */
 package org.apache.tuscany.sca.binding.jms.provider;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
 
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
+import org.apache.tuscany.sca.binding.jms.impl.JMSBindingConstants;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBindingException;
+import org.osoa.sca.ServiceRuntimeException;
 
 /**
  * MessageProcessor for sending/receiving javax.jms.BytesMessage with the JMSBinding.
@@ -41,6 +45,21 @@ public class BytesMessageProcessor extends AbstractMessageProcessor {
         super(jmsBinding);
     }
 
+    @Override
+    public Object extractPayloadFromJMSMessage(Message msg) {
+        byte [] bytes = (byte [])extractPayload(msg);
+        
+        try {
+            if (msg.getBooleanProperty(JMSBindingConstants.FAULT_PROPERTY)) {
+                return new InvocationTargetException(new ServiceRuntimeException(bytes.toString()));
+            } else {
+                return bytes;
+            }
+        } catch (JMSException e) {
+            throw new JMSBindingException(e);
+        }
+    }
+    
     @Override
     protected Object extractPayload(Message msg) {
         try {
@@ -58,6 +77,17 @@ public class BytesMessageProcessor extends AbstractMessageProcessor {
             throw new JMSBindingException(e);
         }
     }
+    
+    @Override
+    public Message createFaultMessage(Session session, Throwable o) {
+        try {
+            Message message = createJMSMessage(session, o.toString().getBytes());
+            message.setBooleanProperty(JMSBindingConstants.FAULT_PROPERTY, true);
+            return message;
+        } catch (JMSException e) {
+            throw new JMSBindingException(e);
+        }        
+    }    
 
     @Override
     protected Message createJMSMessage(Session session, Object o) {
