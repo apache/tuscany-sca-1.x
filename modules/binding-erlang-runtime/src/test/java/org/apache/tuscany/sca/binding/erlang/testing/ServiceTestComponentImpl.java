@@ -41,4 +41,8 @@ public class ServiceTestComponentImpl implements ServiceTestComponent {
 		// doing nothing
 	}
 
+	public String[] sayAtoms(String[] arg) {
+		return arg;
+	}
+
 }

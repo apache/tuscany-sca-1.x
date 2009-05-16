@@ -42,6 +42,7 @@ public class JMSBindingContext {
     private Destination replyToDestination;
     private JMSResourceFactory jmsResourceFactory;
     private long timeToLive;
+    private boolean useBytesForWFJMSDefaultResponse;
 
     public Message getJmsMsg() {
         return jmsMsg;
@@ -130,4 +131,13 @@ public class JMSBindingContext {
     public void setTimeToLive(long timeToLive) {
 		this.timeToLive = timeToLive;
 	}
+
+    public boolean isUseBytesForWFJMSDefaultResponse() {
+        return useBytesForWFJMSDefaultResponse;
+    }
+
+    public void setUseBytesForWFJMSDefaultResponse(
+            boolean useBytesForWFJMSDefaultResponse) {
+        this.useBytesForWFJMSDefaultResponse = useBytesForWFJMSDefaultResponse;
+    }
 }

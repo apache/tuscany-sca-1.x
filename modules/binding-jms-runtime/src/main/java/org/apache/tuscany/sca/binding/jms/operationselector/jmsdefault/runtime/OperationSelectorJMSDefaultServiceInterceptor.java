@@ -25,10 +25,8 @@ import java.util.List;
 import javax.jms.BytesMessage;
 import javax.jms.Destination;
 import javax.jms.JMSException;
-import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.TextMessage;
-import javax.jms.Session;
 import javax.jms.Topic;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -43,6 +41,7 @@ import org.apache.tuscany.sca.binding.jms.impl.JMSBindingException;
 import org.apache.tuscany.sca.binding.jms.provider.JMSMessageProcessor;
 import org.apache.tuscany.sca.binding.jms.provider.JMSMessageProcessorUtil;
 import org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactory;
+import org.apache.tuscany.sca.binding.jms.wireformat.jmsdefault.WireFormatJMSDefault;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmstextxml.WireFormatJMSTextXML;
 import org.apache.tuscany.sca.core.assembly.EndpointReferenceImpl;
 import org.apache.tuscany.sca.interfacedef.Operation;
@@ -73,7 +72,8 @@ public class OperationSelectorJMSDefaultServiceInterceptor implements Intercepto
     private List<Operation> serviceOperations;
     
 
-    public OperationSelectorJMSDefaultServiceInterceptor(JMSBinding jmsBinding, JMSResourceFactory jmsResourceFactory, RuntimeWire runtimeWire) {
+    public OperationSelectorJMSDefaultServiceInterceptor(JMSBinding jmsBinding, JMSResourceFactory jmsResourceFactory,
+            RuntimeWire runtimeWire) {
         super();
         this.jmsBinding = jmsBinding;
         this.runtimeWire = runtimeWire;
@@ -89,7 +89,6 @@ public class OperationSelectorJMSDefaultServiceInterceptor implements Intercepto
     }    
     
     public Message invokeRequest(Message msg) { 
-        try {
             // get the jms context
             JMSBindingContext context = msg.getBindingContext();
             javax.jms.Message jmsMsg = context.getJmsMsg();
@@ -97,39 +96,10 @@ public class OperationSelectorJMSDefaultServiceInterceptor implements Intercepto
             String operationName = requestMessageProcessor.getOperationName(jmsMsg);
             Operation operation = getTargetOperation(operationName, jmsMsg);
             msg.setOperation(operation);
-            
-            ReferenceParameters parameters = msg.getFrom().getReferenceParameters();
-            
-            if (service.getInterfaceContract().getCallbackInterface() != null) {
-                
-                String callbackdestName = jmsMsg.getStringProperty(JMSBindingConstants.CALLBACK_Q_PROPERTY);
-                if (callbackdestName == null && msg.getOperation().isNonBlocking()) {
-                    // if the request has a replyTo but this service operation is oneway but the service uses callbacks
-                    // then use the replyTo as the callback destination
-                    Destination replyTo = jmsMsg.getJMSReplyTo();
-                    if (replyTo != null) {
-                        callbackdestName = (replyTo instanceof Queue) ? ((Queue)replyTo).getQueueName() : ((Topic)replyTo).getTopicName();
-                    }
-                }
-    
-                if (callbackdestName != null) {
-                    // append "jms:" to make it an absolute uri so the invoker can determine it came in on the request
-                    // as otherwise the invoker should use the uri from the service callback binding
-                    parameters.setCallbackReference(new EndpointReferenceImpl("jms:" + callbackdestName));
-                }
-    
-                String callbackID = jmsMsg.getStringProperty(JMSBindingConstants.CALLBACK_ID_PROPERTY);
-                if (callbackID != null) {
-                    parameters.setCallbackID(callbackID);
-                }
-            }        
-            
+
             return msg;
-        } catch (JMSException e) {
-            throw new JMSBindingException(e);
-        }
-    }  
-    
+    }
+
     protected Operation getTargetOperation(String operationName, javax.jms.Message jmsMsg) {
         Operation operation = null;
 
@@ -147,7 +117,8 @@ public class OperationSelectorJMSDefaultServiceInterceptor implements Intercepto
                     break;
                 }
             }
-        } else if (jmsBinding.getRequestWireFormat() instanceof WireFormatJMSTextXML) {
+        } else if (jmsBinding.getRequestWireFormat() instanceof WireFormatJMSDefault
+                || jmsBinding.getRequestWireFormat() instanceof WireFormatJMSTextXML) {
 
             OMElement rootElement;
             String operationFromPayload;
@@ -172,6 +143,7 @@ public class OperationSelectorJMSDefaultServiceInterceptor implements Intercepto
                     long noOfBytes = ((BytesMessage) jmsMsg).getBodyLength();
                     byte[] bytes = new byte[(int) noOfBytes];
                     ((BytesMessage) jmsMsg).readBytes(bytes);
+                    ((BytesMessage) jmsMsg).reset();
 
                     if (bytes != null) {
                         XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(new ByteArrayInputStream(bytes));

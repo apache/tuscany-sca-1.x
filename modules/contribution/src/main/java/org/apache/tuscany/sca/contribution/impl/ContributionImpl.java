@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.contribution.impl;
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tuscany.sca.assembly.Composite;
+import org.apache.tuscany.sca.assembly.impl.ExtensibleImpl;
 import org.apache.tuscany.sca.contribution.Artifact;
 import org.apache.tuscany.sca.contribution.Contribution;
 import org.apache.tuscany.sca.contribution.Export;
@@ -34,7 +35,8 @@ import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
  *
  * @version $Rev$ $Date$
  */
-class ContributionImpl implements Contribution {
+class ContributionImpl extends ExtensibleImpl implements Contribution {
+    private String type;
     private String uri;
     private String location;
     private Object model;
@@ -45,13 +47,13 @@ class ContributionImpl implements Contribution {
     private List<Composite> deployables = new ArrayList<Composite>();
     private List<Artifact> artifacts = new ArrayList<Artifact>();
     private ModelResolver modelResolver;
-    
+
     // FIXME remove this dependency on Java ClassLoaders
     private ClassLoader classLoader;
 
     ContributionImpl() {
     }
-    
+
     public String getLocation() {
         return this.location;
     }
@@ -64,17 +66,17 @@ class ContributionImpl implements Contribution {
     public ClassLoader getClassLoader() {
         return classLoader;
     }
-    
+
     //FIXME Remove dependency on Java ClassLoaders
     public void setClassLoader(ClassLoader classLoader) {
         this.classLoader = classLoader;
     }
-    
-    
+
+
     public String getURI() {
         return this.uri;
     }
-    
+
     public void setURI(String uri) {
         this.uri = uri;
     }
@@ -82,27 +84,27 @@ class ContributionImpl implements Contribution {
     public Object getModel() {
         return model;
     }
-    
+
     public void setModel(Object model) {
         this.model = model;
     }
-    
+
     public byte[] getContents() {
         return contents;
     }
-    
+
     public void setContents(byte[] contents) {
         this.contents = contents;
     }
-    
+
     public boolean isUnresolved() {
         return unresolved;
     }
-    
+
     public void setUnresolved(boolean unresolved) {
         this.unresolved = unresolved;
     }
-    
+
     public ModelResolver getModelResolver() {
         return modelResolver;
     }
@@ -110,7 +112,7 @@ class ContributionImpl implements Contribution {
     public void setModelResolver(ModelResolver modelResolver) {
         this.modelResolver = modelResolver;
     }
-    
+
     public List<Export> getExports() {
         return exports;
     }
@@ -131,7 +133,7 @@ class ContributionImpl implements Contribution {
     public int hashCode() {
         return uri.hashCode();
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -149,6 +151,14 @@ class ContributionImpl implements Contribution {
     public String toString() {
     	return "Contribution : " + uri + " \n" +
     	       "from: " + location;
+    }
+    
+    public String getType() {
+        return type;
+    }
+    
+    public void setType(String contributionType) {
+        this.type = contributionType;
     }
 
 }

@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.interfacedef.java.jaxws;
@@ -22,6 +22,8 @@ package org.apache.tuscany.sca.interfacedef.java.jaxws;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
@@ -33,9 +35,11 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.jws.WebParam.Mode;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 import javax.xml.namespace.QName;
+import javax.xml.ws.Holder;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
@@ -47,6 +51,7 @@ import org.apache.tuscany.sca.interfacedef.DataType;
 import org.apache.tuscany.sca.interfacedef.FaultExceptionMapper;
 import org.apache.tuscany.sca.interfacedef.InvalidInterfaceException;
 import org.apache.tuscany.sca.interfacedef.Operation;
+import org.apache.tuscany.sca.interfacedef.ParameterMode;
 import org.apache.tuscany.sca.interfacedef.impl.DataTypeImpl;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterface;
 import org.apache.tuscany.sca.interfacedef.java.JavaOperation;
@@ -59,7 +64,7 @@ import org.apache.tuscany.sca.interfacedef.util.XMLType;
 
 /**
  * Introspect the java class/interface with JSR-181 and JAXWS annotations
- * 
+ *
  * @version $Rev$ $Date$
  */
 public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
@@ -68,7 +73,6 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
     private DataBindingExtensionPoint dataBindingExtensionPoint;
     private FaultExceptionMapper faultExceptionMapper;
     private XMLAdapterExtensionPoint xmlAdapterExtensionPoint;
-
 
     public JAXWSJavaInterfaceProcessor(DataBindingExtensionPoint dataBindingExtensionPoint,
                                        FaultExceptionMapper faultExceptionMapper,
@@ -88,6 +92,22 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
             return name;
         } else {
             return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        }
+    }
+
+    private ParameterMode getParameterMode(Class<?> javaType, WebParam.Mode mode) {
+        if (javaType != Holder.class) {
+            return ParameterMode.IN;
+        }
+        if (mode == Mode.IN) {
+            return ParameterMode.IN;
+        } else if (mode == Mode.INOUT) {
+            return ParameterMode.INOUT;
+        } else if (mode == Mode.OUT) {
+            return ParameterMode.OUT;
+        } else {
+            // null
+            return ParameterMode.INOUT;
         }
     }
 
@@ -126,7 +146,7 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
             boolean bare = false;
             if (methodSOAPBinding != null) {
                 bare = methodSOAPBinding.parameterStyle() == SOAPBinding.ParameterStyle.BARE;
-                if(bare) {
+                if (bare) {
                     // For BARE parameter style, the data won't be unwrapped
                     // The wrapper should be null
                     operation.setInputWrapperStyle(false);
@@ -157,9 +177,12 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                 operation.setNonBlocking(true);
             }
 
+            List<ParameterMode> parameterModes = operation.getParameterModes();
+
+            Class<?>[] parameterTypes = method.getParameterTypes();
             // Handle BARE mapping
             if (bare) {
-                for (int i = 0; i < method.getParameterTypes().length; i++) {
+                for (int i = 0; i < parameterTypes.length; i++) {
                     WebParam param = getAnnotation(method, i, WebParam.class);
                     if (param != null) {
                         String ns = getValue(param.targetNamespace(), tns);
@@ -170,6 +193,9 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                         if (logical instanceof XMLType) {
                             ((XMLType)logical).setElementName(element);
                         }
+                        parameterModes.set(i, getParameterMode(parameterTypes[i], param.mode()));
+                    } else {
+                        parameterModes.set(i, getParameterMode(parameterTypes[i], null));
                     }
                 }
                 WebResult result = method.getAnnotation(WebResult.class);
@@ -216,8 +242,8 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                             return dt;
                         } catch (ClassNotFoundException e) {
                             GeneratedClassLoader cl = new GeneratedClassLoader(clazz.getClassLoader());
-                            return new GeneratedDataTypeImpl(xmlAdapterExtensionPoint, method, inputWrapperClassName, inputNS, inputName, true,
-                                                             cl);
+                            return new GeneratedDataTypeImpl(xmlAdapterExtensionPoint, method, inputWrapperClassName,
+                                                             inputNS, inputName, true, cl);
                         }
                     }
                 });
@@ -256,15 +282,15 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                             return dt;
                         } catch (ClassNotFoundException e) {
                             GeneratedClassLoader cl = new GeneratedClassLoader(clazz.getClassLoader());
-                            return new GeneratedDataTypeImpl(xmlAdapterExtensionPoint, method, outputWrapperClassName, outputNS, outputName,
-                                                             false, cl);
+                            return new GeneratedDataTypeImpl(xmlAdapterExtensionPoint, method, outputWrapperClassName,
+                                                             outputNS, outputName, false, cl);
                         }
                     }
                 });
                 QName outputWrapper = outputWrapperDT.getLogical().getElementName();
 
                 List<ElementInfo> inputElements = new ArrayList<ElementInfo>();
-                for (int i = 0; i < method.getParameterTypes().length; i++) {
+                for (int i = 0; i < parameterTypes.length; i++) {
                     WebParam param = getAnnotation(method, i, WebParam.class);
                     ns = param != null ? param.targetNamespace() : "";
                     // Default to "" for doc-lit-wrapped && non-header
@@ -279,6 +305,11 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                         type = ((XMLType)logical).getTypeName();
                     }
                     inputElements.add(new ElementInfo(element, new TypeInfo(type, false, null)));
+                    if (param != null) {
+                        parameterModes.set(i, getParameterMode(parameterTypes[i], param.mode()));
+                    } else {
+                        parameterModes.set(i, getParameterMode(parameterTypes[i], null));
+                    }
                 }
 
                 List<ElementInfo> outputElements = new ArrayList<ElementInfo>();
@@ -301,11 +332,10 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                 }
 
                 String db = inputWrapperDT != null ? inputWrapperDT.getDataBinding() : JAXB_DATABINDING;
-                
-                WrapperInfo inputWrapperInfo =
-                    new WrapperInfo(db, new ElementInfo(inputWrapper, null), inputElements);
+
+                WrapperInfo inputWrapperInfo = new WrapperInfo(db, new ElementInfo(inputWrapper, null), inputElements);
                 WrapperInfo outputWrapperInfo =
-                    new WrapperInfo(db, new ElementInfo(outputWrapper, null), outputElements);  
+                    new WrapperInfo(db, new ElementInfo(outputWrapper, null), outputElements);
 
                 inputWrapperInfo.setWrapperType(inputWrapperDT);
                 outputWrapperInfo.setWrapperType(outputWrapperDT);
@@ -313,7 +343,43 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                 operation.setInputWrapper(inputWrapperInfo);
                 operation.setOutputWrapper(outputWrapperInfo);
             }
+
+            List<DataType> inputTypes = operation.getInputType().getLogical();
+            for (int i = 0, size = parameterModes.size(); i < size; i++) {
+                // Holder pattern. Physical types of Holder<T> classes are updated to <T> to aid in transformations.
+                if (Holder.class == inputTypes.get(i).getPhysical()) {
+                    Type firstActual = getFirstActualType(inputTypes.get(i).getGenericType());
+                    if (firstActual != null) {
+                        inputTypes.get(i).setPhysical((Class<?>)firstActual);
+                        if (parameterModes.get(i) == ParameterMode.IN) {
+                            parameterModes.set(i, ParameterMode.INOUT);
+                        }
+                    }
+                }
+                // FIXME: We only handle one Holder
+                // Set the output type to the parameter type
+                ParameterMode mode = parameterModes.get(i);
+                if (mode == ParameterMode.OUT || mode == ParameterMode.INOUT) {
+                    operation.setOutputType(inputTypes.get(i));
+                }
+            }
         }
+    }
+
+    /**
+     * Given a Class<T>, returns T, otherwise null.
+     * @param testClass
+     * @return
+     */
+    protected static Type getFirstActualType(Type genericType) {
+        if (genericType instanceof ParameterizedType) {
+            ParameterizedType pType = (ParameterizedType)genericType;
+            Type[] actualTypes = pType.getActualTypeArguments();
+            if ((actualTypes != null) && (actualTypes.length > 0)) {
+                return actualTypes[0];
+            }
+        }
+        return null;
     }
 
     @SuppressWarnings("unchecked")

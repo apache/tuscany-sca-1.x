@@ -53,12 +53,7 @@ public class ServiceInvoker implements MessageListener {
     private Binding targetBinding;
     private JMSResourceFactory jmsResourceFactory;
     private RuntimeComponentService service;
-    private JMSMessageProcessor requestMessageProcessor;
-    private JMSMessageProcessor responseMessageProcessor;
-    private String correlationScheme;
-    private List<Operation> serviceOperations;
     private MessageFactory messageFactory;
-    
 
     public ServiceInvoker(JMSBinding jmsBinding, RuntimeComponentService service, Binding targetBinding, MessageFactory messageFactory) throws NamingException {
         this.jmsBinding = jmsBinding;
@@ -66,11 +61,6 @@ public class ServiceInvoker implements MessageListener {
         this.service = service;
         this.targetBinding = targetBinding;
         this.messageFactory = messageFactory;
-        
-        requestMessageProcessor = JMSMessageProcessorUtil.getRequestMessageProcessor(jmsBinding);
-        responseMessageProcessor = JMSMessageProcessorUtil.getResponseMessageProcessor(jmsBinding);
-        correlationScheme = jmsBinding.getCorrelationScheme();
-        serviceOperations = service.getInterfaceContract().getInterface().getOperations();
         
     }
 

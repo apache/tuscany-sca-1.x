@@ -21,16 +21,36 @@ package org.apache.tuscany.sca.binding.jms.format.jmsobject.helloworld;
 
 public class HelloWorldServiceImpl implements HelloWorldService {
     
-    public Person getGreetings(Person person){
+    public Person getPersonGreetings(Person person){
          
-    	person.setFirstName("Hello " + person.getFirstName());
-    	person.setLastName("Hello " + person.getLastName());
+    	person.setFirstName("Hello1 " + person.getFirstName());
+    	person.setLastName("Hello1 " + person.getLastName());
     	
         return person;
     }
     
-    public Person getNullGreetings(Person person){      
+    public Person getNullReturnGreetings(Person person){      
         return null;
     }    
+    
+    public String getArrayGreeting(String[] names) {
+        return "Hello3 " + names[0];
+    }
+    
+    public String getMultiArrayGreetings(String[] firstName, String[] lastName) {
+        return "Hello4 " + firstName[0] + " " + lastName[0];
+    }
+    
+    public String getMultiGreetings(String firstName, String lastName) {
+        return "Hello5 " + firstName + " " + lastName;
+    }
+    
+    public String getObjectGreeting(Object person) {
+        return "Hello6 " + ((Person)person).getFirstName() + " " + ((Person)person).getLastName();
+    }
+    
+    public String getObjectArrayGreeting(Object[] person) {
+        return "Hello7 " + ((Person)person[0]).getFirstName() + " " + ((Person)person[0]).getLastName();
+    }
 }
 

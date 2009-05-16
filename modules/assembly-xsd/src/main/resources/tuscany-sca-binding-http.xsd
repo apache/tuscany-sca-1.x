@@ -25,6 +25,8 @@
 
     <import namespace="http://www.osoa.org/xmlns/sca/1.0" schemaLocation="sca-core.xsd"/>
 
+    <include schemaLocation="tuscany-core.xsd"/>
+    
     <element name="binding.http" type="t:HTTPBinding"/>
     
     <complexType name="HTTPBinding">

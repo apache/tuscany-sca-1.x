@@ -28,8 +28,16 @@ import org.apache.tuscany.sca.core.ExtensionPointRegistry;
  */
 public class DefaultContributionClassLoaderProvider implements ContributionClassLoaderProvider {
 
-    public DefaultContributionClassLoaderProvider(ExtensionPointRegistry registry) {
+    public DefaultContributionClassLoaderProvider() {
         super();
+    }
+    
+    /**
+     * returns null as it is the default provider and applies when no specific
+     * provider has been specified
+     */
+    public String getContributionType() {
+        return null;
     }
 
     public ClassLoader getClassLoader(Contribution contribution, ClassLoader parent) {

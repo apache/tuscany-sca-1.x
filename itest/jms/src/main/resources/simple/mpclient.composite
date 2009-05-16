@@ -20,17 +20,17 @@
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
            name="MPClientComposite">
 
-    <component name="HelloWorldClient">
+    <component name="HelloWorldClientMP">
         <implementation.java class="org.apache.tuscany.sca.binding.jms.HelloWorldClientImpl"/>
         <reference name="serviceA" />
     </component>
 
-    <reference name="serviceA" promote="HelloWorldClient/serviceA">
+    <reference name="serviceMP" promote="HelloWorldClientMP/serviceA">
         <interface.java interface="org.apache.tuscany.sca.binding.jms.HelloWorldService" />
         <binding.jms messageProcessor="org.apache.tuscany.sca.binding.jms.TestMessageProcessor">
-            <destination name="DestQueueA"/>
+            <destination name="DestQueueMP"/>
             <response>
-               <destination name="RespQueueA"/>
+               <destination name="RespQueueMP"/>
             </response>
         </binding.jms>  
     </reference>

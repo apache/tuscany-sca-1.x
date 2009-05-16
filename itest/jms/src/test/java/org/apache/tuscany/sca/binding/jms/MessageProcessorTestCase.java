@@ -36,13 +36,12 @@ public class MessageProcessorTestCase {
     @Before
     public void init() {
         scaDomain =
-            SCADomain.newInstance("http://localhost", "/", "simple/mpclient.composite", "simple/service.composite");
-        // scaDomain = SCADomain.newInstance("http://localhost", "/", "simple/client.composite");
+            SCADomain.newInstance("http://localhost", "/", "simple/mpclient.composite", "simple/mpservice.composite");
     }
 
     @Test
     public void testHelloWorldCreate() throws Exception {
-        HelloWorldService helloWorldService = scaDomain.getService(HelloWorldService.class, "HelloWorldClient");
+        HelloWorldService helloWorldService = scaDomain.getService(HelloWorldService.class, "HelloWorldClientMP");
         assertEquals("jmsHello Petra", helloWorldService.sayHello("Petra"));
         assertTrue(TestMessageProcessor.extractPayloadFromJMSMessageCalled);
         assertTrue(TestMessageProcessor.insertPayloadIntoJMSMessageCalled);

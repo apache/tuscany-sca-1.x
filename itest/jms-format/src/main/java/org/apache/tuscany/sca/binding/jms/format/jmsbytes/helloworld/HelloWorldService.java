@@ -18,7 +18,6 @@
  */
 package org.apache.tuscany.sca.binding.jms.format.jmsbytes.helloworld;
 
-import org.osoa.sca.annotations.OneWay;
 import org.osoa.sca.annotations.Remotable;
 
 /**
@@ -28,6 +27,9 @@ import org.osoa.sca.annotations.Remotable;
 public interface HelloWorldService {
 
     public byte[] getByteArrayGreetings(byte[] msg);
+    
+    public void throwChecked(byte[] msg) throws CheckedException;
+    public void throwUnChecked(byte[] msg);
     
 }
 

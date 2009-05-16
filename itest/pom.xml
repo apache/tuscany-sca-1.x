@@ -75,9 +75,12 @@
                 <module>contribution</module>
                 <module>contribution-multiple</module>
                 <module>contribution-import-export</module>
-              <!--  
- <module>contribution-classloader</module> -->
-                <!--module>contribution-jee</module-->
+                <!-- 
+                <module>contribution-classloader</module> 
+                -->
+                <module>contribution-jee-samples</module>
+                <module>contribution-jee</module>
+                <module>contribution-jee-samples</module>
                 <module>conversations</module>
                 <module>corba</module>
                 <module>conversations-ws</module>
@@ -88,6 +91,7 @@
                 <module>exceptions-cross-binding-ws</module>
                 <module>exceptions-simple-ws</module>
                 <module>extended-api</module>
+                <module>http-jsonrpc</module>
                 <module>interfaces</module>
                 <!--
                 <module>interop-soap-client</module>
@@ -104,6 +108,7 @@
                 <module>jms-nonscaclient-exceptions</module>
                 <module>jms-nulls</module>
                 <module>jms-selectors</module>
+                <module>jms-ttl</module>
                 <module>large-sdo-ws</module>
                 <module>late-reference-resolution</module>
                 <module>oneway</module>
@@ -129,6 +134,7 @@
                 <module>validation</module>
                 <module>wires</module>
                 <module>wsdl</module>
+                <module>wsdlgen</module>
                 <module>wsdlless</module>
                 <module>wsdl2java</module>
                 <module>wsdl-multiple</module>

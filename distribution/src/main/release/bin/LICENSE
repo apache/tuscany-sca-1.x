@@ -258,6 +258,10 @@ The following components come under Apache Software License 2.0
  commons-logging-1.1.1.jar
  commons-logging-api-1.1.jar
  derby-10.3.1.4.jar
+ gdata-client-1.0.jar
+ gdata-client-meta-1.0.jar
+ gdata-core-1.0.jar
+ gdata-media-1.0.jar
  geronimo-common-1.2-beta.jar
  geronimo-commonj_1.1_spec-1.0.jar
  geronimo-connector-1.2-beta.jar

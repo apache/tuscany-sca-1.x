@@ -19,7 +19,7 @@
 
 package org.apache.tuscany.sca.binding.http;
 
-import org.apache.tuscany.sca.assembly.Binding;
+import org.apache.tuscany.sca.assembly.BindingRRB;
 
 
 /**
@@ -27,5 +27,5 @@ import org.apache.tuscany.sca.assembly.Binding;
  * 
  * @version $Rev$ $Date$
 */
-public interface HTTPBinding extends Binding {
+public interface HTTPBinding extends BindingRRB {
 }

@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.sca.binding.jms.wireformat.jmsobject.runtime;
 
+import java.util.HashMap;
+
 import javax.jms.Session;
 
 import org.apache.tuscany.sca.binding.jms.context.JMSBindingContext;
@@ -25,6 +27,7 @@ import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
 import org.apache.tuscany.sca.binding.jms.provider.JMSMessageProcessor;
 import org.apache.tuscany.sca.binding.jms.provider.JMSMessageProcessorUtil;
 import org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactory;
+import org.apache.tuscany.sca.binding.jms.provider.ObjectMessageProcessor;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmsobject.WireFormatJMSObject;
 import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.Interceptor;
@@ -45,14 +48,19 @@ public class WireFormatJMSObjectServiceInterceptor implements Interceptor {
     private JMSBinding jmsBinding;
     private JMSMessageProcessor requestMessageProcessor;
     private JMSMessageProcessor responseMessageProcessor;
+    private HashMap<String,Class<?>> singleArgMap;
+    private boolean wrapSingle;
 
-    public WireFormatJMSObjectServiceInterceptor(JMSBinding jmsBinding, JMSResourceFactory jmsResourceFactory, RuntimeWire runtimeWire) {
+    public WireFormatJMSObjectServiceInterceptor(JMSBinding jmsBinding, JMSResourceFactory jmsResourceFactory, 
+            RuntimeWire runtimeWire, HashMap<String, Class<?>> singleArgMap, boolean wrapSingle) {
         super();
         this.jmsBinding = jmsBinding;
         this.runtimeWire = runtimeWire;
         this.jmsResourceFactory = jmsResourceFactory;
         this.requestMessageProcessor = JMSMessageProcessorUtil.getRequestMessageProcessor(jmsBinding);
         this.responseMessageProcessor = JMSMessageProcessorUtil.getResponseMessageProcessor(jmsBinding);
+        this.singleArgMap = singleArgMap;
+        this.wrapSingle = wrapSingle;
     }
 
     public Message invoke(Message msg) {
@@ -79,8 +87,18 @@ public class WireFormatJMSObjectServiceInterceptor implements Interceptor {
         // get the jms context
         JMSBindingContext context = msg.getBindingContext();
         javax.jms.Message jmsMsg = context.getJmsMsg();
-
-        Object requestPayload = requestMessageProcessor.extractPayloadFromJMSMessage(jmsMsg);
+        Object requestPayload;
+        
+        // If the service interface has a single argument then we need 
+        // to check if the object from the wire is expected  
+        // to be unwrapped or not
+        // 
+        Class<?> argType = this.singleArgMap.get(msg.getOperation().getName());
+        if (argType == null) {
+            requestPayload = requestMessageProcessor.extractPayloadFromJMSMessage(jmsMsg);    
+        }else {
+            requestPayload = ((ObjectMessageProcessor)requestMessageProcessor).extractPayloadFromJMSMessageForSingleParamOperation(jmsMsg, argType, wrapSingle);
+        }
         
         if (requestPayload != null && requestPayload.getClass().isArray()) {
             msg.setBody(requestPayload);

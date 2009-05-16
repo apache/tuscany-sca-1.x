@@ -35,7 +35,6 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.tuscany.sca.assembly.ConfiguredOperation;
-import org.apache.tuscany.sca.assembly.Extension;
 import org.apache.tuscany.sca.assembly.OperationSelector;
 import org.apache.tuscany.sca.assembly.OperationsConfigurator;
 import org.apache.tuscany.sca.assembly.WireFormat;
@@ -44,14 +43,13 @@ import org.apache.tuscany.sca.assembly.xml.ConfiguredOperationProcessor;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
 import org.apache.tuscany.sca.binding.jms.operationselector.jmsdefault.OperationSelectorJMSDefault;
+import org.apache.tuscany.sca.binding.jms.wireformat.jmsdefault.WireFormatJMSDefault;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmsobject.WireFormatJMSObject;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmstext.WireFormatJMSText;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmstextxml.WireFormatJMSTextXML;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
-import org.apache.tuscany.sca.contribution.resolver.DefaultModelResolver;
-import org.apache.tuscany.sca.contribution.resolver.ExtensibleModelResolver;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
@@ -240,18 +238,22 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             if ("XMLTextMessage".equalsIgnoreCase(messageProcessorName)) {
                 // may be overwritten be real wire format later
                 jmsBinding.setRequestWireFormat(new WireFormatJMSTextXML());
-                jmsBinding.setResponseWireFormat(new WireFormatJMSTextXML());
+                jmsBinding.setResponseWireFormat(jmsBinding.getRequestWireFormat());
             } else if ("TextMessage".equalsIgnoreCase(messageProcessorName)) {
                 // may be overwritten be real wire format later
                 jmsBinding.setRequestWireFormat(new WireFormatJMSText());
-                jmsBinding.setResponseWireFormat(new WireFormatJMSText());
+                jmsBinding.setResponseWireFormat(jmsBinding.getRequestWireFormat());
             } else if ("ObjectMessage".equalsIgnoreCase(messageProcessorName)) {
                 // may be overwritten be real wire format later
                 jmsBinding.setRequestWireFormat(new WireFormatJMSObject());
-                jmsBinding.setResponseWireFormat(new WireFormatJMSObject());
+                jmsBinding.setResponseWireFormat(jmsBinding.getRequestWireFormat());
             } else {
                 jmsBinding.setRequestMessageProcessorName(messageProcessorName);
                 jmsBinding.setResponseMessageProcessorName(messageProcessorName);
+                // exploit the text wire format code to drive the user selected 
+                // message processor
+                jmsBinding.setRequestWireFormat(new WireFormatJMSText());
+                jmsBinding.setResponseWireFormat(jmsBinding.getRequestWireFormat());
             }
         }
 
@@ -309,8 +311,9 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
                 case END_ELEMENT:
                     QName x = reader.getName();
                     if (Constants.OPERATION.equals(x.getLocalPart())) break;
-                    if (x.getLocalPart().equals("wireFormat.jmsBytes") || x.getLocalPart().equals("wireFormat.jmsText")
-                    		|| x.getLocalPart().equals("wireFormat.jmsObject") || x.getLocalPart().equals("wireFormat.jmsTextXML")) {
+                    // This assumption is not captured in schema, which isn't good, but will probably be fine for now.
+                    // A better solution might be to require each processor to advance to its own END_ELEMENT.
+                    if (x.getLocalPart().startsWith("wireFormat.") || x.getLocalPart().startsWith("operationSelector.")) {                         
                         break;
                     }
                     if (x.equals(JMSBindingConstants.BINDING_JMS_QNAME)) {
@@ -329,10 +332,10 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         
         // if no request wire format specified then assume the default
         if (jmsBinding.getRequestWireFormat() == null){
-            jmsBinding.setRequestWireFormat(new WireFormatJMSTextXML());
+            jmsBinding.setRequestWireFormat(new WireFormatJMSDefault());
         }
         
-        // if no response wire format specific then assume the default
+        // if no response wire format specific then assume the same as the request
         if (jmsBinding.getResponseWireFormat() == null){
             jmsBinding.setResponseWireFormat(jmsBinding.getRequestWireFormat());
          }
@@ -942,7 +945,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
               responseCFName != null  ||
               responseASName != null ) {
             
-           writer.writeStartElement("response");
+           writer.writeStartElement(Constants.SCA10_NS, "response");
            writeResponseDestinationProperties( jmsBinding, writer );       
            writeResponseConnectionFactoryProperties( jmsBinding, writer );        
            writeResponseActivationSpecProperties( jmsBinding, writer );
@@ -986,7 +989,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
      */
     private void writeHeaders( JMSBinding jmsBinding, XMLStreamWriter writer) throws XMLStreamException {
 
-        writer.writeStartElement(JMSBindingConstants.HEADERS);
+        writer.writeStartElement(Constants.SCA10_NS, JMSBindingConstants.HEADERS);
 
         String jmsType = jmsBinding.getJMSType();
         if (jmsType != null && jmsType.length() > 0) {
@@ -1043,7 +1046,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             Object key = entry.getKey();
             Object value = entry.getValue();
 
-            writer.writeStartElement( "property" );
+            writer.writeStartElement(Constants.SCA10_NS, "property" );
             writer.writeAttribute("name", key.toString());
 
             if ( value instanceof String) {
@@ -1107,7 +1110,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         for(Iterator<String> it=operationNames.iterator(); it.hasNext(); ) {
             String opName = it.next();
         
-            writer.writeStartElement("operationProperties");
+            writer.writeStartElement(Constants.SCA10_NS, "operationProperties");
             writer.writeAttribute("name", opName);
 
             String nativeOperation = jmsBinding.getNativeOperationName(opName);
@@ -1131,7 +1134,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             if (jmsType != null || jmsCorrelationId != null || jmsDeliveryMode != null ||
                 jmsTimeToLive != null || jmsPriority != null || operationProperties != null) {
                 
-                writer.writeStartElement(JMSBindingConstants.HEADERS);              
+                writer.writeStartElement(Constants.SCA10_NS, JMSBindingConstants.HEADERS);              
                 
                 if (jmsType != null && jmsType.length() > 0) {
                     writer.writeAttribute("JMSType", jmsType);
@@ -1187,7 +1190,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             Object key = entry.getKey();
             Object value = entry.getValue();
 
-            writer.writeStartElement( "property" );
+            writer.writeStartElement(Constants.SCA10_NS, "property" );
             writer.writeAttribute("name", key.toString());
 
             if ( value instanceof String) {
@@ -1216,7 +1219,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
     private void writeSubscriptionHeaders( JMSBinding jmsBinding, XMLStreamWriter writer) throws XMLStreamException {
         String jmsSubscriptionHeaders = jmsBinding.getJMSSelector();
         if (jmsSubscriptionHeaders != null && jmsSubscriptionHeaders.length() > 0) {
-            writer.writeStartElement("SubscriptionHeaders");
+            writer.writeStartElement(Constants.SCA10_NS, "SubscriptionHeaders");
             writer.writeAttribute("JMSSelector", jmsSubscriptionHeaders);
             writer.writeEndElement();
             // Strange bug. Without white space, headers end tag improperly read. 
@@ -1239,7 +1242,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             return;
         }
 
-        writer.writeStartElement("destination");
+        writer.writeStartElement(Constants.SCA10_NS, "destination");
 
         if ( destinationName != null && destinationName.length() > 0) {
             writer.writeAttribute("name", destinationName);            
@@ -1277,7 +1280,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             return;
         }
 
-        writer.writeStartElement("connectionFactory");
+        writer.writeStartElement(Constants.SCA10_NS, "connectionFactory");
 
         if ( cfName != null && cfName.length() > 0) {
             writer.writeAttribute("name", cfName);            
@@ -1310,7 +1313,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             return;
         }
 
-        writer.writeStartElement("activationSpec");
+        writer.writeStartElement(Constants.SCA10_NS, "activationSpec");
 
         if ( asName != null && asName.length() > 0) {
             writer.writeAttribute("name", asName);            
@@ -1345,7 +1348,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             return;
         }
 
-        writer.writeStartElement("destination");
+        writer.writeStartElement(Constants.SCA10_NS, "destination");
 
         if ( destinationName != null && destinationName.length() > 0) {
             writer.writeAttribute("name", destinationName);            
@@ -1384,7 +1387,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             return;
         }
 
-        writer.writeStartElement("connectionFactory");
+        writer.writeStartElement(Constants.SCA10_NS, "connectionFactory");
 
         if ( cfName != null && cfName.length() > 0) {
             writer.writeAttribute("name", cfName);            
@@ -1417,7 +1420,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             return;
         }
 
-        writer.writeStartElement("activationSpec");
+        writer.writeStartElement(Constants.SCA10_NS, "activationSpec");
 
         if ( asName != null && asName.length() > 0) {
             writer.writeAttribute("name", asName);            
@@ -1449,7 +1452,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             return;
         }
 
-        writer.writeStartElement("resourceAdapter");
+        writer.writeStartElement(Constants.SCA10_NS, "resourceAdapter");
 
         if ( asName != null && asName.length() > 0) {
             writer.writeAttribute("name", asName);            

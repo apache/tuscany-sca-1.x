@@ -80,7 +80,8 @@ public class PropertiesTestCase {
         // assertEquals(3, MsgServiceImpl.msg.getJMSPriority()); // Doesn't seem to work with ActiveMQ
         assertEquals("myHeadP1", MsgServiceImpl.msg.getStringProperty("headP1"));
         assertEquals("foo", MsgServiceImpl.msg.getStringProperty("op2P2"));
-        assertEquals("nativeOp2", MsgServiceImpl.msg.getStringProperty("scaOperationName"));
+        //operation properties are a service side thing
+        //assertEquals("nativeOp2", MsgServiceImpl.msg.getStringProperty("scaOperationName"));
     }
 
     @After

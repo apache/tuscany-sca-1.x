@@ -20,6 +20,8 @@ package org.apache.tuscany.sca.binding.jms.wireformat.jmsobject.runtime;
 
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+
 import javax.jms.JMSException;
 import javax.jms.Session;
 
@@ -31,6 +33,7 @@ import org.apache.tuscany.sca.binding.jms.impl.JMSBindingException;
 import org.apache.tuscany.sca.binding.jms.provider.JMSMessageProcessor;
 import org.apache.tuscany.sca.binding.jms.provider.JMSMessageProcessorUtil;
 import org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactory;
+import org.apache.tuscany.sca.binding.jms.provider.ObjectMessageProcessor;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmsobject.WireFormatJMSObject;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
@@ -50,13 +53,16 @@ public class WireFormatJMSObjectReferenceInterceptor implements Interceptor {
     private JMSMessageProcessor requestMessageProcessor;
     private JMSMessageProcessor responseMessageProcessor;
 
-    public WireFormatJMSObjectReferenceInterceptor(JMSBinding jmsBinding, JMSResourceFactory jmsResourceFactory, RuntimeWire runtimeWire) {
+    private HashMap<String, String> singleArgMap;
+
+    public WireFormatJMSObjectReferenceInterceptor(JMSBinding jmsBinding, JMSResourceFactory jmsResourceFactory, RuntimeWire runtimeWire, HashMap<String, String> hashMap) {
         super();
         this.jmsBinding = jmsBinding;
         this.runtimeWire = runtimeWire;
         this.jmsResourceFactory = jmsResourceFactory;
         this.requestMessageProcessor = JMSMessageProcessorUtil.getRequestMessageProcessor(jmsBinding);
         this.responseMessageProcessor = JMSMessageProcessorUtil.getResponseMessageProcessor(jmsBinding); 
+        this.singleArgMap = hashMap;
     }
 
     public Message invoke(Message msg) {
@@ -78,8 +84,27 @@ public class WireFormatJMSObjectReferenceInterceptor implements Interceptor {
             // get the jms context
             JMSBindingContext context = msg.getBindingContext();
             Session session = context.getJmsSession();
-            
-            javax.jms.Message requestMsg = requestMessageProcessor.insertPayloadIntoJMSMessage(session, msg.getBody());
+
+            javax.jms.Message requestMsg;
+                        
+            // Tuscany automatically wraps operation arguments in an array before we
+            // get to this point so here we need to decide how they are going to appear 
+            // on the wire.
+            //
+            // If the operation has a single parameter and the user has set @wrapSingle=false
+            // then
+            //    send the single parameter out onto the wire unwrapped
+            // else 
+            //    send out the message as is
+            //
+            if (singleArgMap.get(msg.getOperation().getName()) == null) {
+                requestMsg = requestMessageProcessor.insertPayloadIntoJMSMessage(session, msg.getBody());
+            } else {
+                // we know that wrapSinle is set to false here as the provider only
+                // populates singleArgMap if it is set false
+                requestMsg = ((ObjectMessageProcessor) requestMessageProcessor).createJMSMessageForSingleParamOperation(session, msg.getBody(), false);
+            }
+
             msg.setBody(requestMsg);
             
             requestMsg.setJMSReplyTo(context.getReplyToDestination());

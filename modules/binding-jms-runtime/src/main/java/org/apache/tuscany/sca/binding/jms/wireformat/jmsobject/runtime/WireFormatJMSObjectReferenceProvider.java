@@ -19,12 +19,16 @@
 
 package org.apache.tuscany.sca.binding.jms.wireformat.jmsobject.runtime;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBindingConstants;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmsobject.WireFormatJMSObject;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
+import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Phase;
 import org.apache.tuscany.sca.provider.WireFormatProvider;
@@ -40,6 +44,8 @@ public class WireFormatJMSObjectReferenceProvider implements WireFormatProvider 
     private RuntimeComponentReference reference;
     private JMSBinding binding;
     private InterfaceContract interfaceContract; 
+    
+    private HashMap<String,String> singleArgMap; //map of one arg operations, leave empty if wrapSingleInput is true
 
     public WireFormatJMSObjectReferenceProvider(ExtensionPointRegistry registry,
                                                RuntimeComponent component,
@@ -51,6 +57,8 @@ public class WireFormatJMSObjectReferenceProvider implements WireFormatProvider 
         this.reference = reference;
         this.binding = (JMSBinding)binding;
         
+        this.singleArgMap = new HashMap<String,String>();
+        
         // configure the reference based on this wire format
         
         // currently maintaining the message processor structure which 
@@ -58,14 +66,25 @@ public class WireFormatJMSObjectReferenceProvider implements WireFormatProvider 
         // any message processors specified in the SCDL in this case
         if (this.binding.getRequestWireFormat() instanceof WireFormatJMSObject){
             this.binding.setRequestMessageProcessorName(JMSBindingConstants.OBJECT_MP_CLASSNAME);
+            
+            //we don't need to create this map if wrapSingleInput is true
+            if (!((WireFormatJMSObject) this.binding.getRequestWireFormat()).isWrappedSingleInput()){
+                List<Operation> opList = reference.getReference().getInterfaceContract().getInterface().getOperations();
+                
+                for (Operation op: opList) {
+                    if (op.getInputType().getLogical().size() == 1){
+                        this.singleArgMap.put(op.getName(), "");
+                    }
+                }
+            } 
         }
         if (this.binding.getResponseWireFormat() instanceof WireFormatJMSObject){
             this.binding.setResponseMessageProcessorName(JMSBindingConstants.OBJECT_MP_CLASSNAME);
-        } 
+        }
         
         // just point to the reference interface contract so no 
         // databinding transformation takes place
-        interfaceContract = reference.getInterfaceContract();
+        interfaceContract = reference.getReference().getInterfaceContract();
     }
     
     public InterfaceContract configureWireFormatInterfaceContract(InterfaceContract interfaceContract){
@@ -87,7 +106,7 @@ public class WireFormatJMSObjectReferenceProvider implements WireFormatProvider 
     public Interceptor createInterceptor() {
         return new WireFormatJMSObjectReferenceInterceptor(binding, 
                                                           null, 
-                                                          reference.getRuntimeWire(binding));
+                                                          reference.getRuntimeWire(binding), this.singleArgMap);
     }
 
     public String getPhase() {

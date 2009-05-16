@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 package org.apache.tuscany.sca.workspace.processor.impl;
 
@@ -59,7 +59,7 @@ import org.apache.tuscany.sca.workspace.scanner.impl.JarContributionScanner;
 /**
  * URLArtifactProcessor that handles contribution files and the artifacts they contain
  * and returns a contribution model.
- * 
+ *
  * @version $Rev$ $Date$
  */
 public class ContributionContentProcessor implements URLArtifactProcessor<Contribution>{
@@ -80,7 +80,7 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
         this.monitor = monitor;
         URLArtifactProcessorExtensionPoint artifactProcessors = extensionPoints.getExtensionPoint(URLArtifactProcessorExtensionPoint.class);
         this.artifactProcessor = new ExtensibleURLArtifactProcessor(artifactProcessors, this.monitor);
-        
+
         // Get and initialize artifact processors
         StAXArtifactProcessorExtensionPoint staxProcessors = extensionPoints.getExtensionPoint(StAXArtifactProcessorExtensionPoint.class);
         XMLInputFactory inputFactory = modelFactories.getFactory(XMLInputFactory.class);
@@ -88,7 +88,7 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
         this.extensionProcessor = new ExtensibleStAXArtifactProcessor(staxProcessors, inputFactory, outputFactory, monitor);
         this.contributionFactory = modelFactories.getFactory(ContributionFactory.class);
     }
-    
+
     /*
     public ContributionContentProcessor(ModelFactoryExtensionPoint modelFactories, ModelResolverExtensionPoint modelResolvers,
                                         URLArtifactProcessor<Object> artifactProcessor, StAXArtifactProcessor<Object> extensionProcessor, Monitor monitor) {
@@ -101,17 +101,17 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
         this.monitor = monitor;
     }
     */
-    
+
     public String getArtifactType() {
         return ".contribution/content";
     }
-    
+
     public Class<Contribution> getModelType() {
         return Contribution.class;
     }
-    
+
     public Contribution read(URL parentURL, URI contributionURI, URL contributionURL) throws ContributionReadException {
-        
+
         // Create contribution model
         Contribution contribution = contributionFactory.createContribution();
         contribution.setURI(contributionURI.toString());
@@ -127,7 +127,7 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
         } else {
             scanner = new JarContributionScanner();
         }
-        
+
         // Scan the contribution and list the artifacts contained in it
         List<Artifact> artifacts = contribution.getArtifacts();
         boolean contributionMetadata = false;
@@ -141,7 +141,7 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
             artifact.setLocation(artifactURL.toString());
             artifacts.add(artifact);
             modelResolver.addModel(artifact);
-            
+
             // Read each artifact
             Object model = artifactProcessor.read(contributionURL, URI.create(artifactURI), artifactURL);
             if (model != null) {
@@ -157,10 +157,12 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
                     contribution.getImports().addAll(c.getImports());
                     contribution.getExports().addAll(c.getExports());
                     contribution.getDeployables().addAll(c.getDeployables());
+                    contribution.getExtensions().addAll(c.getExtensions());
+                    contribution.getAttributeExtensions().addAll(c.getAttributeExtensions());
                 }
             }
         }
-        
+
         // If no sca-contribution.xml file was provided then just consider
         // all composites in the contribution as deployables
         if (!contributionMetadata) {
@@ -177,24 +179,24 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
             DefaultExport defaultExport = contributionFactory.createDefaultExport();
             contribution.getExports().add(defaultExport);
         }
-        
+
         return contribution;
     }
-    
+
     public void resolve(Contribution contribution, ModelResolver resolver) throws ContributionResolveException {
-        
+
         // Resolve the contribution model itself
         ModelResolver contributionResolver = contribution.getModelResolver();
         contribution.setUnresolved(false);
         contributionResolver.addModel(contribution);
-        
+
         // Resolve imports and exports
         for (Export export: contribution.getExports()) {
             if (export instanceof DefaultExport) {
-                
+
                 // Initialize the default export's resolver
                 export.setModelResolver(contributionResolver);
-                
+
             } else {
                 extensionProcessor.resolve(export, contributionResolver);
             }
@@ -202,7 +204,7 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
         for (Import import_: contribution.getImports()) {
             extensionProcessor.resolve(import_, contributionResolver);
         }
-        
+
         // Resolve all artifact models
         for (Artifact artifact : contribution.getArtifacts()) {
             Object model = artifact.getModel();
@@ -216,7 +218,7 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
                 }
             }
         }
-        
+
         // Resolve deployable composites
         List<Composite> deployables = contribution.getDeployables();
         for (int i = 0, n = deployables.size(); i < n; i++) {
@@ -230,7 +232,7 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
 
     /**
      * FIXME Temporary hack for testing the ClassLoaderModelResolver.
-     * 
+     *
      * @param modelResolvers
      */
     private static void hackResolvers(ModelResolverExtensionPoint modelResolvers) {

@@ -21,6 +21,7 @@ package org.apache.tuscany.sca.interfacedef.wsdl.xml;
 
 import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 
+import java.util.List;
 import javax.wsdl.PortType;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
@@ -45,9 +46,11 @@ import org.apache.tuscany.sca.interfacedef.wsdl.WSDLFactory;
 import org.apache.tuscany.sca.interfacedef.wsdl.WSDLInterface;
 import org.apache.tuscany.sca.interfacedef.wsdl.WSDLInterfaceContract;
 import org.apache.tuscany.sca.interfacedef.wsdl.WSDLObject;
+import org.apache.tuscany.sca.interfacedef.wsdl.impl.WSDLOperationImpl;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
+import com.ibm.wsdl.OperationImpl;
 
 /**
  *
@@ -251,7 +254,21 @@ public class WSDLInterfaceProcessor implements StAXArtifactProcessor<WSDLInterfa
                     wsdlDefinition.getXmlSchemas().addAll(resolved.getXmlSchemas());
                     wsdlDefinition.setUnresolved(false);
                     WSDLObject<PortType> portType = wsdlDefinition.getWSDLObject(PortType.class, wsdlInterface.getName());
-                    if (portType != null) {                        
+                    if (portType != null) {
+                    	// Introspect the WSDL portType and validate 
+                    	// the input/output messages.
+                    	List<OperationImpl> operations = portType.getElement().getOperations();
+                    	for (OperationImpl operation : operations) {
+                    		if (operation.getInput() != null && operation.getInput().getMessage() == null) {
+                    			ContributionResolveException ce = new ContributionResolveException("WSDL binding operation input name " + operation.getInput().getName() + " does not match with PortType Definition");
+                                error("ContributionResolveException", wsdlDefinition, ce);
+                    		}
+                    		if (operation.getOutput() != null && operation.getOutput().getMessage() == null) {
+                    			ContributionResolveException ce = new ContributionResolveException("WSDL binding operation output name " + operation.getOutput().getName() + " does not match with PortType Definition");
+                                error("ContributionResolveException", wsdlDefinition, ce);
+                    		}
+                    	}
+                    	
                         // Introspect the WSDL portType and add the resulting
                         // WSDLInterface to the resolver
                         try {

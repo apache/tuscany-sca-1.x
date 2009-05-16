@@ -48,8 +48,8 @@
                 <module>binding-dwr</module>
                 <module>binding-ejb</module>
                 <module>binding-ejb-runtime</module>
-		<module>binding-erlang</module>
-		<module>binding-erlang-runtime</module>
+                <module>binding-erlang</module>
+                <module>binding-erlang-runtime</module>
                 <!-- obsolete -->
                 <module>binding-feed</module>
                 <!-- new bindings -->
@@ -61,6 +61,8 @@
                 <module>binding-gdata-runtime</module>
                 <module>binding-http</module>
                 <module>binding-http-runtime</module>
+                <module>binding-http-jsonrpc</module>
+                <module>binding-http-jsonrpc-runtime</module>
                 <module>binding-jms</module>
                 <module>binding-jms-runtime</module>
                 <module>binding-jms-policy</module>
@@ -96,7 +98,6 @@
                 <module>core</module>
                 <module>core-databinding</module>
                 <module>core-spi</module>
-                <module>core-spring</module>
                 <module>data-api</module>
                 <module>databinding</module>
                 <module>databinding-axiom</module>
@@ -109,7 +110,6 @@
                 <module>databinding-xmlbeans</module>
                 <module>databinding-fastinfoset</module>
                 <module>databinding-xstream</module>
-                <module>data-engine-helper</module>
                 <module>definitions</module>
                 <module>definitions-xml</module>
                 <module>domain-manager</module>
@@ -131,7 +131,6 @@
                 <module>host-openejb</module>
                 <module>host-rmi</module>
                 <module>host-webapp</module>
-                <module>host-webapp-junit</module>
                 <module>host-jetty</module>
                 <module>host-tomcat</module>
                 <module>interface</module>
@@ -142,8 +141,6 @@
                 <module>interface-wsdl-xml</module>
                 <module>implementation-bpel</module>
                 <module>implementation-bpel-ode</module>
-                <module>implementation-das</module>
-                <module>implementation-data-xml</module>
                 <module>implementation-ejb</module>
                 <module>implementation-java</module>
                 <module>implementation-java-xml</module>
@@ -157,6 +154,7 @@
                 <module>implementation-resource-runtime</module>
                 <module>implementation-script</module>
                 <module>implementation-spring</module>
+		    <module>implementation-spring-runtime</module>
                 <module>implementation-web</module>
                 <module>implementation-web-runtime</module>
                 <module>implementation-widget</module>
@@ -166,14 +164,9 @@
                 <module>implementation-xquery</module>
                 <module>monitor</module>
                 <module>node-api</module>
-                <module>node-dynamic</module>
                 <module>node-impl</module>
                 <module>node-launcher</module>
-                <!--
-                <module>node-launcher-equinox</module>
-                -->
                 <module>node-launcher-osgi</module>
-                <module>node-launcher-webapp</module>
                 <module>node-manager</module>
                 <module>osgi-runtime</module>
                 <module>policy</module>
@@ -185,9 +178,6 @@
                 <module>policy-security-http</module>
                 <module>policy-security-jsr250</module>
                 <module>policy-transaction</module>
-                <module>runtime</module>
-                <module>runtime-tomcat</module>
-                <!--module>runtime-war</module-->
                 <module>sca-api</module>
                 <module>sca-api-extension</module>
                 <module>web-javascript</module>

@@ -109,7 +109,7 @@ public class Interface2WSDLGenerator {
         super();
         this.requiresSOAP12 = requiresSOAP12; 
         this.resolver = resolver; 
-        definitionGenerator = new WSDLDefinitionGenerator(requiresSOAP12);
+        definitionGenerator = new WSDLDefinitionGenerator(requiresSOAP12, false);
         this.dataBindings = dataBindings;
         this.xsdFactory = xsdFactory;
         this.monitor = monitor;

@@ -32,6 +32,10 @@ import org.apache.tuscany.sca.assembly.WireFormat;
 public class WireFormatJMSObject implements WireFormat {
     public static final QName WIRE_FORMAT_JMS_BYTES_QNAME = new QName(Constants.SCA10_TUSCANY_NS, "wireFormat.jmsObject");
     
+    public static final String WIRE_FORMAT_JMS_OBJECT_WRAP_SINGLE_ATTR = "wrapSingle";
+    
+    private boolean wrappedSingleInput = false;
+    
     public QName getSchemaName() {
         return WIRE_FORMAT_JMS_BYTES_QNAME;
     }
@@ -41,5 +45,13 @@ public class WireFormatJMSObject implements WireFormat {
     }
 
     public void setUnresolved(boolean unresolved) {
+    }
+
+    public void setWrappedSingleInput(boolean wrappedSingleInput) {
+        this.wrappedSingleInput = wrappedSingleInput;
+    }
+
+    public boolean isWrappedSingleInput() {
+        return wrappedSingleInput;
     }
 }

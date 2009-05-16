@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.sca.implementation.spring;
 
+import java.net.URL;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -28,16 +29,13 @@ import org.apache.tuscany.sca.assembly.Implementation;
 import org.apache.tuscany.sca.assembly.Property;
 import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.Service;
+import org.apache.tuscany.sca.assembly.builder.ComponentPreProcessor;
 import org.apache.tuscany.sca.assembly.impl.ImplementationImpl;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
-import org.apache.tuscany.sca.assembly.builder.ComponentPreProcessor;
-import org.apache.tuscany.sca.implementation.spring.xml.SpringBeanElement;
-import org.apache.tuscany.sca.policy.util.PolicyHandlerTuple;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
-import org.springframework.core.io.Resource;
 
 /**
- * Represents a Spring implementation.
+ * Represents a Spring implementation. 
  * 
  * @version $Rev: 511195 $ $Date: 2007-02-24 02:29:46 +0000 (Sat, 24 Feb 2007) $ 
  */
@@ -46,17 +44,16 @@ public class SpringImplementation extends ImplementationImpl implements Implemen
     // The location attribute which points to the Spring application-context XML file
     private String location;
     // The application-context file as a Spring Resource
-    private Resource resource;
+    private URL resource;
     private ComponentType componentType;
     // Mapping of Services to Beans
     private Hashtable<String, SpringBeanElement> serviceMap;
     // Mapping of property names to Java class
     private Hashtable<String, Class> propertyMap;
-    private List<PolicyHandlerTuple> policyHandlerClassNames = null;
     // List of unresolved bean property references
     private Hashtable<String, Reference> unresolvedBeanRef;
 
-    protected SpringImplementation() {
+    public SpringImplementation() {
         this.location = null;
         this.resource = null;
         setUnresolved(true);
@@ -79,11 +76,11 @@ public class SpringImplementation extends ImplementationImpl implements Implemen
         return;
     }
 
-    public void setResource(Resource resource) {
+    public void setResource(URL resource) {
         this.resource = resource;
     }
 
-    public Resource getResource() {
+    public URL getResource() {
         return resource;
     }
 
@@ -166,14 +163,6 @@ public class SpringImplementation extends ImplementationImpl implements Implemen
     public Reference getUnresolvedBeanRef(String refName) {
         return unresolvedBeanRef.get(refName);
     } // end method getUnresolvedBeanRef
-    
-    public List<PolicyHandlerTuple> getPolicyHandlerClassNames() {
-        return policyHandlerClassNames;
-    }
-
-    public void setPolicyHandlerClassNames(List<PolicyHandlerTuple> policyHandlerClassNames) {
-        this.policyHandlerClassNames = policyHandlerClassNames;
-    } // end method setPolicyHandlerClassNames
     
     
     /**

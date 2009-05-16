@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 package org.apache.tuscany.sca.databinding.impl;
 
@@ -49,6 +49,18 @@ public class TransformationContextImpl implements TransformationContext {
         this.sourceDataType = sourceDataType;
         this.targetDataType = targetDataType;
         setClassLoader(classLoader);
+        if (metadata != null) {
+            this.metadata.putAll(metadata);
+        }
+    }
+
+    public TransformationContextImpl(DataType sourceDataType,
+                                     DataType targetDataType,
+                                     Map<String, Object> metadata) {
+        super();
+        this.sourceDataType = sourceDataType;
+        this.targetDataType = targetDataType;
+        setClassLoader(Thread.currentThread().getContextClassLoader());
         if (metadata != null) {
             this.metadata.putAll(metadata);
         }

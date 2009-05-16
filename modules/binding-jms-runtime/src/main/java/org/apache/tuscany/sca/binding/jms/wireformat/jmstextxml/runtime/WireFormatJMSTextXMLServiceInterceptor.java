@@ -80,14 +80,10 @@ public class WireFormatJMSTextXMLServiceInterceptor implements Interceptor {
         // get the jms context
         JMSBindingContext context = msg.getBindingContext();
         javax.jms.Message jmsMsg = context.getJmsMsg();
-        
-        if ("onMessage".equals(msg.getOperation().getName())) {
-            msg.setBody(new Object[]{jmsMsg});
-        } else {
-            Object requestPayload = requestMessageProcessor.extractPayloadFromJMSMessage(jmsMsg);
-            msg.setBody(new Object[]{requestPayload});
-        }
-                
+
+        Object requestPayload = requestMessageProcessor.extractPayloadFromJMSMessage(jmsMsg);
+        msg.setBody(new Object[] { requestPayload });
+
         return msg;
     }
     

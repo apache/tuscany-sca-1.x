@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.sca.binding.jms.format.jmsbytes.helloworld;
 
+
 public class HelloWorldServiceImpl implements HelloWorldService {
     
     public byte[] getByteArrayGreetings(byte[] msg){
@@ -28,6 +29,12 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         return name.getBytes();
     }
 
+    public void throwChecked(byte[] msg) throws CheckedException {
+        throw new CheckedException("foo");
+    }
 
+    public void throwUnChecked(byte[] msg) {
+        throw new RuntimeException("bla");
+    }
 }
 

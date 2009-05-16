@@ -62,6 +62,7 @@ public class ErlangInvoker implements Invoker {
 		} else {
 			// NOTE: don't throw exception if not declared
 			// TODO: externalize message?
+			msg.setBody(null);
 			logger
 					.log(Level.WARNING, "Problem while sending/receiving data",
 							e);
@@ -82,7 +83,11 @@ public class ErlangInvoker implements Invoker {
 				node.setCookie(binding.getCookie());
 			}
 			tmpMbox = node.createMbox();
-			Object[] args = msg.getBody();
+			// obtain args, make sure they aren't null
+			// NOTE: sending message with no content (but only with senders PID)
+			// is possible
+			Object[] args = (Object[]) (msg.getBody() != null ? msg.getBody()
+					: new Object[0]);
 			Method jmethod = ((JavaOperation) msg.getOperation())
 					.getJavaMethod();
 			// create and send msg with self pid in the beginning

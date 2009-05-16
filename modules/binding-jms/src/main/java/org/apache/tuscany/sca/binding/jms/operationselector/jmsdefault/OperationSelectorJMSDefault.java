@@ -30,7 +30,7 @@ import org.apache.tuscany.sca.assembly.OperationSelector;
  * @version $Rev$ $Date$
  */
 public class OperationSelectorJMSDefault implements OperationSelector {
-    public static final QName OPERATION_SELECTOR_JMS_DEFAULT_QNAME = new QName(Constants.SCA10_TUSCANY_NS, "operationSelector.JMSDefault");
+    public static final QName OPERATION_SELECTOR_JMS_DEFAULT_QNAME = new QName(Constants.SCA10_TUSCANY_NS, "operationSelector.jmsdefault");
     
     public QName getSchemaName() {
         return OPERATION_SELECTOR_JMS_DEFAULT_QNAME;

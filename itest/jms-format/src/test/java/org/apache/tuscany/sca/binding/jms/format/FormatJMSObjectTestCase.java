@@ -52,10 +52,24 @@ public class FormatJMSObjectTestCase {
         HelloWorldReference helloWorldService = ((SCAClient) node).getService(
                 HelloWorldReference.class, "HelloWorldReferenceComponent");
 
-        assertEquals("Hello Fred Hello Bloggs null", 
-                     helloWorldService.getGreetings("Fred", "Bloggs"));
+        assertEquals("Hello1 Fred Hello1 Bloggs Hello2 null Hello3 Fred Hello4 Fred Bloggs Hello5 Fred Bloggs Hello6 Fred Bloggs Hello7 Fred Bloggs", 
+                     helloWorldService.getGreetingsWrapSingle("Fred", "Bloggs"));
+        
+        assertEquals("Hello1 Fred Hello1 Bloggs Hello2 null Hello3 Fred Hello4 Fred Bloggs Hello5 Fred Bloggs Hello6 Fred Bloggs Hello7 Fred Bloggs", 
+                helloWorldService.getGreetingsDontWrapSingle("Fred", "Bloggs"));        
 
     }
+    
+    @Ignore
+    @Test
+    public void testWaitForInput() {
+        System.out.println("Press a key to end");
+        try {
+            System.in.read();
+        } catch (Exception ex) {
+        }
+        System.out.println("Shutting down");
+    }     
 
     @After
     public void end() {

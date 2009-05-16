@@ -6,21 +6,22 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.contribution.resource.impl;
 
 import java.util.List;
 
+import org.apache.tuscany.sca.assembly.impl.ExtensibleImpl;
 import org.apache.tuscany.sca.contribution.Contribution;
 import org.apache.tuscany.sca.contribution.Export;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
@@ -29,16 +30,16 @@ import org.apache.tuscany.sca.contribution.resource.ResourceImport;
 
 /**
  * The representation of an import for the contribution
- * 
+ *
  * @version $Rev$ $Date$
  */
-public class ResourceImportImpl implements ResourceImport {
+public class ResourceImportImpl extends ExtensibleImpl implements ResourceImport {
     /**
      * The resource URI to be imported
      */
-    private String uri; 
-    
-	private ModelResolver modelResolver;
+    private String uri;
+
+    private ModelResolver modelResolver;
     private List<Contribution> exportContributions;
 
     /**
@@ -46,11 +47,10 @@ public class ResourceImportImpl implements ResourceImport {
      */
     private String location;
 
-    
     protected ResourceImportImpl() {
         super();
     }
-    
+
     public String getLocation() {
         return location;
     }
@@ -66,15 +66,15 @@ public class ResourceImportImpl implements ResourceImport {
     public void setURI(String uri) {
         this.uri = uri;
     }
-    
+
     public ModelResolver getModelResolver() {
         return modelResolver;
     }
-    
+
     public void setModelResolver(ModelResolver modelResolver) {
         this.modelResolver = modelResolver;
     }
-    
+
     public List<Contribution> getExportContributions() {
         return exportContributions;
     }
@@ -95,11 +95,11 @@ public class ResourceImportImpl implements ResourceImport {
                     return true;
                 }
             }
-            
+
         }
         return false;
     }
-    
+
     @Override
     public String toString() {
         return String.valueOf(uri);

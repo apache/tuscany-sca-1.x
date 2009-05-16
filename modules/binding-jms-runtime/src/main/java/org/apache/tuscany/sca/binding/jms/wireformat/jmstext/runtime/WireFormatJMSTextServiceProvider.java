@@ -56,16 +56,23 @@ public class WireFormatJMSTextServiceProvider implements WireFormatProvider {
         // currently maintaining the message processor structure which 
         // contains the details of jms message processing however override 
         // any message processors specified in the SCDL in this case
-        if (this.binding.getRequestWireFormat() instanceof WireFormatJMSText){
+ 
+        // this wire format doubles up as the execution logic for user defined
+        // message processors so check the processor name is still set to default 
+        // before overwriting
+        
+        if ((this.binding.getRequestWireFormat() instanceof WireFormatJMSText) &&
+            (this.binding.getRequestMessageProcessorName().equals(JMSBindingConstants.DEFAULT_MP_CLASSNAME))){
             this.binding.setRequestMessageProcessorName(JMSBindingConstants.TEXT_MP_CLASSNAME);
         }
-        if (this.binding.getResponseWireFormat() instanceof WireFormatJMSText){
+        if ((this.binding.getResponseWireFormat() instanceof WireFormatJMSText) &&
+            (this.binding.getResponseMessageProcessorName().equals(JMSBindingConstants.DEFAULT_MP_CLASSNAME))){
             this.binding.setResponseMessageProcessorName(JMSBindingConstants.TEXT_MP_CLASSNAME);
-        }       
+        }   
         
         // just point to the reference interface contract so no 
         // databinding transformation takes place
-        interfaceContract = service.getInterfaceContract();
+        interfaceContract = service.getService().getInterfaceContract();
     }
         
     public InterfaceContract configureWireFormatInterfaceContract(InterfaceContract interfaceContract){

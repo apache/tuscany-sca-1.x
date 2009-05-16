@@ -27,7 +27,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>itest-contribution-jee-samples-6</artifactId>
+    <artifactId>itest-contribution-jee-samples-6-war-appcomp-contrib-implicit</artifactId>
     <name>Apache Tuscany SCA iTest Contribution Java EE Samples 6</name>
     <packaging>war</packaging>
 

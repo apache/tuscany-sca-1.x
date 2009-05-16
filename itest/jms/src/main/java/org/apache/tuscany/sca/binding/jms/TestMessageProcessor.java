@@ -23,9 +23,9 @@ import javax.jms.Message;
 import javax.jms.Session;
 
 import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
-import org.apache.tuscany.sca.binding.jms.provider.XMLTextMessageProcessor;
+import org.apache.tuscany.sca.binding.jms.provider.TextMessageProcessor;
 
-public class TestMessageProcessor extends XMLTextMessageProcessor {
+public class TestMessageProcessor extends TextMessageProcessor {
 
     public static boolean insertPayloadIntoJMSMessageCalled;
     public static boolean extractPayloadFromJMSMessageCalled;

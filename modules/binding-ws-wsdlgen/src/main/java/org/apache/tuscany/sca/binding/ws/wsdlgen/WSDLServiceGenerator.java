@@ -147,7 +147,10 @@ public class WSDLServiceGenerator {
             return null;
         }
         Definition def = wsdlDefinition.getDefinition();
-        if (wsdlDefinition.getBinding() == null) {
+        
+        boolean wsdlProvidedByUser = (wsdlDefinition.getBinding() == null);
+        
+        if (wsdlProvidedByUser) {
             // The WSDL document was provided by the user.  Generate a new
             // WSDL document with imports from the user-provided document.
             WSDLFactory factory = null;
@@ -253,7 +256,7 @@ public class WSDLServiceGenerator {
 
         // add a service and ports to the generated definition  
         WSDLDefinitionGenerator helper =
-                new WSDLDefinitionGenerator(BindingWSDLGenerator.requiresSOAP12(wsBinding));
+                new WSDLDefinitionGenerator(BindingWSDLGenerator.requiresSOAP12(wsBinding),false);
         WSDLInterface wi = (WSDLInterface)wsBinding.getBindingInterfaceContract().getInterface();
         PortType portType = wi.getPortType();
         Service service = helper.createService(def, portType);
@@ -297,6 +300,32 @@ public class WSDLServiceGenerator {
                 wsBinding.setPort(port);
             }
             wsBinding.setService(service);
+        }
+        
+        // TUSCANY-2900 - add jms binding and service port if required
+        // TODO - remove service/ports from any imported WSDL
+        //      - find away to allow users to retrieve WSDL with JMS bindings
+        //        as a jms binding on it's own provides not target for ?wsdl
+        if ((!wsdlProvidedByUser) && 
+            (wsBinding.getURI() != null) &&
+            (wsBinding.getURI().startsWith("jms"))){
+            
+            // need to work out how to check if user has already specified a binding
+            
+            // create jms binding
+            helper = new WSDLDefinitionGenerator(BindingWSDLGenerator.requiresSOAP12(wsBinding),true);
+            Binding binding = helper.createBinding(def, portType);
+            helper.createBindingOperations(def, binding, portType);
+            binding.setUndefined(false);
+            def.addBinding(binding);
+            
+            // create a jms port
+            String endpointURI = computeActualURI(wsBinding, null);
+            Port port = helper.createPort(def, binding, service, endpointURI);
+            wsBinding.setService(service);
+            wsBinding.setPort(port);
+            
+            //printWSDL = true;
         }
 
         // for debugging

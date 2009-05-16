@@ -76,15 +76,17 @@ public class WSDLDefinitionGenerator {
     private static final String PORT_SUFFIX = "Port";
 
     private boolean requiresSOAP12;
+    private boolean requiresJMS;
     private QName soapAddress;
     private QName soapBinding;
     private QName soapBody;
     private QName soapFault;
     private QName soapOperation;
 
-    public WSDLDefinitionGenerator(boolean requiresSOAP12) {
+    public WSDLDefinitionGenerator(boolean requiresSOAP12, boolean requiresJMS) {
         super();
         this.requiresSOAP12 = requiresSOAP12;
+        this.requiresJMS = requiresJMS;
         soapAddress = requiresSOAP12 ? SOAP12_ADDRESS : SOAP_ADDRESS;
         soapBinding = requiresSOAP12 ? SOAP12_BINDING : SOAP_BINDING;
         soapBody = requiresSOAP12 ? SOAP12_BODY : SOAP_BODY;
@@ -114,10 +116,18 @@ public class WSDLDefinitionGenerator {
                 definition.getExtensionRegistry().createExtension(Binding.class, soapBinding);
             if (requiresSOAP12) {
                 ((SOAP12Binding)bindingExtension).setStyle("document");
-                ((SOAP12Binding)bindingExtension).setTransportURI("http://schemas.xmlsoap.org/soap/http");
+                if (requiresJMS){
+                    ((SOAP12Binding)bindingExtension).setTransportURI("http://schemas.xmlsoap.org/soap/jms");
+                } else {
+                    ((SOAP12Binding)bindingExtension).setTransportURI("http://schemas.xmlsoap.org/soap/http");
+                }
             } else {
                 ((SOAPBinding)bindingExtension).setStyle("document");
-                ((SOAPBinding)bindingExtension).setTransportURI("http://schemas.xmlsoap.org/soap/http");
+                if (requiresJMS){
+                    ((SOAPBinding)bindingExtension).setTransportURI("http://schemas.xmlsoap.org/soap/jms");
+                } else {
+                    ((SOAPBinding)bindingExtension).setTransportURI("http://schemas.xmlsoap.org/soap/http");
+                }
             }
             binding.addExtensibilityElement(bindingExtension);
             return binding;
@@ -125,6 +135,7 @@ public class WSDLDefinitionGenerator {
             throw new WSDLGenerationException(e);
         }
     }
+
 
     protected void configureBinding(Definition definition, Binding binding, PortType portType) throws WSDLException {
         QName portTypeName = portType.getQName();
