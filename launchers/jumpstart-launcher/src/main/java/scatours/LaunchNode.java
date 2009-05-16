@@ -31,9 +31,11 @@ public class LaunchNode {
             SCAContribution gvtContribution = 
               new SCAContribution("goodvaluetrips", 
                   "../../contributions/introducing-goodvaluetrips-contribution/target/classes");
+            
             SCANode node = SCANodeFactory.newInstance().
                createSCANode("trips.composite", 
                              gvtContribution);
+            
             node.start();
 
             Trips tripProvider = ((SCAClient)node).getService(Trips.class, 
