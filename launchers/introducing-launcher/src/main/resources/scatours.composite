@@ -23,7 +23,7 @@
     xmlns:tours="http://tuscanyscatours.com/"
     xmlns:trips="http://goodvaluetrips.com/"
     name="scatours">
-
+    
     <include name="client:Client" />
     <include name="tours:Tours" />
     <include name="trips:Trips" />

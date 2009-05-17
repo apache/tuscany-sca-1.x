@@ -19,6 +19,8 @@
 
 package scatours.client;
 
+import java.math.BigDecimal;
+
 import com.tuscanyscatours.Bookings;
 import com.tuscanyscatours.Checkout;
 
@@ -40,7 +42,6 @@ public class TestClient {
         String bookingCode = bookings.newBooking("FS1APR4", 1);
         System.out.println("Booking code is " + bookingCode);
 
-        checkout.makePayment(1995.00, "1234567843218765 10/10");
-        System.out.println("Paid $1995.00");
+        checkout.makePayment(new BigDecimal("1995.00"), "1234567843218765 10/10");
     }
 }

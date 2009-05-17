@@ -18,11 +18,22 @@
  */
 package com.tuscanyscatours;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShoppingCart implements Checkout, Updates {
-    public void makePayment(double amount, String cardInfo) {
-        // make payment for trips in cart giving card details
+	private static List<String> bookedTrips = new ArrayList<String>();
+	
+    public void makePayment(BigDecimal amount, String cardInfo) {
+    	System.out.print("Charged $" + amount + " to card " + cardInfo + " for trips" );
+    	for (String trip : bookedTrips){
+    		System.out.print(" " + trip);
+    	}
+    	System.out.println();
+    	bookedTrips.clear();
     }
     public void addTrip(String resCode) {
-        // add the booked trip to the cart
+        bookedTrips.add(resCode);
     }
 }
