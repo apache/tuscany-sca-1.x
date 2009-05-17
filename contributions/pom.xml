@@ -43,8 +43,8 @@
                 <module>currency-contribution</module>
                 <module>emailgateway-contribution</module>
                 <module>flight-contribution</module>
+                <module>fullapp-ui-contribution</module>
                 <module>hotel-contribution</module>
-                <module>interaction-ui-contribution</module>
                 <module>introducing-client-contribution</module>
                 <module>introducing-goodvaluetrips-contribution</module>
                 <module>introducing-tuscanyscatours-contribution</module>
