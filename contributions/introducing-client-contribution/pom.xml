@@ -37,7 +37,7 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-chapter-02-tuscanyscatours-contribution</artifactId>
+            <artifactId>scatours-introducing-tuscanyscatours-contribution</artifactId>
             <version>1.5-SNAPSHOT</version>
         </dependency>
     </dependencies>
