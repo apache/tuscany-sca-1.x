@@ -27,6 +27,21 @@ public class Item {
     public Item() {
     }
     
+    
+    /**
+     * Parses a string entry to an Item object
+     * @param s
+     * @return Item
+     */
+    public static Item parseItem(String s)
+    {
+		Item i=new Item();
+		i.setName(s.split("-")[0].trim());
+		i.setPrice(s.split("-")[1].trim());
+		return i;
+    	
+    }
+    
     public Item(String name, String price) {
         this.name = name;
         this.price = price;
@@ -46,6 +61,11 @@ public class Item {
     
     public void setPrice(String price) {
         this.price = price;
+    }
+    
+    public String toString()
+    {
+    	return name + " - " + price;
     }
 
 }

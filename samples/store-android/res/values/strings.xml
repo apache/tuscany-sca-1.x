@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, catalog</string>
     <string name="app_name">store</string>
+    <string name="app_tag">Tuscany</string>
 </resources>

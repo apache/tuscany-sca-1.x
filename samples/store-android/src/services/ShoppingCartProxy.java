@@ -24,18 +24,20 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import services.atom.xml.AtomXML;
 import services.json.rpc.JSONRpc;
 
 public class ShoppingCartProxy {
 	private static final String jsonRPCTotalServiceURI = "http://192.168.1.102:8080/ShoppingCart/Total";
     private static final String jsonRPCTotalRequest = "{\"id\": 4, \"method\": \"Service.getTotal\", \"params\": []}";
+    private static final String atomXMLCartServiceURI="http://192.168.1.102:8080/ShoppingCart/Cart";
 
 	public Item[] getItems() {
 		return null;
 	}
 	
-	public void addItem(Item item) {
-		
+	public boolean addItem(Item item) {
+		return AtomXML.postItem(atomXMLCartServiceURI, item);
 	}
 	
 	public void removeItem(Item item) {
@@ -62,7 +64,6 @@ public class ShoppingCartProxy {
 		} catch (JSONException e) {
 			Log.e("TUSC",e.getMessage());
 		}
-		
 		return total;
 	}
 }
