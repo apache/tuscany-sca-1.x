@@ -66,7 +66,7 @@
                 <!-- General file/folders to exclude -->
                 <exclude>*/.classpath</exclude>
                 <exclude>*/.project</exclude>
-                <exclude>**/pom.transformed.xml</exclude>
+                <exclude>**/pom-transformed.xml</exclude>
                 <exclude>*/.settings</exclude>
                 <exclude>*/.settings/**/*</exclude>
                 <exclude>*/.externalToolBuilders</exclude>
