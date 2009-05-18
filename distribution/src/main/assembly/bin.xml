@@ -66,7 +66,7 @@
                 <!-- General file/folders to exclude -->
                 <exclude>*/.classpath</exclude>
                 <exclude>*/.project</exclude>
-                <exclude>**/pom.transformed.xml</exclude>
+                <exclude>**/pom-transformed.xml</exclude>
                 <exclude>*/.settings</exclude>
                 <exclude>*/.settings/**/*</exclude>
                 <exclude>*/.externalToolBuilders</exclude>
@@ -387,6 +387,7 @@
             <unpack>false</unpack>
             <excludes>
                 <exclude>org.apache.tuscany.sca:*</exclude>
+                <exclude>bouncycastle:*</exclude>
             </excludes>
             <scope>runtime</scope>
         </dependencySet>
