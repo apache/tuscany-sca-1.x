@@ -556,7 +556,14 @@ public class MediatorImpl implements Mediator {
 
     public Object copyFault(Object fault, Operation operation) {
         if (faultExceptionMapper == null) {
-            return fault;
+        	// try to get the fault exception mapper again. It sometime null depending on what order the 
+        	// JavaRuntimeModuleActivator and DatabindingModuleActivator are started
+        	this.faultExceptionMapper =
+                registry.getExtensionPoint(UtilityExtensionPoint.class).getUtility(FaultExceptionMapper.class);
+        	
+        	if (faultExceptionMapper == null) {
+        		return fault;
+        	}
         }
         for (DataType et : operation.getFaultTypes()) {
             if (et.getPhysical().isInstance(fault)) {
