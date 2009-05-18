@@ -196,6 +196,7 @@
                 <exclude>*/**/*.ruleset</exclude>
                 <exclude>*/**/*.pmd</exclude>
                 <exclude>*/**/*.checkstyle</exclude>
+                <exclude>*/**/_/SESSIONS.ser</exclude>
              </excludes>
 	 </fileSet>
      </fileSets>
