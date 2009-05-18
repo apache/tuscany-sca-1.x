@@ -137,6 +137,8 @@
                 <exclude>modules/implementation-osgi/.felix/**/*</exclude>
                 <exclude>modules/osgi-runtime/.felix</exclude>
                 <exclude>modules/osgi-runtime/.felix/**/*</exclude>
+                <exclude>modules/web-javascript-dojo/src/main/resources/dojo</exclude>
+                <exclude>modules/web-javascript-dojo/src/main/resources/dojo/**/*</exclude>
                 <exclude>samples/old</exclude>
                 <exclude>samples/old/**/*</exclude>
                 <exclude>samples/calculator-distributed/work</exclude>
