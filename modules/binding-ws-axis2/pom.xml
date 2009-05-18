@@ -209,6 +209,10 @@
             <exclusions>
                 <exclusion>
                     <groupId>bouncycastle</groupId>
+                    <artifactId>bcprov-jdk13</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>bouncycastle</groupId>
                     <artifactId>bcprov-jdk15</artifactId>
                 </exclusion>
             </exclusions>
@@ -265,6 +269,14 @@
                 <exclusion>
                     <groupId>stax</groupId>
                     <artifactId>stax-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>bouncycastle</groupId>
+                    <artifactId>bcprov-jdk13</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>bouncycastle</groupId>
+                    <artifactId>bcprov-jdk15</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
