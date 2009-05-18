@@ -32,7 +32,7 @@
                  minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="homeInterface" type="NCName" use="optional"/>
-         <attribute name="ejb-link-name" type="NCName" use="optional"/>
+         <attribute name="ejb-link-name" type="string" use="optional"/>
          <attribute name="session-type" type="sca:BeanType" use="optional" default="stateless"/>
          <attribute name="ejb-version" type="sca:VersionValue" use="optional" default="EJB2"/>
          <anyAttribute namespace="##any" processContents="lax"/>
