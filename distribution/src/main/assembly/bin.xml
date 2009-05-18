@@ -66,6 +66,7 @@
                 <!-- General file/folders to exclude -->
                 <exclude>*/.classpath</exclude>
                 <exclude>*/.project</exclude>
+                <exclude>**/pom.transformed.xml</exclude>
                 <exclude>*/.settings</exclude>
                 <exclude>*/.settings/**/*</exclude>
                 <exclude>*/.externalToolBuilders</exclude>
@@ -120,6 +121,8 @@
                 <exclude>feed-aggregator-webapp/target/war</exclude>
                 <exclude>helloworld-bpel/target</exclude>
                 <exclude>helloworld-bpel/target/**/*</exclude>
+                <exclude>store-webapp/target</exclude>
+                <exclude>store-webapp/target/**/*</exclude>
                 <exclude>helloworld-dojo-webapp/src/main/webapp/dojo</exclude>
                 <exclude>helloworld-dojo-webapp/src/main/webapp/dojo/**/*</exclude>
                 <exclude>helloworld-dojo-webapp/target/sample-helloworld-dojo-webapp</exclude>
@@ -169,6 +172,8 @@
                 <exclude>helloworld-ws-deep-webapp/target/sample-helloworld-ws-deep-webapp.war</exclude>
                 <exclude>helloworld-ws-sdo-webapp/target/sample-helloworld-ws-sdo-webapp.war</exclude>
                 <exclude>helloworld-ws-service-webapp/target/sample-helloworld-ws-service-webapp.war</exclude>
+                <exclude>store-webapp/target/sample-helloworld-ws-sdo-webapp.war</exclude>
+                <exclude>store-webapp/target/sample-helloworld-ws-service-webapp.war</exclude>
                 <!-- Modules excluded from distribution as work is in progress... -->
                 <exclude>calculator2</exclude>
                 <exclude>calculator2/**/*</exclude>
@@ -231,6 +236,7 @@
             <excludes>
                 <exclude>*/.classpath</exclude>
                 <exclude>*/.project</exclude>
+                <exclude>**/pom.transformed.xml</exclude>
                 <exclude>*/.settings</exclude>
                 <exclude>*/.settings/**/*</exclude>
                 <exclude>*/work</exclude>
@@ -297,6 +303,7 @@
             <excludes>
                 <exclude>*/.classpath</exclude>
                 <exclude>*/.project</exclude>
+                <exclude>**/pom.transformed.xml</exclude>
                 <exclude>*/.settings</exclude>
                 <exclude>*/.settings/**/*</exclude>
                 <exclude>*/work</exclude>
