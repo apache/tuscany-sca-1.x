@@ -71,6 +71,7 @@ public class BytesMessageProcessor extends AbstractMessageProcessor {
             long noOfBytes = ((BytesMessage)msg).getBodyLength();
             byte [] bytes = new byte[(int)noOfBytes];
             ((BytesMessage)msg).readBytes(bytes);
+            ((BytesMessage)msg).reset();
             return bytes;
 
         } catch (JMSException e) {
