@@ -186,7 +186,8 @@ public class DefaultMessageProcessor extends AbstractMessageProcessor {
                 long noOfBytes = ((BytesMessage) msg).getBodyLength();
                 byte[] bytes = new byte[(int) noOfBytes];
                 ((BytesMessage) msg).readBytes(bytes);
-    
+                ((BytesMessage)msg).reset();
+
                 if ((bytes != null) && (bytes.length > 0)) {
                     XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(new ByteArrayInputStream(bytes));
                     StAXOMBuilder builder = new StAXOMBuilder(reader);
