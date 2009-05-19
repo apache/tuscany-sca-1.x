@@ -18,9 +18,12 @@
  */
 package scatours.currencyconverter;
 
+import org.osoa.sca.annotations.Remotable;
+
 /**
  * The CurrencyConverter service interface
  */
+@Remotable
 public interface CurrencyConverter {
 
     double getExchangeRate(String fromCurrencyCode, 
