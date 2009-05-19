@@ -25,7 +25,7 @@
         <version>1.5-SNAPSHOT</version>
         <!--relativePath>../pom.xml</relativePath-->
     </parent>
-    <artifactId>scatours-launchers</artifactId>
+    <artifactId>scatours-clients</artifactId>
     <packaging>pom</packaging>
     <name>Apache Tuscany SCA Tours non-SCA Clients</name>
 
