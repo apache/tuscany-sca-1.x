@@ -36,6 +36,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>currency-converter-rmi-launcher</module>
                 <module>currency-converter-ws-launcher</module>
                 <module>interaction-launcher</module>
                 <module>introducing-launcher</module>
