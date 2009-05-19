@@ -38,13 +38,19 @@ public class LaunchNode {
             "currency-converter-ws.composite",currencyContribution, currencyWSContribution);
         node.start();
 
+        System.out.println("Quick currency converter test");
         CurrencyConverter converter = ((SCAClient)node).getService(
             CurrencyConverter.class, "CurrencyConverter");
         System.out.println("USD -> GBP = " 
             + converter.getExchangeRate("USD", "GBP"));
         System.out.println("100 USD = " 
             + converter.convert("USD", "GBP", 100) + "GBP");
-          
+
+        System.out.println("Node started - Press enter to shutdown.");
+        System.in.read();
+        
+        
+        
         node.stop();
     }
 }
