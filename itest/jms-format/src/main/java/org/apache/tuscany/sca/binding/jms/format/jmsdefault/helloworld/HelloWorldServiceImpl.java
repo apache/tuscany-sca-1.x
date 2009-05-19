@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld;
 
+import org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld.CheckedException;
+
 public class HelloWorldServiceImpl implements HelloWorldService {
     
     public static int nullInVoidOutCalled = 0;
@@ -38,5 +40,13 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         System.out.println("nullInVoidOut");
         nullInVoidOutCalled++;
     }
+    
+    public void throwChecked(String msg) throws CheckedException {
+        throw new CheckedException("foo");
+    }
+
+    public void throwUnChecked(String msg) {
+        throw new RuntimeException("bla");
+    }    
 }
 

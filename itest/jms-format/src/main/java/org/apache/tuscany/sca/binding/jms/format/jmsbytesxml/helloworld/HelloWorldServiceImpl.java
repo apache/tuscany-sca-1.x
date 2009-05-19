@@ -28,6 +28,12 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         return name.getBytes();
     }
 
+    public void throwChecked(byte[] msg) throws CheckedException {
+        throw new CheckedException("foo");
+    }
 
+    public void throwUnChecked(byte[] msg) {
+        throw new RuntimeException("bla");
+    }
 }
 

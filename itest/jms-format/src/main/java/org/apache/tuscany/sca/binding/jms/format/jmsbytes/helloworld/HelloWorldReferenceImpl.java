@@ -31,15 +31,15 @@ public class HelloWorldReferenceImpl implements HelloWorldReference {
         String stringValue = new String(bytesValue);
         
         try {
-            helloWorldService1.throwChecked(null);
+            helloWorldService1.throwChecked(name.getBytes());
         } catch (Exception e) {
-            stringValue += " CheckedException";
+            stringValue += " " + e.getMessage();
         }
         
         try {
-            helloWorldService1.throwUnChecked(null);
+            helloWorldService1.throwUnChecked(name.getBytes());
         } catch (Exception e) {
-            stringValue += " UncheckedException";
+            stringValue += " " + e.getMessage();
         }
         return stringValue; 
     }    

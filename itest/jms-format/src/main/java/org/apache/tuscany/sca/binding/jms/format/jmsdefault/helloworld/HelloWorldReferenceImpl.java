@@ -20,8 +20,7 @@ package org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld;
 
 import org.osoa.sca.annotations.Reference;
 
-
-public class HelloWorldReferenceImpl implements HelloWorldService {
+public class HelloWorldReferenceImpl implements HelloWorldReference {
     
     @Reference
     protected HelloWorldService helloWorldService1;
@@ -36,10 +35,36 @@ public class HelloWorldReferenceImpl implements HelloWorldService {
     protected HelloWorldService helloWorldService4;
 
     public String getGreetings(String name){
-        return helloWorldService1.getGreetings(name) + " " +
-               helloWorldService2.getGreetings(name) + " " +
-               helloWorldService3.getGreetings(name) + " " +
-               helloWorldService4.getGreetings(name);
+        String stringValue = helloWorldService1.getGreetings(name) + " " +
+                             helloWorldService2.getGreetings(name) + " " +
+                             helloWorldService3.getGreetings(name) + " " +
+                             helloWorldService4.getGreetings(name);
+        
+        try {
+            helloWorldService3.throwChecked(name);
+        } catch (CheckedException e) {
+            stringValue += " " + e.getMessage();
+        }
+        
+        try {
+            helloWorldService3.throwUnChecked(name);
+        } catch (Exception e) {
+            stringValue += " " + e.getMessage();
+        }
+        
+        try {
+            helloWorldService4.throwChecked(name);
+        } catch (CheckedException e) {
+            stringValue += " " + e.getMessage();
+        }
+        
+        try {
+            helloWorldService4.throwUnChecked(name);
+        } catch (Exception e) {
+            stringValue += " " + e.getMessage();
+        }        
+        
+        return stringValue;
     }
     
     public String getPersonGreetings(Person person){

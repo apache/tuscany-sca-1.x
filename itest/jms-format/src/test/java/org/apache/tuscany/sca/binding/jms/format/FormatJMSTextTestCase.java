@@ -20,56 +20,42 @@ package org.apache.tuscany.sca.binding.jms.format;
 
 import static org.junit.Assert.assertEquals;
 
-import org.apache.tuscany.sca.binding.jms.format.jmsobject.helloworld.HelloWorldReference;
+import org.apache.tuscany.sca.binding.jms.format.jmsbytes.helloworld.HelloWorldReference;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
 /**
  * This shows how to test the JMS binding using a simple HelloWorld application.
  */
-public class FormatJMSObjectTestCase {
+public class FormatJMSTextTestCase {
 
     private static SCANode node;
 
     @Before
     public void init() {
         SCANodeFactory factory = SCANodeFactory.newInstance();
-        node = factory.createSCANode("jmsobject/helloworld.composite",
-                new SCAContribution("test", "./target/classes"));
+        node = factory.createSCANode("jmstext/helloworld.composite", 
+                                     new SCAContribution("test", "./target/classes"));
 
         node.start();
     }
 
     @Test
     public void testHelloWorldCreate() throws Exception {
-        HelloWorldReference helloWorldService = ((SCAClient) node).getService(
-                HelloWorldReference.class, "HelloWorldReferenceComponent");
-
-        assertEquals("Hello1 Fred Hello1 Bloggs Hello2 null Hello3 Fred Hello4 Fred Bloggs Hello5 Fred Bloggs Hello6 Fred Bloggs Hello7 Fred Bloggs", 
-                     helloWorldService.getGreetingsWrapSingle("Fred", "Bloggs"));
+        HelloWorldReference helloWorldService = ((SCAClient)node).getService(HelloWorldReference.class, "HelloWorldReferenceComponent");
         
-        assertEquals("Hello1 Fred Hello1 Bloggs Hello2 null Hello3 Fred Hello4 Fred Bloggs Hello5 Fred Bloggs Hello6 Fred Bloggs Hello7 Fred Bloggs foo java.lang.RuntimeException: bla", 
-                helloWorldService.getGreetingsDontWrapSingle("Fred", "Bloggs"));        
-
+        System.out.println(helloWorldService.getGreetings("Fred Bloggs"));
+        assertEquals("Hello Fred Bloggs " +
+                "foo remote service exception, see nested exception", 
+                helloWorldService.getGreetings("Fred Bloggs"));
+        
     }
-    
-    @Ignore
-    @Test
-    public void testWaitForInput() {
-        System.out.println("Press a key to end");
-        try {
-            System.in.read();
-        } catch (Exception ex) {
-        }
-        System.out.println("Shutting down");
-    }     
 
     @After
     public void end() {

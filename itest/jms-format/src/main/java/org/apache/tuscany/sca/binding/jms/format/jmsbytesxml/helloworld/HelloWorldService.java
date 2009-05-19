@@ -28,5 +28,7 @@ public interface HelloWorldService {
 
     public byte[] getByteArrayGreetings(byte[] msg);
     
+    public void throwChecked(byte[] msg) throws CheckedException;
+    public void throwUnChecked(byte[] msg);
 }
 

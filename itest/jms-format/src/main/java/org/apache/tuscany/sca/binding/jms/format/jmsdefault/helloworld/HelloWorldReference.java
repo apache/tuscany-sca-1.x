@@ -18,14 +18,13 @@
  */
 package org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld;
 
-import org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld.CheckedException;
 import org.osoa.sca.annotations.Remotable;
 
 /**
  * This is the business interface of the HelloWorld greetings service.
  */
 @Remotable
-public interface HelloWorldService {
+public interface HelloWorldReference {
 
     public String getGreetings(String name);
     
@@ -33,7 +32,5 @@ public interface HelloWorldService {
     
     public void nullInVoidOut();
     
-    public void throwChecked(String msg) throws CheckedException;
-    public void throwUnChecked(String msg);    
 }
 

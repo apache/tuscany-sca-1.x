@@ -20,7 +20,7 @@ package org.apache.tuscany.sca.binding.jms.format;
 
 import static org.junit.Assert.assertEquals;
 
-import org.apache.tuscany.sca.binding.jms.format.jmstextxml.helloworld.HelloWorldService;
+import org.apache.tuscany.sca.binding.jms.format.jmstextxml.helloworld.HelloWorldReference;
 import org.apache.tuscany.sca.binding.jms.format.jmstextxml.helloworld.Person;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
@@ -49,14 +49,14 @@ public class FormatJMSTextXMLTestCase {
 
     @Test
     public void testHelloWorldCreate() throws Exception {
-        HelloWorldService helloWorldService = ((SCAClient)node).getService(HelloWorldService.class, "HelloWorldReferenceComponent");
+        HelloWorldReference helloWorldService = ((SCAClient)node).getService(HelloWorldReference.class, "HelloWorldReferenceComponent");
         
         assertEquals("Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs", helloWorldService.getGreetings("Fred Bloggs"));
         
         Person person = new Person();
         person.setFirstName("Fred");
         person.setLastName("Bloggs");
-        assertEquals("Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs", helloWorldService.getPersonGreetings(person));
+        assertEquals("Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs foo remote service exception, see nested exception", helloWorldService.getPersonGreetings(person));
     }
 
     @After

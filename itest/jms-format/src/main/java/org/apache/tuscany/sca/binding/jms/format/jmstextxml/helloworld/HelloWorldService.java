@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.sca.binding.jms.format.jmstextxml.helloworld;
 
+import org.apache.tuscany.sca.binding.jms.format.jmstextxml.helloworld.CheckedException;
 import org.osoa.sca.annotations.Remotable;
 
 /**
@@ -26,8 +27,10 @@ import org.osoa.sca.annotations.Remotable;
 @Remotable
 public interface HelloWorldService {
 
-    public String getGreetings(String name);
-    
+    public String getGreetings(String name);  
     public String getPersonGreetings(Person person);
+    
+    public void throwChecked(String msg) throws CheckedException;
+    public void throwUnChecked(String msg);
 }
 

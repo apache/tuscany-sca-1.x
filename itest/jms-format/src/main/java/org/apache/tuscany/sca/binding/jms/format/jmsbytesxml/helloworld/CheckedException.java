@@ -16,31 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
+
 package org.apache.tuscany.sca.binding.jms.format.jmsbytesxml.helloworld;
 
-import org.osoa.sca.annotations.Reference;
+public class CheckedException extends Exception {
+    private static final long serialVersionUID = 1L;
 
-public class HelloWorldReferenceImpl implements HelloWorldReference {
-    
-    @Reference
-    protected HelloWorldService helloWorldService1;
-    
-    public String getGreetings(String name){     
-        byte[] bytesValue = helloWorldService1.getByteArrayGreetings(name.getBytes());
-        String stringValue = new String(bytesValue);  
-        
-        try {
-            helloWorldService1.throwChecked(name.getBytes());
-        } catch (CheckedException e) {
-            stringValue += " " + e.getMessage();
-        }
-        
-        try {
-            helloWorldService1.throwUnChecked(name.getBytes());
-        } catch (Exception e) {
-            stringValue += " " + e.getMessage();
-        }
-        return stringValue;          
-    }    
+    public CheckedException(String s) {
+        super(s);
+    }
 }
-

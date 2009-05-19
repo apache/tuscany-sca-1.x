@@ -20,7 +20,7 @@ package org.apache.tuscany.sca.binding.jms.format;
 
 import static org.junit.Assert.assertEquals;
 
-import org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld.HelloWorldService;
+import org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld.HelloWorldReference;
 import org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld.HelloWorldServiceImpl;
 import org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld.Person;
 import org.apache.tuscany.sca.node.SCAClient;
@@ -51,9 +51,9 @@ public class FormatJMSDefaultTestCase {
 
     @Test
     public void testHelloWorldCreate() throws Exception {
-        HelloWorldService helloWorldService = ((SCAClient)node).getService(HelloWorldService.class, "HelloWorldReferenceComponent");
+        HelloWorldReference helloWorldService = ((SCAClient)node).getService(HelloWorldReference.class, "HelloWorldReferenceComponent");
         
-        assertEquals("Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs", helloWorldService.getGreetings("Fred Bloggs"));
+        assertEquals("Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs Hello Fred Bloggs foo remote service exception, see nested exception foo remote service exception, see nested exception", helloWorldService.getGreetings("Fred Bloggs"));
         
         Person person = new Person();
         person.setFirstName("Fred");

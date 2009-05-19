@@ -16,24 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld;
 
-import org.apache.tuscany.sca.binding.jms.format.jmsdefault.helloworld.CheckedException;
-import org.osoa.sca.annotations.Remotable;
+package org.apache.tuscany.sca.binding.jms.format.jmsobject.helloworld;
 
-/**
- * This is the business interface of the HelloWorld greetings service.
- */
-@Remotable
-public interface HelloWorldService {
+public class CheckedException extends Exception {
+    private static final long serialVersionUID = 1L;
 
-    public String getGreetings(String name);
-    
-    public String getPersonGreetings(Person person);
-    
-    public void nullInVoidOut();
-    
-    public void throwChecked(String msg) throws CheckedException;
-    public void throwUnChecked(String msg);    
+    public CheckedException(String s) {
+        super(s);
+    }
 }
-

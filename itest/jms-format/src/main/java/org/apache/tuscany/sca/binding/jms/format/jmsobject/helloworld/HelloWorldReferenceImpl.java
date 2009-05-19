@@ -58,7 +58,7 @@ public class HelloWorldReferenceImpl implements HelloWorldReference {
         returnString += " " + returnGreeting; 
         
         returnGreeting = helloWorldServiceWrapSingle.getObjectArrayGreeting(new Object[]{person});
-        returnString += " " + returnGreeting; 
+        returnString += " " + returnGreeting;      
         
         return returnString;
     }  
@@ -92,7 +92,19 @@ public class HelloWorldReferenceImpl implements HelloWorldReference {
         returnString += " " + returnGreeting; 
         
         returnGreeting = helloWorldServiceDontWrapSingle.getObjectArrayGreeting(new Object[]{person});
-        returnString += " " + returnGreeting; 
+        returnString += " " + returnGreeting;
+        
+        try {
+            helloWorldServiceDontWrapSingle.throwChecked(person);
+        } catch (CheckedException e) {
+            returnString += " " + e.getMessage();
+        }
+        
+        try {
+            helloWorldServiceDontWrapSingle.throwUnChecked(person);
+        } catch (Exception e) {
+            returnString += " " + e.getCause().getMessage();
+        }           
         
         return returnString;
     }     

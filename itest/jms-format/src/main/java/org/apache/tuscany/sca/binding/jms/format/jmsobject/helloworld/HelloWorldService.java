@@ -33,6 +33,9 @@ public interface HelloWorldService {
     public String getMultiGreetings(String firstName, String lastName);
     public String getObjectGreeting(Object person);
     public String getObjectArrayGreeting(Object[] pearson);
+    
+    public void throwChecked(Person person) throws CheckedException;
+    public void throwUnChecked(Person person);
   
 }
 

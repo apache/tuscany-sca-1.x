@@ -51,7 +51,7 @@ public class FormatJMSBytesXMLTestCase {
         HelloWorldReference helloWorldService = ((SCAClient)node).getService(HelloWorldReference.class, "HelloWorldReferenceComponent");
         
         System.out.println(helloWorldService.getGreetings("Fred Bloggs"));
-        assertEquals("Hello Fred Bloggs", helloWorldService.getGreetings("Fred Bloggs"));
+        assertEquals("Hello Fred Bloggs foo remote service exception, see nested exception", helloWorldService.getGreetings("Fred Bloggs"));
         
     }
 

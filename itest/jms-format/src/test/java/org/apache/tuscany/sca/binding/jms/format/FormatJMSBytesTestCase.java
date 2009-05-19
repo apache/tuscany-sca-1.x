@@ -51,7 +51,10 @@ public class FormatJMSBytesTestCase {
         HelloWorldReference helloWorldService = ((SCAClient)node).getService(HelloWorldReference.class, "HelloWorldReferenceComponent");
         
         System.out.println(helloWorldService.getGreetings("Fred Bloggs"));
-        assertEquals("Hello Fred Bloggs CheckedException UncheckedException", helloWorldService.getGreetings("Fred Bloggs"));
+        assertEquals("Hello Fred Bloggs " +
+                     "org.apache.tuscany.sca.binding.jms.format.jmsbytes.helloworld.CheckedException: foo " +
+                     "org.osoa.sca.ServiceRuntimeException: java.lang.RuntimeException: bla", 
+                     helloWorldService.getGreetings("Fred Bloggs"));
         
     }
 

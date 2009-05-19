@@ -18,7 +18,6 @@
  */
 package org.apache.tuscany.sca.binding.jms.format.jmsobject.helloworld;
 
-
 public class HelloWorldServiceImpl implements HelloWorldService {
     
     public Person getPersonGreetings(Person person){
@@ -52,5 +51,13 @@ public class HelloWorldServiceImpl implements HelloWorldService {
     public String getObjectArrayGreeting(Object[] person) {
         return "Hello7 " + ((Person)person[0]).getFirstName() + " " + ((Person)person[0]).getLastName();
     }
+    
+    public void throwChecked(Person person) throws CheckedException {
+        throw new CheckedException("foo");
+    }
+
+    public void throwUnChecked(Person person) {
+        throw new RuntimeException("bla");
+    }    
 }
 

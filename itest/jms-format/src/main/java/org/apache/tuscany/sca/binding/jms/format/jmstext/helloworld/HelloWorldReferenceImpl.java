@@ -16,9 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.binding.jms.format.jmsbytesxml.helloworld;
+package org.apache.tuscany.sca.binding.jms.format.jmstext.helloworld;
 
 import org.osoa.sca.annotations.Reference;
+
 
 public class HelloWorldReferenceImpl implements HelloWorldReference {
     
@@ -26,21 +27,20 @@ public class HelloWorldReferenceImpl implements HelloWorldReference {
     protected HelloWorldService helloWorldService1;
     
     public String getGreetings(String name){     
-        byte[] bytesValue = helloWorldService1.getByteArrayGreetings(name.getBytes());
-        String stringValue = new String(bytesValue);  
+        String stringValue = helloWorldService1.getStringGreetings(name);
         
         try {
-            helloWorldService1.throwChecked(name.getBytes());
-        } catch (CheckedException e) {
-            stringValue += " " + e.getMessage();
-        }
-        
-        try {
-            helloWorldService1.throwUnChecked(name.getBytes());
+            helloWorldService1.throwChecked(name);
         } catch (Exception e) {
             stringValue += " " + e.getMessage();
         }
-        return stringValue;          
+        
+        try {
+            helloWorldService1.throwUnChecked(name);
+        } catch (Exception e) {
+            stringValue += " " + e.getMessage();
+        }
+        return stringValue;  
     }    
 }
 

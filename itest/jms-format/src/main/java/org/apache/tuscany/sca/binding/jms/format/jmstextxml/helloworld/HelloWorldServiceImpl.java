@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.sca.binding.jms.format.jmstextxml.helloworld;
 
+import org.apache.tuscany.sca.binding.jms.format.jmstextxml.helloworld.CheckedException;
+
 public class HelloWorldServiceImpl implements HelloWorldService {
 
     public String getGreetings(String name){
@@ -31,5 +33,13 @@ public class HelloWorldServiceImpl implements HelloWorldService {
         System.out.println("getPersonGreetings: " + response);
         return response;
     }
+    
+    public void throwChecked(String msg) throws CheckedException {
+        throw new CheckedException("foo");
+    }
+
+    public void throwUnChecked(String msg) {
+        throw new RuntimeException("bla");
+    }    
 }
 
