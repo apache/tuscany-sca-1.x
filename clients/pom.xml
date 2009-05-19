@@ -36,6 +36,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>currency-converter-corba-client</module>
                 <module>currency-converter-rmi-client</module>
                 <module>currency-converter-ws-jaxws-client</module>
             </modules>
