@@ -41,6 +41,7 @@
                 <module>common-contribution</module>
                 <module>creditcard-payment-jaxb-contribution</module>
                 <module>currency-contribution</module>
+                <module>currency-contribution-corba</module>
                 <module>currency-contribution-rmi</module>
                 <module>currency-contribution-ws</module>
                 <module>emailgateway-contribution</module>
