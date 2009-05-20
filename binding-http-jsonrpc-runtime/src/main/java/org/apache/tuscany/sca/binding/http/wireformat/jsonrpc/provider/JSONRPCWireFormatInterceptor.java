@@ -20,6 +20,9 @@
 package org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.provider;
 
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
+import org.apache.tuscany.sca.binding.http.HTTPBindingContext;
+import org.apache.tuscany.sca.interfacedef.InterfaceContract;
+import org.apache.tuscany.sca.interfacedef.java.JavaInterface;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
@@ -42,11 +45,15 @@ public class JSONRPCWireFormatInterceptor implements Interceptor {
     private RuntimeWire runtimeWire;
     private HTTPBinding binding;
     
+    private InterfaceContract serviceContract;
+    
     private MessageFactory messageFactory;
     
-    public JSONRPCWireFormatInterceptor(HTTPBinding binding, RuntimeWire runtimeWire, MessageFactory messageFactory) {
+    public JSONRPCWireFormatInterceptor(HTTPBinding binding, RuntimeWire runtimeWire, InterfaceContract serviceContract, MessageFactory messageFactory) {
         this.binding = binding;
         this.runtimeWire = runtimeWire;
+        
+        this.serviceContract = serviceContract;
         
         this.messageFactory = messageFactory;
     }
@@ -61,6 +68,25 @@ public class JSONRPCWireFormatInterceptor implements Interceptor {
     }
 
     public Message invoke(Message msg) {
+        HTTPBindingContext bindingContext = msg.getBindingContext();
+        Message returnMessage = null;
+        
+        if ("smd".equals(bindingContext.getHttpRequest().getQueryString())) {
+            returnMessage = handleSMDInvocation(msg);
+        } else {
+            returnMessage = handleJSONRPCInvocation(msg);
+        }
+        
+        return returnMessage;
+        
+    }
+    
+    /**
+     * Handle regular JSON-RPC Invocation
+     * @param msg
+     * @return
+     */
+    private Message handleJSONRPCInvocation (Message msg) {
         JSONObject jsonReq = (JSONObject) msg.getBody();
         String method = null;
         Object[] args = null;
@@ -112,9 +138,23 @@ public class JSONRPCWireFormatInterceptor implements Interceptor {
             Throwable exception = (Throwable)responseMessage.getBody();
             return createJSONFaultMessage(exception);
         }
-        
     }
     
+    /**
+     * handles requests for the SMD descriptor for a service
+     */
+    private Message handleSMDInvocation(Message msg) {
+        HTTPBindingContext bindingContext = msg.getBindingContext();
+        
+        String serviceUrl = bindingContext.getHttpRequest().getRequestURL().toString();
+        JavaInterface interfaze = (JavaInterface) serviceContract.getInterface();
+        String smd = JavaToSmd.interfaceToSmd(interfaze.getJavaClass(), serviceUrl);
+        
+        Message smdResponseMessage = messageFactory.createMessage();
+        smdResponseMessage.setBody(smd);
+        
+        return smdResponseMessage;
+    }
 
     /**
      * Create a Fault Message with a JSON representation of the current exception
