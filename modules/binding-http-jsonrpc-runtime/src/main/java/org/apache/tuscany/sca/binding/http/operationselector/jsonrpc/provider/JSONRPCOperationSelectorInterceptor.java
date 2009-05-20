@@ -23,6 +23,7 @@ import java.io.CharArrayWriter;
 import java.util.List;
 
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
+import org.apache.tuscany.sca.binding.http.HTTPBindingContext;
 import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
@@ -61,6 +62,11 @@ public class JSONRPCOperationSelectorInterceptor implements Interceptor {
     }
 
     public Message invoke(Message msg) {
+        
+        HTTPBindingContext bindingContext = msg.getBindingContext();
+        if ("smd".equals(bindingContext.getHttpRequest().getQueryString())) {
+            return getNext().invoke(msg);
+        }
         
         JSONObject jsonReq = null;
         String method = null;

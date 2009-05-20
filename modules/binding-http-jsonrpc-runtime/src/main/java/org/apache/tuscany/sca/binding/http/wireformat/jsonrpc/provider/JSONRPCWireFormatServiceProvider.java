@@ -85,7 +85,7 @@ public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {
             BindingRRB rrbBinding = (BindingRRB) binding;
             WireFormat wireFormat = rrbBinding.getRequestWireFormat();
             if(wireFormat != null && wireFormat instanceof JSONRPCWireFormat) {
-                return new JSONRPCWireFormatInterceptor((HTTPBinding) binding, service.getRuntimeWire(binding), messageFactory);
+                return new JSONRPCWireFormatInterceptor((HTTPBinding) binding, service.getRuntimeWire(binding), serviceContract, messageFactory);
             }
         }
         
