@@ -28,6 +28,6 @@
     <!-- Policy intents -->
     <policySet name="ps1" provides="sca:authorization" appliesTo="sca:implementation.java"/>
     
-    <!-- policySet name="ps2" provides="sca:managedTransaction.global" appliesTo="sca:implementation.java"/-->
+    <policySet name="ps2" provides="sca:managedTransaction.global" appliesTo="sca:implementation.java"/>
 	
 </definitions>
