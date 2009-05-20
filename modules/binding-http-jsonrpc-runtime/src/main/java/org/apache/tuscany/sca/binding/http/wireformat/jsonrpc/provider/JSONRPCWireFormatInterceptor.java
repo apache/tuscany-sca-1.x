@@ -84,16 +84,6 @@ public class JSONRPCWireFormatInterceptor implements Interceptor {
             msg.setBody(args);
             responseMessage = runtimeWire.getInvocationChain(msg.getOperation()).getHeadInvoker().invoke(msg);
         } catch (RuntimeException re) {
-            //FIXME Exceptions are not handled correctly here 
-            // They should be reported to the client JavaScript as proper
-            // JavaScript exceptions.
-
-            //throw new RuntimeException("Error invoking service :" + re.getMessage(), re);
-
-            //FIXME should create a fault message and stuff the JSON Result in the body of the message
-            //JSONRPCResult errorResult = new JSONRPCResult(JSONRPCResult.CODE_REMOTE_EXCEPTION, id, re);
-            //return errorResult.toString().getBytes("UTF-8");
-            
             Throwable exception = new RuntimeException("Error invoking service :" + re.getMessage(), re);
             return createJSONFaultMessage(re);
         }
@@ -114,11 +104,8 @@ public class JSONRPCWireFormatInterceptor implements Interceptor {
             }
         } else {
             //exception thrown while executing the invocation
-            //FIXME should create a fault message and stuff the JSON Result in the body of the message
             Throwable exception = (Throwable)responseMessage.getBody();
-            return createJSONFaultMessage( exception);
-            //JSONRPCResult errorResult = new JSONRPCResult(JSONRPCResult.CODE_REMOTE_EXCEPTION, id, exception );
-            //return errorResult.toString().getBytes("UTF-8");
+            return createJSONFaultMessage(exception);
         }
         
     }
