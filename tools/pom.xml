@@ -41,6 +41,7 @@
                 <module>java2wsdl</module>
                 <module>maven</module>
                 <module>wsdl2java</module>
+		<module>wsdl2java-cxf</module>
             </modules>
         </profile>
     </profiles>
