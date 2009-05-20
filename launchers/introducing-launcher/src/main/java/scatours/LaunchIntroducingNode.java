@@ -27,10 +27,10 @@ import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
-public class LaunchNode {
+public class LaunchIntroducingNode {
 
     public static void main(String[] args) throws Exception {
-        LaunchNode.launchFromFileSystemDir();
+        LaunchIntroducingNode.launchFromFileSystemDir();
     }
     
     // OK for development but you must launch the node from this module 
