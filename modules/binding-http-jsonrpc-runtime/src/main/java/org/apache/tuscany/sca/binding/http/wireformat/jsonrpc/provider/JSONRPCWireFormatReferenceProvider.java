@@ -29,6 +29,8 @@ import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentReference;
 
 /**
+ * JSON-RPC Wire Format Reference Provider
+ * 
  * @version $Rev$ $Date$
  */
 public class JSONRPCWireFormatReferenceProvider implements WireFormatProvider {

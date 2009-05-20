@@ -25,10 +25,14 @@ import org.apache.tuscany.sca.assembly.WireFormat;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 
 /**
-*
-* @version $Rev$ $Date$
-*/
+ * JSON-RPC Wire Format model
+ * 
+ * @version $Rev$ $Date$
+ */
 public interface JSONRPCWireFormat extends WireFormat {
+    /**
+     * QName representing the HTTP JSON-RPC Wire Format extension
+     */
     public static final QName WIRE_FORMAT_HTTP_JSONRPC_QNAME = new QName(Constants.SCA10_NS, "wireFormat.jsonrpc");
 
     QName getSchemaName();

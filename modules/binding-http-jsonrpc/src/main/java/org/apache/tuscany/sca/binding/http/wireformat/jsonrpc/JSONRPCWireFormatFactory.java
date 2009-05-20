@@ -20,7 +20,7 @@
 package org.apache.tuscany.sca.binding.http.wireformat.jsonrpc;
 
 /**
- *
+ * JSON-RPC Wire Format model factory
  * @version $Rev$ $Date$
  */
 public interface JSONRPCWireFormatFactory {

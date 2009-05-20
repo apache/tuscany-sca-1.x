@@ -25,9 +25,14 @@ import org.apache.tuscany.sca.assembly.OperationSelector;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 
 /**
+ * JSON-RPC Operation Selector model
+ * 
  * @version $Rev$ $Date$
  */
 public interface JSONRPCOperationSelector extends OperationSelector {
+    /**
+     *  QName representing the HTTP JSON-RPC Operation Selector extension
+     */
     public static final QName OPERATION_SELECTOR_HTTP_JSONRPC_QNAME = new QName(Constants.SCA10_NS, "wireFormat.jsonrpc");
 
     QName getSchemaName();

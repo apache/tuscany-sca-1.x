@@ -24,9 +24,9 @@ import javax.xml.namespace.QName;
 import org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormat;
 
 /**
-*
-* @version $Rev$ $Date$
-*/
+ * JSON-RPC Wire Format model implementation
+ * @version $Rev$ $Date$
+ */
 public class JSONRPCWireFormatImpl implements JSONRPCWireFormat {
     
     public QName getSchemaName() {

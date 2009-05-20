@@ -42,6 +42,8 @@ import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 
 /**
+ * JSON-RPC Wire Format Service Provider
+ * 
  * @version $Rev$ $Date$
  */
 public class JSONRPCWireFormatServiceProvider implements WireFormatProvider {

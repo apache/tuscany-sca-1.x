@@ -23,9 +23,9 @@ import org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOper
 import org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelectorFactory;
 
 /**
-*
-* @version $Rev$ $Date$
-*/
+ * JSON-RPC Operation Selector model factory implementation
+ * @version $Rev$ $Date$
+ */
 public class JSONRPCOperationSelectorFactoryImpl implements JSONRPCOperationSelectorFactory {
 
     public JSONRPCOperationSelector createJSONRPCOperationSelector() {

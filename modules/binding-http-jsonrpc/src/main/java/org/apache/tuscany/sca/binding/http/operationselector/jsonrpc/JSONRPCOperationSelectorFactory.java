@@ -21,6 +21,8 @@ package org.apache.tuscany.sca.binding.http.operationselector.jsonrpc;
 
 
 /**
+ * JSON-RPC Operation Selector model factory
+ * 
  * @version $Rev$ $Date$
  */
 public interface JSONRPCOperationSelectorFactory {

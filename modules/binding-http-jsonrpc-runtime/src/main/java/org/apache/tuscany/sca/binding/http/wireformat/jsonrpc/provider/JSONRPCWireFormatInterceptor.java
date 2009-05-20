@@ -31,6 +31,11 @@ import org.osoa.sca.ServiceRuntimeException;
 
 import com.metaparadigm.jsonrpc.JSONRPCResult;
 
+/**
+ * JSON-RPC Wire Format Interceptor
+ * 
+ * @version $Rev$ $Date$
+ */
 public class JSONRPCWireFormatInterceptor implements Interceptor {
     private Invoker next;
     

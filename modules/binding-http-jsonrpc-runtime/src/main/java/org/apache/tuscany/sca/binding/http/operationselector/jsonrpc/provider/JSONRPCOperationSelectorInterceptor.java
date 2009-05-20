@@ -33,6 +33,11 @@ import org.json.JSONObject;
 
 import com.metaparadigm.jsonrpc.JSONRPCResult;
 
+/**
+ * JSON-RPC Operation Selector Interceptor
+ * 
+ * @version $Rev$ $Date$
+ */
 public class JSONRPCOperationSelectorInterceptor implements Interceptor {
     private Invoker next;
     
