@@ -24,7 +24,7 @@ import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
-public class LaunchNode {
+public class LaunchCurrencyConverterWSNode {
 
     public static void main(String[] args) throws Exception {
         SCAContribution currencyWSContribution = 
