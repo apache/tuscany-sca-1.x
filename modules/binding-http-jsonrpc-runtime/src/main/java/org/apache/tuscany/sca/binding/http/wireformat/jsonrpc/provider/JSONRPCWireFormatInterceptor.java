@@ -110,6 +110,12 @@ public class JSONRPCWireFormatInterceptor implements Interceptor {
         
     }
     
+
+    /**
+     * Create a Fault Message with a JSON representation of the current exception
+     * @param throwable
+     * @return
+     */
     private Message createJSONFaultMessage(Throwable throwable) {
         Message jsonFaultMessage = messageFactory.createMessage();
         

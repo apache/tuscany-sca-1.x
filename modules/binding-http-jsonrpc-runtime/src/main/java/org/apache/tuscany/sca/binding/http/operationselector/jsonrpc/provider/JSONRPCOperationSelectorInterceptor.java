@@ -27,6 +27,7 @@ import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
+import org.apache.tuscany.sca.invocation.MessageFactory;
 import org.apache.tuscany.sca.runtime.RuntimeWire;
 import org.json.JSONObject;
 
@@ -38,11 +39,12 @@ public class JSONRPCOperationSelectorInterceptor implements Interceptor {
     private RuntimeWire runtimeWire;
     private HTTPBinding binding;
     
-    //TODO: Pass messageFactory to create fault messages when error occur
-    public JSONRPCOperationSelectorInterceptor(HTTPBinding binding, RuntimeWire runtimeWire) {
+    private MessageFactory messageFactory;
+    
+    public JSONRPCOperationSelectorInterceptor(HTTPBinding binding, RuntimeWire runtimeWire, MessageFactory messageFactory) {
         this.binding = binding;
         this.runtimeWire = runtimeWire;
-        
+        this.messageFactory = messageFactory;
     }
 
     public Invoker getNext() {
@@ -63,14 +65,7 @@ public class JSONRPCOperationSelectorInterceptor implements Interceptor {
             jsonReq = new JSONObject(data.toString());
             method = jsonReq.getString("method");
         } catch (Exception e) {
-            //FIXME Exceptions are not handled correctly here 
-            // They should be reported to the client JavaScript as proper
-            // JavaScript exceptions.
-            throw new RuntimeException("Unable to parse request", e);
-           
-            //FIXME should create a fault message and stuff the JSON Result in the body of the message
-            //JSONRPCResult errorResult = new JSONRPCResult(JSONRPCResult.CODE_ERR_PARSE, null, e);
-            //return errorResult;
+            Throwable exception = new RuntimeException("Unable to parse request", e);
         }
         
         Operation jsonOperation = findOperation(method);
@@ -92,9 +87,6 @@ public class JSONRPCOperationSelectorInterceptor implements Interceptor {
         }
 
         List<Operation> operations = runtimeWire.getTarget().getInterfaceContract().getInterface().getOperations(); 
-          //serviceContract.getInterface().getOperations();
-          //componentService.getBindingProvider(binding).getBindingInterfaceContract().getInterface().getOperations();
-
 
         Operation result = null;
         for (Operation o : operations) {
@@ -105,6 +97,22 @@ public class JSONRPCOperationSelectorInterceptor implements Interceptor {
         }
 
         return result;
-    }    
+    }
+    
+
+
+    /**
+     * Create a Fault Message with a JSON representation of the current exception
+     * @param throwable
+     * @return
+     */
+    private Message createJSONFaultMessage(Throwable throwable) {
+        Message jsonFaultMessage = messageFactory.createMessage();
+        
+        JSONRPCResult jsonFault = new JSONRPCResult(JSONRPCResult.CODE_REMOTE_EXCEPTION, null, throwable);
+        jsonFaultMessage.setBody(jsonFault);
+        
+        return jsonFaultMessage;
+    }
 
 }

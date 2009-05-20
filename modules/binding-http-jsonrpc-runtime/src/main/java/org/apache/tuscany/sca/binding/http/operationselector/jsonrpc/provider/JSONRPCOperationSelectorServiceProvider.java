@@ -24,14 +24,18 @@ import org.apache.tuscany.sca.assembly.BindingRRB;
 import org.apache.tuscany.sca.assembly.OperationSelector;
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
 import org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelector;
+import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.invocation.Interceptor;
+import org.apache.tuscany.sca.invocation.MessageFactory;
 import org.apache.tuscany.sca.invocation.Phase;
 import org.apache.tuscany.sca.provider.OperationSelectorProvider;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 
 public class JSONRPCOperationSelectorServiceProvider implements OperationSelectorProvider {
+    private MessageFactory messageFactory;
+    
     private RuntimeComponent component;
     private RuntimeComponentService service;
     private Binding binding;
@@ -40,7 +44,9 @@ public class JSONRPCOperationSelectorServiceProvider implements OperationSelecto
                                                    RuntimeComponent component, 
                                                    RuntimeComponentService service, 
                                                    Binding binding) {
-        super();
+        ModelFactoryExtensionPoint modelFactories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);
+        messageFactory = modelFactories.getFactory(MessageFactory.class);
+ 
         this.component = component;
         this.service = service;
         this.binding = binding;
@@ -51,7 +57,7 @@ public class JSONRPCOperationSelectorServiceProvider implements OperationSelecto
             BindingRRB rrbBinding = (BindingRRB) binding;
             OperationSelector operationSelector = rrbBinding.getOperationSelector();
             if(operationSelector != null && operationSelector instanceof JSONRPCOperationSelector) {
-                return new JSONRPCOperationSelectorInterceptor((HTTPBinding) binding, service.getRuntimeWire(binding));
+                return new JSONRPCOperationSelectorInterceptor((HTTPBinding) binding, service.getRuntimeWire(binding), messageFactory);
             }
         }
         
