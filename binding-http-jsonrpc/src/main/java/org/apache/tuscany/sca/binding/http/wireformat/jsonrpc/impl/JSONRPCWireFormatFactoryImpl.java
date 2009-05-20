@@ -24,9 +24,10 @@ import org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormatF
 
 
 /**
-*
-* @version $Rev$ $Date$
-*/
+ * JSON-RPC Wire Format model factory implementation
+ * 
+ * @version $Rev$ $Date$
+ */
 public class JSONRPCWireFormatFactoryImpl implements JSONRPCWireFormatFactory {
 
     public JSONRPCWireFormat createJSONRPCWireFormat() {

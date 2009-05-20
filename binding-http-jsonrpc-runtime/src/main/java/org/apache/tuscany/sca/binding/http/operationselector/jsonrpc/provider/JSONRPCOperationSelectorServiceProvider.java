@@ -33,6 +33,11 @@ import org.apache.tuscany.sca.provider.OperationSelectorProvider;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 
+/**
+ * JSON-RPC Operation Selector Service Provider
+ * 
+ * @version $Rev$ $Date$
+ */
 public class JSONRPCOperationSelectorServiceProvider implements OperationSelectorProvider {
     private MessageFactory messageFactory;
     

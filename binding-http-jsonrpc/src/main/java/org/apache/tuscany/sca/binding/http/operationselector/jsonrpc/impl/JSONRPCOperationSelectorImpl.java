@@ -24,9 +24,9 @@ import javax.xml.namespace.QName;
 import org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelector;
 
 /**
-*
-* @version $Rev$ $Date$
-*/
+ * JSON-RPC Operation Selector model implementation
+ * @version $Rev$ $Date$
+ */
 public class JSONRPCOperationSelectorImpl implements JSONRPCOperationSelector {
 
     public QName getSchemaName() {

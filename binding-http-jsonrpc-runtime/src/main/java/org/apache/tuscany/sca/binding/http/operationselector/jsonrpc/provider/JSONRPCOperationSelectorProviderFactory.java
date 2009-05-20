@@ -28,6 +28,11 @@ import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentReference;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 
+/**
+ * JSON-RPC Operation Selector Provider Factory
+ * 
+ * @version $Rev$ $Date$
+ */
 public class JSONRPCOperationSelectorProviderFactory implements OperationSelectorProviderFactory<JSONRPCOperationSelector> {
     private ExtensionPointRegistry extensionPoints;
 
