@@ -26,7 +26,7 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 
 import scatours.currencyconverter.CurrencyConverter;
 
-public class LaunchNode {
+public class LaunchCurrencyConverterCORBANode {
 
     public static void main(String[] args) throws Exception {
         SCAContribution currencyCORBAContribution = 
