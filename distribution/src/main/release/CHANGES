@@ -1,6 +1,538 @@
 Changes With Apache Tuscany SCA 1.5 May 2009 
 ============================================
 
+- Add dependency on jaxws (as the code now uses the Holder class) so it compiles on pre-JDK6
+- Merge branch 'tuscany-2663'
+- Remove unneeded deploy.xml and .componentType files
+- Reverting changes from revision #734356 and there was some merge conflicts that were not supposed to get to svn.
+- TUSCANY-2463 - Properly register default attribute processor to handle extended attributes
+- Exclude xsd module from base
+- Fixes for TUSCANY-2772
+-  Renaming test cases to follow same naming pattern
+- Updating testcase to JUnit 4
+- TUSCANY-2463 - Storing extended attributes in a second list, wrapped into a extension class that stores the attribute QName, it's value
+- Removing obsolet test composite
+- TUSCANY-2663 - UPdating test scenarios to split valid extended element from invalid scenario where require attribute has empty value
+- TUSCANY-2463 - Last adjustments to test processors to support the extension attribute wrapper
+- TUSCANY-2463 - Fixing model object definition for extended attribute processor
+- copy stest framework from 2.x to consider potentially reusing in 1.x
+- Tuscany 2768 - sample showing web services Holder support (input/output parameters)
+- Start adding resources for a test of folder and zip contributions which contain application jars
+- TUSCANY-2783 - Adding schema for GData binding
+- TUSCANY-2783 - Integrating GData schema to tuscany schema
+- TUSCANY-2781 - Adding schema for Corba binding
+- TUSCANY-2781 - Integrating Corba schema to tuscany schema
+- TUSCANY-2781 - Fixing Corba schema with right binding name
+- TUSCANY-2784 - Adding schema for Java EE implementation
+- TUSCANY-2784 - Integrating Java EE schema to sca schema
+- Move to a seperate itest as that makes the itest simpler
+- Add an itest for folder contributions and zip contributions containing jars
+- Demonstrate how the non-JAXWS base class can be used. Add some ignores.
+- Start looking at seperating out the JMS service side listener functions into a pluggable module so different runtime environments can plug in their own runtime specific code. This should help the geronimo plugin support JMS using the Geronimo JMS provider and JCA, and any others who are using Tuscany deeply embedded in a container. Not in the build yet or used by the current JMS binding till it gets a bit further
+- and related to r737718 a module for the current JMS binding listener code that uses the 'asf' approach of a JMS listener spawning unmanaged threads to process messages
+- TUSCANY-2794 - JMS callback property variable ends with space - not a valid Javaidentifier
+- Removing holder-ws-service from pom as it seems the sample is not available
+- Process services in component pre-processing.
+- Start to add some JMS host interfaces
+- Start to add some JMS host default implementations
+- Fixes for TUSCANY-2771
+- Make jms host an extension point
+- Make the default jms host use the jms host extension point
+- Remove unused  code
+- Add method to get the service destination to the jms host as you need that to get callbacks working
+- Implement the getDestination method in the default jms host
+- Intial cut at changing the jms binding to use the jms host for the service listener
+- Update the pom.xml to include a jms host
+- Update the pom.xml to include a jms host
+- update the jms itests to include a jms host
+- TUSCANY-2663 - Workaround for 'java.lang.IllegalStateException: The current state is not START_DOCUMENT' when in WebSphere env
+- Refactoring common code to simplify processing extended attributes
+- Adding support for extended attributes to webservices binding
+- Fixing test failures by ignoring tuscany NS when processing extended attributes
+- Adding support for extended attributes to EJB binding
+- Adding support for writing extended attributes to EJB binding
+- Adding support for extended attributes to java implementation
+- Removing System.out from WS Policy processor
+- Adding support for extended attributes to java interface
+- Adding support for extended attributes to wsdl interface
+- Remove some targetNamespace attributes
+- Remove some targetNamespace attributes
+- TUSCANY-2291, Separate the mixed callback error validation test from the other callback tests so that the error doesn't affect the rest of the tests
+- Removing obsolete dependency
+- Fixing sca.tld copy by adding rtexprvalue attribute
+- TUSCANY-2798: Add an itest for a service sending the response to the response destination defined on the jms binding element if the request message doesn't have a replyTo set
+- TUSCANY-2798: Fix the jms binding to use the destination in the binding response element when the request message has no replyto
+- TUSCANY-2776 The JMSBindingProcessor does not perform validation of binding properties
+- TUSCANY-2803 - Improvement to component matching in NodeImpl
+- TUSCANY-2463 - New test case that exercises extended attributes in bindings
+- Removing system.out from AnyAttribute test case
+- Removing unused imports
+- TUSCANY-2701  NPE when verifying conformance item ASM60006 in OASIS sepc
+- TUSCANY-2799 - don't return responses inside arrays. Generally reorg the code so that the message processors only worry about getting data in and out of JMS message while the interceptors worry about whether the data should be wrapped as an array. In this way the forward path can do array wrapping in order to keep databinding happy while the response path can omit array wrapping
+- Commit update to jms sca binding left off the change to the JMS binding to use the JMS Host
+- TUSCANY-2799 Fix NPE in JMS Object wire format when a null object is returned. Add a test also.
+- Remove target namespace from contribution.xml of distributed calculator
+- Add jms host modules to the build
+- TUSCANY-2820: start adding support for the varrious property elements on the jms binding
+- Fixes for TUSCANY-2451
+- Update validation tests for jms binidng updates
+- Correct dependency with backlevel version
+- TUSCANY-2823 Callback problem with COMPOSITE scoped implementation
+- Add support for operation property properties to binding.jms
+- Add support for resourceAdapter and its properties
+- Add support for resourceAdapter and its properties
+- TUSCANY-2821 Added JMS Binding APIs public Set&lt;String&gt; getOperationNames() and public Object getOperationProperty(String opName, String propName ).
+- TUSCANY-2463 - Fixing Web Service binding processor to propertly get a reference to Extended Attribute processor
+- Fixes for MTOM TestCase
+- TUSCANY-2824 - Turn the binding.ws policy handlers back on. The ws policy handlers are now present but commented out as they are causing problems in the Axis 1.4.1 stack. Update the keys for the binding.ws tests cases so they remain valid for a long time. 
+- TUSCANY-2835 JMS Binding does not save operation names unless there are properties.
+- Merge branch 'bpel-resolver'
+- Removing system.out used for debug
+- Fix the TLD to use jsp taglib 2.1 xsd
+- TUSCANY-2463 - Enabling extended attribute support for default sca binding
+- Apply the  TLD fix to use jsp taglib 2.1 xsd in the other copy sca.tld
+- Simplify so you can use createNode() instead of createNode(null, null)
+- Add jms itest using a response ConnectionFactory
+- Move jms responsecf itest to its own module to make it eaisier to debug
+- Remove erronious warning about response connection factory not being processed
+- TUSCANY-2841: start to add support for using a seperate response connection factory
+- Update for resource factory changes
+- Update noreply itest for change to not return Object arrays
+- Add jms noreply itest to itest build
+- Update jms response connectionFactory itest to correctly setup jndi resources
+- TUSCANY-2839: Start at supporting services invoked by oneway requests not needing a response connection factory
+- TUSCANY-2824 - turn WSSecurity based policy back on. Two not so great fixes here. Firstly WSSecurityPolicyHandler pushes a property into the Axis configuration context to force Rampart to recognize the policy. I haven't discovered what part of our configuration is required to do this properly. Secondly I fixed the helloworld-ws-service-secure test case to reference the wsdl on binding.ws. Without this you get a NPE in axis/rampart as it fails to map binding operations to port type operation using QNames (don't know why it thinks these are QNames). Our generated WSDL has the generated binding in a different namespace to the port type. Associating the wsdl binding with binding.ws means that the binding is not generated at the made up QNames match. I also updated a few key stores as the runtime was complaining about X509 certificate version numbers. 
+- Add a jms oneway itest with a nondefault connection factory
+- Set svn ignores
+- Make sure resource factory gets set before use to avoid any NPEs
+- TUSCANY-2825 JMSBindingProcessor missing 'write' method implementation
+- TUSCANY-2847 - Updating composite used to verify any element processing
+- TUSCANY-2836 remove DEFAULT_DESTINATION_NAME and DEFAULT_RESPONSE_DESTINATION_NAME and use null instead as these are just strings to indicated that there is no destination rather than being a default destination
+- Fix for TUSCANY-2846
+- Reenable a commented out test as the jira has been fixed
+- Add a JMS test for exceptions using a non-SCA JMS client. Doesn't actually test the responses yet but the framework is there to send and receive the messages to the sca service
+- UPdate jms exceptions testcase so the object format tests work
+- Add the jms nonsca excpetions test to build
+- Fixes for TUSCANY-2840
+- Change XMLTextMessageProcessor to override the createFaultMessage to handle FaultExceptions
+- Activate text and object tests in the jms nonsca client exxceptions test
+- Activate the unchecked exception test, still need to establish what the response should really look like
+- Correct test name
+- Partial fix for exceptions for sca clients using text xml wireformat
+- Update JAXWSFaultExceptionMapper to handle extra contsructor
+- Comment out failing assertions for the time being
+- Update with JIRA about the problem
+- Fix for TUSCANY-2779. Thanks zhulei for the patch.
+- Remove old test thats nolonger applicable
+- TUSCANY-2839: Add checks to bypass response processing for oneway operations
+- TUSCANY-2845: Change JMS binding so unchecked exceptions are returned as RuntimeExceptions
+- Use Logger instead e.printStackTrace
+- Fix for TUSCANY-2854: remove the use of "tempuri.org"
+- TUSCANY 2855 - Adding Holder WS Sample
+- TUSCANY-2855 Holder sample not appearing (part 2, missed a few files)
+- Fix the JAXBException if package-info annotated with @XmlSchema is present without ObjectFactory
+- Fix for TUSCANY-2702
+- Fix for TUSCANY-2860
+- Fixes for TUSCANY-2840-Part2
+- Fixes for TUSCANY-2840-Part3
+- Add a method that returns an unchecked exception
+- Add ignores
+- Commit some code to write out composite model during processing. Uncomment to use. 
+- TUSCANY-2859: Add a closeResponseConnection method to the JMSResourceFactory
+- TUSCANY-2849 Unable to define operation-level intents on binding.jms
+- TUSCANY-2861: Add an itest for sending/receiving null
+- Add jms-nulls itest to build
+- TUSCANY-2861: Fix Object wireformat to deal with receiveing a null message correctly
+- Fix already closed bug when the responseConnection is the same as the request connection
+- Fix already closed bug with oneway requests
+- Add BPEL document resolver to defer to namespace imports if document is not found in current contribution
+- Make property ids optional
+- Fix for TUSCANY-2550
+- Fix for TUSCANY-2550
+- TUSCANY-2867 - Pass checked exceptions as InvocationTargetExceptions. Don't rely on boolean fault flag for messages of object type. Thanks for the patch Kaushik
+- TUSCANY-2857 Correct handling of JMSDeliveryMode and JMSPriority
+- Improve some assembly component tests to be more specific
+- TUSCANY-2856 'property' validation conflicts with osoa spec
+- Correct the type of message that CompositeProcessor reports for a CompositeReadException and correct a few tests to take account of this and another couple of exception funnies. 
+- Fix the push/pop out of sequence issue
+- Adding new store-secure sample to exercise security policy in web 2.0 extensions
+- Adding support to enable SSL when using binding-http using Confidentiality policy intent
+- Minor cleanup on the policy properties
+- Refactoring confidentiality policy support for http bindings to it's own module
+- Updating NodeWebAppServletHost to provide new version of addServletMapping
+- Updating WebAppServletHost to provide new version of addServletMapping
+- Adding support for enabling and configuring authentication for embedded http server using policy
+- Removing empty folder
+- TUSCANY-2868 - Add more assembly/component test cases. Thanks for the patch Jun Guo
+- TUSCANY-2864 - Fix end of test comment. Thanks for the patch emily
+- TUSCANY-2874 - Add ASM_6030_TestCase - thanks for the patch Susan
+- Fix for TUSCANY-2875
+- Fix for TUSCANY-2875
+- TUSCANY-2897 JMSBinding model should be QNames not Strings
+- TUSCANY-2871 ClassCastException using atom-abdera binding
+- Only create a transport description for the JMS transport if JMS is configured to be in use. 
+- Fixes for TUSCANY-2642, 2909, 2910
+- Fixes for TUSCANY-2642
+- Remove SpringSCAPropertyElement.java.orig
+- Removing empty folder
+- TUSCANY-2905 Implement third rule which is supposed to look for an operation name in the root element of the XML payload
+- TUSCANY-2907 Stest code
+- Adding code to use full binding uri when provided, otherwise using relative path - note that code is commented out for now
+- TUSCANY-2884 - more composite vtests. Thanks for the patch Susan.
+- Updating-DWR-dependency-level-to-2.0.3
+- Placing gif jpg files used for testing in test resource folder
+- Moving to use DOJO 1.3.0b3
+- Update scn urls required by continuuns builds
+- Updating project name to help identify (1.x) versus (2.x) builds in continuuns environment
+- Fix the J2W generation issue which misses the target namespace
+- Make the artifactURI "" resolve to the sourceURL.
+- Added an EAR packaging type. Updated WAR to use PackageType.WAR.
+- o JavaEE processors to introspect WAR, JAR and EAR files and create model objects
+- Missing and wrongly placed license headers.
+- Updated the methods to throw ContributionReadException.
+- Java EE Introspection code using OpenEJB.
+- URI "" corresponds to the archive as an artifact.
+- Fix a regression caused by r755474
+- Use the JavaEE optional extension to compute SCA references and SCA properties from Remote EJB3 references and EnvEntries.
+- Use the JavaEE extensions to compute SCA services, SCA references and SCA properties from EJB3 business interfaces, Remote EJB3 references and EnvEntries.
+- Only introspect the fault type if the JAXWS interface processor hasn't figured out the databinding
+- Produce xsi:type for local elements
+- Add contribution-jee to the build to avoid break
+- Removing obsolete schema file for binding-gdata
+- Removing @author per Apache best practices
+- Adding support for Jaas authentication policy to component services
+- Removing system.out debug message
+- Wrapping the invocation with a message, in order to pass extra information during invocation
+- Removing @author per Apache best practices
+- Properly handling business/runtime exception with new invocation method
+- Small method name change
+- Removing unused imports
+- Adding support for LDAP Realm authentication policy
+- Adding support for LDAP Realm authentication policy
+- Fixes for TUSCANY-2914
+- Fixes for TUSCANY-2922
+- Fixes for TUSCANY-2922
+- TUSCANY-2923 Stest code ASM_0024 - ASM_0043
+- TUSCANY-2926 Stest code invalid ignore tag
+- Use the JavaEE extensions to compute SCA services, SCA references and SCA properties from EJB3 business interfaces, Remote EJB3 references and EnvEntries.
+- TUSCANY-2932 Throw org.apache.tuscany.sca.data.collection.NotFoundException on 404 errors if AtomReferenceBindingProvider.supportsFeedEntries() is false
+- TUSCANY-2931 - Start of test for different in request and response wire formats. Infrastructure not working properly just yet. 
+- Do not throw exception if the jar is not an EJB jar.
+- TUSCANY-2932 Correctly handle NotFoundException as a 404 in AtomBindingListenerServlet
+- Adding module to the build.
+- TUSCANY-2935 Integration tests for Java EE contribution processing
+- TUSCANY-2933 - Runtime changes to properly define widget functions in it's own namespace
+- TUSCANY-2933 - Updating photo-gallery sample to use widget Java Script fuctions in the new tuscany.sca namespace
+- TUSCANY-2933 - Updating store sample to use widget Java Script fuctions in the new tuscany.sca namespace
+- TUSCANY-2933 - Updating store samples to use widget Java Script fuctions in the new tuscany.sca namespace
+- TUSCANY-2933 - Updating domain manager ui to use widget Java Script fuctions in the new tuscany.sca namespace
+- TUSCANY-2933 - Updating store tutorial to use widget Java Script fuctions in the new tuscany.sca namespace
+- TUSCANY-2933 - Updating widget test html to use widget Java Script fuctions in the new tuscany.sca namespace
+- Store scenario using widget packaged as a webapp
+- Adding store-webapp to build
+- TUSCANY-2838 - Updating implementation widget to properly register component java script in a webapp environment
+- TUSCANY-2838 - Missing files required by implementation widget to properly register component java script in a webapp environment
+- Update scadomain to support passing in the default port in the domain uri
+- TUSCANY-2936 Extension point API for Java EE
+- Commenting out since an issue in openejb is resulting in problems with WAR processing.
+- Set some svn ignores
+- TUSCANY-2936 Extension point API for Java EE
+- Minor formatting
+- Adding provided binding URI to avoid issues when service is deployed in a webapp environment
+- Minor formatting and removing unused imports
+- Adding test case to test atom feed reference using generic collection interface
+- Move JAAS service policy provider from binding wire to the operation wire
+- add some ignores
+- add some ignores
+- Set svn ignores
+- TUSCANY-2918, Update jms support so that the service listener can be pluggable via host-jms
+- Move fault type introspection to the the fault mapper
+- Fixes for TUSCANY-2906
+- Fixes for TUSCANY-2941
+- Don't fall over if there is no introspector, e.g. if contribution-jee-impl is not loaded
+- TUSCANY-2931 - allow separate request and response wire formats in binding.jms. The tuscany binding.jms XSD has been extended to allow a response wireFormat element to be specified. The knock on effect of all this is that the Operation interface has been changed to allow input and output wrapper info to be held separately. Also Interface has some new operations. There are changes across the code base to take account of this interface change. 
+- Add a namespace to the missing component type composite
+- Remove these files as they are no longer required. Replaced by RRB... versions.
+- Example of how we could describe what exceptions are expected in stests
+- Take testcase out of build as its now broken, see TUSCANY-2942
+- Add jira number
+- Take testcase out of build as its broken, see TUSCANY-2943
+- Take store-test out of build as its broken, see TUSCANY-2944
+- Remove old "getWireFormatInterfaceContract" operation
+- Take fialing tests out of build, see TUSCANY-2945
+- TUSCANY-2934 - wire up the wire format writers
+- TUSCANY-2937 - Renaming FeedAggregatorTestCase and adding @Ignore on failing tests as described in jira
+- TUSCANY-2837 - Adding Javascript extension points to be used by implementtion.widget and any web related extensions that have Javascript proxy dependencies
+- TUSCANY-2837 - Updates to start using Javascript extension points to generate js client proxies
+- TUSCANY-2837 - Atom Binding Javascript extension point implementation
+- TUSCANY-2837 - JSONRPC Binding Javascript extension point implementation
+- TUSCANY-2837 - Updating sample app dependencies to add javascript dependencies for atom and jsonrpc bindings
+- TUSCANY-2837 - Adding new modules to build
+- TUSCANY-2837 - Adding javadoc comments to JavascriptProxyFactory
+- TUSCANY-2837 - Extending Javascript extension to provide the js proxy client file
+- Removing duplicated file that is already available in main/resources
+- TUSCANY-2837 - Adding new js dependencies
+- TUSCANY-2837 - Adding new js dependencies
+- TUSCANY-2946, take failing test out of build
+- TUSCANY-2947, take itest out of build as its failing
+- TUSCANY-2948, take jms-format test out of build for now
+- TUSCANY-2944 don't raise NPE if the component type model cannot be determined
+- TUSCANY-2950 enclose etags in speech marks
+- TUSCANY-2937 uncomment ignored tests as underlying etag issue is fixed under TUSCANY-2950.
+- Workaround the jaxws-api maven issue (merged from 2.x)
+- TUSCANY-2944 - Enable tests as recent changes from slaws in revision #759149 fixes the problems we were seeing.
+- TUSCANY-2931 - update operation matching to be based on operation name. Add a complex type based interface back into to the test case. 
+- Process SCA Property and Reference annotations.
+- TUSCANY-2935 Integration tests for Java EE contribution processing
+- Reversing the changes committed accidentally in the last commit.
+- Put back the TUSCANY-2946 failing test into the build to see if anyone else gets it
+- Fixes for TUSCANY-2945, 2947, 2948
+- Fixes for TUSCANY-2945, 2947, 2948
+- Fixes for TUSCANY-2945, 2947, 2948
+- Added the missing JSP spec dependency.
+- Set svn:ignore
+- Set svn:ignore
+- Make sure SCA domain is closed 
+- Move the componentType files into the resource folder so that maven copy them into the target/classes
+- Removing obsolet place holder module
+- Removing eclipse/maven generated files
+- TUSCANY-2878 - New extensions to generate javascript proxies when using dojo
+- TUSCANY-2878 - Module responsible to add register dojo toolkit in web environment under '/dojo'. This is usefull in embedded environment
+- TUSCANY-2878 - JavaScript Generator extension point. Used by implementation.widget to allow multiple implementations of js generator (e.g. tuscany specific and dojo based)
+- TUSCANY-2878 - Changes to support new JavaScript Generator extension point and new generators for tuscany specific scripts and dojo toolkit
+- TUSCANY-2878 - New store sample app using dojo version of implementation widget
+- TUSCANY-2878 - Adding new modules and sample apps to build
+- TUSCANY-2878 - Removing obsolete file
+- TUSCANY-2878 - Adjusting modules to add implementation-widget-runtime-tuscany as dependency
+- TUSCANY-2878 - Adjusting modules to add implementation-widget-runtime-tuscany as dependency
+- TUSCANY-2878 - Moving tests to implementation-widget-runtime-tuscany and minor pom adjusts
+- TUSCANY-2955 SCA annotation processing for impl.web, impl.ejb, impl.jee
+- Moving Erlang binding to 1.x branch
+- TUSCANY-2935 Integration tests for Java EE contribution processing
+- TUSCANY-2878 - Missed module activator files from last committs
+- TUSCANY-2878 - Renaming resource bundle used by monitor to match name expected in code
+- svn propset svn:ignore
+- svn propset svn:ignore
+- svn propset svn:ignore
+- TUSCANY-2878 - Missed dojo javascript generator from last commit
+- TUSCANY-2878 - Missed dojo javascript extension poing to atom binding
+- TUSCANY-2878 - Missed dojo javascript extension poing to jsonrpc binding
+- TUSCANY-2956 Java EE Archive introspection
+- TUSCANY-2878 - Removing unnecessary .Service from generated dojo jsonrpc javascript proxy
+- TUSCANY-2878 - Moving dojo.requires to before store.js and fixing invocation of services to follow dojo pattern
+- TUSCANY-2878 - Moving dojo resources to it's own folder to avoid issues with clean target that was removing other non-dojo resources. 
+- TUSCANY-2956 Java EE Archive introspection
+- TUSCANY-2935 Integration tests for Java EE contribution processing
+- TUSCANY-2935 Integration tests for Java EE contribution processing
+- Added configurable thread pools, fixed problem with ReferenceServiceTestCase.testMultipleMethod() test case, added writing to binding processor - problems with testing
+- TUSCANY-2935 Integration tests for Java EE contribution processing
+- Minor typo on method declaration
+- Renaming core-web-xxx modules to web-javascript-xxx modules
+- Refactoring javascript extension points packages to follow the same naming pattern used by it's modules.
+- Fix minor copy error in input vs. output var name
+- Set svn:ignore and update the module names
+- Make the openejb version consistent and fix the NPE &amp; UnsupportedModuleType
+- Comment out the test case due to TUSCANY-2957
+- Make sure the outputWrapperStyle is set
+- TUSCANY-2952, fix jms listener to work in weblogic 10.x
+- Copy zip/folder nested jar support change from 2.x to 1.x
+- Added a configuration to work around http://jira.codehaus.org/browse/MECLIPSE-544
+- TUSCANY-2862 - Fixing issues when calculating contribution location and provided composite had spaces
+- TUSCANY-2862 - Fixing URI issues when processing jar contributions that had artifacts with space on it's name
+- TUSCANY-2862 - Further changes to handled folder contributions that have artifacts with space in the name
+- Fix TUSCANY-2957
+- Add remotable check to avoid perf penality from Holder processing for local calls
+- TUSCANY-2938 - Fixing how we calculate request path based on contextPath and ServletPath to make operations working in both embedded and webapp hosted environment
+- TUSCANY-2871 - Providing better exception when feed entry is not supported
+- Refacroting testcase to use same package pattern for the module
+- Removing empty directory
+- Removing empty directory
+- TUSCANY-2958 JEEImplementationImpl, WebImplementationImpl and EJBImplementationImpl need to implement PolicySetAttachPoint
+- General improvements for messaging, fixed some issues regarding communication with real Erlang nodes
+- Change to use port 8085 as 8081 has a conflict on the continuum server
+- Change JMS server port to try to avoid conflict on continuum server
+- Add a println of the problem to see what it says when running on the continuum machine as the test is assing for me
+- Exclude the module that has conflicting classes with the JDK
+- Separate the contribution JEE sample scenarios from the contribution JEE itests so we can see the source for the samples and more easily mix and match to construct the various combinations required. Add a new test relating to a single sample scenario to explore the problem with classloading where the JEE archive classloader is not available during contribution resolution. 
+- Set a bunch of svn ignores
+- Messaging improvements
+- TUSCANY-2851, start of an itest for exceptions in Java component initilization
+- Add more complete test for the various lifecycle exceptions
+- TUSCANY-2851, fix exceptions during init processing of java components to call destroy
+- Use explicit version to fix continuum build
+- Use explicit verison to fix continuum build
+- Change to port 8085 to avoid conflict on continuum build
+- Change some jms ports to try to fix continuum build conflicts
+- Change some jms ports to try to fix continuum build conflicts
+- Comment out tests which don't work on continuum build machine
+- TUSCANY-2972 - Sample code for fixing up classloaders for JEE archives. No where near done yet but allows us to experiment and explore the problems.
+- Added support for Erlang Atoms
+- Try another port for the continuum machine build
+- Comment out the http service as its not used by the test an seems to ause a problem in continuum
+- Bump up 1.x trunk version to 1.6-SNAPSHOT
+- General improvements
+- TUSCANY-2976: Apply patch from Greg Dritschler to Remove default 'ConnectionFactory' in JMSBinding model
+- TUSCANY-2972 instigate contribution type specific class loading to allow the JEE classloader to be used independently of jar, zip, dir classloading schemes
+- Start adding some more JEE samples. No guarantee that these actually work yet as I haven't run them in a JEE runtime but a place to start. 
+- Start of a testcase which show implemntation.jee pointing at an ear is processed correctly
+- Add test dependency
+- It should be EAR instead of EJB.
+- Type should be WAR instead of EAR.
+- Set the EJB classloader in EJBModuleInfo.
+- Move testcase to an itest
+- New itest for jee external ear's
+- Set svn ignores
+- Update to introspect external ear archives
+- Rename testcase as it works now (as long as you've the NPE fixed openejb jar)
+- Add exclusion to avoid the conflicting jdk classes from felix
+- Add "Extensible" support for the ContributionMetaData/Contribution/Import/Export models (TUSCANY-2983)
+- TUSCANY-2968 - Creating a new http binding based on current tuscany one
+- Removing unecessary @Ignore
+- TUSCANY-2968 - Adding new binding processor and making necessary adjustment to move to spec namespace
+- Adding gdata dependencies to LICENSE file (copied from 1.4 release)
+- Updating pom version to reflect changes made in trunk in preparation for release
+- TUSCANY-2968 - Adding module to handle json-rpc wireformat and initial support for it
+- Add an external ear modelresolver approach to the jee itest
+- Improve the handling of INOUT and OUT parameters using JAX-WS Holder
+- Remove bundle module from the pom.xml as it's now moved
+- Put back distribution/bundle that was inadvertently removed in r766999
+- Put back distribution\bundle into the build
+- TUSCANY-2930 main part of separating wireFormat.jmsdefault out from wireFormat.jmsTextXML. I've spotted a few more things that need fixing but this basic functionality passes all of our current JMS tests and now better matched what the specification says about default format.
+- TUSCANY-2930 extend default format test for the chase where default is specified on reference but not on the service
+- Move the JAX-WS holder testing logic to interface-java-jaxws
+- TUSCANY-2986 - move the callback processing into a separate interceptor to allow other operation selectors to use it. Don't have any others just yet but about to add another one. 
+- TUSCANY-2987 code to make nativeOperation based operation selection work and add new operation selector (jmsUser) that allows you to specify what JMS message property holds the operation name. No test cases yet. 
+- TUSCANY-2977 determine implementation.jee component type from application composite if one is available
+- o Updated artifactId to the correct (long) one.
+- TUSCANY-2987, TUSCANY-2964. Rename operation selector that allows the user to specify which message property holds the operation name. Add tests cases for this and the default selector. Rename default selector to be all lowers case (it's still in the Tuscany namespace though)
+- TUSCANY-2965 - add a jmsBytesXML wireFormat analogous to jmsTextXML
+- TUSCANY-2966 - reset bytes message after read in operation selector so that following wire format can re-read bytes if required. 
+- Update the tuscany part of the JMS binding schema to take account of recent wireFormat and opertionSelector changes. These schema type are not wired into the binding.jms schema at the moment (we rely on anys) but it's useful to keep track of the shape of these elements. 
+- Add some ignores
+- TUSCANY-2626 - add EndpointReference back into the binding.ws schema. This is not the wsa:EnpointReference though. To get this to work I have had  EndpointReference goes in the target namespace. The code to read EndpointReference still reads wsa:EndpointReference so this shouldn't break anyone already using that but at least it gives the reader an idea about what can validly go in the schema. 
+- Fix the ArrayOutofBoundException that causes the hang of itest/helloworld-bpel
+- set svn:ignore
+- Make sure the default mode is set to INOUT if the type is Holder.class
+- TUSCANY-2626 add file missed in previous commit for this JIRA
+- The war file generated by the jee sample project has a long name.  Updating the url accordingly.
+- Code update to support external EAR has broken this test. Ignoring the test for now.
+- TUSCANY-2953 Fix sca.tld in branches-1.x
+- Uncommenting contribution-jee itest.
+- TUSCANY-2997 - Removing unecessary load of dojo base component
+- TUSCANY-2998 - Fixing sample usage of dojo based JavaScript proxies to avoid issues when invoking shopingCart service (e.g loading shoopingCart contents)
+- TUSCANY-2999 - Fixing property initialization in implementation widget
+- TUSCANY-2968 - Adding model and processors for JSONRPC Operation Selector
+- TUSCANY-2968 - Starting to bring up JSON RPC runtime pieces as wire format for binding.http
+- Add an itest for setting the JMS Time-To-Live header
+- Remove unused xsds
+- Add exclusion to avoid the conflicting jdk classes from felix
+- Make sure the checked exception is tested against the target operation
+- MOving data-engine-helper to contrib
+- Removing data-engine-helper from pom as it was moved to contrib
+- Fix for TUSCANY-3000
+- Add a apace for the error message
+- Fix the clone()
+- TUSCANY-2996 - Add support for wrapSingle attribute that, when set true, ensures that single parameters are wrapped in an array on the wire. When set false single parameters will not be wrapped on the wire. Multiple parameters will always be wrapped. 
+- Add ignore
+- TUSCANY-2965 - add fault handling code for wireFormat.bytesXML
+- TUSCANY-2993 Fix global variable handling that was causing store-dojo to fail with internet explorer
+- Move the Holder logic into JAXWS interface processor
+- Start to add contribution level SDO type registration
+- Set svn:ignore
+- Add annotation dependency as the provided scope is not transitive
+- Update to cargo plugin 1.0
+- Refactor the data transformation and copy logic into Mediator utility
+- Add jee contribution samples to the build as the contribution-jee itest depends on it
+- TUSCANY-3002: fix writeStartElement calls in JMSBindingProcessor do not pass namespace
+- Clean up imports
+- TUSCANY-3006 - Disabling failing test cases
+- TUSCANY-2968 - Updating binding-http schema and moving wireFormat and operationSelector to tuscany-sca-core.xsd to be sharable
+- TUSCANY-2968 - Changing binding to tuscany namespace and other small updates
+- TUSCANY-2968 - Renaming new binding.http module to avoid confusion with the oasis draft, as we are not really implementing the whole spec but just following the wireFormat and operationSelector options implemented in binding.jms
+- Double the time the test waits for the time to live to be set into the initial context as it's failing on my machine with the existing timeout. 
+- TUSCANY-2978 - Add some more sample archives based on the scenarios here http://cwiki.apache.org/confluence/display/TUSCANYWIKI/Java+EE+Integration
+- TUSCANY-2978 - Add test code to exercise new JEE sample archives including code to show how to process an archive that appears outside of the contribution that references it. See TestExternalEarModelResolver.java. Some jee processing changes were required to make this work.
+- TUSCANY-3008 disable reference test in testContributeEAR_Enhanced16 until this problem is fixed
+- Remove the unused mediator lookup
+- TUSCANY-2968 - JSONRPC operation selector
+- TUSCANY-2968 - Moving unit tests to iTest to avoid circular references
+- TUSCANY-2968 - Further changes trying to add the json-rpc wireformat and operation selector interceptors to the invocation chain
+- TUSCANY-2968 - Minor update to make serice providers follow the same implementation pattern
+- Set context for mediateFault as well.
+- Fixing NPE when no operation provided when creating invoker
+- TUSCANY-2968 - Discovering and adding wire format and operation selector interceptors via extension point, but inside binding provider
+- TUSCANY-2968 - JSONRPC invocation using operation selector and wire formats working end to end
+- TUSCANY-2968 - Enabling test that invoke remote jsonrpc services using the new operation selector/wire format implementation
+- TUSCANY-2968 - Adding databinding dependencies to integration tests
+- TUSCANY-2968 - Setting JSON dataBinding on service interface contract
+- TUSCANY-2968 - Enabling more tests that are currently passing
+- Add host-jetty dependency as binging-http needs are servlet host. For some reason this test works OK in Eclipse but doesn't work in Maven. So eclipse is picking up the jetty dependency from somewhere else. Ass some ignores also. 
+- Tidy comment
+- TUSCANY-3005 - Take account of the case where there are either no input parameters or a void return type (or both). Thanks for the patch Kaushik.
+- TUSCANY-2968 - Fixing data binding related issues to properly transform to/from json format as needed
+- USCANY-2968 - Enabling more tests that are currently passing
+- TUSCANY-2968 - Fixing exception handling issues to properly report exceptions as json error responses
+- USCANY-2968 - Enabling more tests that are currently passing
+- Small clean up and formatting on tests
+- TUSCANY-2968 - Fixing NPE with pure http binding
+- Removing unwanted files, got in accidentaly
+- Renaming Spring modules as old
+- Refactoring Spring module
+- moving spring-runtime to spring-sca
+- Refactoring Spring Module
+- Changing Spring Dependencies
+- Refactoring Spring Module
+- Refactoring Spring Module
+- TUSCANY-2959 - Store-android patch from Sanni Lookman
+- Adding missing Apache headers to store-android
+- Restoring catalog activity as backup/reference
+- TUSCANY-2900 - Add code to generate JMS binding and service/port to generated wsdl. Add itest to explore the different ways of configuring generated WSDL. 
+- TUSCANY-3011 correct JMS binding XSD to make OperationalProperties/Headers optional as per the OSOA spec
+- Performance enhancement to avoid processing the deployable composite twice when starting a node
+- Add a new soap/jms transport module copied from the Apache WS Commons transports but with the code backported to work with Axis2 1.4.1
+- Merging changes from binding-http-new that introduces support to wire format and operation selector to the main binding-http.
+- Fix for TUSCANY-2962
+- Leverage optimization from the Axiom 1.2.7
+- Remove unused classes
+- Merging HTTPBindingProcessor from binding-http-new that introduces support to wire format and operation selector to the main binding-http.
+- Renaming binding-http-new-jsonrpc* to binding-http-jsonrpc*
+- Adjusting pom with recent module name refactoring/changes
+- Removing obsolete modules that have been merged or renamed.
+- Fix for TUSCANY-3017
+- Abandon trying to use the new Axis2 JMS transport for now as its proving too messy tryingto backport it to the 1.4.1 release. Now trying a new approach which modifies the JMS transport from Axis2 1.4.1
+- Start bringing up Tuscany version of JMS transport so the setMessageListener not allowed in a JEE container can be fixed
+- Add support for using Tuscany threads instead on setMessageListener in a JEE container environment
+- Fix NPE bug in TUSCANY-2962 fix
+- TUSCANY-2967 Fix up just jmsBytes wire format to return exceptions as bytes to see if this is what we want
+- TUSCANY-3031 Ensure that JMS wire formats that don't required a data transformation work when interface.wsdl is used. Use the component type interface rather than the service
+- A tool to save to disc the WSDL for each service, with binding.ws, within all of the deployable composites in a specified contribution
+- Exclude work session.ser from build
+- Add missing license headers
+- Add missing license headers
+- Rename tests and add license header
+- Add missing license header
+- Add missing license header
+- Exclude cruft from bin distro
+- Excelude multiple sca bindings from bundle build
+- Exclude bouncycastle
+- Update legal files
+- Remove provided csope from spring dependencies
+- Add spring runtime module
+- Mereg bouncy castle excludes from 1.5 to 1.x
+- Exclude dojo files
+- TUSCANY-3030 if the fault exception mapper is null try getting it from the registry before returning the fault unmapped. This takes care of the case there the mapper is null just because the JavaRuntimeModuleActivator is started before the DatabindingModuleActivator
+- TUSCANY-3032 - fix binding.ejb schema so that ejb-link-name is a string not an NCName
+- Correct typo in exclude
+- TUSCANY-3025 - Appying Sanni Lookman patch plus small fixes to make it run successfully
+- TUSCANY-2967 - to aid investigation of possible exception processing refactoring enhance format tests to test checked and unchecked exceptions. Also add a wf.jmsText test.
+- Do BytesMessage.reset() on BytesMP, DefaultMP to be consistent across wire formats.
+- Apply patch for TUSCANY-3033 from Pradeep. Thanks.
+- Removing obsolete FIXME tags, as exceptions are handled ok on wireFormat interceptor already
+- Reporting fault message with exception in json representation, when jsonrpc operation selector interceptor can't parse json request
+- Updating java doc for HTTP JSON-RPC wireformat/operation selector extensions
+- Properly handle SMD requests in JSON-RPC wire format/operation selector
+- Reverting changes as this would make sample stop working due to TUSCANY-3042
+- Add jms host to bundle to fix running jms samples
 
 Changes With Apache Tuscany SCA 1.4 December 2008 
 ==================================================
