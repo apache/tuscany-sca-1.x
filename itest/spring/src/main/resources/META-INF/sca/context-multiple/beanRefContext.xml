@@ -28,6 +28,7 @@
 	   <constructor-arg>
 		  <list>
 			 <value>META-INF/sca/context-multiple/StockQuoteService-context.xml</value>
+			 <value>META-INF/sca/context-multiple/SpringHelloWorld-context.xml</value>
 		  </list>
 	   </constructor-arg>
     </bean>

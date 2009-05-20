@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,20 +15,24 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-	xmlns:sca="http://www.osoa.org/xmlns/sca/1.0"
-	targetNamespace="http://stockquote"
-	xmlns:hw="http://stockquote"
-    name="StockQuote">
-    
-    <service name="StockQuoteService" promote="StockQuoteServiceComponent">
-        <interface.java interface="bigbank.stockquote.StockQuoteService"/>
-        <binding.ws uri="http://localhost:8085/services/StockQuoteWebService"/>
-    </service>
+ */
 
-    <component name="StockQuoteServiceComponent">
-        <implementation.spring location="META-INF/sca/context-multiple/beanRefContext.xml"/>
-    </component>
+package helloworld;
 
-</composite>
+/**
+ * A simple proxy Java class which implements the HelloWorld interface but which uses
+ * a reference "delegate" to actually provide the HelloWorld service
+ *
+ * @version $Rev$ $Date$
+ */
+public class HelloWorldImpl implements HelloWorld {
+
+    static String hello = "Hello ";
+
+    public String sayHello(String s) {
+        // Simply call the reference to satisfy the service request...
+        System.out.println("HelloWorldImpl - sayHello called");
+        return (hello + s);
+    }
+
+}

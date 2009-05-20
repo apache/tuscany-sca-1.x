@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,20 +15,22 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-	xmlns:sca="http://www.osoa.org/xmlns/sca/1.0"
-	targetNamespace="http://stockquote"
-	xmlns:hw="http://stockquote"
-    name="StockQuote">
-    
-    <service name="StockQuoteService" promote="StockQuoteServiceComponent">
-        <interface.java interface="bigbank.stockquote.StockQuoteService"/>
-        <binding.ws uri="http://localhost:8085/services/StockQuoteWebService"/>
-    </service>
+ */
 
-    <component name="StockQuoteServiceComponent">
-        <implementation.spring location="META-INF/sca/context-multiple/beanRefContext.xml"/>
-    </component>
+package sca.services;
 
-</composite>
+import org.apache.tuscany.sca.itest.spring.AbstractHelloWorldTestCase;
+
+/**
+ * A basic test case of:
+ * 1) A composite containing a component with a Spring implementation
+ * 2) The composite has a component with a Java POJO implementation which uses the
+ * Spring implementation to satisfy a reference
+ * 3) The <implementation.spring.../> element references an application context that
+ * uses an explicit sca: element to identify the service offered by the Spring application
+ *
+ * @version $Rev$ $Date$
+ */
+public class SpringExplicitServiceTestCase extends AbstractHelloWorldTestCase {
+    // super class does it all getting composite based on this class name
+}
