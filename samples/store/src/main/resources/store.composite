@@ -28,19 +28,13 @@
         	<t:binding.http uri="/store"/>
         </service>
 		<reference name="catalog" target="Catalog">
-		 	<t:binding.http>
-		 	   <t:wireFormat.jsonrpc/>
-		 	   <t:operationSelector.jsonrpc/>
-		 	</t:binding.http>
+		 	<t:binding.jsonrpc/>
 		 </reference>
 		 <reference name="shoppingCart" target="ShoppingCart/Cart">
 		 	<t:binding.atom/>
 		 </reference>
 		 <reference name="shoppingTotal" target="ShoppingCart/Total">
-		 	<t:binding.http>
-		 	   <t:wireFormat.jsonrpc/>
-		 	   <t:operationSelector.jsonrpc/>
-		 	</t:binding.http>
+		 	<t:binding.jsonrpc/>
 		 </reference>
     </component>
     
@@ -48,10 +42,7 @@
 		<implementation.java class="services.FruitsCatalogImpl"/> 
 		<property name="currencyCode">USD</property>
 		<service name="Catalog">
-		 	<t:binding.http>
-		 	   <t:wireFormat.jsonrpc/>
-		 	   <t:operationSelector.jsonrpc/>
-		 	</t:binding.http>
+			<t:binding.jsonrpc/>
    		</service>
 		<reference name="currencyConverter" target="CurrencyConverter"/>	
 	</component> 
@@ -62,10 +53,7 @@
 			<t:binding.atom uri="/ShoppingCart/Cart"/>
 		</service>    	
 		<service name="Total">
-		 	<t:binding.http>
-		 	   <t:wireFormat.jsonrpc/>
-		 	   <t:operationSelector.jsonrpc/>
-		 	</t:binding.http>
+			<t:binding.jsonrpc/>
 		</service>    	
 	</component>
     
