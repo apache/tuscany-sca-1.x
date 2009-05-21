@@ -50,9 +50,7 @@
                           <goal>wsimport</goal>
                       </goals>
                       <configuration>
-                          <wsdlUrls>
-                              <wsdlUrl>http://localhost:8080/CurrencyConverter?wsdl</wsdlUrl>
-                          </wsdlUrls>
+                          <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
                           <packageName>scatours.curencyconverter.client</packageName>
                       </configuration>
                   </execution>
