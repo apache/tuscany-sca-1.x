@@ -37,6 +37,7 @@
             </activation>
             <modules>
                 <module>creditcard-payment-jaxws-service</module>
+                <module>smsgateway-jaxws-service</module>
             </modules>
         </profile>
 
