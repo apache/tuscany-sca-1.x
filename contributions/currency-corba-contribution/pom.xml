@@ -25,8 +25,8 @@
         <version>1.5-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>scatours-currency-contribution-rmi</artifactId>
-    <name>Apache Tuscany SCA Tours Currency Converter Contribution With RMI Binding</name>
+    <artifactId>scatours-currency-corba-contribution</artifactId>
+    <name>Apache Tuscany SCA Tours Currency Converter Contribution With CORBA Binding</name>
 
     <dependencies>
         <dependency>

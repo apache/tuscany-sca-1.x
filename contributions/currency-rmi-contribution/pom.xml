@@ -25,16 +25,10 @@
         <version>1.5-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>scatours-currency-contribution-ws</artifactId>
-    <name>Apache Tuscany SCA Tours Currency Converter Contribution With Web Service Binding</name>
+    <artifactId>scatours-currency-rmi-contribution</artifactId>
+    <name>Apache Tuscany SCA Tours Currency Converter Contribution With RMI Binding</name>
 
     <dependencies>
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-embedded</artifactId>
-            <version>1.5-SNAPSHOT</version>
-        </dependency>
-
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-java-runtime</artifactId>

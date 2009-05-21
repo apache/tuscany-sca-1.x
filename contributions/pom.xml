@@ -41,9 +41,9 @@
                 <module>common-contribution</module>
                 <module>creditcard-payment-jaxb-contribution</module>
                 <module>currency-contribution</module>
-                <module>currency-contribution-corba</module>
-                <module>currency-contribution-rmi</module>
-                <module>currency-contribution-ws</module>
+                <module>currency-corba-contribution</module>
+                <module>currency-rmi-contribution</module>
+                <module>currency-ws-contribution</module>
                 <module>emailgateway-contribution</module>
                 <module>flight-contribution</module>
                 <module>fullapp-ui-contribution</module>
