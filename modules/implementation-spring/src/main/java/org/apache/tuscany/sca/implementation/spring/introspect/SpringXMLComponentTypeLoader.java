@@ -24,7 +24,6 @@ import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -177,14 +176,11 @@ public class SpringXMLComponentTypeLoader {
             URL resource = getApplicationContextResource(location, cl);            
             // FIXME - need a better way to handle the XMLInputFactory than allocating a new one every time
             XMLInputFactory xmlFactory = XMLInputFactory.newInstance();
-            XMLStreamReader reader = 
-            	xmlFactory.createXMLStreamReader(new FileInputStream(new File(resource.toURI())));
+            XMLStreamReader reader = xmlFactory.createXMLStreamReader(resource.openStream());
             return reader;
         } catch (IOException e) {
             throw new ContributionReadException(e);
         } catch (XMLStreamException e) {
-            throw new ContributionReadException(e);
-        } catch (URISyntaxException e) {
             throw new ContributionReadException(e);
         }
     }    
