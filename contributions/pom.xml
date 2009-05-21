@@ -53,6 +53,7 @@
                 <module>introducing-tuscanyscatours-contribution</module>
                 <module>notification-contribution</module>
                 <module>notification-ws-contribution</module>
+                <module>notification-corba-contribution</module>
                 <module>shoppingcart-contribution</module>   
                 <module>travelcatalog-contribution</module>         
                 <module>tripbooking-contribution</module>
