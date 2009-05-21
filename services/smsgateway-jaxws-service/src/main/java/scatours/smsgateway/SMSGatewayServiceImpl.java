@@ -20,8 +20,7 @@ package scatours.smsgateway;
 
 import javax.jws.WebService;
 
-@WebService(endpointInterface 
-        = "scatours.smsgateway.SMSGatewayService")
+@WebService(endpointInterface = "scatours.smsgateway.SMSGatewayService")
 public class SMSGatewayServiceImpl implements SMSGatewayService {
 
     public boolean sendSMS(String fromNumber, String toNumber, String text) {
