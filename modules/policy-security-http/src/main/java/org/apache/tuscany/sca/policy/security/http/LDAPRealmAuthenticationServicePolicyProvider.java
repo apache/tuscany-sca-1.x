@@ -29,6 +29,7 @@ import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Phase;
 import org.apache.tuscany.sca.policy.PolicySet;
+import org.apache.tuscany.sca.policy.authorization.AuthorizationPolicy;
 import org.apache.tuscany.sca.provider.PolicyProvider;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
@@ -59,16 +60,18 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
     }
 
     public Interceptor createInterceptor(Operation operation) {
-        List<LDAPRealmAuthenticationPolicy> policies = null;
+        List<LDAPRealmAuthenticationPolicy> authenticationPolicies = null;
+        List<AuthorizationPolicy> authorizationPolicies = null;
 
         if (operation != null) {
-            policies = findPolicies(operation);
+            authenticationPolicies = findAuthenticationPolicies(operation);
+            authorizationPolicies = findAuthorizationPolicies(operation);
         }
 
-        if (policies == null || policies.isEmpty()) {
+        if (authenticationPolicies == null || authenticationPolicies.isEmpty()) {
             return null;
         } else {
-            return new LDAPRealmAuthenticationInterceptor(policies);
+            return new LDAPRealmAuthenticationInterceptor(authenticationPolicies, authorizationPolicies);
         }
     }
 
@@ -82,7 +85,7 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
      * @param op
      * @return
      */
-    private List<LDAPRealmAuthenticationPolicy> findPolicies(Operation op) {
+    private List<LDAPRealmAuthenticationPolicy> findAuthenticationPolicies(Operation op) {
         List<LDAPRealmAuthenticationPolicy> polices = new ArrayList<LDAPRealmAuthenticationPolicy>();
         // FIXME: How do we get a list of effective policySets for a given operation?
         for(Operation operation : operations) {
@@ -117,6 +120,53 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
             for (Object p : ps.getPolicies()) {
                 if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
                     polices.add((LDAPRealmAuthenticationPolicy)p);
+                }
+            }
+        }
+        
+        return polices;
+    }
+    
+    /**
+     * 
+     * @param op
+     * @return
+     */
+    private List<AuthorizationPolicy> findAuthorizationPolicies(Operation op) {
+        List<AuthorizationPolicy> polices = new ArrayList<AuthorizationPolicy>();
+        // FIXME: How do we get a list of effective policySets for a given operation?
+        for(Operation operation : operations) {
+            if (operation.getName().equals(op.getName())) {
+                for (PolicySet ps : operation.getPolicySets()) {
+                    for (Object p : ps.getPolicies()) {
+                        if (AuthorizationPolicy.class.isInstance(p)) {
+                            polices.add((AuthorizationPolicy)p);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (service instanceof OperationsConfigurator) {
+            OperationsConfigurator operationsConfigurator = (OperationsConfigurator)service;
+            for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
+                if (cop.getName().equals(op.getName())) {
+                    for (PolicySet ps : cop.getApplicablePolicySets()) {
+                        for (Object p : ps.getPolicies()) {
+                            if (AuthorizationPolicy.class.isInstance(p)) {
+                                polices.add((AuthorizationPolicy)p);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        List<PolicySet> policySets = service.getPolicySets();
+        for (PolicySet ps : policySets) {
+            for (Object p : ps.getPolicies()) {
+                if (AuthorizationPolicy.class.isInstance(p)) {
+                    polices.add((AuthorizationPolicy)p);
                 }
             }
         }

@@ -29,8 +29,7 @@ import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Phase;
 import org.apache.tuscany.sca.policy.PolicySet;
-import org.apache.tuscany.sca.policy.security.jaas.JaasAuthenticationInterceptor;
-import org.apache.tuscany.sca.policy.security.jaas.JaasAuthenticationPolicy;
+import org.apache.tuscany.sca.policy.authorization.AuthorizationPolicy;
 import org.apache.tuscany.sca.provider.PolicyProvider;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 
@@ -50,11 +49,11 @@ public class LDAPRealmAuthenticationImplementationPolicyProvider implements Poli
     }
 
     public Interceptor createInterceptor(Operation operation) {
-        List<LDAPRealmAuthenticationPolicy> policies = findPolicies(operation);
+        List<LDAPRealmAuthenticationPolicy> policies = findAuthenticationPolicies(operation);
         if (policies == null || policies.isEmpty()) {
             return null;
         } else {
-            return new LDAPRealmAuthenticationInterceptor(findPolicies(operation));
+            return new LDAPRealmAuthenticationInterceptor(findAuthenticationPolicies(operation), findAuthorizationPolicies(operation));
         }
     }
 
@@ -67,16 +66,15 @@ public class LDAPRealmAuthenticationImplementationPolicyProvider implements Poli
      * @param op
      * @return
      */
-    private List<LDAPRealmAuthenticationPolicy> findPolicies(Operation op) {
+    private List<LDAPRealmAuthenticationPolicy> findAuthenticationPolicies(Operation op) {
         List<LDAPRealmAuthenticationPolicy> polices = new ArrayList<LDAPRealmAuthenticationPolicy>();
-        // FIXME: How do we get a list of effective policySets for a given operation?
         if (implementation instanceof OperationsConfigurator) {
             OperationsConfigurator operationsConfigurator = (OperationsConfigurator)implementation;
             for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
                 if (cop.getName().equals(op.getName())) {
                     for (PolicySet ps : cop.getPolicySets()) {
                         for (Object p : ps.getPolicies()) {
-                            if (JaasAuthenticationPolicy.class.isInstance(p)) {
+                            if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
                                 polices.add((LDAPRealmAuthenticationPolicy)p);
                             }
                         }
@@ -90,6 +88,34 @@ public class LDAPRealmAuthenticationImplementationPolicyProvider implements Poli
             for (Object p : ps.getPolicies()) {
                 if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
                     polices.add((LDAPRealmAuthenticationPolicy)p);
+                }
+            }
+        }
+        return polices;
+    }
+    
+    private List<AuthorizationPolicy> findAuthorizationPolicies(Operation op) {
+        List<AuthorizationPolicy> polices = new ArrayList<AuthorizationPolicy>();
+        if (implementation instanceof OperationsConfigurator) {
+            OperationsConfigurator operationsConfigurator = (OperationsConfigurator)implementation;
+            for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
+                if (cop.getName().equals(op.getName())) {
+                    for (PolicySet ps : cop.getPolicySets()) {
+                        for (Object p : ps.getPolicies()) {
+                            if (AuthorizationPolicy.class.isInstance(p)) {
+                                polices.add((AuthorizationPolicy)p);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        List<PolicySet> policySets = component.getPolicySets();
+        for (PolicySet ps : policySets) {
+            for (Object p : ps.getPolicies()) {
+                if (AuthorizationPolicy.class.isInstance(p)) {
+                    polices.add((AuthorizationPolicy)p);
                 }
             }
         }
