@@ -21,6 +21,7 @@ package org.apache.tuscany.sca.implementation.jee.xml;
 
 import java.io.InputStream;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 
@@ -38,9 +39,10 @@ import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.core.DefaultExtensionPointRegistry;
 import org.apache.tuscany.sca.core.UtilityExtensionPoint;
-import org.apache.tuscany.sca.implementation.jee.JEEImplementation;
+import org.apache.tuscany.sca.implementation.jee.impl.JEEImplementationImpl;
 import org.apache.tuscany.sca.interfacedef.InterfaceContractMapper;
 import org.apache.tuscany.sca.policy.IntentAttachPointTypeFactory;
+import org.apache.tuscany.sca.policy.PolicySet;
 
 /**
  * Test reading JEE implementations.
@@ -76,8 +78,11 @@ public class ReadTestCase extends TestCase {
         assertNotNull(composite);
 
         compositeBuilder.build(composite);
+        JEEImplementationImpl implementation = (JEEImplementationImpl) composite.getComponents().get(0).getImplementation();
         
-        assertTrue(((JEEImplementation) composite.getComponents().get(0).getImplementation()).getArchive().equals("myarchive.ear"));
+        assertTrue(implementation.getArchive().equals("myarchive.ear"));
+        PolicySet policySet = implementation.getPolicySets().get(0);
+        assertEquals(new QName("http://sample/test-policy", "allowRole1"), policySet.getName());
     }
 
 }

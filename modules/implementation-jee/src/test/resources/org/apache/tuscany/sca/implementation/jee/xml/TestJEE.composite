@@ -23,9 +23,10 @@
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
 	targetNamespace="http://sample/jee"
 	xmlns:sc="http://sample/composite"
+	xmlns:test="http://sample/test-policy"
 	name="TestJEE">
 
     <component name="TestJEE">
-        <implementation.jee archive="myarchive.ear"/>
+        <implementation.jee archive="myarchive.ear" policySets="test:allowRole1"/>
     </component>
 </composite>

@@ -62,7 +62,7 @@ public class WriteTestCase extends TestCase {
         staxProcessor.write(composite, outputFactory.createXMLStreamWriter(bos));
         
         assertTrue(bos.toString().contains("archive=\"myarchive.ear\""));
-
+        assertTrue(bos.toString().contains("allowRole1"));
     }
 
 }

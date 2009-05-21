@@ -31,6 +31,7 @@ import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.assembly.ComponentType;
 import org.apache.tuscany.sca.assembly.Composite;
 import org.apache.tuscany.sca.assembly.xml.Constants;
+import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.jee.ModelObject;
 import org.apache.tuscany.sca.contribution.jee.EjbModuleInfo;
@@ -52,6 +53,7 @@ import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
 import org.apache.tuscany.sca.implementation.jee.JEEImplementation;
 import org.apache.tuscany.sca.implementation.jee.JEEImplementationFactory;
 import org.apache.tuscany.sca.monitor.Monitor;
+import org.apache.tuscany.sca.policy.PolicyFactory;
 
 /**
  * Implements a StAX artifact processor for JEE implementations.
@@ -62,17 +64,21 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
     private static final QName IMPLEMENTATION_JEE = new QName(Constants.SCA10_NS, "implementation.jee");
     
     private AssemblyFactory assemblyFactory;
+    private PolicyFactory policyFactory;
     private JEEImplementationFactory implementationFactory;
     private JavaEEExtension jeeExtension;
     private JavaEEOptionalExtension jeeOptionalExtension;
     private Monitor monitor;
+    private PolicyAttachPointProcessor policyProcessor;
     
     public JEEImplementationProcessor(ModelFactoryExtensionPoint modelFactories, Monitor monitor) {
         this.assemblyFactory = modelFactories.getFactory(AssemblyFactory.class);
+        this.policyFactory = modelFactories.getFactory(PolicyFactory.class);
         this.implementationFactory = modelFactories.getFactory(JEEImplementationFactory.class);
         this.jeeExtension = modelFactories.getFactory(JavaEEExtension.class);
         this.jeeOptionalExtension = modelFactories.getFactory(JavaEEOptionalExtension.class);
         this.monitor = monitor;
+        this.policyProcessor = new PolicyAttachPointProcessor(policyFactory);
     }
 
     public QName getArtifactType() {
@@ -99,6 +105,9 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
             // Set the URI of the component type 
             implementation.setURI(archive);
         }
+
+        // Read policies
+        policyProcessor.readPolicies(implementation, reader);
 
         // Skip to end element
         while (reader.hasNext()) {
@@ -266,9 +275,11 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
     public void write(JEEImplementation implementation, XMLStreamWriter writer) throws ContributionWriteException, XMLStreamException {
         
         // Write <implementation.jee>
+        policyProcessor.writePolicyPrefixes(implementation, writer);
         writeStart(writer, IMPLEMENTATION_JEE.getNamespaceURI(), IMPLEMENTATION_JEE.getLocalPart(),
                    new XAttr("archive", implementation.getArchive()));
         
+        policyProcessor.writePolicyAttributes(implementation, writer);
         writeEnd(writer);
     }
 }
