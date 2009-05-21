@@ -155,8 +155,6 @@ public class SpringXMLComponentTypeLoader {
             throw new ContributionReadException(e);
         } catch (XMLStreamException e) {
             throw new ContributionReadException(e);
-        } catch (URISyntaxException e) {
-            throw new ContributionReadException(e);
         }
 
         /* At this point, the complete application-context.xml file has been read and its contents  */
