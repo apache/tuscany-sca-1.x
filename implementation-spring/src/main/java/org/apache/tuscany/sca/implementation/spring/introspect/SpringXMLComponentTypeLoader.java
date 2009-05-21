@@ -146,7 +146,7 @@ public class SpringXMLComponentTypeLoader {
             implementation.setURI(resource.toString());            
             // FIXME - need a better way to handle the XMLInputFactory than allocating a new one every time
             XMLInputFactory xmlFactory = XMLInputFactory.newInstance();
-            reader = xmlFactory.createXMLStreamReader(new FileInputStream(new File(resource.toURI())));
+            reader = xmlFactory.createXMLStreamReader(resource.openStream());
 
             // System.out.println("Spring TypeLoader - starting to read context file");            
             readContextDefinition(reader, beans, services, references, scaproperties);
