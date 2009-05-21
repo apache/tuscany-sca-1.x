@@ -29,6 +29,16 @@
     <policySet name="permitAll" appliesTo="sca:implementation.java"/>
     <policySet name="denyAll" appliesTo="sca:implementation.java"/>
     
+    <!-- Policy Intents Defined by the SCA Runtime -->
+	<intent name="authorization" 
+	 		constrains="sca:implementation.java">
+		<description>
+			Specifying this intent on references requires necessary authentication information
+			to be sent along with outgoing messages. Specifying this intent on service requires
+			incoming messages to be authenticated
+		</description>
+	</intent>
+    
 	<!-- Policy Intents Defined by the SCA Runtime -->
 	<intent name="authentication" 
 	 		constrains="sca:binding tuscany:binding">
