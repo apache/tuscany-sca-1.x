@@ -27,7 +27,7 @@ import org.apache.tuscany.sca.implementation.jee.JEEImplementation;
  * 
  * @version $Rev$ $Date$
  */
-class JEEImplementationImpl extends ImplementationImpl implements JEEImplementation {
+public class JEEImplementationImpl extends ImplementationImpl implements JEEImplementation {
 
     private String archive;
 
