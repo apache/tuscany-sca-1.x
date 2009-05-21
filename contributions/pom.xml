@@ -51,6 +51,8 @@
                 <module>introducing-client-contribution</module>
                 <module>introducing-goodvaluetrips-contribution</module>
                 <module>introducing-tuscanyscatours-contribution</module>
+                <module>notification-contribution</module>
+                <module>notification-ws-contribution</module>
                 <module>shoppingcart-contribution</module>   
                 <module>travelcatalog-contribution</module>         
                 <module>tripbooking-contribution</module>
