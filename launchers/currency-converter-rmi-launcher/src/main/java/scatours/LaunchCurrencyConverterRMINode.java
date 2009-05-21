@@ -31,7 +31,7 @@ public class LaunchCurrencyConverterRMINode {
     public static void main(String[] args) throws Exception {
         SCAContribution currencyRMIContribution = 
             new SCAContribution("currency-rmi", 
-              "../../contributions/currency-contribution-rmi/target/classes");
+              "../../contributions/currency-rmi-contribution/target/classes");
         SCAContribution currencyContribution = 
           new SCAContribution("currency", 
               "../../contributions/currency-contribution/target/classes");

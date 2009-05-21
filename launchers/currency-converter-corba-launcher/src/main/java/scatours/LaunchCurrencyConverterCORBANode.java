@@ -31,7 +31,7 @@ public class LaunchCurrencyConverterCORBANode {
     public static void main(String[] args) throws Exception {
         SCAContribution currencyCORBAContribution = 
             new SCAContribution("currency-corba", 
-              "../../contributions/currency-contribution-corba/target/classes");
+              "../../contributions/currency-corba-contribution/target/classes");
         SCAContribution currencyContribution = 
           new SCAContribution("currency", 
               "../../contributions/currency-contribution/target/classes");

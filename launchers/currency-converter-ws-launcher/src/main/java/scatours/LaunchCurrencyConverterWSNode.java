@@ -31,7 +31,7 @@ public class LaunchCurrencyConverterWSNode {
     public static void main(String[] args) throws Exception {
         SCAContribution currencyWSContribution = 
             new SCAContribution("currency-ws", 
-              "../../contributions/currency-contribution-ws/target/classes");
+              "../../contributions/currency-ws-contribution/target/classes");
         SCAContribution currencyContribution = 
           new SCAContribution("currency", 
               "../../contributions/currency-contribution/target/classes");
