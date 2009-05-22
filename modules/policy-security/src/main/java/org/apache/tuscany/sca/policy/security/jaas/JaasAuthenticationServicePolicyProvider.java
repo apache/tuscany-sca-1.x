@@ -57,11 +57,13 @@ public class JaasAuthenticationServicePolicyProvider implements PolicyProvider {
         List<JaasAuthenticationPolicy> polices = new ArrayList<JaasAuthenticationPolicy>();
         // FIXME: How do we get a list of effective policySets for a given operation?
         for(Operation operation : operations) {
-            if (operation.getName().equals(op.getName())) {
-                for (PolicySet ps : operation.getPolicySets()) {
-                    for (Object p : ps.getPolicies()) {
-                        if (JaasAuthenticationPolicy.class.isInstance(p)) {
-                            polices.add((JaasAuthenticationPolicy)p);
+            if (operation!= null && operation.getName() != null) {
+                if (operation.getName().equals(op.getName())) {
+                    for (PolicySet ps : operation.getPolicySets()) {
+                        for (Object p : ps.getPolicies()) {
+                            if (JaasAuthenticationPolicy.class.isInstance(p)) {
+                                polices.add((JaasAuthenticationPolicy)p);
+                            }
                         }
                     }
                 }
