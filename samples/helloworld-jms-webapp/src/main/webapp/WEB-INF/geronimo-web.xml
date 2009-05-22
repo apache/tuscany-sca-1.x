@@ -23,18 +23,10 @@
     <d:environment>
         <d:moduleId>
             <d:groupId>org.apache.tuscany.sca</d:groupId>
-            <d:artifactId>sample-helloworld-ws-sdo-webapp</d:artifactId>
-            <d:version>1.6-SNAPSHOT</d:version>
+            <d:artifactId>sample-helloworld-jms-webapp</d:artifactId>
+            <d:version>1.5-SNAPSHOT</d:version>
             <d:type>war</d:type>
         </d:moduleId>
-        
-        <!-- Using the shared library -->
-        <d:dependencies>
-            <d:dependency>
-                <d:groupId>org.apache.geronimo.configs</d:groupId>
-                <d:artifactId>sharedlib</d:artifactId>
-            </d:dependency>
-        </d:dependencies>
 
 		<!-- TUSCANY-2622 -->
 		<d:hidden-classes>

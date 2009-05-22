@@ -36,6 +36,7 @@
 			<dep:version>1.0</dep:version>
 			<dep:type>car</dep:type>
 		</dep:moduleId>
+		
 		<!-- TUSCANY-2622 -->
 		<dep:hidden-classes>
 			<dep:filter>org.apache.axiom</dep:filter>
@@ -43,6 +44,7 @@
 			<dep:filter>org.apache.commons</dep:filter>
 			<dep:filter>org.jdom</dep:filter>
 		</dep:hidden-classes>		
+		
 	</dep:environment>
 	<web:context-root>/sample-store-secure-webapp</web:context-root>
 </web:web-app>
