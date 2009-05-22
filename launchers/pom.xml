@@ -44,6 +44,7 @@
                 <module>jumpstart-launcher</module>
                 <module>fullapp-launcher</module>
                 <module>notification-ws-launcher</module>
+                <module>notification-corba-launcher</module>
             </modules>
         </profile>
 
