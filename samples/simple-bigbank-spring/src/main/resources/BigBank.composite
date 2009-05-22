@@ -57,7 +57,7 @@
         </reference>      
         
         <reference name="stockQuoteService">
-            <binding.ws uri="http://localhost:8081/services/StockQuoteWebService"/>
+            <binding.ws uri="http://localhost:8085/services/StockQuoteWebService"/>
         </reference>
     </component>
 
