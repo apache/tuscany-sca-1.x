@@ -31,7 +31,8 @@ public class CurrencyConverterCORBAClient {
     String[] orbArgs = {"-ORBInitialPort", "5080"};
     ORB orb = ORB.init( orbArgs, null );
 
-    Object obj = orb.string_to_object("corbaname::localhost:5080#CurrencyConverterCORBAService");
+    String ior = "corbaname::localhost:5080#CurrencyConverterCORBAService";
+    Object obj = orb.string_to_object(ior);
     CurrencyConverter converter = CurrencyConverterHelper.narrow(obj);
 
     System.out.println("USD -> GBP = " + converter.getExchangeRate("USD", "GBP"));

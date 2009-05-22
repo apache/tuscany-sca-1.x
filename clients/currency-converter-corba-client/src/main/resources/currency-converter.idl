@@ -17,7 +17,7 @@
  * under the License.
  */
  
- module scatours {
+module scatours {
     module currencyconverter {
         interface CurrencyConverter {
             double getExchangeRate(in string fromCurrencyCode, in string toCurrencyCode);
