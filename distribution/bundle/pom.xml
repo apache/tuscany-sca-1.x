@@ -49,6 +49,11 @@
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-atom-js</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-atom-abdera</artifactId>
             <version>${pom.version}</version>
         </dependency>
@@ -84,7 +89,7 @@
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
-            <artifactId>tuscany-binding-atom</artifactId>
+            <artifactId>tuscany-binding-http-jsonrpc-runtime</artifactId>
             <version>${pom.version}</version>
         </dependency>
         <dependency>
@@ -95,6 +100,11 @@
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-jms-runtime</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-jsonrpc-js</artifactId>
             <version>${pom.version}</version>
         </dependency>
         <dependency>
@@ -491,11 +501,6 @@
         </dependency-->
         <dependency>
             <groupId>${pom.groupId}</groupId>
-            <artifactId>tuscany-workspace</artifactId>
-            <version>${pom.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-domain-manager</artifactId>
             <version>${pom.version}</version>
             <exclusions> 
@@ -504,6 +509,16 @@
                     <artifactId>tuscany-host-tomcat</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-web-javascript</artifactId>
+            <version>${pom.version}</version>
+        </dependency>        
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-workspace</artifactId>
+            <version>${pom.version}</version>
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
