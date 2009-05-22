@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,18 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           targetNamespace="http://sample"
-           xmlns:sample="http://sample"
-           name="Calculator">
-
-    <component name="HelloworlClientComponent">
-		<implementation.java class="sample.pojo.HelloworldClientImpl"/>
-        <reference name="hwService" target="HelloworldServiceComponent/HelloworldServiceBean_HelloworldService" />
-    </component>
-
-    <component name="HelloworldServiceComponent">
-        <implementation.jee archive="itest-contribution-jee-samples-13-ear-nonenhanced.ear"/>
-    </component>
-
-</composite>
+<project name="copy-jar-to-zip" default="copy"> 
+    <target name="copy"> 
+        <copy file="${from.file}" 
+              toFile="${to.file}"/>
+    </target>
+</project>

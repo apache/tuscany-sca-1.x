@@ -129,7 +129,14 @@
             <artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</artifactId>
             <version>1.6-SNAPSHOT</version>
             <type>ejb</type>
-        </dependency>        
+        </dependency> 
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-12-ejb-appcomp-contrib-implicit</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>       
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>

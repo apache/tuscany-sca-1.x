@@ -28,7 +28,7 @@
     </component>
 
     <component name="HelloworldServiceComponent">
-        <implementation.jee archive="itest-contribution-jee-samples-13-ear-nonenhanced.ear"/>
+        <implementation.jee archive="itest-contribution-jee-samples-12-ejb-appcomp-contrib-implicit-1.6-SNAPSHOT.jar"/>
     </component>
 
 </composite>

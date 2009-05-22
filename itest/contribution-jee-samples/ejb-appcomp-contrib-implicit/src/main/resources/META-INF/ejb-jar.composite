@@ -22,13 +22,14 @@
            xmlns:sample="http://sample"
            name="Calculator">
 
-    <component name="HelloworlClientComponent">
-		<implementation.java class="sample.pojo.HelloworldClientImpl"/>
-        <reference name="hwService" target="HelloworldServiceComponent/HelloworldServiceBean_HelloworldService" />
-    </component>
-
     <component name="HelloworldServiceComponent">
-        <implementation.jee archive="itest-contribution-jee-samples-13-ear-nonenhanced.ear"/>
+        <implementation.ejb ejb-link="HelloworldServiceBean"/>
+        <service name="HelloworldService">
+            <interface.java interface="sample.ejb3.HelloworldService"/>
+            <binding.sca/>
+        </service>
     </component>
+    
+    <service name="TheService" promote="HelloworldServiceComponent/HelloworldService"/>
 
 </composite>

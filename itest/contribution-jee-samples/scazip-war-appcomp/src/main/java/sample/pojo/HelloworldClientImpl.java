@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,19 +15,20 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           targetNamespace="http://sample"
-           xmlns:sample="http://sample"
-           name="Calculator">
+ */
+package sample.pojo;
 
-    <component name="HelloworlClientComponent">
-		<implementation.java class="sample.pojo.HelloworldClientImpl"/>
-        <reference name="hwService" target="HelloworldServiceComponent/HelloworldServiceBean_HelloworldService" />
-    </component>
+import org.osoa.sca.annotations.Reference;
 
-    <component name="HelloworldServiceComponent">
-        <implementation.jee archive="itest-contribution-jee-samples-13-ear-nonenhanced.ear"/>
-    </component>
+import sample.ejb3.HelloworldService;
 
-</composite>
+public class HelloworldClientImpl implements HelloworldClient {
+    
+    @Reference
+    protected HelloworldService hwService;
+
+    public String getGreetings(String name){
+        return hwService.getGreetings(name);
+    }
+
+}

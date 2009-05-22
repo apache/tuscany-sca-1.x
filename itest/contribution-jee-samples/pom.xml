@@ -42,10 +42,13 @@
                 <module>war-nonenhanced</module>
                 <module>war-appcomp-contrib-implicit</module>
                 <module>ejb-nonenhanced</module>
+                <module>ejb-appcomp-contrib-implicit</module>
                 <module>ear-nonenhanced</module>
                 <module>ear-appcomp-contrib-implicit</module>
                 <module>scajar-ear-nonenhanced</module>
                 <module>scajar-ear-appcomp</module>
+                <module>scazip-ejb-appcomp</module>
+                <module>scazip-war-appcomp</module>
             </modules>
         </profile>
     </profiles>

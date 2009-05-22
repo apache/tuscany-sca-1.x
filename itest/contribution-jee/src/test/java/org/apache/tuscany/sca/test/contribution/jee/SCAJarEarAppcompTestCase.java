@@ -32,6 +32,7 @@ import org.apache.tuscany.sca.assembly.Component;
 import org.apache.tuscany.sca.assembly.Composite;
 import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.Service;
+import org.apache.tuscany.sca.assembly.builder.CompositeBuilder;
 import org.apache.tuscany.sca.contribution.Artifact;
 import org.apache.tuscany.sca.contribution.Contribution;
 import org.apache.tuscany.sca.contribution.jee.ExternalEarInfo;
@@ -100,6 +101,11 @@ public class SCAJarEarAppcompTestCase {
         Assert.assertEquals(2, composite.getComponents().size());
         Assert.assertEquals(1, composite.getComponents().get(1).getImplementation().getServices().size());            
         Assert.assertEquals("TheService", composite.getComponents().get(1).getImplementation().getServices().get(0).getName());
+        
+        domain.buildComposite(composite);
+        
+        // assert that the build process has worked
+        Assert.assertNotNull(composite);
 
     }
 

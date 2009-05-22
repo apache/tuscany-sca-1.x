@@ -22,11 +22,15 @@
            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
            name="Helloworld-web">
 
-    <component name="helloworldWebComponent">
-        <implementation.web web-uri="helloworld-web.war"/>
-        <reference name="helloworldSca" target="helloworldEjbComponent/HelloworldService">
+    <component name="HelloworldWebComponent">
+        <implementation.java class="sample.HelloworldEjbServlet"/>
+        <reference name="helloworldSca">
             <interface.java interface="sample.ejb3.HelloworldService"/>
+            <binding.sca uri="http://localhost:8080/SomeService"/>
         </reference>
     </component>
+    
+    <reference name="helloworldSca" promote="HelloworldWebComponent/helloworldSca"/>
+
 </composite>
 

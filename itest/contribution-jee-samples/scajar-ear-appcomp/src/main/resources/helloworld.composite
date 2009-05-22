@@ -24,7 +24,7 @@
 
     <component name="HelloworlClientComponent">
 		<implementation.java class="sample.pojo.HelloworldClientImpl"/>
-        <reference name="hwService" target="HelloworlderviceComponent" />
+        <reference name="hwService" target="HelloworldServiceComponent/TheService" />
     </component>
 
     <component name="HelloworldServiceComponent">
