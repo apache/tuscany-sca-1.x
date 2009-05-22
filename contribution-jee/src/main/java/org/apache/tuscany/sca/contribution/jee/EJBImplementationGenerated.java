@@ -16,28 +16,29 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.implementation.jee;
+package org.apache.tuscany.sca.contribution.jee;
 
-import org.apache.tuscany.sca.assembly.Composite;
+import org.apache.tuscany.sca.assembly.Implementation;
+
+
 
 /**
- * The model representing a JEE implementation in an SCA assembly model.
- * 
+ * The model representing an EJB implementation in an SCA assembly model.
+ *
  * @version $Rev$ $Date$
  */
-public interface JEEImplementation extends Composite {
+public interface EJBImplementationGenerated extends Implementation {
     
     /**
-     * Returns the archive.
-     * 
-     * @return the archive
+     * Returns the EJB link URI.
+     * @return the EJB link URI
      */
-    String getArchive();
+    String getEJBLink();
     
     /**
-     * Sets the archive.
-     * 
-     * @param archive
+     * Sets the EJB link URI.
+     * @param ejbLink the EJB link URI
      */
-    void setArchive(String archive);
+    void setEJBLink(String ejbLink);
+
 }

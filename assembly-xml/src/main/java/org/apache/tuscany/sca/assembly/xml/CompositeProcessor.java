@@ -56,6 +56,7 @@ import org.apache.tuscany.sca.assembly.Property;
 import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.Service;
 import org.apache.tuscany.sca.assembly.Wire;
+import org.apache.tuscany.sca.assembly.impl.CompositeImpl;
 import org.apache.tuscany.sca.contribution.Artifact;
 import org.apache.tuscany.sca.contribution.ContributionFactory;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
@@ -682,7 +683,10 @@ public class CompositeProcessor extends BaseAssemblyProcessor implements StAXArt
             
             // Write the component implementation
             Implementation implementation = component.getImplementation();
-            if (implementation instanceof Composite) {
+            // check that we really have CompositeImpl and treat this specially. Some
+            // extension extend CompositeImpl and we want these to be treated by the extension 
+            // processor.
+            if ((implementation != null ) && (implementation.getClass().equals(CompositeImpl.class))) {
                 writeStart(writer, IMPLEMENTATION_COMPOSITE, new XAttr(NAME, ((Composite)implementation).getName()));
                 
                 //write extended attributes

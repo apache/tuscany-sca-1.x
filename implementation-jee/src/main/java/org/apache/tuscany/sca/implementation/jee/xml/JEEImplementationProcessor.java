@@ -185,21 +185,19 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                 unresolved.setUri(URI.create("WEB-INF/web.composite"));
                 ModelObject resolved = resolver.resolveModel(ModelObject.class, unresolved);
                 if(resolved != unresolved) {
-                    // Found web composite
+                    // Found web composite so the war itself must have been the contribution
                     Composite appComposite = (Composite)resolved.getObject();
-                    implementation.getServices().addAll(appComposite.getServices());
-                    implementation.getReferences().addAll(appComposite.getReferences());
-                    implementation.getProperties().addAll(appComposite.getProperties());
+                    mergeCompositeInfo(appComposite, implementation);
                 }
 
                 // TODO: Obtain includeDefaults value from the composite
                 boolean includeDefaults = false;
                 
                 if(includeDefaults || resolved == unresolved) {
+                    // there is either no application composite or we are ignoring it as the
+                    // war is nested inside another contribution
                     if(jeeOptionalExtension != null) {
-                        ComponentType ct = jeeOptionalExtension.createImplementationJeeComponentType((WebModuleInfo)moduleInfo);
-                        implementation.getReferences().addAll(ct.getReferences());
-                        implementation.getProperties().addAll(ct.getProperties());
+                        jeeOptionalExtension.createImplementationJeeComposite((WebModuleInfo)moduleInfo, implementation);
                     }
                 }
             } else if(moduleInfo instanceof EjbModuleInfo) {
@@ -208,11 +206,9 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                 unresolved.setUri(URI.create("META-INF/ejb-jar.composite"));
                 ModelObject resolved = resolver.resolveModel(ModelObject.class, unresolved);
                 if(resolved != unresolved) {
-                    // Found ejb-jar composite
+                    // Found ejb-jar composite so the ejb jar itself must have been the contribution
                     Composite appComposite = (Composite)resolved.getObject();
-                    implementation.getServices().addAll(appComposite.getServices());
-                    implementation.getReferences().addAll(appComposite.getReferences());
-                    implementation.getProperties().addAll(appComposite.getProperties());
+                    mergeCompositeInfo(appComposite, implementation);
                 }
 
                 // TODO: Obtain includeDefaults value from the composite
@@ -220,14 +216,11 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                 
                 if(includeDefaults || resolved == unresolved) {
                     if(jeeExtension != null) {
-                        ComponentType ct = jeeExtension.createImplementationJeeComponentType((EjbModuleInfo)moduleInfo);
-                        implementation.getServices().addAll(ct.getServices());
+                        jeeExtension.createImplementationJeeComposite((EjbModuleInfo)moduleInfo, implementation);
+
                     }
                     if(jeeOptionalExtension != null) {
-                        ComponentType ct = jeeOptionalExtension.createImplementationJeeComponentType((EjbModuleInfo)moduleInfo);
-                        implementation.getServices().addAll(ct.getServices());
-                        implementation.getReferences().addAll(ct.getReferences());
-                        implementation.getProperties().addAll(ct.getProperties());
+                        jeeOptionalExtension.createImplementationJeeComposite((EjbModuleInfo)moduleInfo, implementation);
                     }
                 }
             } else if(moduleInfo instanceof JavaEEApplicationInfo) {
@@ -246,10 +239,9 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                 }
                 
                 if(appComposite != null) {
-                    // Found application composite
-                    implementation.getServices().addAll(appComposite.getServices());
-                    implementation.getReferences().addAll(appComposite.getReferences());
-                    implementation.getProperties().addAll(appComposite.getProperties());
+                    // Found application composite so copy it's details across into 
+                    // the implementation (which is itself a composite)
+                    mergeCompositeInfo(appComposite, implementation);
                 }                    
                 
                 // TODO: Obtain includeDefaults value from the composite
@@ -257,19 +249,36 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                 
                 if(includeDefaults || appComposite == null) {
                     if(jeeExtension != null) {
-                        ComponentType ct = jeeExtension.createImplementationJeeComponentType((JavaEEApplicationInfo)moduleInfo);
-                        implementation.getServices().addAll(ct.getServices());
+                        jeeExtension.createImplementationJeeComposite((JavaEEApplicationInfo)moduleInfo, implementation);
                     }
                     if(jeeOptionalExtension != null) {
-                        ComponentType ct = jeeOptionalExtension.createImplementationJeeComponentType((JavaEEApplicationInfo)moduleInfo);
-                        implementation.getServices().addAll(ct.getServices());
-                        implementation.getReferences().addAll(ct.getReferences());
-                        implementation.getProperties().addAll(ct.getProperties());
+                        jeeOptionalExtension.createImplementationJeeComposite((JavaEEApplicationInfo)moduleInfo, implementation);
                     }
                 }
             }
         }
         implementation.setUnresolved(false);
+    }
+    
+    private void mergeCompositeInfo(Composite fromComposite, Composite intoComposite){ 
+        intoComposite.getApplicablePolicySets().addAll(fromComposite.getApplicablePolicySets());
+        intoComposite.getAttributeExtensions().addAll(fromComposite.getAttributeExtensions());
+        intoComposite.setAutowire(fromComposite.getAutowire());
+        intoComposite.getComponents().addAll(fromComposite.getComponents());
+        intoComposite.setConstrainingType(fromComposite.getConstrainingType());
+        intoComposite.getExtensions().addAll(fromComposite.getExtensions());
+        intoComposite.setLocal(fromComposite.isLocal());
+        intoComposite.getIncludes().addAll(fromComposite.getIncludes());
+        intoComposite.setName(fromComposite.getName());
+        intoComposite.getPolicySets().addAll(fromComposite.getPolicySets());
+        intoComposite.getProperties().addAll(fromComposite.getProperties());
+        intoComposite.getReferences().addAll(fromComposite.getReferences());
+        intoComposite.getRequiredIntents().addAll(fromComposite.getRequiredIntents());
+        intoComposite.getServices().addAll(fromComposite.getServices());
+        intoComposite.setType(fromComposite.getType());
+        intoComposite.setUnresolved(fromComposite.isUnresolved());
+        intoComposite.setURI(fromComposite.getURI());
+        intoComposite.getWires().addAll(fromComposite.getWires());
     }
 
     public void write(JEEImplementation implementation, XMLStreamWriter writer) throws ContributionWriteException, XMLStreamException {
