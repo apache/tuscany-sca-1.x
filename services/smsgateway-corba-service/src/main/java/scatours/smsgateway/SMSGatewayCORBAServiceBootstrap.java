@@ -35,8 +35,7 @@ public class SMSGatewayCORBAServiceBootstrap {
         ORB orb = ORB.init( orbArgs, null );
 
         NamingContextExt namingCtx;
-        try
-        {
+        try {
           Object objRef = orb.resolve_initial_references("NameService");
           namingCtx = NamingContextExtHelper.narrow(objRef);
         } catch (Exception ex) {
