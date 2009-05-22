@@ -741,6 +741,15 @@
                                     <resource>META-INF/services/org.apache.tuscany.sca.spi.ImplementationActivator</resource>
                                 </transformer>
                                 <transformer implementation="org.codehaus.mojo.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/services/org.apache.tuscany.sca.web.javascript.JavascriptProxyFactory</resource>
+                                </transformer>
+                                <transformer implementation="org.codehaus.mojo.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/services/org.apache.tuscany.sca.web.javascript.ComponentJavaScriptGeneratorExtensionPoint</resource>
+                                </transformer>
+                                <transformer implementation="org.codehaus.mojo.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/services/org.apache.tuscany.sca.web.javascript.JavascriptProxyFactoryExtensionPoint</resource>
+                                </transformer>
+                                <transformer implementation="org.codehaus.mojo.shade.resource.AppendingTransformer">
                                     <resource>META-INF/services/org.apache.tuscany.sca.work.WorkScheduler</resource>
                                 </transformer>
                                 <transformer implementation="org.codehaus.mojo.shade.resource.AppendingTransformer">
