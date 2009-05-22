@@ -50,10 +50,10 @@ public class SMSGatewayCORBAServiceBootstrap {
         rootPoa.the_POAManager().activate();
         
         SMSGatewayServant smsGateway = new SMSGatewayServant();
+        Object smsGatewayRef = rootPoa.servant_to_reference(smsGateway);
 
         String corbaServerName = "SMSGatewayCORBAService";
         NameComponent[]  name = { new NameComponent(corbaServerName, "") };
-        Object smsGatewayRef = rootPoa.servant_to_reference(smsGateway);
         namingCtx.rebind(name, smsGatewayRef);
 
         System.out.println("CORBA server running - waiting for requests");
