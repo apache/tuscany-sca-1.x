@@ -40,7 +40,7 @@ public class NotificationImpl implements Notification {
     String sms = getSMSAddress(accountID);
     if (sms != null) {
       System.out.println("Sending SMS to " + sms);
-      result &= smsGateway.sendSMS(SCA_TOURS_SMS, sms, subject + message);
+      result &= smsGateway.sendSMS(SCA_TOURS_SMS, sms, subject + ". " + message);
     }
 
     return result;
