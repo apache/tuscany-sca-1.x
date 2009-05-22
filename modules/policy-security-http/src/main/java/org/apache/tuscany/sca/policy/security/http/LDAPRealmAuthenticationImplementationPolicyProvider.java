@@ -76,7 +76,7 @@ public class LDAPRealmAuthenticationImplementationPolicyProvider implements Poli
                 if (cop.getName().equals(op.getName())) {
                     for (PolicySet ps : cop.getPolicySets()) {
                         for (Object p : ps.getPolicies()) {
-                            if (JaasAuthenticationPolicy.class.isInstance(p)) {
+                            if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
                                 polices.add((LDAPRealmAuthenticationPolicy)p);
                             }
                         }
