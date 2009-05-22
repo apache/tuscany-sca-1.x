@@ -22,10 +22,11 @@ package org.apache.tuscany.sca.host.jms.asf;
 import javax.jms.MessageListener;
 import javax.naming.NamingException;
 
-import org.apache.tuscany.sca.binding.jms.impl.JMSBinding;
 import org.apache.tuscany.sca.binding.jms.impl.JMSBindingException;
-import org.apache.tuscany.sca.host.jms.JMSServiceListenerDetails;
+import org.apache.tuscany.sca.binding.jms.provider.JMSBindingServiceBindingProvider;
+import org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactory;
 import org.apache.tuscany.sca.host.jms.JMSServiceListener;
+import org.apache.tuscany.sca.host.jms.JMSServiceListenerDetails;
 import org.apache.tuscany.sca.host.jms.JMSServiceListenerFactory;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 import org.apache.tuscany.sca.work.WorkScheduler;
@@ -38,16 +39,15 @@ public class JMSServiceListenerFactoryImpl implements JMSServiceListenerFactory 
         this.workScheduler = workScheduler;
     }
 
-    public JMSServiceListener createJMSServiceListener(String serviceName, boolean isCallbackService, JMSBinding jmsBinding, MessageListener listener) {
-        return new ASFListener(listener, serviceName, isCallbackService, jmsBinding, workScheduler);
-    }
-
     public JMSServiceListener createJMSServiceListener(JMSServiceListenerDetails jmsSLD) {
         try {
 
-            MessageListener listener = new ServiceInvoker(jmsSLD.getJmsBinding(), jmsSLD.getService(), jmsSLD.getTargetBinding(), jmsSLD.getMessageFactory());
+            JMSResourceFactory rf = ((JMSBindingServiceBindingProvider)jmsSLD).getResourceFactory();
+            
+            MessageListener listener = new ServiceInvoker(jmsSLD.getJmsBinding(), jmsSLD.getService(), jmsSLD.getTargetBinding(), jmsSLD.getMessageFactory(), rf);
             RuntimeComponentService service = jmsSLD.getService();
-            return new ASFListener(listener, service.getName(), service.isCallback(), jmsSLD.getJmsBinding(), workScheduler);
+
+            return new ASFListener(listener, service.getName(), service.isCallback(), jmsSLD.getJmsBinding(), workScheduler, rf);
 
         } catch (NamingException e) {
             throw new JMSBindingException(e);

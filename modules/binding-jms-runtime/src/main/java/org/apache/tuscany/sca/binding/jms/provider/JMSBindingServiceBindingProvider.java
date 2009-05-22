@@ -220,5 +220,9 @@ public class JMSBindingServiceBindingProvider implements ServiceBindingProviderR
     public MessageFactory getMessageFactory() {
         return messageFactory;
     }
+    
+    public JMSResourceFactory getResourceFactory() {
+        return jmsResourceFactory;
+    }
 
 }
