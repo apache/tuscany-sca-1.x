@@ -60,13 +60,13 @@ public class ASFListener implements JMSServiceListener {
 
     private Destination destination;
 
-    public ASFListener(MessageListener listener, String serviceName, boolean isCallbackService, JMSBinding jmsBinding, WorkScheduler workScheduler) {
+    public ASFListener(MessageListener listener, String serviceName, boolean isCallbackService, JMSBinding jmsBinding, WorkScheduler workScheduler, JMSResourceFactory rf) {
         this.listener = listener;
         this.serviceName = serviceName;
         this.isCallbackService = isCallbackService;
         this.jmsBinding = jmsBinding;
         this.workScheduler = workScheduler;
-        this.jmsResourceFactory = new JMSResourceFactoryImpl(jmsBinding.getConnectionFactoryName(), jmsBinding.getResponseConnectionFactoryName(), jmsBinding.getInitialContextFactoryName(), jmsBinding.getJndiURL());
+        this.jmsResourceFactory = rf;
     }
     
     public void start() {
@@ -84,6 +84,7 @@ public class ASFListener implements JMSServiceListener {
         try {
             consumer.close();
             jmsResourceFactory.closeConnection();
+            jmsResourceFactory.closeResponseConnection();
         } catch (Exception e) {
             // if using an embedded broker then when shutting down Tuscany the broker may get closed
             // before this stop method is called. I can't see how to detect that so for now just

@@ -55,9 +55,9 @@ public class ServiceInvoker implements MessageListener {
     private RuntimeComponentService service;
     private MessageFactory messageFactory;
 
-    public ServiceInvoker(JMSBinding jmsBinding, RuntimeComponentService service, Binding targetBinding, MessageFactory messageFactory) throws NamingException {
+    public ServiceInvoker(JMSBinding jmsBinding, RuntimeComponentService service, Binding targetBinding, MessageFactory messageFactory, JMSResourceFactory rf) throws NamingException {
         this.jmsBinding = jmsBinding;
-        this.jmsResourceFactory = new JMSResourceFactoryImpl(jmsBinding.getConnectionFactoryName(), jmsBinding.getResponseConnectionFactoryName(), jmsBinding.getInitialContextFactoryName(), jmsBinding.getJndiURL());
+        this.jmsResourceFactory = rf;
         this.service = service;
         this.targetBinding = targetBinding;
         this.messageFactory = messageFactory;
