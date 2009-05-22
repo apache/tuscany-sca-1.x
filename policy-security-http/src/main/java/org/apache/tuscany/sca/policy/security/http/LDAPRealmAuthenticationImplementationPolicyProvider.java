@@ -71,7 +71,7 @@ public class LDAPRealmAuthenticationImplementationPolicyProvider implements Poli
         if (implementation instanceof OperationsConfigurator) {
             OperationsConfigurator operationsConfigurator = (OperationsConfigurator)implementation;
             for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
-                if (cop.getName().equals(op.getName())) {
+                if (cop != null && cop.getName() != null && cop.getName().equals(op.getName())) {
                     for (PolicySet ps : cop.getPolicySets()) {
                         for (Object p : ps.getPolicies()) {
                             if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
@@ -99,7 +99,7 @@ public class LDAPRealmAuthenticationImplementationPolicyProvider implements Poli
         if (implementation instanceof OperationsConfigurator) {
             OperationsConfigurator operationsConfigurator = (OperationsConfigurator)implementation;
             for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
-                if (cop.getName().equals(op.getName())) {
+                if (cop != null && cop.getName() != null && cop.getName().equals(op.getName())) {
                     for (PolicySet ps : cop.getPolicySets()) {
                         for (Object p : ps.getPolicies()) {
                             if (AuthorizationPolicy.class.isInstance(p)) {
