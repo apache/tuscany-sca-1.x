@@ -77,11 +77,6 @@
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
-            <artifactId>tuscany-binding-http-jsonrpc-js</artifactId>
-            <version>${pom.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-http-jsonrpc-runtime</artifactId>
             <version>${pom.version}</version>
         </dependency>
