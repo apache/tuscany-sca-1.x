@@ -19,9 +19,12 @@
 package scatours.smsgateway;
 
 import org.omg.CORBA.ORB;
+import org.omg.CORBA.Object;
 import org.omg.CosNaming.NameComponent;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
+import org.omg.PortableServer.POA;
+import org.omg.PortableServer.POAHelper;
 
 public class SMSGatewayCORBAServiceBootstrap {
 
@@ -34,7 +37,7 @@ public class SMSGatewayCORBAServiceBootstrap {
         NamingContextExt namingCtx;
         try
         {
-          org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+          Object objRef = orb.resolve_initial_references("NameService");
           namingCtx = NamingContextExtHelper.narrow(objRef);
         } catch (Exception ex) {
           System.err.println("ERROR: Failed to resolve Name Service.");
@@ -43,12 +46,16 @@ public class SMSGatewayCORBAServiceBootstrap {
           return;
         }
 
-        SMSGatewayServiceImpl smsGateway = new SMSGatewayServiceImpl();
+        Object rootPoaRef = orb.resolve_initial_references("RootPOA");
+        POA rootPoa = POAHelper.narrow(rootPoaRef);
+        rootPoa.the_POAManager().activate();
+        
+        SMSGatewayServant smsGateway = new SMSGatewayServant();
 
         String corbaServerName = "SMSGatewayCORBAService";
         NameComponent[]  name = { new NameComponent(corbaServerName, "") };
-
-        namingCtx.rebind(name, smsGateway);
+        Object smsGatewayRef = rootPoa.servant_to_reference(smsGateway);
+        namingCtx.rebind(name, smsGatewayRef);
 
         System.out.println("CORBA server running - waiting for requests");
         orb.run();

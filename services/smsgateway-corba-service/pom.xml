@@ -58,8 +58,9 @@
                             <includes>
                                 <include>sms-gateway.idl</include>
                             </includes>
-                            <emitStubs>false</emitStubs>
+                            <emitStubs>true</emitStubs>
                             <emitSkeletons>true</emitSkeletons>
+                            <compatible>false</compatible>
                         </source>
                     </sources>
                     <sourceDirectory>${basedir}/src/main/resources</sourceDirectory>
