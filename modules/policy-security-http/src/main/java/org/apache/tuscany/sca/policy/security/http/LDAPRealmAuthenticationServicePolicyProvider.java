@@ -89,13 +89,11 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
         List<LDAPRealmAuthenticationPolicy> polices = new ArrayList<LDAPRealmAuthenticationPolicy>();
         // FIXME: How do we get a list of effective policySets for a given operation?
         for(Operation operation : operations) {
-            if (operation!= null && operation.getName() != null) {
-                if (operation.getName().equals(op.getName())) {
-                    for (PolicySet ps : operation.getPolicySets()) {
-                        for (Object p : ps.getPolicies()) {
-                            if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
-                                polices.add((LDAPRealmAuthenticationPolicy)p);
-                            }
+            if (operation!= null && operation.getName() != null && operation.getName().equals(op.getName())) {
+                for (PolicySet ps : operation.getPolicySets()) {
+                    for (Object p : ps.getPolicies()) {
+                        if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
+                            polices.add((LDAPRealmAuthenticationPolicy)p);
                         }
                     }
                 }
@@ -105,7 +103,7 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
         if (service instanceof OperationsConfigurator) {
             OperationsConfigurator operationsConfigurator = (OperationsConfigurator)service;
             for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
-                if (cop.getName().equals(op.getName())) {
+                if (cop!= null && cop.getName() != null && cop.getName().equals(op.getName())) {
                     for (PolicySet ps : cop.getApplicablePolicySets()) {
                         for (Object p : ps.getPolicies()) {
                             if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
@@ -138,13 +136,11 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
         List<AuthorizationPolicy> polices = new ArrayList<AuthorizationPolicy>();
         // FIXME: How do we get a list of effective policySets for a given operation?
         for(Operation operation : operations) {
-            if (operation!= null && operation.getName() != null) {
-                if (operation.getName().equals(op.getName())) {
-                    for (PolicySet ps : operation.getPolicySets()) {
-                        for (Object p : ps.getPolicies()) {
-                            if (AuthorizationPolicy.class.isInstance(p)) {
-                                polices.add((AuthorizationPolicy)p);
-                            }
+            if (operation!= null && operation.getName() != null && operation.getName().equals(op.getName())) {
+                for (PolicySet ps : operation.getPolicySets()) {
+                    for (Object p : ps.getPolicies()) {
+                        if (AuthorizationPolicy.class.isInstance(p)) {
+                            polices.add((AuthorizationPolicy)p);
                         }
                     }
                 }
@@ -154,7 +150,7 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
         if (service instanceof OperationsConfigurator) {
             OperationsConfigurator operationsConfigurator = (OperationsConfigurator)service;
             for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
-                if (cop.getName().equals(op.getName())) {
+                if (cop != null && cop.getName() != null && cop.getName().equals(op.getName())) {
                     for (PolicySet ps : cop.getApplicablePolicySets()) {
                         for (Object p : ps.getPolicies()) {
                             if (AuthorizationPolicy.class.isInstance(p)) {
