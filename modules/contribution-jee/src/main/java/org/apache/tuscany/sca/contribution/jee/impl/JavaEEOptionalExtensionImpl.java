@@ -24,11 +24,18 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
+import org.apache.tuscany.sca.assembly.Component;
+import org.apache.tuscany.sca.assembly.ComponentReference;
+import org.apache.tuscany.sca.assembly.ComponentService;
 import org.apache.tuscany.sca.assembly.ComponentType;
+import org.apache.tuscany.sca.assembly.Composite;
+import org.apache.tuscany.sca.assembly.CompositeReference;
+import org.apache.tuscany.sca.assembly.CompositeService;
 import org.apache.tuscany.sca.assembly.Multiplicity;
 import org.apache.tuscany.sca.assembly.Property;
 import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.jee.EJBImplementationGenerated;
 import org.apache.tuscany.sca.contribution.jee.EjbInfo;
 import org.apache.tuscany.sca.contribution.jee.EjbModuleInfo;
 import org.apache.tuscany.sca.contribution.jee.EjbReferenceInfo;
@@ -167,15 +174,16 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
         return componentType;
     }
     
-    public ComponentType createImplementationJeeComponentType(WebModuleInfo webModule) {
-        ComponentType componentType = assemblyFactory.createComponentType();
+    public void createImplementationJeeComposite(WebModuleInfo webModule, Composite composite) {
+        
+        Component component = findComponent(composite, webModule.getModuleName());
         
         // Process Remote EJB References
         for(Map.Entry<String, EjbReferenceInfo> entry : webModule.getEjbReferences().entrySet()) {
             EjbReferenceInfo ejbRef = entry.getValue();
             String referenceName = entry.getKey();
             referenceName = referenceName.replace("/", "_");
-            Reference reference = assemblyFactory.createComponentReference();
+            ComponentReference reference = assemblyFactory.createComponentReference();
             reference.setName(referenceName);
             InterfaceContract ic = javaInterfaceFactory.createJavaInterfaceContract();
             try {
@@ -187,24 +195,25 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
             reference.setInterfaceContract(ic);
             reference.getRequiredIntents().add(EJB_INTENT);
             reference.setMultiplicity(Multiplicity.ZERO_ONE);
-            componentType.getReferences().add(reference);
+            
+            addComponentReference(composite, component, reference);
         }
-        
-        return componentType;
     }
 
-    public ComponentType createImplementationJeeComponentType(EjbModuleInfo ejbModule) {
-        ComponentType componentType = assemblyFactory.createComponentType();
+    public void createImplementationJeeComposite(EjbModuleInfo ejbModule, Composite composite) {
         
         for(Map.Entry<String, EjbInfo> entry : ejbModule.getEjbInfos().entrySet()) {
             EjbInfo ejbInfo = entry.getValue();
+            
+            Component component = findComponent(composite, ejbInfo.beanName);
+            
             // Process Remote EJB References
             for(Map.Entry<String, EjbReferenceInfo> entry1 : ejbInfo.ejbReferences.entrySet()) {
                 EjbReferenceInfo ejbRef = entry1.getValue();
                 String referenceName = ejbRef.referenceName;
                 referenceName = referenceName.replace("/", "_");
                 referenceName = ejbInfo.beanName + "_" + referenceName;
-                Reference reference = assemblyFactory.createComponentReference();
+                ComponentReference reference = assemblyFactory.createComponentReference();
                 reference.setName(referenceName);
                 InterfaceContract ic = javaInterfaceFactory.createJavaInterfaceContract();
                 try {
@@ -216,28 +225,30 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
                 reference.setInterfaceContract(ic);
                 reference.getRequiredIntents().add(EJB_INTENT);
                 reference.setMultiplicity(Multiplicity.ZERO_ONE);
-                componentType.getReferences().add(reference);
+                
+                addComponentReference(composite, component, reference);
             }
         }
-        
-        return componentType;
     }
 
-    public ComponentType createImplementationJeeComponentType(JavaEEApplicationInfo appInfo) {
-        ComponentType componentType = assemblyFactory.createComponentType();
+    
+    public void createImplementationJeeComposite(JavaEEApplicationInfo appInfo, Composite composite) {
         
         for(Map.Entry<String, EjbModuleInfo> entry0 : appInfo.getEjbModuleInfos().entrySet()) {
             EjbModuleInfo ejbModule = entry0.getValue();
             
             for(Map.Entry<String, EjbInfo> entry : ejbModule.getEjbInfos().entrySet()) {
                 EjbInfo ejbInfo = entry.getValue();
+                
+                Component component = findComponent(composite, ejbInfo.beanName);
+                
                 // Process Remote EJB References
                 for(Map.Entry<String, EjbReferenceInfo> entry1 : ejbInfo.ejbReferences.entrySet()) {
                     EjbReferenceInfo ejbRef = entry1.getValue();
                     String referenceName = ejbRef.referenceName;
                     referenceName = referenceName.replace("/", "_");
                     referenceName = ejbInfo.beanName + "_" + referenceName;
-                    Reference reference = assemblyFactory.createComponentReference();
+                    ComponentReference reference = assemblyFactory.createComponentReference();
                     reference.setName(referenceName);
                     InterfaceContract ic = javaInterfaceFactory.createJavaInterfaceContract();
                     try {
@@ -249,11 +260,58 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
                     reference.setInterfaceContract(ic);
                     reference.getRequiredIntents().add(EJB_INTENT);
                     reference.setMultiplicity(Multiplicity.ZERO_ONE);
-                    componentType.getReferences().add(reference);
+                    
+                    addComponentReference(composite, component, reference);
                 }
             }
         }
+    }   
+    
+    /**
+     * We are fluffing up the JEEImplemention composite to represented the components
+     * in the JEE archive. Given the JEEimplemenation composite find a named component 
+     * it if already exists or create it if it doesn't. 
+     * 
+     * @param composite
+     * @param componentName
+     * @return
+     */
+    private Component findComponent(Composite composite, String componentName){
+        Component component = null;
         
-        return componentType;
-    }
+        for (Component tmpComponent : composite.getComponents()){
+            if (tmpComponent.getName().equals(componentName)){
+               component = tmpComponent;
+               break;
+            }
+        }
+         
+        if (component == null){
+            component = assemblyFactory.createComponent();
+            component.setName(componentName);
+            composite.getComponents().add(component);
+            
+            EJBImplementationGenerated implementation = new EJBImplementationGeneratedImpl();
+            component.setImplementation(implementation);
+        }
+        
+        return component;
+    } 
+    
+    /**
+     * Add a component reference and fluff up a composite reference to match
+     * 
+     * @param composite
+     * @param component
+     * @param service
+     */
+    private void addComponentReference(Composite composite, Component component, ComponentReference reference){        
+        component.getImplementation().getReferences().add(reference);
+        
+        CompositeReference compositeReference = assemblyFactory.createCompositeReference();
+        composite.getReferences().add(compositeReference);
+        
+        compositeReference.setName(reference.getName());
+        compositeReference.getPromotedReferences().add(reference);        
+    }    
 }

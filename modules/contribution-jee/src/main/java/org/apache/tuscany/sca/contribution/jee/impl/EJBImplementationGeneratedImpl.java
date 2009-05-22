@@ -16,46 +16,52 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.implementation.jee.impl;
+package org.apache.tuscany.sca.contribution.jee.impl;
 
+import org.apache.tuscany.sca.assembly.Component;
 import org.apache.tuscany.sca.assembly.ConstrainingType;
-import org.apache.tuscany.sca.assembly.impl.CompositeImpl;
-import org.apache.tuscany.sca.implementation.jee.JEEImplementation;
+import org.apache.tuscany.sca.assembly.Property;
+import org.apache.tuscany.sca.assembly.Reference;
+import org.apache.tuscany.sca.assembly.Service;
+import org.apache.tuscany.sca.assembly.builder.ComponentPreProcessor;
+import org.apache.tuscany.sca.assembly.impl.ImplementationImpl;
+import org.apache.tuscany.sca.contribution.jee.EJBImplementationGenerated;
+import org.apache.tuscany.sca.runtime.RuntimeComponent;
+
 
 /**
- * The model representing a JEE implementation in an SCA assembly model.
- * 
+ * The model representing an EJB implementation in an SCA assembly model.
+ *
  * @version $Rev$ $Date$
  */
-public class JEEImplementationImpl extends CompositeImpl implements JEEImplementation {
+class EJBImplementationGeneratedImpl extends ImplementationImpl implements EJBImplementationGenerated {
 
-    private String archive;
+    private String ejbLink;
 
     /**
-     * Constructs a new JEE implementation.
+     * Constructs a new EJB implementation.
      */
-    JEEImplementationImpl() {
+    EJBImplementationGeneratedImpl() {
         super();
     }
 
     @Override
     public ConstrainingType getConstrainingType() {
-        // The JEE implementation does not support constrainingTypes
+        // The EJB implementation does not support constrainingTypes
         return null;
+    }
+
+    public String getEJBLink() {
+        return ejbLink;
     }
     
     @Override
     public void setConstrainingType(ConstrainingType constrainingType) {
-        // The JEE implementation does not support constrainingTypes
+        // The EJB implementation does not support constrainingTypes
     }
 
-    public String getArchive() {
-        return archive;
+    public void setEJBLink(String ejbLink) {
+        this.ejbLink = ejbLink;
     }
-
-    public void setArchive(String archive) {
-        this.archive = archive;
-    }
-    
     
 }

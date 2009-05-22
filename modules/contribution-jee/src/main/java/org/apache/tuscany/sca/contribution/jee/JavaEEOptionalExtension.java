@@ -19,6 +19,7 @@
 package org.apache.tuscany.sca.contribution.jee;
 
 import org.apache.tuscany.sca.assembly.ComponentType;
+import org.apache.tuscany.sca.assembly.Composite;
 
 /**
  * Compute componentType with Remote EJB references translating into SCA references and env-entries translating into
@@ -27,9 +28,14 @@ import org.apache.tuscany.sca.assembly.ComponentType;
  * @version $Rev$ $Date$
  */
 public interface JavaEEOptionalExtension {
+    // The EJBImplementation and WEBImplemenation models are straight implementations so 
+    // we deals in component types
     ComponentType createImplementationWebComponentType(WebModuleInfo webModule);
     ComponentType createImplementationEjbComponentType(EjbModuleInfo ejbModule, String ejbName);
-    ComponentType createImplementationJeeComponentType(WebModuleInfo webModule);
-    ComponentType createImplementationJeeComponentType(EjbModuleInfo ejbModule);
-    ComponentType createImplementationJeeComponentType(JavaEEApplicationInfo appInfo);
+    
+    // The JEEImplemenation model is a composite and so we have to fluff
+    // up the composite contents to match the JEE artifact
+    void createImplementationJeeComposite(WebModuleInfo webModule, Composite composite);
+    void createImplementationJeeComposite(EjbModuleInfo ejbModule, Composite composite);
+    void createImplementationJeeComposite(JavaEEApplicationInfo appInfo, Composite composite);
 }

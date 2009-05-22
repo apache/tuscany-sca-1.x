@@ -19,6 +19,7 @@
 package org.apache.tuscany.sca.contribution.jee;
 
 import org.apache.tuscany.sca.assembly.ComponentType;
+import org.apache.tuscany.sca.assembly.Composite;
 
 /**
  * Compute componentType with EJB3 business interfaces translating into SCA services.
@@ -26,7 +27,12 @@ import org.apache.tuscany.sca.assembly.ComponentType;
  * @version $Rev$ $Date$
  */
 public interface JavaEEExtension {
+    // The EJBImplementation model is a straight implementation so we deal in 
+    // component types
     ComponentType createImplementationEjbComponentType(EjbModuleInfo ejbModule, String ejbName);
-    ComponentType createImplementationJeeComponentType(EjbModuleInfo ejbModule);
-    ComponentType createImplementationJeeComponentType(JavaEEApplicationInfo appInfo);
+    
+    // The JEEImplemenation model is a composite and so we have to fluff
+    // up the composite contents to match the JEE artifact
+    void createImplementationJeeComposite(EjbModuleInfo ejbModule, Composite composite);
+    void createImplementationJeeComposite(JavaEEApplicationInfo appInfo, Composite composite);
 }
