@@ -6,17 +6,13 @@ variations of an online Store application.
 
 For an overview of the scenarios covered here, please refer to Tutorial.pdf.
 
-For more detailed information, please see:
-
-http://incubator.apache.org/tuscany/sca-java-tutorial.html
-
 
 Running The Tutorial Application
 --------------------------------
 
 Start the SCA Domain Manager:
    cd domain
-   java -jar ../../modules/tuscany-node2-launcher-1.2-incubating.jar domain
+   java -jar ../../../modules/tuscany-node-launcher-1.5.jar domain
 
 To access the SCA Manager application, point your Web browser to:
    http://localhost:9990/ui/cloud/
@@ -31,4 +27,8 @@ store/catalog-webapp folder and running
 You should now be able to access the online Store application. Point your Web
 browser to:
    http://localhost:8100/ui/
+
+For more detailed information, please see:
+
+http://tuscany.apache.org/getting-started-with-tuscany.html
 
