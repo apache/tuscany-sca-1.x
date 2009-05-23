@@ -27,9 +27,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests all the components and services in chapter 2
+ * Test driver for introducing-tuscanyscatours-contribution and
+ * introducing-goodvaluetrips-contribution.
  */
-public class NodeTestCase {
+public class IntroducingTestCase {
 
     private SCANode node;
 
