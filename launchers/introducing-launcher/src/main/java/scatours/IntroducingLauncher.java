@@ -27,10 +27,10 @@ import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
-public class LaunchIntroducingNode {
+public class IntroducingLauncher {
 
     public static void main(String[] args) throws Exception {
-        LaunchIntroducingNode.launchFromFileSystemDir();
+        IntroducingLauncher.launchFromFileSystemDir();
     }
     
     // OK for development but you must launch the node from this module 
@@ -45,18 +45,6 @@ public class LaunchIntroducingNode {
 
             Runnable runner = ((SCAClient)node).getService(Runnable.class, "TestClient/Runnable");
             runner.run();
-            /*
-            Bookings bookings = ((SCAClient)node).getService(Bookings.class, 
-                                                             "TripBooking/Bookings");
-
-            System.out.println("Trip boooking code = " + 
-            		           bookings.newBooking("FS1APR4", 1));
-            
-            Checkout checkout = ((SCAClient)node).getService(Checkout.class, 
-                                                             "ShoppingCart/Checkout");
-            
-            checkout.makePayment(new BigDecimal("1995.00"), "1234567843218765 10/10");
-            */
             
             node.stop();
             
