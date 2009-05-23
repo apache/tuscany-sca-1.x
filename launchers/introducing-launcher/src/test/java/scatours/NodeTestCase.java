@@ -36,11 +36,10 @@ public class NodeTestCase {
     @Before
     public void startServer() throws Exception {
         try {
-            node = SCANodeFactory.newInstance().createSCANode("scatours.composite", 
+            node = SCANodeFactory.newInstance().createSCANode(null, 
                 new SCAContribution("goodvaluetrips", "../../contributions/introducing-goodvaluetrips-contribution/target/classes"),
                 new SCAContribution("tuscanyscatours", "../../contributions/introducing-tuscanyscatours-contribution/target/classes"),
-                new SCAContribution("client", "../../contributions/introducing-client-contribution/target/classes"),
-                new SCAContribution("node", "./target/classes"));
+                new SCAContribution("client", "../../contributions/introducing-client-contribution/target/classes"));
             node.start();
         } catch (Exception ex) {
             System.out.println(ex.toString());

@@ -38,10 +38,14 @@ public class LaunchIntroducingNode {
         try {
             SCANode node = SCANodeFactory.newInstance().createSCANode(null, 
                 new SCAContribution("goodvaluetrips", "../../contributions/introducing-goodvaluetrips-contribution/target/classes"),
-                new SCAContribution("tuscanyscatours", "../../contributions/introducing-tuscanyscatours-contribution/target/classes"));
+                new SCAContribution("tuscanyscatours", "../../contributions/introducing-tuscanyscatours-contribution/target/classes"),
+                new SCAContribution("client", "../../contributions/introducing-client-contribution/target/classes"));
 
             node.start();
 
+            Runnable runner = ((SCAClient)node).getService(Runnable.class, "TestClient/Runnable");
+            runner.run();
+            /*
             Bookings bookings = ((SCAClient)node).getService(Bookings.class, 
                                                              "TripBooking/Bookings");
 
@@ -52,7 +56,7 @@ public class LaunchIntroducingNode {
                                                              "ShoppingCart/Checkout");
             
             checkout.makePayment(new BigDecimal("1995.00"), "1234567843218765 10/10");
-            
+            */
             
             node.stop();
             

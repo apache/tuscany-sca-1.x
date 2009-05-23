@@ -28,18 +28,10 @@
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
         </javac>
-        <copy todir="target/classes">
-            <fileset dir="src/main/resources"/>
-        </copy>
-        <jar destfile="target/scatours-introducing-launcher.jar" basedir="target/classes">
-            <manifest>
-                <attribute name="Main-Class" value="scatours.LaunchNode"/>
-            </manifest>
-        </jar>
     </target>
 
     <target name="run">
-        <java classname="scatours.LaunchNode" fork="true">
+        <java classname="scatours.LaunchIntroducingNode" fork="true">
             <classpath>
                 <pathelement location="target/classes"/>
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>

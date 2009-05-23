@@ -26,7 +26,8 @@ public class ShoppingCart implements Checkout, Updates {
 	private static List<String> bookedTrips = new ArrayList<String>();
 	
     public void makePayment(BigDecimal amount, String cardInfo) {
-    	System.out.print("Charged $" + amount + " to card " + cardInfo + " for trips" );
+    	System.out.print("Charged $" + amount + " to card " + cardInfo + " for " +
+                         (bookedTrips.size() > 1 ? "trips" : "trip"));
     	for (String trip : bookedTrips){
     		System.out.print(" " + trip);
     	}
