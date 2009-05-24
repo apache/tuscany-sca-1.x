@@ -22,8 +22,10 @@
  			xmlns:sca="http://www.osoa.org/xmlns/sca/1.0"
  			xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0">
 
-	<!-- Policy Intents Defined by the SCA Runtime -->
-	<intent name="authorization" constrains="sca:implementation"/>
+    <!-- Policy Intents Defined by the SCA Runtime -->
+    <intent name="authorization" constrains="sca:implementation"/>
+    <intent name="managedTransaction" constrains="sca:implementation"/>
+    <intent name="managedTransaction.global"/>
     
     <!-- Policy intents -->
     <policySet name="ps1" provides="sca:authorization" appliesTo="sca:implementation.java"/>
