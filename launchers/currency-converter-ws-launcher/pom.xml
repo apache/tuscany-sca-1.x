@@ -25,7 +25,7 @@
         <version>1.5-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>currency-converter-ws-launcher</artifactId>
+    <artifactId>scatours-currency-converter-ws-launcher</artifactId>
     <name>Apache Tuscany SCA Tours Currency Converter Web Service Launcher</name>
 
     <dependencies>

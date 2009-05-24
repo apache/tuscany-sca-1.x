@@ -25,7 +25,7 @@
         <version>1.5-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>notification-ws-launcher</artifactId>
+    <artifactId>scatours-notification-ws-launcher</artifactId>
     <name>Apache Tuscany SCA Tours Notification Web Service Launcher</name>
 
     <dependencies>

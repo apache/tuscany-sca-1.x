@@ -25,7 +25,7 @@
         <version>1.5-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>notification-corba-launcher</artifactId>
+    <artifactId>scatours-notification-corba-launcher</artifactId>
     <name>Apache Tuscany SCA Tours Notification CORBA Service Launcher</name>
 
     <dependencies>

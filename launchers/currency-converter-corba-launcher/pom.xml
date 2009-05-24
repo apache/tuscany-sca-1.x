@@ -25,7 +25,7 @@
         <version>1.5-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>currency-converter-corba-launcher</artifactId>
+    <artifactId>scatours-currency-converter-corba-launcher</artifactId>
     <name>Apache Tuscany SCA Tours Currency Converter CORBA Launcher</name>
 
     <dependencies>
