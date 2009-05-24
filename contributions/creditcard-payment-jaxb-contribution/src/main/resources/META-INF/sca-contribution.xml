@@ -17,6 +17,8 @@
     * specific language governing permissions and limitations
     * under the License.    
 -->
-<contribution xmlns="http://www.osoa.org/xmlns/sca/1.0">
+<contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
+              xmlns:creditcard="http://creditcard">
    <export.java package="payment.creditcard"/>
+   <deployable composite="creditcard:creditcard" />
 </contribution>

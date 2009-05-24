@@ -24,9 +24,8 @@
            name="creditcard">
 
     <component name="CreditCardPaymentComponent">
-        <implementation.java class="payment.creditcard.impl.CreditCardPaymentImpl" />
+        <implementation.java class="payment.creditcard.CreditCardPaymentImpl" />
         <service name="CreditCardPayment">
-            <interface.wsdl interface="http://www.example.org/CreditCardPayment/#wsdl.interface(CreditCardPayment)"/>
             <binding.ws uri="http://localhost:8082/CreditCardPayment" />
             <binding.sca/>
         </service>

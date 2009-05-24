@@ -19,9 +19,6 @@
 
 package scatours;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;

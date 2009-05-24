@@ -20,6 +20,7 @@
 package payment.creditcard;
 
 import org.apache.tuscany.sca.node.SCAClient;
+import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.junit.AfterClass;
@@ -38,9 +39,14 @@ public class CreditCardPaymentTestCase {
      */
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        SCANodeFactory factory = SCANodeFactory.newInstance();
-        node = factory.createSCANodeFromClassLoader("creditcard.composite", CreditCardPayment.class.getClassLoader());
-        node.start();
+    	try {
+	        node = SCANodeFactory.newInstance().createSCANode(null, 
+	            new SCAContribution("creditcard", "./target/classes"));
+	
+	        node.start();
+    	} catch (Exception ex) {
+    		ex.printStackTrace();
+    	}
     }
     
     @Test

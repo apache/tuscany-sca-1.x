@@ -25,22 +25,23 @@
            
     <component name="PaymentComponent">
         <implementation.java class="payment.PaymentImpl" />
+        <service name="Payment">
+           <binding.ws uri="http://localhost:8081/Payment"/>
+        </service>
         <reference name="customerRegistry" target="CustomerRegistryComponent"/>
-        <reference name="creditCardPayment" target="CreditCardPaymentComponent"/>
+        <reference name="creditCardPayment">
+            <binding.ws uri="http://localhost:8082/CreditCardPayment"/>
+        </reference>
         <reference name="emailGateway" target="EmailGatewayComponent"/>
         <property name="transactionFeeRate">0.02</property>
     </component>
-    
+        
     <component name="CustomerRegistryComponent">
         <implementation.java class="scatours.customer.CustomerRegistryImpl" />
     </component>
-    
+            
     <component name="EmailGatewayComponent">
         <implementation.java class="scatours.emailgateway.EmailGatewayImpl" />
     </component>    
-    
-    <component name="CreditCardPaymentComponent">
-        <implementation.java class="payment.creditcard.CreditCardPaymentImpl" />
-    </component>
     
 </composite>

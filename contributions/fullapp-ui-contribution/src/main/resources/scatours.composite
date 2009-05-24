@@ -143,25 +143,8 @@
         <service name="ShoppingCart">
         </service>
         <reference name="payment">
-            <binding.ws uri="http://localhost:8080/Payment" />
+            <binding.ws uri="http://localhost:8081/Payment" />
         </reference> 
-    </component>   
-    
-    <!--component name="PaymentComponent">
-        <implementation.java class="payment.PaymentImpl" />
-        <service name="Payment">
-            <binding.ws uri="http://localhost:8080/Payment" />
-        </service>
-        <reference name="creditCardPayment">
-            <binding.ws uri="http://localhost:8080/CreditCardPayment" />
-        </reference>
-    </component>
-    
-    <component name="CreditCardPaymentComponent">
-        <implementation.java class="payment.creditcard.CreditCardPaymentImpl" />
-        <service name="CreditCardPayment">
-            <binding.ws uri="http://localhost:8080/CreditCardPayment" />
-        </service>
-    </component-->     
+    </component>     
 
 </composite>

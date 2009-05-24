@@ -26,7 +26,7 @@
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
     <artifactId>scatours-creditcard-payment-jaxb-contribution</artifactId>
-    <name>Apache Tuscany SCA Tours Credit Card Payment Contribution</name>
+    <name>Apache Tuscany SCA Tours Credit Card Payment Contribution JAXB</name>
 
     <dependencies>
         <dependency>

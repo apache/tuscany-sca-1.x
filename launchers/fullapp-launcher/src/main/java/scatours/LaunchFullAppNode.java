@@ -32,31 +32,33 @@ public class LaunchFullAppNode {
     
     // OK for development but you must launch the node from this module 
     public static void launchFromFileSystemDir(){
-        SCANode node = null; 
         
         try {
-            node = SCANodeFactory.newInstance().createSCANode("scatours.composite", 
-                                                               new SCAContribution("common", "../../contributions/common-contribution/target/classes"),
-                                                               new SCAContribution("currency", "../../contributions/currency-contribution/target/classes"),
-                                                               new SCAContribution("hotel", "../../contributions/hotel-contribution/target/classes"),
-                                                               new SCAContribution("flight", "../../contributions/flight-contribution/target/classes"),
-                                                               new SCAContribution("car", "../../contributions/car-contribution/target/classes"),
-                                                               new SCAContribution("trip", "../../contributions/trip-contribution/target/classes"),
-                                                               new SCAContribution("tripbooking", "../../contributions/tripbooking-contribution/target/classes"),
-                                                               new SCAContribution("travelcatalog", "../../contributions/travelcatalog-contribution/target/classes"),
-                                                               new SCAContribution("payment", "../../contributions/payment-java-contribution/target/classes"),
-                                                               new SCAContribution("creditcard", "../../contributions/creditcard-payment-jaxb-contribution/target/classes"),
-                                                               new SCAContribution("shoppingcart", "../../contributions/shoppingcart-contribution/target/classes"),
-                                                               new SCAContribution("scatours", "../../contributions/scatours-contribution/target/classes"),
-                                                               new SCAContribution("ui", "../../contributions/fullapp-ui-contribution/target/classes"));
-            node.start();
+        	SCANode node1 = SCANodeFactory.newInstance().createSCANode(null, 
+	           new SCAContribution("common", "../../contributions/common-contribution/target/classes"),
+	           new SCAContribution("currency", "../../contributions/currency-contribution/target/classes"),
+	           new SCAContribution("hotel", "../../contributions/hotel-contribution/target/classes"),
+	           new SCAContribution("flight", "../../contributions/flight-contribution/target/classes"),
+	           new SCAContribution("car", "../../contributions/car-contribution/target/classes"),
+	           new SCAContribution("trip", "../../contributions/trip-contribution/target/classes"),
+	           new SCAContribution("tripbooking", "../../contributions/tripbooking-contribution/target/classes"),
+	           new SCAContribution("travelcatalog", "../../contributions/travelcatalog-contribution/target/classes"),
+	           new SCAContribution("payment", "../../contributions/payment-java-contribution/target/classes"),
+	           new SCAContribution("creditcard", "../../contributions/creditcard-payment-jaxb-contribution/target/classes"),
+	           new SCAContribution("shoppingcart", "../../contributions/shoppingcart-contribution/target/classes"),
+	           new SCAContribution("scatours", "../../contributions/scatours-contribution/target/classes"),
+	           new SCAContribution("ui", "../../contributions/fullapp-ui-contribution/target/classes"));
+        	
+            node1.start();
             
+            System.out.println("Point your browser at - http://L3AW203:8080/scatours/ ");
             System.out.println("Node started - Press enter to shutdown.");
+            
             try {
                 System.in.read();
             } catch (IOException e) {}
             
-            node.stop();
+            node1.stop();
             
         } catch (Exception ex) {
             System.out.println(ex.toString());

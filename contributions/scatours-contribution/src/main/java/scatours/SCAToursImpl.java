@@ -94,6 +94,6 @@ public class SCAToursImpl implements SCAToursSearch, SCAToursBooking, SCAToursCa
     
     public void checkout(String cartId){
         // need to get the user id from the context here
-        carts.get(cartId).checkout("Fred");
+        carts.get(cartId).checkout("c-0");
     }   
 }
