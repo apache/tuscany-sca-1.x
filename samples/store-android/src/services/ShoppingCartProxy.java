@@ -28,9 +28,10 @@ import services.atom.xml.AtomXML;
 import services.json.rpc.JSONRpc;
 
 public class ShoppingCartProxy {
-	private static final String jsonRPCTotalServiceURI = "http://192.168.1.102:8080/ShoppingCart/Total";
+    // see http://developer.android.com/guide/developing/tools/emulator.html
+    private static final String jsonRPCTotalServiceURI = "http://10.0.2.2:8080/ShoppingCart/Total";
     private static final String jsonRPCTotalRequest = "{\"id\": 4, \"method\": \"Service.getTotal\", \"params\": []}";
-    private static final String atomXMLCartServiceURI="http://192.168.1.102:8080/ShoppingCart/Cart";
+    private static final String atomXMLCartServiceURI="http://10.0.2.2:8080/ShoppingCart/Cart";
 
 	public Item[] getItems() {
 		return null;
