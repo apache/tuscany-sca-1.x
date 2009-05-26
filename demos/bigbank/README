@@ -2,11 +2,11 @@ BigBank Demo
 ============
 
 This application is made of 3 modules that represent the different aspects 
-of a fictitious banking application. Please see bigbank.png in the bigbank-account directory for a diagram of this demo.
+of a fictitious banking application. Please see bigbank.png for a diagram of this demo.
 
-To run the bigbank-account demo you need to first run bigbank-calculator and bigbank-stockquote composites. This will bring up Tuscany runtime and load the two applications and make them available as services. Bigbank-account is dependent on these services.
+To run the bigbank demo you need to first run bigbank-calculator and bigbank-stockquote composites. This will bring up Tuscany runtime and load the two applications and make them available as services. Bigbank-account is dependent on these services.
 
-This demo uses ant. This is just one way of running this demo. 
+To run this demo you need to use ant to compile and run the application. 
 
 Start Bigbank-calculator composite
 ----------------------------------
@@ -20,7 +20,6 @@ ant run
 
 .. Leave the server running
 
-Note that 'ant compile' needs to be done the first time you run this demo out of the binary distribution. No need to do 'ant compile' from there on.
 
 Start Bigbank-stockquote
 ------------------------
@@ -33,7 +32,6 @@ ant run
 
 .. Leave the server running
 
-Note that 'ant compile' needs to be done the first time you run this demo out of the binary distribution. No need to do 'ant compile' from there on.
 
 Start Bigbank
 -------------
@@ -50,12 +48,12 @@ The BigBank comprises of two subsystems that are built from two distinct contrib
 Besides the bigbank-account the bigbank composite application calls into bigbank-stockquote and 
 bigbank-calculator services. 
 
-Start bigbank-account in the following way:
+Start bigbank application in the following way:
 
-	cd bigbank
-	ant run
+cd bigbank
+ant run
 
-	.. Leave the server running
+.. Leave the server running
 
 Bigbank and the SCA Policies
 ----------------------------
