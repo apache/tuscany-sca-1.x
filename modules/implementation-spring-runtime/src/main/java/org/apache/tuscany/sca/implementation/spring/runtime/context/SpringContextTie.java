@@ -58,9 +58,6 @@ public class SpringContextTie {
     
     public SpringContextTie(SpringImplementationStub implementation, URL resource) throws Exception {
         this.implementation = implementation;
-        if (! SpringVersion.getVersion().equals("2.5.5")) {
-        	throw new RuntimeException("Unsupported version: Use only Spring Framework Version 2.5.5");
-        }
         SCAParentApplicationContext scaParentContext = new SCAParentApplicationContext(implementation);
         springContext = createApplicationContext(scaParentContext, resource);  
     }
