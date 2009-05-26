@@ -23,12 +23,42 @@ package services;
 public class Item {
     private String name;
     private String price;
+    private String key;
     
-    public Item() {
+    /**
+	 * @return the key
+	 */
+	public String getKey() {
+		return key;
+	}
+
+	/**
+	 * @param key the key to set
+	 */
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+
+
+
+
+
+
+
+
+	public Item() {
     }
     
     
-    /**
+    
+    
+    
+
+
+
+
+	/**
      * Parses a string entry to an Item object
      * @param s
      * @return Item
@@ -55,7 +85,14 @@ public class Item {
         this.name = name;
     }
     
-    public String getPrice() {
+    public Item(String name, String price, String key) {
+		super();
+		this.name = name;
+		this.price = price;
+		this.key = key;
+	}
+
+	public String getPrice() {
         return price;
     }
     

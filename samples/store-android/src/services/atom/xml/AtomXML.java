@@ -18,9 +18,14 @@
  */
 package services.atom.xml;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -28,9 +33,15 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
+import services.Commons;
 import services.Item;
 import android.util.Log;
 
@@ -38,111 +49,209 @@ import android.util.Log;
  *
  */
 public class AtomXML {
-	
-	public static boolean postItem(String ServiceURI, final Item item)
-	{
-		DefaultHttpClient client=new DefaultHttpClient();
-		HttpPost httpost = new HttpPost(ServiceURI);
-		
-		httpost.setEntity(new HttpEntity(){
-			
-			String entry="<entry xmlns=\"http://www.w3.org/2005/Atom\">" +
-			 "<title>item</title>" +
-			 "<content type=\"text/xml\">" +
-			  "<Item xmlns=\"http://services/\">" +
-			  "<name xmlns=\"\">" + item.getName()+ "</name>" +
-			 "<price xmlns=\"\">" +item.getPrice()+"</price>" +
-			  "</Item></content></entry>";
-			
-			class mHeader implements Header
-			{
-				public HeaderElement[] getElements() throws ParseException {
-					// TODO Auto-generated method stub
-					return null;
-				}
 
-				public String getName() {
-					// TODO Auto-generated method stub
-					return "Content-type";
-				}
+    public static String postItem(String ServiceURI, final String content)
+    {
+        DefaultHttpClient client=new DefaultHttpClient();
+        HttpPost httpost = new HttpPost(ServiceURI);
 
-				public String getValue() {
-					// TODO Auto-generated method stub
-					return "application/atom+xml;type=entry";
-				}
-			}
+        httpost.setEntity(new HttpEntity(){
 
-			public void consumeContent() throws IOException {
-				// TODO Auto-generated method stub
-				
-			}
+            String entry=content;
 
-			public InputStream getContent() throws IOException,
-					IllegalStateException {
-				// TODO Auto-generated method stub
-				return new InputStream(){
+            class mHeader implements Header
+            {
+                public HeaderElement[] getElements() throws ParseException {
+                    // TODO Auto-generated method stub
+                    return null;
+                }
 
-					public int read() throws IOException {
-						// TODO Auto-generated method stub
-						return this.available();
-					}
-					
-				};
-			}
+                public String getName() {
+                    // TODO Auto-generated method stub
+                    return "Content-type";
+                }
 
-			public Header getContentEncoding() {
-				// TODO Auto-generated method stub
-				return new mHeader();
-			}
+                public String getValue() {
+                    // TODO Auto-generated method stub
+                    return "application/atom+xml;type=entry";
+                }
+            }
 
-			public long getContentLength() {
-				// TODO Auto-generated method stub
-				return entry.length();
-			}
+            public void consumeContent() throws IOException {
+                // TODO Auto-generated method stub
 
-			public Header getContentType() {
-				// TODO Auto-generated method stub
-				return new mHeader();
-			}
+            }
 
-			public boolean isChunked() {
-				// TODO Auto-generated method stub
-				return false;
-			}
+            public InputStream getContent() throws IOException,
+            IllegalStateException {
+                // TODO Auto-generated method stub
+                return new InputStream(){
 
-			public boolean isRepeatable() {
-				// TODO Auto-generated method stub
-				return true;
-			}
+                    public int read() throws IOException {
+                        // TODO Auto-generated method stub
+                        return this.available();
+                    }
 
-			public boolean isStreaming() {
-				// TODO Auto-generated method stub
-				return false;
-			}
+                };
+            }
 
-			public void writeTo(OutputStream arg0) throws IOException {
-				// TODO Auto-generated method stub
-				
-				arg0.write(entry.getBytes());
-				arg0.flush();
-				Log.i("Tuscany", "Entry: "+item+" posted via atom/xml");
-			}		
-			
-		});
-				 
-		try {
-			HttpResponse response = client.execute(httpost);
-			Log.i("Tuscany", "Atom entry post status: "+response.getStatusLine().toString());
-			return true;
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			Log.e("Tuscany",e.getMessage());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			Log.e("Tuscany",e.getMessage());
-		}
-		
-		return false;
-	}	
+            public Header getContentEncoding() {
+                // TODO Auto-generated method stub
+                return new mHeader();
+            }
+
+            public long getContentLength() {
+                // TODO Auto-generated method stub
+                return entry.length();
+            }
+
+            public Header getContentType() {
+                // TODO Auto-generated method stub
+                return new mHeader();
+            }
+
+            public boolean isChunked() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            public boolean isRepeatable() {
+                // TODO Auto-generated method stub
+                return true;
+            }
+
+            public boolean isStreaming() {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            public void writeTo(OutputStream arg0) throws IOException {
+                // TODO Auto-generated method stub
+
+                arg0.write(entry.getBytes());
+                arg0.flush();
+                //Log.i("Tuscany", "Entry posted via atom/xml");
+            }		
+
+        });
+
+        try {
+            HttpResponse response = client.execute(httpost);
+            InputStream is =response.getEntity().getContent();
+
+            //Human readable atom response from servlet
+            int read;
+            StringBuffer sb=new StringBuffer();
+            while((read=is.read())>0)
+            {
+                sb.append((char)read);
+            }
+            Log.i("Tuscany", "Atom entry post status: "+response.getStatusLine().toString());
+            //Log.i("Tuscany", "Response: "+sb.toString());
+            //Try now to parse the consumed data
+            try {
+                SAXParserFactory spf = SAXParserFactory.newInstance();
+                SAXParser sp;
+                sp = spf.newSAXParser();
+                XMLReader xr = sp.getXMLReader();
+                CartItemHandler cih=new CartItemHandler();
+                xr.setContentHandler(cih);
+
+                xr.parse(new InputSource(new ByteArrayInputStream(sb.toString().getBytes())));
+                is.close();
+
+                return cih.getCurrentKey();
+
+            } catch (ParserConfigurationException e) {
+                // TODO Auto-generated catch block
+                Log.e(Commons.TAG,e.getMessage());
+            } catch (SAXException e) {
+                // TODO Auto-generated catch block
+                Log.e(Commons.TAG,e.getLocalizedMessage());
+            }
+
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            Log.e(Commons.TAG,e.getMessage());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            Log.e(Commons.TAG,e.getMessage());
+        }
+
+        return null;
+    }	
+
+    public static boolean performdelete(String uri)
+    {
+        DefaultHttpClient client=new DefaultHttpClient();
+        Log.i(Commons.TAG,Commons.DEL+uri);
+        HttpDelete del=new HttpDelete(uri);
+
+        try {
+            client.execute(del);
+            return true;
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            Log.e(Commons.TAG,e.getMessage());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            Log.e(Commons.TAG,e.getMessage());
+        }
+
+        return false;
+
+
+    }
+
+    public static Item[] getItems(String uri)
+    {
+        DefaultHttpClient client=new DefaultHttpClient();
+        HttpGet hg=new HttpGet(uri);
+        HttpResponse hr;
+        HttpEntity he;
+        try {
+            hr=client.execute(hg);
+            InputStream is =hr.getEntity().getContent();
+
+            //Human readable atom response from servlet
+            int read;
+            StringBuffer sb=new StringBuffer();
+            while((read=is.read())>0)
+            {
+                sb.append((char)read);
+            }
+            Log.i("Tuscany", "Atom get content: "+sb.toString());
+
+            SAXParserFactory spf = SAXParserFactory.newInstance();
+            SAXParser sp;
+            sp = spf.newSAXParser();
+            XMLReader xr = sp.getXMLReader();
+            CartItemHandler cih=new CartItemHandler();
+            xr.setContentHandler(cih);
+
+            xr.parse(new InputSource(new ByteArrayInputStream(sb.toString().getBytes())));
+            is.close();
+            Log.e(Commons.TAG,String.valueOf(cih.getItemsCollection().length));
+            return cih.getItemsCollection();
+
+
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            Log.e(Commons.TAG,e.getMessage());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            Log.e(Commons.TAG,e.getMessage());
+        } catch (ParserConfigurationException e) {
+            // TODO Auto-generated catch block
+            Log.e(Commons.TAG,e.getMessage());
+        } catch (SAXException e) {
+            // TODO Auto-generated catch block
+            Log.e(Commons.TAG,e.getMessage());
+        }
+        return null;
+    }
+
+
+
 
 }

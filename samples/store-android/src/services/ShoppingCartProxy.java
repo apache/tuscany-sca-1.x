@@ -19,6 +19,9 @@
 
 package services;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,21 +31,41 @@ import services.atom.xml.AtomXML;
 import services.json.rpc.JSONRpc;
 
 public class ShoppingCartProxy {
-    // see http://developer.android.com/guide/developing/tools/emulator.html
-    private static final String jsonRPCTotalServiceURI = "http://10.0.2.2:8080/ShoppingCart/Total";
+	private static final String jsonRPCTotalServiceURI = "http://10.0.2.2:8080/ShoppingCart/Total";
     private static final String jsonRPCTotalRequest = "{\"id\": 4, \"method\": \"Service.getTotal\", \"params\": []}";
     private static final String atomXMLCartServiceURI="http://10.0.2.2:8080/ShoppingCart/Cart";
 
+
 	public Item[] getItems() {
-		return null;
+		return AtomXML.getItems(atomXMLCartServiceURI);
 	}
 	
 	public boolean addItem(Item item) {
-		return AtomXML.postItem(atomXMLCartServiceURI, item);
+		String content="<entry xmlns=\"http://www.w3.org/2005/Atom\">" +
+		 "<title>item</title>" +
+		 "<content type=\"text/xml\">" +
+		  "<Item xmlns=\"http://services/\">" +
+		  "<name xmlns=\"\">" + item.getName()+ "</name>" +
+		 "<price xmlns=\"\">" +item.getPrice()+"</price>" +
+		  "</Item></content></entry>";
+		String key =AtomXML.postItem(atomXMLCartServiceURI, content);
+		if(key==null)
+			return false;
+		item.setKey(key);
+		Log.i("TUSCANY shopping cart proxy", key);
+		return true;
 	}
 	
-	public void removeItem(Item item) {
+	public boolean removeItem(Item item) {
 		
+		Log.e("Sent key",item.getKey());
+		String uri=atomXMLCartServiceURI+"/"+item.getKey();
+		return AtomXML.performdelete(uri);		
+	}
+	
+	public boolean clearCartContent()
+	{
+		return AtomXML.performdelete(atomXMLCartServiceURI);
 	}
 	
 	public void checkOut() {
