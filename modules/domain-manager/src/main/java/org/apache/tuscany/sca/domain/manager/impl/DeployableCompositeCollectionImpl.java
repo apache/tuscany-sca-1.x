@@ -284,7 +284,9 @@ public class DeployableCompositeCollectionImpl implements ItemCollection, LocalI
             
             Contribution contribution = (Contribution)contributionProcessor.read(null, uri, location);
             
-            contributionProcessor.resolve(contribution, new DefaultModelResolver());
+            // TODO - analyse dependencies here?
+            
+            //contributionProcessor.resolve(contribution, new DefaultModelResolver());
             
             // Cache contribution
             contributionCache = new ContributionCache();
@@ -298,8 +300,8 @@ public class DeployableCompositeCollectionImpl implements ItemCollection, LocalI
             throw e;
         } catch (MalformedURLException e) {
             throw new ContributionReadException(e);
-        } catch (ContributionResolveException e) {
-            throw new ContributionReadException(e);
+       // } catch (ContributionResolveException e) {
+       //     throw new ContributionReadException(e);
         } catch (Throwable e) {
             throw new ContributionReadException(e);
         }
