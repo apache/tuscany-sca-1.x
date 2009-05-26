@@ -70,7 +70,8 @@ public class ArtifactModelResolver implements ModelResolver {
             if (import_ instanceof ResourceImport) {
             	ResourceImport resourceImport = (ResourceImport)import_;
             	//check the import location against the computed package name from the componentType URI
-                if (resourceImport.getURI().equals(uri)) {
+                if ((resourceImport.getURI().equals(uri)) &&
+                    (resourceImport.getModelResolver() != null)){
                     // Delegate the resolution to the import resolver
                     resolved = resourceImport.getModelResolver().resolveModel(Artifact.class, (Artifact)unresolved);
                     if (!resolved.isUnresolved()) {
