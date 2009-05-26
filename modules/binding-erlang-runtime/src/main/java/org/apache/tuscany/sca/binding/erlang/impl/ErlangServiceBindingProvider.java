@@ -52,6 +52,8 @@ public class ErlangServiceBindingProvider implements ServiceBindingProvider {
 	public void start() {
 		try {
 			Thread thread = new Thread(node);
+			// prevents blocking stop procedure by service listener
+			thread.setDaemon(true);
 			thread.start();
 		} catch (Exception e) {
 			throw new ServiceRuntimeException(e);
