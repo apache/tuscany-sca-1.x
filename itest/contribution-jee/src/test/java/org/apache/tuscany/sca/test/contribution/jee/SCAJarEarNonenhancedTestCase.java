@@ -127,8 +127,8 @@ public class SCAJarEarNonenhancedTestCase {
         Assert.assertNotNull(composite);
         
         Assert.assertEquals(2, composite.getComponents().size());
-        Assert.assertEquals(1, composite.getComponents().get(1).getImplementation().getServices().size());
-        Assert.assertEquals("HelloworldServiceBean_HelloworldService", composite.getComponents().get(1).getImplementation().getServices().get(0).getName());
+        Assert.assertEquals(2, composite.getComponents().get(1).getImplementation().getServices().size());
+        Assert.assertEquals("HelloworldService7Bean_HelloworldService7", composite.getComponents().get(1).getImplementation().getServices().get(0).getName());
         
         domain.buildComposite(composite);
         

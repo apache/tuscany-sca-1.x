@@ -48,6 +48,13 @@
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-00-jar-shared</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>        
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</artifactId>
             <version>1.6-SNAPSHOT</version>
             <type>ejb</type>
@@ -71,6 +78,12 @@
                 <artifactId>maven-ear-plugin</artifactId>
                 <configuration>
                     <modules>
+                        <jarModule>
+                            <groupId>org.apache.tuscany.sca</groupId>
+                            <artifactId>itest-contribution-jee-samples-00-jar-shared</artifactId>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                            <bundleDir>/</bundleDir>
+                        </jarModule>
                         <ejbModule>
                             <groupId>org.apache.tuscany.sca</groupId>
                             <artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</artifactId>

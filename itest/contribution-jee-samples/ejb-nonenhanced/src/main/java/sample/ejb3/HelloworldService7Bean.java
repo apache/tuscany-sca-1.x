@@ -24,10 +24,16 @@ import javax.ejb.Stateless;
 
  */
 @Stateless
-public class HelloworldServiceBean implements HelloworldService {
+public class HelloworldService7Bean implements HelloworldService7, HelloworldLocal7 {
 
     public String getGreetings(String name) {
-        String greeting = "Hello " + name;
+        String greeting = "Hello remote " + name;
+        System.out.println(greeting);
+        return greeting;
+    }
+    
+    public String getGreetingsLocal(String name) {
+        String greeting = "Hello local " + name;
         System.out.println(greeting);
         return greeting;
     }

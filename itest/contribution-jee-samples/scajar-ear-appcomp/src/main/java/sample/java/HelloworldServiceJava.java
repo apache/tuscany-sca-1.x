@@ -16,10 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package sample.pojo;
 
-public interface HelloworldClient {
+package sample.java;
 
-    String getGreetings(String name);
+import org.osoa.sca.annotations.Remotable;
 
+
+@Remotable
+public interface HelloworldServiceJava {    
+	String getGreetings(String name);
 }

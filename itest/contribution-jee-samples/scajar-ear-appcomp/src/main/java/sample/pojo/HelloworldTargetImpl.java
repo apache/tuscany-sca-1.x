@@ -16,18 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
+package sample.pojo;
 
-package sample.ejb3;
+import sample.java.HelloworldServiceJava;
 
-import javax.ejb.Remote;
+public class HelloworldTargetImpl implements HelloworldServiceJava {
 
-/**
- * HelloworldService EJB interface.
- * 
- * @version $Rev$ $Date$
- */
+    public String getGreetings(String name){
+        return "Hello " + name;
+    }
 
-@Remote
-public interface HelloworldService {
-	String getGreetings(String name);
 }

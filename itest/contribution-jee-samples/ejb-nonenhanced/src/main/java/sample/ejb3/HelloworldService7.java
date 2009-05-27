@@ -16,19 +16,18 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package sample.pojo;
 
-import org.osoa.sca.annotations.Reference;
+package sample.ejb3;
 
-import sample.ejb3.HelloworldService;
+import javax.ejb.Remote;
 
-public class HelloworldClientImpl implements HelloworldClient {
-    
-    @Reference
-    protected HelloworldService hwService;
+/**
+ * HelloworldService EJB interface.
+ * 
+ * @version $Rev$ $Date$
+ */
 
-    public String getGreetings(String name){
-        return hwService.getGreetings(name);
-    }
-
+@Remote
+public interface HelloworldService7 {
+	String getGreetings(String name);
 }

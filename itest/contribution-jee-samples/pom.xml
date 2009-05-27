@@ -39,6 +39,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>jar-shared</module>
                 <module>war-nonenhanced</module>
                 <module>war-appcomp-contrib-implicit</module>
                 <module>ejb-nonenhanced</module>

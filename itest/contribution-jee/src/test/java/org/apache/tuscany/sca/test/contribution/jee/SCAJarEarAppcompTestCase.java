@@ -52,6 +52,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import sample.pojo.HelloworldClient2;
+
 
 public class SCAJarEarAppcompTestCase {
  
@@ -82,7 +84,7 @@ public class SCAJarEarAppcompTestCase {
      *    
      */
     @Test
-    public void testSCAJarEarNonenhanced() throws Exception {
+    public void testSCAJarEarAppcomp() throws Exception {
 
         URL contributionLocation = new File("../contribution-jee-samples/scajar-ear-appcomp/target/itest-contribution-jee-samples-41-scajar-ear-appcomp.jar").toURL();
         Contribution contribution =  contributionService.contribute(CONTRIBUTION_001_ID, contributionLocation, false);
@@ -98,14 +100,24 @@ public class SCAJarEarAppcompTestCase {
         
         Assert.assertNotNull(composite);
         
-        Assert.assertEquals(2, composite.getComponents().size());
-        Assert.assertEquals(1, composite.getComponents().get(1).getImplementation().getServices().size());            
+        domain.getDomainComposite().getIncludes().add(composite);
+        
+        Assert.assertEquals(3, composite.getComponents().size());
+        Assert.assertEquals(2, composite.getComponents().get(1).getImplementation().getServices().size());            
         Assert.assertEquals("TheService", composite.getComponents().get(1).getImplementation().getServices().get(0).getName());
         
         domain.buildComposite(composite);
         
         // assert that the build process has worked
         Assert.assertNotNull(composite);
+        
+        domain.getCompositeActivator().activate(composite);
+        domain.getCompositeActivator().start(composite);
+        
+        HelloworldClient2 client = domain.getService(HelloworldClient2.class, "HelloworldClientComponent");
+        Assert.assertEquals("Hello Fred", client.getGreetings("Fred"));
+        
+        domain.stop();
 
     }
 
