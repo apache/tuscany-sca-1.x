@@ -14,7 +14,6 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int Spinner01=0x7f050006;
         public static final int btnSearch=0x7f050005;
         public static final int edit_NumberOfPeople=0x7f050004;
         public static final int edit_date_end=0x7f050003;
@@ -24,7 +23,6 @@ public final class R {
     }
     public static final class layout {
         public static final int main=0x7f030000;
-        public static final int test=0x7f030001;
     }
     public static final class string {
         public static final int alert_cancel=0x7f040003;
