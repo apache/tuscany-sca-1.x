@@ -78,6 +78,8 @@ public class JavaEEExtensionImpl implements JavaEEExtension {
                     e.printStackTrace();
                 }
                 service.setInterfaceContract(ic);
+                service.getRequiredIntents().add(EJB_INTENT);
+                
                 componentType.getServices().add(service);
             }
 
@@ -124,6 +126,7 @@ public class JavaEEExtensionImpl implements JavaEEExtension {
                         e.printStackTrace();
                     }
                     service.setInterfaceContract(ic);
+                    service.getRequiredIntents().add(EJB_INTENT);
                     
                     addComponentService(composite, component, service);
                 }
@@ -175,6 +178,7 @@ public class JavaEEExtensionImpl implements JavaEEExtension {
                             e.printStackTrace();
                         }
                         service.setInterfaceContract(ic);
+                        service.getRequiredIntents().add(EJB_INTENT);
                         
                         addComponentService(composite, component, service);
                     }
@@ -224,9 +228,11 @@ public class JavaEEExtensionImpl implements JavaEEExtension {
         if (component == null){
             component = assemblyFactory.createComponent();
             component.setName(componentName);
+            component.setUnresolved(true);
             composite.getComponents().add(component);
             
             EJBImplementationGenerated implementation = new EJBImplementationGeneratedImpl();
+            implementation.setUnresolved(true);
             component.setImplementation(implementation);
         }
         

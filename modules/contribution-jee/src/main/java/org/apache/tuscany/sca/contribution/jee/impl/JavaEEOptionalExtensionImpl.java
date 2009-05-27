@@ -289,9 +289,11 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
         if (component == null){
             component = assemblyFactory.createComponent();
             component.setName(componentName);
+            component.setUnresolved(true);
             composite.getComponents().add(component);
             
             EJBImplementationGenerated implementation = new EJBImplementationGeneratedImpl();
+            implementation.setUnresolved(true);
             component.setImplementation(implementation);
         }
         
