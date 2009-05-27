@@ -32,32 +32,32 @@ import org.json.JSONObject;
 
 public class JSONRpc {
 
-	protected JSONRpc() {
+    protected JSONRpc() {
 
-	}
+    }
 
-	public static JSONObject invoke(String serviceURI, String rpcRequest) throws JSONException{
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(serviceURI);
+    public static JSONObject invoke(String serviceURI, String rpcRequest) throws JSONException{
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(serviceURI);
 
-		JSONObject result = null;
-		try {
-			httpPost.setHeader("Content-Type", "text/xml");
-			httpPost.setEntity(new StringEntity(rpcRequest));
+        JSONObject result = null;
+        try {
+            httpPost.setHeader("Content-Type", "text/xml");
+            httpPost.setEntity(new StringEntity(rpcRequest));
 
-			HttpResponse httpResponse = httpClient.execute(httpPost);
-			if (httpResponse.getStatusLine().getStatusCode() == 200) {
-				String jsonResult = EntityUtils.toString(httpResponse.getEntity());
-				result = new JSONObject(jsonResult);
-			} else {
-				String errorMessage = httpResponse.getStatusLine()
-						.getReasonPhrase();
-				System.out.println(errorMessage);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            HttpResponse httpResponse = httpClient.execute(httpPost);
+            if (httpResponse.getStatusLine().getStatusCode() == 200) {
+                String jsonResult = EntityUtils.toString(httpResponse.getEntity());
+                result = new JSONObject(jsonResult);
+            } else {
+                String errorMessage = httpResponse.getStatusLine()
+                .getReasonPhrase();
+                System.out.println(errorMessage);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		return result;
-	}
+        return result;
+    }
 }
