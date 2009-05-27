@@ -1,12 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
     android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="From:" />
+
+    <AutoCompleteTextView android:id="@+id/edit_fromLocation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="LGW"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To:"/>
+
+    <AutoCompleteTextView android:id="@+id/edit_toLocation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="FLR"/>
+        
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Date:" />
+        
+     <AutoCompleteTextView android:id="@+id/edit_date_start"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="06/12/09"/>
+        
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Date:" />
+        
+     <AutoCompleteTextView android:id="@+id/edit_date_end"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="13/12/09"/>        
+            
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Number of People:" />
+        
+     <AutoCompleteTextView android:id="@+id/edit_NumberOfPeople"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="2"/>      
+        
+        
+      <Button android:id="@+id/btnSearch" 
+        android:layout_width="100px" 
+        android:layout_height="40px"/>  
+        
 </LinearLayout>
+
+

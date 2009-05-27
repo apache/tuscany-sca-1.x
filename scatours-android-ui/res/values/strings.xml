@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, TripSearch!</string>
-    <string name="app_name">SCA Tours</string>
+    <string name="app_name">SCA Tours - Search Trip</string>
 </resources>
