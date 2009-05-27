@@ -27,6 +27,8 @@ public final class R {
         public static final int test=0x7f030001;
     }
     public static final class string {
+        public static final int alert_cancel=0x7f040003;
+        public static final int alert_yes=0x7f040002;
         public static final int app_name=0x7f040000;
         public static final int title_search=0x7f040001;
     }
