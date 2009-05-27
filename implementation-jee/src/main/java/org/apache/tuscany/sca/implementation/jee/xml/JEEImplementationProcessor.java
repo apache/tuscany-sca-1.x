@@ -46,12 +46,16 @@ import org.apache.tuscany.sca.contribution.jee.impl.JavaEEApplicationInfoImpl;
 import org.apache.tuscany.sca.contribution.jee.impl.WebModuleInfoImpl;
 import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
+import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessorExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.StAXAttributeProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
 import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
+import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.implementation.jee.JEEImplementation;
 import org.apache.tuscany.sca.implementation.jee.JEEImplementationFactory;
+import org.apache.tuscany.sca.implementation.node.ConfiguredNodeImplementation;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.policy.PolicyFactory;
 
@@ -69,9 +73,14 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
     private JavaEEExtension jeeExtension;
     private JavaEEOptionalExtension jeeOptionalExtension;
     private Monitor monitor;
-    private PolicyAttachPointProcessor policyProcessor;
+    private PolicyAttachPointProcessor policyProcessor; 
     
-    public JEEImplementationProcessor(ModelFactoryExtensionPoint modelFactories, Monitor monitor) {
+    private StAXArtifactProcessorExtensionPoint artifactProcessors;
+    private StAXArtifactProcessor<Composite> compositeProcessor;
+    
+    public JEEImplementationProcessor(ExtensionPointRegistry registry,
+                                      Monitor monitor) {
+        ModelFactoryExtensionPoint modelFactories = registry.getExtensionPoint(ModelFactoryExtensionPoint.class);
         this.assemblyFactory = modelFactories.getFactory(AssemblyFactory.class);
         this.policyFactory = modelFactories.getFactory(PolicyFactory.class);
         this.implementationFactory = modelFactories.getFactory(JEEImplementationFactory.class);
@@ -79,6 +88,9 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
         this.jeeOptionalExtension = modelFactories.getFactory(JavaEEOptionalExtension.class);
         this.monitor = monitor;
         this.policyProcessor = new PolicyAttachPointProcessor(policyFactory);
+        
+        artifactProcessors = registry.getExtensionPoint(StAXArtifactProcessorExtensionPoint.class);
+        compositeProcessor = artifactProcessors.getProcessor(Composite.class);
     }
 
     public QName getArtifactType() {
@@ -96,6 +108,8 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
         // Read an <implementation.jee> element
         JEEImplementation implementation = implementationFactory.createJEEImplementation();
         implementation.setUnresolved(true);
+        
+        implementation.setName(IMPLEMENTATION_JEE);
 
         // Read the archive attribute
         String archive = getString(reader, "archive");
@@ -256,6 +270,12 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                     }
                 }
             }
+            
+            // now resolve the implementation composite as a real composite. 
+            // Any artifacts from an application composite will already be resolved. 
+            // Composite artifacts created on the fly to represent a non-enhanced JEE 
+            // archive need to be resolved. 
+            compositeProcessor.resolve((Composite)implementation, resolver);
         }
         implementation.setUnresolved(false);
     }
