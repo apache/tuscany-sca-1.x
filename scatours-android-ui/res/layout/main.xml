@@ -57,7 +57,8 @@
         
       <Button android:id="@+id/btnSearch" 
         android:layout_width="100px" 
-        android:layout_height="40px"/>  
+        android:layout_height="40px"
+        android:text="@string/title_search"/>  
         
 </LinearLayout>
 
