@@ -27,9 +27,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>itest-contribution-jee-samples-01-war-nonenhanced</artifactId>
-    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 01</name>
-    <packaging>war</packaging>
+    <artifactId>itest-contribution-jee-samples-08-ejb-enhanced</artifactId>
+    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 08</name>
+    <packaging>ejb</packaging>
 
     <dependencies>
         <dependency>
@@ -40,27 +40,29 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-ejb_3.0_spec</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-annotation_1.0_spec</artifactId>
+            <version>1.1.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
-
+    
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-            </plugin>
+       <finalName>${artifactId}</finalName>
+       <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-ejb-plugin</artifactId>
+            <configuration>
+              <ejbVersion>3.0</ejbVersion>
+            </configuration>
+          </plugin>
         </plugins>
-        <finalName>${artifactId}</finalName>
     </build>
 </project>

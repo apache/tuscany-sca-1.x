@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,19 +15,19 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           targetNamespace="http://sample"
-           xmlns:sample="http://sample"
-           name="Calculator">
+ */
 
-    <component name="HelloworlClientComponent">
-		<implementation.java class="sample.pojo.HelloworldClientImpl"/>
-        <reference name="hwService" target="HelloworldServiceComponent/HelloworldService7Bean_HelloworldService7" />
-    </component>
+package sample.ejb3;
 
-    <component name="HelloworldServiceComponent">
-        <implementation.jee archive="itest-contribution-jee-samples-13-ear-nonenhanced.ear"/>
-    </component>
+import javax.ejb.Local;
 
-</composite>
+/**
+ * HelloworldService EJB interface.
+ * 
+ * @version $Rev$ $Date$
+ */
+
+@Local
+public interface HelloworldLocal8 {
+	String getGreetingsLocal(String name);
+}

@@ -25,8 +25,8 @@
         <version>1.6-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>itest-contribution-jee-samples-4-scazip-war-appcomp</artifactId>
-    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 4</name>
+    <artifactId>itest-contribution-jee-samples-04-scazip-war-appcomp</artifactId>
+    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 04</name>
 
     <repositories>
        <repository>

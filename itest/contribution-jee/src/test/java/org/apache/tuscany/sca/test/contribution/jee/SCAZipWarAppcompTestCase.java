@@ -86,7 +86,7 @@ public class SCAZipWarAppcompTestCase {
     @Test
     public void testSCAJarEarNonenhanced() throws Exception {
 
-        URL contributionLocation = new File("../contribution-jee-samples/scazip-war-appcomp/target/itest-contribution-jee-samples-4-scazip-war-appcomp.zip").toURL();
+        URL contributionLocation = new File("../contribution-jee-samples/scazip-war-appcomp/target/itest-contribution-jee-samples-04-scazip-war-appcomp.zip").toURL();
         Contribution contribution =  contributionService.contribute(CONTRIBUTION_001_ID, contributionLocation, false);
         
         Assert.assertNotNull(contribution);

@@ -27,8 +27,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</artifactId>
-    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 7</name>
+    <artifactId>itest-contribution-jee-samples-07-ejb-nonenhanced</artifactId>
+    <name>Apache Tuscany SCA iTest Contribution Java EE Samples 07</name>
     <packaging>ejb</packaging>
 
     <dependencies>

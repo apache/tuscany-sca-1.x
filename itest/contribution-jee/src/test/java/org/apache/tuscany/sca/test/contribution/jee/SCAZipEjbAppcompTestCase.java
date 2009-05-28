@@ -82,7 +82,7 @@ public class SCAZipEjbAppcompTestCase {
      *    
      */
     @Test
-    public void testSCAJarEarNonenhanced() throws Exception {
+    public void testSCAZipEjbAppcomp() throws Exception {
 
         URL contributionLocation = new File("../contribution-jee-samples/scazip-ejb-appcomp/target/itest-contribution-jee-samples-10-scazip-ejb-appcomp.zip").toURL();
         Contribution contribution =  contributionService.contribute(CONTRIBUTION_001_ID, contributionLocation, false);

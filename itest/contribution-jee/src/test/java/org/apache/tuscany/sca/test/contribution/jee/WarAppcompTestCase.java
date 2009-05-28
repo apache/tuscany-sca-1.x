@@ -82,7 +82,7 @@ public class WarAppcompTestCase {
     @Test
     public void testEjbAppcom() throws Exception {
 
-        URL contributionLocation = new File("../contribution-jee-samples/war-appcomp-contrib-implicit/target/itest-contribution-jee-samples-6-war-appcomp-contrib-implicit.war").toURL();
+        URL contributionLocation = new File("../contribution-jee-samples/war-appcomp-contrib-implicit/target/itest-contribution-jee-samples-06-war-appcomp-contrib-implicit.war").toURL();
         Contribution contribution =  contributionService.contribute(CONTRIBUTION_001_ID, contributionLocation, false);
         
         Assert.assertNotNull(contribution);

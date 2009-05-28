@@ -55,7 +55,7 @@
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</artifactId>
+            <artifactId>itest-contribution-jee-samples-08-ejb-enhanced</artifactId>
             <version>1.6-SNAPSHOT</version>
             <type>ejb</type>
             <scope>provided</scope>
@@ -63,7 +63,7 @@
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>itest-contribution-jee-samples-1-war-nonenhanced</artifactId>
+            <artifactId>itest-contribution-jee-samples-01-war-nonenhanced</artifactId>
             <version>1.6-SNAPSHOT</version>
             <type>war</type>
             <scope>provided</scope>
@@ -86,12 +86,12 @@
                         </jarModule>
                         <ejbModule>
                             <groupId>org.apache.tuscany.sca</groupId>
-                            <artifactId>itest-contribution-jee-samples-7-ejb-nonenhanced</artifactId>
+                            <artifactId>itest-contribution-jee-samples-08-ejb-enhanced</artifactId>
                             <bundleDir>/</bundleDir>
                         </ejbModule>
                         <webModule>
                             <groupId>org.apache.tuscany.sca</groupId>
-                            <artifactId>itest-contribution-jee-samples-1-war-nonenhanced</artifactId>
+                            <artifactId>itest-contribution-jee-samples-01-war-nonenhanced</artifactId>
                             <bundleDir>/</bundleDir>
                         </webModule>
                     </modules>

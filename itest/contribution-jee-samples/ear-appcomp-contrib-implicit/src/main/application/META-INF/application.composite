@@ -23,14 +23,17 @@
            name="Calculator">
 
     <component name="HelloworldServiceComponent">
-        <implementation.ejb ejb-link="itest-contribution-jee-samples-7-ejb-nonenhanced.jar#HelloworldService7Bean"/>
-        <service name="HelloworldService7">
-            <interface.java interface="sample.ejb3.HelloworldService7"/>
+        <implementation.ejb ejb-link="itest-contribution-jee-samples-08-ejb-enhanced.jar#HelloworldService8Bean"/>
+        <service name="HelloworldService8">
+            <interface.java interface="sample.ejb3.HelloworldService8"/>
             <binding.sca/>
         </service>
+        <reference name="hwReference" target="HelloworldServiceJavaComponent"/>
     </component>
     
-    <service name="TheService" promote="HelloworldServiceComponent/HelloworldService7"/>
+    <service name="TheService" promote="HelloworldServiceComponent/HelloworldService8"/>
+    
+    <reference name="TheReference" promote="HelloworldServiceComponent/hwReference"/>
     
     <component name="HelloworldServiceJavaComponent">
         <implementation.java class="sample.java.HelloworldServiceJavaImpl"/>
