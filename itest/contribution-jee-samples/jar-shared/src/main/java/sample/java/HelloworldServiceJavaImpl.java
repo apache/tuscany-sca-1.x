@@ -17,15 +17,19 @@
 
 package sample.java;
 
+import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
 
 public class HelloworldServiceJavaImpl implements HelloworldServiceJava {
     
     @Reference
     protected HelloworldServiceJava hwReference;
+    
+    @Property 
+    protected String hwProperty;
 
     public String getGreetings(String name) {
-        String greeting = hwReference.getGreetings(name);
+        String greeting = hwReference.getGreetings(name) + " " + hwProperty;
         System.out.println(greeting);
         return greeting;
     }

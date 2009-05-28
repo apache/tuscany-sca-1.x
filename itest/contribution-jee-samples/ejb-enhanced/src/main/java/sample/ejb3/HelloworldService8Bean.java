@@ -19,7 +19,8 @@ package sample.ejb3;
 
 import javax.ejb.Stateless;
 
-//import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Property;
+import org.osoa.sca.annotations.Reference;
 
 /**
  * HelloworldService EJB implementation  SCA enhancement
@@ -28,8 +29,11 @@ import javax.ejb.Stateless;
 @Stateless
 public class HelloworldService8Bean implements HelloworldService8, HelloworldLocal8 {
     
-    //@Reference
-    //protected HelloworldService8 hwReference;
+    @Reference
+    protected HelloworldService8 hwReference;
+    
+    @Property 
+    protected String hwProperty;
 
     public String getGreetings(String name) {
         String greeting = "Hello remote " + name;

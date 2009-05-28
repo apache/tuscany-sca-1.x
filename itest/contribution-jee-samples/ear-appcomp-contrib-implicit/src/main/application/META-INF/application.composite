@@ -29,6 +29,7 @@
             <binding.sca/>
         </service>
         <reference name="hwReference" target="HelloworldServiceJavaComponent"/>
+        <property name="hwProperty">EJB</property>
     </component>
     
     <service name="TheService" promote="HelloworldServiceComponent/HelloworldService8"/>
@@ -37,6 +38,7 @@
     
     <component name="HelloworldServiceJavaComponent">
         <implementation.java class="sample.java.HelloworldServiceJavaImpl"/>
+        <property name="hwProperty">Java</property>
     </component>
     
     <service name="JavaService" promote="HelloworldServiceJavaComponent/HelloworldServiceJava"/>

@@ -115,7 +115,7 @@ public class SCAJarEarAppcompTestCase {
         domain.getCompositeActivator().start(composite);
         
         HelloworldClient2 client = domain.getService(HelloworldClient2.class, "HelloworldClientComponent");
-        Assert.assertEquals("Hello Fred", client.getGreetings("Fred"));
+        Assert.assertEquals("Hello Fred Java", client.getGreetings("Fred"));
         
         domain.stop();
 
