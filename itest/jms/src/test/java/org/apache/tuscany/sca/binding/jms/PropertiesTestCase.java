@@ -69,7 +69,7 @@ public class PropertiesTestCase {
         // wait for up to 5 seconds but should wake up as soon as done
         synchronized(MsgServiceImpl.lock) {
             if (MsgServiceImpl.msg == null) {
-                MsgServiceImpl.lock.wait(5000);
+                MsgServiceImpl.lock.wait(6000);
             }
         }
         assertNotNull(MsgServiceImpl.msg);
