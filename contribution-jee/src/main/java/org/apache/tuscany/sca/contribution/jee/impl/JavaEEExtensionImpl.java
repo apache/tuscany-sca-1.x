@@ -109,7 +109,7 @@ public class JavaEEExtensionImpl implements JavaEEExtension {
         for(Map.Entry<String, EjbInfo> entry : ejbModule.getEjbInfos().entrySet()) {
             EjbInfo ejbInfo = entry.getValue();
             
-            Component component = findComponent(composite, ejbInfo.beanName);
+            Component component = findComponent(composite, ejbInfo);
             
             if(ejbInfo.ejbType.compareTo(EjbType.MESSAGE_DRIVEN) != 0) {
                 for(Class<?> intf : ejbInfo.businessRemote) {
@@ -161,7 +161,7 @@ public class JavaEEExtensionImpl implements JavaEEExtension {
             for(Map.Entry<String, EjbInfo> entry : ejbModule.getEjbInfos().entrySet()) {
                 EjbInfo ejbInfo = entry.getValue();
                 
-                Component component = findComponent(composite, ejbInfo.beanName);
+                Component component = findComponent(composite, ejbInfo);
                 
                 if(ejbInfo.ejbType.compareTo(EjbType.MESSAGE_DRIVEN) != 0) {
                     for(Class<?> intf : ejbInfo.businessRemote) {
@@ -211,11 +211,12 @@ public class JavaEEExtensionImpl implements JavaEEExtension {
      * in the JEE archive. Given the JEEimplemenation composite find a named component 
      * it if already exists or create it if it doesn't. 
      * 
-     * @param composite
+     * @param ejbInfo
      * @param componentName
      * @return
      */
-    private Component findComponent(Composite composite, String componentName){
+    private Component findComponent(Composite composite, EjbInfo ejbInfo){
+        String componentName = ejbInfo.beanName;
         Component component = null;
         
         for (Component tmpComponent : composite.getComponents()){
@@ -233,6 +234,7 @@ public class JavaEEExtensionImpl implements JavaEEExtension {
             
             EJBImplementationGenerated implementation = new EJBImplementationGeneratedImpl();
             implementation.setUnresolved(true);
+            implementation.setEJBInfo(ejbInfo);
             component.setImplementation(implementation);
         }
         

@@ -213,6 +213,8 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                     if(jeeOptionalExtension != null) {
                         jeeOptionalExtension.createImplementationJeeComposite((WebModuleInfo)moduleInfo, implementation);
                     }
+                    // now resolve the implementation composite as a real composite. 
+                    compositeProcessor.resolve((Composite)implementation, resolver);
                 }
             } else if(moduleInfo instanceof EjbModuleInfo) {
                 // Check for ejb-jar composite
@@ -236,6 +238,8 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                     if(jeeOptionalExtension != null) {
                         jeeOptionalExtension.createImplementationJeeComposite((EjbModuleInfo)moduleInfo, implementation);
                     }
+                    // now resolve the implementation composite as a real composite. 
+                    compositeProcessor.resolve((Composite)implementation, resolver);
                 }
             } else if(moduleInfo instanceof JavaEEApplicationInfo) {
                 // Check for application composite
@@ -268,14 +272,13 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
                     if(jeeOptionalExtension != null) {
                         jeeOptionalExtension.createImplementationJeeComposite((JavaEEApplicationInfo)moduleInfo, implementation);
                     }
+                    // now resolve the implementation composite as a real composite. 
+                    compositeProcessor.resolve((Composite)implementation, resolver);
                 }
             }
             
-            // now resolve the implementation composite as a real composite. 
-            // Any artifacts from an application composite will already be resolved. 
-            // Composite artifacts created on the fly to represent a non-enhanced JEE 
-            // archive need to be resolved. 
-            compositeProcessor.resolve((Composite)implementation, resolver);
+            // we could have resolved the whole implementation composite here except that 
+            // it messes up the resolvers associated with the 
         }
         implementation.setUnresolved(false);
     }
