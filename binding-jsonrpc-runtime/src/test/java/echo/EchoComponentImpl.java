@@ -95,4 +95,9 @@ public class EchoComponentImpl implements Echo {
 		return set;
 		
 	}
+	
+
+        public void get\u03a9\u03bb\u03c0() {
+
+        }
 }
