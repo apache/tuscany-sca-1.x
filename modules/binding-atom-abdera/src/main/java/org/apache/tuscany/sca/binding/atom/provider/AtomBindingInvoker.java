@@ -383,10 +383,11 @@ class AtomBindingInvoker implements Invoker {
                     }
 
                 } else if (status == 404) {
-                	if ( provider.supportsFeedEntries())
+                	if ( provider.supportsFeedEntries()) {
                 		msg.setFaultBody(new NotFoundException());
-                	else
-                		msg.setFaultBody(new org.apache.tuscany.sca.data.collection.NotFoundException());                   
+                	} else {
+                		msg.setFaultBody(new org.apache.tuscany.sca.data.collection.NotFoundException());
+                	}
                 } else {
                     msg.setFaultBody(new ServiceRuntimeException("HTTP status code: " + status));
                 }
