@@ -59,4 +59,7 @@ public interface Echo {
     
     Set echoSet(HashSet set);
     
+
+    void get\u03a9\u03bb\u03c0();
+
 }

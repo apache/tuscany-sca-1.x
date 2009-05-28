@@ -47,5 +47,4 @@ public class TestBean {
     public void setTestInt(int testInt) {
         this.testInt = testInt;
     }
-
 }
