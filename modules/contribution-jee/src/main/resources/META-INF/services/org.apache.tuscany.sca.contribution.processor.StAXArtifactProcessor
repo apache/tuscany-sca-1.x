@@ -19,3 +19,4 @@
 
 # Implementation class for the artifact processor extension
 org.apache.tuscany.sca.contribution.jee.impl.EJBImplementationGeneratedProcessor;qname=http://dummy_namespace/#dummy.name,model=org.apache.tuscany.sca.contribution.jee.impl.EJBImplementationGeneratedImpl,factory=dummy
+org.apache.tuscany.sca.contribution.jee.impl.WebImplementationGeneratedProcessor;qname=http://dummy_namespace/#dummy.name,model=org.apache.tuscany.sca.contribution.jee.impl.WebImplementationGeneratedImpl,factory=dummy

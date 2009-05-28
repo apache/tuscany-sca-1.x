@@ -42,6 +42,7 @@ import org.apache.tuscany.sca.contribution.jee.EjbReferenceInfo;
 import org.apache.tuscany.sca.contribution.jee.EnvEntryInfo;
 import org.apache.tuscany.sca.contribution.jee.JavaEEApplicationInfo;
 import org.apache.tuscany.sca.contribution.jee.JavaEEOptionalExtension;
+import org.apache.tuscany.sca.contribution.jee.WebImplementationGenerated;
 import org.apache.tuscany.sca.contribution.jee.WebModuleInfo;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
 import org.apache.tuscany.sca.interfacedef.InvalidInterfaceException;
@@ -176,7 +177,7 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
     
     public void createImplementationJeeComposite(WebModuleInfo webModule, Composite composite) {
         
-        Component component = findComponent(composite, webModule.getModuleName());
+        Component component = findComponent(composite, webModule);
         
         // Process Remote EJB References
         for(Map.Entry<String, EjbReferenceInfo> entry : webModule.getEjbReferences().entrySet()) {
@@ -205,7 +206,7 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
         for(Map.Entry<String, EjbInfo> entry : ejbModule.getEjbInfos().entrySet()) {
             EjbInfo ejbInfo = entry.getValue();
             
-            Component component = findComponent(composite, ejbInfo.beanName);
+            Component component = findComponent(composite, ejbInfo);
             
             // Process Remote EJB References
             for(Map.Entry<String, EjbReferenceInfo> entry1 : ejbInfo.ejbReferences.entrySet()) {
@@ -240,7 +241,7 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
             for(Map.Entry<String, EjbInfo> entry : ejbModule.getEjbInfos().entrySet()) {
                 EjbInfo ejbInfo = entry.getValue();
                 
-                Component component = findComponent(composite, ejbInfo.beanName);
+                Component component = findComponent(composite, ejbInfo);
                 
                 // Process Remote EJB References
                 for(Map.Entry<String, EjbReferenceInfo> entry1 : ejbInfo.ejbReferences.entrySet()) {
@@ -268,15 +269,16 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
     }   
     
     /**
-     * We are fluffing up the JEEImplemention composite to represented the components
+     * We are fluffing up the JEEImplemention composite to represent the components
      * in the JEE archive. Given the JEEimplemenation composite find a named component 
      * it if already exists or create it if it doesn't. 
      * 
      * @param composite
-     * @param componentName
+     * @param ejbInfo
      * @return
      */
-    private Component findComponent(Composite composite, String componentName){
+    private Component findComponent(Composite composite, EjbInfo ejbInfo){
+        String componentName = ejbInfo.beanName;
         Component component = null;
         
         for (Component tmpComponent : composite.getComponents()){
@@ -294,11 +296,48 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
             
             EJBImplementationGenerated implementation = new EJBImplementationGeneratedImpl();
             implementation.setUnresolved(true);
+            implementation.setEJBInfo(ejbInfo);
             component.setImplementation(implementation);
         }
         
         return component;
     } 
+    
+    /**
+     * We are fluffing up the JEEImplemention composite to represent the components
+     * in the JEE archive. Given the JEEimplemenation composite find a named component 
+     * it if already exists or create it if it doesn't. 
+     * 
+     * @param composite
+     * @param ejbInfo
+     * @return
+     */
+    private Component findComponent(Composite composite, WebModuleInfo webInfo){
+        String componentName = webInfo.getModuleName();
+        Component component = null;
+        
+        for (Component tmpComponent : composite.getComponents()){
+            if (tmpComponent.getName().equals(componentName)){
+               component = tmpComponent;
+               break;
+            }
+        }
+         
+        if (component == null){
+            component = assemblyFactory.createComponent();
+            component.setName(componentName);
+            component.setUnresolved(true);
+            composite.getComponents().add(component);
+            
+            WebImplementationGenerated implementation = new WebImplementationGeneratedImpl();
+            implementation.setUnresolved(true);
+            // need generated impl to represent web modules
+            implementation.setWebInfo(webInfo);
+            component.setImplementation(implementation);
+        }
+        
+        return component;
+    }     
     
     /**
      * Add a component reference and fluff up a composite reference to match
