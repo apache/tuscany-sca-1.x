@@ -55,8 +55,8 @@ public class AggregatorTestCase {
         new Socket("127.0.0.1", 8085);
     }
     
-    @Ignore("TUSCANY-2939")
-    //@Test
+    //@Ignore("TUSCANY-2939")
+    @Test
     public void testAggregator() throws Exception {
         Entry<String, Item>[] entries = aggregatorService.getAll();
         

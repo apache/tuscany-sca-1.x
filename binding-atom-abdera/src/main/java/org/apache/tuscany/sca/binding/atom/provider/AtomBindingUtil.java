@@ -24,6 +24,7 @@ import java.util.Date;
 import org.apache.abdera.factory.Factory;
 import org.apache.abdera.model.Content;
 import org.apache.abdera.model.Link;
+import org.apache.abdera.model.Content.Type;
 import org.apache.tuscany.sca.data.collection.Entry;
 import org.apache.tuscany.sca.data.collection.Item;
 import org.apache.tuscany.sca.databinding.Mediator;
@@ -47,13 +48,13 @@ class AtomBindingUtil {
     static Entry<Object, Object> entry(org.apache.abdera.model.Entry feedEntry,
                                        DataType<?> itemClassType, DataType<?> itemXMLType, Mediator mediator) {
         if (feedEntry != null) {
-            if (itemClassType.getPhysical() == Item.class) {
+            if (itemClassType.getPhysical() == Item.class || feedEntry.getContentType() == Type.HTML ) {
                 String key = feedEntry.getId().toString();
-                
+
                 Item item = new Item();
                 item.setTitle(feedEntry.getTitle());
                 item.setContents(feedEntry.getContent());
-                
+
                 for (Link link : feedEntry.getLinks()) {
                     if (link.getRel() == null || "self".equals(link.getRel())) {
                         if (item.getLink() == null) {
@@ -65,25 +66,25 @@ class AtomBindingUtil {
                         item.setAlternate(link.getHref().toString());
                     }
                 }
-                
+
                 item.setDate(feedEntry.getUpdated());
-                
+
                 return new Entry<Object, Object>(key, item);
-                
+
             } else {
                 String key = null; 
                 if ( feedEntry.getId() != null) {
-                	key = feedEntry.getId().toString();
+                    key = feedEntry.getId().toString();
                 }
-                
+
                 // Create the item from XML
                 if (feedEntry.getContentElement().getElements().size() == 0) {
-                        return null;
+                    return null;
                 }
-                
+
                 String value = feedEntry.getContent();
                 Object data = mediator.mediate(value, itemXMLType, itemClassType, null);
-    
+
                 return new Entry<Object, Object>(key, data);
             }
         } else {
@@ -107,19 +108,19 @@ class AtomBindingUtil {
         Object data = entry.getData();
         if (data instanceof Item) {
             Item item = (Item)data;
-            
+
             org.apache.abdera.model.Entry feedEntry = factory.newEntry();
             if (key != null) {
                 feedEntry.setId(key.toString());
             }
             feedEntry.setTitle(item.getTitle());
             feedEntry.setContentAsHtml(item.getContents());
-    
+
             String href = item.getLink();
             if (href == null && key != null) {
                 href = key.toString();
             }
-    
+
             if (href != null) {
                 feedEntry.addLink(href);
             }
@@ -131,31 +132,31 @@ class AtomBindingUtil {
             if (alternate != null) {
                 feedEntry.addLink(alternate, "alternate");
             }
-                
+
             Date date = item.getDate();
             if (date != null) {
                 feedEntry.setUpdated(date);
             }
             return feedEntry;
-            
+
         } else if (data != null) {
             org.apache.abdera.model.Entry feedEntry = factory.newEntry();
-             feedEntry.setId(key.toString());
-             feedEntry.setTitle("item");
-             
-             
-             // Convert the item to XML
-             String value = mediator.mediate(data, itemClassType, itemXMLType, null).toString();
-             
-             Content content = factory.newContent();
-             content.setContentType(Content.Type.XML);
-             content.setValue(value);
-             
-             feedEntry.setContentElement(content);
-    
-             feedEntry.addLink(key.toString());
-                  
-             return feedEntry;
+            feedEntry.setId(key.toString());
+            feedEntry.setTitle("item");
+
+
+            // Convert the item to XML
+            String value = mediator.mediate(data, itemClassType, itemXMLType, null).toString();
+
+            Content content = factory.newContent();
+            content.setContentType(Content.Type.XML);
+            content.setValue(value);
+
+            feedEntry.setContentElement(content);
+
+            feedEntry.addLink(key.toString());
+
+            return feedEntry;
         } else {
             return null;
         }
