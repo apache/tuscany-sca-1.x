@@ -33,7 +33,10 @@ public class HelloWorldReferenceImpl implements HelloWorldReference {
         try {
             helloWorldService1.throwChecked(name.getBytes());
         } catch (Exception e) {
-            stringValue += " " + e.getMessage();
+            // Test to see what happens if we talk to a service
+            // that declares a checked exception through an
+            // interface that doesn't
+            stringValue += " " + e.getCause().getMessage();
         }
         
         try {

@@ -51,11 +51,19 @@ public class FormatJMSBytesTestCase {
         HelloWorldReference helloWorldService = ((SCAClient)node).getService(HelloWorldReference.class, "HelloWorldReferenceComponent");
         
         System.out.println(helloWorldService.getGreetings("Fred Bloggs"));
+/* TUSCANY-2967 - disable this change while we decide what to do and
+ *                return faults as JMSObject messages to be consistent
+ *                again with other wire formats        
         assertEquals("Hello Fred Bloggs " +
                      "org.apache.tuscany.sca.binding.jms.format.jmsbytes.helloworld.CheckedException: foo " +
                      "org.osoa.sca.ServiceRuntimeException: java.lang.RuntimeException: bla", 
                      helloWorldService.getGreetings("Fred Bloggs"));
-        
+*/
+        assertEquals("Hello Fred Bloggs " +
+                     "foo " +
+                     "remote service exception, see nested exception" , 
+                     helloWorldService.getGreetings("Fred Bloggs"));        
+             
     }
 
     @After
