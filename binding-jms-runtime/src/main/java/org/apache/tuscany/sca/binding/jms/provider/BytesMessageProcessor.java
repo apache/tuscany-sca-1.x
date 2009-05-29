@@ -45,13 +45,16 @@ public class BytesMessageProcessor extends AbstractMessageProcessor {
         super(jmsBinding);
     }
 
+/* TUSCANY-2967 - disable this change while we decide what to do and
+ *                return faults as JMSObject messages to be consistent
+ *                again with other wire formats
     @Override
     public Object extractPayloadFromJMSMessage(Message msg) {
         byte [] bytes = (byte [])extractPayload(msg);
         
         try {
             if (msg.getBooleanProperty(JMSBindingConstants.FAULT_PROPERTY)) {
-                return new InvocationTargetException(new ServiceRuntimeException(bytes.toString()));
+                return new InvocationTargetException(new ServiceRuntimeException(new String(bytes)));
             } else {
                 return bytes;
             }
@@ -59,6 +62,7 @@ public class BytesMessageProcessor extends AbstractMessageProcessor {
             throw new JMSBindingException(e);
         }
     }
+*/
     
     @Override
     protected Object extractPayload(Message msg) {
@@ -79,6 +83,9 @@ public class BytesMessageProcessor extends AbstractMessageProcessor {
         }
     }
     
+/* TUSCANY-2967 - disable this change while we decide what to do and
+ *                return faults as JMSObject messages to be consistent
+ *                again with other wire formats    
     @Override
     public Message createFaultMessage(Session session, Throwable o) {
         try {
@@ -88,7 +95,8 @@ public class BytesMessageProcessor extends AbstractMessageProcessor {
         } catch (JMSException e) {
             throw new JMSBindingException(e);
         }        
-    }    
+    } 
+*/   
 
     @Override
     protected Message createJMSMessage(Session session, Object o) {
