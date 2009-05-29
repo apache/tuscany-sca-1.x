@@ -71,7 +71,7 @@ import org.apache.tuscany.sca.policy.PolicyFactory;
  *              ...>
  * 
  *     <headers JMSType="string"?
- *              JMSCorrelationId="string"?
+ *              JMSCorrelationID="string"?
  *              JMSDeliveryMode="string"?
  *              JMSTimeToLive="int"?
  *              JMSPriority="string"?>
@@ -117,7 +117,7 @@ import org.apache.tuscany.sca.policy.PolicyFactory;
  *     <operationProperties name="string" nativeOperation="string"?>
  *         <property name="NMTOKEN" type="NMTOKEN">*
  *         <headers JMSType="string"?
- *                  JMSCorrelationId="string"?
+ *                  JMSCorrelationID="string"?
  *                  JMSDeliveryMode="string"?
  *                  JMSTimeToLive="int"?
  *                  JMSPriority="string"?>
@@ -622,7 +622,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
      * <operationProperties name=”string” nativeOperation=”string”?>
      *   <property name=”NMTOKEN” type=”NMTOKEN”?>*
      *   <headers JMSType=”string”?
-     *            JMSCorrelationId=”string”?
+     *            JMSCorrelationID=”string”?
      *            JMSDeliveryMode=”PERSISTENT or NON_PERSISTENT”?
      *            JMSTimeToLive=”long”?
      *            JMSPriority=”0 .. 9”?>
@@ -998,7 +998,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
 
         String jmsCorrelationId = jmsBinding.getJMSCorrelationId();
         if (jmsCorrelationId != null && jmsCorrelationId.length() > 0) {
-            writer.writeAttribute("JMSCorrelationId", jmsCorrelationId);
+            writer.writeAttribute("JMSCorrelationID", jmsCorrelationId);
         }
 
         Boolean jmsDeliveryMode = jmsBinding.isdeliveryModePersistent();
@@ -1092,7 +1092,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
      *     <operationProperties name="string" nativeOperation="string"?>
      *         <property name="NMTOKEN" type="NMTOKEN">*
      *         <headers JMSType="string"?
-     *                  JMSCorrelationId="string"?
+     *                  JMSCorrelationID="string"?
      *                  JMSDeliveryMode="string"?
      *                  JMSTimeToLive="int"?
      *                  JMSPriority="string"?>
@@ -1141,7 +1141,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
                 }
 
                 if (jmsCorrelationId != null && jmsCorrelationId.length() > 0) {
-                    writer.writeAttribute("JMSCorrelationId", jmsCorrelationId);
+                    writer.writeAttribute("JMSCorrelationID", jmsCorrelationId);
                 }
 
                 if (jmsDeliveryMode != null) {
