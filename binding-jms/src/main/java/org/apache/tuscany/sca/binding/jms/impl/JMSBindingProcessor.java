@@ -687,7 +687,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         String jmsDeliveryMode = reader.getAttributeValue(null, "JMSDeliveryMode");
         if (jmsDeliveryMode != null && jmsDeliveryMode.length() > 0) {
             if ("PERSISTENT".equalsIgnoreCase(jmsDeliveryMode)) {
-                jmsBinding.setJMSDeliveryMode(true);
+                jmsBinding.setOperationJMSDeliveryMode(opName, true);
             } else if ("NON_PERSISTENT".equalsIgnoreCase(jmsDeliveryMode)) {
                 jmsBinding.setOperationJMSDeliveryMode(opName, false);
             } else {
