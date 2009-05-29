@@ -206,7 +206,7 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
         for(Map.Entry<String, EjbInfo> entry : ejbModule.getEjbInfos().entrySet()) {
             EjbInfo ejbInfo = entry.getValue();
             
-            Component component = findComponent(composite, ejbInfo);
+            Component component = findComponent(composite, ejbInfo, ejbModule);
             
             // Process Remote EJB References
             for(Map.Entry<String, EjbReferenceInfo> entry1 : ejbInfo.ejbReferences.entrySet()) {
@@ -241,7 +241,7 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
             for(Map.Entry<String, EjbInfo> entry : ejbModule.getEjbInfos().entrySet()) {
                 EjbInfo ejbInfo = entry.getValue();
                 
-                Component component = findComponent(composite, ejbInfo);
+                Component component = findComponent(composite, ejbInfo, ejbModule);
                 
                 // Process Remote EJB References
                 for(Map.Entry<String, EjbReferenceInfo> entry1 : ejbInfo.ejbReferences.entrySet()) {
@@ -277,7 +277,7 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
      * @param ejbInfo
      * @return
      */
-    private Component findComponent(Composite composite, EjbInfo ejbInfo){
+    private Component findComponent(Composite composite, EjbInfo ejbInfo, EjbModuleInfo ejbmoduleInfo){
         String componentName = ejbInfo.beanName;
         Component component = null;
         
@@ -297,6 +297,7 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
             EJBImplementationGenerated implementation = new EJBImplementationGeneratedImpl();
             implementation.setUnresolved(true);
             implementation.setEJBInfo(ejbInfo);
+            implementation.setEjbModuleInfo(ejbmoduleInfo);
             component.setImplementation(implementation);
         }
         

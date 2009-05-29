@@ -22,6 +22,7 @@ import org.apache.tuscany.sca.assembly.ConstrainingType;
 import org.apache.tuscany.sca.assembly.impl.ImplementationImpl;
 import org.apache.tuscany.sca.contribution.jee.EJBImplementationGenerated;
 import org.apache.tuscany.sca.contribution.jee.EjbInfo;
+import org.apache.tuscany.sca.contribution.jee.EjbModuleInfo;
 
 /**
  * The model representing an EJB implementation in an SCA assembly model when the 
@@ -30,6 +31,7 @@ import org.apache.tuscany.sca.contribution.jee.EjbInfo;
 class EJBImplementationGeneratedImpl extends ImplementationImpl implements EJBImplementationGenerated {
 
     private EjbInfo ejbInfo;
+    private EjbModuleInfo ejbModuleInfo;
 
     /**
      * Constructs a new EJB implementation.
@@ -56,5 +58,13 @@ class EJBImplementationGeneratedImpl extends ImplementationImpl implements EJBIm
     public void setEJBInfo(EjbInfo ejbInfo) {
         this.ejbInfo = ejbInfo;
     }
+
+	public EjbModuleInfo getEjbModuleInfo() {
+		return ejbModuleInfo;
+	}
+
+	public void setEjbModuleInfo(EjbModuleInfo ejbModuleInfo) {
+		this.ejbModuleInfo = ejbModuleInfo;
+	}
     
 }
