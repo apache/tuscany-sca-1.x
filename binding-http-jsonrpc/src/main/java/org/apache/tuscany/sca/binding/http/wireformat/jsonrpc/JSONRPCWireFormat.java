@@ -33,7 +33,7 @@ public interface JSONRPCWireFormat extends WireFormat {
     /**
      * QName representing the HTTP JSON-RPC Wire Format extension
      */
-    public static final QName WIRE_FORMAT_HTTP_JSONRPC_QNAME = new QName(Constants.SCA10_NS, "wireFormat.jsonrpc");
+    public static final QName WIRE_FORMAT_HTTP_JSONRPC_QNAME = new QName(Constants.SCA10_TUSCANY_NS, "wireFormat.jsonrpc");
 
     QName getSchemaName();
 }
