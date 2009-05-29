@@ -40,4 +40,17 @@ public interface EJBImplementationGenerated extends Implementation {
      */
     void setEJBInfo(EjbInfo ejbInfo);
 
+    /**
+     * return the EjbModuleInfo which contains the EJB Info used to generate this object
+     * 
+     * @return
+     */
+    EjbModuleInfo getEjbModuleInfo();
+    
+    /**
+     * Set the EjbModuleInfo which contains the EJB Info used to generate this object
+     * 
+     * @param ejbModuleInfo
+     */
+    void setEjbModuleInfo(EjbModuleInfo ejbModuleInfo);
 }
