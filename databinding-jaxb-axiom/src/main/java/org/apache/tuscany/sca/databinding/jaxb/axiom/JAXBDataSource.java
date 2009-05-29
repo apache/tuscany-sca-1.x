@@ -49,7 +49,6 @@ import org.apache.tuscany.sca.databinding.jaxb.JAXBContextHelper;
 public class JAXBDataSource extends OMDataSourceExtBase {
     private JAXBContext context;
     private Object element;
-    private Marshaller marshaller;
 
     public JAXBDataSource(Object element, JAXBContext context) {
         this.element = element;
@@ -57,11 +56,7 @@ public class JAXBDataSource extends OMDataSourceExtBase {
     }
 
     private Marshaller getMarshaller() throws JAXBException {
-        if (marshaller == null) {
-            // For thread safety, not sure we can cache the marshaller
-            marshaller = JAXBContextHelper.getMarshaller(context);
-        }
-        return marshaller;
+        return JAXBContextHelper.getMarshaller(context);
     }
 
     private void releaseMarshaller(Marshaller marshaller) {
@@ -103,8 +98,9 @@ public class JAXBDataSource extends OMDataSourceExtBase {
             // marshaller.setProperty(Marshaller.JAXB_ENCODING, format.getCharSetEncoding());
             AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
                 public Object run() throws Exception {
+                    Marshaller marshaller = null;
                     try {
-                        Marshaller marshaller = getMarshaller();
+                        marshaller = getMarshaller();
                         // Marshalling directly to the output stream is faster than marshalling through the
                         // XMLStreamWriter. Take advantage of this optimization if there is an output stream.
                         OutputStream os = getOutputStream(xmlWriter);
@@ -129,8 +125,9 @@ public class JAXBDataSource extends OMDataSourceExtBase {
             // marshaller.setProperty(Marshaller.JAXB_ENCODING, format.getCharSetEncoding());
             AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
                 public Object run() throws Exception {
+                    Marshaller marshaller = null;
                     try {
-                        Marshaller marshaller = getMarshaller();
+                        marshaller = getMarshaller();
                         marshaller.marshal(element, output);
                     } finally {
                         releaseMarshaller(marshaller);
@@ -147,8 +144,9 @@ public class JAXBDataSource extends OMDataSourceExtBase {
         try {
             AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
                 public Object run() throws Exception {
+                    Marshaller marshaller = null;
                     try {
-                        Marshaller marshaller = getMarshaller();
+                        marshaller = getMarshaller();
                         marshaller.marshal(element, writer);
                     } finally {
                         releaseMarshaller(marshaller);
@@ -176,9 +174,10 @@ public class JAXBDataSource extends OMDataSourceExtBase {
         try {
             return AccessController.doPrivileged(new PrivilegedExceptionAction<byte[]>() {
                 public byte[] run() throws JAXBException, XMLStreamException, UnsupportedEncodingException {
+                    Marshaller marshaller = null;
                     try {
                         StringWriter sw = new StringWriter();
-                        Marshaller marshaller = getMarshaller();
+                        marshaller = getMarshaller();
                         marshaller.marshal(element, sw);
                         return sw.toString().getBytes(encoding);
                     } finally {
