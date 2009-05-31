@@ -41,7 +41,7 @@ public class CalendarTestCase extends TestCase {
         scaDomain.close();
     }
 
-    public void testCalculator() throws Exception {
+    public void testCalendar() throws Exception {
         System.out.println(calendar.getEndDate("07/10/96 04:05", 3));
     }
 }

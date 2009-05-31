@@ -19,6 +19,7 @@
 package scatours.tripbooking;
 
 import org.osoa.sca.ComponentContext;
+import org.osoa.sca.ServiceReference;
 import org.osoa.sca.annotations.Context;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
@@ -79,57 +80,12 @@ public class TripBookingImpl implements TripBooking{
         }
         
         // add trip to the shopping cart
-        //ServiceReference<ShoppingCart> cart = componentContext.getServiceReference(ShoppingCart.class, 
-        //                                                                           "shoppingCart");
-        //cart.setConversationID(cartId);
-        //cart.getService().addTrip(trip);
+        ServiceReference<ShoppingCart> cart = componentContext.getServiceReference(ShoppingCart.class, 
+                                                                                   "shoppingCart");
+        cart.setConversationID(cartId);
+        cart.getService().addTrip(cartId, trip);
         
         return trip;
     }
  
-    /*
-    @ConversationID
-    protected String conversationId;
-    
-    private Map<String, TripItem> tripItems = new HashMap<String, TripItem>();
-     
-    // Trip methods
-    
-    @Init
-    public void initTrip() {
-        System.out.println("Trip init for id: " + conversationId);
-    }
-    
-    @Destroy
-    public void destroyTrip() {
-        System.out.println("Trip destroy for id: " + conversationId);
-    }
-    
-    
-    public void addTripItem(TripItem tripItem){
-        tripItems.put(tripItem.getId(), tripItem);
-    }
-    
-    public void removeTripItem(String id){
-        tripItems.remove(id);
-    }  
-    
-    public TripItem[] getTripItems() {
-        return tripItems.values().toArray(new TripItem[tripItems.size()]);
-    }
-    
-    public double getTripPrice(){ 
-        double totalPrice = 0.0;
-        
-        for (TripItem tripItem : tripItems.values()){
-            totalPrice += tripItem.getPrice();
-        }
-        
-        return totalPrice;
-    }
-    
-    public void bookTrip() {
-        // TODO
-    }
-    */
 }

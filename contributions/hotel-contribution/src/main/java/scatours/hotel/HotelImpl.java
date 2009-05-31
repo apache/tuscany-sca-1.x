@@ -36,8 +36,8 @@ import scatours.common.TripLeg;
  * An implementation of the Hotel service
  */
 @Scope("STATELESS")
-@Service(interfaces={Search.class, Book.class})
-public class HotelImpl implements Search, Book {
+@Service(interfaces={Search.class, Book.class, HotelManagement.class})
+public class HotelImpl implements Search, Book, HotelManagement {
     
     private List<HotelInfo> hotels = new ArrayList<HotelInfo>();
     
@@ -112,5 +112,10 @@ public class HotelImpl implements Search, Book {
     
     public String book(TripItem tripItem) {
         return "hotel1";
+    }
+    
+    public void addHotelInfo(HotelInfo hotelInfo){
+    	hotels.add(hotelInfo);
+    	System.out.println("Added hotel info - " + hotelInfo.getName());
     }
 }

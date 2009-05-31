@@ -37,7 +37,7 @@
         </reference>
         <reference name="scaToursCart" target="SCAToursComponent/SCAToursCart">
             <tuscany:binding.jsonrpc/>
-        </reference>        
+        </reference>                
     </component>
     
     <component name="SCAToursComponent">
@@ -80,6 +80,10 @@
         </reference>
         <property name="quoteCurrencyCode">GBP</property>
     </component>
+    
+    <component name="CurrencyConverterComponent">
+        <implementation.java class="scatours.currencyconverter.CurrencyConverterImpl"/>
+    </component>    
     
     <component name="TripBookingComponent">
         <implementation.java class="scatours.tripbooking.TripBookingImpl"/>
@@ -132,19 +136,18 @@
         <service name="Book"/>        
     </component> 
     
-    <component name="CurrencyConverterComponent">
-        <implementation.java class="scatours.currencyconverter.CurrencyConverterImpl"/>
-        <service name="CurrencyConverter">
-        </service>
-    </component>
-    
     <component name="ShoppingCartComponent">
         <implementation.java class="scatours.shoppingcart.ShoppingCartImpl"/>
-        <service name="ShoppingCart">
-        </service>
+        <service name="ShoppingCart"/>
+        <reference name="cartStore" target="CartStoreComponent/CartStore"/>     
         <reference name="payment">
             <binding.ws uri="http://localhost:8081/Payment" />
         </reference> 
-    </component>     
+    </component>    
+    
+    <component name="CartStoreComponent">
+        <implementation.java class="scatours.shoppingcart.CartStoreImpl"/>
+        <service name="CartStore"/>
+    </component> 
 
 </composite>

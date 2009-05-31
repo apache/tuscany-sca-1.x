@@ -19,8 +19,14 @@
 package scatours.shoppingcart;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
+import org.osoa.sca.ComponentContext;
+import org.osoa.sca.ServiceReference;
+import org.osoa.sca.annotations.Context;
 import org.osoa.sca.annotations.ConversationID;
 import org.osoa.sca.annotations.Destroy;
 import org.osoa.sca.annotations.Init;
@@ -34,49 +40,51 @@ import scatours.common.TripItem;
 /**
  * An implementation of the Trip service
  */
-@Scope("CONVERSATION")
 @Service(interfaces={ShoppingCart.class})
 public class ShoppingCartImpl implements ShoppingCart{
     
     @Reference
-    protected Payment payment;   
-
-    @ConversationID
-    protected String cartId;
+    protected Payment payment; 
     
-    private List<TripItem> trips = new ArrayList<TripItem>();
-     
-    // Trip methods
+    @Reference 
+    protected CartStore cartStore;
     
-    @Init
-    public void initCart() {
-        System.out.println("Cart init for id: " + cartId);
+    @Context
+    protected ComponentContext componentContext;  
+    
+    private static Map<String, CartStore> cartStores = new HashMap<String, CartStore>();
+    
+    public String newCart(){
+        String cartId = UUID.randomUUID().toString();
+        ServiceReference<CartStore> cartStore = componentContext.getServiceReference(CartStore.class, 
+                                                                                           "cartStore");
+        cartStore.setConversationID(cartId);
+        cartStores.put(cartId, cartStore.getService());
+        
+        return cartId;
+    }  
+    
+    public void addTrip(String cartId, TripItem trip) {
+    	cartStores.get(cartId).addTrip(trip);
     }
     
-    @Destroy
-    public void destroyCart() {
-        System.out.println("Cart destroy for id: " + cartId);
+    public void removeTrip(String cartId, TripItem trip) {
+    	cartStores.get(cartId).addTrip(trip);
     }
     
-    public void addTrip(TripItem trip) {
-        trips.add(trip);
+    public TripItem[] getTrips(String cartId){
+        return cartStores.get(cartId).getTrips();
     }
     
-    public void removeTrip(TripItem trip) {
-        trips.remove(trip);
-    }
-    
-    public TripItem[] getTrips(){
-        return trips.toArray(new TripItem[trips.size()]);
-    }
-    
-    public void checkout(String customerName){ 
+    public void checkout(String cartId, String customerName){ 
         // get users credentials. Hard coded for now but should
         // come from the security context
         String customerId = customerName;
        
         // get the total for all the trips
         float amount = (float)0.0;
+        
+        TripItem[] trips = getTrips(cartId);
         
         for (TripItem trip : trips){
             if (trip.getType().equals(TripItem.TRIP)){
@@ -90,6 +98,10 @@ public class ShoppingCartImpl implements ShoppingCart{
         
         // Take the payment from the customer
         payment.makePaymentMember(customerId, amount);
+        
+        // reset the cart store
+        cartStores.get(cartId).reset();
+        cartStores.remove(cartId);
     }  
     
 }

@@ -28,12 +28,10 @@ import scatours.common.TripItem;
  * The ShoppingCart service interface
  */
 @Remotable
-@Conversational
 public interface ShoppingCart{
-    void addTrip(TripItem trip);
-    void removeTrip(TripItem trip);
-    TripItem[] getTrips();
-    
-    @EndsConversation
-    void checkout(String name);  
+	String newCart();
+    void addTrip(String cartId,TripItem trip);
+    void removeTrip(String cartId,TripItem trip);
+    TripItem[] getTrips(String cartId);
+    void checkout(String cartId,String name);  
 }

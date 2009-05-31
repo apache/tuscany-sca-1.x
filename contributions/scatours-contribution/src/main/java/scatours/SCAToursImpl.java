@@ -36,10 +36,8 @@ import scatours.travelcatalog.TravelCatalogSearch;
 import scatours.tripbooking.TripBooking;
 
 /**
- * An implementation of the SCA tours component. This component currently provides
- * a front end to the components that the UI communicated with. It allows a conversation
- * to be held with the shopping cart as javascript doesn't support conversations. 
- * Other than that it's just a pass through so we could look to remove it.
+ * An implementation of the SCA tours component. it's just a pass through and allows
+ * the outward facing bindings to be changed without changing the individual contributions
  */
 @Scope("COMPOSITE")
 @Service(interfaces={SCAToursSearch.class, SCAToursBooking.class, SCAToursCart.class})
@@ -53,47 +51,34 @@ public class SCAToursImpl implements SCAToursSearch, SCAToursBooking, SCAToursCa
     
     @Reference 
     protected ShoppingCart shoppingCart; 
-    
-    @Context
-    protected ComponentContext componentContext;  
-    
-    private Map<String,ShoppingCart> carts = new HashMap<String,ShoppingCart>();
-    private Map<String,TripBooking> trips = new HashMap<String,TripBooking>();
-    
+        
     // SCAToursSearch methods
     
     public TripItem[] search(TripLeg tripLeg) {
-        
         return travelCatalogSearch.search(tripLeg);
- 
     } 
 
     // SCAToursBooking methods
     
     public String bookTrip(String cartId, TripItem trip){
         TripItem bookedTrip = tripBooking.bookTrip(cartId, trip);
-        carts.get(cartId).addTrip(bookedTrip);
         return bookedTrip.getBookingCode();
     }
     
     // SCAToursCart methods
     
     public String newCart(){
-        String cartId = UUID.randomUUID().toString();
-        ServiceReference<ShoppingCart> shoppingCart = componentContext.getServiceReference(ShoppingCart.class, 
-                                                                                           "shoppingCart");
-        shoppingCart.setConversationID(cartId);
-        carts.put(cartId, shoppingCart.getService());
-        
+        String cartId = shoppingCart.newCart();
         return cartId;
     }  
     
     public TripItem[] getTrips(String cartId){
-        return carts.get(cartId).getTrips();
+        return shoppingCart.getTrips(cartId);
     }
     
     public void checkout(String cartId){
-        // need to get the user id from the context here
-        carts.get(cartId).checkout("c-0");
+        // need to get the user id from the context here but
+    	// just make one up for the time being
+    	shoppingCart.checkout(cartId, "c-0");
     }   
 }
