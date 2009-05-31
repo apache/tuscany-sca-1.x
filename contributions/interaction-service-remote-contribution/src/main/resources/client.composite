@@ -18,26 +18,13 @@
  * under the License.    
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           targetNamespace="http://scatours"
-           xmlns:scatours="http://scatours"
-           xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-           xmlns:pp="http://www.example.org/PaymentProcess"
-           name="ui">
-           
-    <component name="scatours">
-        <tuscany:implementation.widget location="scatours.html"/>
-        <service name="Widget">
-            <tuscany:binding.http uri="/scatours"/>
+    targetNamespace="http://service.scatours/"
+    name="Service">
+     
+     <component name="HotelComponent">
+        <implementation.java class="scatours.hotel.HotelImpl"/>
+        <service name="Search">
+            <binding.ws uri="http://localhost:8081/HotelComponent/Search"/>
         </service>
-        <reference name="scaToursCatalog" target="SCAToursComponent/SCAToursSearch">
-            <tuscany:binding.jsonrpc/>
-        </reference> 
-        <reference name="scaToursBooking" target="SCAToursComponent/SCAToursBooking">
-            <tuscany:binding.jsonrpc/>
-        </reference>
-        <reference name="scaToursCart" target="SCAToursComponent/SCAToursCart">
-            <tuscany:binding.jsonrpc/>
-        </reference>                
-    </component>   
-   
+    </component> 
 </composite>

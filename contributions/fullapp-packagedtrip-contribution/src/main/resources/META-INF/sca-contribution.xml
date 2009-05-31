@@ -19,20 +19,7 @@
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
    xmlns:scatours="http://scatours">
-   <deployable composite="scatours:ui"/>
+   <deployable composite="scatours:packagedtrip"/>
    <import.java package="scatours.common"/>
-   <import.java package="scatours.currencyconverter"/>
-   <import.java package="scatours.hotel"/>
-   <import.java package="scatours.flight"/>
-   <import.java package="scatours.car"/>
    <import.java package="scatours.trip"/>
-   <import.java package="scatours.tripbooking"/>
-   <import.java package="scatours.travelcatalog"/>
-   <import.java package="payment.creditcard"/>
-   <import.java package="payment"/>
-   <import.java package="scatours.emailgateway"/>
-   <import.java package="scatours.paymentprocess"/>
-   <import.java package="scatours.shoppingcart"/>
-   <import.java package="scatours"/>
-   <import namespace="http://www.example.org/PaymentProcess/"/>
 </contribution>

@@ -21,23 +21,38 @@
            targetNamespace="http://scatours"
            xmlns:scatours="http://scatours"
            xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-           xmlns:pp="http://www.example.org/PaymentProcess"
-           name="ui">
-           
-    <component name="scatours">
-        <tuscany:implementation.widget location="scatours.html"/>
-        <service name="Widget">
-            <tuscany:binding.http uri="/scatours"/>
+           name="bespoketrip">
+    
+    <component name="HotelComponent">
+        <implementation.java class="scatours.hotel.HotelImpl"/>
+        <service name="Search">
+            <binding.sca/>
+            <tuscany:binding.jsonrpc/>
         </service>
-        <reference name="scaToursCatalog" target="SCAToursComponent/SCAToursSearch">
+        <service name="Book"/>
+    </component>  
+    
+    <component name="FlightComponent">
+        <implementation.java class="scatours.flight.FlightImpl"/>
+        <service name="Search">
+            <interface.java interface="scatours.common.Search" 
+                            callbackInterface="scatours.common.SearchCallback"/>
+            <binding.ws uri="http://localhost:8080/Flight/Search"/>
             <tuscany:binding.jsonrpc/>
-        </reference> 
-        <reference name="scaToursBooking" target="SCAToursComponent/SCAToursBooking">
+            <callback>
+                <binding.ws uri="http://localhost:8080/Flight/SearchCallback"/>
+            </callback>            
+        </service>
+        <service name="Book"/>
+    </component> 
+    
+    <component name="CarComponent">
+        <implementation.java class="scatours.car.CarImpl"/>
+        <service name="Search">
+            <binding.sca/>
             <tuscany:binding.jsonrpc/>
-        </reference>
-        <reference name="scaToursCart" target="SCAToursComponent/SCAToursCart">
-            <tuscany:binding.jsonrpc/>
-        </reference>                
-    </component>   
-   
+        </service>
+        <service name="Book"/>        
+    </component>
+
 </composite>

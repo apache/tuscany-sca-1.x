@@ -21,23 +21,15 @@
            targetNamespace="http://scatours"
            xmlns:scatours="http://scatours"
            xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-           xmlns:pp="http://www.example.org/PaymentProcess"
-           name="ui">
-           
-    <component name="scatours">
-        <tuscany:implementation.widget location="scatours.html"/>
-        <service name="Widget">
-            <tuscany:binding.http uri="/scatours"/>
+           name="packagedtrip">
+
+    <component name="TripComponent">
+        <implementation.java class="scatours.trip.TripImpl"/>
+        <service name="Search">
+            <binding.sca/>
+            <tuscany:binding.jsonrpc/>
         </service>
-        <reference name="scaToursCatalog" target="SCAToursComponent/SCAToursSearch">
-            <tuscany:binding.jsonrpc/>
-        </reference> 
-        <reference name="scaToursBooking" target="SCAToursComponent/SCAToursBooking">
-            <tuscany:binding.jsonrpc/>
-        </reference>
-        <reference name="scaToursCart" target="SCAToursComponent/SCAToursCart">
-            <tuscany:binding.jsonrpc/>
-        </reference>                
-    </component>   
-   
+        <service name="Book"/>        
+    </component>
+
 </composite>
