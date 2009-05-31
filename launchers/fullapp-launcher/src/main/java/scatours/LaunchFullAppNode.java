@@ -47,7 +47,12 @@ public class LaunchFullAppNode {
 	           new SCAContribution("creditcard", "../../contributions/creditcard-payment-jaxb-contribution/target/classes"),
 	           new SCAContribution("shoppingcart", "../../contributions/shoppingcart-contribution/target/classes"),
 	           new SCAContribution("scatours", "../../contributions/scatours-contribution/target/classes"),
-	           new SCAContribution("ui", "../../contributions/fullapp-ui-contribution/target/classes"));
+	           new SCAContribution("fullapp-ui", "../../contributions/fullapp-ui-contribution/target/classes"),
+	           new SCAContribution("fullapp-frontend", "../../contributions/fullapp-frontend-contribution/target/classes"),
+	           new SCAContribution("fullapp-currency", "../../contributions/fullapp-currency-contribution/target/classes"),
+	           new SCAContribution("fullapp-packagedtrip", "../../contributions/fullapp-packagedtrip-contribution/target/classes"),
+	           new SCAContribution("fullapp-bespoketrip", "../../contributions/fullapp-bespoketrip-contribution/target/classes"),
+	           new SCAContribution("fullapp-shoppingcart", "../../contributions/fullapp-shoppingcart-contribution/target/classes"));
 
             node1.start();
 

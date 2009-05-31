@@ -21,6 +21,7 @@ package scatours;
 
 import java.io.IOException;
 
+import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
@@ -32,31 +33,26 @@ public class LaunchIntactionNode {
     
     // OK for development but you must launch the node from this module 
     public static void launchFromFileSystemDir(){
-        SCANode node = null; 
         
         try {
-            node = SCANodeFactory.newInstance().createSCANode("scatours.composite", 
-                                                               new SCAContribution("common", "../../contributions/common-contribution/target/classes"),
-                                                               new SCAContribution("currency", "../../contributions/currency-contribution/target/classes"),
-                                                               new SCAContribution("hotel", "../../contributions/hotel-contribution/target/classes"),
-                                                               new SCAContribution("flight", "../../contributions/flight-contribution/target/classes"),
-                                                               new SCAContribution("car", "../../contributions/car-contribution/target/classes"),
-                                                               new SCAContribution("trip", "../../contributions/trip-contribution/target/classes"),
-                                                               new SCAContribution("tripbooking", "../../contributions/tripbooking-contribution/target/classes"),
-                                                               new SCAContribution("travelcatalog", "../../contributions/travelcatalog-contribution/target/classes"),
-                                                               new SCAContribution("payment", "../../contributions/payment-java-contribution/target/classes"),
-                                                               new SCAContribution("creditcard", "../../contributions/creditcard-payment-jaxb-contribution/target/classes"),
-                                                               new SCAContribution("shoppingcart", "../../contributions/shoppingcart-contribution/target/classes"),
-                                                               new SCAContribution("scatours", "../../contributions/scatours-contribution/target/classes"),
-                                                               new SCAContribution("ui", "../../contribution/interaction-ui-contribution/target/classes"));
-            node.start();
+        	SCANode node1 = SCANodeFactory.newInstance().createSCANode("client.composite", 
+                new SCAContribution("common", "../../contributions/common-contribution/target/classes"),
+                new SCAContribution("calendar", "../../contributions/calendar-contribution/target/classes"),
+                new SCAContribution("client", "../../contributions/interaction-client-contribution/target/classes"));
+        	
+        	SCANode node2 = SCANodeFactory.newInstance().createSCANode("client.composite", 
+                    new SCAContribution("common", "../../contributions/common-contribution/target/classes"),
+                    new SCAContribution("hotel", "../../contributions/hotel-contribution/target/classes"),
+                    new SCAContribution("remoteService", "../../contributions/interaction-service-remote-contribution/target/classes"));
+
+        	node2.start();
+            node1.start();
             
-            System.out.println("Node started - Press enter to shutdown.");
-            try {
-                System.in.read();
-            } catch (IOException e) {}
+            Runnable runner = ((SCAClient)node1).getService(Runnable.class, "TestClient/Runnable");
+            runner.run();
             
-            node.stop();
+            node1.stop();
+            node2.stop();
             
         } catch (Exception ex) {
             System.out.println(ex.toString());
