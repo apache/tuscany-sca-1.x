@@ -6,15 +6,15 @@
     * to you under the Apache License, Version 2.0 (the
     * "License"); you may not use this file except in compliance
     * with the License.  You may obtain a copy of the License at
-    * 
+    *
     *   http://www.apache.org/licenses/LICENSE-2.0
-    * 
+    *
     * Unless required by applicable law or agreed to in writing,
     * software distributed under the License is distributed on an
     * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
     * KIND, either express or implied.  See the License for the
     * specific language governing permissions and limitations
-    * under the License.    
+    * under the License.
 -->
 <html>
 <head>
@@ -24,22 +24,22 @@
 
 <script type="text/javascript" src="scatours.js"></script>
 
-<script language="JavaScript">   
-	
+<script language="JavaScript">
+
     //@Reference
     var scaToursCatalog = new tuscany.sca.Reference("scaToursCatalog");
-    
+
     //@Reference
     var scaToursBooking = new tuscany.sca.Reference("scaToursBooking");
-    
+
     //@Reference
-    var scaToursCart = new tuscany.sca.Reference("scaToursCart");    
-        
+    var scaToursCart = new tuscany.sca.Reference("scaToursCart");
+
     //local state
     var packagedItems;
     var bespokeItems;
     var cartId;
-         
+
     //the constructor for trip leg beans
     function TripLegType(id,
                          fromLocation,
@@ -54,7 +54,7 @@
           this.toDate       = toDate;
           this.noOfPeople   = noOfPeople;
     }
-    
+
     function getTripLeg(){
         return new TripLegType(cartId,
                                document.searchForm.fromLocation.value,
@@ -63,28 +63,28 @@
                                document.searchForm.toDate.value,
                                document.searchForm.noOfPeople.value);
     }
-    
+
     //the constructor for bespoke trip beans
     function TripType() {
           this.id           = cartId;
           this.type         = "Bespoke";
           this.tripItems    = new Array();
-          // json databinding can't tolerate having a class hint set as the 
-          // databinding transformer is not in the right classloader to load 
+          // json databinding can't tolerate having a class hint set as the
+          // databinding transformer is not in the right classloader to load
           // the class pointed to by the hint
           //this.javaClass    = "scatours.common.TripItem";
     }
-    
+
     function getTrip(){
         return new TripType();
-    }    
-    
+    }
+
     // remove class hint from the trip object
-    // can also be used to limit the amount of 
+    // can also be used to limit the amount of
     // data returned to the server
     function copyTrip(trip){
         var tripCopy = new TripType();
-        
+
         tripCopy.id = trip.id;
         tripCopy.tripId = trip.tripId;
         tripCopy.type = trip.type;
@@ -96,20 +96,20 @@
         tripCopy.price = trip.price;
         tripCopy.currency = trip.currency;
         tripCopy.link = trip.link;
-        
+
         return tripCopy;
-    }   
-		
+    }
+
     function init() {
 	   try {
-           newCart(); 
+           newCart();
 	   }
 	   catch(e) {
 	       alert(e);
 	   }
     }
-    
-    function reset() { 
+
+    function reset() {
         document.getElementById('packagedTripItems').innerHTML = "";
         document.getElementById('bespokeTripItems').innerHTML = "";
         document.getElementById('cartItems').innerHTML = "";
@@ -117,42 +117,42 @@
         packagedItems = new Array();
         bespokeItems = new Array();
     }
-       
-    function newCart() { 
+
+    function newCart() {
         scaToursCart.newCart(newCart_response);
         reset();
     }
-    
-    function newCart_response(newCartId, exception) { 
+
+    function newCart_response(newCartId, exception) {
         if(exception){
             alert(exception.javaStack);
             return;
         }
         cartId = newCartId
-    }        
-            
-    function searchTravelCatalog() {        
+    }
+
+    function searchTravelCatalog() {
         scaToursCatalog.search(getTripLeg(), search_response);
     }
-        
+
     function search_response(items, exception) {
         if(exception){
             alert(exception.javaStack);
             return;
         }
-        
+
         var packagedHTML = '<h3>Packaged Trip Items</h3>';
         packagedHTML    += '<table border="0">';
         packagedHTML    += '<tr>';
         packagedHTML    += '<td>Select</td><td>Name</td><td>Description</td><td>Location</td><td>From - To</td><td>Price</td>';
-        packagedHTML    += '</tr>'; 
-             
-        var bespokeHTML = '<h3>Bespoke Trip Items</h3>'; 
+        packagedHTML    += '</tr>';
+
+        var bespokeHTML = '<h3>Bespoke Trip Items</h3>';
         bespokeHTML    += '<table border="0">';
         bespokeHTML    += '<tr>';
         bespokeHTML    += '<td>Select</td><td>Name</td><td>Description</td><td>Location</td><td>From - To</td><td>Price</td>';
-        bespokeHTML    += '</tr>';       
-        
+        bespokeHTML    += '</tr>';
+
         for (var i=0; i<items.length; i++) {
             if (items[i].type == "Trip") {
                 packagedHTML += '<tr>';
@@ -172,104 +172,104 @@
                 bespokeHTML += '<td>' +  items[i].location + '</td>';
                 bespokeHTML += '<td>' +  items[i].fromDate + ' - ' + items[i].toDate +'</td>';
                 bespokeHTML += '<td>' +  items[i].price + ' ' + items[i].currency + '</td>';
-                bespokeHTML += '</tr>';  
-                bespokeItems.push(items[i]);          
+                bespokeHTML += '</tr>';
+                bespokeItems.push(items[i]);
             }
         }
-        
-        packagedHTML    += '</table>'; 
-        packagedHTML    += '<input type="button" onClick="bookPackagedTrip()" value="Book Packaged Trip">'; 
-        
+
+        packagedHTML    += '</table>';
+        packagedHTML    += '<input type="button" onClick="bookPackagedTrip()" value="Book Packaged Trip">';
+
         bespokeHTML    += '<tr><td/><td/><td>Total Price</td><td/><td/><td><div id="bespokeTripPrice"></div> </td></tr>';
         bespokeHTML    += '</table>';
-        bespokeHTML    += '<input type="button" onClick="bookBespokeTrip()" value="Book Bespoke Trip">';       
-        
+        bespokeHTML    += '<input type="button" onClick="bookBespokeTrip()" value="Book Bespoke Trip">';
+
         if (packagedItems.length > 0){
             document.getElementById('packagedTripItems').innerHTML = packagedHTML;
         }
-        
+
         if (bespokeItems.length > 0){
             document.getElementById('bespokeTripItems').innerHTML = bespokeHTML;
         }
-    }  
-    
+    }
+
     function processPackagedSelection() {
         // do nothing at the moment
     }
-    
+
     function processBespokeSelection() {
         // calculate total price
         var items  = document.getElementsByName("bespokeTripItemSelection");
         var totalPrice = 0.0;
         for (var i=0; i<items.length; i++) {
-            
+
             // find the items that are checked
             if (items[i].checked == true) {
                 totalPrice = totalPrice + bespokeItems[i].price;
-            } 
+            }
         }
         document.getElementById('bespokeTripPrice').innerHTML = totalPrice + ' ' + bespokeItems[0]. currency;
-    }        
-    
-    function bookPackagedTrip() {   
+    }
+
+    function bookPackagedTrip() {
         // find first selected trip item
         var trip = null;
         var items  = document.getElementsByName("packagedTripItemSelection");
         for (var i=0; i<items.length; i++) {
-            
+
             // find the items that are checked
             if (items[i].checked == true) {
                 trip = copyTrip(packagedItems[i]);
                 break;
-            } 
+            }
         }
-            
-        if (trip != null) { 
-            // book trip        
+
+        if (trip != null) {
+            // book trip
             scaToursBooking.bookTrip(cartId, trip);
-            
+
             // reset the display
             reset();
-            
+
             // re-populate the cart with all entries
             getCartTrips();
         } else {
             alert ("Please select a trip")
         }
-    }   
-    
+    }
+
     function bookBespokeTrip() {
         // create a trip object
-        var trip = getTrip();    
-        
+        var trip = getTrip();
+
         // add selected trip items to trip
         var items  = document.getElementsByName("bespokeTripItemSelection");
         for (var i=0; i<items.length; i++) {
-            
+
             // find the items that are checked
             if (items[i].checked == true) {
                 trip.tripItems.push(copyTrip(bespokeItems[i]));
-            } 
+            }
         }
-            
-        if (trip.tripItems.length > 0) { 
-            // book trip        
+
+        if (trip.tripItems.length > 0) {
+            // book trip
             scaToursBooking.bookTrip(cartId, trip);
-            
+
             // reset the display
             reset();
-            
+
             // re-populate the cart with all entries
             getCartTrips();
         } else {
             alert ("Please select some trip items!")
         }
-    } 
-    
+    }
+
     function getCartTrips() {
         scaToursCart.getTrips(cartId, getCartTrips_response);
     }
-    
+
     function getCartTrips_response(trips, exception) {
         if(exception){
             alert(exception.javaStack);
@@ -277,14 +277,14 @@
         }
         var itemsHTML = '';
         var totalPrice  = 0.0;
-        
+
         for (var x=0; x<trips.length; x++){
             itemsHTML += '<h3>Trip - ' + trips[x].id + '</h3>';
             itemsHTML += '<table border="0">';
             itemsHTML += '<tr>';
             itemsHTML += '<td>Booking Ref</td><td>Name</td><td>Description</td><td>Location</td><td>From - To</td><td>Price</td>';
             itemsHTML += '</tr>';
-            
+
             if (trips[x].type == "Trip") {
                 itemsHTML += '<tr>';
                 itemsHTML += '<td>' +  trips[x].bookingCode + '</td>';
@@ -295,10 +295,10 @@
                 itemsHTML += '<td>' +  trips[x].price + ' ' + trips[x].currency + '</td>';
                 itemsHTML += '</tr>';
                 totalPrice = totalPrice + trips[x].price;
-            
+
             } else {
                 var tripItems = trips[x].tripItems;
-            
+
                 for (var i=0; i<tripItems.length; i++) {
                     itemsHTML += '<tr>';
                     itemsHTML += '<td>' +  tripItems[i].bookingCode + '</td>';
@@ -311,28 +311,29 @@
                     totalPrice = totalPrice + tripItems[i].price;
                 }
             }
-            
+
             itemsHTML    += '</table>';
         }
-        
-        document.getElementById('cartItems').innerHTML = itemsHTML;  
-        document.getElementById('cartPrice').innerHTML = totalPrice + ' ' + trips[0].currency; 
-    }     
-    
-    function checkout() {        
+
+        document.getElementById('cartItems').innerHTML = itemsHTML;
+        document.getElementById('cartPrice').innerHTML = totalPrice + ' ' + trips[0].currency;
+    }
+
+    function checkout() {
         scaToursCart.checkout(cartId);
-        
+
         document.getElementById('packagedTripItems').innerHTML = "";
         document.getElementById('bespokeTripItems').innerHTML = "";
         document.getElementById('cartItems').innerHTML = "Thank you for shopping with SCA Tours";
         document.getElementById('cartPrice').innerHTML = "";
         searchResponseItems = null;
         tripItems = null;
-    }   
-    
-    function purchase() { 
+        init();
     }
-	
+
+    function purchase() {
+    }
+
 </script>
 
 </head>
@@ -340,7 +341,7 @@
 <body onload="init()" background="">
 	<img src="scatours.png" border="0" />
 	<div id="scatours">
-        <form name="searchForm"> 
+        <form name="searchForm">
             <h3>Search for trips, hotels, flights and cars</h3>
             <br/>
             <table border="0">
@@ -369,23 +370,23 @@
                 </tr>
             </table>
             <br/>
-            <input type="button" onClick="searchTravelCatalog()" value="Search"> 
+            <input type="button" onClick="searchTravelCatalog()" value="Search">
         </form>
         <form name="packagedTripForm">
-            <div id="packagedTripItems"></div>    
-        </form>         
+            <div id="packagedTripItems"></div>
+        </form>
         <form name="bespokeTripForm">
-            <div id="bespokeTripItems"></div>    
-        </form> 
+            <div id="bespokeTripItems"></div>
+        </form>
         <form name="cartForm">
             <h3>Shopping Cart</h3>
             <div id="cartItems"></div>
-            <br/>  
+            <br/>
             Total Price: <div id="cartPrice"></div>
-            <br/>          
-            <input type="button" onClick="checkout()" value="Checkout"> 
-        </form>         
+            <br/>
+            <input type="button" onClick="checkout()" value="Checkout">
+        </form>
 	</div>
-  
+
 </body>
 </html>
