@@ -7,24 +7,25 @@
     * to you under the Apache License, Version 2.0 (the
     * "License"); you may not use this file except in compliance
     * with the License.  You may obtain a copy of the License at
-    * 
+    *
     *   http://www.apache.org/licenses/LICENSE-2.0
-    * 
+    *
     * Unless required by applicable law or agreed to in writing,
     * software distributed under the License is distributed on an
     * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
     * KIND, either express or implied.  See the License for the
     * specific language governing permissions and limitations
-    * under the License.    
+    * under the License.
 -->
 <project>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.5</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
+    <version>1.0-SNAPSHOT</version>
     <artifactId>scatours-shoppingcart-contribution</artifactId>
     <name>Apache Tuscany SCA Tours Shopping Cart Contribution</name>
 
@@ -32,31 +33,31 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-sca-api</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.5</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-data-api</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.5</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-common-contribution</artifactId>
-            <version>1.5-SNAPSHOT</version>
-        </dependency>   
-        
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-currency-contribution</artifactId>
-            <version>1.5-SNAPSHOT</version>
-        </dependency> 
-       
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-payment-java-contribution</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -93,7 +94,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
-                <version>1.9</version>
+                <version>1.12</version>
                 <executions>
                     <execution>
                         <id>payment</id>
@@ -111,9 +112,9 @@
                             <verbose>false</verbose>
                             <xnocompile>true</xnocompile>
                         </configuration>
-                    </execution>               
+                    </execution>
                 </executions>
-            </plugin>      
+            </plugin>
         </plugins>
     </build>
 </project>

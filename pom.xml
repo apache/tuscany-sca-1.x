@@ -22,11 +22,12 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.5</version>
         <!--relativePath>../pom.xml</relativePath-->
     </parent>
     <artifactId>tuscany-scatours</artifactId>
     <packaging>pom</packaging>
+    <version>${scatours.version}</version>
     <name>Apache Tuscany SCA Tours Assembly Examples</name>
 
     <profiles>
@@ -35,6 +36,10 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <scatours.version>1.0-SNAPSHOT</scatours.version>
+                <tuscany.version>1.5</tuscany.version>
+            </properties>
             <modules>
                 <module>contributions</module>
                 <module>launchers</module>

@@ -30,20 +30,22 @@
                     targetNamespace="http://www.tuscanyscatours.com/CreditCardPayment/"
                     xmlns:tns="http://www.tuscanyscatours.com/CreditCardPayment/">
 
-            <xsd:element name="authorize" type="tns:AuthorizeType"/>
-            <xsd:complexType name="AuthorizeType">
+            <xsd:element name="authorize">
+            <xsd:complexType>
                 <xsd:sequence>
                     <xsd:element name="CreditCard" type="tns:CreditCardDetailsType"></xsd:element>
                     <xsd:element name="Amount" type="xsd:float"></xsd:element>
                 </xsd:sequence>
             </xsd:complexType>
+            </xsd:element>
 
-            <xsd:element name="authorizeResponse" type="tns:AuthorizeResponseType"/>
-            <xsd:complexType name="AuthorizeResponseType">
+            <xsd:element name="authorizeResponse">
+            <xsd:complexType>
                 <xsd:sequence>
                     <xsd:element name="Status" type="xsd:string"></xsd:element>
                 </xsd:sequence>
             </xsd:complexType>
+            </xsd:element>
 
             <xsd:complexType name="CreditCardDetailsType">
                 <xsd:sequence>
