@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package payment.creditcard;
@@ -29,7 +29,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * 
+ *
  */
 public class CreditCardPaymentTestCase {
     private static SCANode node;
@@ -40,30 +40,34 @@ public class CreditCardPaymentTestCase {
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
     	try {
-	        node = SCANodeFactory.newInstance().createSCANode(null, 
+	        node = SCANodeFactory.newInstance().createSCANode(null,
 	            new SCAContribution("creditcard", "./target/classes"));
-	
+
 	        node.start();
     	} catch (Exception ex) {
     		ex.printStackTrace();
     	}
     }
-    
+
     @Test
     public void testCreditCardPayment() {
         SCAClient client = (SCAClient) node;
         CreditCardPayment cc = client.getService(CreditCardPayment.class, "CreditCardPaymentComponent/CreditCardPayment");
-        
+
         ObjectFactory objectFactory = new ObjectFactory();
         CreditCardDetailsType ccDetails = objectFactory.createCreditCardDetailsType();
         ccDetails.setCreditCardType(CreditCardTypeType.fromValue("Visa"));
         PayerType ccOwner = objectFactory.createPayerType();
         ccOwner.setName("Fred");
         ccDetails.setCardOwner(ccOwner);
-        
-        System.out.println(cc.authorize(ccDetails, 100.00f));
+
+        try {
+            System.out.println(cc.authorize(ccDetails, 100.00f));
+        } catch (AuthorizeFault_Exception e) {
+            System.err.println("Fault: " + e.getFaultInfo().getErrorCode());
+        }
     }
-    
+
     @Test
     @Ignore
     public void testWaitForInput() {
@@ -73,7 +77,7 @@ public class CreditCardPaymentTestCase {
         } catch (Exception ex) {
         }
         System.out.println("Shutting down");
-    }    
+    }
 
     /**
      * @throws java.lang.Exception
