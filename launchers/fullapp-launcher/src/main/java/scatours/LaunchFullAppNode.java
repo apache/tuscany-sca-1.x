@@ -44,6 +44,7 @@ public class LaunchFullAppNode {
 	           new SCAContribution("tripbooking", "../../contributions/tripbooking-contribution/target/classes"),
 	           new SCAContribution("travelcatalog", "../../contributions/travelcatalog-contribution/target/classes"),
 	           new SCAContribution("payment", "../../contributions/payment-java-contribution/target/classes"),
+	           //new SCAContribution("payment", "../../contributions/payment-spring-contribution/target/classes"),
 	           new SCAContribution("creditcard", "../../contributions/creditcard-payment-jaxb-contribution/target/classes"),
 	           new SCAContribution("shoppingcart", "../../contributions/shoppingcart-contribution/target/classes"),
 	           new SCAContribution("scatours", "../../contributions/scatours-contribution/target/classes"),

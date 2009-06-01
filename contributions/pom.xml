@@ -70,6 +70,7 @@
                 <module>trip-contribution</module>
                 <module>scatours-contribution</module>
                 <module>payment-java-contribution</module>
+                <module>payment-spring-contribution</module>
             </modules>
         </profile>
 

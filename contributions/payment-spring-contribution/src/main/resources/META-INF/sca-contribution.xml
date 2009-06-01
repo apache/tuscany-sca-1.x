@@ -18,18 +18,8 @@
     * under the License.    
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
-   xmlns:scatours="http://scatours">
-   <deployable composite="scatours:ui"/>
-   <import.java package="scatours.common"/>
-   <import.java package="scatours.currencyconverter"/>
-   <import.java package="scatours.hotel"/>
-   <import.java package="scatours.flight"/>
-   <import.java package="scatours.car"/>
-   <import.java package="scatours.trip"/>
-   <import.java package="scatours.tripbooking"/>
-   <import.java package="scatours.travelcatalog"/>
-   <import.java package="payment.creditcard"/>
-   <import.java package="payment"/>
-   <import.java package="scatours.shoppingcart"/>
-   <import.java package="scatours"/>
+              xmlns:scatours="http://scatours">
+   <export.java package="payment"/>
+   <export namespace="http://www.tuscanyscatours.com/Payment/"/>
+   <deployable composite="scatours:payment" />
 </contribution>

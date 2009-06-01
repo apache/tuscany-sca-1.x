@@ -19,6 +19,5 @@
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0">
    <import.java package="scatours.common"/>
-   <import.java package="scatours.paymentprocess"/>
    <export.java package="scatours.shoppingcart"/>
 </contribution>
