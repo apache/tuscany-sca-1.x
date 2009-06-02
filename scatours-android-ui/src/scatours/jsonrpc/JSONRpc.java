@@ -17,7 +17,7 @@
  * under the License.    
  */
 
-package com.scatours.services.jsonrpc;
+package scatours.jsonrpc;
 
 import java.io.IOException;
 

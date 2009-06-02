@@ -1,12 +1,10 @@
-package com.scatours.android;
+package scatours.android;
 
 import scatours.SCAToursSearch;
 import scatours.SCAToursSearchProxy;
 import scatours.common.TripItem;
 import scatours.common.TripLeg;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,7 +39,7 @@ public class TripSearch extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.search);
         
         
         ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_dropdown_item_1line, AIRPORT_CODES);

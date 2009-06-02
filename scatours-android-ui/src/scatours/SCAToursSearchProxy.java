@@ -28,11 +28,7 @@ import org.json.JSONObject;
 
 import scatours.common.TripItem;
 import scatours.common.TripLeg;
-
-import android.util.Log;
-
-import com.scatours.android.R;
-import com.scatours.services.jsonrpc.JSONRpc;
+import scatours.jsonrpc.JSONRpc;
 
 public class SCAToursSearchProxy implements SCAToursSearch {
     // see http://developer.android.com/guide/developing/tools/emulator.html
@@ -81,22 +77,4 @@ public class SCAToursSearchProxy implements SCAToursSearch {
         tripCatalog.toArray(catalogArray);
         return catalogArray;
     }
-    
-    public static void main(String[] args) {
-        SCAToursSearch searchProxy = new SCAToursSearchProxy();
-        TripLeg tripLeg = new TripLeg();
-        
-        tripLeg.setFromLocation("LGW");
-        tripLeg.setToLocation("FLR");
-        tripLeg.setFromDate("06/12/09");
-        tripLeg.setToDate("13/12/09");
-        tripLeg.setNoOfPeople("2");
-        
-        TripItem[] tripsAvailable = searchProxy.search(tripLeg);
-        
-        int foundTrips = tripsAvailable.length;
-        System.out.println(foundTrips);
-
-    }
-
 }
