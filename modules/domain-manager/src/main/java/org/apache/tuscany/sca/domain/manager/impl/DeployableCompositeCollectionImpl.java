@@ -195,6 +195,9 @@ public class DeployableCompositeCollectionImpl implements ItemCollection, LocalI
         QName qname = compositeQName(key);
         for (Composite deployable: contribution.getDeployables()) {
             if (qname.equals(deployable.getName())) {
+            	// find the deployable composite
+            	deployable = contribution.getModelResolver().resolveModel(Composite.class, deployable);
+            	
                 if (deployable.isUnresolved()) {
                     throw new NotFoundException(key);
                 }
