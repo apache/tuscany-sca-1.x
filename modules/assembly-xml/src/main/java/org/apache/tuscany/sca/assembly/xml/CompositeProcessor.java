@@ -703,95 +703,99 @@ public class CompositeProcessor extends BaseAssemblyProcessor implements StAXArt
             
             // Write <service> elements
             for (ComponentService service : component.getServices()) {
-                writeStart(writer, SERVICE, new XAttr(NAME, service.getName()),
-                           policyProcessor.writePolicies(service));
-
-                //write extended attributes
-                this.writeExtendedAttributes(writer, service, extensionAttributeProcessor);
-
-                // Write service interface
-                extensionProcessor.write(service.getInterfaceContract(), writer);
-                
-                // Write bindings
-                for (Binding binding : service.getBindings()) {
-                    extensionProcessor.write(binding, writer);
-                }
-                
-                // Write <callback> element
-                if (service.getCallback() != null) {
-                    Callback callback = service.getCallback();
-                    writeStart(writer, CALLBACK, policyProcessor.writePolicies(callback));
-
-                    //write extended attributes
-                    this.writeExtendedAttributes(writer, callback, extensionAttributeProcessor);
-
-                    // Write bindings
-                    for (Binding binding : callback.getBindings()) {
-                        extensionProcessor.write(binding, writer);
-                    }
-                    
-                    // Write extensions 
-                    for (Object extension : callback.getExtensions()) {
-                        extensionProcessor.write(extension, writer);
-                    }
-                
-                    writeEnd(writer);
-                }
-                
-                // Write extensions
-                for (Object extension : service.getExtensions()) {
-                    extensionProcessor.write(extension, writer);
-                }
-                
-                writeEnd(writer);
+            	if (service.isCallback() == false){
+	                writeStart(writer, SERVICE, new XAttr(NAME, service.getName()),
+	                           policyProcessor.writePolicies(service));
+	
+	                //write extended attributes
+	                this.writeExtendedAttributes(writer, service, extensionAttributeProcessor);
+	
+	                // Write service interface
+	                extensionProcessor.write(service.getInterfaceContract(), writer);
+	                
+	                // Write bindings
+	                for (Binding binding : service.getBindings()) {
+	                    extensionProcessor.write(binding, writer);
+	                }
+	                
+	                // Write <callback> element
+	                if (service.getCallback() != null) {
+	                    Callback callback = service.getCallback();
+	                    writeStart(writer, CALLBACK, policyProcessor.writePolicies(callback));
+	
+	                    //write extended attributes
+	                    this.writeExtendedAttributes(writer, callback, extensionAttributeProcessor);
+	
+	                    // Write bindings
+	                    for (Binding binding : callback.getBindings()) {
+	                        extensionProcessor.write(binding, writer);
+	                    }
+	                    
+	                    // Write extensions 
+	                    for (Object extension : callback.getExtensions()) {
+	                        extensionProcessor.write(extension, writer);
+	                    }
+	                
+	                    writeEnd(writer);
+	                }
+	                
+	                // Write extensions
+	                for (Object extension : service.getExtensions()) {
+	                    extensionProcessor.write(extension, writer);
+	                }
+	                
+	                writeEnd(writer);
+            	}
             }
             
             // Write <reference> elements
             for (ComponentReference reference : component.getReferences()) {
-                writeStart(writer, REFERENCE, new XAttr(NAME, reference.getName()),
-                           new XAttr(AUTOWIRE, reference.getAutowire()),
-                           writeMultiplicity(reference),
-                           writeTargets(reference),
-                           policyProcessor.writePolicies(reference));
-
-                //write extended attributes
-                this.writeExtendedAttributes(writer, reference, extensionAttributeProcessor);
-
-                // Write reference interface
-                extensionProcessor.write(reference.getInterfaceContract(), writer);
-
-                // Write bindings
-                for (Binding binding : reference.getBindings()) {
-                    extensionProcessor.write(binding, writer);
-                }
-                
-                // Write callback
-                if (reference.getCallback() != null) {
-                    Callback callback = reference.getCallback();
-                    writeStart(writer, CALLBACK, policyProcessor.writePolicies(callback));
-                
-                    //write extended attributes
-                    this.writeExtendedAttributes(writer, callback, extensionAttributeProcessor);
-
-                    // Write callback bindings
-                    for (Binding binding : callback.getBindings()) {
-                        extensionProcessor.write(binding, writer);
-                    }
-                    
-                    // Write extensions
-                    for (Object extensions : callback.getExtensions()) {
-                        extensionProcessor.write(extensions, writer);
-                    }
-                
-                    writeEnd(writer);
-                }
-                
-                // Write extensions
-                for (Object extensions : reference.getExtensions()) {
-                    extensionProcessor.write(extensions, writer);
-                }
-                
-                writeEnd(writer);
+            	if (reference.isCallback() == false){
+	                writeStart(writer, REFERENCE, new XAttr(NAME, reference.getName()),
+	                           new XAttr(AUTOWIRE, reference.getAutowire()),
+	                           writeMultiplicity(reference),
+	                           writeTargets(reference),
+	                           policyProcessor.writePolicies(reference));
+	
+	                //write extended attributes
+	                this.writeExtendedAttributes(writer, reference, extensionAttributeProcessor);
+	
+	                // Write reference interface
+	                extensionProcessor.write(reference.getInterfaceContract(), writer);
+	
+	                // Write bindings
+	                for (Binding binding : reference.getBindings()) {
+	                    extensionProcessor.write(binding, writer);
+	                }
+	                
+	                // Write callback
+	                if (reference.getCallback() != null) {
+	                    Callback callback = reference.getCallback();
+	                    writeStart(writer, CALLBACK, policyProcessor.writePolicies(callback));
+	                
+	                    //write extended attributes
+	                    this.writeExtendedAttributes(writer, callback, extensionAttributeProcessor);
+	
+	                    // Write callback bindings
+	                    for (Binding binding : callback.getBindings()) {
+	                        extensionProcessor.write(binding, writer);
+	                    }
+	                    
+	                    // Write extensions
+	                    for (Object extensions : callback.getExtensions()) {
+	                        extensionProcessor.write(extensions, writer);
+	                    }
+	                
+	                    writeEnd(writer);
+	                }
+	                
+	                // Write extensions
+	                for (Object extensions : reference.getExtensions()) {
+	                    extensionProcessor.write(extensions, writer);
+	                }
+	                
+	                writeEnd(writer);
+            	}
             }
             
             // Write <property> elements
