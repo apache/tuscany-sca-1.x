@@ -105,7 +105,14 @@ public class HotelImpl implements Search, Book, HotelManagement {
     }
     
     public void searchAsynch(TripLeg tripLeg) {
-        
+    	System.out.println("Starting hotel search");
+    	
+    	try {
+    		this.wait(1000);
+    	} catch(Exception ex){
+        	// do nothing
+        }
+    	
         // return available hotels
         searchCallback.searchResults(searchSynch(tripLeg));  
     }

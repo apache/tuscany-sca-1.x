@@ -95,7 +95,14 @@ public class TripImpl implements Search, Book {
     }
     
     public void searchAsynch(TripLeg tripLeg) {
-        
+    	System.out.println("Starting trip search");
+    	
+    	try {
+    		this.wait(2000);
+    	} catch(Exception ex){
+        	// do nothing
+        }
+    	
         // return available hotels
         searchCallback.searchResults(searchSynch(tripLeg));  
     }

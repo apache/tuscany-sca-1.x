@@ -21,12 +21,13 @@
    xmlns:scatours="http://scatours">
    <deployable composite="scatours:frontend"/>
    <import.java package="scatours"/>
-   <import.java package="scatours.tripbooking"/>
-   <import.java package="scatours.travelcatalog"/>
    <import.java package="scatours.common"/>
    <import.java package="scatours.hotel"/>
    <import.java package="scatours.flight"/>
    <import.java package="scatours.car"/>
    <import.java package="scatours.trip"/>
    <import.java package="scatours.currencyconverter"/>
+   <import.java package="scatours.tripbooking"/>
+   <import.java package="scatours.travelcatalog"/> 
+   <import.java package="scatours.shoppingcart"/>  
 </contribution>

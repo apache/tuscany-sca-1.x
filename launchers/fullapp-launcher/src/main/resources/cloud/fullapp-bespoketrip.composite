@@ -17,22 +17,20 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           targetNamespace="http://scatours"
-           xmlns:scatours="http://scatours"
-           xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-           name="packagedtrip">
+<composite	xmlns="http://www.osoa.org/xmlns/sca/1.0"
+		xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
+		targetNamespace="http://scatours/cloud"
+		xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
+		xmlns:s="http://scatours"
+		name="bespoketrip">
 
-    <component name="TripComponent">
-        <implementation.java class="scatours.trip.TripImpl"/>
-        <service name="Search">
-            <binding.ws name="searchws" uri="http://localhost:8085/Trip/Search"/>
-            <tuscany:binding.jsonrpc name="searchjsonrpc"/>
-            <callback>
-                <binding.ws uri="http://localhost:8084/Trip/SearchCallback"/>
-            </callback> 
+    <component name="bespoketrip">
+        <t:implementation.node uri="fullapp-bespoketrip" composite="s:bespoketrip"/>
+        <service name="Node">
+            <binding.sca uri="http://localhost:8086"/>
+            <binding.ws uri="http://localhost:8086"/>
+            <tuscany:binding.jsonrpc uri="http://localhost:8086"/>
         </service>
-        <service name="Book"/>        
     </component>
-
+     
 </composite>

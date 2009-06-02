@@ -39,5 +39,21 @@
             <tuscany:binding.jsonrpc/>
         </reference>                
     </component>   
+    
+    <component name="SCAToursComponent">
+        <implementation.java class="scatours.SCAToursImpl"/>
+        <service name="SCAToursSearch">
+            <tuscany:binding.jsonrpc/>
+        </service>
+        <service name="SCAToursBooking">
+            <tuscany:binding.jsonrpc/>
+        </service>
+        <service name="SCAToursCart">
+            <tuscany:binding.jsonrpc/>
+        </service>        
+        <reference name="travelCatalogSearch" target="TravelCatalogComponent/TravelCatalogSearch"/>
+        <reference name="tripBooking" target="TripBookingComponent/TripBooking"/>
+        <reference name="shoppingCart" target="ShoppingCartComponent/ShoppingCart"/>       
+    </component>    
    
 </composite>

@@ -83,8 +83,22 @@ public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
         dynamicHotelSearch.getService().searchAsynch(tripLeg);
         
         flightSearch.searchAsynch(tripLeg);
+        
+        while (responsesReceived < 2){
+            try {
+                synchronized (this) {
+                    this.wait();
+                }
+            } catch (InterruptedException ex){
+                // do nothing
+            	System.out.println("waiting for response");
+            }
+        }  
+        
         carSearch.searchAsynch(tripLeg);
         tripSearch.searchAsynch(tripLeg);
+        
+        System.out.println("going into wait");
         
         while (responsesReceived < 4){
             try {
@@ -93,8 +107,9 @@ public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
                 }
             } catch (InterruptedException ex){
                 // do nothing
+            	System.out.println("waiting for response");
             }
-        }
+        }     
         
         for (TripItem tripItem : searchResults){
             tripItem.setId(UUID.randomUUID().toString());
@@ -113,7 +128,7 @@ public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
     public void searchResults(TripItem[] items){
         RequestContext requestContext = componentContext.getRequestContext();
         Object callbackID = requestContext.getServiceReference().getCallbackID();
-        System.out.println(callbackID);
+        System.out.println("Asynch response - " + callbackID);
         
         if (items != null) {
             for(int i = 0; i < items.length; i++ ){

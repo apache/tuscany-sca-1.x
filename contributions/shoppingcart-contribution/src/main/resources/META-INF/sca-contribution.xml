@@ -20,4 +20,5 @@
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0">
    <import.java package="scatours.common"/>
    <export.java package="scatours.shoppingcart"/>
+   <export.java package="payment"/>
 </contribution>

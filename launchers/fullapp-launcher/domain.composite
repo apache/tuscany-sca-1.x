@@ -17,22 +17,20 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           targetNamespace="http://scatours"
-           xmlns:scatours="http://scatours"
-           xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-           name="packagedtrip">
-
-    <component name="TripComponent">
-        <implementation.java class="scatours.trip.TripImpl"/>
-        <service name="Search">
-            <binding.ws name="searchws" uri="http://localhost:8085/Trip/Search"/>
-            <tuscany:binding.jsonrpc name="searchjsonrpc"/>
-            <callback>
-                <binding.ws uri="http://localhost:8084/Trip/SearchCallback"/>
-            </callback> 
-        </service>
-        <service name="Book"/>        
-    </component>
+<composite name="domain.composite"
+           targetNamespace="http://tuscany.apache.org/xmlns/sca/1.0"
+           xmlns="http://www.osoa.org/xmlns/sca/1.0" 
+           xmlns:ns1="http://www.osoa.org/xmlns/sca/1.0"
+           xmlns:ns2="http://scatours"
+           xmlns:ns3="http://creditcard">
+       
+  <include name="ns3:creditcard" uri="fullapp-creditcard" />         
+  <include name="ns2:payment" uri="fullapp-payment" />    
+  <include name="ns2:shoppingcart" uri="fullapp-shoppingcart" />
+  <include name="ns2:currency" uri="fullapp-currency" />
+  <include name="ns2:packagedtrip" uri="fullapp-packagedtrip" /> 
+  <include name="ns2:bespoketrip" uri="fullapp-bespoketrip" />
+  <include name="ns2:frontend" uri="fullapp-frontend" />         
+  <include name="ns2:ui" uri="fullapp-ui" /> 
 
 </composite>

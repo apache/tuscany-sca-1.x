@@ -46,6 +46,15 @@
             </classpath>
         </java>
     </target>
+	
+    <target name="run-domain">
+        <java classname="scatours.LaunchFullAppDomain" fork="true">
+            <classpath>
+                <pathelement location="target/classes"/>
+                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
+            </classpath>
+        </java>
+    </target>	
 
     <target name="clean">
         <delete includeemptydirs="true">

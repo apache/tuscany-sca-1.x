@@ -26,8 +26,11 @@
     <component name="HotelComponent">
         <implementation.java class="scatours.hotel.HotelImpl"/>
         <service name="Search">
-            <binding.sca/>
-            <tuscany:binding.jsonrpc/>
+            <binding.ws name="searchws" uri="http://localhost:8086/Hotel/Search"/>
+            <!-- tuscany:binding.jsonrpc name="searchjsonrpc"/-->
+            <callback>
+                <binding.ws uri="http://localhost:8084/Hotel/SearchCallback"/>
+            </callback> 
         </service>
         <service name="Book"/>
     </component>  
@@ -37,10 +40,10 @@
         <service name="Search">
             <interface.java interface="scatours.common.Search" 
                             callbackInterface="scatours.common.SearchCallback"/>
-            <binding.ws uri="http://localhost:8080/Flight/Search"/>
-            <tuscany:binding.jsonrpc/>
+            <binding.ws name="searchws" uri="http://localhost:8086/Flight/Search"/>
+            <tuscany:binding.jsonrpc name="searchjsonrpc"/>
             <callback>
-                <binding.ws uri="http://localhost:8080/Flight/SearchCallback"/>
+                <binding.ws uri="http://localhost:8084/Flight/SearchCallback"/>
             </callback>            
         </service>
         <service name="Book"/>
@@ -49,8 +52,11 @@
     <component name="CarComponent">
         <implementation.java class="scatours.car.CarImpl"/>
         <service name="Search">
-            <binding.sca/>
-            <tuscany:binding.jsonrpc/>
+            <binding.ws name="searchws" uri="http://localhost:8086/Car/Search"/>
+            <tuscany:binding.jsonrpc name="searchjsonrpc"/>
+            <callback>
+                <binding.ws uri="http://localhost:8084/Car/SearchCallback"/>
+            </callback> 
         </service>
         <service name="Book"/>        
     </component>

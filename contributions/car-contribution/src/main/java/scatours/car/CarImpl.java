@@ -89,7 +89,14 @@ public class CarImpl implements Search, Book {
     }
     
     public void searchAsynch(TripLeg tripLeg) {
-        
+    	System.out.println("Starting car search");
+    	
+    	try {
+    		this.wait(4000);
+    	} catch(Exception ex){
+        	// do nothing
+        }
+    	
         // return available hotels
         searchCallback.searchResults(searchSynch(tripLeg));  
     }

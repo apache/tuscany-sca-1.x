@@ -20,6 +20,7 @@
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
    xmlns:scatours="http://scatours">
    <deployable composite="scatours:shoppingcart"/>
-   <import.java package="scatours.common"/>
+   <!-- import.java package="scatours.common"/-->
+   <import.java package="payment"/>
    <import.java package="scatours.shoppingcart"/>
 </contribution>
