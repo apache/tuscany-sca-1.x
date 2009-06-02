@@ -55,12 +55,13 @@ public class SCAToursSearchProxy implements SCAToursSearch {
             for(int i = 0; i < result.length(); i++) {
                 TripItem item = new TripItem();
                 
+                item.setType(result.getJSONObject(i).getString("type"));
                 item.setName(result.getJSONObject(i).getString("name"));
                 item.setDescription(result.getJSONObject(i).getString("description"));
                 item.setLocation(result.getJSONObject(i).getString("location"));
                 item.setFromDate(result.getJSONObject(i).getString("fromDate"));
                 item.setToDate(result.getJSONObject(i).getString("toDate"));
-                item.setPrice(result.getJSONObject(i).getLong("price"));
+                item.setPrice(result.getJSONObject(i).getDouble("price"));
                 item.setCurrency(result.getJSONObject(i).getString("currency"));
 
                 tripCatalog.add(item);

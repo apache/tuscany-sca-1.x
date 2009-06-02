@@ -5,6 +5,9 @@ import scatours.SCAToursSearchProxy;
 import scatours.common.TripItem;
 import scatours.common.TripLeg;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -127,8 +130,57 @@ public class TripSearch extends Activity {
         tripLeg.setNoOfPeople("2");
         
         TripItem[] tripsAvailable = searchProxy.search(tripLeg);
-        
         Log.i(getString(R.string.app_name),"Found " + tripsAvailable.length + " trips");
+        
+        Log.i(getString(R.string.app_name),"Calling Results view...");
+        
+        displayTripSearchResults(tripsAvailable);
+        
+        /*
+        try {
+            Intent resultView = new Intent(this, TripSearchResults.class);
+            resultView.putExtra("results", tripsAvailable);
+            startActivity(resultView);
+        } catch(Exception e) {
+            Log.e(getString(R.string.app_name), e.getMessage());
+        }
+        */
+        
+        //TripSearchResults searchResults = new TripSearchResults(tripsAvailable);
+        //searchResults.setContentView(R.layout.search_results);
+        
+        Log.i(getString(R.string.app_name),"Called...");
+
+    }
+    
+    private void displayTripSearchResults(TripItem[] tripsAvailable) {
+
+        String result = "";
+        for(TripItem item : tripsAvailable) {
+            Log.i(getString(R.string.app_name), "Item type:" + item.getType());
+            if (item.getType().equals(TripItem.TRIP)) {
+                result += item.getDescription() + " (" + item.getCurrency() + " " + item.getPrice() + ")\n";  
+            }
+        }
+
+        
+        //Search trips here
+        new AlertDialog.Builder(TripSearch.this) 
+        .setTitle("SCATour")
+        .setMessage("Found:\n" + result)
+        .setIcon(R.drawable.icon)
+        .setCancelable(false)
+        .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                
+            }})
+            .setNegativeButton(R.string.alert_cancel, new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which) {
+                    
+                }       
+            })
+            .show();
+
     }
 
 }

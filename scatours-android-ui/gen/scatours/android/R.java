@@ -20,6 +20,7 @@ public final class R {
         public static final int edit_date_start=0x7f050002;
         public static final int edit_fromLocation=0x7f050000;
         public static final int edit_toLocation=0x7f050001;
+        public static final int listPackages=0x7f050006;
     }
     public static final class layout {
         public static final int search=0x7f030000;
