@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.node.impl;
@@ -50,6 +50,7 @@ import org.apache.tuscany.sca.core.UtilityExtensionPoint;
 import org.apache.tuscany.sca.core.assembly.ActivationException;
 import org.apache.tuscany.sca.core.assembly.CompositeActivator;
 import org.apache.tuscany.sca.core.assembly.RuntimeAssemblyFactory;
+import org.apache.tuscany.sca.core.conversation.ConversationManager;
 import org.apache.tuscany.sca.core.invocation.ExtensibleProxyFactory;
 import org.apache.tuscany.sca.core.invocation.ProxyFactory;
 import org.apache.tuscany.sca.core.invocation.ProxyFactoryExtensionPoint;
@@ -96,6 +97,7 @@ public class RuntimeBootStrapper {
     private List<SCADefinitions> policyDefinitions;
     private ModelResolver policyDefinitionsResolver;
     private Monitor monitor;
+    private ConversationManager conversationManager;
 
     public RuntimeBootStrapper(ClassLoader classLoader) {
         this.classLoader = classLoader;
@@ -110,6 +112,8 @@ public class RuntimeBootStrapper {
 
         // Get work scheduler
         workScheduler = utilities.getUtility(WorkScheduler.class);
+
+        conversationManager = utilities.getUtility(ConversationManager.class);
 
         // Create an interface contract mapper
         InterfaceContractMapper mapper = utilities.getUtility(InterfaceContractMapper.class);
@@ -165,7 +169,7 @@ public class RuntimeBootStrapper {
                                                      policyDefinitions,
                                                      policyDefinitionsResolver,
                                                      monitor);
-        
+
         // add the contribution service into the utility extension point
         utilities.addUtility(contributionService);
 
@@ -200,6 +204,9 @@ public class RuntimeBootStrapper {
 
         // Stop and destroy the work manager
         workScheduler.destroy();
+
+        conversationManager.destroy();
+        conversationManager = null;
 
         // Cleanup
         modules = null;
