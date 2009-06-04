@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.core.conversation;
@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  * @version $Rev$ $Date$
  */
 public class ConversationManagerImpl implements ConversationManager {
-	
+
     private List<ConversationListener> listeners = Collections.synchronizedList(new ArrayList<ConversationListener>());
     private Map<Object, ExtendedConversation> conversations = new ConcurrentHashMap<Object, ExtendedConversation>();
 
@@ -43,12 +43,12 @@ public class ConversationManagerImpl implements ConversationManager {
      * the default max age. this is set to 1 hour
      */
     private static final long DEFAULT_MAX_AGE = 60 * 60 * 1000; ;
-    
+
     /**
      * the default max idle time. this is set to 1 hour
      */
-    private static final long DEFAULT_MAX_IDLE_TIME = 60 * 60 * 1000; 
-    
+    private static final long DEFAULT_MAX_IDLE_TIME = 60 * 60 * 1000;
+
     /**
      * the globally used max age
      */
@@ -57,20 +57,22 @@ public class ConversationManagerImpl implements ConversationManager {
     /**
      * the globally used max idle time
      */
-    private final long maxIdleTime; 
+    private final long maxIdleTime;
 
     /**
      * the reaper thread
      */
-    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    
+    private final ScheduledExecutorService scheduler;
+
     /**
      * constructor
      */
     public ConversationManagerImpl() {
     	long mit = DEFAULT_MAX_IDLE_TIME;
     	long ma = DEFAULT_MAX_AGE;
-    	
+
+    	scheduler = Executors.newSingleThreadScheduledExecutor();
+
     	// Allow privileged access to read system property. Requires PropertyPermission in security
         // policy.
         String aProperty = AccessController.doPrivileged(new PrivilegedAction<String>() {
@@ -104,7 +106,7 @@ public class ConversationManagerImpl implements ConversationManager {
         maxAge = ma;
         maxIdleTime = mit;
     }
-    
+
     /**
      * @see org.apache.tuscany.sca.core.conversation.ConversationManager#addListener(org.apache.tuscany.sca.core.conversation.ConversationListener)
      */
@@ -170,17 +172,17 @@ public class ConversationManagerImpl implements ConversationManager {
      */
     public synchronized void stopReaper() {
 
-        // Prevent the scheduler from submitting any additional reapers, 
-    	// initiate an orderly shutdown if a reaper task is in progress. 
+        // Prevent the scheduler from submitting any additional reapers,
+    	// initiate an orderly shutdown if a reaper task is in progress.
     	this.scheduler.shutdown();
     }
-    
+
 
     /**
      * @see org.apache.tuscany.sca.core.conversation.ConversationManager#startConversation(java.lang.Object)
      */
     public ExtendedConversation startConversation(Object conversationID) {
-    	
+
         if (conversationID == null) {
             conversationID = UUID.randomUUID().toString();
         }
@@ -188,7 +190,7 @@ public class ConversationManagerImpl implements ConversationManager {
         if (conversation != null && conversation.getState() != ConversationState.ENDED) {
             throw new IllegalStateException(conversation + " already exists.");
         }
-                
+
         conversation = new ExtendedConversationImpl(
         		this, conversationID, ConversationState.STARTED);
         conversations.put(conversationID, conversation);
@@ -212,5 +214,12 @@ public class ConversationManagerImpl implements ConversationManager {
      */
     public long getMaxAge(){
         return maxAge;
+    }
+
+    public void destroy() {
+        // REVIEW: A more graceful way?
+        scheduler.shutdownNow();
+        this.listeners.clear();
+        this.conversations.clear();
     }
 }
