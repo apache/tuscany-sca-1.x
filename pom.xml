@@ -50,6 +50,7 @@
                 <module>binding-ejb-runtime</module>
                 <module>binding-erlang</module>
                 <module>binding-erlang-runtime</module>
+		<module>domain-search</module>
                 <!-- obsolete -->
                 <module>binding-feed</module>
                 <!-- new bindings -->
