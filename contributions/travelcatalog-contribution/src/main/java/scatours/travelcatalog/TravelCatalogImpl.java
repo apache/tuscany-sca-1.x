@@ -21,6 +21,7 @@ package scatours.travelcatalog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
 
 import org.osoa.sca.ComponentContext;
 import org.osoa.sca.RequestContext;
@@ -64,17 +65,17 @@ public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
     
     @Context
     protected ComponentContext componentContext;
-    
-    private int responsesReceived = 0;
-    
+        
     private List<TripItem> searchResults = new ArrayList<TripItem>();
+    
+    CountDownLatch resultsReceivedCountdown;
     
     // TravelSearch methods
     
     public TripItem[] search(TripLeg tripLeg) {
         
+    	resultsReceivedCountdown = new CountDownLatch(4);
         searchResults.clear();
-        responsesReceived = 0;
         
         ServiceReference<Search> dynamicHotelSearch = 
             componentContext.getServiceReference(Search.class, "hotelSearch");
@@ -82,34 +83,16 @@ public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
         dynamicHotelSearch.setCallbackID("HotelSearchCallbackID-" + tripLeg.getId());        
         dynamicHotelSearch.getService().searchAsynch(tripLeg);
         
-        flightSearch.searchAsynch(tripLeg);
-        
-        while (responsesReceived < 2){
-            try {
-                synchronized (this) {
-                    this.wait();
-                }
-            } catch (InterruptedException ex){
-                // do nothing
-            	System.out.println("waiting for response");
-            }
-        }  
-        
+        flightSearch.searchAsynch(tripLeg); 
         carSearch.searchAsynch(tripLeg);
         tripSearch.searchAsynch(tripLeg);
         
         System.out.println("going into wait");
         
-        while (responsesReceived < 4){
-            try {
-                synchronized (this) {
-                    this.wait();
-                }
-            } catch (InterruptedException ex){
-                // do nothing
-            	System.out.println("waiting for response");
-            }
-        }     
+        try {
+        	resultsReceivedCountdown.await();
+        } catch (InterruptedException ex){
+        }
         
         for (TripItem tripItem : searchResults){
             tripItem.setId(UUID.randomUUID().toString());
@@ -125,7 +108,7 @@ public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
     
     // SearchCallback methods
     
-    public void searchResults(TripItem[] items){
+    public synchronized void searchResults(TripItem[] items){
         RequestContext requestContext = componentContext.getRequestContext();
         Object callbackID = requestContext.getServiceReference().getCallbackID();
         System.out.println("Asynch response - " + callbackID);
@@ -136,12 +119,6 @@ public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
             }
         }
         
-        responsesReceived++;
-        try {
-            synchronized (this) {
-                this.notifyAll();
-            }
-        } catch (Exception ex) {
-        }
+        resultsReceivedCountdown.countDown();
     }    
 }
