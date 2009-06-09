@@ -27,6 +27,6 @@ import org.apache.tuscany.sca.contribution.impl.ContributionFactoryImpl;
  * 
  * @version $Rev$ $Date$
  */
-public class DefaultContributionFactory extends ContributionFactoryImpl {
+public class DefaultContributionFactory extends ContributionFactoryImpl implements ContributionFactory {
     
 }
