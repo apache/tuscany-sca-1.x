@@ -25,7 +25,7 @@
 
     <import namespace="http://www.osoa.org/xmlns/sca/1.0" schemaLocation="sca-core.xsd"/>
 
-    <element name="binding.atom" type="t:AtomBinding"/>
+    <element name="binding.atom" substitutionGroup="sca:binding" type="t:AtomBinding"/>
     
     <complexType name="AtomBinding">
         <complexContent>
