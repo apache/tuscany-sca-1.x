@@ -27,7 +27,7 @@
 
     <include schemaLocation="tuscany-core.xsd"/>
     
-    <element name="binding.http" substitutionGroup="sca:binding" type="t:HTTPBinding"/>
+    <element name="binding.http" type="t:HTTPBinding"/>
     
     <complexType name="HTTPBinding">
         <complexContent>
