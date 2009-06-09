@@ -25,7 +25,7 @@
 
     <import namespace="http://www.osoa.org/xmlns/sca/1.0" schemaLocation="sca-core.xsd"/>
 
-    <element name="implementation.widget" type="t:WidgetImplementation"/>
+    <element name="implementation.widget" substitutionGroup="sca:implementation" type="t:WidgetImplementation"/>
     	
     <complexType name="WidgetImplementation">
         <complexContent>
