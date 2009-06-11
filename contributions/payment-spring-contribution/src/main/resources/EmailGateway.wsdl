@@ -79,7 +79,7 @@
     </wsdl:binding>
     <wsdl:service name="EmailGatewayService">
         <wsdl:port name="EmailGatewayPort" binding="tns:EmailGatwayBinding">
-            <soap:address location="http://localhost:8082/EmailGateway" />
+            <soap:address location="http://localhost:8088/EmailGateway" />
         </wsdl:port>
     </wsdl:service>
     

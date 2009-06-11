@@ -25,13 +25,13 @@
     <component name="EmailGatewayClient">
         <implementation.java class="scatours.emailgateway.client.EmailGatewayClientImpl" />
         <reference name="emailGateway">
-            <binding.ws uri="http://localhost:8082/EmailGateway" />
+            <binding.ws uri="http://localhost:8088/EmailGateway" />
         </reference>
     </component>
     <component name="EmailGateway">
         <implementation.java class="scatours.emailgateway.EmailGatewayImpl" />
         <service name="EmailGateway">
-            <binding.ws uri="http://localhost:8082/EmailGateway" />
+            <binding.ws uri="http://localhost:8088/EmailGateway" />
         </service>
     </component>
 </composite>
