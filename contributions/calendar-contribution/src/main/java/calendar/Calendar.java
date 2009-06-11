@@ -18,9 +18,6 @@
  */
 package calendar;
 
-/**
- * The Add service interface
- */
 public interface Calendar {
 
     String getEndDate(String startDate, int duration);

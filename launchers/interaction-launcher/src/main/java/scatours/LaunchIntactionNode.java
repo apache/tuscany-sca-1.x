@@ -37,6 +37,7 @@ public class LaunchIntactionNode {
         try {
         	SCANode node1 = SCANodeFactory.newInstance().createSCANode("client.composite", 
                 new SCAContribution("common", "../../contributions/common-contribution/target/classes"),
+                new SCAContribution("currency", "../../contributions/currency-contribution/target/classes"),
                 new SCAContribution("calendar", "../../contributions/calendar-contribution/target/classes"),
                 new SCAContribution("client", "../../contributions/interaction-client-contribution/target/classes"));
         	
@@ -48,8 +49,14 @@ public class LaunchIntactionNode {
         	node2.start();
             node1.start();
             
-            Runnable runner = ((SCAClient)node1).getService(Runnable.class, "TestClient/Runnable");
-            runner.run();
+            Runnable localInteraction = ((SCAClient)node1).getService(Runnable.class, "InteractionLocalClient/Runnable");
+            localInteraction.run();
+            
+            Runnable remoteInteraction = ((SCAClient)node1).getService(Runnable.class, "InteractionRemoteClient/Runnable");
+            remoteInteraction.run();   
+            
+            Runnable requestResponseInteraction = ((SCAClient)node1).getService(Runnable.class, "InteractionRequestResponseClient/Runnable");
+            requestResponseInteraction.run();
             
             node1.stop();
             node2.stop();

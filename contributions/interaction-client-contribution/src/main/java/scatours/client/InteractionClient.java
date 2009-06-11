@@ -19,7 +19,6 @@
 
 package scatours.client;
 
-import org.osoa.sca.RequestContext;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
@@ -29,18 +28,16 @@ import scatours.common.Search;
 import scatours.common.SearchCallback;
 import scatours.common.TripItem;
 import scatours.common.TripLeg;
-import scatours.hotel.HotelInfo;
-import scatours.hotel.HotelManagement;
 
 @Service(Runnable.class)
-public class TestClient implements SearchCallback {
+public class InteractionClient implements Runnable, SearchCallback {
     @Reference
     protected Search hotelSearchRemoteRequestResponse;
     
     @Reference
     protected Calendar calendarLocalRequestResponse;
 
-    public TestClient() {
+    public InteractionClient() {
     }
 
     // Runnable method
@@ -76,7 +73,7 @@ public class TestClient implements SearchCallback {
     	
     }
     
-    private void runCallbac() {
+    private void runCallback() {
     	
     }
     

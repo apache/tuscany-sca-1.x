@@ -21,17 +21,33 @@
     targetNamespace="http://client.scatours/"
     name="Client">
 
-    <component name="TestClient">
-        <implementation.java class="scatours.client.TestClient" />
-        <reference name="hotelSearchRemoteRequestResponse">
-            <binding.ws uri="http://localhost:8081/HotelComponent/Search"/>
-        </reference>
-        <reference name="calendarLocalRequestResponse" 
+    <!--  Local interaction -->
+    <component name="InteractionLocalClient">
+        <implementation.java class="scatours.client.InteractionLocalClient" />
+        <reference name="calendarLocal" 
                    target="CalendarComponent"/>
      </component>
      
     <component name="CalendarComponent">
 		<implementation.java class="calendar.CalendarImpl"/>
-    </component>     
+    </component> 
+    
+    <!--  Remote interaction -->
+    <component name="InteractionRemoteClient">
+        <implementation.java class="scatours.client.InteractionRemoteClient" />
+        <reference name="hotelSearchRemote">
+            <binding.ws uri="http://localhost:8081/HotelComponent/Search"/>
+        </reference>
+     </component>
+     
+     <!--  Request response interaction -->
+     <component name="InteractionRequestResponseClient">
+        <implementation.java class="scatours.client.InteractionRequestResponseClient" />
+        <reference name="currencyConverterRequestResponse" target="CurrencyConverterComponent"/>
+     </component>
+     
+    <component name="CurrencyConverterComponent">
+        <implementation.java class="scatours.currencyconverter.CurrencyConverterImpl"/>
+    </component>      
 
 </composite>

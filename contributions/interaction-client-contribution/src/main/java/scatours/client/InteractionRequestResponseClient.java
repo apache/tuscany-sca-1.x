@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,16 +15,28 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-    targetNamespace="http://service.scatours/"
-    name="Service">
-     
-     <component name="HotelComponent">
-        <implementation.java class="scatours.hotel.HotelImpl"/>
-        <service name="Search">
-            <binding.ws uri="http://localhost:8081/HotelComponent/Search"/>
-        </service>
-    </component> 
-   
-</composite>
+ */
+
+package scatours.client;
+
+import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Service;
+
+import calendar.Calendar;
+
+import scatours.common.TripLeg;
+import scatours.currencyconverter.CurrencyConverter;
+
+@Service(Runnable.class)
+public class InteractionRequestResponseClient implements Runnable {
+	
+    @Reference
+    protected CurrencyConverter currencyConverterRequestResponse;
+
+    public void run() {   	
+    	System.out.println("\nCalling currency converter component using request response pattern");
+    	double convertedAmount = currencyConverterRequestResponse.convert("GBP", "USD", 10.0);
+    	System.out.println("10 GBP = " + convertedAmount + " USD");
+    }
+    
+}

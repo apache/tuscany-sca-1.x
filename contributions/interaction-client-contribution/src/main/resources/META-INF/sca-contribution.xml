@@ -19,7 +19,8 @@
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
               xmlns:client="http://client.scatours/">
-    <import.java package="scatours.common"/>
     <import.java package="calendar"/>
+    <import.java package="scatours.common"/>
+    <import.java package="scatours.currencyconverter"/>
     <deployable composite="client:Client" />
 </contribution>
