@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package echo.provider;
@@ -35,14 +35,16 @@ import echo.server.EchoServiceListener;
  * Implementation of the Echo binding provider.
  */
 class EchoServiceBindingProvider implements ServiceBindingProvider {
-    
+
     private RuntimeComponent component;
-    private RuntimeComponentService service;  
+    private RuntimeComponentService service;
     private EchoBinding binding;
     private MessageFactory messageFactory;
-    
+
     EchoServiceBindingProvider(RuntimeComponent component,
-                                      RuntimeComponentService service, EchoBinding binding, MessageFactory messageFactory) {
+                               RuntimeComponentService service,
+                               EchoBinding binding,
+                               MessageFactory messageFactory) {
         this.component = component;
         this.service = service;
         this.binding = binding;
@@ -52,24 +54,24 @@ class EchoServiceBindingProvider implements ServiceBindingProvider {
     public InterfaceContract getBindingInterfaceContract() {
         return service.getInterfaceContract();
     }
-    
+
     public boolean supportsOneWayInvocation() {
         return false;
     }
 
     public void start() {
 
-        RuntimeComponentService componentService = (RuntimeComponentService) service;
+        RuntimeComponentService componentService = (RuntimeComponentService)service;
         RuntimeWire wire = componentService.getRuntimeWire(binding);
         InvocationChain chain = wire.getInvocationChains().get(0);
-        
+
         // Register with the hosting server
         String uri = binding.getURI();
         EchoServer.getServer().register(uri, new EchoServiceListener(chain.getHeadInvoker(), messageFactory));
     }
 
     public void stop() {
-        
+
         // Unregister from the hosting server
         String uri = component.getURI() + "/" + binding.getName();
         EchoServer.getServer().unregister(uri);

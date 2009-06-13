@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package echo.server;
@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A sample Echo server, showing how to integrate service bindings. 
+ * A sample Echo server, showing how to integrate service bindings.
  */
 public class EchoServer {
 
@@ -46,7 +46,7 @@ public class EchoServer {
 
     /**
      * Register a service under the given name.
-     * 
+     *
      * @param service
      * @param name
      */
@@ -66,13 +66,17 @@ public class EchoServer {
 
     /**
      * Dispatch an incoming interaction to the corresponding service.
-     * 
+     *
      * @param uri
-     * @param input
+     * @param args
      * @return
      */
-    public String sendReceive(String uri, String input) throws InvocationTargetException {
-        return services.get(uri).sendReceive(input);
+    public Object call(String uri, Object[] args) throws InvocationTargetException {
+        EchoServiceListener service = services.get(uri);
+        if (service == null) {
+            return args[0];
+        }
+        return service.call(args);
     }
 
 }
