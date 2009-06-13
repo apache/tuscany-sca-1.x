@@ -27,7 +27,7 @@ import org.apache.tuscany.sca.policy.Policy;
  */
 public class WSPolicy implements Policy {
     private boolean unresolved = true;
-    
+
     public QName getSchemaName() {
         return new QName("http://schemas.xmlsoap.org/ws/2004/09/policy", "PolicyAttachment");
     }

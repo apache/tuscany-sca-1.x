@@ -18,7 +18,6 @@
  */
 package echo.provider.policy;
 
-import org.apache.tuscany.sca.policy.Policy;
 import org.apache.tuscany.sca.policy.PolicySet;
 
 /**
@@ -27,18 +26,18 @@ import org.apache.tuscany.sca.policy.PolicySet;
 public class EncryptionPolicyHandler implements PolicyHandler {
 
     public void applyPolicy(Object msg, PolicySet policySet) throws Exception {
-        for ( Object aPolicy : policySet.getPolicies() ) {
-            if ( aPolicy instanceof EchoBindingEncryptionPolicy ) {
-                encrypt(msg, (EchoBindingEncryptionPolicy)aPolicy); 
+        for (Object aPolicy : policySet.getPolicies()) {
+            if (aPolicy instanceof EchoBindingEncryptionPolicy) {
+                encrypt(msg, (EchoBindingEncryptionPolicy)aPolicy);
             }
         }
     }
-    
+
     private void encrypt(Object msg, EchoBindingEncryptionPolicy policy) throws Exception {
-        if ( !policy.isUnresolved() && msg instanceof Object[] ) {
+        if (!policy.isUnresolved() && msg instanceof Object[]) {
             EncryptionStrategy strategy = policy.getStrategyClass().newInstance();
             Object[] msgArgs = (Object[])msg;
-            for ( int count = 0 ; count < msgArgs.length ; ++count ) {
+            for (int count = 0; count < msgArgs.length; ++count) {
                 msgArgs[count] = strategy.encryptMessage(msgArgs[count]);
             }
         }

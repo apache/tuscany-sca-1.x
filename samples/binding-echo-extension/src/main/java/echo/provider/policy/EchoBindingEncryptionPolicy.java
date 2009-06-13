@@ -24,16 +24,19 @@ public class EchoBindingEncryptionPolicy extends EchoBindingPolicy {
 
     private String encryptionStrategyClassName;
     private Class<? extends EncryptionStrategy> strategyClass;
-    
+
     public String getEncryptionStrategyClassName() {
         return encryptionStrategyClassName;
     }
+
     public void setEncryptionStrategyClassName(String encryptionStrategyClassName) {
         this.encryptionStrategyClassName = encryptionStrategyClassName;
     }
+
     public Class<? extends EncryptionStrategy> getStrategyClass() {
         return strategyClass;
     }
+
     public void setStrategyClass(Class<? extends EncryptionStrategy> strategy) {
         this.strategyClass = strategy;
     }

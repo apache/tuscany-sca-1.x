@@ -28,8 +28,8 @@ import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
 import org.apache.tuscany.sca.policy.PolicySet;
 
-import echo.provider.policy.PolicyHandler;
 import echo.provider.policy.EncryptionPolicyHandler;
+import echo.provider.policy.PolicyHandler;
 
 /**
  * Invoker that applies policies before invocation for the sample echo binding.
@@ -37,32 +37,31 @@ import echo.provider.policy.EncryptionPolicyHandler;
 public class EchoBindingPoliciedInvoker implements Invoker {
     List<PolicySet> policies = null;
     Map<QName, PolicyHandler> policyHandlers = new HashMap<QName, PolicyHandler>();
-    
+
     public EchoBindingPoliciedInvoker(List<PolicySet> policies) {
         this.policies = policies;
-        policyHandlers.put(new QName("http://test","EncryptionPolicy"), 
-                           new EncryptionPolicyHandler());
+        policyHandlers.put(new QName("http://test", "EncryptionPolicy"), new EncryptionPolicyHandler());
     }
 
     public Message invoke(Message msg) {
         try {
             Object[] args = msg.getBody();
-            
+
             applyPolicies(args);
 
             // echo back the first parameter, a real binding would invoke some API for flowing the request
             Object result = args[0];
-                                 
+
             msg.setBody(result);
-            
+
         } catch (Exception e) {
             msg.setFaultBody(e);
         }
         return msg;
-    }  
-    
+    }
+
     private void applyPolicies(Object[] args) throws Exception {
-        for ( PolicySet policySet : policies ) {
+        for (PolicySet policySet : policies) {
             PolicyHandler policyHandler = policyHandlers.get(policySet.getName());
             policyHandler.applyPolicy(args, policySet);
         }

@@ -33,7 +33,7 @@ import echo.EchoBinding;
  * Implementation of the Echo binding model.
  */
 public class EchoBindingImpl implements EchoBinding, PolicySetAttachPoint {
-    
+
     private String name;
     private String uri;
     private List<Intent> requiredIntents = new ArrayList<Intent>();
@@ -81,22 +81,22 @@ public class EchoBindingImpl implements EchoBinding, PolicySetAttachPoint {
     public void setUnresolved(boolean unresolved) {
         // The sample binding is always resolved
     }
-    
+
     public void setPolicySets(List<PolicySet> policySets) {
         this.policySets = policySets;
-        
+
     }
 
     public void setRequiredIntents(List<Intent> intents) {
         this.requiredIntents = intents;
-        
+
     }
-    
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
-    }    
-    
+    }
+
     public List<PolicySet> getApplicablePolicySets() {
         return this.applicablePolicySets;
     }

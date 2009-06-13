@@ -31,18 +31,18 @@ public class EchoBindingClient {
 
     public static void main(String[] args) throws Exception {
 
-        SCADomain scaDomain  = SCADomain.newInstance("EchoBinding.composite");
+        SCADomain scaDomain = SCADomain.newInstance("EchoBinding.composite");
 
         // Call the echo service component which will, in turn, call a reference
         // with an echo binding. The echo binding will echo the given string.
         Echo service = scaDomain.getService(Echo.class, "EchoComponent");
         String echoString = service.echo("foo");
-        System.out.println("Echo reference = " + echoString );
+        System.out.println("Echo reference = " + echoString);
 
         // Call the echo server. This will dispatch the call to a service with an
         // echo binding. The echo binding will pass the call to the echo component.
-        echoString = (String) EchoServer.getServer().call("http://example.com/server", new Object[] {"bar"});
-        System.out.println("Echo service = " + echoString );
+        echoString = (String)EchoServer.getServer().call("http://example.com/server", new Object[] {"bar"});
+        System.out.println("Echo service = " + echoString);
 
         scaDomain.close();
 

@@ -37,9 +37,7 @@ class EchoReferenceBindingProvider implements ReferenceBindingProvider {
     private RuntimeComponentReference reference;
     private EchoBinding binding;
 
-    EchoReferenceBindingProvider(RuntimeComponent component,
-                                        RuntimeComponentReference reference,
-                                        EchoBinding binding) {
+    EchoReferenceBindingProvider(RuntimeComponent component, RuntimeComponentReference reference, EchoBinding binding) {
         this.reference = reference;
         this.binding = binding;
     }
@@ -47,7 +45,7 @@ class EchoReferenceBindingProvider implements ReferenceBindingProvider {
     public Invoker createInvoker(Operation operation) {
         if (binding instanceof PolicySetAttachPoint) {
             PolicySetAttachPoint policySetAttachPoint = (PolicySetAttachPoint)binding;
-            if ( !policySetAttachPoint.getPolicySets().isEmpty() ){
+            if (!policySetAttachPoint.getPolicySets().isEmpty()) {
                 return new EchoBindingPoliciedInvoker(policySetAttachPoint.getPolicySets());
             }
         }

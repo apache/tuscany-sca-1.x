@@ -27,9 +27,9 @@ import org.apache.tuscany.sca.policy.Policy;
  */
 public class EchoBindingPolicy implements Policy {
     private boolean unresolved = true;
-    
+
     public QName getSchemaName() {
-        return new QName("http://sample/policy","echoBindingPolicy");
+        return new QName("http://sample/policy", "echoBindingPolicy");
     }
 
     public boolean isUnresolved() {

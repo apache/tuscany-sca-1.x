@@ -23,7 +23,7 @@ package echo.provider.policy;
 public class ReverseEncryptionStrategy implements EncryptionStrategy {
 
     public Object encryptMessage(Object msg) {
-        if ( msg instanceof String ) {
+        if (msg instanceof String) {
             StringBuffer sb = new StringBuffer((String)msg);
             msg = sb.reverse().toString();
         }

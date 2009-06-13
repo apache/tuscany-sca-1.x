@@ -23,7 +23,7 @@ package echo;
  * A factory for the sample Echo binding model.
  */
 public interface EchoBindingFactory {
-    
+
     /**
      * Creates a new Echo binding.
      * 

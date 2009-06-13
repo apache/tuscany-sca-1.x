@@ -31,27 +31,30 @@ import org.apache.tuscany.sca.runtime.RuntimeComponentService;
 
 import echo.EchoBinding;
 
-
 /**
  * Implementation of the Echo binding model.
  */
 public class EchoBindingProviderFactory implements BindingProviderFactory<EchoBinding> {
-    
+
     private MessageFactory messageFactory;
-    
+
     public EchoBindingProviderFactory(ExtensionPointRegistry extensionPoints) {
         ModelFactoryExtensionPoint factories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);
         this.messageFactory = factories.getFactory(MessageFactory.class);
     }
 
-    public ReferenceBindingProvider createReferenceBindingProvider(RuntimeComponent component, RuntimeComponentReference reference, EchoBinding binding) {
+    public ReferenceBindingProvider createReferenceBindingProvider(RuntimeComponent component,
+                                                                   RuntimeComponentReference reference,
+                                                                   EchoBinding binding) {
         return new EchoReferenceBindingProvider(component, reference, binding);
     }
 
-    public ServiceBindingProvider createServiceBindingProvider(RuntimeComponent component, RuntimeComponentService service, EchoBinding binding) {
+    public ServiceBindingProvider createServiceBindingProvider(RuntimeComponent component,
+                                                               RuntimeComponentService service,
+                                                               EchoBinding binding) {
         return new EchoServiceBindingProvider(component, service, binding, messageFactory);
     }
-    
+
     public Class<EchoBinding> getModelType() {
         return EchoBinding.class;
     }

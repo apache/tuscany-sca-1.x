@@ -31,7 +31,7 @@ public class EchoBindingTestCase extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        scaDomain  = SCADomain.newInstance("EchoBinding.composite");
+        scaDomain = SCADomain.newInstance("EchoBinding.composite");
     }
 
     @Override
@@ -50,7 +50,7 @@ public class EchoBindingTestCase extends TestCase {
     public void testService() throws Exception {
         // Call the echo server. This will dispatch the call to a service with an
         // echo binding. The echo binding will pass the call to the echo component.
-        String echoString = (String) EchoServer.getServer().call("http://example.com/server", new Object[] {"bar"});
+        String echoString = (String)EchoServer.getServer().call("http://example.com/server", new Object[] {"bar"});
         assertEquals(echoString, "bar");
     }
 }

@@ -24,6 +24,6 @@ package echo;
  * @version $Rev$ $Date$
  */
 public interface Echo {
-    
+
     String echo(String msg);
 }

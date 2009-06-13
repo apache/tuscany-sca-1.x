@@ -46,5 +46,4 @@ public class EchoServiceTestCase extends TestCase {
         assertEquals("oof", result);
     }
 
-
 }

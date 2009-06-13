@@ -46,5 +46,4 @@ public class EchoReferenceTestCase extends TestCase {
         assertEquals("oof", result);
     }
 
-
 }

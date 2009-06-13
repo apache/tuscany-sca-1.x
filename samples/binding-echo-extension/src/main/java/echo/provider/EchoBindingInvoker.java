@@ -28,6 +28,7 @@ import echo.server.EchoServer;
  */
 class EchoBindingInvoker implements Invoker {
     private String uri;
+
     EchoBindingInvoker(String uri) {
         this.uri = uri;
     }

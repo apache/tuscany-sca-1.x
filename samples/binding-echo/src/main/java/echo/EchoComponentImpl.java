@@ -22,7 +22,6 @@ import org.osoa.sca.annotations.Constructor;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
-
 /**
  * A simple client component that uses a reference with an Echo binding.
  *
@@ -40,7 +39,7 @@ public class EchoComponentImpl implements Echo {
 
     public String echo(String msg) {
         String result = echoReference.echo(msg);
-        System.out.println("Returned message: "+ result);
+        System.out.println("Returned message: " + result);
         return result;
     }
 }
