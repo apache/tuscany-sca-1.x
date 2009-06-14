@@ -21,5 +21,6 @@
               xmlns:client="http://client.scatours/">
     <import.java package="scatours.common"/>
     <import.java package="scatours.hotel"/>
+    <import.java package="scatours.flight"/>
     <deployable composite="client:Client" />
 </contribution>

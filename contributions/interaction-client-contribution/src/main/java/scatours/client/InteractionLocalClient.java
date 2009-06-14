@@ -33,7 +33,7 @@ public class InteractionLocalClient implements Runnable {
     protected Calendar calendarLocal;
 
     public void run() {   	
-    	System.out.println("\nCalling calendar component over local binding");
+    	System.out.println("\nCalling calendar component over a local binding");
     	TripLeg tripLeg = getTestTripLeg();
     	String toDate = calendarLocal.getEndDate(tripLeg.getFromDate(), 10);
     	tripLeg.setToDate(toDate);

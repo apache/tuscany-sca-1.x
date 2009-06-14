@@ -98,13 +98,17 @@ public class TripImpl implements Search, Book {
     	System.out.println("Starting trip search");
     	
     	try {
-    		this.wait(2000);
+    		Thread.sleep(2000);
     	} catch(Exception ex){
         	// do nothing
         }
     	
         // return available hotels
         searchCallback.searchResults(searchSynch(tripLeg));  
+    }
+    
+    public int getPercentComplete(){
+        return 100;
     }
     
     public String book(TripItem tripItem) {

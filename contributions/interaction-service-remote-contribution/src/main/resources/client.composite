@@ -21,11 +21,28 @@
     targetNamespace="http://service.scatours/"
     name="Service">
      
-     <component name="HotelComponent">
+     <component name="Hotel">
         <implementation.java class="scatours.hotel.HotelImpl"/>
         <service name="Search">
-            <binding.ws uri="http://localhost:8081/HotelComponent/Search"/>
+            <interface.java interface="scatours.common.Search" 
+                    callbackInterface="scatours.common.SearchCallback"/>
+            <binding.ws uri="http://localhost:8081/Hotel/Search"/>
+            <callback>
+                <binding.ws uri="http://localhost:8080/Client/SearchCallback"/>
+            </callback>            
         </service>
     </component> 
+    
+     <component name="Flight">
+        <implementation.java class="scatours.flight.FlightImpl"/>
+        <service name="Search">
+            <interface.java interface="scatours.common.Search" 
+                    callbackInterface="scatours.common.SearchCallback"/>
+            <binding.ws uri="http://localhost:8081/Hotel/SearchConversational"/>
+            <callback>
+                <binding.ws uri="http://localhost:8080/Client/SearchCallbackConversational"/>
+            </callback>            
+        </service>
+    </component>     
    
 </composite>

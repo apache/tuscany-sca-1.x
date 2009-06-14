@@ -67,6 +67,5 @@ public class CartStoreImpl implements CartStore{
     
     public void reset(){ 
         trips.clear();
-    }  
-    
+    }   
 }

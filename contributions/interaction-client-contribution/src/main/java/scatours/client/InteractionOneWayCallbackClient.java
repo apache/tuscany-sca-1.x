@@ -19,7 +19,10 @@
 
 package scatours.client;
 
+import java.util.concurrent.CountDownLatch;
+
 import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
 import scatours.common.Search;
@@ -27,25 +30,36 @@ import scatours.common.SearchCallback;
 import scatours.common.TripItem;
 import scatours.common.TripLeg;
 
+@Scope("COMPOSITE")
 @Service(Runnable.class)
-public class InteractionRemoteClient implements Runnable, SearchCallback{
+public class InteractionOneWayCallbackClient implements Runnable, SearchCallback{
 	
     @Reference
-    protected Search hotelSearchRemote;
+    protected Search hotelSearchOneWayCallback;
+    
+    CountDownLatch resultsReceivedCountdown;
     
     public void run() {
-    	System.out.println("\nCalling hotel component over a remote binding");
+    	System.out.println("\nCalling hotel component using both one way and callback interation patterns");
+    	resultsReceivedCountdown = new CountDownLatch(1);
     	TripLeg tripLeg = getTestTripLeg();
-    	TripItem[] tripItems = hotelSearchRemote.searchSynch(tripLeg);
-    	for (TripItem tripItem : tripItems){
-    		System.out.println("Found hotel - " + tripItem.getName());
-    	}
+    	hotelSearchOneWayCallback.searchAsynch(tripLeg);
+    	
+    	// start other searched here while the hotel search progresses
+    	
+    	// wait for responses to come back
+        try {
+            resultsReceivedCountdown.await();
+        } catch (InterruptedException ex){
+        }
     }
     
     public void searchResults(TripItem[] items){
-        // we are calling the hotel component synchronously here
-    	// so the callback interface is not used
-    }      
+        for (TripItem tripItem : items){
+            System.out.println("Found hotel - " + tripItem.getName());
+        }
+        resultsReceivedCountdown.countDown();
+    }  
     
     public void setPercentComplete(String searchComponent, int percentComplete){
         // Not used in this sample

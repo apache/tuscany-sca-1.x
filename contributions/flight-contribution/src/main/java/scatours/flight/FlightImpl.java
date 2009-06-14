@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osoa.sca.annotations.Callback;
+import org.osoa.sca.annotations.ComponentName;
 import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
@@ -35,7 +36,7 @@ import scatours.common.TripLeg;
 /**
  * An implementation of the Hotel service
  */
-@Scope("STATELESS")
+@Scope("CONVERSATION")
 @Service(interfaces={Search.class, Book.class})
 public class FlightImpl implements Search, Book {
     
@@ -43,6 +44,11 @@ public class FlightImpl implements Search, Book {
     
     @Callback
     protected SearchCallback searchCallback; 
+    
+    @ComponentName
+    protected String componentName;
+    
+    protected int percentComplete = 0;
 
     @Init
     public void init() {
@@ -118,15 +124,24 @@ public class FlightImpl implements Search, Book {
     public void searchAsynch(TripLeg tripLeg) {
     	System.out.println("Starting flight search");
     	
-    	try {
-    		this.wait(3000);
-    	} catch(Exception ex){
-        	// do nothing
+        // pretend that this processing takes some time to complete
+        while ( percentComplete < 100 ){ 
+            try {
+                Thread.sleep(50);
+            } catch(Exception ex){
+                // do nothing
+            }
+            percentComplete = percentComplete + 10;
+            searchCallback.setPercentComplete(componentName, percentComplete);
         }
         
-        // return available hotels
+        // return available flights
         searchCallback.searchResults(searchSynch(tripLeg));  
     }
+    
+    public int getPercentComplete(){
+        return 100;
+    }    
     
     public String book(TripItem tripItem) {
         return "flight1";

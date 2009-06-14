@@ -92,7 +92,7 @@ public class CarImpl implements Search, Book {
     	System.out.println("Starting car search");
     	
     	try {
-    		this.wait(4000);
+    		Thread.sleep(4000);
     	} catch(Exception ex){
         	// do nothing
         }
@@ -101,7 +101,11 @@ public class CarImpl implements Search, Book {
         searchCallback.searchResults(searchSynch(tripLeg));  
     }
     
+    public int getPercentComplete(){
+        return 100;
+    }
+    
     public String book(TripItem tripItem) {
         return "car1";
-    }    
+    } 
 }

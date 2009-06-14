@@ -22,5 +22,6 @@
     <import.java package="calendar"/>
     <import.java package="scatours.common"/>
     <import.java package="scatours.currencyconverter"/>
+    <import.java package="scatours.shoppingcart"/>
     <deployable composite="client:Client" />
 </contribution>

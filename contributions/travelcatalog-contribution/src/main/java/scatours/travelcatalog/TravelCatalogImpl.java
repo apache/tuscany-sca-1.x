@@ -120,5 +120,9 @@ public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
         }
         
         resultsReceivedCountdown.countDown();
-    }    
+    } 
+    
+    public void setPercentComplete(String searchComponent, int percentComplete){
+        // Not used at the moment
+    }
 }

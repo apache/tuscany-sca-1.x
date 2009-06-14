@@ -39,11 +39,13 @@ public class LaunchIntactionNode {
                 new SCAContribution("common", "../../contributions/common-contribution/target/classes"),
                 new SCAContribution("currency", "../../contributions/currency-contribution/target/classes"),
                 new SCAContribution("calendar", "../../contributions/calendar-contribution/target/classes"),
+                new SCAContribution("shoppingcart", "../../contributions/shoppingcart-contribution/target/classes"),
                 new SCAContribution("client", "../../contributions/interaction-client-contribution/target/classes"));
         	
         	SCANode node2 = SCANodeFactory.newInstance().createSCANode("client.composite", 
                     new SCAContribution("common", "../../contributions/common-contribution/target/classes"),
                     new SCAContribution("hotel", "../../contributions/hotel-contribution/target/classes"),
+                    new SCAContribution("flight", "../../contributions/flight-contribution/target/classes"),
                     new SCAContribution("remoteService", "../../contributions/interaction-service-remote-contribution/target/classes"));
 
         	node2.start();
@@ -57,6 +59,15 @@ public class LaunchIntactionNode {
             
             Runnable requestResponseInteraction = ((SCAClient)node1).getService(Runnable.class, "InteractionRequestResponseClient/Runnable");
             requestResponseInteraction.run();
+            
+            Runnable onewayCallbackInteraction = ((SCAClient)node1).getService(Runnable.class, "InteractionOneWayCallbackClient/Runnable");
+            onewayCallbackInteraction.run();
+            
+            Runnable conversationalInteraction = ((SCAClient)node1).getService(Runnable.class, "InteractionConversationClient/Runnable");
+            conversationalInteraction.run();
+            
+            Runnable statefulCallbackInteraction = ((SCAClient)node1).getService(Runnable.class, "InteractionStatefulCallbackClient/Runnable");
+            statefulCallbackInteraction.run();            
             
             node1.stop();
             node2.stop();
