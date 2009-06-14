@@ -25,10 +25,10 @@
     <component name="InteractionLocalClient">
         <implementation.java class="scatours.client.InteractionLocalClient" />
         <reference name="calendarLocal" 
-                   target="CalendarComponent"/>
+                   target="Calendar"/>
      </component>
      
-    <component name="CalendarComponent">
+    <component name="Calendar">
 		<implementation.java class="calendar.CalendarImpl"/>
     </component> 
     

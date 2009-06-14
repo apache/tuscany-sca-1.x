@@ -115,7 +115,8 @@ public class HotelImpl implements Search, Book, HotelManagement {
         }
     	
         // return available hotels
-        searchCallback.searchResults(searchSynch(tripLeg));  
+        TripItem[] items = searchSynch(tripLeg);
+        searchCallback.searchResults(items);  
     }
     
     public int getPercentComplete(){
