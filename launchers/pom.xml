@@ -48,6 +48,7 @@
                 <module>fullapp-launcher</module>
                 <module>notification-ws-launcher</module>
                 <module>notification-corba-launcher</module>
+                <module>notification-rmi-launcher</module>
             </modules>
         </profile>
 
