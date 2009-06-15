@@ -64,6 +64,7 @@
                 <module>notification-contribution</module>
                 <module>notification-ws-contribution</module>
                 <module>notification-corba-contribution</module>
+                <module>notification-ejb-contribution</module>
                 <module>notification-rmi-contribution</module>
                 <module>shoppingcart-contribution</module>   
                 <module>travelcatalog-contribution</module>         

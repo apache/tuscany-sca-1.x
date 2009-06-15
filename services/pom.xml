@@ -40,6 +40,7 @@
                 <module>creditcard-payment-jaxws-service</module>
                 <module>smsgateway-jaxws-service</module>
                 <module>smsgateway-corba-service</module>
+                <module>smsgateway-ejb-service</module>
                 <module>smsgateway-rmi-service</module>
             </modules>
         </profile>
