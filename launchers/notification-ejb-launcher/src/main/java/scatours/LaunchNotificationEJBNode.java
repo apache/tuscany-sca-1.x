@@ -20,7 +20,6 @@
 package scatours;
 
 import javax.naming.Context;
-import javax.naming.InitialContext;
 
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
