@@ -29,7 +29,8 @@
         <reference name="hotelSearch">
             <binding.ws uri="http://localhost:8086/Hotel/Search"/>
             <callback>
-                <binding.ws uri="http://localhost:8084/Hotel/SearchCallback"/>
+                <binding.ws name="callback"
+                            uri="http://localhost:8084/Hotel/SearchCallback"/>
             </callback>
         </reference>
         <reference name="flightSearch">
@@ -37,19 +38,22 @@
                             callbackInterface="scatours.common.SearchCallback"/>
             <binding.ws uri="http://localhost:8086/Flight/Search"/>
             <callback>
-                <binding.ws uri="http://localhost:8084/Flight/SearchCallback"/>
+                <binding.ws name="callback"
+                            uri="http://localhost:8084/Flight/SearchCallback"/>
             </callback>
         </reference> 
         <reference name="carSearch">
             <binding.ws uri="http://localhost:8086/Car/Search"/>
             <callback>
-                <binding.ws uri="http://localhost:8084/Car/SearchCallback"/>
+                <binding.ws name="callback"
+                            uri="http://localhost:8084/Car/SearchCallback"/>
             </callback>
         </reference>    
         <reference name="tripSearch">
             <binding.ws uri="http://localhost:8085/Trip/Search"/>
             <callback>
-                <binding.ws uri="http://localhost:8084/Trip/SearchCallback"/>
+                <binding.ws name="callback"
+                            uri="http://localhost:8084/Trip/SearchCallback"/>
             </callback>
         </reference>     
         <reference name="currencyConverter" target="CurrencyConverterComponent">
