@@ -23,10 +23,10 @@
 	name="WebResource">
 
     <component name="myWeb">
-       <tuscany:implementation.resource location="myContent"/>
+        <tuscany:implementation.resource location="myContent"/>
         <service name="Resource">
             <tuscany:binding.http/>
         </service>
-    </component>      
+    </component>
 
 </composite>
