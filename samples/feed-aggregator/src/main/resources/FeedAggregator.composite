@@ -18,43 +18,44 @@
     * under the License.    
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-	xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-	targetNamespace="http://aggregator"
+    xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
+    targetNamespace="http://aggregator"
     name="FeedAggregator">
 
-	<service name="rssSample" promote="RssAggregator">
-		<tuscany:binding.atom uri="http://localhost:8083/rssAggregator"/>
-	</service>
-	<service name="atomSample" promote="AtomAggregator">
-		<tuscany:binding.atom  uri="http://localhost:8083/atomAggregator"/>
-	</service>	
+    <service name="rssSample" promote="RssAggregator">
+        <tuscany:binding.atom uri="http://localhost:8083/rssAggregator"/>
+    </service>
+    <service name="atomSample" promote="AtomAggregator">
+        <tuscany:binding.atom  uri="http://localhost:8083/atomAggregator"/>
+    </service>
 
     <component name="RssAggregator">
-        <implementation.java class="feed.AggregatorImpl"/>             
-		<reference name="rssFeed1">
-   	 		<tuscany:binding.rss uri="http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/world/rss.xml"/>
-   		</reference>
-   		<reference name="rssFeed2"> 	
-   	 		<tuscany:binding.rss uri="http://www.engadget.com/rss.xml"/>
-   		</reference>
-   		<reference name="sort" target="Sort"/> 	 		
-        <property name="feedTitle">RSS Aggregator Sample</property> 
+        <implementation.java class="feed.AggregatorImpl"/>
+        <reference name="rssFeed1">
+            <tuscany:binding.rss uri="http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/world/rss.xml"/>
+        </reference>
+        <reference name="rssFeed2">
+            <tuscany:binding.rss uri="http://www.engadget.com/rss.xml"/>
+        </reference>
+        <reference name="sort" target="Sort"/>
+        <property name="feedTitle">RSS Aggregator Sample</property>
     </component>
+
     <component name="Sort">
-        <implementation.java class="feed.SortImpl"/>       
-        <property name="newFirst">true</property> 
-    </component>    
+        <implementation.java class="feed.SortImpl"/>
+        <property name="newFirst">true</property>
+    </component>
     
     <component name="AtomAggregator">
-        <implementation.java class="feed.AggregatorImpl"/>        
-        <reference name="sort" target="Sort"/>          
-		<reference name="atomFeed1">
-   	 		<tuscany:binding.atom uri="http://apache-tuscany.blogspot.com/feeds/posts/default"/>
-   		</reference>
-   		<reference name="atomFeed2"> 	
-   	 		<tuscany:binding.atom uri="http://feeds.feedburner.com/blogspot/Dcni?format=xml"/>
-   		</reference>
-        <property name="feedTitle">Atom Aggregator Sample</property>    		           
-    </component>      
+        <implementation.java class="feed.AggregatorImpl"/>
+        <reference name="sort" target="Sort"/>
+        <reference name="atomFeed1">
+            <tuscany:binding.atom uri="http://apache-tuscany.blogspot.com/feeds/posts/default"/>
+        </reference>
+        <reference name="atomFeed2">
+            <tuscany:binding.atom uri="http://feeds.feedburner.com/blogspot/Dcni?format=xml"/>
+        </reference>
+        <property name="feedTitle">Atom Aggregator Sample</property>
+    </component>
 
 </composite>
