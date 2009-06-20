@@ -47,7 +47,6 @@ import org.junit.Test;
  */
 public class ProviderEntryEntityTagsTestCase {
 	public final static String providerURI = "http://localhost:8084/customer";
-	protected static SCADomain scaConsumerDomain;
 	protected static SCADomain scaProviderDomain;
 	protected static CustomerClient testService;
     protected static Abdera abdera;
@@ -66,11 +65,13 @@ public class ProviderEntryEntityTagsTestCase {
 		abderaParser = Abdera.getNewParser();
 	}
 
-	@AfterClass
-	public static void destroy() throws Exception {
-		System.out.println(">>>ProviderEntryEntityTagsTestCase.destroy");
-		scaProviderDomain.close();
-	}
+    @AfterClass
+    public static void destroy() throws Exception {
+        System.out.println(">>>ProviderEntryEntityTagsTestCase.destroy");
+        if (scaProviderDomain != null) {
+            scaProviderDomain.close();
+        }
+    }
 
 	@Test
 	public void testPrelim() throws Exception {

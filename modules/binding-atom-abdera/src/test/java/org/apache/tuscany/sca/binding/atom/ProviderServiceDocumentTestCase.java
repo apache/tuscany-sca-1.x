@@ -65,10 +65,12 @@ public class ProviderServiceDocumentTestCase {
 		abderaParser = Abdera.getNewParser();
 	}
 
-	@AfterClass
-	public static void destroy() throws Exception {
-		scaProviderDomain.close();
-	}
+    @AfterClass
+    public static void destroy() throws Exception {
+        if (scaProviderDomain != null) {
+            scaProviderDomain.close();
+        }
+    }
 
 	@Test
 	public void testPrelim() throws Exception {
