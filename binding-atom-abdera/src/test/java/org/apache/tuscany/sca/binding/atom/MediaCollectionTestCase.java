@@ -51,7 +51,6 @@ import org.junit.Test;
  */
 public class MediaCollectionTestCase {
 	public final static String providerURI = "http://localhost:8084/receipt";
-	protected static SCADomain scaConsumerDomain;
 	protected static SCADomain scaProviderDomain;
 	protected static CustomerClient testService;
     protected static Abdera abdera;
@@ -71,11 +70,13 @@ public class MediaCollectionTestCase {
 		abderaParser = Abdera.getNewParser();
 	}
 
-	@AfterClass
-	public static void destroy() throws Exception {
-		System.out.println(">>>MediaCollectionTestCase.destroy");
-		scaProviderDomain.close();
-	}
+    @AfterClass
+    public static void destroy() throws Exception {
+        System.out.println(">>>MediaCollectionTestCase.destroy");
+        if (scaProviderDomain != null) {
+            scaProviderDomain.close();
+        }
+    }
 
 	@Test
 	public void testPrelim() throws Exception {

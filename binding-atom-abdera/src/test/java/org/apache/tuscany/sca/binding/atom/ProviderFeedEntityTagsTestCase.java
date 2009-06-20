@@ -53,7 +53,6 @@ import org.junit.Test;
  */
 public class ProviderFeedEntityTagsTestCase {
 	public final static String providerURI = "http://localhost:8084/customer";
-	protected static SCADomain scaConsumerDomain;
 	protected static SCADomain scaProviderDomain;
 	protected static CustomerClient testService;
     protected static Abdera abdera;
@@ -72,11 +71,13 @@ public class ProviderFeedEntityTagsTestCase {
 		abderaParser = Abdera.getNewParser();
 	}
 
-	@AfterClass
-	public static void destroy() throws Exception {
-		System.out.println(">>>ProviderFeedEntityTagsTestCase.destroy");
-		scaProviderDomain.close();
-	}
+    @AfterClass
+    public static void destroy() throws Exception {
+        System.out.println(">>>ProviderFeedEntityTagsTestCase.destroy");
+        if (scaProviderDomain != null) {
+            scaProviderDomain.close();
+        }
+    }
 
 	@Test
 	public void testPrelim() throws Exception {

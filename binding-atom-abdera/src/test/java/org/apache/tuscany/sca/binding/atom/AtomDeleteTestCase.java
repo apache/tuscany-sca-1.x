@@ -49,8 +49,12 @@ public class AtomDeleteTestCase {
     @AfterClass
     public static void destroy() throws Exception {
         // System.out.println(">>>AtomDeleteTestCase.destroy entry");
-        scaConsumerDomain.close();
-        scaProviderDomain.close();
+        if (scaConsumerDomain != null) {
+            scaConsumerDomain.close();
+        }
+        if (scaProviderDomain != null) {
+            scaProviderDomain.close();
+        }
     }
 
     @Test
