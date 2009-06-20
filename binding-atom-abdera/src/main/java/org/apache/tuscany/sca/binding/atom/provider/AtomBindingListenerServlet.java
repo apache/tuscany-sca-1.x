@@ -95,6 +95,7 @@ class AtomBindingListenerServlet extends HttpServlet {
     private Invoker deleteInvoker;
     private MessageFactory messageFactory;
     private String title;
+    private String description;
     private Mediator mediator;
     private DataType<?> itemClassType;
     private DataType<?> itemXMLType;
@@ -107,11 +108,12 @@ class AtomBindingListenerServlet extends HttpServlet {
      * @param messageFactory
      * @param feedType
      */
-    AtomBindingListenerServlet(RuntimeWire wire, MessageFactory messageFactory, Mediator mediator, String title) {
+    AtomBindingListenerServlet(RuntimeWire wire, MessageFactory messageFactory, Mediator mediator, String title, String description) {
         this.wire = wire;
         this.messageFactory = messageFactory;
         this.mediator = mediator;
         this.title = title;
+        this.description = description;
 
         // Get the invokers for the supported operations
         Operation getOperation = null;
@@ -514,6 +516,9 @@ class AtomBindingListenerServlet extends HttpServlet {
                     feed.setTitle(title);
                 } else {
                     feed.setTitle("Feed");
+                }
+                if (description != null) {
+                    feed.setSubtitle(description);
                 }
                 // All feeds must provide Id and updated elements.
                 // However, some do not, so provide some program protection.

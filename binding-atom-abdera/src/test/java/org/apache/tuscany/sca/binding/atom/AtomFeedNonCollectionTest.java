@@ -182,4 +182,21 @@ public class AtomFeedNonCollectionTest {
         // Validate the title
         Assert.assertEquals(expectedFeedTitle, feedTitle);
     }
+
+    /**
+     * Tests that the description of the feed can be set by the description
+     * attribute on the binding.atom
+     */
+    @Test
+    public void testThatFeedDescriptionSet() {
+        final String expectedFeedDescription = "Feed used for unit testing";
+
+        // Get the description of the feed
+        final Collection resourceCollection = testService.getCustomerCollection();
+        Assert.assertNotNull(resourceCollection);
+        final String feedDescription = resourceCollection.getFeed().getSubtitle();
+
+        // Validate the description
+        Assert.assertEquals(expectedFeedDescription, feedDescription);
+    }
 }

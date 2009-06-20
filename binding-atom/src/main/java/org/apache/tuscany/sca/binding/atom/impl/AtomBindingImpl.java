@@ -42,6 +42,7 @@ class AtomBindingImpl implements AtomBinding, PolicySetAttachPoint {
     private String name;
     private String uri;
     private String title;
+    private String description;
     private List<Intent> requiredIntents = new ArrayList<Intent>();
     private List<PolicySet> policySets = new ArrayList<PolicySet>();
     private IntentAttachPointType intentAttachPointType;
@@ -69,6 +70,20 @@ class AtomBindingImpl implements AtomBinding, PolicySetAttachPoint {
     
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isUnresolved() {

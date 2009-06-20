@@ -39,5 +39,18 @@ public interface AtomBinding extends Binding {
      * @param title
      */
     void setTitle(String title);
-    
+
+    /**
+     * Returns the description of the Atom collection.
+     * 
+     * @return The description of the Atom collection
+     */
+    String getDescription();
+
+    /**
+     * Sets the description of the Atom collection.
+     * 
+     * @param description The description of the Atom collection
+     */
+    void setDescription(String description);
 }
