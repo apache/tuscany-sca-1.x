@@ -35,7 +35,7 @@ As this point the aggregated Feeds are exposed by a web server started
 automatically by the SCA runtime. You can later stop the server by pressing enter.
 
 Now that the server is started you can point your Web browser to each URL of the
-aggregated feeds to see the information in your broswer. These URLs are:
+aggregated feeds to see the information in your browser. These URLs are:
 
 http://localhost:8083/atomAggregator
 http://localhost:8083/atomAggregator/atomsvc 
@@ -43,7 +43,7 @@ http://localhost:8083/rssAggregator
 
 ** Please note that if your browser is not configured correctly to receive
 feed information, you will be prompted to open each file that contains the feed
-information in xml.
+information in XML.
 
 Sample Overview
 ---------------
@@ -56,8 +56,8 @@ web-resource/
         feed/
           AggregatorImpl.java             - implementation of the Feed
                                             aggregator component
-          Sort.java						  - utilty interface 
-          SortImpl.java					  - implementation of the Sort component
+          Sort.java                       - utility interface 
+          SortImpl.java                   - implementation of the Sort component
         launch
           LaunchFeedServer.java           - starts the SCA Runtime and 
                                             publishes the aggregated feeds
