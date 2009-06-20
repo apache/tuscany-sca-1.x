@@ -22,9 +22,10 @@
 	   targetNamespace = "http://customer"
 	   name="ProviderNonCollection">
 
-	<service name="customer" promote="CustomerCollection">
-		<tuscany:binding.atom uri = "http://localhost:8084/customer" title="Atom binding Non Collection"/>
-	</service>
+    <service name="customer" promote="CustomerCollection">
+        <tuscany:binding.atom uri = "http://localhost:8084/customer"
+            title="Atom binding Non Collection" description="Feed used for unit testing"/>
+    </service>
 	
     <component name="CustomerCollection">
         <implementation.java class="org.apache.tuscany.sca.binding.atom.CustomerNonCollectionImpl"/>
