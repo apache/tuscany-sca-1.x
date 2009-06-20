@@ -37,6 +37,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>blog-feed-launcher</module>
                 <module>currency-converter-launcher</module>
                 <module>currency-converter-corba-launcher</module>
                 <module>currency-converter-rmi-launcher</module>

@@ -37,6 +37,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>blog-feed-contribution/</module>
                 <module>calendar-contribution</module>
                 <module>car-contribution</module>
                 <module>common-contribution</module>
