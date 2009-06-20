@@ -100,7 +100,7 @@ public class FeedAggregatorTestCase {
         ClientResponse res = client.get(providerURI, opts);
         Assert.assertNotNull(res);
         try {
-            // Asser feed provided since no predicates
+            // Assert feed provided since no predicates
             Assert.assertEquals(200, res.getStatus());
             Assert.assertEquals(ResponseType.SUCCESS, res.getType());
             // AtomTestCaseUtils.printResponseHeaders( "Feed response headers:",
