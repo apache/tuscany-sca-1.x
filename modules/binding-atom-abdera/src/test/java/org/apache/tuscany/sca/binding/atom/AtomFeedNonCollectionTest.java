@@ -30,7 +30,9 @@ import org.apache.tuscany.sca.binding.atom.collection.Collection;
 import org.apache.tuscany.sca.data.collection.Entry;
 import org.apache.tuscany.sca.data.collection.Item;
 import org.apache.tuscany.sca.host.embedded.SCADomain;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -90,11 +92,28 @@ public class AtomFeedNonCollectionTest {
     /**
      * Make sure everything has been initialised correctly.
      */
-    @Test
+    @Before
     public void testPrelim() {
         Assert.assertNotNull(scaProviderDomain);
         Assert.assertNotNull(scaConsumerDomain);
         Assert.assertNotNull(testService);
+
+        // Add some entries to the Atom feed
+        final Entry<Object, Object>[] testEntries = new Entry[FEED_ENTRY_COUNT];
+        for (int i = 0; i < FEED_ENTRY_COUNT; i++) {
+            testEntries[i] = createFeedEntry(FEED_ENTRY_TITLES[i], FEED_ENTRY_CONTENT[i], FEED_ENTRY_LINK[i]);
+        }
+        CustomerNonCollectionImpl.entries = testEntries;
+    }
+
+    /**
+     * Post test cleanup
+     */
+    @After
+    public void testPostCleanup()
+    {
+        // Clear any old feed entries that have been added by previous tests
+        CustomerNonCollectionImpl.entries = null;
     }
 
     /**
@@ -103,13 +122,6 @@ public class AtomFeedNonCollectionTest {
      */
     @Test
     public void testThatCanGetFeedEntriesFromNonCollectionImplementation() {
-        // Add some entries to the Atom feed
-        final Entry<Object, Object>[] testEntries = new Entry[FEED_ENTRY_COUNT];
-        for (int i = 0; i < FEED_ENTRY_COUNT; i++) {
-            testEntries[i] = createFeedEntry(FEED_ENTRY_TITLES[i], FEED_ENTRY_CONTENT[i], FEED_ENTRY_LINK[i]);
-        }
-        CustomerNonCollectionImpl.entries = testEntries;
-
         // Get the entries from the feed
         final Collection resourceCollection = testService.getCustomerCollection();
         Assert.assertNotNull(resourceCollection);
@@ -152,5 +164,22 @@ public class AtomFeedNonCollectionTest {
      */
     private String nextFeedID() {
         return Integer.toString(ID_GEN.incrementAndGet());
+    }
+
+    /**
+     * Tests that the title of the feed can be set by the title
+     * attribute on the binding.atom
+     */
+    @Test
+    public void testThatFeedTitleSet() {
+        final String expectedFeedTitle = "Atom binding Non Collection";
+
+        // Get the title of the feed
+        final Collection resourceCollection = testService.getCustomerCollection();
+        Assert.assertNotNull(resourceCollection);
+        final String feedTitle = resourceCollection.getFeed().getTitle();
+
+        // Validate the title
+        Assert.assertEquals(expectedFeedTitle, feedTitle);
     }
 }
