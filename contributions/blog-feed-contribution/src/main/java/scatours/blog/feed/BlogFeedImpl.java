@@ -71,15 +71,25 @@ public class BlogFeedImpl implements org.apache.tuscany.sca.binding.atom.collect
 
         // Create a sample entry
         final Entry entry = factory.newEntry();
-        entry.setId(Integer.toString(ID_GEN.incrementAndGet()));
+        entry.setId(nextBlogID());
         entry.addAuthor(FEED_AUTHOR);
-        entry.setTitle("Apache Tuscay in Action book features SCA Tours");
+        entry.setTitle("Apache Tuscany in Action book features SCA Tours");
         entry.setContentAsHtml("We are famous as SCA Tours has been featured in the Apache Tuscany in Action book published by Manning");
         entry.setUpdated(new Date());
         entry.addLink("http://www.manning.com/laws/");
         feed.addEntry(entry);
 
         return feed;
+    }
+
+    /**
+     * Generates the next blog entry ID.
+     * 
+     * @return Next blog entry ID
+     */
+    private String nextBlogID()
+    {
+        return Integer.toString(ID_GEN.incrementAndGet());
     }
 
     /**
