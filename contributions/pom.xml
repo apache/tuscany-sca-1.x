@@ -55,6 +55,7 @@
                 <module>fullapp-packagedtrip-contribution</module>
                 <module>fullapp-bespoketrip-contribution</module>
                 <module>fullapp-shoppingcart-contribution</module>
+                <module>help-pages-contribution</module>
                 <module>hotel-contribution</module>
                 <module>interaction-client-contribution</module>
                 <module>interaction-service-remote-contribution</module>

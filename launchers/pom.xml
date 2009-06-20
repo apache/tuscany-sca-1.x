@@ -46,6 +46,7 @@
                 <module>introducing-launcher</module>
                 <module>jumpstart-launcher</module>
                 <module>fullapp-launcher</module>
+                <module>help-pages-launcher</module>
                 <module>notification-ws-launcher</module>
                 <module>notification-corba-launcher</module>
                 <module>notification-ejb-launcher</module>
