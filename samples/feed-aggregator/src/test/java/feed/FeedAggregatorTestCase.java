@@ -142,8 +142,7 @@ public class FeedAggregatorTestCase {
         }
     }
 
-    //@Test
-    @Ignore("TUSCANY-2937")
+    @Test
     public void testUnmodifiedGetIfModified() throws Exception {
         System.out.println(">>>FeedAggregatorTest.testFeedUnmodifiedGetIfModified");
         // Feed request with predicates
