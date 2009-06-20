@@ -33,7 +33,7 @@
             <binding.ws uri="http://localhost:8082/CreditCardPayment"/>
         </reference>
         <reference name="emailGateway" target="EmailGatewayComponent"/>
-        <property name="transactionFeeRate">0.02</property>
+        <property name="transactionFee">0.02</property>
     </component>
         
     <component name="CustomerRegistryComponent">

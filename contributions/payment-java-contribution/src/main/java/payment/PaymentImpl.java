@@ -54,7 +54,7 @@ public class PaymentImpl implements Payment {
     protected EmailGateway emailGateway;
 
     @Property
-    protected float transactionFeeRate = 0.01f;
+    protected float transactionFee = 0.01f;
 
     public String makePaymentMember(String customerId, float amount) {
         Customer customer = null;
@@ -68,10 +68,12 @@ public class PaymentImpl implements Payment {
         }
 
         CreditCardDetailsType ccDetails = customer.getCreditCard();
+        
+        float total = amount + transactionFee;
 
         String status;
         try {
-            status = creditCardPayment.authorize(ccDetails, amount);
+            status = creditCardPayment.authorize(ccDetails, total);
         } catch (AuthorizeFault_Exception e) {
             status = e.getFaultInfo().getErrorCode();
         }
