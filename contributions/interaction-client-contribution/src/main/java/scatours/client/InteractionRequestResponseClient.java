@@ -35,8 +35,8 @@ public class InteractionRequestResponseClient implements Runnable {
 
     public void run() {   	
     	System.out.println("\nCalling currency converter component using request response interation pattern");
-    	double convertedAmount = currencyConverterRequestResponse.convert("GBP", "USD", 10.0);
-    	System.out.println("10 GBP = " + convertedAmount + " USD");
+    	double exchangeRate = currencyConverterRequestResponse.getExchangeRate("GBP", "USD");
+    	System.out.println("GBP to USD exchange rate is " + exchangeRate);
     }
     
 }
