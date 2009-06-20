@@ -20,10 +20,10 @@
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
            xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
 	   targetNamespace = "http://customer"
-	   name="Provider">
+	   name="ProviderNonCollection">
 
 	<service name="customer" promote="CustomerCollection">
-		<tuscany:binding.atom uri = "http://localhost:8084/customer"/>
+		<tuscany:binding.atom uri = "http://localhost:8084/customer" title="Atom binding Non Collection"/>
 	</service>
 	
     <component name="CustomerCollection">
