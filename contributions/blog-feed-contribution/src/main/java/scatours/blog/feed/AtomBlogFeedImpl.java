@@ -19,77 +19,49 @@
 
 package scatours.blog.feed;
 
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.List;
 
 import org.apache.abdera.Abdera;
 import org.apache.abdera.factory.Factory;
 import org.apache.abdera.model.Entry;
 import org.apache.abdera.model.Feed;
-import org.apache.abdera.model.Person;
 import org.apache.tuscany.sca.binding.atom.collection.NotFoundException;
 
-public class BlogFeedImpl implements org.apache.tuscany.sca.binding.atom.collection.Collection {
+import scatours.blog.BlogPost;
+
+/**
+ * An Atom feed that implements the org.apache.tuscany.sca.binding.atom.collection.Collection
+ * interface and uses the Atom APIs to construct the Atom feed.
+ */
+public class AtomBlogFeedImpl extends BaseBlogFeedImpl implements org.apache.tuscany.sca.binding.atom.collection.Collection {
 
     /**
-     * Title of the blog.feed.
-     */
-    private static final String FEED_TITLE = "Tuscany SCA Tours Blog Feed";
-
-    /**
-     * Description of the blog feed.
-     */
-    private static final String FEED_DESCRIPTION = "Feed contianing the latest blog posts from Tuscany SCA Tours";
-
-    /**
-     * Author of the blog feed.
-     */
-    private static final String FEED_AUTHOR = "SCA Tours CEO";
-
-    /**
-     * Used to generate unique IDs for the blog entries.
-     */
-    private static final AtomicInteger ID_GEN = new AtomicInteger();
-
-    /**
-     * Gets a feed containing all the blog posts.
+     * Gets an Atom feed containing all the blog posts.
      * 
-     * @return A feed containing all the blog posts.
+     * @return An Atom feed containing all the blog posts.
      */
     public Feed getFeed() {
+        // Create SCA Tours blog Atom feed
         final Factory factory = Abdera.getNewFactory();
-
-        // Create SCA Tours blog feed
         final Feed feed = factory.newFeed();
         feed.setTitle(FEED_TITLE);
         feed.setSubtitle(FEED_DESCRIPTION);
+        feed.addAuthor(FEED_AUTHOR);
 
-        // Create blog author
-        final Person author = factory.newAuthor();
-        author.setName(FEED_AUTHOR);
-        feed.addAuthor(author);
-
-        // Create a sample entry
-        final Entry entry = factory.newEntry();
-        entry.setId(nextBlogID());
-        entry.addAuthor(FEED_AUTHOR);
-        entry.setTitle("Apache Tuscany in Action book features SCA Tours");
-        entry.setContentAsHtml("We are famous as SCA Tours has been featured in the Apache Tuscany in Action book published by Manning");
-        entry.setUpdated(new Date());
-        entry.addLink("http://www.manning.com/laws/");
-        feed.addEntry(entry);
+        // Get all blog posts and convert to Atom entries
+        final List<BlogPost> blogEntries = getAllBlogPosts();
+        for (BlogPost blogEntry : blogEntries) {
+            final Entry entry = factory.newEntry();
+            entry.setId(nextBlogID());
+            entry.addAuthor(blogEntry.getAuthor());
+            entry.setTitle(blogEntry.getTitle());
+            entry.setContentAsHtml(blogEntry.getContent());
+            entry.setUpdated(blogEntry.getUpdated());
+            entry.addLink(blogEntry.getLink());
+            feed.addEntry(entry);
+        }
 
         return feed;
-    }
-
-    /**
-     * Generates the next blog entry ID.
-     * 
-     * @return Next blog entry ID
-     */
-    private String nextBlogID()
-    {
-        return Integer.toString(ID_GEN.incrementAndGet());
     }
 
     /**

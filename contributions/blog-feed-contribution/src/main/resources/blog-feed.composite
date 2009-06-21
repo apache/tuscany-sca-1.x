@@ -22,16 +22,38 @@
     targetNamespace="http://goodvaluetrips.com/"
     name="blog-feed">
 
-    <service name="BlogRSS" promote="Blog">
-        <tuscany:binding.atom uri="http://localhost:8090/BlogRSS"/>
+
+    <!-- Example that shows using the Tuscany Data APIs to create a feed that -->
+    <!-- is independent of the Feed API -->
+    <service name="BlogAtom" promote="BlogFeed">
+        <tuscany:binding.atom uri="http://localhost:8090/BlogAtom"/>
     </service>
 
-    <service name="BlogAtom" promote="Blog">
-        <tuscany:binding.atom  uri="http://localhost:8090/BlogAtom"/>
+    <service name="BlogRSS" promote="BlogFeed">
+        <tuscany:binding.rss uri="http://localhost:8090/BlogRSS"/>
     </service>
 
-    <component name="Blog">
-        <implementation.java class="scatours.blog.feed.BlogFeedImpl"/>
+    <component name="BlogFeed">
+        <implementation.java class="scatours.blog.feed.GenericBlogFeedImpl"/>
     </component>
 
+    <!-- Example that shows using the Atom Collections API to create a feed that -->
+    <!-- uses the Atom APIs -->
+    <service name="BlogAtomAPIs" promote="BlogAtom">
+        <tuscany:binding.atom uri="http://localhost:8090/BlogAtomAPIs"/>
+    </service>
+
+    <component name="BlogAtom">
+        <implementation.java class="scatours.blog.feed.AtomBlogFeedImpl"/>
+    </component>
+
+    <!-- Example that shows using the RSS Collections API to create a feed that -->
+    <!-- uses the RSS APIs -->
+    <service name="BlogRSSAPIs" promote="BlogRSS">
+        <tuscany:binding.rss uri="http://localhost:8090/BlogRSSAPIs"/>
+    </service>
+
+    <component name="BlogRSS">
+        <implementation.java class="scatours.blog.feed.RSSBlogFeedImpl"/>
+    </component>
 </composite>
