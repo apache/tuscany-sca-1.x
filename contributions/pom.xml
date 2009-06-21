@@ -49,6 +49,7 @@
                 <module>currency-ws-contribution</module>
                 <module>databinding-client-contribution</module>
                 <module>emailgateway-contribution</module>
+                <module>feed-logger-contribution</module>
                 <module>flight-contribution</module>
                 <module>fullapp-ui-contribution</module>
                 <module>fullapp-frontend-contribution</module>

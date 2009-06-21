@@ -43,6 +43,7 @@
                 <module>currency-converter-rmi-launcher</module>
                 <module>currency-converter-ws-launcher</module>
                 <module>databinding-launcher</module>
+                <module>feed-logger-launcher</module>
                 <module>interaction-launcher</module>
                 <module>introducing-launcher</module>
                 <module>jumpstart-launcher</module>
