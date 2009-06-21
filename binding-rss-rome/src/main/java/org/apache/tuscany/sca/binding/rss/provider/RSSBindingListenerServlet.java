@@ -234,6 +234,7 @@ class RSSBindingListenerServlet extends HttpServlet {
             link.setRel("alternate");
             link.setHref(href);
             feedEntry.getLinks().add(link);
+            feedEntry.setLink(href);
     
             Date date = item.getDate();
             if (date == null) {
