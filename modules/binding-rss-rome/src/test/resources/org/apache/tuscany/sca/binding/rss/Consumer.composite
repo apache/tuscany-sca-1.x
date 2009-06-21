@@ -19,15 +19,14 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
            xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-	   targetNamespace = "http://customer"
-	   name="Provider">
-
-	<service name="customer" promote="CustomerCollection">
-		<tuscany:binding.rss uri = "http://localhost:8084/customer"/>
-	</service>
-	
-    <component name="CustomerCollection">
-        <implementation.java class="org.apache.tuscany.sca.binding.feed.CustomerCollectionImpl"/>
+	   targetNamespace="http://customer"
+	   name="Consumer">
+    
+    <component name="CustomerClient">
+        <implementation.java class="org.apache.tuscany.sca.binding.rss.CustomerClientImpl"/>
+        <reference name="resourceCollection">
+        	<tuscany:binding.rss uri="http://localhost:8084/customer"/>
+        </reference>
     </component>
 
 </composite>
