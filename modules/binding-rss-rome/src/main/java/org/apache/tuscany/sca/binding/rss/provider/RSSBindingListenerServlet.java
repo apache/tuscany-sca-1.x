@@ -168,6 +168,7 @@ class RSSBindingListenerServlet extends HttpServlet {
                     // Create the feed
                     feed = new SyndFeedImpl();
                     feed.setTitle("Feed");
+                    feed.setDescription("Feed description");
                     
                     for (org.apache.tuscany.sca.data.collection.Entry<Object, Object> entry: collection) {
                         SyndEntry feedEntry = createFeedEntry(entry);
