@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.tuscany.sca.binding.rss.collection.Collection;
+import org.apache.tuscany.sca.binding.rss.collection.NotFoundException;
 import org.osoa.sca.annotations.Scope;
 
 import com.sun.syndication.feed.synd.SyndContent;
@@ -98,5 +99,16 @@ public class CustomerCollectionImpl implements Collection {
         feed.getEntries().addAll(entries.values());
         return feed;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public SyndEntry get(String id) throws NotFoundException {
+        final SyndEntry entry = entries.get(id);
+        if (id == null) {
+            throw new NotFoundException("No entry found with ID " + id);
+        }
 
+        return entry;
+    }
 }
