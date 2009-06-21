@@ -108,16 +108,17 @@ class RSSBindingListenerServlet extends HttpServlet {
         }
 
         // Determine the collection item type
-        itemXMLType = new DataTypeImpl<Class<?>>(String.class.getName(), String.class, String.class);
-        Class<?> itemClass = getOperation.getOutputType().getPhysical();
-        if (itemClass == SyndEntry.class) {
-            supportsFeedEntries = true;
+        if (getOperation != null) {
+            itemXMLType = new DataTypeImpl<Class<?>>(String.class.getName(), String.class, String.class);
+            Class<?> itemClass = getOperation.getOutputType().getPhysical();
+            if (itemClass == SyndEntry.class) {
+                supportsFeedEntries = true;
+            }
+            DataType<XMLType> outputType = getOperation.getOutputType();
+            QName qname = outputType.getLogical().getElementName();
+            qname = new QName(qname.getNamespaceURI(), itemClass.getSimpleName());
+            itemClassType = new DataTypeImpl<XMLType>("java:complexType", itemClass, new XMLType(qname, null));
         }
-        DataType<XMLType> outputType = getOperation.getOutputType();
-        QName qname = outputType.getLogical().getElementName();
-        qname = new QName(qname.getNamespaceURI(), itemClass.getSimpleName());
-        itemClassType = new DataTypeImpl<XMLType>("java:complexType", itemClass, new XMLType(qname, null));
-        
     }
 
     @Override
@@ -196,7 +197,7 @@ class RSSBindingListenerServlet extends HttpServlet {
     }
 
     /**
-     * Create an Atom entry from a data collection entry.
+     * Create an RSS entry from a data collection entry.
      * @param entry 
      * @return
      */
