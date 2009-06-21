@@ -25,17 +25,12 @@ import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
-/**
- * 
- */
 public class PaymentTestCase {
     private static SCANode node;
 
-    /**
-     * @throws java.lang.Exception
-     */
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
     	try {
@@ -53,26 +48,22 @@ public class PaymentTestCase {
     public void testPayment() {
         SCAClient client = (SCAClient) node;
         Payment payment = client.getService(Payment.class, "PaymentComponent");
-        System.out.println(payment.makePaymentMember("c-0", 100.00f));
-        System.out.println(payment.makePaymentMember("c-1", 100.00f));
+        
+        System.out.println("\n\nSuccessful Payment - Status = \n\n" + payment.makePaymentMember("c-0", 100.00f));
+        System.out.println("\n\nFailed Payment - Status = \n\n" + payment.makePaymentMember("c-1", 100.00f));
     }
     
     @Test
-    //@Ignore
+    @Ignore
     public void testWaitForInput() {
-/*
         System.out.println("Press a key to end");
         try {
             System.in.read();
         } catch (Exception ex) {
         }
         System.out.println("Shutting down");
-*/
     }    
 
-    /**
-     * @throws java.lang.Exception
-     */
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
         if (node != null) {

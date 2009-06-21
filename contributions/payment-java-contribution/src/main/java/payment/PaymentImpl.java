@@ -57,34 +57,21 @@ public class PaymentImpl implements Payment {
     protected float transactionFee = 0.01f;
 
     public String makePaymentMember(String customerId, float amount) {
-        Customer customer = null;
-
         try {
-            customer = customerRegistry.getCustomer(customerId);
+            Customer customer = customerRegistry.getCustomer(customerId);
+            String status = creditCardPayment.authorize(customer.getCreditCard(), 
+                                                        amount + transactionFee);
+            emailGateway.sendEmail("order@tuscanyscatours.com", 
+                                   customer.getEmail(), 
+                                   "Status for your payment", 
+                                   customer + " >>> Status = " + status);
+            return status;
         } catch (CustomerNotFoundException ex) {
             return "Payment failed due to " + ex.getMessage();
+        } catch (AuthorizeFault_Exception e) {
+            return e.getFaultInfo().getErrorCode();
         } catch (Throwable t) {
             return "Payment failed due to system error " + t.getMessage();
-        }
-
-        CreditCardDetailsType ccDetails = customer.getCreditCard();
-        
-        float total = amount + transactionFee;
-
-        String status;
-        try {
-            status = creditCardPayment.authorize(ccDetails, total);
-        } catch (AuthorizeFault_Exception e) {
-            status = e.getFaultInfo().getErrorCode();
-        }
-
-        StringBuffer body = new StringBuffer();
-        body.append(customer);
-        body.append("\n").append("Status: ").append(status).append("\n");
-        emailGateway.sendEmail("order@tuscanyscatours.com", customer.getEmail(), "Status for your payment", body
-            .toString());
-
-        return status;
+        } 
     }
-
 }
