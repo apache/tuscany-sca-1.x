@@ -37,8 +37,13 @@ public class LaunchBlogFeedNode {
         System.out.println("Node started - Press enter to shutdown.");
         System.out.println();
         System.out.println("To view the blog feed, use your Web browser to view:");
+        System.out.println("  Feeds using Tuscany Data APIs");
         System.out.println("    http://localhost:8090/BlogAtom");
         System.out.println("    http://localhost:8090/BlogRSS");
+        System.out.println("  Feeds using Atom APIs");
+        System.out.println("    http://localhost:8090/BlogAtomAPIs");
+        System.out.println("  Feeds using RSS APIs");
+        System.out.println("    http://localhost:8090/BlogRSSAPIs");
         System.out.println();
         System.in.read();
         node.stop();
