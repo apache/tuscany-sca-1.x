@@ -30,7 +30,6 @@ import java.util.UUID;
 import org.apache.tuscany.sca.binding.rss.collection.Collection;
 import org.osoa.sca.annotations.Scope;
 
-import com.sun.syndication.feed.atom.Content;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -56,7 +55,7 @@ public class CustomerCollectionImpl implements Collection {
 
             SyndContent content = new SyndContentImpl();
             content.setValue("Jane Doe_" + String.valueOf(i));
-            content.setType(Content.TEXT);
+            content.setType("text");
             entry.setContents(Collections.singletonList(content));
 
             List<SyndLink> links = new ArrayList<SyndLink>();
