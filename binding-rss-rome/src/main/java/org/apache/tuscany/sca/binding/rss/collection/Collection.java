@@ -20,6 +20,7 @@ package org.apache.tuscany.sca.binding.rss.collection;
 
 import org.osoa.sca.annotations.Remotable;
 
+import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 
 
@@ -46,4 +47,12 @@ public interface Collection {
      */
     SyndFeed query(String queryString);
 
+    /**
+     * Retrieves an RSS entry.
+     * 
+     * @param id The entry ID
+     * @return The requested entry
+     * @throws NotFoundException No entry found with the given ID
+     */
+    SyndEntry get(String id) throws NotFoundException;
 }
