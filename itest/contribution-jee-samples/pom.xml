@@ -47,8 +47,10 @@
                 <module>ejb-appcomp-contrib-implicit</module>
                 <module>ear-nonenhanced</module>
                 <module>ear-appcomp-contrib-implicit</module>
+                <module>ear-appcomp-contrib-implicit-war-appcomp</module>
                 <module>scajar-ear-nonenhanced</module>
                 <module>scajar-ear-appcomp</module>
+                <module>scajar-ear-appcomp-war-appcomp</module>
                 <module>scazip-ejb-appcomp</module>
                 <module>scazip-war-appcomp</module>
             </modules>

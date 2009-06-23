@@ -93,6 +93,8 @@ public class TestExternalEarModelResolver implements ModelResolver {
                         earLocation = new File("../contribution-jee-samples/ear-nonenhanced/target/itest-contribution-jee-samples-13-ear-nonenhanced.ear").toURL();
                     } else if ( uri.toString().equals("itest-contribution-jee-samples-29-ear-appcomp-contrib-implicit.ear")){                       
                         earLocation = new File("../contribution-jee-samples/ear-appcomp-contrib-implicit/target/itest-contribution-jee-samples-29-ear-appcomp-contrib-implicit.ear").toURL();
+                    } else if ( uri.toString().equals("itest-contribution-jee-samples-30-ear-appcomp-contrib-implicit-war-appcomp.ear")){                       
+                        earLocation = new File("../contribution-jee-samples/ear-appcomp-contrib-implicit-war-appcomp/target/itest-contribution-jee-samples-30-ear-appcomp-contrib-implicit-war-appcomp.ear").toURL();                        
                     } else {
                         return unresolved;
                     }
