@@ -38,6 +38,8 @@ public class SpringImplementationProviderFactory implements ImplementationProvid
 
     private ProxyFactory proxyFactory;
     private JavaPropertyValueObjectFactory propertyFactory;
+    private AnnotationProcessorExtensionPoint annotationProcessor;
+    private boolean annotationSupport;
 
     /**
      * Simple constructor
@@ -47,8 +49,14 @@ public class SpringImplementationProviderFactory implements ImplementationProvid
         super();
         
         ProxyFactoryExtensionPoint proxyFactories = extensionPoints.getExtensionPoint(ProxyFactoryExtensionPoint.class); 
-        proxyFactory = new ExtensibleProxyFactory(proxyFactories); 
-
+        proxyFactory = new ExtensibleProxyFactory(proxyFactories);
+        
+        annotationProcessor = extensionPoints.getExtensionPoint(AnnotationProcessorExtensionPoint.class);
+        if (annotationProcessor == null) {
+        	annotationProcessor = new DefaultAnnotationProcessorExtensionPoint();
+        }
+        annotationSupport = annotationProcessor.isAnnotationSupported();
+        
         // TODO: could the runtime have a default PropertyValueObjectFactory?
         propertyFactory = new JavaPropertyValueObjectFactory(new MediatorImpl(extensionPoints));
     }
@@ -65,7 +73,8 @@ public class SpringImplementationProviderFactory implements ImplementationProvid
         return new SpringImplementationProvider(component, 
                                                 implementation, 
                                                 proxyFactory, 
-                                                propertyFactory);
+                                                propertyFactory,
+                                                annotationSupport);
     }
 
     /**

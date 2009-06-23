@@ -50,13 +50,14 @@ public class SpringImplementationProvider implements ImplementationProvider {
     public SpringImplementationProvider(RuntimeComponent component,
                                         SpringImplementation implementation,
                                         ProxyFactory proxyService,
-                                        JavaPropertyValueObjectFactory propertyValueObjectFactory) {
+                                        JavaPropertyValueObjectFactory propertyValueObjectFactory,
+                                        boolean annotationSupport) {
         super();
         this.implementation = implementation;
         this.component = component;
         this.propertyValueObjectFactory = propertyValueObjectFactory;
 
-        springContext = new SpringContextStub(component, implementation, proxyService, propertyValueObjectFactory);        
+        springContext = new SpringContextStub(component, implementation, proxyService, propertyValueObjectFactory, annotationSupport);        
         
     } // end constructor
 

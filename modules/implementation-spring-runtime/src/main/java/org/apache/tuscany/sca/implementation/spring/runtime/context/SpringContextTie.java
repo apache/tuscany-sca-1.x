@@ -55,12 +55,14 @@ public class SpringContextTie {
 
     private AbstractApplicationContext springContext;
     private SpringImplementationStub implementation;
+    private boolean isAnnotationSupported;
     
-    public SpringContextTie(SpringImplementationStub implementation, URL resource) throws Exception {
+    public SpringContextTie(SpringImplementationStub implementation, URL resource, boolean annotationSupport) throws Exception {
         this.implementation = implementation;
+        this.isAnnotationSupported = annotationSupport;
         if ((SpringVersion.getVersion()!= null) && (! SpringVersion.getVersion().equals("2.5.5"))) {
         	throw new RuntimeException("Unsupported version: Use only Spring Framework Version 2.5.5");
-        }
+        }        
         SCAParentApplicationContext scaParentContext = new SCAParentApplicationContext(implementation);
         springContext = createApplicationContext(scaParentContext, resource);  
     }
@@ -120,19 +122,22 @@ public class SpringContextTie {
                         if (beanClassName.indexOf(".ClassPathXmlApplicationContext") != -1) {                                                                   
                                 appContext = new ClassPathXmlApplicationContext(listValues, false, scaParentContext);                                   
                                 appContext.refresh();
-                                includeAnnotationProcessors(appContext.getBeanFactory());
+                                if (isAnnotationSupported)
+                                	includeAnnotationProcessors(appContext.getBeanFactory());
                                 return appContext;
                         } else {
                                 appContext = new FileSystemXmlApplicationContext(listValues, false, scaParentContext);                                  
                                 appContext.refresh();
-                                includeAnnotationProcessors(appContext.getBeanFactory());
+                                if (isAnnotationSupported)
+                                	includeAnnotationProcessors(appContext.getBeanFactory());
                                 return appContext;
                         }
                 }               
         }
         
         // use the generic application context as default 
-        includeAnnotationProcessors(beanFactory);
+        if (isAnnotationSupported)
+        	includeAnnotationProcessors(beanFactory);
         appContext = new GenericApplicationContext(beanFactory, scaParentContext);
         return appContext;
     }
