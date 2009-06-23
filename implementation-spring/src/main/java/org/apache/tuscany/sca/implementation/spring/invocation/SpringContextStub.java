@@ -45,15 +45,17 @@ public class SpringContextStub {
     public SpringContextStub(RuntimeComponent component,
                                SpringImplementation implementation,
                                ProxyFactory proxyService,
-                               JavaPropertyValueObjectFactory propertyValueObjectFactory) {
+                               JavaPropertyValueObjectFactory propertyValueObjectFactory,
+                               boolean annotationSupport) {
 
-        initTie(component, implementation, propertyValueObjectFactory);        
+        initTie(component, implementation, propertyValueObjectFactory, annotationSupport);        
 
     }
 
     private void initTie(RuntimeComponent component,
                          SpringImplementation implementation,
-                         JavaPropertyValueObjectFactory propertyValueObjectFactory) {
+                         JavaPropertyValueObjectFactory propertyValueObjectFactory,
+                         boolean annotationSupport) {
 
         // TODO: what class loader to use?
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -65,8 +67,8 @@ public class SpringContextStub {
             Object stub = stubConstructor.newInstance(new SpringImplementationTie(implementation, component, propertyValueObjectFactory));
 
             Class<?> tieClass = Class.forName("org.apache.tuscany.sca.implementation.spring.runtime.context.SpringContextTie", true, cl);
-            Constructor<?> tieConstructor = tieClass.getConstructor(new Class<?>[]{stubClass, URL.class});
-            this.tie = tieConstructor.newInstance(stub, implementation.getResource());
+            Constructor<?> tieConstructor = tieClass.getConstructor(new Class<?>[]{stubClass, URL.class, boolean.class});
+            this.tie = tieConstructor.newInstance(stub, implementation.getResource(), annotationSupport);
             
             this.startMethod = tieClass.getMethod("start");
             this.closeMethod = tieClass.getMethod("close");

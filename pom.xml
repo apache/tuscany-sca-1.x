@@ -176,7 +176,7 @@
                 <module>policy-logging</module>
                 <module>policy-reliability</module>
                 <module>policy-security</module>
-                <module>policy-security-http</module>
+                <!--module>policy-security-http</module-->
                 <module>policy-security-jsr250</module>
                 <module>policy-transaction</module>
                 <module>sca-api</module>
