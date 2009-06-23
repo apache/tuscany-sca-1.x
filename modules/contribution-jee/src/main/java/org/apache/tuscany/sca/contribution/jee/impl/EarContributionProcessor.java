@@ -144,7 +144,11 @@ public class EarContributionProcessor implements PackageProcessor {
                     List<URI> artifacts = archiveProcessor.getArtifacts(packageSourceURL, bin);
                     bin.close();
                     for(URI artifact : artifacts) {
-                        names.add(entry.getName()+"!/"+artifact);
+                        // don't add in nested application composites
+                        if ((artifact.toString().endsWith("ejb-jar.composite") == false) &&
+                            (artifact.toString().endsWith("web.composite") == false)) {
+                            names.add(entry.getName()+"!/"+artifact);
+                        }
                     }
                 }
             }
