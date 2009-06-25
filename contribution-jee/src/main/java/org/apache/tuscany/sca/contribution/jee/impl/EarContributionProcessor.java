@@ -28,7 +28,6 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
-import java.net.URLStreamHandlerFactory;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -49,25 +48,13 @@ import org.eclipse.emf.common.archive.ArchiveURLConnection;
  */
 public class EarContributionProcessor implements PackageProcessor {
     
-    /* Install handler for "archive" */
-    static {
-        URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
-            public URLStreamHandler createURLStreamHandler(String protocol) {
-                if("archive".equalsIgnoreCase(protocol)) {
-                    return new Handler();
-                } else {
-                    return null;
-                }
-            }}
-        );
-    }
-
-    static class Handler extends URLStreamHandler {
+    /* URL stream handler for "archive" */
+    private static URLStreamHandler archiveUrlStreamHandler = new URLStreamHandler() {
         @Override
         protected URLConnection openConnection(URL u) throws IOException {
             return new ArchiveURLConnection(u);
         }
-    }
+    };
 
     public URL getArtifactURL(URL packageSourceURL, URI artifact)
             throws MalformedURLException {
@@ -75,9 +62,9 @@ public class EarContributionProcessor implements PackageProcessor {
             return packageSourceURL;
         }
         if (packageSourceURL.toString().startsWith("archive:")) {
-            return new URL(packageSourceURL, artifact.toString());
+            return new URL(packageSourceURL, artifact.toString(), archiveUrlStreamHandler);
         } else {
-            return new URL("archive:" + packageSourceURL.toExternalForm() + "!/" + artifact);
+            return new URL("archive", "", -1, packageSourceURL.toExternalForm() + "!/" + artifact, archiveUrlStreamHandler);
         }
     }
 
