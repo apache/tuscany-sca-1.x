@@ -565,11 +565,15 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
 
         String jmsPriority = reader.getAttributeValue(null, "JMSPriority");
         if (jmsPriority != null && jmsPriority.length() > 0) {
-            int p = Integer.parseInt(jmsPriority);
-            if (p >= 0 && p <= 9) {
-                jmsBinding.setJMSPriority(p);
-            } else {
-                warning("InvalidJMSPriority", jmsBinding, jmsPriority);
+            try {
+                int p = Integer.parseInt(jmsPriority);
+                if (p >= 0 && p <= 9) {
+                    jmsBinding.setJMSPriority(p);
+                } else {
+                    warning("InvalidJMSPriority", jmsBinding, jmsPriority);
+                }
+            } catch (NumberFormatException ex) {
+                error("InvalidJMSPriority", jmsBinding, jmsPriority);
             }
         }
 
@@ -702,11 +706,15 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
 
         String jmsPriority = reader.getAttributeValue(null, "JMSPriority");
         if (jmsPriority != null && jmsPriority.length() > 0) {
-            int p = Integer.parseInt(jmsPriority);
-            if (p >= 0 && p <= 9) {
-                jmsBinding.setOperationJMSPriority(opName, p);
-            } else {
-                warning("InvalidOPJMSPriority", jmsBinding, jmsPriority);
+            try {
+                int p = Integer.parseInt(jmsPriority);
+                if (p >= 0 && p <= 9) {
+                    jmsBinding.setOperationJMSPriority(opName, p);
+                } else {
+                    warning("InvalidOPJMSPriority", jmsBinding, jmsPriority);
+                }
+            } catch (NumberFormatException ex) {
+                error("InvalidOPJMSPriority", jmsBinding, jmsPriority);
             }
         }
 
@@ -1195,7 +1203,9 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             Object value = entry.getValue();
 
             writer.writeStartElement(Constants.SCA10_NS, "property" );
-            writer.writeAttribute("name", key.toString());
+            if (key != null){
+                writer.writeAttribute("name", key.toString());
+            }
 
             if ( value instanceof String) {
                 writer.writeCharacters( value.toString() );

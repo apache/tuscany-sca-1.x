@@ -77,6 +77,20 @@ public class JMSBindingProcessorTestCase extends TestCase {
             + "      </service>"
             + " </component>"
             + "</composite>";
+    
+    public static final String HEADERS_INVALID_PRIORITY =
+        "<?xml version=\"1.0\" encoding=\"ASCII\"?>" 
+        + "<composite xmlns=\"http://www.osoa.org/xmlns/sca/1.0\" targetNamespace=\"http://binding-jms\" name=\"binding-jms\">"
+            + " <component name=\"HelloWorldComponent\">"
+            + "   <implementation.java class=\"services.HelloWorld\"/>"
+            + "      <service name=\"HelloWorldService\">"
+            + "          <binding.jms uri=\"jms:testQueue\" >"
+            + "             <headers JMSType=\"myType\" JMSCorrelationID=\"myCorrelId\" JMSDeliveryMode=\"PERSISTENT\" JMSTimeToLive=\"54321\" JMSPriority=\"medium\">"
+            + "             </headers>" 
+            + "          </binding.jms>"
+            + "      </service>"
+            + " </component>"
+            + "</composite>";
 
     public static final String PROPERTIES1 =
         "<?xml version=\"1.0\" encoding=\"ASCII\"?>" 
@@ -476,6 +490,22 @@ public class JMSBindingProcessorTestCase extends TestCase {
             assertTrue( e.getClass().isAssignableFrom( JMSBindingException.class ) );
         }
     }
+    
+    public void testParsingValidationErrors2() throws Exception {        
+        // Composite with invalid priority
+        XMLStreamReader reader = inputFactory.createXMLStreamReader(new StringReader(HEADERS_INVALID_PRIORITY));
+
+        try {
+            Composite composite = (Composite)staxProcessor.read(reader);       
+        } catch(Exception e) {
+            // JMSBindingExceptions are expected with invalid composite.
+            if ( !e.getClass().isAssignableFrom( JMSBindingException.class ) )
+                throw e;
+            // Do assertion to make sure test registers results.
+            assertTrue( e.getClass().isAssignableFrom( JMSBindingException.class ) );
+            return;
+        }
+    }    
 
     /** Test various model validation requirements. */
     public void testValidationErrors1() throws Exception {
