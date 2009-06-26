@@ -139,6 +139,13 @@ public class HTTPBindingProcessor extends BaseStAXArtifactProcessor implements S
             writer.writeAttribute(URI, httpBinding.getURI());
         }
         
+        if ( httpBinding.getRequestWireFormat() != null ) {
+        	extensionProcessor.write(httpBinding.getRequestWireFormat(), writer);
+        }
+        
+        if ( httpBinding.getOperationSelector() != null ) {
+        	extensionProcessor.write(httpBinding.getOperationSelector(), writer);
+        }
         writeEnd(writer);
         //writer.writeEndElement();
     }
