@@ -133,7 +133,11 @@ public class HTTPServiceBindingProvider implements ServiceBindingProviderRRB {
         for (InvocationChain invocationChain : wire.getInvocationChains()) {
             Operation operation = invocationChain.getTargetOperation();
             String operationName = operation.getName();
-            if (operationName.equals("get")) { 
+            if (binding.getOperationSelector() != null || binding.getRequestWireFormat() != null) {
+                Invoker bindingInvoker = wire.getBindingInvocationChain().getHeadInvoker();
+                servlet = new HTTPRRBListenerServlet(binding, bindingInvoker, messageFactory);
+                break;
+            } else if (operationName.equals("get")) { 
                 Invoker getInvoker = invocationChain.getHeadInvoker();
                	bindingListenerServlet.setGetInvoker(getInvoker);
                 servlet = bindingListenerServlet;
@@ -169,11 +173,7 @@ public class HTTPServiceBindingProvider implements ServiceBindingProviderRRB {
                 Invoker serviceInvoker = invocationChain.getHeadInvoker();
                 servlet = new HTTPServiceListenerServlet(binding, serviceInvoker, messageFactory);
                 break;
-            } else if (binding.getOperationSelector() != null || binding.getRequestWireFormat() != null) {
-                Invoker bindingInvoker = wire.getBindingInvocationChain().getHeadInvoker();
-                servlet = new HTTPRRBListenerServlet(binding, bindingInvoker, messageFactory);
-                break;
-            }
+            } 
         }
         if (servlet == null) {
             throw new IllegalStateException("No get or service method found on the service");
