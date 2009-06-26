@@ -901,12 +901,12 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             writer.writeAttribute("uri", jmsBinding.getURI());
         }
 
-        String dest = jmsBinding.getDestinationName();
-        if (dest != null) {
-            if ( dest != null ) {
-               writer.writeAttribute("uri", "jms:" + jmsBinding.getDestinationName());
-            }
-        }
+        //String dest = jmsBinding.getDestinationName();
+        //if (dest != null) {
+        //    if ( dest != null ) {
+        //       writer.writeAttribute("uri", "jms:" + jmsBinding.getDestinationName());
+        //    }
+        //}
 
         String correlationScheme = jmsBinding.getCorrelationScheme();
         if ( correlationScheme != null ) {
@@ -951,7 +951,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
            writeResponseActivationSpecProperties( jmsBinding, writer );
            
            if ((jmsBinding.getResponseWireFormat() != null) &&
-               !(jmsBinding.getResponseWireFormat() instanceof WireFormatJMSTextXML)){
+               !(jmsBinding.getResponseWireFormat() instanceof WireFormatJMSDefault)){
                writeWireFormat(jmsBinding.getResponseWireFormat(), writer);
            }
            
@@ -965,7 +965,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         writeConfiguredOperations( jmsBinding, writer );
         
         if ((jmsBinding.getRequestWireFormat() != null) &&
-            !(jmsBinding.getRequestWireFormat() instanceof WireFormatJMSTextXML)){
+            !(jmsBinding.getRequestWireFormat() instanceof WireFormatJMSDefault)){
             writeWireFormat(jmsBinding.getRequestWireFormat(), writer);
         }
         
@@ -1131,39 +1131,43 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             Integer jmsPriority = jmsBinding.getOperationJMSPriority(opName);
             Map<String, Object> operationProperties = jmsBinding.getOperationProperties(opName);
             
-            if (jmsType != null || jmsCorrelationId != null || jmsDeliveryMode != null ||
-                jmsTimeToLive != null || jmsPriority != null || operationProperties != null) {
-                
-                writer.writeStartElement(Constants.SCA10_NS, JMSBindingConstants.HEADERS);              
-                
-                if (jmsType != null && jmsType.length() > 0) {
-                    writer.writeAttribute("JMSType", jmsType);
+            if (operationProperties != null){
+                if ((jmsType != null && jmsType.length() > 0) || 
+                    (jmsCorrelationId != null && jmsCorrelationId.length() > 0) || 
+                    jmsDeliveryMode != null || jmsTimeToLive != null || 
+                    jmsPriority != null) {
+                    
+                    writer.writeStartElement(Constants.SCA10_NS, JMSBindingConstants.HEADERS);              
+                    
+                    if (jmsType != null && jmsType.length() > 0) {
+                        writer.writeAttribute("JMSType", jmsType);
+                    }
+    
+                    if (jmsCorrelationId != null && jmsCorrelationId.length() > 0) {
+                        writer.writeAttribute("JMSCorrelationID", jmsCorrelationId);
+                    }
+    
+                    if (jmsDeliveryMode != null) {
+                        if (jmsDeliveryMode.booleanValue())
+                            writer.writeAttribute("JMSDeliveryMode", "PERSISTENT");
+                        else
+                            writer.writeAttribute("JMSDeliveryMode", "NON_PERSISTENT");
+                    }
+    
+                    if (jmsTimeToLive != null) {
+                        writer.writeAttribute("JMSTimeToLive", jmsTimeToLive.toString());
+                    }
+    
+                    if (jmsPriority != null) {
+                        writer.writeAttribute("JMSPriority", jmsPriority.toString());
+                    }
+                    
+                    writeProperties( operationProperties, writer );
+                    
+                    writer.writeEndElement();
+                    // Strange bug. Without white space, headers end tag improperly read. 
+                    // writer.writeCharacters( " " ); 
                 }
-
-                if (jmsCorrelationId != null && jmsCorrelationId.length() > 0) {
-                    writer.writeAttribute("JMSCorrelationID", jmsCorrelationId);
-                }
-
-                if (jmsDeliveryMode != null) {
-                    if (jmsDeliveryMode.booleanValue())
-                        writer.writeAttribute("JMSDeliveryMode", "PERSISTENT");
-                    else
-                        writer.writeAttribute("JMSDeliveryMode", "NON_PERSISTENT");
-                }
-
-                if (jmsTimeToLive != null) {
-                    writer.writeAttribute("JMSTimeToLive", jmsTimeToLive.toString());
-                }
-
-                if (jmsPriority != null) {
-                    writer.writeAttribute("JMSPriority", jmsPriority.toString());
-                }
-                
-                writeProperties( operationProperties, writer );
-                
-                writer.writeEndElement();
-                // Strange bug. Without white space, headers end tag improperly read. 
-                // writer.writeCharacters( " " ); 
             }
 
             writer.writeEndElement();
@@ -1255,7 +1259,8 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         // }
 
         String destinationCreate = jmsBinding.getDestinationCreate();
-        if ( destinationCreate != null && destinationCreate.length() > 0) {
+        if ( destinationCreate != null && destinationCreate.length() > 0 &&
+             !destinationCreate.equals(JMSBindingConstants.CREATE_IF_NOT_EXIST)) {
             writer.writeAttribute("create", destinationCreate);            
         }
 
@@ -1287,7 +1292,8 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         }
 
         String destinationCreate = jmsBinding.getConnectionFactoryCreate();
-        if ( destinationCreate != null && destinationCreate.length() > 0) {
+        if ( destinationCreate != null && destinationCreate.length() > 0 &&
+             !destinationCreate.equals(JMSBindingConstants.CREATE_IF_NOT_EXIST)) {
             writer.writeAttribute("create", destinationCreate);            
         }
 

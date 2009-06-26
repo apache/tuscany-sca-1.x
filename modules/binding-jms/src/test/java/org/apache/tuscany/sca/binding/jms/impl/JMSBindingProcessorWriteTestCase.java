@@ -58,6 +58,26 @@ public class JMSBindingProcessorWriteTestCase extends TestCase {
     private XMLOutputFactory outputFactory;
     private StAXArtifactProcessor<Object> staxProcessor;
     private Monitor monitor;
+    
+    public static final String DEFAULT =
+        "<?xml version=\"1.0\" encoding=\"ASCII\"?>" 
+        + "<composite xmlns=\"http://www.osoa.org/xmlns/sca/1.0\" targetNamespace=\"http://binding-jms\" name=\"binding-jms\">"
+            + " <component name=\"HelloWorldComponent\">"
+            + "      <service name=\"HelloWorldService\">"
+            + "          <binding.jms>"
+            + "            <destination name=\"AAA\">"
+            + "                <property name=\"AAAProp\" type=\"string\"/>"
+            + "            </destination>"
+            + "            <connectionFactory name=\"ABC\"/>"
+            + "            <response/>"
+            + "            <headers/>"
+            + "            <resourceAdapter name=\"GHI\"/>"
+            + "            <operationProperties name=\"JKL\">"
+            + "            </operationProperties>"
+            + "          </binding.jms>"
+            + "      </service>"
+            + " </component>"
+            + "</composite>";
 
     @Override
     protected void setUp() throws Exception {
@@ -381,5 +401,35 @@ public class JMSBindingProcessorWriteTestCase extends TestCase {
 
         // Compare initial binding to written binding.
         assertEquals(binding, binding2);
-    }    
+    }   
+
+    // TUSCANY-3120
+    // Checking we don't write out values unless the use has specified them on input
+    public void testDefault() throws Exception {
+        XMLStreamReader reader =
+            inputFactory.createXMLStreamReader(new StringReader(DEFAULT));
+        Composite composite = (Composite)staxProcessor.read(reader);
+        JMSBinding binding = (JMSBinding)composite.getComponents().get(0).getServices().get(0).getBindings().get(0);
+        assertNotNull(binding);
+        
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        staxProcessor.write(composite, outputFactory.createXMLStreamWriter(bos));
+        
+        System.out.println(bos.toString());
+        assertEquals(bos.toString(),
+                     "<?xml version=\'1.0\' encoding=\'UTF-8\'?>" +
+                     "<composite targetNamespace=\"http://binding-jms\" name=\"binding-jms\" xmlns=\"http://www.osoa.org/xmlns/sca/1.0\">" +
+                       "<component name=\"HelloWorldComponent\">" + 
+                           "<service name=\"HelloWorldService\">" +
+                             "<binding.jms><operationProperties name=\"JKL\" /> " +
+                               "<destination name=\"AAA\">" +
+                                 "<property name=\"AAAProp\" type=\"string\"></property>" +
+                               "</destination> " +
+                               "<connectionFactory name=\"ABC\" /> "+
+                               "<resourceAdapter name=\"GHI\" /> " +
+                             "</binding.jms>" +
+                           "</service>" +
+                         "</component>" +
+                       "</composite>");
+    }  
 }
