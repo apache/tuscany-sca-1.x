@@ -19,16 +19,12 @@
 
 package org.apache.tuscany.sca.policy.security.http;
 
-import java.security.AccessControlContext;
 import java.util.List;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginContext;
-import javax.security.jacc.WebRoleRefPermission;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.geronimo.security.ContextManager;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
