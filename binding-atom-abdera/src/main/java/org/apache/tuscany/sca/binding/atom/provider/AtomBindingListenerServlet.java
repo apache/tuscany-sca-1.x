@@ -150,10 +150,9 @@ class AtomBindingListenerServlet extends HttpServlet {
             if (itemClass == org.apache.abdera.model.Entry.class) {
                 supportsFeedEntries = true;
             }
-            DataType<XMLType> outputType = getOperation.getOutputType();
-            QName qname = outputType.getLogical().getElementName();
-            qname = new QName(qname.getNamespaceURI(), itemClass.getSimpleName());
-            itemClassType = new DataTypeImpl<XMLType>("java:complexType", itemClass, new XMLType(qname, null));
+            //We assume that the item type is the same for both input and 
+            //ouput for all operations on the interface
+            itemClassType = getOperation.getOutputType();
         }
     }
 

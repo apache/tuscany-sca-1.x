@@ -86,22 +86,20 @@ class AtomReferenceBindingProvider implements ReferenceBindingProvider {
 
     public Invoker createInvoker(Operation operation) {
         
-        String operationName = operation.getName();
-        if (operationName.equals("get")) {
-            
+        String operationName = operation.getName();            
+        if (operationName.equals("get")) { 
+
             // Determine the collection item type
             itemXMLType = new DataTypeImpl<Class<?>>(String.class.getName(), String.class, String.class);
             Class<?> itemClass = operation.getOutputType().getPhysical();
             DataType<XMLType> outputType = operation.getOutputType();
-            QName qname = outputType.getLogical().getElementName();
-            qname = new QName(qname.getNamespaceURI(), itemClass.getSimpleName());
-            itemClassType = new DataTypeImpl<XMLType>("java:complexType", itemClass, new XMLType(qname, null));
+            itemClassType = outputType;
             if (itemClassType.getPhysical() == org.apache.abdera.model.Entry.class) {
                 supportsFeedEntries = true;
             }
-            
+
             return new AtomBindingInvoker.GetInvoker(operation, binding.getURI(), httpClient, authorizationHeader, this);
-            
+
         } else if (operationName.equals("post")) {
             return new AtomBindingInvoker.PostInvoker(operation, binding.getURI(), httpClient, authorizationHeader, this);
         } else if (operationName.equals("put")) {
