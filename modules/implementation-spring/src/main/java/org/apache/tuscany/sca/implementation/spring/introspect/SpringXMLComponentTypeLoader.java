@@ -294,8 +294,7 @@ public class SpringXMLComponentTypeLoader {
                             	String value = reader.getAttributeValue(null, "value");
                             	constructorArg.addValue(value);
                             	if ((value.indexOf(".xml") != -1)) {
-                                    if ((bean.getClassName().indexOf(".ClassPathXmlApplicationContext") != -1) ||
-                                        (bean.getClassName().indexOf(".FileSystemXmlApplicationContext") != -1)) {                                    
+                                    if (bean.getClassName().indexOf(".ClassPathXmlApplicationContext") != -1) {                                 
                                         XMLStreamReader creader = getApplicationContextReader(value);
                                         // Read the context definition for the constructor-arg resources
                                         readContextDefinition(creader, beans, services, references, scaproperties);
@@ -316,8 +315,7 @@ public class SpringXMLComponentTypeLoader {
                             	constructorArg.addValue(value);
                                 // Identify the XML resource specified for the constructor-arg element
                                 if ((value.indexOf(".xml") != -1)) {
-                                    if ((bean.getClassName().indexOf(".ClassPathXmlApplicationContext") != -1) ||
-                                        (bean.getClassName().indexOf(".FileSystemXmlApplicationContext") != -1)) {                                    
+                                    if (bean.getClassName().indexOf(".ClassPathXmlApplicationContext") != -1) {                                   
                                         XMLStreamReader creader = getApplicationContextReader(value);
                                         // Read the context definition for the constructor-arg resources
                                         readContextDefinition(creader, beans, services, references, scaproperties);
