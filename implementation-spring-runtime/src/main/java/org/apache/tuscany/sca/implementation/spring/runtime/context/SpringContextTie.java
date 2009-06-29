@@ -56,12 +56,15 @@ public class SpringContextTie {
     private AbstractApplicationContext springContext;
     private SpringImplementationStub implementation;
     private boolean isAnnotationSupported;
+    private String versionSupported;
     
-    public SpringContextTie(SpringImplementationStub implementation, URL resource, boolean annotationSupport) throws Exception {
+    public SpringContextTie(SpringImplementationStub implementation, URL resource, boolean annotationSupport, String versionSupported) throws Exception {
         this.implementation = implementation;
         this.isAnnotationSupported = annotationSupport;
-        if ((SpringVersion.getVersion()!= null) && (! SpringVersion.getVersion().equals("2.5.5"))) {
-        	throw new RuntimeException("Unsupported version: Use only Spring Framework Version 2.5.5");
+        this.versionSupported = versionSupported;
+        if (! this.versionSupported.equals("ANY")) {
+        	if ((SpringVersion.getVersion()!= null) && (! SpringVersion.getVersion().equals(versionSupported)))
+        		throw new RuntimeException("Unsupported version: Use only Spring Framework Version " + versionSupported);
         }        
         SCAParentApplicationContext scaParentContext = new SCAParentApplicationContext(implementation);
         springContext = createApplicationContext(scaParentContext, resource);  
