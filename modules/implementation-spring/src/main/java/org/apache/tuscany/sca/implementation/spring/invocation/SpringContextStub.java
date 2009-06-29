@@ -46,16 +46,18 @@ public class SpringContextStub {
                                SpringImplementation implementation,
                                ProxyFactory proxyService,
                                JavaPropertyValueObjectFactory propertyValueObjectFactory,
-                               boolean annotationSupport) {
+                               boolean annotationSupport,
+                               String versionSupported) {
 
-        initTie(component, implementation, propertyValueObjectFactory, annotationSupport);        
+        initTie(component, implementation, propertyValueObjectFactory, annotationSupport, versionSupported);        
 
     }
 
     private void initTie(RuntimeComponent component,
                          SpringImplementation implementation,
                          JavaPropertyValueObjectFactory propertyValueObjectFactory,
-                         boolean annotationSupport) {
+                         boolean annotationSupport,
+                         String versionSupported) {
 
         // TODO: what class loader to use?
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -67,8 +69,8 @@ public class SpringContextStub {
             Object stub = stubConstructor.newInstance(new SpringImplementationTie(implementation, component, propertyValueObjectFactory));
 
             Class<?> tieClass = Class.forName("org.apache.tuscany.sca.implementation.spring.runtime.context.SpringContextTie", true, cl);
-            Constructor<?> tieConstructor = tieClass.getConstructor(new Class<?>[]{stubClass, URL.class, boolean.class});
-            this.tie = tieConstructor.newInstance(stub, implementation.getResource(), annotationSupport);
+            Constructor<?> tieConstructor = tieClass.getConstructor(new Class<?>[]{stubClass, URL.class, boolean.class, String.class});
+            this.tie = tieConstructor.newInstance(stub, implementation.getResource(), annotationSupport, versionSupported);
             
             this.startMethod = tieClass.getMethod("start");
             this.closeMethod = tieClass.getMethod("close");

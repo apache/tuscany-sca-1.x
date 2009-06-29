@@ -38,8 +38,9 @@ public class SpringImplementationProviderFactory implements ImplementationProvid
 
     private ProxyFactory proxyFactory;
     private JavaPropertyValueObjectFactory propertyFactory;
-    private AnnotationProcessorExtensionPoint annotationProcessor;
+    private ConfigurationPropertiesExtensionPoint configProperties;
     private boolean annotationSupport;
+    private String versionSupported;
 
     /**
      * Simple constructor
@@ -51,11 +52,12 @@ public class SpringImplementationProviderFactory implements ImplementationProvid
         ProxyFactoryExtensionPoint proxyFactories = extensionPoints.getExtensionPoint(ProxyFactoryExtensionPoint.class); 
         proxyFactory = new ExtensibleProxyFactory(proxyFactories);
         
-        annotationProcessor = extensionPoints.getExtensionPoint(AnnotationProcessorExtensionPoint.class);
-        if (annotationProcessor == null) {
-        	annotationProcessor = new DefaultAnnotationProcessorExtensionPoint();
+        configProperties = extensionPoints.getExtensionPoint(ConfigurationPropertiesExtensionPoint.class);
+        if (configProperties == null) {
+        	configProperties = new DefaultConfigurationPropertiesExtensionPoint();
         }
-        annotationSupport = annotationProcessor.isAnnotationSupported();
+        annotationSupport = configProperties.isAnnotationSupported();
+        versionSupported = configProperties.getSupportedVersion();
         
         // TODO: could the runtime have a default PropertyValueObjectFactory?
         propertyFactory = new JavaPropertyValueObjectFactory(new MediatorImpl(extensionPoints));
@@ -74,7 +76,8 @@ public class SpringImplementationProviderFactory implements ImplementationProvid
                                                 implementation, 
                                                 proxyFactory, 
                                                 propertyFactory,
-                                                annotationSupport);
+                                                annotationSupport,
+                                                versionSupported);
     }
 
     /**
