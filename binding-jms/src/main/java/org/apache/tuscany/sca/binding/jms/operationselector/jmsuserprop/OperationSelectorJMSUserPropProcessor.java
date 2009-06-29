@@ -51,7 +51,13 @@ public class OperationSelectorJMSUserPropProcessor extends BaseStAXArtifactProce
     public OperationSelectorJMSUserProp read(XMLStreamReader reader) throws ContributionReadException, XMLStreamException {
         OperationSelectorJMSUserProp opSelector = new OperationSelectorJMSUserProp();
         String propertyName = reader.getAttributeValue(null, OperationSelectorJMSUserProp.OPERATION_SELECTOR_JMS_USERPROP_ATTR);
-        opSelector.setPropertyName(propertyName);
+        if (propertyName != null && propertyName.length() > 0) {
+            opSelector.setPropertyName(propertyName);
+        } else {
+            throw new ContributionReadException(OperationSelectorJMSUserProp.OPERATION_SELECTOR_JMS_USERPROP_QNAME.toString() + ": " + 
+                    OperationSelectorJMSUserProp.OPERATION_SELECTOR_JMS_USERPROP_ATTR + " is a required attribute.");
+        }
+        
         return opSelector;
     }
 

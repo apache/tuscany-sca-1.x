@@ -57,6 +57,11 @@ public class WireFormatJMSDefaultProcessor extends BaseStAXArtifactProcessor imp
         if (sendFormat != null && sendFormat.length() > 0) {
             if (WireFormatJMSDefault.WIRE_FORMAT_JMS_DEFAULT_TEXT_FORMAT_VAL.equalsIgnoreCase(sendFormat)) {
                 wireFormat.setUseBytesMessage(false);
+            }else if (WireFormatJMSDefault.WIRE_FORMAT_JMS_DEFAULT_BYTES_FORMAT_VAL.equalsIgnoreCase(sendFormat)) {
+                wireFormat.setUseBytesMessage(true);
+            }else{
+                throw new ContributionReadException(WireFormatJMSDefault.WIRE_FORMAT_JMS_DEFAULT_QNAME.toString() +" " +sendFormat + " is not a valid attribute value for " + 
+                        WireFormatJMSDefault.WIRE_FORMAT_JMS_DEFAULT_FORMAT_ATTR);
             }
         }
 
