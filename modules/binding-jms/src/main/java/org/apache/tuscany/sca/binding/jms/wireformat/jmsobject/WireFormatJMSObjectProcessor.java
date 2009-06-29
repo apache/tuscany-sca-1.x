@@ -57,6 +57,11 @@ public class WireFormatJMSObjectProcessor extends BaseStAXArtifactProcessor impl
         if (wrappedSingleInput != null && wrappedSingleInput.length() > 0) {
             if ("true".equalsIgnoreCase(wrappedSingleInput)) {
                 wireFormat.setWrappedSingleInput(true);
+            } else if ("false".equalsIgnoreCase(wrappedSingleInput)) {
+                wireFormat.setWrappedSingleInput(false);
+            } else {
+                throw new ContributionReadException(WireFormatJMSObject.WIRE_FORMAT_JMS_BYTES_QNAME.toString() + ": " + wrappedSingleInput + 
+                        " is not a valid attribute value for " + WireFormatJMSObject.WIRE_FORMAT_JMS_OBJECT_WRAP_SINGLE_ATTR);
             }
         }
         return wireFormat;

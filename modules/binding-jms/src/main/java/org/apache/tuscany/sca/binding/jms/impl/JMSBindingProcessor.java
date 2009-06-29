@@ -298,9 +298,18 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
                         Object extension = extensionProcessor.read(reader);
                         if (extension != null) {
                             if (extension instanceof WireFormat) {
-                                jmsBinding.setRequestWireFormat((WireFormat)extension);
+                                if (jmsBinding.getRequestWireFormat() == null) {
+                                    jmsBinding.setRequestWireFormat((WireFormat) extension);
+                                } else {
+                                    throw new ContributionReadException("The request wireformat has already been defined. " + "Only one request wire format can be specified.");
+                                }
                             } else if (extension instanceof OperationSelector) {
-                                jmsBinding.setOperationSelector((OperationSelector)extension);
+                                if (jmsBinding.getOperationSelector() == null) {
+                                    jmsBinding.setOperationSelector((OperationSelector) extension);
+                                } else {
+                                    throw new ContributionReadException("More than one operation selector has been specified. " + "Only one operation selector can be specified.");
+                                }
+
                             } else {
                                 error("UnexpectedElement", reader, extension.toString());
                             }
@@ -497,7 +506,11 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
                         Object extension = extensionProcessor.read(reader);
                         if (extension != null) {
                             if (extension instanceof WireFormat) {
-                                jmsBinding.setResponseWireFormat((WireFormat)extension);
+                                if (jmsBinding.getResponseWireFormat() == null) {
+                                    jmsBinding.setResponseWireFormat((WireFormat)extension);
+                                } else {
+                                    throw new ContributionReadException("The response wireformat has already been defined. " + "Only one response wire format can be specified.");
+                                }
                             } else {
                                 error("UnexpectedElement", reader, extension.toString());
                             }
