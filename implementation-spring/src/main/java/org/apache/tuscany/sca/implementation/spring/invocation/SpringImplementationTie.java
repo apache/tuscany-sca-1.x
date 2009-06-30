@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.implementation.spring.invocation;
@@ -35,20 +35,20 @@ import org.apache.tuscany.sca.runtime.RuntimeComponent;
  * It enables the Sping code in the runtime module to invoke methods on a
  * Tuscany SpringImplementation without the Spring runtime module
  * needing to know about any Tuscany classes. See the SpringImplementationStub class
- * in the implementation-spring-runtime module for what the stub does. 
+ * in the implementation-spring-runtime module for what the stub does.
  */
 public class SpringImplementationTie {
 
     private SpringImplementation implementation;
     private RuntimeComponent component;
     private JavaPropertyValueObjectFactory propertyFactory;
-    
+
     public SpringImplementationTie(SpringImplementation implementation, RuntimeComponent component, JavaPropertyValueObjectFactory propertyFactory) {
         this.implementation = implementation;
         this.component = component;
         this.propertyFactory = propertyFactory;
     }
-    
+
     public String getURI() {
         throw new IllegalStateException("Not yet impl");
     }
@@ -132,12 +132,16 @@ public class SpringImplementationTie {
         throw new RuntimeException("Unable to find Bean with name " + name);
 
     } // end method getBean( String, Class )
-    
+
     public Object getComponentTie() {
         return new ComponentTie(component);
     }
 
     public Object getPropertyValueTie() {
         return new PropertyValueTie(component, propertyFactory);
+    }
+
+    public ClassLoader getClassLoader() {
+        return implementation.getClassLoader();
     }
 }

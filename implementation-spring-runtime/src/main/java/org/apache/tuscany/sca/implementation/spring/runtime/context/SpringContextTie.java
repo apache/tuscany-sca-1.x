@@ -88,6 +88,7 @@ public class SpringContextTie {
     private AbstractApplicationContext createApplicationContext(SCAParentApplicationContext scaParentContext, URL resource) {
 
         XmlBeanFactory beanFactory = new XmlBeanFactory(new UrlResource(resource));
+        beanFactory.setBeanClassLoader(implementation.getClassLoader());
         AbstractApplicationContext appContext = null;
         
         for (String bean : beanFactory.getBeanDefinitionNames()) {
@@ -123,8 +124,9 @@ public class SpringContextTie {
                         }
                 }            
                                                                                    
-	            appContext = new ClassPathXmlApplicationContext(listValues, false, scaParentContext);                                   
+	            appContext = new ClassPathXmlApplicationContext(listValues, false, scaParentContext);	            
 	            appContext.refresh();
+	            appContext.getBeanFactory().setBeanClassLoader(implementation.getClassLoader());
 	            if (isAnnotationSupported)
 	            	includeAnnotationProcessors(appContext.getBeanFactory());
 	            return appContext;
@@ -135,6 +137,7 @@ public class SpringContextTie {
         if (isAnnotationSupported)
         	includeAnnotationProcessors(beanFactory);
         appContext = new GenericApplicationContext(beanFactory, scaParentContext);
+        appContext.setClassLoader(implementation.getClassLoader());
         return appContext;
     }
 

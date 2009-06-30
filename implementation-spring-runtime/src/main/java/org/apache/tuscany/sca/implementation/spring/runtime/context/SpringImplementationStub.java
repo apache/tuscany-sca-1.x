@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.implementation.spring.runtime.context;
@@ -29,7 +29,7 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
  * It enables the Spring code in the runtime module to invoke methods on a
  * Tuscany SpringImplementation without the Spring runtime module
  * needing to know about any Tuscany classes. See the SpringImplementationTie class
- * in the implementation-spring module for what the tie does. 
+ * in the implementation-spring module for what the tie does.
  */
 public class SpringImplementationStub {
 
@@ -39,7 +39,8 @@ public class SpringImplementationStub {
     Method getComponentName;
     Method getComponentTie;
     Method getPropertyValueTie;
-    
+    Method getClassLoader;
+
     public SpringImplementationStub(Object tie) {
         this.tie = tie;
         Class<?> tieClass = tie.getClass();
@@ -49,11 +50,12 @@ public class SpringImplementationStub {
             getComponentName = tieClass.getMethod("getComponentName");
             getComponentTie = tieClass.getMethod("getComponentTie");
             getPropertyValueTie = tieClass.getMethod("getPropertyValueTie");
+            getClassLoader = tieClass.getMethod("getClassLoader");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    
+
     public String getURI() {
         try {
 
@@ -109,6 +111,16 @@ public class SpringImplementationStub {
         try {
 
             return getPropertyValueTie.invoke(tie);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ClassLoader getClassLoader() {
+        try {
+
+            return (ClassLoader) getClassLoader.invoke(tie);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

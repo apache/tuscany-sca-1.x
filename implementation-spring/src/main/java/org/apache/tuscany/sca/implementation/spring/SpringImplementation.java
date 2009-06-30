@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 package org.apache.tuscany.sca.implementation.spring;
 
@@ -35,9 +35,9 @@ import org.apache.tuscany.sca.interfacedef.InterfaceContract;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 
 /**
- * Represents a Spring implementation. 
- * 
- * @version $Rev: 511195 $ $Date: 2007-02-24 02:29:46 +0000 (Sat, 24 Feb 2007) $ 
+ * Represents a Spring implementation.
+ *
+ * @version $Rev: 511195 $ $Date: 2007-02-24 02:29:46 +0000 (Sat, 24 Feb 2007) $
  */
 public class SpringImplementation extends ImplementationImpl implements Implementation, ComponentPreProcessor, Extensible {
 
@@ -52,6 +52,8 @@ public class SpringImplementation extends ImplementationImpl implements Implemen
     private Hashtable<String, Class> propertyMap;
     // List of unresolved bean property references
     private Hashtable<String, Reference> unresolvedBeanRef;
+
+    private ClassLoader classLoader;
 
     public SpringImplementation() {
         this.location = null;
@@ -84,8 +86,8 @@ public class SpringImplementation extends ImplementationImpl implements Implemen
         return resource;
     }
 
-    /* 
-     * Returns the componentType for this Spring implementation 
+    /*
+     * Returns the componentType for this Spring implementation
      */
     public ComponentType getComponentType() {
         return componentType;
@@ -145,35 +147,35 @@ public class SpringImplementation extends ImplementationImpl implements Implemen
     } // end method setPropertyClass
 
     /**
-     * Gets the Java Class for an SCA property 
+     * Gets the Java Class for an SCA property
      * @param propertyName - the property name
      * @return - a Class object for the type of the property
      */
     public Class getPropertyClass(String propertyName) {
         return propertyMap.get(propertyName);
     } // end method getPropertyClass
-    
+
     public void setUnresolvedBeanRef(String refName, Reference reference) {
         if (refName == null || reference == null)
             return;
         unresolvedBeanRef.put(refName, reference);
         return;
     } // end method setUnresolvedBeanRef
-    
+
     public Reference getUnresolvedBeanRef(String refName) {
         return unresolvedBeanRef.get(refName);
     } // end method getUnresolvedBeanRef
-    
-    
+
+
     /**
-     * Use preProcess to validate and map the references and properties dynamically 
+     * Use preProcess to validate and map the references and properties dynamically
      */
     public void preProcess(Component component) {
         if (!(component instanceof RuntimeComponent))
             return;
-        
+
         RuntimeComponent rtc = (RuntimeComponent) component;
-        
+
         for (Reference reference : rtc.getReferences()) {
             if (unresolvedBeanRef.containsKey(reference.getName())) {
             	Reference ref = unresolvedBeanRef.get(reference.getName());
@@ -184,14 +186,14 @@ public class SpringImplementation extends ImplementationImpl implements Implemen
         }
 
         for (Property property : rtc.getProperties()) {
-        	if (unresolvedBeanRef.containsKey(property.getName())) {        		
+        	if (unresolvedBeanRef.containsKey(property.getName())) {
         		componentType.getProperties().add(createProperty(property));
         		this.setPropertyClass(property.getName(), property.getClass());
         		unresolvedBeanRef.remove(property.getName());
             }
-        }      
+        }
     }
-    
+
     protected Reference createReference(Reference reference, InterfaceContract interfaze) {
         Reference newReference;
         try {
@@ -203,7 +205,7 @@ public class SpringImplementation extends ImplementationImpl implements Implemen
         }
         return newReference;
     }
-    
+
     protected Property createProperty(Property property) {
         Property newProperty;
         try {
@@ -212,5 +214,13 @@ public class SpringImplementation extends ImplementationImpl implements Implemen
             throw new AssertionError(e); // should not ever happen
         }
         return newProperty;
+    }
+
+    public ClassLoader getClassLoader() {
+        return classLoader;
+    }
+
+    public void setClassLoader(ClassLoader classLoader) {
+        this.classLoader = classLoader;
     }
 }
