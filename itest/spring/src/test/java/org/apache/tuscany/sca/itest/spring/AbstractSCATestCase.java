@@ -21,16 +21,36 @@ package org.apache.tuscany.sca.itest.spring;
 
 import junit.framework.TestCase;
 
+import java.io.File;
+import java.net.MalformedURLException;
+
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 
 public abstract class AbstractSCATestCase<T> extends TestCase {
 
     protected SCADomain domain;
+    protected String compositeName;
+    protected String contributionLocation;
     protected T service;
+    
+    public AbstractSCATestCase(String compositeName, String contributionLocation) {
+        super();
+        this.compositeName = compositeName;
+        this.contributionLocation = contributionLocation;
+        try {
+            if (contributionLocation != null) {
+                File f = new File("target/classes/" + contributionLocation);
+                this.contributionLocation = f.toURL().toString();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void setUp() throws Exception {
-        domain = SCADomain.newInstance(getCompositeName());
+    	domain = SCADomain.newInstance("http://localhost", contributionLocation, compositeName);
+        //domain = SCADomain.newInstance(getCompositeName());
         service = domain.getService(getServiceClass(), "ClientComponent");
     }
 

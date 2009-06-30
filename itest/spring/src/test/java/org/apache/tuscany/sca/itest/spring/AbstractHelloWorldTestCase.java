@@ -19,7 +19,6 @@
 
 package org.apache.tuscany.sca.itest.spring;
 
-
 /**
  * Basic "hello world" style test case for testing Spring component implementation
  *
@@ -29,6 +28,10 @@ public abstract class AbstractHelloWorldTestCase extends AbstractSCATestCase<Hel
     /**
      * Calls the hello world service and checks that it gives the right response...
      */
+	public AbstractHelloWorldTestCase(String compositeName, String contributionLocation) {
+        super(compositeName, contributionLocation);        
+    }
+	
     public void testHello() throws Exception {
         assertEquals("Hello petra", service.sayHello("petra"));
     }

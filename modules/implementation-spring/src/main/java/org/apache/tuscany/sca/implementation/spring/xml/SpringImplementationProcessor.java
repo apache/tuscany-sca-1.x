@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.implementation.spring.xml;
@@ -31,12 +31,12 @@ import org.apache.tuscany.sca.assembly.ComponentType;
 import org.apache.tuscany.sca.assembly.builder.impl.ProblemImpl;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
+import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
+import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
 import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
-import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
-import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
-import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.implementation.spring.SpringImplementation;
 import org.apache.tuscany.sca.implementation.spring.introspect.SpringXMLComponentTypeLoader;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterfaceFactory;
@@ -48,8 +48,8 @@ import org.apache.tuscany.sca.policy.PolicyFactory;
 /**
  * SpringArtifactProcessor is responsible for processing the XML of an <implementation.spring.../>
  * element in an SCA SCDL file.
- * 
- * @version $Rev: 511195 $ $Date: 2007-02-24 02:29:46 +0000 (Sat, 24 Feb 2007) $ 
+ *
+ * @version $Rev: 511195 $ $Date: 2007-02-24 02:29:46 +0000 (Sat, 24 Feb 2007) $
  */
 public class SpringImplementationProcessor implements StAXArtifactProcessor<SpringImplementation> {
 
@@ -63,18 +63,21 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
     private PolicyFactory policyFactory;
     private PolicyAttachPointProcessor policyProcessor;
     private Monitor monitor;
-    
+
+    private ModelFactoryExtensionPoint factories;
+
     public SpringImplementationProcessor(ModelFactoryExtensionPoint modelFactories, Monitor monitor) {
+        this.factories = modelFactories;
         this.assemblyFactory = modelFactories.getFactory(AssemblyFactory.class);
         this.javaFactory = modelFactories.getFactory(JavaInterfaceFactory.class);
         this.policyFactory = modelFactories.getFactory(PolicyFactory.class);
         this.policyProcessor = new PolicyAttachPointProcessor(policyFactory);
         this.monitor = monitor;
     }
-    
+
     /**
      * Report a exception.
-     * 
+     *
      * @param problems
      * @param message
      * @param model
@@ -85,10 +88,10 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
 	        monitor.problem(problem);
     	 }
     }
-    
+
     /**
      * Report a error.
-     * 
+     *
      * @param problems
      * @param message
      * @param model
@@ -102,21 +105,21 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
 
     /*
      * Read the XML and parse out the attributes.
-     * 
+     *
      * <implementation.spring.../> has a single required attribute:
      * "location" - which is the target URI of of an archive file or a directory that contains the Spring
      * application context files.
-     * If the resource identified by the location attribute is an archive file, then the file 
-     * META-INF/MANIFEST.MF is read from the archive. 
+     * If the resource identified by the location attribute is an archive file, then the file
+     * META-INF/MANIFEST.MF is read from the archive.
      * If the location URI identifies a directory, then META-INF/MANIFEST.MF must exist
-     * underneath that directory. 
+     * underneath that directory.
      * If the manifest file contains a header "Spring-Context" of the format:
      *    Spring-Context ::= path ( ';' path )*
-     *    
-     * Where path is a relative path with respect to the location URI, then the set of paths 
-     * specified in the header identify the context configuration files. 
-     * If there is no MANIFEST.MF file or no Spring-Context header within that file, 
-     * then the default behaviour is to build an application context using all the *.xml files 
+     *
+     * Where path is a relative path with respect to the location URI, then the set of paths
+     * specified in the header identify the context configuration files.
+     * If there is no MANIFEST.MF file or no Spring-Context header within that file,
+     * then the default behaviour is to build an application context using all the *.xml files
      * in the METAINF/spring directory.
      */
     public SpringImplementation read(XMLStreamReader reader) throws ContributionReadException, XMLStreamException {
@@ -135,7 +138,7 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
         	error("LocationAttributeMissing", reader);
             //throw new ContributionReadException(MSG_LOCATION_MISSING);
         }
-        
+
         // Read policies
         policyProcessor.readPolicies(springImplementation, reader);
 
@@ -153,7 +156,7 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
      * Handles the component type for the Spring implementation
      * @param springImplementation - a Spring implementation.  The component type information
      * is created for this implementation
-     *  
+     *
      */
     private void processComponentType(SpringImplementation springImplementation) {
 
@@ -173,7 +176,7 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
         policyProcessor.writePolicyPrefixes(springImplementation, writer);
         writer.writeStartElement(Constants.SCA10_NS, IMPLEMENTATION_SPRING);
         policyProcessor.writePolicyAttributes(springImplementation, writer);
-        
+
         if (springImplementation.getLocation() != null) {
             writer.writeAttribute(LOCATION, springImplementation.getLocation());
         }
@@ -188,16 +191,16 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
      */
     public void resolve(SpringImplementation springImplementation, ModelResolver resolver)
         throws ContributionResolveException {
-    	
+
     	if (springImplementation == null)
     		return;
 
         /* Load the Spring component type by reading the Spring application context */
         SpringXMLComponentTypeLoader springLoader =
-            new SpringXMLComponentTypeLoader(assemblyFactory, javaFactory, policyFactory);
+            new SpringXMLComponentTypeLoader(factories, assemblyFactory, javaFactory, policyFactory);
         try {
             // Load the Spring Implementation information from its application context file...
-            springLoader.load(springImplementation);
+            springLoader.load(springImplementation, resolver);
         } catch (ContributionReadException e) {
         	ContributionResolveException ce = new ContributionResolveException(e);
         	error("ContributionResolveException", resolver, ce);
@@ -210,12 +213,12 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
             ComponentType componentType = resolver.resolveModel(ComponentType.class, ct);
             if (componentType.isUnresolved()) {
             	error("UnableToResolveComponentType", resolver);
-                //throw new ContributionResolveException("SpringArtifactProcessor: unable to resolve componentType for Spring component");             
+                //throw new ContributionResolveException("SpringArtifactProcessor: unable to resolve componentType for Spring component");
             } else {
                 springImplementation.setComponentType(componentType);
                 springImplementation.setUnresolved(false);
-           }            
-   
+           }
+
         } // end if
 
     } // end method resolve

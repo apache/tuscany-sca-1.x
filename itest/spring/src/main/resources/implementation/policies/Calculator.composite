@@ -24,7 +24,7 @@
            xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0">
 
     <component name="CalculatorServiceComponent">
-        <implementation.spring location="META-INF/sca/implementation-policies/CalculatorService-context.xml">		
+        <implementation.spring location="META-INF/spring/CalculatorService-context.xml">		
 			<operation name="divide" requires="tuscany:logging"/>
 			<operation name="subtract" requires="tuscany:logging"/>
 		</implementation.spring>
@@ -51,7 +51,7 @@
     </component>
     
     <component name="AnotherCalculatorServiceComponent">
-        <implementation.spring location="META-INF/sca/implementation-policies/CalculatorService-context.xml" requires="tuscany:logging"/>		
+        <implementation.spring location="META-INF/spring/CalculatorService-context.xml" requires="tuscany:logging"/>		
         <reference name="addService" target="AddServiceComponent" />
         <reference name="subtractService" target="SubtractServiceComponent" />
         <reference name="multiplyService" target="MultiplyServiceComponent" />

@@ -18,6 +18,9 @@
  */
 package context.multiple;
 
+import java.io.File;
+
+import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.springframework.context.ApplicationContext;
@@ -34,7 +37,8 @@ public class StockQuoteServer {
         System.out.println("Starting the Sample SCA StockQuote Service...");
 
         SCANodeFactory factory = SCANodeFactory.newInstance();
-        SCANode node = factory.createSCANodeFromClassLoader("context/multiple/StockQuote.composite", StockQuoteServer.class.getClassLoader());
+        SCANode node = factory.createSCANode(new File("src/main/resources/context/multiple/StockQuote.composite").toURL().toString(),
+                new SCAContribution("TestContribution", new File("src/main/resources/context/multiple/").toURL().toString()));
         node.start();
         
         // Method 1: To access the Spring Application Context instance

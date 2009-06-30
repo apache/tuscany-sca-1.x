@@ -23,17 +23,13 @@
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/sca http://www.osoa.org/xmlns/sca/1.0/spring-sca.xsd">
-
-    <bean id="CalculatorServiceBean" class="calculator.CalculatorServiceImpl">        
-        <property name="addService" ref="addService"/>
-        <property name="subtractService" ref="subtractService"/>
-        <property name="multiplyService" ref="multiplyService"/>
-        <property name="divideService" ref="divideService"/>
+       
+    <bean id="beanRefFactory" class="org.springframework.context.support.ClassPathXmlApplicationContext">
+	   <constructor-arg>
+		  <list>
+			 <value>context/multiple/META-INF/spring/StockQuoteService-context.xml</value>
+			 <value>context/multiple/META-INF/spring/SpringHelloWorld-context.xml</value>
+		  </list>
+	   </constructor-arg>
     </bean>
-
-    <sca:reference name="addService" type="calculator.AddService"/>
-    <sca:reference name="subtractService" type="calculator.SubtractService"/>   
-    <sca:reference name="multiplyService" type="calculator.MultiplyService"/>    
-    <sca:reference name="divideService" type="calculator.DivideService"/>
-
 </beans>

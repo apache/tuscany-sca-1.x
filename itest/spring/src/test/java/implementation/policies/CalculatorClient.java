@@ -46,8 +46,9 @@ public class CalculatorClient {
         }
 
         SCANodeFactory factory = SCANodeFactory.newInstance();
-        SCANode node = factory.createSCANodeFromClassLoader("implementation/policies/Calculator.composite", CalculatorServiceImpl.class.getClassLoader());
-        node.start();        
+        SCANode node = factory.createSCANode(new File("src/main/resources/implementation/policies/Calculator.composite").toURL().toString(),
+                new SCAContribution("TestContribution", new File("src/main/resources/implementation/policies/").toURL().toString()));
+        node.start();       
               
         CalculatorService calculatorService = 
             ((SCAClient)node).getService(CalculatorService.class, "CalculatorServiceComponent");

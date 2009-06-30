@@ -27,7 +27,6 @@ import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
 import calculator.CalculatorService;
-import calculator.CalculatorServiceImpl;
 
 
 /**
