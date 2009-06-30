@@ -119,22 +119,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.tuscany.sca</groupId>
-                <artifactId>tuscany-maven-ant-generator</artifactId>
-                <version>1.6-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <buildDependencyFileOnly>true</buildDependencyFileOnly>
-                        </configuration>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+          </plugins>
     </build>
 
 </project>
