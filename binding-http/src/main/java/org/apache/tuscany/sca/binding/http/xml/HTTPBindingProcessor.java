@@ -31,6 +31,7 @@ import org.apache.tuscany.sca.assembly.OperationSelector;
 import org.apache.tuscany.sca.assembly.WireFormat;
 import org.apache.tuscany.sca.assembly.builder.impl.ProblemImpl;
 import org.apache.tuscany.sca.assembly.xml.Constants;
+import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
 import org.apache.tuscany.sca.binding.http.HTTPBinding;
 import org.apache.tuscany.sca.binding.http.HTTPBindingFactory;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
@@ -45,6 +46,7 @@ import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
+import org.apache.tuscany.sca.policy.PolicyFactory;
 
 public class HTTPBindingProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<HTTPBinding> {
     private static final String BINDING_HTTP = "binding.http";
@@ -56,6 +58,8 @@ public class HTTPBindingProcessor extends BaseStAXArtifactProcessor implements S
     private HTTPBindingFactory httpBindingFactory;
     private StAXArtifactProcessor<Object> extensionProcessor;
     private StAXAttributeProcessor<Object> extensionAttributeProcessor;
+    private PolicyFactory policyFactory;
+    private PolicyAttachPointProcessor policyProcessor;
     private Monitor monitor;
 
     public HTTPBindingProcessor(ExtensionPointRegistry extensionPoints, 
@@ -66,6 +70,8 @@ public class HTTPBindingProcessor extends BaseStAXArtifactProcessor implements S
         this.httpBindingFactory = modelFactories.getFactory(HTTPBindingFactory.class);
         this.extensionProcessor = (StAXArtifactProcessor<Object>)extensionProcessor;
         this.extensionAttributeProcessor = extensionAttributeProcessor;
+        this.policyFactory = modelFactories.getFactory(PolicyFactory.class);
+        this.policyProcessor = new PolicyAttachPointProcessor(policyFactory);
         this.monitor = monitor;
     }
     
@@ -79,6 +85,9 @@ public class HTTPBindingProcessor extends BaseStAXArtifactProcessor implements S
 
     public HTTPBinding read(XMLStreamReader reader) throws ContributionReadException, XMLStreamException {
         HTTPBinding httpBinding = httpBindingFactory.createHTTPBinding();
+        
+        // Read policies
+        policyProcessor.readPolicies(httpBinding, reader);
         
         while(reader.hasNext()) {
             QName elementName = null;
@@ -128,6 +137,9 @@ public class HTTPBindingProcessor extends BaseStAXArtifactProcessor implements S
         //writer.writeStartElement(Constants.SCA10_NS, BINDING_HTTP);
         
         writeStart(writer, BINDING_HTTP_QNAME.getNamespaceURI(), BINDING_HTTP_QNAME.getLocalPart());
+
+        //write policies
+        policyProcessor.writePolicyAttributes(httpBinding, writer);
         
         // Write binding name
         if (httpBinding.getName() != null) {
@@ -151,9 +163,8 @@ public class HTTPBindingProcessor extends BaseStAXArtifactProcessor implements S
     }
 
 
-    public void resolve(HTTPBinding model, ModelResolver resolver) throws ContributionResolveException {
-        // Should not need to do anything here for now... 
-        
+    public void resolve(HTTPBinding model, ModelResolver resolver) throws ContributionResolveException {      
+        policyProcessor.resolvePolicies(model, resolver);    
     }
     
     /**
