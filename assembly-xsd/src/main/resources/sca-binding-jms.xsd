@@ -139,7 +139,7 @@
     <complexType name="BindingProperty">
         <simpleContent>
             <extension base="string">
-                <attribute name="name" type="NMTOKEN"/>
+                <attribute name="name" type="NMTOKEN" use="required"/>
                 <attribute name="type" type="string" use="optional" default="xs:string"/>
             </extension>
         </simpleContent>
