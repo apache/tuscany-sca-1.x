@@ -29,8 +29,5 @@
 
     <bean id="StockQuoteServiceBean" class="bigbank.stockquote.StockQuoteImpl">
     </bean>
-    
-    <bean id="applicationContextProvider" class="context.access.SCAApplicationContextProvider">
-    </bean>
 
 </beans>

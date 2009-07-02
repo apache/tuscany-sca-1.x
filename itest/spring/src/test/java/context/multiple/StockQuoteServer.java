@@ -39,12 +39,7 @@ public class StockQuoteServer {
         SCANodeFactory factory = SCANodeFactory.newInstance();
         SCANode node = factory.createSCANode(new File("src/main/resources/context/multiple/StockQuote.composite").toURL().toString(),
                 new SCAContribution("TestContribution", new File("src/main/resources/context/multiple/").toURL().toString()));
-        node.start();
-        
-        // Method 1: To access the Spring Application Context instance
-        ApplicationContext ctx = SCAApplicationContextProvider.getApplicationContext();
-        if (ctx.containsBean("StockQuoteServiceBean"))
-            System.out.println("StockQuoteServiceBean is now available for use...");        
+        node.start();      
         
         System.out.println("Press Enter to Exit...");
         Thread.sleep(1000);
