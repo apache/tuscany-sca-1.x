@@ -24,12 +24,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.xml.namespace.QName;
 import java.util.TreeSet;
 
+import javax.xml.namespace.QName;
+
 import org.apache.tuscany.sca.assembly.BindingRRB;
-import org.apache.tuscany.sca.assembly.DefinitionElement;
 import org.apache.tuscany.sca.assembly.ConfiguredOperation;
+import org.apache.tuscany.sca.assembly.DefinitionElement;
 import org.apache.tuscany.sca.assembly.OperationSelector;
 import org.apache.tuscany.sca.assembly.OperationsConfigurator;
 import org.apache.tuscany.sca.assembly.WireFormat;
@@ -140,8 +141,10 @@ public class JMSBinding implements BindingRRB, PolicySetAttachPoint, OperationsC
     private String jmsSelector;
     private QName requestConnectionName;
     private QName responseConnectionName;
+    private QName operationPropertiesName;
     private JMSBinding requestConnectionBinding;
     private JMSBinding responseConnectionBinding;
+    private JMSBinding operationPropertiesBinding;
     
     private WireFormat requestWireFormat;
     private WireFormat responseWireFormat;
@@ -681,6 +684,20 @@ public class JMSBinding implements BindingRRB, PolicySetAttachPoint, OperationsC
         return responseConnectionBinding;
     }
     
+    public void setOperationPropertiesName(QName nameValue) {
+        this.operationPropertiesName = nameValue;
+    }
+    public QName getOperationPropertiesName() {
+        return operationPropertiesName;
+    }
+
+    public void setOperationPropertiesBinding(JMSBinding binding) {
+        this.operationPropertiesBinding = binding;
+    }
+    public JMSBinding getOperationPropertiesBinding() {
+        return operationPropertiesBinding;
+    }
+
     // operations required by PolicySetAttachPoint
     public List<PolicySet> getPolicySets() {
         return policySets;
@@ -893,4 +910,5 @@ public class JMSBinding implements BindingRRB, PolicySetAttachPoint, OperationsC
         
         return true;
     }
+
 }

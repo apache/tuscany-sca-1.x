@@ -266,6 +266,11 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
             jmsBinding.setResponseConnectionName(getQNameValue(reader, responseConnectionName));
         }
 
+        String operationPropertiesName = reader.getAttributeValue(null, "operationProperties");
+        if (operationPropertiesName != null && operationPropertiesName.length() > 0) {
+            jmsBinding.setOperationPropertiesName(getQNameValue(reader, operationPropertiesName));
+        }
+
         // Read sub-elements of binding.jms
         boolean endFound = false;
         while (!endFound) {
@@ -383,6 +388,9 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         }
         if (model.getResponseConnectionName() != null) {
             model.setResponseConnectionBinding(getConnectionBinding(model, "responseConnection", model.getResponseConnectionName(), resolver));
+        }
+        if (model.getOperationPropertiesName() != null) {
+            model.setOperationPropertiesBinding(getConnectionBinding(model, "operationProperties", model.getOperationPropertiesName(), resolver));
         }
     }
 
@@ -912,7 +920,8 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         // Write a <binding.jms>
         writeStart(writer, Constants.SCA10_NS, JMSBindingConstants.BINDING_JMS,
                    new XAttr("requestConnection", jmsBinding.getRequestConnectionName()),
-                   new XAttr("responseConnection", jmsBinding.getResponseConnectionName()));
+                   new XAttr("responseConnection", jmsBinding.getResponseConnectionName()),
+                   new XAttr("operationProperties", jmsBinding.getOperationPropertiesName()));
 
         if (jmsBinding.getName() != null) {
             writer.writeAttribute("name", jmsBinding.getName());
