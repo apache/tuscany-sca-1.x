@@ -38,6 +38,7 @@ import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
@@ -70,7 +71,8 @@ public class SpringContextTie {
     }
 
     public void start() {
-        // Do refresh here to ensure that Spring Beans are not touched before the SCA config process is complete...
+        // Do refresh here to ensure that Spring Beans are not touched before 
+    	// the SCA config process is complete...
         springContext.refresh();
         springContext.start();
     }
@@ -122,11 +124,12 @@ public class SpringContextTie {
                                 }
                                 listValues = (values.toString()).split("~");                                    
                         }
-                }            
-                                                                                   
-	            appContext = new ClassPathXmlApplicationContext(listValues, false, scaParentContext);	            
+                }
+                
+	            appContext = new ClassPathXmlApplicationContext(listValues, false, scaParentContext);
+	            appContext.setClassLoader(implementation.getClassLoader());
 	            appContext.refresh();
-	            appContext.getBeanFactory().setBeanClassLoader(implementation.getClassLoader());
+	            //appContext.getBeanFactory().setBeanClassLoader(implementation.getClassLoader());
 	            if (isAnnotationSupported)
 	            	includeAnnotationProcessors(appContext.getBeanFactory());
 	            return appContext;
@@ -137,7 +140,6 @@ public class SpringContextTie {
         if (isAnnotationSupported)
         	includeAnnotationProcessors(beanFactory);
         appContext = new GenericApplicationContext(beanFactory, scaParentContext);
-        appContext.setClassLoader(implementation.getClassLoader());
         return appContext;
     }
 
