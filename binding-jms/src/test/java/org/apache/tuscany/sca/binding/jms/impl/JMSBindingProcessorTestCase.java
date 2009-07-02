@@ -19,10 +19,8 @@
 
 package org.apache.tuscany.sca.binding.jms.impl;
 
-import java.io.InputStream;
 import java.io.StringReader;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,7 +30,6 @@ import javax.xml.stream.XMLStreamReader;
 import junit.framework.TestCase;
 
 import org.apache.tuscany.sca.assembly.Composite;
-import org.apache.tuscany.sca.assembly.ConfiguredOperation;
 import org.apache.tuscany.sca.assembly.OperationsConfigurator;
 import org.apache.tuscany.sca.assembly.WireFormat;
 import org.apache.tuscany.sca.binding.jms.wireformat.jmsbytes.WireFormatJMSBytes;
@@ -385,6 +382,17 @@ public class JMSBindingProcessorTestCase extends TestCase {
             + "      </service>"
             + " </component>"
             + "</composite>";     
+
+    public static final String OP_PROP_NAME =
+        "<?xml version=\"1.0\" encoding=\"ASCII\"?>" 
+        + "<composite xmlns=\"http://www.osoa.org/xmlns/sca/1.0\" targetNamespace=\"http://binding-jms\" name=\"binding-jms\">"
+            + " <component name=\"HelloWorldComponent\">"
+            + "   <implementation.java class=\"services.HelloWorld\"/>"
+            + "      <service name=\"HelloWorldService\">"
+            + "          <binding.jms operationProperties=\"foo\"/>"
+            + "      </service>"
+            + " </component>"
+            + "</composite>";
 
     private XMLInputFactory inputFactory;
     private StAXArtifactProcessor<Object> staxProcessor;
@@ -762,4 +770,14 @@ public class JMSBindingProcessorTestCase extends TestCase {
         WireFormat responseWireFormat = binding.getResponseWireFormat();
         assertEquals(WireFormatJMSBytes.class, responseWireFormat.getClass());
     }    
+
+    public void testOpPropertiesName() throws Exception {
+        XMLStreamReader reader = inputFactory.createXMLStreamReader(new StringReader(OP_PROP_NAME));
+        
+        Composite composite = (Composite)staxProcessor.read(reader);
+        JMSBinding binding = (JMSBinding)   composite.getComponents().get(0).getServices().get(0).getBindings().get(0);
+        
+        assertNotNull(binding);
+        assertEquals( "foo", binding.getOperationPropertiesName().getLocalPart() );
+    }
 }
