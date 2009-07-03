@@ -27,6 +27,7 @@ import org.osoa.sca.annotations.Service;
 public class HelloWorldImpl implements HelloWorldService {
 
     public String getGreetings(String name) {
+        System.out.println("Got greeting " + name + " at server");
         return "Hello " + name;
     }
 
