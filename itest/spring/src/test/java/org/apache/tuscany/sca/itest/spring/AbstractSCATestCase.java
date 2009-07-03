@@ -50,7 +50,6 @@ public abstract class AbstractSCATestCase<T> extends TestCase {
     @Override
     protected void setUp() throws Exception {
     	domain = SCADomain.newInstance("http://localhost", contributionLocation, compositeName);
-        //domain = SCADomain.newInstance(getCompositeName());
         service = domain.getService(getServiceClass(), "ClientComponent");
     }
 

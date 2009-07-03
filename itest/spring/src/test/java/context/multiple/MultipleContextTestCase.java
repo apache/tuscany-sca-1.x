@@ -19,12 +19,11 @@
 package context.multiple;
 
 import junit.framework.TestCase;
-import org.junit.Ignore;
+
 /**
  * Tests out the big bank service
  *
  */
-@Ignore("TUSCANY-3069")
 public class MultipleContextTestCase extends TestCase {
 
     public void testServer() throws Exception {
