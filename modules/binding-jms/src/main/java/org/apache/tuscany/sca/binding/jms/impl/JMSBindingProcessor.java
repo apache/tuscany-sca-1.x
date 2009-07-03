@@ -656,6 +656,11 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
      * </operationProperties>*
      */
     private void parseOperationProperties(XMLStreamReader reader, JMSBinding jmsBinding) throws XMLStreamException {
+        
+        if (jmsBinding.getOperationPropertiesName() != null) {
+            error("DuplicateOperationProperties", jmsBinding);
+        }
+        
         String opName = reader.getAttributeValue(null, "name");
         if (opName == null || opName.length() < 1) {
             warning("MissingJMSOperationPropertyName", jmsBinding);
@@ -1132,6 +1137,9 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
      * </binding.jms>
      */
     private void writeOperationProperties( JMSBinding jmsBinding, XMLStreamWriter writer) throws XMLStreamException {
+        if (jmsBinding.getOperationPropertiesBinding() != null) {
+            return;   
+        }
         Set<String> operationNames = jmsBinding.getOperationNames();
         if (operationNames == null || (operationNames.size() < 1)) {
             return;

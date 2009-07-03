@@ -542,14 +542,22 @@ public class JMSBinding implements BindingRRB, PolicySetAttachPoint, OperationsC
      * @return a Set<String> of operation names
      */
     public Set<String> getOperationNames() {
-        // Make a defensive copy since key changes affect map, map changes affect keys.
-        Set<String> opNames = operationProperties.keySet();
-        Set<String> opNamesCopy = new TreeSet<String>( opNames );
-        return opNamesCopy;
+        if (operationPropertiesBinding != null) {
+            return operationPropertiesBinding.getOperationNames();
+        } else {
+            // Make a defensive copy since key changes affect map, map changes affect keys.
+            Set<String> opNames = operationProperties.keySet();
+            Set<String> opNamesCopy = new TreeSet<String>( opNames );
+            return opNamesCopy;
+        }
     }
     
     public Map<String, Object> getOperationProperties(String opName) {
-        return operationProperties.get(opName);
+        if (operationPropertiesBinding != null) {
+            return operationPropertiesBinding.getOperationProperties(opName);
+        } else {
+            return operationProperties.get(opName);
+        }
     }
 
     public void setOperationProperty(String opName, String propName, Object value) {
@@ -569,22 +577,34 @@ public class JMSBinding implements BindingRRB, PolicySetAttachPoint, OperationsC
      * null for non existant operation name or property name.
      */
     public Object getOperationProperty(String opName, String propName ) {
-        Map<String, Object> props = operationProperties.get(opName);
-        if (props == null) { 
-            return null;
+        if (operationPropertiesBinding != null) {
+            return operationPropertiesBinding.getOperationProperty(opName, propName);
+        } else {
+            Map<String, Object> props = operationProperties.get(opName);
+            if (props == null) { 
+                return null;
+            }
+            return props.get(propName);
         }
-        return props.get(propName);
     }
 
     public boolean hasNativeOperationName(String opName) {
-        return nativeOperationNames.containsKey(opName);
+        if (operationPropertiesBinding != null) {
+            return operationPropertiesBinding.hasNativeOperationName(opName);
+        } else {
+            return nativeOperationNames.containsKey(opName);
+        }
     }
 
     public String getNativeOperationName(String opName) {
-        if (nativeOperationNames.containsKey(opName)) {
-            return nativeOperationNames.get(opName);
+        if (operationPropertiesBinding != null && operationPropertiesBinding.getNativeOperationName(opName) != null) {
+            return operationPropertiesBinding.getNativeOperationName(opName);
         } else {
-            return opName;
+            if (nativeOperationNames.containsKey(opName)) {
+                return nativeOperationNames.get(opName);
+            } else {
+                return opName;
+            }
         }
     }
 
@@ -593,10 +613,14 @@ public class JMSBinding implements BindingRRB, PolicySetAttachPoint, OperationsC
     }
 
     public String getOperationJMSType(String opName) {
-        if (operationJMSTypes.containsKey(opName)) {
-            return operationJMSTypes.get(opName);
+        if (operationPropertiesBinding != null && operationPropertiesBinding.getOperationJMSType(opName) != null) {
+            return operationPropertiesBinding.getOperationJMSType(opName);
         } else {
-            return jmsType;
+            if (operationJMSTypes.containsKey(opName)) {
+                return operationJMSTypes.get(opName);
+            } else {
+                return jmsType;
+            }
         }
     }
     public void setOperationJMSType(String opName, String jmsType) {
@@ -604,10 +628,18 @@ public class JMSBinding implements BindingRRB, PolicySetAttachPoint, OperationsC
     }
 
     public String getOperationJMSCorrelationId(String opName) {
-        if (operationJMSCorrelationIds.containsKey(opName)) {
-            return operationJMSCorrelationIds.get(opName);
+        if (operationPropertiesBinding != null) {
+            if (operationPropertiesBinding.getOperationJMSCorrelationId(opName) != null) {
+                return operationPropertiesBinding.getOperationJMSCorrelationId(opName);
+            } else {
+                return jmsCorrelationId;
+            }
         } else {
-            return jmsCorrelationId;
+            if (operationJMSCorrelationIds.containsKey(opName)) {
+                return operationJMSCorrelationIds.get(opName);
+            } else {
+                return jmsCorrelationId;
+            }
         }
     }
     public void setOperationJMSCorrelationId(String opName, String jmsCorrelationId) {
@@ -615,10 +647,18 @@ public class JMSBinding implements BindingRRB, PolicySetAttachPoint, OperationsC
     }
 
     public Boolean getOperationJMSDeliveryMode(String opName) {
-        if (operationJMSDeliveryModes.containsKey(opName)) {
-            return operationJMSDeliveryModes.get(opName);
+        if (operationPropertiesBinding != null) {
+            if (operationPropertiesBinding.getOperationJMSDeliveryMode(opName) != null) {
+                return operationPropertiesBinding.getOperationJMSDeliveryMode(opName);
+            } else {
+                return deliveryModePersistent;
+            }
         } else {
-            return deliveryModePersistent;
+            if (operationJMSDeliveryModes.containsKey(opName)) {
+                return operationJMSDeliveryModes.get(opName);
+            } else {
+                return deliveryModePersistent;
+            }
         }
     }
     public void setOperationJMSDeliveryMode(String opName, boolean b) {
@@ -626,10 +666,18 @@ public class JMSBinding implements BindingRRB, PolicySetAttachPoint, OperationsC
     }
 
     public Long getOperationJMSTimeToLive(String opName) {
-        if (operationJMSTimeToLives.containsKey(opName)) {
-            return operationJMSTimeToLives.get(opName);
+        if (operationPropertiesBinding != null) {
+            if (operationPropertiesBinding.getOperationJMSTimeToLive(opName) != null) {
+                return operationPropertiesBinding.getOperationJMSTimeToLive(opName);
+            } else {
+                return timeToLive;
+            }
         } else {
-            return timeToLive;
+            if (operationJMSTimeToLives.containsKey(opName)) {
+                return operationJMSTimeToLives.get(opName);
+            } else {
+                return timeToLive;
+            }
         }
     }
     public void setOperationJMSTimeToLive(String opName, Long ttl) {
@@ -637,10 +685,18 @@ public class JMSBinding implements BindingRRB, PolicySetAttachPoint, OperationsC
     }
 
     public Integer getOperationJMSPriority(String opName) {
-        if (operationJMSPriorities.containsKey(opName)) {
-            return operationJMSPriorities.get(opName);
+        if (operationPropertiesBinding != null) {
+            if (operationPropertiesBinding.getOperationJMSPriority(opName) != null) {
+                return operationPropertiesBinding.getOperationJMSPriority(opName);
+            } else {
+                return jmsPriority;
+            }
         } else {
-            return jmsPriority;
+            if (operationJMSPriorities.containsKey(opName)) {
+                return operationJMSPriorities.get(opName);
+            } else {
+                return jmsPriority;
+            }
         }
     }
     public void setOperationJMSPriority(String opName, int p) {
