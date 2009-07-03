@@ -32,9 +32,23 @@
         <property name="hwProperty">EJB</property>
     </component>
     
+    <component name="HelloworldServiceComponent2">
+        <implementation.ejb ejb-link="itest-contribution-jee-samples-08-ejb-enhanced.jar#HelloworldService8Bean"/>
+        <service name="HelloworldService8">
+            <interface.java interface="sample.ejb3.HelloworldService8"/>
+            <binding.sca/>
+        </service>
+        <reference name="hwReference" target="HelloworldServiceJavaComponent"/>
+        <property name="hwProperty">EJB</property>
+    </component>    
+    
     <service name="TheService" promote="HelloworldServiceComponent/HelloworldService8"/>
     
     <reference name="TheReference" promote="HelloworldServiceComponent/hwReference"/>
+    
+    <service name="TheService2" promote="HelloworldServiceComponent2/HelloworldService8"/>
+    
+    <reference name="TheReference2" promote="HelloworldServiceComponent2/hwReference"/>
     
     <component name="HelloworldServiceJavaComponent">
         <implementation.java class="sample.java.HelloworldServiceJavaImpl"/>

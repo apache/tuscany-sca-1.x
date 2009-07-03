@@ -103,7 +103,7 @@ public class SCAJarEarAppcompTestCase {
         domain.getDomainComposite().getIncludes().add(composite);
         
         Assert.assertEquals(3, composite.getComponents().size());
-        Assert.assertEquals(2, composite.getComponents().get(1).getImplementation().getServices().size());            
+        Assert.assertEquals(3, composite.getComponents().get(1).getImplementation().getServices().size());            
         Assert.assertEquals("TheService", composite.getComponents().get(1).getImplementation().getServices().get(0).getName());
         
         domain.buildComposite(composite);
