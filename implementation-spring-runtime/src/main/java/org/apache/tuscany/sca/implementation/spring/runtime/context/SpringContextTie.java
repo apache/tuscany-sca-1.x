@@ -38,7 +38,6 @@ import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
@@ -103,33 +102,30 @@ public class SpringContextTie {
             	
             if (beanClassName.indexOf(".ClassPathXmlApplicationContext") != -1) {
             	BeanDefinition beanDef = beanFactory.getBeanDefinition(bean);                           
-                String[] listValues = null;
+                String[] configLocations = null;
                 List<ConstructorArgumentValues.ValueHolder> conArgs = 
                         beanDef.getConstructorArgumentValues().getGenericArgumentValues();
                 for (ConstructorArgumentValues.ValueHolder conArg : conArgs) {
-                        if (conArg.getValue() instanceof TypedStringValue) {
-                                TypedStringValue value = (TypedStringValue) conArg.getValue();
-                                if (value.getValue().indexOf(".xml") != -1)
-                                        listValues = new String[]{value.getValue()};
+                	if (conArg.getValue() instanceof TypedStringValue) {
+                        TypedStringValue value = (TypedStringValue) conArg.getValue();
+                        if (value.getValue().indexOf(".xml") != -1)
+                        	configLocations = new String[]{value.getValue()};
+                	}
+                    if (conArg.getValue() instanceof ManagedList) {
+                        Iterator itml = ((ManagedList)conArg.getValue()).iterator();
+                        StringBuffer values = new StringBuffer();
+                        while (itml.hasNext()) {
+                            TypedStringValue next = (TypedStringValue)itml.next();
+                            if (next.getValue().indexOf(".xml") != -1) {
+                            	values.append(implementation.getClassLoader().getResource(next.getValue()).toString());
+                                values.append("~");
+                            }
                         }
-                        if (conArg.getValue() instanceof ManagedList) {
-                                Iterator itml = ((ManagedList)conArg.getValue()).iterator();
-                                StringBuffer values = new StringBuffer();
-                                while (itml.hasNext()) {
-                                        TypedStringValue next = (TypedStringValue)itml.next();
-                                        if (next.getValue().indexOf(".xml") != -1) {
-                                                values.append(next.getValue());
-                                                values.append("~");
-                                        }
-                                }
-                                listValues = (values.toString()).split("~");                                    
-                        }
+                        configLocations = (values.toString()).split("~");                                    
+                    }
                 }
                 
-	            appContext = new ClassPathXmlApplicationContext(listValues, false, scaParentContext);
-	            appContext.setClassLoader(implementation.getClassLoader());
-	            appContext.refresh();
-	            //appContext.getBeanFactory().setBeanClassLoader(implementation.getClassLoader());
+	            appContext = new ClassPathXmlApplicationContext(configLocations, true, scaParentContext);	            
 	            if (isAnnotationSupported)
 	            	includeAnnotationProcessors(appContext.getBeanFactory());
 	            return appContext;
