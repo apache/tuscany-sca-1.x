@@ -185,7 +185,6 @@
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-core</artifactId>
             <version>5.2.0</version>
-            <scope>runtime</scope>
         </dependency>
         
         <dependency>
