@@ -78,6 +78,13 @@ public class WireFormatJMSDefaultReferenceProvider implements WireFormatProvider
             this.binding.setResponseMessageProcessorName(JMSBindingConstants.DEFAULT_MP_CLASSNAME);
         }
 
+        // TODO - can be null if it's a $self$ reference. Need to decide if 
+        //        that's valid
+        if (reference.getReference() == null){
+            interfaceContract = reference.getInterfaceContract();
+            return;
+        }
+        
         List<Operation> opList = reference.getReference().getInterfaceContract().getInterface().getOperations();
 
         // Go through each operation and add wrapper info
