@@ -80,7 +80,7 @@ public class ComponentTypeDocumentProcessor extends BaseAssemblyProcessor implem
             URLConnection connection = url.openConnection();
             connection.setUseCaches(false);
             urlStream = connection.getInputStream();
-            XMLStreamReader reader = inputFactory.createXMLStreamReader(url.toString(), urlStream);
+            XMLStreamReader reader = inputFactory.createXMLStreamReader(urlStream);
             reader.nextTag();
             
             // Reader the componentType model 
