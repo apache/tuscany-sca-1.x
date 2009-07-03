@@ -19,12 +19,22 @@
 
 package services;
 
-import org.osoa.sca.annotations.Remotable;
 
-@Remotable
-public interface Total {
+public class Order {
+    private Item[] items;
+      
+    public Order() {
+    }
     
-    String getTotal();
-    void confirmTotal();
-
+    public Order(Item[] items) {
+        this.items = items;
+    }
+    
+    public Item[] getItems() {
+        return items;
+    }
+    
+    public void setItems(Item[] items) {
+        this.items = items;
+    }
 }

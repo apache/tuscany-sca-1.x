@@ -51,6 +51,7 @@
 	}
 	
 	function shoppingCart_getResponse(feed) {
+		document.getElementById("shoppingCart").innerHTML = "";
 		if (feed != null) {
 			var entries = feed.getElementsByTagName("entry");              
 			var list = "";
@@ -99,25 +100,48 @@
 			}
 	}
 	function checkoutCart() {
+		var cartHtml = document.getElementById('shoppingCart').innerHTML;
+		var totalHtml = document.getElementById('total').innerHTML;
+
+		document.getElementById('shoppingCart').innerHTML = "";
+		document.getElementById('total').innerHTML = "";
+		
 		document.getElementById('store').innerHTML='<h2>' +
 				'Thanks for Shopping With Us!</h2>'+
 				'<h2>Your Order</h2>'+
 				'<form name="orderForm">'+
-					document.getElementById('shoppingCart').innerHTML+
+				    cartHtml +
 					'<br>'+
-					document.getElementById('total').innerHTML+
+					totalHtml +
 					'<br>'+
 					'<br>'+
-					'<input type="submit" value="Continue Shopping">'+ 
+					'<input type="submit" value="Place Order" onClick="confirmTotal()">'+ 
 				'</form>';
-		shoppingCart.del("", null);
 	}
+	
 	function deleteCart() {
 		shoppingCart.del("", null);
 		document.getElementById('shoppingCart').innerHTML = "";
 		document.getElementById('total').innerHTML = "";	
 	}	
 
+    function confirmTotal() {
+    	try {
+	    	shoppingTotal.confirmTotal(shoppingTotal_confirmTotalResponse); 
+	    	alert("Order dispatched to warehouse");
+	    }
+	    catch(e) {
+	        alert(e);
+	    }
+    }
+
+    function shoppingTotal_confirmTotalResponse(exception) {
+        if(exception){
+            alert(exception.message);
+            return;
+        }  
+    }  
+	    
 	function init() {
 		try {
 			catalog.get(catalog_getResponse);

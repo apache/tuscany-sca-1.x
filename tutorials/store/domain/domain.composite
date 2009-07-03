@@ -30,6 +30,7 @@
   <!-- include name="ns2:store-mashup" uri="store-mashup" xmlns:ns2="http://store"/-->
   <include name="ns2:catalogs" uri="web-services" xmlns:ns2="http://services"/>
   <include name="ns2:currency" uri="web-services" xmlns:ns2="http://services"/>
+  <include name="ns2:store-enterprise" uri="store-enterprise" xmlns:ns2="http://store"/>
   <!--include name="ns2:catalog-web" uri="catalog-webapp" xmlns:ns2="http://catalog"/-->
   <!--include name="ns2:catalog-mediation" uri="catalog-mediation" xmlns:ns2="http://catalog"/-->
   <!--include name="ns2:catalog-ejb" uri="catalog-ejb" xmlns:ns2="http://catalog"/-->

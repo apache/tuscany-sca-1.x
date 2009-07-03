@@ -28,12 +28,16 @@ import java.util.UUID;
 import org.apache.tuscany.sca.data.collection.Entry;
 import org.apache.tuscany.sca.data.collection.NotFoundException;
 import org.osoa.sca.annotations.Init;
+import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 
 @Scope("COMPOSITE")
 public class ShoppingCartImpl implements Cart, Total {
     
     private Map<String, Item> cart;
+    
+    @Reference(required=false)
+    protected Warehouse warehouse;
     
     @Init
     public void init() {
@@ -108,5 +112,18 @@ public class ShoppingCartImpl implements Cart, Total {
             total += Double.valueOf(item.getPrice().substring(1));
         }
         return currencySymbol + String.valueOf(total);
+    }
+    
+    public void confirmTotal() {
+        if (warehouse != null){
+            System.out.println("Confirm total");
+            try {
+                Order order = new Order(cart.values().toArray(new Item[cart.values().size()]));
+                warehouse.addOrder(order);
+            } catch (Exception ex){
+                ex.printStackTrace();
+            } 
+        }
+        cart.clear();
     }
 }

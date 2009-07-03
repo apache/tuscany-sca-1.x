@@ -46,6 +46,8 @@
                 <module>store-market</module>
                 <module>store-eu</module>
                 <module>store-mashup</module>
+                <module>store-enterprise</module>
+                <module>warehouse-spring</module>
                 <module>web-services</module>
                 <module>catalog-webapp</module>
                 <module>catalog-ejb</module>

@@ -168,4 +168,8 @@ public class ShoppingCartTableImpl implements Cart, Total {
         }
         return currencySymbol + total;
     }
+    
+    public void confirmTotal() {
+        
+    }
 }

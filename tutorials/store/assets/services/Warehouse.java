@@ -22,9 +22,7 @@ package services;
 import org.osoa.sca.annotations.Remotable;
 
 @Remotable
-public interface Total {
-    
-    String getTotal();
-    void confirmTotal();
-
+public interface Warehouse {
+    void addOrder(Order order);
+    Order[] getOrders();
 }

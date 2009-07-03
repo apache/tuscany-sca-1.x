@@ -17,14 +17,12 @@
  * under the License.    
  */
 
-package services;
+package launch;
 
-import org.osoa.sca.annotations.Remotable;
+import org.apache.tuscany.sca.node.launcher.NodeLauncher;
 
-@Remotable
-public interface Total {
-    
-    String getTotal();
-    void confirmTotal();
-
+public class LaunchStoreEnterpriseNode {
+    public static void main(String[] args) throws Exception {
+        NodeLauncher.main(new String[] {"http://localhost:9990/node-config/StoreEnterpriseNode"});
+    }
 }
