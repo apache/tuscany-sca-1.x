@@ -33,7 +33,7 @@
     </component>
     
 	<component name="Warehouse">
-		<implementation.java class="services.WarehouseImpl"/> 
+        <implementation.spring location="warehouse-context.xml"/>
 		<service name="Warehouse">
 			<t:binding.jsonrpc uri="http://localhost:8088/Warehouse"/>
             <binding.jms initialContextFactory="org.apache.activemq.jndi.ActiveMQInitialContextFactory"
