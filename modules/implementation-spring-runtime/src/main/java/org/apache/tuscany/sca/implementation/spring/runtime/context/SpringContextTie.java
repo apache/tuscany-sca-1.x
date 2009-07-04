@@ -36,8 +36,10 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.config.TypedStringValue;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
@@ -56,6 +58,28 @@ public class SpringContextTie {
     private SpringImplementationStub implementation;
     private boolean isAnnotationSupported;
     private String versionSupported;
+    
+    // TUSCANY-3128
+    // extension of the generic application context just to force the classloader
+    // on the bean factory to stay set to the contribution classloader
+    // instead of being set back to the application classloader
+    private class LocalGenericApplicationContext extends GenericApplicationContext{
+        
+        ClassLoader classloader = null;
+        
+        public LocalGenericApplicationContext(DefaultListableBeanFactory beanFactory, 
+                                              ApplicationContext parent,
+                                              ClassLoader classloader) {
+            super(beanFactory, parent);
+            this.classloader = classloader;
+        }
+        
+        @Override
+        protected void postProcessBeanFactory(
+                ConfigurableListableBeanFactory beanFactory) {
+            beanFactory.setBeanClassLoader(classloader);
+        }
+    }
     
     public SpringContextTie(SpringImplementationStub implementation, URL resource, boolean annotationSupport, String versionSupported) throws Exception {
         this.implementation = implementation;
@@ -134,8 +158,13 @@ public class SpringContextTie {
         
         // use the generic application context as default 
         if (isAnnotationSupported)
+        {            
         	includeAnnotationProcessors(beanFactory);
-        appContext = new GenericApplicationContext(beanFactory, scaParentContext);
+        }
+        
+        appContext = new LocalGenericApplicationContext(beanFactory, 
+                                                        scaParentContext,
+                                                        implementation.getClassLoader());
         return appContext;
     }
 
