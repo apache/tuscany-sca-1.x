@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.tuscany.sca.extensibility.ServiceDeclaration;
 import org.apache.tuscany.sca.extensibility.ServiceDiscovery;
@@ -33,6 +35,8 @@ import org.apache.tuscany.sca.extensibility.ServiceDiscovery;
  * @version $Rev$ $Date$
  */
 public class DefaultModuleActivatorExtensionPoint implements ModuleActivatorExtensionPoint {
+    private final static Logger logger = Logger.getLogger(DefaultModuleActivatorExtensionPoint.class.getName());
+    
     private List<ModuleActivator> activators = new ArrayList<ModuleActivator>();
     private boolean loadedActivators;
     
@@ -72,7 +76,10 @@ public class DefaultModuleActivatorExtensionPoint implements ModuleActivatorExte
         
         // Load and instantiate module activators
         for (ServiceDeclaration activatorDeclaration: activatorDeclarations) {
-            ModuleActivator activator;
+            if (logger.isLoggable(Level.FINE)) {
+                logger.fine("Loading " + activatorDeclaration.getClassName());
+            }
+            ModuleActivator activator = null;
             try {
                 Class<ModuleActivator> activatorClass = (Class<ModuleActivator>)activatorDeclaration.loadClass();
                 activator = activatorClass.newInstance();

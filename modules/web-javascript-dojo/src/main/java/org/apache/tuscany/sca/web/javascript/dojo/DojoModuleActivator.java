@@ -40,6 +40,10 @@ public class DojoModuleActivator implements ModuleActivator {
     public void start(ExtensionPointRegistry registry) {
         ServletHostExtensionPoint servletHosts = registry.getExtensionPoint(ServletHostExtensionPoint.class);
         this.servletHost = servletHosts.getServletHosts().get(0);
+        
+        if (servletHost == null) {
+            throw new IllegalStateException("Can't find ServletHost reference !");
+        }
 
         Servlet servlet = null;
         
