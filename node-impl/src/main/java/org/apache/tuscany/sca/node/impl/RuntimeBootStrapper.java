@@ -21,6 +21,8 @@ package org.apache.tuscany.sca.node.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -320,8 +322,9 @@ public class RuntimeBootStrapper {
         try {
             Set<ServiceDeclaration> moduleActivators =
                 ServiceDiscovery.getInstance().getServiceDeclarations(ModuleActivator.class);
+            List<ServiceDeclaration> orderedModuleActivators = sort(moduleActivators);
             Set<String> moduleClasses = new HashSet<String>();
-            for (ServiceDeclaration moduleDeclarator : moduleActivators) {
+            for (ServiceDeclaration moduleDeclarator : orderedModuleActivators) {
                 if (moduleClasses.contains(moduleDeclarator.getClassName())) {
                     continue;
                 }
@@ -398,4 +401,27 @@ public class RuntimeBootStrapper {
         return registry;
     }
 
+    @SuppressWarnings("unchecked")
+    private static List<ServiceDeclaration> sort(Set<ServiceDeclaration> servicesDeclaration) {
+        ServiceDeclaration[] servicesArray = new ServiceDeclaration[servicesDeclaration.size()];
+        servicesArray = (ServiceDeclaration[])servicesDeclaration.toArray(servicesArray);
+        Arrays.sort(servicesArray, new Comparator() {
+            public int compare(final Object xObj, final Object yObj) {
+                String xPriority = ((ServiceDeclaration) xObj).getAttributes().get("priority");
+                String yPriority = ((ServiceDeclaration) yObj).getAttributes().get("priority");
+                
+                long x = 0, y = 0;
+                if (xPriority != null && xPriority.length() > 0) {
+                    x = Long.parseLong(xPriority);
+                }
+                
+                if (yPriority != null && yPriority.length() > 0) {
+                    y = Long.parseLong(yPriority);
+                }
+
+                return x > y ? 1 : -1;
+            }
+        });
+        return Arrays.asList(servicesArray);
+    }
 }
