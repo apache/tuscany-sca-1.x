@@ -77,7 +77,7 @@ public class DocumentProcessorsMap extends
 
 	}
 
-	public Document process(DocumentProcessorsMap processors,
+	public Document process(DocumentProcessor parentProcessor,
 			DocumentMap documents, Object object, Document document, String parent) {
 
 		LinkedList<DocumentProcessor> processorsList;
@@ -102,7 +102,7 @@ public class DocumentProcessorsMap extends
 		}
 
 		for (DocumentProcessor processor : processorsList) {
-			processor.process(processors, documents, object, document, parent);
+			processor.process(parentProcessor, documents, object, document, parent);
 		}
 
 		return document;

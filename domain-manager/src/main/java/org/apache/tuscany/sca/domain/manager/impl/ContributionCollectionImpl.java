@@ -97,8 +97,8 @@ import org.w3c.dom.Document;
  * @version $Rev$ $Date$
  */
 @Scope("COMPOSITE")
-@Service(interfaces={ItemCollection.class, LocalItemCollection.class})
-public class ContributionCollectionImpl implements ItemCollection, LocalItemCollection {
+@Service(interfaces={ItemCollection.class, LocalItemCollection.class, WorkspaceReader.class})
+public class ContributionCollectionImpl implements ItemCollection, LocalItemCollection, WorkspaceReader {
 
     private static final Logger logger = Logger.getLogger(ContributionCollectionImpl.class.getName());
 
@@ -486,7 +486,7 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
      * 
      * @return
      */
-    private Workspace readWorkspace() {
+    Workspace readWorkspace() {
         String rootDirectory = domainManagerConfiguration.getRootDirectory();
         
         Workspace workspace;
@@ -652,5 +652,9 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
         }
         return contributions;
     }
+
+	public Workspace getWorkspace() {
+		return readContributions(readWorkspace());
+	}
     
 }

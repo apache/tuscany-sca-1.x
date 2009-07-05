@@ -5,11 +5,10 @@ import java.io.File;
 import org.apache.lucene.document.Field;
 import org.apache.tuscany.sca.domain.search.DocumentMap;
 import org.apache.tuscany.sca.domain.search.DocumentProcessor;
-import org.apache.tuscany.sca.domain.search.DocumentProcessorsMap;
 
 public class DirectoryDocumentProcessor implements DocumentProcessor {
 
-	public Document process(DocumentProcessorsMap processors,
+	public Document process(DocumentProcessor parentProcessor,
 			DocumentMap documents, Object object, Document doc, String parent) {
 
 		if (object instanceof File) {
@@ -25,7 +24,7 @@ public class DirectoryDocumentProcessor implements DocumentProcessor {
 				File[] files = file.listFiles();
 				
 				for (File childFile : files) {
-					Document fileDoc = processors.process(processors, documents, childFile, null, parent);
+					Document fileDoc = parentProcessor.process(parentProcessor, documents, childFile, null, parent);
 					
 					fileDoc.add(new Field(SearchFields.PARENT_FIELD, parent,
 							Field.Store.YES, Field.Index.ANALYZED));

@@ -7,11 +7,10 @@ import org.apache.tuscany.sca.assembly.Component;
 import org.apache.tuscany.sca.assembly.Composite;
 import org.apache.tuscany.sca.domain.search.DocumentMap;
 import org.apache.tuscany.sca.domain.search.DocumentProcessor;
-import org.apache.tuscany.sca.domain.search.DocumentProcessorsMap;
 
 public class CompositeDocumentProcessor implements DocumentProcessor {
 
-	public Document process(DocumentProcessorsMap processors,
+	public Document process(DocumentProcessor parentProcessor,
 			DocumentMap documents, Object object, Document doc, String parent) {
 
 		if (object instanceof Composite) {
@@ -25,15 +24,16 @@ public class CompositeDocumentProcessor implements DocumentProcessor {
 				uri = null;
 				
 			} else if (doc == null) {
-				doc = documents.get(uri);	
-				parent += DomainPathAnalyzer.PATH_SEPARATOR + SearchFields.COMPOSITE_FIELD + DomainPathAnalyzer.TYPE_SEPARATOR + uri;
-				
+				doc = documents.get(uri);
+			}
+			
+			if (uri != null) {
+				parent += DomainPathAnalyzer.PATH_SEPARATOR + SearchFields.COMPOSITE_FIELD + DomainPathAnalyzer.TYPE_SEPARATOR + composite.getURI() + DomainPathAnalyzer.URI_SEPARATOR + composite.getName();
 			}
 			
 			for (Component component : composite.getComponents()) {
 				
-				
-				Document componentDoc = processors.process(processors,
+				Document componentDoc = parentProcessor.process(parentProcessor,
 						documents, component, null, parent);
 
 				if (uri != null) {
@@ -47,13 +47,13 @@ public class CompositeDocumentProcessor implements DocumentProcessor {
 
 			if (uri != null) {
 
-				doc.add(new Field(SearchFields.COMPOSITE_FIELD, uri.toString(),
+				doc.add(new Field(SearchFields.COMPOSITE_FIELD, uri,
 						Field.Store.YES, Field.Index.ANALYZED));
 
 			}
 
 			for (Composite include : composite.getIncludes()) {
-				Document compositeDoc = processors.process(processors,
+				Document compositeDoc = parentProcessor.process(parentProcessor,
 						documents, include, null, parent);
 
 				if (uri != null) {
@@ -66,7 +66,7 @@ public class CompositeDocumentProcessor implements DocumentProcessor {
 			}
 
 			for (Component component : composite.getComponents()) {
-				Document componentDoc = processors.process(processors,
+				Document componentDoc = parentProcessor.process(parentProcessor,
 						documents, component, null, parent);
 
 				if (uri != null) {
@@ -102,5 +102,5 @@ public class CompositeDocumentProcessor implements DocumentProcessor {
 		throw new IllegalArgumentException();
 			
 	}
-
+	
 }

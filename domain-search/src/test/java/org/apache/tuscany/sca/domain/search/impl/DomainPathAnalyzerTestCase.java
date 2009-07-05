@@ -16,7 +16,7 @@ public class DomainPathAnalyzerTestCase extends TestCase {
 		
 		Tokenizer tokenizer = new DomainPathAnalyzer.DomainPathTokenizer(new StringReader(
 				DomainPathAnalyzer.PATH_SEPARATOR + SearchFields.CONTRIBUTION_FIELD + DomainPathAnalyzer.TYPE_SEPARATOR + "123tuscany" + DomainPathAnalyzer.TYPE_SEPARATOR + "SCA" +
-				DomainPathAnalyzer.PATH_SEPARATOR + DomainPathAnalyzer.TYPE_SEPARATOR + "TuscanySCA" + DomainPathAnalyzer.TYPE_SEPARATOR + "123"));
+				DomainPathAnalyzer.PATH_SEPARATOR + DomainPathAnalyzer.TYPE_SEPARATOR + "TuscanySCA" + DomainPathAnalyzer.TYPE_SEPARATOR + "321" + DomainPathAnalyzer.URI_SEPARATOR + "123"));
 
 		assertNextToken(Character.toString(DomainPathAnalyzer.PATH_SEPARATOR), tokenizer);
 		assertNextToken("123", tokenizer);

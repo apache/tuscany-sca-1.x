@@ -6,11 +6,10 @@ import org.apache.lucene.document.Field;
 import org.apache.tuscany.sca.assembly.Property;
 import org.apache.tuscany.sca.domain.search.DocumentMap;
 import org.apache.tuscany.sca.domain.search.DocumentProcessor;
-import org.apache.tuscany.sca.domain.search.DocumentProcessorsMap;
 
 public class PropertyDocumentProcessor implements DocumentProcessor {
 
-	public Document process(DocumentProcessorsMap processors,
+	public Document process(DocumentProcessor parentProcessor,
 			DocumentMap documents, Object object, Document doc, String parent) {
 
 		if (object instanceof Property) {

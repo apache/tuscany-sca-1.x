@@ -39,6 +39,7 @@ import org.apache.tuscany.sca.data.collection.Item;
 import org.apache.tuscany.sca.data.collection.ItemCollection;
 import org.apache.tuscany.sca.data.collection.LocalItemCollection;
 import org.apache.tuscany.sca.data.collection.NotFoundException;
+import org.apache.tuscany.sca.domain.search.DomainSearch;
 import org.osoa.sca.ServiceRuntimeException;
 import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Reference;

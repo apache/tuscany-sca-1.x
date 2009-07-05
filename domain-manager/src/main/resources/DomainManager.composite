@@ -29,6 +29,13 @@
         </service>
     </component>
     
+    <component name="SearchPage">
+        <t:implementation.widget location="search.html"/>
+        <service name="Widget">
+        	<t:binding.http uri="http://localhost:9990/ui/search"/>
+        </service>
+    </component>
+    
     <component name="HomeGadget">
         <t:implementation.widget location="home-gadget.html"/>
         <service name="Widget">
@@ -247,6 +254,29 @@
    		<reference name="cloudCollection" target="CloudCollectionComponent/LocalItemCollection"/>
    		<reference name="processCollection" target="NodeProcessCollectionComponent/LocalItemCollection"/>
     </component>
+    
+    <component name="SearchGadget">
+        <t:implementation.widget location="search-gadget.html"/>
+        <service name="Widget">
+        	<t:binding.http uri="http://localhost:9990/ui/search-gadget"/>
+        </service>
+		 <reference name="searcher" target="SearcherCollectionComponent/ItemCollection">
+		 	<t:binding.atom/>
+		 </reference>
+		
+    </component>
+    
+    <component name="SearcherCollectionComponent">
+        <implementation.java class="org.apache.tuscany.sca.domain.manager.impl.Searcher"/>
+        
+   		<service name="ItemCollection">
+   	 		<t:binding.atom uri="http://localhost:9990/search" title="Search"/>
+   		</service>
+   		
+   		<reference name="domainSearch" target="DomainSearchComponent"/>
+   		<reference name="contributionCollection" target="ContributionCollectionComponent/WorkspaceReader"/>
+   		
+    </component>
 
     <component name="NodeProcessCollectionFacadeComponent">
         <implementation.java class="org.apache.tuscany.sca.domain.manager.impl.NodeProcessCollectionFacadeImpl"/>
@@ -258,6 +288,7 @@
    		<reference name="processCollection" target="NodeProcessCollectionComponent/ItemCollection">
    	 		<t:binding.atom/>
    		</reference>
+   		
     </component>
 
     <component name="NodeProcessCollectionComponent">
@@ -276,6 +307,10 @@
     
     <component name="DomainManagerConfigurationComponent">
         <implementation.java class="org.apache.tuscany.sca.domain.manager.impl.DomainManagerConfigurationImpl"/>
+    </component>
+    
+    <component name="DomainSearchComponent">
+        <implementation.java class="org.apache.tuscany.sca.domain.search.impl.DomainSearchImpl"/>
     </component>
 
 </composite>

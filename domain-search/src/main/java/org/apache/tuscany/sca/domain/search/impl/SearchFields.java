@@ -51,5 +51,7 @@ public interface SearchFields {
 	final public static String KEY_FIELD = "propertykey";
 
 	final public static String VALUE_FIELD = "propertyvalue";
+	
+	final public static String FILE_CONTENT_FIELD = "filecontent";
 
 }

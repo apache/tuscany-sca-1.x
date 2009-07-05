@@ -59,6 +59,7 @@ import org.apache.tuscany.sca.data.collection.Item;
 import org.apache.tuscany.sca.data.collection.ItemCollection;
 import org.apache.tuscany.sca.data.collection.LocalItemCollection;
 import org.apache.tuscany.sca.data.collection.NotFoundException;
+import org.apache.tuscany.sca.domain.search.DomainSearch;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.osoa.sca.ServiceRuntimeException;
@@ -115,7 +116,7 @@ public class DeployedCompositeCollectionImpl implements ItemCollection, LocalIte
      */
     @Init
     public void initialize() throws ParserConfigurationException {
-        
+    	
         // Create factories
         ExtensionPointRegistry extensionPoints = domainManagerConfiguration.getExtensionPoints();
         modelFactories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);
@@ -133,7 +134,7 @@ public class DeployedCompositeCollectionImpl implements ItemCollection, LocalIte
     
     public Entry<String, Item>[] getAll() {
         logger.fine("getAll");
-
+    
         // Return all the composites in the domain composite
         List<Entry<String, Item>> entries = new ArrayList<Entry<String, Item>>();
         Composite compositeCollection = readCompositeCollection();
