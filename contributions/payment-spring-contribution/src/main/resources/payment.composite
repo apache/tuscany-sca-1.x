@@ -31,9 +31,6 @@
         <reference name="creditCardPaymentReference">
             <binding.ws uri="http://localhost:8082/CreditCardPayment"/>
         </reference>
-        <!--reference name="emailGateway">
-            <binding.ws uri="http://localhost:8088/EmailGateway"/>
-        </reference-->
     </component>
 
 </composite>

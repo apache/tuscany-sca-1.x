@@ -35,7 +35,7 @@ import org.junit.Test;
 public class PaymentTestCase {
     private static SCANode paymentNode;
     private static SCANode creditCardNode;
-    private static SCANode emailGatewayNode;    
+   
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {  
@@ -45,13 +45,7 @@ public class PaymentTestCase {
                 new SCAContribution("creditcard-test", "../creditcard-payment-jaxb-contribution/target/test-classes"));
             
             creditCardNode.start();
-            
-            emailGatewayNode = SCANodeFactory.newInstance().createSCANode("emailgateway.composite", 
-                new SCAContribution("creditcard", "../emailgateway-contribution/target/classes"),
-                new SCAContribution("creditcard-test", "../emailgateway-contribution/target/test-classes"));
-            
-            emailGatewayNode.start();
-            
+                       
             paymentNode = SCANodeFactory.newInstance().createSCANode(null, 
                 new SCAContribution("payment-spring", "./target/classes"),
                 new SCAContribution("payment-spring-test", "./target/test-classes"));
@@ -74,7 +68,6 @@ public class PaymentTestCase {
     public static void tearDownAfterClass() throws Exception {
         paymentNode.stop();
         creditCardNode.stop();
-        emailGatewayNode.stop();
     }
 
 }
