@@ -7,13 +7,12 @@ import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.Service;
 import org.apache.tuscany.sca.domain.search.DocumentMap;
 import org.apache.tuscany.sca.domain.search.DocumentProcessor;
-import org.apache.tuscany.sca.domain.search.DocumentProcessorsMap;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
 import org.apache.tuscany.sca.interfacedef.Operation;
 
 public class ComponentTypeDocumentProcessor implements DocumentProcessor {
 
-	public Document process(DocumentProcessorsMap processors,
+	public Document process(DocumentProcessor parentProcessor,
 			DocumentMap documents, Object object, Document doc, String parent) {
 
 		if (object instanceof ComponentType) {
@@ -131,7 +130,7 @@ public class ComponentTypeDocumentProcessor implements DocumentProcessor {
 			}
 
 			for (Property property : componentType.getProperties()) {
-				Document propertyDoc = processors.process(processors,
+				Document propertyDoc = parentProcessor.process(parentProcessor,
 						documents, property, null, parent);
 
 				if (uri != null) {

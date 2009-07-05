@@ -1,5 +1,7 @@
 package org.apache.tuscany.sca.domain.search.impl;
 
+import java.io.File;
+
 import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.Component;
 import org.apache.tuscany.sca.assembly.ComponentType;
@@ -21,6 +23,7 @@ public class DomainSearchDocumentProcessorsMap extends DocumentProcessorsMap {
 		addDocumentProcessor(Binding.class, new BindingDocumentProcessor());
 		addDocumentProcessor(Component.class, new ComponentDocumentProcessor());
 		addDocumentProcessor(Composite.class, new CompositeDocumentProcessor());
+		addDocumentProcessor(File.class, new DomainSearchFileDocumentProcessor());
 		
 	}
 

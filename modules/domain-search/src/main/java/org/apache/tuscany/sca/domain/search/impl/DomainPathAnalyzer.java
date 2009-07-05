@@ -14,6 +14,8 @@ public class DomainPathAnalyzer extends Analyzer {
 
 	final public static char TYPE_SEPARATOR = '\u0002';
 
+	final public static char URI_SEPARATOR = '\u0003';
+
 	static class DomainPathTokenizer extends Tokenizer {
 
 		private int offset = 0, bufferIndex = 0, dataLen = 0;
@@ -21,25 +23,28 @@ public class DomainPathAnalyzer extends Analyzer {
 		private static final int IO_BUFFER_SIZE = 4096;
 		private final char[] ioBuffer = new char[IO_BUFFER_SIZE];
 		private boolean typeCharFound = false;
+		private boolean uriCharFound = false;
 
 		public DomainPathTokenizer(Reader reader) {
 			super(reader);
 		}
-		
+
 		@Override
 		public void reset() throws IOException {
 			super.reset();
-			
+
 			typeCharFound = false;
-			
+			uriCharFound = false;
+
 		}
-		
+
 		@Override
 		public void reset(Reader input) throws IOException {
 			super.reset(input);
-			
+
+			uriCharFound = false;
 			typeCharFound = false;
-			
+
 		}
 
 		@Override
@@ -52,7 +57,7 @@ public class DomainPathAnalyzer extends Analyzer {
 
 			boolean lowercaseCharFound = false;
 			boolean digitFound = false;
-			
+
 			while (true) {
 
 				if (bufferIndex >= dataLen) {
@@ -94,15 +99,17 @@ public class DomainPathAnalyzer extends Analyzer {
 					} else {
 						bufferIndex--;
 					}
-					
-					typeCharFound = false;
 
-				} else if (c == TYPE_SEPARATOR && !typeCharFound) {
+					typeCharFound = false;
+					uriCharFound = false;
+
+				} else if (c == TYPE_SEPARATOR && !typeCharFound
+						|| c == URI_SEPARATOR && !uriCharFound) {
 					length = 0;
 					breakChar = false;
 					lowercaseCharFound = false;
 					digitFound = false;
-					
+
 				} else {
 
 					if (Character.isDigit(c)) {
@@ -154,12 +161,18 @@ public class DomainPathAnalyzer extends Analyzer {
 
 					if (c == TYPE_SEPARATOR && !typeCharFound) {
 						typeCharFound = true;
-						
+
+					} else if (c == URI_SEPARATOR && !uriCharFound) {
+						typeCharFound = true;
+
 					} else {
-						buffer[length++] = Character.toLowerCase(c); // buffer it, normalized
+						buffer[length++] = Character.toLowerCase(c); // buffer
+																		// it,
+																		// normalized
 					}
-					
-					if (length == MAX_WORD_LEN || (breakChar && length > 0)) // buffer overflow!
+
+					if (length == MAX_WORD_LEN || (breakChar && length > 0)) // buffer
+																				// overflow!
 						break;
 
 				} else if (length > 0) {// at non-Letter w/ chars

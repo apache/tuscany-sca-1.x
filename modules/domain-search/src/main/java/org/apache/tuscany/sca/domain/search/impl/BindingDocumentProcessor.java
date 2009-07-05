@@ -4,11 +4,10 @@ import org.apache.lucene.document.Field;
 import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.domain.search.DocumentMap;
 import org.apache.tuscany.sca.domain.search.DocumentProcessor;
-import org.apache.tuscany.sca.domain.search.DocumentProcessorsMap;
 
 public class BindingDocumentProcessor implements DocumentProcessor {
 
-	public Document process(DocumentProcessorsMap processors,
+	public Document process(DocumentProcessor parentProcessor,
 			DocumentMap documents, Object object, Document document, String parent) {
 
 		if (object instanceof Binding) {
@@ -55,5 +54,5 @@ public class BindingDocumentProcessor implements DocumentProcessor {
 		throw new IllegalArgumentException();
 
 	}
-
+	
 }
