@@ -46,23 +46,23 @@
     </target>
 
     <fileset id="tuscany.jars" dir="../../../modules">
-        <include name="tuscany-assembly-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-assembly-xml-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-binding-jms-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-contribution-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-contribution-java-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-contribution-namespace-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-core-spi-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-data-api-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-definitions-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-extensibility-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-implementation-java-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-interface-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-interface-java-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-monitor-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-policy-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-sca-api-1.6-SNAPSHOT.jar"/>
-        <include name="tuscany-sca-api-extension-1.6-SNAPSHOT.jar"/>
+        <include name="tuscany-assembly-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-assembly-xml-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-binding-jms-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-contribution-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-contribution-java-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-contribution-namespace-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-core-spi-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-data-api-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-definitions-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-extensibility-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-implementation-java-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-interface-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-interface-java-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-monitor-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-policy-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-sca-api-1.5.1-SNAPSHOT.jar"/>
+        <include name="tuscany-sca-api-extension-1.5.1-SNAPSHOT.jar"/>
         <include name="tutorial-assets.jar"/>
     </fileset>
     <fileset id="3rdparty.jars" dir="../../../lib">
