@@ -76,6 +76,7 @@
                 <module>scatours-contribution</module>
                 <module>payment-java-contribution</module>
                 <module>payment-spring-contribution</module>
+                <module>payment-spring-scatag-contribution</module>
             </modules>
         </profile>
 
