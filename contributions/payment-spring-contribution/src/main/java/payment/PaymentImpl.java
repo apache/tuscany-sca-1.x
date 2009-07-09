@@ -31,6 +31,7 @@ public class PaymentImpl implements Payment {
 
     private CreditCardPayment creditCardPayment;
     private EmailGateway emailGateway;
+    private float transactionFee;
     
     public void setCreditCardPayment(CreditCardPayment creditCardPayment) {
         this.creditCardPayment = creditCardPayment;
@@ -38,6 +39,10 @@ public class PaymentImpl implements Payment {
     
     public void setEmailGateway(EmailGateway emailGateway) {
         this.emailGateway = emailGateway;
+    }
+    
+    public void setTransactionFee(Float transactionFee) {
+        this.transactionFee = transactionFee;
     }
     
     public String makePaymentMember(String customerId, float amount) {
@@ -48,6 +53,8 @@ public class PaymentImpl implements Payment {
         PayerType ccOwner = objectFactory.createPayerType();
         ccOwner.setName(customerId);
         ccDetails.setCardOwner(ccOwner);
+        
+        amount += transactionFee;
         
         String status = creditCardPayment.authorize(ccDetails, amount);
         

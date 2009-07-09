@@ -26,6 +26,7 @@
     <bean id="Payment" class="payment.PaymentImpl">
         <property name="creditCardPayment" ref="creditCardPaymentReference"/>
         <property name="emailGateway" ref="EmailGateway"/>
+        <property name="transactionFee" value="0.5f"/>
     </bean>
 
     <bean id="EmailGateway" class="scatours.emailgateway.EmailGatewayImpl">

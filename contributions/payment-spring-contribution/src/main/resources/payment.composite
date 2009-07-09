@@ -31,6 +31,7 @@
         <reference name="creditCardPaymentReference">
             <binding.ws uri="http://localhost:8082/CreditCardPayment"/>
         </reference>
+        <property name="transactionFee">1.23</property>
     </component>
 
 </composite>
