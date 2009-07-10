@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.tools.wsdl2java.sdo;
 
+import java.net.URL;
+
 import org.apache.cxf.tools.wsdlto.WSDLToJava;
 import org.junit.Test;
 
@@ -29,8 +31,9 @@ public class SDODataBindingTestCase {
 
     @Test
     public void testGenerate() {
+        URL url = getClass().getResource("/HelloService.wsdl");
         String args[] =
-            new String[] {"-db", "sdo", "-d", "target/jaxws-source", "src/test/resources/HelloService.wsdl"};
+            new String[] {"-db", "sdo", "-d", "target/jaxws-source", url.toString()};
         WSDLToJava.main(args);
 
     }
