@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.tuscany.sdo.tool;
+package org.apache.tuscany.tools.wsdl2java.sdo;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -61,7 +61,7 @@ import org.eclipse.xsd.XSDSchema;
 import commonj.sdo.helper.HelperContext;
 import commonj.sdo.helper.XSDHelper;
 
-class SDOToolingDatabinding extends JavaGenerator implements DataBindingProfile {
+public class SDODatabinding extends JavaGenerator implements DataBindingProfile {
 
     private EPackage.Registry packageRegistry;
     private ExtendedMetaData extendedMetaData;
@@ -102,6 +102,7 @@ class SDOToolingDatabinding extends JavaGenerator implements DataBindingProfile 
 
     public void initialize(ToolContext context) throws ToolException {
         String wsdl = (String)context.get(ToolConstants.CFG_WSDLLOCATION);
+        xsdFileName = wsdl;
         String catalog = (String)context.get(ToolConstants.CFG_CATALOG);
         Object o = context.get(ToolConstants.CFG_BINDING);
         String bindingFiles[];
@@ -113,8 +114,8 @@ class SDOToolingDatabinding extends JavaGenerator implements DataBindingProfile 
 
         packageRegistry = new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
         extendedMetaData = new BasicExtendedMetaData(packageRegistry);
-        packageURI = getSchemaNamespace(xsdFileName);
-        packageInfoTable = createPackageInfoTable(packageURI, schemaNamespace, javaPackage, prefix, null);
+//        packageURI = getSchemaNamespace(xsdFileName);
+//        packageInfoTable = createPackageInfoTable(packageURI, schemaNamespace, javaPackage, prefix, null);
 
     }
 
