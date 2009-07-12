@@ -46,6 +46,7 @@
                 <module>currency-contribution</module>
                 <module>currency-corba-contribution</module>
                 <module>currency-jms-contribution</module>
+                <module>currency-jsp-contribution</module>
                 <module>currency-rmi-contribution</module>
                 <module>currency-ws-contribution</module>
                 <module>databinding-client-contribution</module>
