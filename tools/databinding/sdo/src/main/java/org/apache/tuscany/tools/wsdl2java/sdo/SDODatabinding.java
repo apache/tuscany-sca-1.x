@@ -29,6 +29,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +43,10 @@ import org.apache.cxf.tools.wsdlto.core.DataBindingProfile;
 import org.apache.tuscany.sdo.api.SDOUtil;
 import org.apache.tuscany.sdo.generate.XSD2JavaGenerator;
 import org.apache.tuscany.sdo.helper.HelperContextImpl;
+import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
@@ -64,6 +69,7 @@ public class SDODatabinding extends XSD2JavaGenerator implements DataBindingProf
 
     private boolean dynamic;
     private ExtendedMetaData extendedMetaData;
+    private GenModel genModel;
 
     public void generate(ToolContext context) throws ToolException {
         if (dynamic) {
@@ -106,10 +112,11 @@ public class SDODatabinding extends XSD2JavaGenerator implements DataBindingProf
 
         try {
             processArguments(args);
-            run(args);
+            genModel = runXSD2Java(args);
         } catch (Exception e) {
             e.printStackTrace();
             printUsage();
+            return;
         }
 
         HelperContext hc = new HelperContextImpl(extendedMetaData, false);
@@ -118,21 +125,21 @@ public class SDODatabinding extends XSD2JavaGenerator implements DataBindingProf
 
     }
 
-    protected void run(String args[]) {
+    protected GenModel runXSD2Java(String args[]) {
         String xsdFileName = args[inputIndex];
         EPackage.Registry packageRegistry = new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
         extendedMetaData = new BasicExtendedMetaData(packageRegistry);
         String packageURI = getSchemaNamespace(xsdFileName);
         Hashtable packageInfoTable =
             createPackageInfoTable(packageURI, schemaNamespace, javaPackage, prefix, namespaceInfo);
-        generateFromXMLSchema(xsdFileName,
-                              packageRegistry,
-                              extendedMetaData,
-                              targetDirectory,
-                              packageInfoTable,
-                              genOptions,
-                              generateBuiltIn,
-                              allNamespaces);
+        return generateFromXMLSchema(xsdFileName,
+                                     packageRegistry,
+                                     extendedMetaData,
+                                     targetDirectory,
+                                     packageInfoTable,
+                                     genOptions,
+                                     generateBuiltIn,
+                                     allNamespaces);
     }
 
     private static Hashtable createPackageInfoTable(String packageURI,
@@ -216,13 +223,42 @@ public class SDODatabinding extends XSD2JavaGenerator implements DataBindingProf
     }
 
     private String getClassName(Type type) {
-        EClassifier eClass = (EClassifier)type;
-        String name = eClass.getInstanceClassName();
-        if (name == null) {
-            return type.getName();
-        } else {
+        EClassifier eClassifier = (EClassifier)type;
+        String name = eClassifier.getInstanceClassName();
+        if (name != null) {
             return name;
         }
+
+        if (genModel == null) {
+            return type.getName();
+        }
+
+        List<GenPackage> packages = genModel.getGenPackages();
+        Hashtable<EClassifier, GenClass> genClasses = new Hashtable<EClassifier, GenClass>();
+        for (Iterator<GenPackage> iter = packages.iterator(); iter.hasNext();) {
+            // loop through the list, once to build up the eclass to genclass mapper
+            GenPackage genPackage = iter.next();
+            List<GenClass> classes = genPackage.getGenClasses();
+            for (Iterator<GenClass> classIter = classes.iterator(); classIter.hasNext();) {
+                GenClass genClass = classIter.next();
+                genClasses.put(genClass.getEcoreClass(), genClass);
+            }
+        }
+
+        if (eClassifier instanceof EClass) {
+            // complex type
+            EClass eClass = (EClass)eClassifier;
+            GenClass genEClass = (GenClass)genClasses.get(eClassifier);
+            if (genEClass != null) {
+                name = genEClass.getGenPackage().getInterfacePackageName() + '.' + genEClass.getInterfaceName();
+
+            }
+        } else {
+            // simple type
+            name = eClassifier.getInstanceClass().getName();
+        }
+        return name;
+
     }
 
     public String getWrappedElementType(QName wrapperElement, QName item) {
