@@ -19,4 +19,5 @@
 -->
 <plugin name="sdo" version="" provider="tuscany.apache.org" xmlns="http://cxf.apache.org/tools/plugin">
     <databinding name="sdo" package="org.apache.tuscany.tools.wsdl2java.sdo" profile="SDODatabinding" />
+    <databinding name="static-sdo" package="org.apache.tuscany.tools.wsdl2java.sdo" profile="SDODatabinding" />
 </plugin>

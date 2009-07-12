@@ -30,10 +30,17 @@ import org.junit.Test;
 public class SDODataBindingTestCase {
 
     @Test
-    public void testGenerate() {
+    public void testGenerateStatic() {
         URL url = getClass().getResource("/HelloService.wsdl");
-        String args[] =
-            new String[] {"-db", "sdo", "-d", "target/jaxws-source", url.toString()};
+        String args[] = new String[] {"-db", "static-sdo", "-d", "target/jaxws-static-sdo-source", url.toString()};
+        WSDLToJava.main(args);
+
+    }
+
+    @Test
+    public void testGenerateDynamic() {
+        URL url = getClass().getResource("/HelloService.wsdl");
+        String args[] = new String[] {"-db", "sdo", "-d", "target/jaxws-sdo-source", url.toString()};
         WSDLToJava.main(args);
 
     }
