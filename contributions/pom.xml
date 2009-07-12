@@ -45,6 +45,7 @@
                 <module>creditcard-payment-sdo-contribution</module>
                 <module>currency-contribution</module>
                 <module>currency-corba-contribution</module>
+                <module>currency-jms-contribution</module>
                 <module>currency-rmi-contribution</module>
                 <module>currency-ws-contribution</module>
                 <module>databinding-client-contribution</module>
@@ -68,6 +69,7 @@
                 <module>notification-ws-contribution</module>
                 <module>notification-corba-contribution</module>
                 <module>notification-ejb-contribution</module>
+                <module>notification-jms-contribution</module>
                 <module>notification-rmi-contribution</module>
                 <module>shoppingcart-contribution</module>   
                 <module>travelcatalog-contribution</module>         

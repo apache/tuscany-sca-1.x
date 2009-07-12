@@ -40,6 +40,7 @@
                 <module>blog-feed-launcher</module>
                 <module>currency-converter-launcher</module>
                 <module>currency-converter-corba-launcher</module>
+                <module>currency-converter-jms-launcher</module>
                 <module>currency-converter-rmi-launcher</module>
                 <module>currency-converter-ws-launcher</module>
                 <module>databinding-launcher</module>
@@ -52,6 +53,7 @@
                 <module>notification-ws-launcher</module>
                 <module>notification-corba-launcher</module>
                 <module>notification-ejb-launcher</module>
+                <module>notification-jms-launcher</module>
                 <module>notification-rmi-launcher</module>
             </modules>
         </profile>
