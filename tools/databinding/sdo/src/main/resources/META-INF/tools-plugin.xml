@@ -20,4 +20,6 @@
 <plugin name="sdo" version="" provider="tuscany.apache.org" xmlns="http://cxf.apache.org/tools/plugin">
     <databinding name="sdo" package="org.apache.tuscany.tools.wsdl2java.sdo" profile="SDODatabinding" />
     <databinding name="static-sdo" package="org.apache.tuscany.tools.wsdl2java.sdo" profile="SDODatabinding" />
+    <databinding name="dom" package="org.apache.tuscany.tools.wsdl2java.dom" profile="DOMDataBinding" />
+    <databinding name="axiom" package="org.apache.tuscany.tools.wsdl2java.axiom" profile="AXIOMDataBinding" />
 </plugin>
