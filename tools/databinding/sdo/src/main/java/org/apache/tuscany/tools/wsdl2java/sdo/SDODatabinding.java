@@ -19,9 +19,7 @@
 
 package org.apache.tuscany.tools.wsdl2java.sdo;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -79,26 +77,26 @@ public class SDODatabinding extends XSD2JavaGenerator implements DataBindingProf
 
         Map<String, String> ns2pkgMap = context.getNamespacePackageMap();
 
-        String srcd = (String)context.get(ToolConstants.CFG_OUTPUTDIR);
+        String outputDir = (String)context.get(ToolConstants.CFG_OUTPUTDIR);
         String pkg = context.getPackageName();
 
         String wsdl = (String)context.get(ToolConstants.CFG_WSDLLOCATION);
 
         // preparing the directories where files to be written.
-        File srcDir;
-        if (srcd == null) {
+        File targetDir;
+        if (outputDir == null) {
             try {
-                srcd = new File(new URI(wsdl)).getParentFile().getAbsolutePath();
+                outputDir = new File(new URI(wsdl)).getParentFile().getAbsolutePath();
             } catch (URISyntaxException e) {
-                srcd = new File(".").getAbsolutePath();
+                outputDir = new File(".").getAbsolutePath();
             }
         }
-        srcDir = new File(srcd);
-        srcDir.mkdirs();
+        targetDir = new File(outputDir);
+        targetDir.mkdirs();
 
         List<String> argList = new ArrayList<String>();
         argList.add("-targetDirectory");
-        argList.add(srcDir.getAbsolutePath());
+        argList.add(targetDir.getAbsolutePath());
 
         if (pkg != null) {
             argList.add("-javaPackage");
@@ -112,7 +110,7 @@ public class SDODatabinding extends XSD2JavaGenerator implements DataBindingProf
 
         try {
             processArguments(args);
-            genModel = runXSD2Java(args);
+            genModel = runXSD2Java(args, ns2pkgMap);
         } catch (Exception e) {
             e.printStackTrace();
             printUsage();
@@ -125,13 +123,13 @@ public class SDODatabinding extends XSD2JavaGenerator implements DataBindingProf
 
     }
 
-    protected GenModel runXSD2Java(String args[]) {
+    protected GenModel runXSD2Java(String args[], Map<String, String> ns2PkgMap) {
         String xsdFileName = args[inputIndex];
         EPackage.Registry packageRegistry = new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
         extendedMetaData = new BasicExtendedMetaData(packageRegistry);
         String packageURI = getSchemaNamespace(xsdFileName);
-        Hashtable packageInfoTable =
-            createPackageInfoTable(packageURI, schemaNamespace, javaPackage, prefix, namespaceInfo);
+        Hashtable<String, PackageInfo> packageInfoTable =
+            createPackageInfoTable(packageURI, schemaNamespace, javaPackage, prefix, ns2PkgMap);
         return generateFromXMLSchema(xsdFileName,
                                      packageRegistry,
                                      extendedMetaData,
@@ -142,35 +140,16 @@ public class SDODatabinding extends XSD2JavaGenerator implements DataBindingProf
                                      allNamespaces);
     }
 
-    private static Hashtable createPackageInfoTable(String packageURI,
-                                                    String schemaNamespace,
-                                                    String javaPackage,
-                                                    String prefix,
-                                                    String namespaceInfo) {
-        Hashtable packageInfoTable = new Hashtable();
+    private static Hashtable<String, PackageInfo> createPackageInfoTable(String packageURI,
+                                                                         String schemaNamespace,
+                                                                         String javaPackage,
+                                                                         String prefix,
+                                                                         Map<String, String> ns2PkgMap) {
+        Hashtable<String, PackageInfo> packageInfoTable = new Hashtable<String, PackageInfo>();
 
-        if (namespaceInfo != null) {
-            try {
-                FileReader inputFile = new FileReader(namespaceInfo);
-                BufferedReader bufRead = new BufferedReader(inputFile);
-
-                String line = bufRead.readLine();
-                while (line != null) {
-                    if (line.length() > 0) {
-                        String[] options = line.split(";");
-                        if (options.length > 1) {
-                            if (options.length > 2)
-                                packageInfoTable.put(options[0], new PackageInfo(options[1], options[2], options[0],
-                                                                                 null));
-                            else
-                                packageInfoTable.put(options[0], new PackageInfo(options[1], null, options[0], null));
-                        } else
-                            packageInfoTable.put(options[0], new PackageInfo(null, null, options[0], null));
-                    }
-                    line = bufRead.readLine();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (ns2PkgMap != null && !ns2PkgMap.isEmpty()) {
+            for (Map.Entry<String, String> e : ns2PkgMap.entrySet()) {
+                packageInfoTable.put(e.getKey(), new PackageInfo(e.getValue(), null, e.getKey(), null));
             }
         } else {
             if (schemaNamespace != null)

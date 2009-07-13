@@ -19,6 +19,7 @@
 
 package org.apache.tuscany.tools.wsdl2java.sdo;
 
+import java.io.File;
 import java.net.URL;
 
 import org.apache.cxf.tools.wsdlto.WSDLToJava;
@@ -31,10 +32,12 @@ public class SDODataBindingTestCase {
 
     @Test
     public void testGenerateStatic() {
-        URL url = getClass().getResource("/HelloService.wsdl");
-        String args[] = new String[] {"-db", "static-sdo", "-d", "target/jaxws-static-sdo-source", url.toString()};
+        File file = new File("src/test/resources/HelloService.wsdl");
+        String args[] =
+            new String[] {"-db", "static-sdo", "-d", "target/jaxws-static-sdo-source", "-p",
+                          "http://apache.org/hello_world_soap_http/types=helloworld.sdo", "-p",
+                          "http://apache.org/hello_world_soap_http=helloworld.ws", file.getAbsolutePath()};
         WSDLToJava.main(args);
-
     }
 
     @Test
