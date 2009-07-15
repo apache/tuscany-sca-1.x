@@ -23,7 +23,7 @@
            name="Calculator">
 
     <component name="HelloworldServiceComponent">
-        <implementation.jee archive="itest-contribution-jee-samples-6-war-appcomp-contrib-implicit-1.6-SNAPSHOT.jar"/>
+        <implementation.jee archive="itest-contribution-jee-samples-6-war-appcomp-contrib-implicit.jar"/>
     </component>
 
 </composite>
