@@ -96,6 +96,7 @@
                                     <outputDirectory>${project.build.directory}/classes</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
+                            <stripVersion>true</stripVersion>
                         </configuration>
                     </execution>
                 </executions>

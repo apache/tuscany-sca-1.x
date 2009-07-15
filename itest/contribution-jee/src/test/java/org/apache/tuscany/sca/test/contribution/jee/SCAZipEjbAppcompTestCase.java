@@ -75,9 +75,9 @@ public class SCAZipEjbAppcompTestCase {
     }
 
     /**
-     * SCAJAR      - It's an SCA contribution in a JAR with no nested archives
-     *               but which references a...
-     * EAR         - It's an JEE EAR file
+     * SCAZIP      - It's an SCA contribution in a ZIP with no nested archive
+     *               but with a reference to an EJB Jar
+     * JAR
      *    appcomp  - It has an application composite in it
      *    
      */
