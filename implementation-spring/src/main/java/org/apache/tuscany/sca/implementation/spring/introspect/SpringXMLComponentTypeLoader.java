@@ -692,12 +692,13 @@ public class SpringXMLComponentTypeLoader {
                             }
                         }
                     }
+                    // Look for the default applicaiton-context.xml file, when MANIFEST.MF is absent.
                     je = jf.getJarEntry("META-INF" + "/" + "spring" + "/" + SpringImplementationConstants.APPLICATION_CONTEXT);
                     if (je != null) {
-                        return new URL("jar:" + locationFile.toURI().toURL() + "!/" + SpringImplementationConstants.APPLICATION_CONTEXT);
+                        return new URL("jar:" + locationFile.toURI().toURL() + "!/" +
+                        		"META-INF" + "/" + "spring" + "/" + SpringImplementationConstants.APPLICATION_CONTEXT);
                     }
                 } catch (IOException e) {
-                    // bad archive
                     // TODO: create a more appropriate exception type
                     throw new ContributionReadException("SpringXMLLoader getApplicationContextResource: "
                     												+ " IO exception reading context file.", e);
@@ -711,8 +712,8 @@ public class SpringXMLComponentTypeLoader {
         			// Deal with the directory inside a jar file, in case the contribution itself is a JAR file.
         			try {
 	        			if (locationFile.getPath().indexOf(".jar") > 0) {
-	        				String jarEntry = url.getPath().substring(6, url.getPath().indexOf("!"));
-	        				JarFile jf = new JarFile(jarEntry);
+	        				String jarPath = url.getPath().substring(6, url.getPath().indexOf("!"));
+	        				JarFile jf = new JarFile(jarPath);
 	        				JarEntry je = jf.getJarEntry(url.getPath().substring(url.getPath().indexOf("!/")+2)
 	        												+ "/" + "META-INF" + "/" + "MANIFEST.MF");
 	        			    if (je != null) {
@@ -726,6 +727,13 @@ public class SpringXMLComponentTypeLoader {
 	                                }
 	                            }
 	        				}
+	        			    // Look for the default applicaiton-context.xml file, when MANIFEST.MF is absent.
+        			    	je = jf.getJarEntry(url.getPath().substring(url.getPath().indexOf("!/")+2) + "/" + 
+                        			"META-INF" + "/" + "spring" + "/" + SpringImplementationConstants.APPLICATION_CONTEXT);
+                            if (je != null) {
+                                return new URL("jar:" + url.getPath() + "/" + 
+                                	"META-INF" + "/" + "spring" + "/" + SpringImplementationConstants.APPLICATION_CONTEXT);
+                            }
 	        			}
             		} catch (IOException e) {
                         throw new ContributionReadException("Error reading manifest " + manifestFile);
