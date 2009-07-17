@@ -164,7 +164,7 @@ public class XSDModelResolver implements ModelResolver {
             } catch (RuntimeException e) {
                 // find original cause of the problem
                 Throwable cause = e;
-                while (cause.getCause() != null) {
+                while (cause.getCause() != null && cause != cause.getCause()) {
                     cause = cause.getCause();
                 }
                 throw new ContributionRuntimeException(cause);
@@ -179,28 +179,33 @@ public class XSDModelResolver implements ModelResolver {
                 return;
             }
             // Read an XSD document
-            InputSource xsd;
-            try {
-            	xsd = XMLDocumentHelper.getInputSource(definition.getLocation().toURL());
-            } catch (IOException e) {
-            	throw new ContributionRuntimeException(e);
-            }
-            for (XmlSchema d : schemaCollection.getXmlSchemas()) {
-                if (isSameNamespace(d.getTargetNamespace(), definition.getNamespace())) {
-                    if (d.getSourceURI().equals(definition.getLocation().toString()))
-                        return;
-                }
-            }
             XmlSchema schema = null;
-            try {
-                schema = schemaCollection.read(xsd, null);
-            } catch (RuntimeException e) {
-                // find original cause of the problem
-                Throwable cause = e;
-                while (cause.getCause() != null) {
-                    cause = cause.getCause();
+            for (XmlSchema d : schemaCollection.getXmlSchemas()) {
+                if (isSameNamespace(d.getTargetNamespace(), definition.getNamespace()))  {
+                    if (d.getSourceURI().equals(definition.getLocation().toString())) {
+                        schema = d;
+                        break;
+                    }
                 }
-                throw new ContributionRuntimeException(cause);
+            }
+            if (schema == null) {
+                InputSource xsd = null;
+                try {
+                    xsd = XMLDocumentHelper.getInputSource(definition.getLocation().toURL());
+                } catch (IOException e) {
+                    throw new ContributionRuntimeException(e);
+                }
+
+                try {
+                    schema = schemaCollection.read(xsd, null);
+                } catch (RuntimeException e) {
+                    // find original cause of the problem
+                    Throwable cause = e;
+                    while (cause.getCause() != null && cause != cause.getCause()) {
+                        cause = cause.getCause();
+                    }
+                    throw new ContributionRuntimeException(cause);
+                }
             }
             definition.setSchemaCollection(schemaCollection);
             definition.setSchema(schema);
