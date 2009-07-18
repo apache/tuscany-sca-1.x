@@ -19,7 +19,9 @@
 
 package org.apache.tuscany.sca.host.webapp;
 
+import java.beans.Introspector;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -28,6 +30,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -39,6 +42,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.apache.commons.logging.LogFactory;
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.apache.tuscany.sca.host.http.SecurityContext;
 import org.apache.tuscany.sca.host.http.ServletHost;
@@ -57,7 +61,7 @@ public class WebAppServletHost implements ServletHost {
 
     public static final String SCA_DOMAIN_ATTRIBUTE = "org.apache.tuscany.sca.SCADomain";
 
-    private static final WebAppServletHost instance = new WebAppServletHost();
+    private static WebAppServletHost instance = null;
 
     private Map<String, Servlet> servlets;
     private SCADomain scaDomain;
@@ -210,6 +214,9 @@ public class WebAppServletHost implements ServletHost {
     }
 
     public static WebAppServletHost getInstance() {
+    	if (instance == null){
+    		instance = new WebAppServletHost();
+    	}
         return instance;
     }
 
@@ -309,7 +316,15 @@ public class WebAppServletHost implements ServletHost {
             if (scaDomain instanceof WebSCADomain) {
                 ((WebSCADomain)scaDomain).destroy();
             }
+            servletContext.setAttribute(SCA_DOMAIN_ATTRIBUTE, null);
+            scaDomain = null;
         }
+        
+        servletContext = null;
+        instance = null;
+        servlets.clear();
+        LogFactory.release(this.getClass().getClassLoader());
+        Introspector.flushCaches();      
     }
 
     public String getContextPath() {
