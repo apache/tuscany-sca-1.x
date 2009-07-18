@@ -392,6 +392,8 @@ public class Axis2ServiceProvider {
                 servletHost.removeServletMapping(endpointURL);
             }
         }
+        
+        servletHost = null;
 
         if ( jmsSender != null )
             jmsSender.stop();

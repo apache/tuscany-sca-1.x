@@ -70,6 +70,7 @@ public class TuscanyServletFilter implements Filter {
 
     public void destroy() {
         WebAppServletHost.getInstance().destroy();
+        servletHost = null;
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, javax.servlet.FilterChain chain)
