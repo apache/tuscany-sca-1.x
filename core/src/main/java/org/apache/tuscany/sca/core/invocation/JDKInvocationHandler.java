@@ -30,8 +30,10 @@ import java.util.UUID;
 
 import javax.xml.ws.Holder;
 
+import org.apache.tuscany.sca.core.assembly.CompositeActivator;
 import org.apache.tuscany.sca.core.assembly.RuntimeWireImpl;
 import org.apache.tuscany.sca.core.context.CallableReferenceImpl;
+import org.apache.tuscany.sca.core.context.ComponentContextImpl;
 import org.apache.tuscany.sca.core.context.InstanceWrapper;
 import org.apache.tuscany.sca.core.conversation.ConversationManager;
 import org.apache.tuscany.sca.core.conversation.ConversationState;
@@ -45,8 +47,10 @@ import org.apache.tuscany.sca.interfacedef.ConversationSequence;
 import org.apache.tuscany.sca.interfacedef.DataType;
 import org.apache.tuscany.sca.interfacedef.Interface;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
+import org.apache.tuscany.sca.interfacedef.InvalidInterfaceException;
 import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.interfacedef.ParameterMode;
+import org.apache.tuscany.sca.interfacedef.java.JavaInterface;
 import org.apache.tuscany.sca.interfacedef.java.JavaOperation;
 import org.apache.tuscany.sca.invocation.InvocationChain;
 import org.apache.tuscany.sca.invocation.Invoker;
@@ -94,6 +98,39 @@ public class JDKInvocationHandler implements InvocationHandler, Serializable {
             this.businessInterface = callableReference.getBusinessInterface();
             this.conversation = (ExtendedConversation)callableReference.getConversation();
             this.wire = ((CallableReferenceImpl<?>)callableReference).getRuntimeWire();
+            
+            /* ==========================================================================*/
+            // TUSCANY-3140 - in some cases we have noticed that the runtime engine for a 
+            //                component implementation uses a different classloader compared
+            //                to the classloader used in the first instance to introspect the 
+            //                component type and create the component model. If the business
+            //                interface of the callable reference is different from the 
+            //                interface of the reference then set the reference interface to the 
+            //                business interface
+            if (wire != null){
+	            Interface iface = wire.getSource().getInterfaceContract().getInterface();
+	            if (iface instanceof JavaInterface) {
+	            	JavaInterface javaIFace = (JavaInterface)iface;
+	            	// only reset the interface if the classes have the same name but the 
+	            	// class object is different
+	            	if ((javaIFace.getJavaClass().getName().equals(this.businessInterface.getName())) &&
+	                    (javaIFace.getJavaClass() != this.businessInterface)) {
+		             	try {
+		                    RuntimeComponent wireSourceComponent = wire.getSource().getComponent();
+		                    CompositeActivator  compositeActivator = ((ComponentContextImpl)wireSourceComponent.getComponentContext()).getCompositeActivator();
+		                    if (compositeActivator != null && compositeActivator.getJavaInterfaceFactory() != null) {
+		                         //reconstruct java interface using interface loaded by implementation class loader
+		                         iface.getOperations().clear();
+		                         compositeActivator.getJavaInterfaceFactory().createJavaInterface((JavaInterface) iface, this.businessInterface);
+		                    }
+			            } catch (InvalidInterfaceException e) {
+		                   e.printStackTrace();
+		                }
+	            	}
+	            }
+            }
+            /* ==========================================================================*/
+
             if (wire != null) {
                 init(wire);
             }
