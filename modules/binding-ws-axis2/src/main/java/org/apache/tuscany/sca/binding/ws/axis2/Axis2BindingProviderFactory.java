@@ -46,17 +46,15 @@ import org.apache.tuscany.sca.work.WorkScheduler;
 public class Axis2BindingProviderFactory implements BindingProviderFactory<WebServiceBinding> {
 
     private ModelFactoryExtensionPoint modelFactories;
-    private ServletHost servletHost;
+    private List<ServletHost> hosts;
     private List<PolicyHandlerTuple> policyHandlerClassnames = null;
     private DataBindingExtensionPoint dataBindings;
     private WorkScheduler workScheduler;
 
     public Axis2BindingProviderFactory(ExtensionPointRegistry extensionPoints) {
         ServletHostExtensionPoint servletHosts = extensionPoints.getExtensionPoint(ServletHostExtensionPoint.class);
-        List<ServletHost> hosts = servletHosts.getServletHosts();
-        if (!hosts.isEmpty()) {
-            this.servletHost = hosts.get(0);
-        }
+        hosts = servletHosts.getServletHosts();
+
         modelFactories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);
         policyHandlerClassnames = PolicyHandlerDefinitionsLoader.loadPolicyHandlerClassnames();
         dataBindings = extensionPoints.getExtensionPoint(DataBindingExtensionPoint.class);
@@ -74,6 +72,12 @@ public class Axis2BindingProviderFactory implements BindingProviderFactory<WebSe
     public ServiceBindingProvider createServiceBindingProvider(RuntimeComponent component,
                                                                RuntimeComponentService service,
                                                                WebServiceBinding binding) {
+    	ServletHost servletHost = null;
+    	
+        if (!hosts.isEmpty()) {
+            servletHost = hosts.get(0);
+        }
+    	
         return new Axis2ServiceBindingProvider(component, service, binding,
                                                servletHost, modelFactories,
                                                policyHandlerClassnames, dataBindings, workScheduler);

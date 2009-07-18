@@ -213,7 +213,12 @@ public class DefaultSCADomain extends SCADomain {
     public void close() {
         super.close();
         node.stop();
-
+        node = null;
+        client = null;
+        components.clear();
+        compositeActivator = null;
+        applicationClassLoader = null;
+        componentManager = null;
     }
 
     @Override
