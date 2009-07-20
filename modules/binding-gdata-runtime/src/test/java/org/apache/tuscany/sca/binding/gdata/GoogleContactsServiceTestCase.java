@@ -26,6 +26,7 @@ import junit.framework.TestCase;
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gdata.client.Query;
@@ -101,6 +102,7 @@ public class GoogleContactsServiceTestCase extends TestCase{
     }
 
     
+    @Ignore("TUSCANY-3164")
     @Test
     public void testClientDelete() throws Exception {
         
