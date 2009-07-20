@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.WeakHashMap;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElement;
@@ -45,6 +46,13 @@ import javax.xml.namespace.QName;
  * 
  */
 public class XMLRootElementUtil {
+
+    /**
+     * TUSCANY-3167
+     * Cache for property descriptors
+     */
+    private static Map<Class<?>, Map<String, JAXBPropertyDescriptor>> PROPERTY_MAP =
+        new WeakHashMap<Class<?>, Map<String, JAXBPropertyDescriptor>>();
 
     /** Constructor is intentionally private.  This class only provides static utility methods */
     private XMLRootElementUtil() {
@@ -158,11 +166,16 @@ public class XMLRootElementUtil {
      * @param jaxbClass
      * @return map
      */
-    public static Map<String, JAXBPropertyDescriptor> createPropertyDescriptorMap(Class<?> jaxbClass)
+    public synchronized static Map<String, JAXBPropertyDescriptor> createPropertyDescriptorMap(Class<?> jaxbClass)
         throws NoSuchFieldException, IntrospectionException {
 
+        Map<String, JAXBPropertyDescriptor> map = PROPERTY_MAP.get(jaxbClass);
+        if (map != null) {
+            return map;
+        }
+
+        map = new HashMap<String, JAXBPropertyDescriptor>();
         PropertyDescriptor[] pds = Introspector.getBeanInfo(jaxbClass).getPropertyDescriptors();
-        Map<String, JAXBPropertyDescriptor> map = new HashMap<String, JAXBPropertyDescriptor>();
 
         // Unfortunately the element names are stored on the fields.
         // Get all of the fields in the class and super classes
@@ -217,8 +230,8 @@ public class XMLRootElementUtil {
                 map.put(xmlName, new JAXBPropertyDescriptor(pd, xmlName, index));
                 index++;
             }
-
         }
+        PROPERTY_MAP.put(jaxbClass, map);
         return map;
     }
 
