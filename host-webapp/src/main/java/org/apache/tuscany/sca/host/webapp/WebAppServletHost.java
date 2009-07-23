@@ -126,6 +126,11 @@ public class WebAppServletHost implements ServletHost {
     }
 
     public Servlet getServletMapping(String suri) throws ServletMappingException {
+        URI pathURI = URI.create(suri);
+
+        // Make sure that the path starts with a /
+        suri = pathURI.getPath();
+        
         if (!suri.startsWith("/")) {
             suri = '/' + suri;
         }
