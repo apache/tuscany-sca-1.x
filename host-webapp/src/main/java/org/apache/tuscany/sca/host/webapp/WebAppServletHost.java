@@ -43,6 +43,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.apache.commons.logging.LogFactory;
+import org.apache.tuscany.sca.core.invocation.ThreadMessageContext;
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.apache.tuscany.sca.host.http.SecurityContext;
 import org.apache.tuscany.sca.host.http.ServletHost;
@@ -329,7 +330,8 @@ public class WebAppServletHost implements ServletHost {
         instance = null;
         servlets.clear();
         LogFactory.release(this.getClass().getClassLoader());
-        Introspector.flushCaches();      
+        Introspector.flushCaches(); 
+        ThreadMessageContext.removeMessageContext();
     }
 
     public String getContextPath() {

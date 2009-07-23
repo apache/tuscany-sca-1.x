@@ -69,4 +69,12 @@ public final class ThreadMessageContext {
     public static Message getMessageContext() {
         return CONTEXT.get();
     }
+    
+    /**
+     * Removes and state from the current thread to ensure that
+     * any associated classloaders can be GCd
+     */
+    public static void removeMessageContext() {
+        CONTEXT.remove();
+    }
 }
