@@ -99,13 +99,15 @@ public class ReallySmallRuntime {
 
     public ReallySmallRuntime(ClassLoader classLoader) {
         this.classLoader = classLoader;
+        
+        // Create our extension point registry
+        registry = new DefaultExtensionPointRegistry();
     }
 
     public void start() throws ActivationException {
     	long start = System.currentTimeMillis();
     	
-        // Create our extension point registry
-        registry = new DefaultExtensionPointRegistry();
+
         UtilityExtensionPoint utilities = registry.getExtensionPoint(UtilityExtensionPoint.class);
 
         // Get work scheduler
