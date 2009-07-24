@@ -50,6 +50,18 @@
             <version>1.6-SNAPSHOT</version>
         </dependency> 
         
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-contribution-impl</artifactId>
+            <version>1.6-SNAPSHOT</version>
+        </dependency> 
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-contribution-xml</artifactId>
+            <version>1.6-SNAPSHOT</version>
+        </dependency>         
+        
          <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-core</artifactId>
@@ -59,13 +71,6 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-sca</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency> 
-        
-         <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-workspace-impl</artifactId>
             <version>1.6-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>  
@@ -89,7 +94,14 @@
             <artifactId>tuscany-monitor</artifactId>
             <version>1.6-SNAPSHOT</version>
             <scope>test</scope>
-        </dependency>           
+        </dependency>   
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-workspace-impl</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>  
                
         <dependency>
             <groupId>org.easymock</groupId>

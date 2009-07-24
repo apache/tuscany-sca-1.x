@@ -17,24 +17,24 @@
  * under the License.    
  */
 
-package org.apache.tuscany.sca.workspace.impl;
+package org.apache.tuscany.sca.workspace.manager.impl;
 
-import org.apache.tuscany.sca.workspace.Workspace;
-import org.apache.tuscany.sca.workspace.WorkspaceFactory;
+import org.apache.tuscany.sca.workspace.manager.WorkspaceManager;
+import org.apache.tuscany.sca.workspace.manager.WorkspaceManagerFactory;
+import org.osoa.sca.ServiceRuntimeException;
 
 
 /**
- * Default implementation of a contribution workspace model factory.
- * 
- * @version $Rev$ $Date$
+ * A factory for creating workspace managers. A workspace manager has an instance
+ * of the Tuscany runtime and creates workspaces for collecting and processing
+ * contributions 
  */
-public class WorkspaceFactoryImpl implements WorkspaceFactory {
-    
-    public WorkspaceFactoryImpl() {
+public class WorkspaceManagerFactoryImpl extends WorkspaceManagerFactory {
+	
+    public WorkspaceManagerFactoryImpl() {
     }
     
-    public Workspace createWorkspace() {
-        return new WorkspaceImpl();
-    }
-
+	public WorkspaceManager createWorkspaceManager(){
+	    return new WorkspaceManagerImpl();
+	}
 }
