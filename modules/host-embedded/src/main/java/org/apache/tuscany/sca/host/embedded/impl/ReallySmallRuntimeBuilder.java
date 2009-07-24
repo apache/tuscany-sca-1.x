@@ -191,7 +191,7 @@ public class ReallySmallRuntimeBuilder {
         modelFactories.addFactory(inputFactory);
         
         // Create a validation XML schema extension point
-        ValidationSchemaExtensionPoint schemas = new DefaultValidationSchemaExtensionPoint();
+        ValidationSchemaExtensionPoint schemas = registry.getExtensionPoint(ValidationSchemaExtensionPoint.class);
                
         // Create a validating XML input factory
         XMLInputFactory validatingInputFactory = new DefaultValidatingXMLInputFactory(inputFactory, schemas, monitor);
