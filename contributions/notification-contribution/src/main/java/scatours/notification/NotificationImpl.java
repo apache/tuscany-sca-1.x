@@ -27,7 +27,11 @@ import scatours.smsgateway.SMSGateway;
 @Service(Notification.class)
 public class NotificationImpl implements Notification {
 
-  private static final String SCA_TOURS_SMS ="12345";
+  /**
+   * Use "Fake" phone number that has been reserved by Ofcom.
+   * See: http://www.ofcom.org.uk/telecoms/ioi/numbers/num_drama?a=87101
+   */
+  private static final String SCA_TOURS_SMS ="+44(0)2079460723";
   
   @Reference
   protected SMSGateway smsGateway;
@@ -39,7 +43,7 @@ public class NotificationImpl implements Notification {
    
     String sms = getSMSAddress(accountID);
     if (sms != null) {
-      System.out.println("Sending SMS to " + sms);
+      System.out.println("Sending SMS to " + sms + " for accountID " + accountID);
       result &= smsGateway.sendSMS(SCA_TOURS_SMS, sms, subject + ". " + message);
     }
 
@@ -47,6 +51,8 @@ public class NotificationImpl implements Notification {
   }
 
   private String getSMSAddress(String accountID) {
-    return "23874";
+    // Use "Fake" phone number that has been reserved by Ofcom.
+    // See: http://www.ofcom.org.uk/telecoms/ioi/numbers/num_drama?a=87101
+    return "+44(0)7700900812";
   }
 }
