@@ -208,7 +208,6 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        logger.info("$$$CompositeConfigurationServiceImpl.doGet()"); //[nash]         
         // Get the request path
         String path = URLDecoder.decode(request.getRequestURI().substring(request.getServletPath().length()), "UTF-8");
         String key;
