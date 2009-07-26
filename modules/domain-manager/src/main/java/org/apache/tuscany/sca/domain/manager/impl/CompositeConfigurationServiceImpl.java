@@ -87,6 +87,9 @@ import org.apache.tuscany.sca.implementation.node.builder.impl.NodeCompositeBuil
 import org.apache.tuscany.sca.interfacedef.InterfaceContractMapper;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.MonitorFactory;
+import org.apache.tuscany.sca.monitor.MonitorRuntimeException;
+import org.apache.tuscany.sca.monitor.Problem;
+import org.apache.tuscany.sca.monitor.Problem.Severity;
 import org.apache.tuscany.sca.policy.Intent;
 import org.apache.tuscany.sca.policy.IntentAttachPointType;
 import org.apache.tuscany.sca.policy.IntentAttachPointTypeFactory;
@@ -275,8 +278,13 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
                         try {
                             String dependencyLocation = dependencyItem.getAlternate();
                             dependency = contribution(workspace, dependencyURI, dependencyLocation);
-                        } catch (ContributionReadException e) {
-                            continue;
+                        } catch (Exception e) {
+                            if (contributionURI.equals(dependencyURI)) {
+                                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getDescription(e));
+                                return;
+                            } else {
+                                continue;
+                            }
                         }
                         workspace.getContributions().add(dependency);
                         contributionMap.put(dependencyURI, dependency);
@@ -313,9 +321,10 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
             // Fuse includes into the deployable composite
             try {
                 compositeIncludeBuilder.build(deployable);
-            } catch (CompositeBuilderException e) {
-                e.printStackTrace();  //[nash]
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
+                analyzeProblems();
+            } catch (Exception e) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getDescription(e));
+                return;
             }
             
             // Store away the requested composite  
@@ -387,9 +396,9 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
                                      contractMapper, aggregatedDefinitions, monitor);
         try {
             compositeBuilder.build(domainComposite);
-        } catch (CompositeBuilderException e) {
-            e.printStackTrace();  //[nash]
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
+            analyzeProblems();
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getDescription(e));
             return;
         }        
 
@@ -455,9 +464,7 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
             QName formatName = new QName(format.substring(0, s), format.substring(s +1));
             processor = (StAXArtifactProcessor<Composite>)staxProcessors.getProcessor(formatName);
             if (processor == null) {
-                Exception e = new IllegalArgumentException(queryString);  //[nash]
-                e.printStackTrace();  //[nash]
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString()); //[nash]
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, new IllegalArgumentException(queryString).toString());
                 return;
             }
         } else {
@@ -468,7 +475,6 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
             XMLStreamWriter writer = outputFactory.createXMLStreamWriter(response.getOutputStream());
             processor.write(requestedComposite, writer);
         } catch (Exception e) {
-            e.printStackTrace();  //[nash]
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
             return;
         }
@@ -541,12 +547,27 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
         try {
             URI uri = URI.create(contributionURI);
             URL location = locationURL(contributionLocation);
+
             Contribution contribution = (Contribution)contributionProcessor.read(null, uri, location);
+            try {
+                analyzeProblems();
+            } catch (ServiceRuntimeException e) {
+                throw e;
+            } catch (Exception e) {
+                throw new ContributionReadException(e);
+            }
             
             // Resolve the contribution dependencies
             contributionDependencyBuilder.buildContributionDependencies(contribution, workspace);
             
             contributionProcessor.resolve(contribution, workspace.getModelResolver());
+            try {
+                analyzeProblems();
+            } catch (ServiceRuntimeException e) {
+                throw e;
+            } catch (Exception e) {
+                throw new ContributionReadException(e);
+            }
             return contribution;
 
         } catch (ContributionReadException e) {
@@ -557,6 +578,29 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
             throw new ContributionReadException(e);
         }
     }
+
+    private void analyzeProblems() throws Exception {
+
+        for (Problem problem : monitor.getProblems()) {
+            if ((problem.getSeverity() == Severity.ERROR) && (!problem.getMessageId().equals("SchemaError"))) {
+                if (problem.getCause() != null) {
+                    throw new ServiceRuntimeException(new MonitorRuntimeException(problem.getCause()));
+                } else {
+                    throw new ServiceRuntimeException(new MonitorRuntimeException(problem.toString()));
+                }
+            }
+        }
+    }
+
+    private String getDescription(Exception e) {
+        if (e instanceof ServiceRuntimeException && e.getCause() instanceof MonitorRuntimeException) {
+            Throwable ce = e.getCause();
+            return ce.getCause() != null ? ce.getCause().toString() : ce.getMessage();
+        } else {
+            return e.toString();
+        }
+    }
+
 
     /**
      * The following code was copied from RuntimeBootStrapper to fix TUSCANY-3171

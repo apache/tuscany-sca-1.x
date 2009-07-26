@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace xmlns="http://tuscany.apache.org/xmlns/sca/1.0"
+           xmlns:ns1="http://tuscany.apache.org/xmlns/sca/1.0">
+    <contribution location="file:./cloud"
+           uri="http://tuscany.apache.org/cloud" />
+    <contribution location="file:../../../../payment/target/itest-domainmgr-error-payment.jar"
+           uri="scatours-payment" />
+</workspace>

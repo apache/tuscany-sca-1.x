@@ -21,17 +21,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
-        <artifactId>itest-domainmgr-transaction</artifactId>
+        <artifactId>itest-domainmgr-error</artifactId>
         <version>1.5.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>itest-domainmgr-transaction-runtest</artifactId>
-    <name>Apache Tuscany SCA iTest Domain Manager Transaction Run Test</name>
+    <artifactId>itest-domainmgr-error-runtest</artifactId>
+    <name>Apache Tuscany SCA iTest Domain Manager Error Handling Run Test</name>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>itest-domainmgr-transaction-payment</artifactId>
+            <artifactId>itest-domainmgr-error-payment</artifactId>
             <version>1.5.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
