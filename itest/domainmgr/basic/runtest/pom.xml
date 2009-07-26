@@ -70,14 +70,6 @@
             <version>1.5.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-jsonrpc-runtime</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        -->
 
         <dependency>
             <groupId>junit</groupId>
