@@ -55,6 +55,7 @@ import org.apache.tuscany.sca.assembly.builder.CompositeBuilder;
 import org.apache.tuscany.sca.assembly.builder.CompositeBuilderException;
 import org.apache.tuscany.sca.assembly.builder.impl.CompositeBuilderImpl;
 import org.apache.tuscany.sca.assembly.builder.impl.CompositeIncludeBuilderImpl;
+import org.apache.tuscany.sca.assembly.xml.CompositeDocumentProcessor;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.contribution.Artifact;
 import org.apache.tuscany.sca.contribution.Contribution;
@@ -65,7 +66,10 @@ import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.URLArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.URLArtifactProcessorExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.ValidatingXMLInputFactory;
+import org.apache.tuscany.sca.contribution.resolver.DefaultModelResolver;
 import org.apache.tuscany.sca.contribution.resolver.ExtensibleModelResolver;
+import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolverExtensionPoint;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
@@ -75,17 +79,26 @@ import org.apache.tuscany.sca.data.collection.Entry;
 import org.apache.tuscany.sca.data.collection.Item;
 import org.apache.tuscany.sca.data.collection.LocalItemCollection;
 import org.apache.tuscany.sca.data.collection.NotFoundException;
+import org.apache.tuscany.sca.definitions.SCADefinitions;
+import org.apache.tuscany.sca.definitions.impl.SCADefinitionsImpl;
+import org.apache.tuscany.sca.definitions.util.SCADefinitionsUtil;
 import org.apache.tuscany.sca.implementation.node.NodeImplementation;
 import org.apache.tuscany.sca.implementation.node.builder.impl.NodeCompositeBuilderImpl;
 import org.apache.tuscany.sca.interfacedef.InterfaceContractMapper;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.MonitorFactory;
+import org.apache.tuscany.sca.policy.Intent;
+import org.apache.tuscany.sca.policy.IntentAttachPointType;
 import org.apache.tuscany.sca.policy.IntentAttachPointTypeFactory;
+import org.apache.tuscany.sca.policy.PolicySet;
+import org.apache.tuscany.sca.provider.SCADefinitionsProvider;
+import org.apache.tuscany.sca.provider.SCADefinitionsProviderExtensionPoint;
 import org.apache.tuscany.sca.workspace.Workspace;
 import org.apache.tuscany.sca.workspace.WorkspaceFactory;
 import org.apache.tuscany.sca.workspace.builder.ContributionDependencyBuilder;
 import org.apache.tuscany.sca.workspace.builder.impl.ContributionDependencyBuilderImpl;
 import org.apache.tuscany.sca.workspace.processor.impl.ContributionContentProcessor;
+import org.osoa.sca.ServiceRuntimeException;
 import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
@@ -125,10 +138,16 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
     private StAXArtifactProcessor<Composite> compositeProcessor;
     private XMLOutputFactory outputFactory;
     private ContributionDependencyBuilder contributionDependencyBuilder;
-    private CompositeBuilder compositeBuilder;
     private CompositeBuilder compositeIncludeBuilder;
     private CompositeBuilder nodeConfigurationBuilder;
     private Monitor monitor;
+    private List<SCADefinitions> policyDefinitions;
+    private ModelResolver policyDefinitionsResolver;
+    private SCABindingFactory scaBindingFactory;
+    private IntentAttachPointTypeFactory intentAttachPointTypeFactory;
+    private DocumentBuilderFactory documentBuilderFactory;
+    private TransformerFactory transformerFactory;
+    private InterfaceContractMapper contractMapper;
     
     /**
      * Initialize the component.
@@ -158,26 +177,38 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
 
         URLArtifactProcessorExtensionPoint urlProcessors = extensionPoints.getExtensionPoint(URLArtifactProcessorExtensionPoint.class);
         URLArtifactProcessor<Object> urlProcessor = new ExtensibleURLArtifactProcessor(urlProcessors, monitor);
-        
+        policyDefinitionsResolver = new DefaultModelResolver();
+        policyDefinitions = new ArrayList<SCADefinitions>();
+
+        // The following was copied from RuntimeBuilder to fix TUSCANY-3171
+        XMLInputFactory validatingInputFactory = modelFactories.getFactory(ValidatingXMLInputFactory.class);
+        documentBuilderFactory = modelFactories.getFactory(DocumentBuilderFactory.class);
+        //documentBuilderFactory.setNamespaceAware(true);
+        urlProcessors.getProcessor(Composite.class);
+        urlProcessors.addArtifactProcessor(new CompositeDocumentProcessor(staxProcessor, validatingInputFactory,
+                                                                          documentBuilderFactory, policyDefinitions, monitor));
+    
         // Create contribution processor
         modelResolvers = extensionPoints.getExtensionPoint(ModelResolverExtensionPoint.class);
-        contributionProcessor = new ContributionContentProcessor(extensionPoints, monitor);
+        contributionProcessor = new ContributionContentProcessor(extensionPoints, monitor, policyDefinitionsResolver, policyDefinitions);
         
         // Create contribution and composite builders
-        DocumentBuilderFactory documentBuilderFactory = modelFactories.getFactory(DocumentBuilderFactory.class);
-        TransformerFactory transformerFactory = modelFactories.getFactory(TransformerFactory.class);
+        transformerFactory = modelFactories.getFactory(TransformerFactory.class);
         contributionDependencyBuilder = new ContributionDependencyBuilderImpl(monitor);
-        SCABindingFactory scaBindingFactory = modelFactories.getFactory(SCABindingFactory.class);
-        IntentAttachPointTypeFactory intentAttachPointTypeFactory = modelFactories.getFactory(IntentAttachPointTypeFactory.class);
-        InterfaceContractMapper contractMapper = utilities.getUtility(InterfaceContractMapper.class);
-        compositeBuilder = new CompositeBuilderImpl(assemblyFactory, scaBindingFactory, intentAttachPointTypeFactory, documentBuilderFactory, transformerFactory, contractMapper, monitor);
+        scaBindingFactory = modelFactories.getFactory(SCABindingFactory.class);
+        intentAttachPointTypeFactory = modelFactories.getFactory(IntentAttachPointTypeFactory.class);
+        contractMapper = utilities.getUtility(InterfaceContractMapper.class);
         compositeIncludeBuilder = new CompositeIncludeBuilderImpl(monitor);
         nodeConfigurationBuilder = new NodeCompositeBuilderImpl(assemblyFactory, scaBindingFactory, documentBuilderFactory, transformerFactory, contractMapper, null, monitor);
+
+        // Load the definitions.xml
+        loadSCADefinitions(extensionPoints);
     }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
+        logger.info("$$$CompositeConfigurationServiceImpl.doGet()"); //[nash]         
         // Get the request path
         String path = URLDecoder.decode(request.getRequestURI().substring(request.getServletPath().length()), "UTF-8");
         String key;
@@ -284,6 +315,7 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
             try {
                 compositeIncludeBuilder.build(deployable);
             } catch (CompositeBuilderException e) {
+                e.printStackTrace();  //[nash]
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
             }
             
@@ -347,9 +379,17 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
         }
         
         // Build the domain composite
+        SCADefinitions aggregatedDefinitions = new SCADefinitionsImpl();
+        for (SCADefinitions definition : policyDefinitions) {
+            SCADefinitionsUtil.aggregateSCADefinitions(definition, aggregatedDefinitions);
+        }
+        CompositeBuilder compositeBuilder = new CompositeBuilderImpl(assemblyFactory, null, scaBindingFactory,
+                                     intentAttachPointTypeFactory, documentBuilderFactory, transformerFactory,
+                                     contractMapper, aggregatedDefinitions, monitor);
         try {
             compositeBuilder.build(domainComposite);
         } catch (CompositeBuilderException e) {
+            e.printStackTrace();  //[nash]
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
             return;
         }        
@@ -416,7 +456,9 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
             QName formatName = new QName(format.substring(0, s), format.substring(s +1));
             processor = (StAXArtifactProcessor<Composite>)staxProcessors.getProcessor(formatName);
             if (processor == null) {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, new IllegalArgumentException(queryString).toString());
+                Exception e = new IllegalArgumentException(queryString);  //[nash]
+                e.printStackTrace();  //[nash]
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString()); //[nash]
                 return;
             }
         } else {
@@ -427,6 +469,7 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
             XMLStreamWriter writer = outputFactory.createXMLStreamWriter(response.getOutputStream());
             processor.write(requestedComposite, writer);
         } catch (Exception e) {
+            e.printStackTrace();  //[nash]
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
             return;
         }
@@ -513,6 +556,54 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
             throw new ContributionReadException(e);
         } catch (MalformedURLException e) {
             throw new ContributionReadException(e);
+        }
+    }
+
+    /**
+     * The following code was copied from RuntimeBootStrapper to fix TUSCANY-3171
+     *
+     * @param registry
+     */
+    private void loadSCADefinitions(ExtensionPointRegistry registry) throws ParserConfigurationException {
+        try {
+            URLArtifactProcessorExtensionPoint documentProcessors =
+                registry.getExtensionPoint(URLArtifactProcessorExtensionPoint.class);
+            URLArtifactProcessor<SCADefinitions> definitionsProcessor =
+                documentProcessors.getProcessor(SCADefinitions.class);
+            SCADefinitionsProviderExtensionPoint scaDefnProviders =
+                registry.getExtensionPoint(SCADefinitionsProviderExtensionPoint.class);
+
+            SCADefinitions systemSCADefinitions = new SCADefinitionsImpl();
+            SCADefinitions aSCADefn = null;
+            for (SCADefinitionsProvider aProvider : scaDefnProviders.getSCADefinitionsProviders()) {
+                aSCADefn = aProvider.getSCADefinition();
+                SCADefinitionsUtil.aggregateSCADefinitions(aSCADefn, systemSCADefinitions);
+            }
+
+            policyDefinitions.add(systemSCADefinitions);
+
+            //we cannot expect that providers will add the intents and policysets into the resolver
+            //so we do this here explicitly
+            for (Intent intent : systemSCADefinitions.getPolicyIntents()) {
+                policyDefinitionsResolver.addModel(intent);
+            }
+
+            for (PolicySet policySet : systemSCADefinitions.getPolicySets()) {
+                policyDefinitionsResolver.addModel(policySet);
+            }
+
+            for (IntentAttachPointType attachPoinType : systemSCADefinitions.getBindingTypes()) {
+                policyDefinitionsResolver.addModel(attachPoinType);
+            }
+
+            for (IntentAttachPointType attachPoinType : systemSCADefinitions.getImplementationTypes()) {
+                policyDefinitionsResolver.addModel(attachPoinType);
+            }
+
+            //now that all system sca definitions have been read, lets resolve them right away
+            definitionsProcessor.resolve(systemSCADefinitions, policyDefinitionsResolver);
+        } catch (Exception e) {
+            throw new ServiceRuntimeException(e);
         }
     }
 

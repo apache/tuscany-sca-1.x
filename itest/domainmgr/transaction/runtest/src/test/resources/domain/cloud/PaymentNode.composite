@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
+           xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
+           xmlns:c="http://scatours"
+           targetNamespace="http://tuscany.apache.org/cloud"
+           name="PaymentNode">
+    <component name="PaymentNode">
+        <t:implementation.node uri="scatours-payment" composite="c:payment" />
+        <service name="Node">
+             <binding.ws uri="http://localhost:8081" />
+        </service>
+    </component>
+</composite>

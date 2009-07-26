@@ -50,9 +50,13 @@ import org.apache.tuscany.sca.contribution.resolver.ModelResolverExtensionPoint;
 import org.apache.tuscany.sca.contribution.scanner.ContributionScanner;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
+import org.apache.tuscany.sca.definitions.SCADefinitions;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.core.UtilityExtensionPoint;
 import org.apache.tuscany.sca.monitor.Monitor;
+import org.apache.tuscany.sca.policy.Intent;
+import org.apache.tuscany.sca.policy.IntentAttachPointType;
+import org.apache.tuscany.sca.policy.PolicySet;
 import org.apache.tuscany.sca.workspace.scanner.impl.DirectoryContributionScanner;
 import org.apache.tuscany.sca.workspace.scanner.impl.JarContributionScanner;
 
@@ -71,6 +75,8 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
     private StAXArtifactProcessor<Object> extensionProcessor;
     private UtilityExtensionPoint utilities;
     private Monitor monitor = null;
+    private ModelResolver policyDefinitionsResolver = null;
+    private List<SCADefinitions> policyDefinitions = null;
 
     public ContributionContentProcessor(ExtensionPointRegistry extensionPoints, Monitor monitor) {
         this.extensionPoints = extensionPoints;
@@ -87,6 +93,13 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
         XMLOutputFactory outputFactory = modelFactories.getFactory(XMLOutputFactory.class);
         this.extensionProcessor = new ExtensibleStAXArtifactProcessor(staxProcessors, inputFactory, outputFactory, monitor);
         this.contributionFactory = modelFactories.getFactory(ContributionFactory.class);
+    }
+
+    public ContributionContentProcessor(ExtensionPointRegistry extensionPoints, Monitor monitor,
+                                        ModelResolver policyDefinitionsResolver, List<SCADefinitions> policyDefinitions) {
+        this(extensionPoints, monitor);
+        this.policyDefinitionsResolver = policyDefinitionsResolver;
+        this.policyDefinitions = policyDefinitions;
     }
 
     /*
@@ -116,7 +129,12 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
         Contribution contribution = contributionFactory.createContribution();
         contribution.setURI(contributionURI.toString());
         contribution.setLocation(contributionURL.toString());
-        ModelResolver modelResolver = new ExtensibleModelResolver(contribution, extensionPoints);
+        ModelResolver modelResolver;
+        if (policyDefinitionsResolver != null) {
+            modelResolver = new ExtensibleModelResolver(contribution, extensionPoints, modelResolvers, modelFactories, policyDefinitionsResolver);
+        } else { 
+            modelResolver = new ExtensibleModelResolver(contribution, extensionPoints);
+        }
         contribution.setModelResolver(modelResolver);
         contribution.setUnresolved(true);
 
@@ -149,6 +167,11 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
 
                 // Add the loaded model to the model resolver
                 modelResolver.addModel(model);
+
+                // Add policy definitions to the list of policy definitions
+                if (policyDefinitionsResolver != null) {
+                    addPolicyDefinitions(model);
+                }
 
                 // Merge contribution metadata into the contribution model
                 if (model instanceof ContributionMetadata) {
@@ -245,4 +268,38 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
             }
         }
     }
+
+    /**
+     * The following code was copied from ContributionServiceImpl to fix TUSCANY-3171
+     *
+     * @param model
+     */
+    private void addPolicyDefinitions(Object model) {
+
+        // Add policy definitions to the list of policy definitions
+        if (model instanceof SCADefinitions) {
+            policyDefinitions.add((SCADefinitions)model);
+
+            SCADefinitions definitions = (SCADefinitions)model;
+            for (Intent intent : definitions.getPolicyIntents() ) {
+                policyDefinitionsResolver.addModel(intent);
+            }
+
+            for (PolicySet policySet : definitions.getPolicySets() ) {
+                policyDefinitionsResolver.addModel(policySet);
+            }
+
+            for (IntentAttachPointType attachPointType : definitions.getBindingTypes() ) {
+                policyDefinitionsResolver.addModel(attachPointType);
+            }
+
+            for (IntentAttachPointType attachPointType : definitions.getImplementationTypes() ) {
+                policyDefinitionsResolver.addModel(attachPointType);
+            }
+            for (Object binding : definitions.getBindings() ) {
+                policyDefinitionsResolver.addModel(binding);
+            }
+        }
+    }
+
 }
