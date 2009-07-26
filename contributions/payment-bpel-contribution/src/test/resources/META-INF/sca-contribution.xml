@@ -17,7 +17,9 @@
     * specific language governing permissions and limitations
     * under the License.    
 -->
-<contribution xmlns="http://www.osoa.org/xmlns/sca/1.0">
+<contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
+              xmlns:pp="http://www.tuscanyscatours.com/Payment" >
    <import namespace="http://www.tuscanyscatours.com/Payment"/>
    <import namespace="http://www.tuscanyscatours.com/Payment/"/>
+   <deployable composite="pp:paymentClient" />
 </contribution>

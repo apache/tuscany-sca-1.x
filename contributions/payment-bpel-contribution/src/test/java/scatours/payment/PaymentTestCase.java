@@ -50,7 +50,7 @@ public class PaymentTestCase {
                 
             emailGatewayNode.start();            
    
-            paymentNode = SCANodeFactory.newInstance().createSCANode("payment.composite", 
+            paymentNode = SCANodeFactory.newInstance().createSCANode(null, 
                     new SCAContribution("payment-bpel", "./target/classes"),
                     new SCAContribution("payment-bpel-test", "./target/test-classes"));
     

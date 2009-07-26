@@ -22,13 +22,6 @@
            xmlns:pp="http://www.tuscanyscatours.com/Payment" 
            targetNamespace="http://www.tuscanyscatours.com/Payment" 
            name="payment">
-           
-    <component name="PaymentClient">
-        <implementation.java class="scatours.payment.client.PaymentClientImpl" />
-        <reference name="payment">
-            <binding.ws uri="http://localhost:8080/Payment" />
-        </reference>
-    </component>
     
     <component name="Payment">
         <implementation.bpel process="pp:Payment"/>
