@@ -19,12 +19,15 @@
 
 package org.apache.tuscany.sca.policy.security.http;
 
+import java.security.AccessControlContext;
 import java.util.List;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginContext;
+import javax.security.jacc.WebRoleRefPermission;
 
+import org.apache.geronimo.security.ContextManager;
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
@@ -58,7 +61,7 @@ public class LDAPRealmAuthenticationInterceptor  implements Interceptor {
     public Message invoke(Message msg) {
         Subject subject = null;
         Subject authenticatedSubject = null;
-
+        
         try {
             // Perform user authentication    
             LDAPRealmAuthenticationPolicy authenticationPolicy = authenticationPolicies.get(0);
@@ -76,6 +79,7 @@ public class LDAPRealmAuthenticationInterceptor  implements Interceptor {
                 LoginContext geronimoLoginContext = ContextManager.login(authenticationPolicy.getRealmConfigurationName(), callbackHandler);
 
                 authenticatedSubject = geronimoLoginContext.getSubject();
+                ContextManager.setCallers(authenticatedSubject, authenticatedSubject);
                 if (authenticatedSubject != null) {
                     //TODO: add authenticated subject to the msg header ?
                 }
@@ -87,9 +91,14 @@ public class LDAPRealmAuthenticationInterceptor  implements Interceptor {
                 if(authorizationPolicy.getAccessControl() == AuthorizationPolicy.AcessControl.allow) {
                     /* Geronimo Specific code */
                     /*
+                    AccessControlContext acc = ContextManager.getCurrentContext();
+                    
                     boolean isAllowed = false;
                     for (String requiredRole : authorizationPolicy.getRoleNames()) {
-                        isAllowed = isUserInRole(authenticatedSubject, requiredRole);
+                        isAllowed = isUserInRole(acc, requiredRole);
+                        if(isAllowed) {
+                            break;
+                        }
                     }
                     
                     if(! isAllowed ) {
@@ -106,22 +115,20 @@ public class LDAPRealmAuthenticationInterceptor  implements Interceptor {
         return getNext().invoke(msg);
     }
     
-    public boolean isUserInRole(Subject subject, String role) {
+    public boolean isUserInRole(AccessControlContext acc, String role) {
         /* Geronimo Specific code */
         /*
-        AccessControlContext acc = ContextManager.getCurrentContext();
-
+        
         try {
             acc.checkPermission(new WebRoleRefPermission("", role));
         } catch (Exception e) {
+            System.out.println(">>> NO : " + e.getMessage());
             return false;
         }
-
+        
         return true;
         */
 
         return false;
     }
-
-
 }
