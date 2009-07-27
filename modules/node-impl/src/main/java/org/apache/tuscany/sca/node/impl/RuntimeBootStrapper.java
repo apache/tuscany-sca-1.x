@@ -103,13 +103,13 @@ public class RuntimeBootStrapper {
 
     public RuntimeBootStrapper(ClassLoader classLoader) {
         this.classLoader = classLoader;
+        registry = new DefaultExtensionPointRegistry();
     }
 
     public void start() throws ActivationException {
         long start = System.currentTimeMillis();
 
         // Create our extension point registry
-        registry = new DefaultExtensionPointRegistry();
         UtilityExtensionPoint utilities = registry.getExtensionPoint(UtilityExtensionPoint.class);
 
         // Get work scheduler
