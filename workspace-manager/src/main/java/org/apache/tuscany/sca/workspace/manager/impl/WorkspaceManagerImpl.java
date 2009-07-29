@@ -37,7 +37,6 @@ import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.MonitorFactory;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
-import org.apache.tuscany.sca.workspace.ContributionConfiguration;
 import org.apache.tuscany.sca.workspace.Workspace;
 import org.apache.tuscany.sca.workspace.WorkspaceFactory;
 import org.apache.tuscany.sca.workspace.builder.ContributionDependencyBuilder;
@@ -46,14 +45,19 @@ import org.apache.tuscany.sca.workspace.manager.WorkspaceManager;
 import org.osoa.sca.ServiceRuntimeException;
 
 /**
- * An SPI for firing up the Tuscany runtime and for providing
- * access to the ExtensionPointRegsitry. With a reference to the
- * registry you can add new extension points and then start the
- * runtime. Once started you can create worksapces and use them
- * to read and resolve SCA contributions in the same way that 
- * Tuscany does internally. 
+ * This workspace manager class provides an SPI for firing up the Tuscany runtime 
+ * and for providing access to the Tuscany ExtensionPointRegsitry. With a reference to the
+ * registry you can add new extension points programmatically before starting the runtime.
+ * Once the runtime is started you can read contributions, create a workspace, populate it
+ * and then resolve it. 
+ * 
+ * A workspace is a collection of contributions. A workspace populated
+ * with one or more contribution models can be resolved to ensure
+ * that all referenced artifacts are located. When more than one contribution
+ * model is present resolution takes into account the import and export relationships 
+ * between contributions.  
  */
-public class WorkspaceManagerImpl implements WorkspaceManager {
+public class WorkspaceManagerImpl extends WorkspaceManager {
     
     private ReallySmallRuntime runtime;
     
@@ -67,7 +71,7 @@ public class WorkspaceManagerImpl implements WorkspaceManager {
     private MonitorFactory monitorFactory;
     private Monitor monitor;
 		
-	public WorkspaceManagerImpl(){
+	public WorkspaceManagerImpl() throws ServiceRuntimeException{
         try {
             runtime = new ReallySmallRuntime(Thread.currentThread().getContextClassLoader());  
             
@@ -93,7 +97,7 @@ public class WorkspaceManagerImpl implements WorkspaceManager {
 	    return runtime.getExtensionPointRegistry();
 	}
 	
-	public void start(){
+	public void start() throws ServiceRuntimeException {
        try {
             runtime.start();
         } catch(Exception ex) {
@@ -101,7 +105,7 @@ public class WorkspaceManagerImpl implements WorkspaceManager {
         }
 	}
 
-	public void stop(){
+	public void stop() throws ServiceRuntimeException{
         try {
             runtime.stop();
         } catch(Exception ex) {
@@ -116,14 +120,14 @@ public class WorkspaceManagerImpl implements WorkspaceManager {
         
         return workspace;	    
 	}
-	    
-    public Contribution addContributionToWorkspace(Workspace workspace, Contribution contribution){
+	
+
+    public Contribution readContribution(String name, String location) throws ServiceRuntimeException{
         try {
-            Contribution returnContribution = contributionProcessor.read(null, 
-                    URI.create(contribution.getURI()), 
-                    new File(contribution.getLocation()).toURI().toURL());
-            
-            workspace.getContributions().add(returnContribution);
+            Contribution returnContribution = 
+                contributionProcessor.read(null, 
+                                           URI.create(name), 
+                                           new File(location).toURI().toURL());
             
             analyzeProblems();
             
@@ -133,12 +137,23 @@ public class WorkspaceManagerImpl implements WorkspaceManager {
             throw new ServiceRuntimeException(ex);
         }
     }
+	    
+    public void addContributionToWorkspace(Workspace workspace, Contribution contribution) throws ServiceRuntimeException{
+        try {
+            
+            workspace.getContributions().add(contribution);
+
+            
+        } catch (Exception ex) {
+            throw new ServiceRuntimeException(ex);
+        }
+    }
     
-    public void resolveWorkspace(Workspace workspace){
+    public void resolveWorkspace(Workspace workspace) throws ServiceRuntimeException {
         try {
             // some algorithm to resolve contributions given their dependencies
             // need to look at the one from 2.x as this one expects contributions
-            // presented in the right order
+            // to be presented in the right order
             Set<Contribution> resolved = new HashSet<Contribution>();
             for (Contribution contribution: workspace.getContributions()) {
                 List<Contribution> dependencies = contributionDependencyBuilder.buildContributionDependencies(contribution, workspace);
@@ -157,10 +172,6 @@ public class WorkspaceManagerImpl implements WorkspaceManager {
         } catch (Exception ex) {
             throw new ServiceRuntimeException(ex);
         }
-    }
-    
-    public void removeContributionFromWorkspace(Workspace workspace, Contribution contribution){
-        workspace.getContributions().remove(contribution);
     }
     
     private void analyzeProblems() throws Exception {

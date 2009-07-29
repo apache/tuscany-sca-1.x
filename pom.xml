@@ -155,7 +155,7 @@
                 <module>implementation-resource-runtime</module>
                 <module>implementation-script</module>
                 <module>implementation-spring</module>
-		    <module>implementation-spring-runtime</module>
+		<module>implementation-spring-runtime</module>
                 <module>implementation-web</module>
                 <module>implementation-web-runtime</module>
                 <module>implementation-widget</module>
@@ -186,6 +186,7 @@
                 <module>workspace</module>
                 <module>workspace-impl</module>
                 <module>workspace-xml</module>
+                <module>workspace-manager</module>
                 <module>xsd</module>
                 <module>xsd-xml</module>
                 <module>tracing-aspectj</module>
