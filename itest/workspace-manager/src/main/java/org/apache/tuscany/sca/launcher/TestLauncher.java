@@ -38,15 +38,13 @@ import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
 import org.apache.tuscany.sca.workspace.Workspace;
 import org.apache.tuscany.sca.workspace.manager.WorkspaceManager;
-import org.apache.tuscany.sca.workspace.manager.WorkspaceManagerFactory;
 import org.osoa.sca.ServiceRuntimeException;
 
 public class TestLauncher {
 	
 	public  final static void main(String[] args) {
 
-	    WorkspaceManagerFactory workspaceManagerFactory = WorkspaceManagerFactory.newInstance();
-		WorkspaceManager workspaceManager = workspaceManagerFactory.createWorkspaceManager();
+		WorkspaceManager workspaceManager = WorkspaceManager.newInstance();
 		
 		addExtensions(workspaceManager);
 		workspaceManager.start();
@@ -56,7 +54,7 @@ public class TestLauncher {
 	
 	private static void addExtensions(WorkspaceManager workspaceManager) {
     	try {
-            System.out.println("Adding extensions");    	    
+            System.out.println("Add extensions");    	    
     		ExtensionPointRegistry registry = workspaceManager.getRegistry();
     		
     		// get monitor
@@ -93,24 +91,13 @@ public class TestLauncher {
 	private static void processContributions(WorkspaceManager workspaceManager){
 		try {
 			System.out.println("Process contribution");
-			ExtensionPointRegistry registry = workspaceManager.getRegistry();
-			ModelFactoryExtensionPoint modelFactories = registry.getExtensionPoint(ModelFactoryExtensionPoint.class);
-			ContributionFactory contributionFactory = modelFactories.getFactory(ContributionFactory.class);
-			
-			Workspace workspace = workspaceManager.createWorkspace();
-		
-			Contribution contribution = contributionFactory.createContribution();
-            contribution.setURI("contrib1");
-            contribution.setLocation("./target/classes/contrib1");
-            contribution.setUnresolved(true);
             
-            contribution = workspaceManager.addContributionToWorkspace(workspace, contribution);
-			
+			Workspace workspace = workspaceManager.createWorkspace();
+            Contribution contribution = workspaceManager.readContribution("contrib1", "./target/classes/contrib1");
+            workspaceManager.addContributionToWorkspace(workspace, contribution);
             workspaceManager.resolveWorkspace(workspace);	
             
             // do whatever you need to do with workspace and its resolved contributions
-            
-            workspaceManager.removeContributionFromWorkspace(workspace, contribution);
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
