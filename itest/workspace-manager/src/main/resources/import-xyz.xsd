@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (c) Copyright SCA Collaboration 2006 -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://someuri" 
+    xmlns:tns="http://someuri" 
+    xmlns:sca="http://www.osoa.org/xmlns/sca/1.0"
+    elementFormDefault="qualified">
+
+    <import namespace="http://www.osoa.org/xmlns/sca/1.0"/>
+
+	<element name="import.xyz" type="tns:ImportXYZ" substitutionGroup="sca:baseImport"/>
+	
+	<element name="export.xyz" type="tns:ExportXYZ" substitutionGroup="sca:baseExport"/>
+
+    <complexType name="ImportXYZ">
+        <complexContent>
+            <extension base="sca:BaseImportType">
+    	        <attribute name="anAttribute" type="string"/>
+    	    </extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="ExportXYZ">
+        <complexContent>
+            <extension base="sca:BaseExportType"/>
+    	</complexContent>
+    </complexType>
+
+</schema>

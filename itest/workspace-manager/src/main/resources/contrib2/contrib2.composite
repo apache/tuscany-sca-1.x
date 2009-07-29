@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
+           xmlns:tns="http://someuri"
+           targetNamespace="http://contrib2"
+           name="BComposite">
+
+       <component name="Component3">
+         <tns:implementation.xyz anAttribute="abcdef.xyz"/>
+         <reference name="component2" target="Component2"/>
+       </component>
+    
+</composite>

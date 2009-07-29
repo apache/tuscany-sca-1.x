@@ -136,6 +136,7 @@
                 <module>transaction</module>
                 <module>validation</module>
                 <module>wires</module>
+                <module>workspace-manager</module>
                 <module>wsdl</module>
                 <module>wsdlgen</module>
                 <module>wsdlless</module>
