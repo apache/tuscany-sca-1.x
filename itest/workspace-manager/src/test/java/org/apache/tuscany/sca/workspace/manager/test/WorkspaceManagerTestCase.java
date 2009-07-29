@@ -21,15 +21,21 @@ package org.apache.tuscany.sca.workspace.manager.test;
 import static org.junit.Assert.assertEquals;
 
 
+import org.apache.tuscany.sca.artifact.xyz.XYZ;
+import org.apache.tuscany.sca.artifact.xyz.XYZModelResolver;
+import org.apache.tuscany.sca.artifact.xyz.XYZProcessor;
 import org.apache.tuscany.sca.contribution.Contribution;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessorExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.URLArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.ValidationSchemaExtensionPoint;
+import org.apache.tuscany.sca.contribution.resolver.ModelResolverExtensionPoint;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.core.UtilityExtensionPoint;
 import org.apache.tuscany.sca.implementation.xyz.ImplementationXYZFactoryImpl;
 import org.apache.tuscany.sca.implementation.xyz.ImplementationXYZProcessor;
 import org.apache.tuscany.sca.imprt.xyz.DefaultImportExportXYZFactory;
+import org.apache.tuscany.sca.imprt.xyz.ExportXYZProcessor;
 import org.apache.tuscany.sca.imprt.xyz.ImportXYZProcessor;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.MonitorFactory;
@@ -63,23 +69,32 @@ public class WorkspaceManagerTestCase {
             ExtensionPointRegistry registry = workspaceManager.getRegistry();
             
             // get monitor
-            UtilityExtensionPoint utilities = registry.getExtensionPoint(UtilityExtensionPoint.class);
+            UtilityExtensionPoint utilities = 
+                registry.getExtensionPoint(UtilityExtensionPoint.class);
             MonitorFactory monitorFactory = utilities.getUtility(MonitorFactory.class);
             Monitor monitor = monitorFactory.createMonitor();
                     
             // create validation schema
             // are schema required
-            ValidationSchemaExtensionPoint schemas = registry.getExtensionPoint(ValidationSchemaExtensionPoint.class);
+            ValidationSchemaExtensionPoint schemas = 
+                registry.getExtensionPoint(ValidationSchemaExtensionPoint.class);
             schemas.addSchema(WorkspaceManagerTestCase.class.getClassLoader().getResource("implementation-xyz.xsd").toString());
             schemas.addSchema(WorkspaceManagerTestCase.class.getClassLoader().getResource("import-xyz.xsd").toString());
             
             // create model factories
-            ModelFactoryExtensionPoint modelFactories = registry.getExtensionPoint(ModelFactoryExtensionPoint.class);
+            ModelFactoryExtensionPoint modelFactories = 
+                registry.getExtensionPoint(ModelFactoryExtensionPoint.class);
 
             modelFactories.addFactory(new ImplementationXYZFactoryImpl());
             modelFactories.addFactory(new DefaultImportExportXYZFactory());
             
-            // Create artifact processors
+            // Create URL artifact processors
+            URLArtifactProcessorExtensionPoint urlProcessors = 
+                registry.getExtensionPoint(URLArtifactProcessorExtensionPoint.class);
+            
+            urlProcessors.addArtifactProcessor(new XYZProcessor(modelFactories, monitor));
+            
+            // Create stax artifact processors
             StAXArtifactProcessorExtensionPoint artifactProcessors = 
                 registry.getExtensionPoint(StAXArtifactProcessorExtensionPoint.class);
             
@@ -87,6 +102,14 @@ public class WorkspaceManagerTestCase {
                     monitor));
             artifactProcessors.addArtifactProcessor(new ImportXYZProcessor(modelFactories,
                     monitor));
+            artifactProcessors.addArtifactProcessor(new ExportXYZProcessor(modelFactories,
+                    monitor));
+            
+            // create model resolvers
+            ModelResolverExtensionPoint modelResolvers = 
+                registry.getExtensionPoint(ModelResolverExtensionPoint.class);
+            
+            modelResolvers.addResolver(XYZ.class, XYZModelResolver.class);
             
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -98,8 +121,13 @@ public class WorkspaceManagerTestCase {
             System.out.println("Process contribution");
             
             Workspace workspace = workspaceManager.createWorkspace();
-            Contribution contribution = workspaceManager.readContribution("contrib1", "./target/classes/contrib1");
+            
+            Contribution contribution = workspaceManager.readContribution("contrib2", "./target/classes/contrib2");
             workspaceManager.addContributionToWorkspace(workspace, contribution);
+            
+            contribution = workspaceManager.readContribution("contrib1", "./target/classes/contrib1");
+            workspaceManager.addContributionToWorkspace(workspace, contribution);
+            
             workspaceManager.resolveWorkspace(workspace);   
             
             return workspace;

@@ -3,7 +3,7 @@
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
 		 	  xmlns:tns="http://someuri"
               xmlns:ans="http://someotheruri">
-    <deployable composite="AComposite"/>
-    <import namespace="http://test"/>
-    <tns:import.xyz uri="abcdef" anAttribute="abcdef.xyz"/>
+    <deployable composite="BComposite"/>
+    <export namespace="http://test"/>
+    <tns:export.xyz uri="abcdef" anAttribute="abcdef.xyz"/>
 </contribution>
