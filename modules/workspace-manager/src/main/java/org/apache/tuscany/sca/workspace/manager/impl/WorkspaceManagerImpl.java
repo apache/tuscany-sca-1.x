@@ -151,7 +151,7 @@ public class WorkspaceManagerImpl extends WorkspaceManager {
     
     public void resolveWorkspace(Workspace workspace) throws ServiceRuntimeException {
         try {
-            // some algorithm to resolve contributions given their dependencies
+            // an algorithm to resolve contributions given their dependencies
             // need to look at the one from 2.x as this one expects contributions
             // to be presented in the right order
             Set<Contribution> resolved = new HashSet<Contribution>();
