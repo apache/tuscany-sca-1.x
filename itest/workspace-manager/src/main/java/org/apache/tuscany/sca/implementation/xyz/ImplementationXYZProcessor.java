@@ -25,6 +25,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.apache.tuscany.sca.artifact.xyz.XYZ;
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.assembly.ComponentType;
 import org.apache.tuscany.sca.assembly.Service;
@@ -97,9 +98,17 @@ public class ImplementationXYZProcessor implements StAXArtifactProcessor<Impleme
     public void resolve(ImplementationXYZ implementation, ModelResolver resolver) throws ContributionResolveException {
         
         // Resolve the xyz implementation
-        
+        XYZ xyz = new XYZ();
+        xyz.setAnAttribute(implementation.getAnAttribute());
+       
         // First resolve its module
-        //resolver.resolveModel(ClassReference.class, null);
+        XYZ resolved = resolver.resolveModel(XYZ.class, xyz);
+        
+        if (resolved == null){
+            return;
+        }
+        
+        // use this to check that the import/export association has been created 
         
         // Check to see if we have a .componentType file describing the POJO class
         ComponentType componentType = assemblyFactory.createComponentType();

@@ -45,27 +45,20 @@ public class ImportExportXYZListener implements ContributionListener {
         for (Import import_: contribution.getImports()) {
             boolean initialized = false;
 
-            if (import_ instanceof NamespaceImport) {
-                NamespaceImport namespaceImport = (NamespaceImport)import_;
+            if (import_ instanceof ImportXYZ) {
+                ImportXYZ importXYZ = (ImportXYZ)import_;
                 
-                // Find a matching contribution
-                if (namespaceImport.getLocation() != null) {
-                    Contribution targetContribution = repository.getContribution(namespaceImport.getLocation());
-                    if (targetContribution != null) {
-                    
-                        // Find a matching contribution export
-                        for (Export export: targetContribution.getExports()) {
-                            if (export instanceof NamespaceExport) {
-                                NamespaceExport namespaceExport = (NamespaceExport)export;
-                                if (namespaceImport.getNamespace().equals(namespaceExport.getNamespace())) {
-                                    namespaceImport.setModelResolver(namespaceExport.getModelResolver());
-                                    initialized = true;
-                                    break;
-                                }
-                            }
+                for(Contribution contrib : repository.getContributions()){
+                    for (Export export: contrib.getExports()) {
+                        ExportXYZ exportXYZ = (ExportXYZ)export;
+                        if (exportXYZ.getAnAttribute().equals(importXYZ.getAnAttribute())) {
+                            importXYZ.setModelResolver(exportXYZ.getModelResolver());
+                            initialized = true;
+                            System.out.println("Matched import to export for - " + exportXYZ.getAnAttribute());
+                            break;
                         }
                     }
-                } 
+                }
                 
                 //if no location was specified, try to resolve with any contribution            
                 if( !initialized ) {

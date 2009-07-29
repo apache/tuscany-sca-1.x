@@ -66,6 +66,9 @@ public class ImportXYZImpl extends ExtensibleImpl implements ImportXYZ {
     }
 
     public boolean match(Export export) {
+        if (export instanceof ExportXYZ){
+            return anAttribute.equals(((ExportXYZ)export).getAnAttribute());
+        }
         return false;
     }
 
