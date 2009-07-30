@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite local="true" name="domain"
+           targetNamespace="http://tuscany.apache.org/xmlns/sca/1.0"
+           xmlns="http://www.osoa.org/xmlns/sca/1.0"
+           xmlns:ns1="http://www.osoa.org/xmlns/sca/1.0">
+    <include name="ns2:service"
+           uri="callback-service"
+           xmlns:ns2="http://simplecallback" />
+    <include name="ns2:client"
+           uri="callback-client"
+           xmlns:ns2="http://simplecallback" />
+</composite>
