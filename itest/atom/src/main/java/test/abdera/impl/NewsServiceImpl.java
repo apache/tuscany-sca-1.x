@@ -1,5 +1,6 @@
 package test.abdera.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,11 @@ public class NewsServiceImpl implements NewsService {
 	}
 	
 	public List<Entry> getAll() {
-        return (List<Entry>) collection.values();
+		List<Entry> entries = new ArrayList<Entry>();
+		for(Entry entry : collection.values()) {
+			entries.add(entry);
+		}
+        return entries;
 	}
 
 	public Item get(String arg0) throws NotFoundException_Exception {
