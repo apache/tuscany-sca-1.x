@@ -26,7 +26,7 @@
 
     <component name="PaymentClient">
         <implementation.java class="payment.client.PaymentClientImpl" />
-        <reference name="payment" target="PaymentComponent">
+        <reference name="payment">
             <interface.java interface="payment.Payment" />
             <binding.ws uri="http://localhost:8081/Payment" />
         </reference>
