@@ -58,6 +58,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>atom</module>
                 <module>bpel</module>
                 <module>builder</module>
                 <module>callablereferences</module>
