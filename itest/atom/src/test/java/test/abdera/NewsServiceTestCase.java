@@ -49,19 +49,7 @@ public class NewsServiceTestCase {
 	    @Test
 	    public void testPing() throws Exception {
 	        new Socket("127.0.0.1", 8085);
-	        System.in.read();
-	    }
-	    
-	    @Test
-	    public void testNewsServicesGetAll() throws Exception {    	
-	        List<Entry> entries = newsService.getAll();
-	        
-	        Assert.assertNotNull(entries);
-	        Assert.assertTrue(entries.size() > 0);
-	        
-	        for(Entry entry : entries) {
-	            System.out.println(">>> Entry - " + ((Item)entry.getData()).getTitle());
-	        }
+	        //System.in.read();
 	    }
 	    
 	    @Test
