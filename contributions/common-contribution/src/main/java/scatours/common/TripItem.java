@@ -206,6 +206,21 @@ public class TripItem {
     }
     
     @Override
+    public String toString(){
+        String tripString = "Trip: id " + this.tripId +
+                            " type " + this.type +
+                            " name " + this.name +
+                            " description " + this.description +
+                            " location " + this.location +
+                            " fromDate " + this.fromDate +
+                            " toDate " + this.toDate +
+                            " price " + this.price +
+                            " currency " + this.currency +
+                            " link " + this.link;
+        return tripString;
+    }
+    
+    @Override
     public boolean equals(Object obj) {
         
         if (obj instanceof TripItem){
