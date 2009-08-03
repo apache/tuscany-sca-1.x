@@ -38,7 +38,7 @@ import org.apache.tuscany.sca.monitor.Monitor;
 public class CompositePolicyBuilderImpl extends BaseWireBuilderImpl implements CompositeBuilder {
 
     public CompositePolicyBuilderImpl(AssemblyFactory assemblyFactory, EndpointFactory endpointFactory, InterfaceContractMapper interfaceContractMapper, Monitor monitor) {
-        super(assemblyFactory, endpointFactory, interfaceContractMapper, monitor);
+        super(assemblyFactory, endpointFactory, interfaceContractMapper, monitor, null);
     }
 
     public void build(Composite composite) throws CompositeBuilderException {

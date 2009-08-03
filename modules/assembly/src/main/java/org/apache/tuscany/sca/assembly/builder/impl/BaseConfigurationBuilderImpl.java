@@ -72,6 +72,7 @@ public abstract class BaseConfigurationBuilderImpl {
     private SCADefinitions policyDefinitions;
     private DocumentBuilderFactory documentBuilderFactory;
     private TransformerFactory transformerFactory;
+    private Map<Binding, Binding> bindingMap;
 
     protected BaseConfigurationBuilderImpl(AssemblyFactory assemblyFactory,
                                              SCABindingFactory scaBindingFactory,
@@ -80,6 +81,18 @@ public abstract class BaseConfigurationBuilderImpl {
                                              InterfaceContractMapper interfaceContractMapper,
                                              SCADefinitions policyDefinitions,
                                              Monitor monitor) {
+        this(assemblyFactory, scaBindingFactory, documentBuilderFactory,
+             transformerFactory, interfaceContractMapper, policyDefinitions, monitor, null);
+    }
+
+    protected BaseConfigurationBuilderImpl(AssemblyFactory assemblyFactory,
+                                           SCABindingFactory scaBindingFactory,
+                                           DocumentBuilderFactory documentBuilderFactory,
+                                           TransformerFactory transformerFactory,
+                                           InterfaceContractMapper interfaceContractMapper,
+                                           SCADefinitions policyDefinitions,
+                                           Monitor monitor,
+                                           Map<Binding, Binding> bindingMap) {
         this.assemblyFactory = assemblyFactory;
         this.scaBindingFactory = scaBindingFactory;
         this.documentBuilderFactory = documentBuilderFactory;
@@ -87,6 +100,7 @@ public abstract class BaseConfigurationBuilderImpl {
         this.interfaceContractMapper = interfaceContractMapper;
         this.policyDefinitions = policyDefinitions;
         this.monitor = monitor;
+        this.bindingMap = bindingMap;
     }
 
     /**
@@ -1034,6 +1048,26 @@ public abstract class BaseConfigurationBuilderImpl {
                     scaBinding.setName(service.getName() + "Callback");
                     service.getCallback().getBindings().add(scaBinding);
                 }
+
+                // Add all SCA bindings for the service callback to the bindingMap
+                // so that BindingConfigurationUtil.matchBinding() can identify the node
+                // for the target component.
+                if (service.getInterfaceContract() != null
+                    && service.getInterfaceContract().getCallbackInterface() != null
+                    && service.getCallback() != null
+                    && bindingMap != null
+                    && defaultBindings != null) {
+                    for (Binding binding : service.getCallback().getBindings()) {
+                        if (binding instanceof SCABinding) {
+                            for (Binding nodeBinding : defaultBindings) {
+                                if (nodeBinding instanceof SCABinding) {
+                                    bindingMap.put(binding, nodeBinding);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
     
                 // Initialize binding names and URIs
                 for (Binding binding : service.getBindings()) {
@@ -1044,6 +1078,28 @@ public abstract class BaseConfigurationBuilderImpl {
             
             for (ComponentReference reference : component.getReferences()) {
     
+                // Create default SCA binding
+                if (reference.getBindings().isEmpty()) {
+                    SCABinding scaBinding = createSCABinding();
+                    reference.getBindings().add(scaBinding);
+                }
+
+                // Add all SCA bindings for the reference to the bindingMap so that
+                // BindingConfigurationUtil.matchBinding() can identify the node for
+                // the source component.
+                if (bindingMap != null && defaultBindings != null) {
+                    for (Binding binding : reference.getBindings()) {
+                        if (binding instanceof SCABinding) {
+                            for (Binding nodeBinding : defaultBindings) {
+                                if (nodeBinding instanceof SCABinding) {
+                                    bindingMap.put(binding, nodeBinding);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+    
                 // Create default SCA callback binding
                 if (reference.getInterfaceContract() != null
                     && reference.getInterfaceContract().getCallbackInterface() != null
@@ -1052,6 +1108,26 @@ public abstract class BaseConfigurationBuilderImpl {
                     SCABinding scaBinding = createSCABinding();
                     scaBinding.setName(reference.getName() + "Callback");
                     reference.getCallback().getBindings().add(scaBinding);
+                }
+
+                // Add all SCA bindings for the reference callback to the bindingMap
+                // so that BindingConfigurationUtil.matchBinding() can identify the node
+                // for the source component.
+                if (reference.getInterfaceContract() != null
+                    && reference.getInterfaceContract().getCallbackInterface() != null
+                    && reference.getCallback() != null
+                    && bindingMap != null
+                    && defaultBindings != null) {
+                    for (Binding binding : reference.getCallback().getBindings()) {
+                        if (binding instanceof SCABinding) {
+                            for (Binding nodeBinding : defaultBindings) {
+                                if (nodeBinding instanceof SCABinding) {
+                                    bindingMap.put(binding, nodeBinding);
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
 
                 // Initialize binding names and URIs
@@ -1300,7 +1376,16 @@ public abstract class BaseConfigurationBuilderImpl {
             if (defaultBindings != null) {
                 for (Binding defaultBinding : defaultBindings){
                     if (binding.getClass() == defaultBinding.getClass()){
-                        baseURI = new URI(addSlashToPath(defaultBinding.getURI()));
+                        // if the domain manager is generating a URI for an SCA binding,
+                        // tentatively omit the base URI for now.  The base URI will be added
+                        // to the service URI by BindingConfigurationUtil.matchBinding()
+                        // if the service needs a remote SCA binding because it is a
+                        // wiring target for a reference running on a different node.
+                        if (bindingMap != null && binding instanceof SCABinding) {
+                            bindingMap.put(binding, defaultBinding);
+                        } else {
+                            baseURI = new URI(addSlashToPath(defaultBinding.getURI()));
+                        }
                         break;
                     }
                 }

@@ -19,7 +19,9 @@
 
 package org.apache.tuscany.sca.assembly.builder.impl;
 
+import java.util.Map;
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
+import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.Composite;
 import org.apache.tuscany.sca.assembly.EndpointFactory;
 import org.apache.tuscany.sca.assembly.builder.CompositeBuilder;
@@ -34,8 +36,10 @@ import org.apache.tuscany.sca.monitor.Monitor;
  */
 public class ComponentReferenceWireBuilderImpl extends BaseWireBuilderImpl implements CompositeBuilder {
 
-    public ComponentReferenceWireBuilderImpl(AssemblyFactory assemblyFactory, EndpointFactory endpointFactory, InterfaceContractMapper interfaceContractMapper, Monitor monitor) {
-        super(assemblyFactory, endpointFactory, interfaceContractMapper, monitor);
+    public ComponentReferenceWireBuilderImpl(AssemblyFactory assemblyFactory, EndpointFactory endpointFactory,
+                                             InterfaceContractMapper interfaceContractMapper, Monitor monitor,
+                                             Map<Binding, Binding> bindingMap) {
+        super(assemblyFactory, endpointFactory, interfaceContractMapper, monitor, bindingMap);
     }
 
     public void build(Composite composite) throws CompositeBuilderException {

@@ -48,6 +48,7 @@ import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.TransformerFactory;
 
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
+import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.Component;
 import org.apache.tuscany.sca.assembly.Composite;
 import org.apache.tuscany.sca.assembly.SCABindingFactory;
@@ -151,6 +152,7 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
     private DocumentBuilderFactory documentBuilderFactory;
     private TransformerFactory transformerFactory;
     private InterfaceContractMapper contractMapper;
+    private Map<Binding, Binding> bindingMap;
     
     /**
      * Initialize the component.
@@ -202,7 +204,9 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
         intentAttachPointTypeFactory = modelFactories.getFactory(IntentAttachPointTypeFactory.class);
         contractMapper = utilities.getUtility(InterfaceContractMapper.class);
         compositeIncludeBuilder = new CompositeIncludeBuilderImpl(monitor);
-        nodeConfigurationBuilder = new NodeCompositeBuilderImpl(assemblyFactory, scaBindingFactory, documentBuilderFactory, transformerFactory, contractMapper, null, monitor);
+        bindingMap = new HashMap<Binding, Binding>();
+        nodeConfigurationBuilder = new NodeCompositeBuilderImpl(assemblyFactory, scaBindingFactory, documentBuilderFactory,
+                                                               transformerFactory, contractMapper, null, monitor, bindingMap);
 
         // Load the definitions.xml
         loadSCADefinitions(extensionPoints);
@@ -393,7 +397,7 @@ public class CompositeConfigurationServiceImpl extends HttpServlet implements Se
         }
         CompositeBuilder compositeBuilder = new CompositeBuilderImpl(assemblyFactory, null, scaBindingFactory,
                                      intentAttachPointTypeFactory, documentBuilderFactory, transformerFactory,
-                                     contractMapper, aggregatedDefinitions, monitor);
+                                     contractMapper, aggregatedDefinitions, monitor, bindingMap);
         try {
             compositeBuilder.build(domainComposite);
             analyzeProblems();

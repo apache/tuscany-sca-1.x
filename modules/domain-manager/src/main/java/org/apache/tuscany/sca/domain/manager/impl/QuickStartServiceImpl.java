@@ -207,6 +207,7 @@ public class QuickStartServiceImpl extends HttpServlet {
                                 "       <component name=\"" + nodeName + "\">\n" +
                                 "               <t:implementation.node uri=\"" + contributionURI + "\" composite=\"c:" + compositeName.getLocalPart() + "\"/>\n" +
                                 "               <service name=\"Node\">\n" +
+                                "                       <binding.sca uri=\"" + nodeURI + "\"/>\n" +
                                 "                       <binding.ws uri=\"" + nodeURI + "\"/>\n" +
                                 "                       <t:binding.http uri=\"" + nodeURI + "\"/>\n" +
                                 "                       <t:binding.jsonrpc uri=\"" + nodeURI + "\"/>\n" +

@@ -66,16 +66,18 @@ class BaseWireBuilderImpl {
     private AssemblyFactory assemblyFactory;
     private EndpointFactory endpointFactory;
     private InterfaceContractMapper interfaceContractMapper;
+    private Map<Binding, Binding> bindingMap;
     private EndpointBuilder endpointBuilder;
     
-    
-    protected BaseWireBuilderImpl(AssemblyFactory assemblyFactory, EndpointFactory endpointFactory, InterfaceContractMapper interfaceContractMapper, Monitor monitor) {
+    protected BaseWireBuilderImpl(AssemblyFactory assemblyFactory, EndpointFactory endpointFactory,
+                                  InterfaceContractMapper interfaceContractMapper, Monitor monitor,
+                                  Map<Binding, Binding> bindingMap) {
         this.assemblyFactory = assemblyFactory;
         this.endpointFactory = endpointFactory;
         this.interfaceContractMapper = interfaceContractMapper;
         this.monitor = monitor;
-        this.endpointBuilder = new DefaultEndpointBuilder(monitor);
-        
+        this.bindingMap = bindingMap;
+        this.endpointBuilder = new DefaultEndpointBuilder(monitor, bindingMap);
     }
     
     /**
@@ -754,14 +756,16 @@ class BaseWireBuilderImpl {
                 }
 
                 // Match the binding against the bindings of the target service
-                Binding selected = BindingConfigurationUtil.resolveBindings(componentReference, targetComponent, targetComponentService);
+                Binding selected = BindingConfigurationUtil.resolveBindings(componentReference, targetComponent, targetComponentService,
+                                                                            bindingMap);
                 if (selected == null) {
                     warning("NoMatchingBinding", componentReference, componentReference.getName(), targetComponentService.getName());
                 } else {
                     selectedBindings.add(selected);
                 }
                 if (bidirectional) {
-                    Binding selectedCallback = BindingConfigurationUtil.resolveCallbackBindings(componentReference, targetComponent, targetComponentService);
+                    Binding selectedCallback = BindingConfigurationUtil.resolveCallbackBindings(componentReference, targetComponent,
+                                                                                                targetComponentService, bindingMap);
                     if (selectedCallback != null) {
                         selectedCallbackBindings.add(selectedCallback);
                     }
