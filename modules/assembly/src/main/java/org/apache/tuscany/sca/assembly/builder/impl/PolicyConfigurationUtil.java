@@ -156,17 +156,7 @@ abstract class PolicyConfigurationUtil {
             //remove duplicates and ...
             //where qualified form of intent exists retain it and remove the qualifiable intent
             filterDuplicatesAndQualifiableIntents(confOp);
-            
-            //exclude intents that are inherently supported by the parent
-            //attachpoint-type (binding-type  / implementation-type)
-            if ( attachPointType != null ) {
-                List<Intent> requiredIntents = new ArrayList<Intent>(confOp.getRequiredIntents());
-                for ( Intent intent : requiredIntents ) {
-                    if ( isProvidedInherently(attachPointType, intent) ) {
-                        confOp.getRequiredIntents().remove(intent);
-                    }
-                }
-            }
+
         }
     }
     
