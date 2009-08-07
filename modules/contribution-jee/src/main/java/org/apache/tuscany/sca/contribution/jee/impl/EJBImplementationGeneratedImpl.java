@@ -66,5 +66,12 @@ class EJBImplementationGeneratedImpl extends ImplementationImpl implements EJBIm
 	public void setEjbModuleInfo(EjbModuleInfo ejbModuleInfo) {
 		this.ejbModuleInfo = ejbModuleInfo;
 	}
+	
+	// make sure the generated implementation can be distinguished 
+	// based on the ejb info that is referenced
+	@Override
+	public int hashCode() {
+	    return getEJBInfo().hashCode();
+	}
     
 }
