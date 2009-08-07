@@ -320,7 +320,7 @@ The following components come under Apache Software License 2.0
  spring-context-2.5.5.jar
  spring-core-2.5.5.jar
  tranql-connector-1.1.jar
- tuscany-sca-all-1.4.jar 
+ tuscany-sca-all-1.5.1.jar 
  tuscany-sca-manifest.jar
  tuscany-sdo-api-r2.1-1.1.1.jar
  tuscany-sdo-impl-1.1.1.jar
@@ -2158,7 +2158,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ================================================================================
 
-The module tuscany-implementation-script-1.4.jar temporarily includes    
+The module tuscany-implementation-script-1.5.1.jar temporarily includes    
 one file under the below BSD license with the following copyright:
 
  Copyright (c) 2006, Sun Microsystems, Inc.
