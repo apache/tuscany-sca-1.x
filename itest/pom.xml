@@ -79,10 +79,7 @@
                 <!-- 
                 <module>contribution-classloader</module> 
                 -->
-                <module>contribution-jee-samples</module>
-                <!--TUSCANY-3165
                 <module>contribution-jee</module>
-                -->
                 <module>contribution-jee-samples</module>
                 <module>conversations</module>
                 <module>corba</module>
