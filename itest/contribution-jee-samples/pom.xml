@@ -51,6 +51,7 @@
                 <module>scajar-ear-nonenhanced</module>
                 <module>scajar-ear-appcomp</module>
                 <module>scajar-ear-appcomp-war-appcomp</module>
+                <module>scajar-ejb-nonenhanced</module>
                 <module>scazip-ejb-appcomp</module>
                 <module>scazip-war-appcomp</module>
             </modules>

@@ -178,6 +178,13 @@
             <version>1.6-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>itest-contribution-jee-samples-44-scajar-ejb-nonenhanced</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>        
                         
     </dependencies>
 </project>
