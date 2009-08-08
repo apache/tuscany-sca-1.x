@@ -33,7 +33,7 @@
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-distribution</artifactId>
             <version>1.6-SNAPSHOT</version>
-            <type>pom</type>
+            <type>zip</type>
         </dependency>
 
         <dependency>
