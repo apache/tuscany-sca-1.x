@@ -41,9 +41,8 @@ public class LicenseTestCase extends TestCase {
         File archive = new File("..\\..\\distribution\\target\\apache-tuscany-sca-1.6-SNAPSHOT.zip");
         ZipFile zf = new ZipFile(archive);
         try {
-            
-            String licenstText = getLicenseText(zf);
 
+            String licenstText = getLicenseText(zf);
             List<String> jarsInArchive = getJarsInDistro(zf);
 
             List<String> jarsNotInLicense = getJarsNotInLicense(licenstText, jarsInArchive);
@@ -104,7 +103,13 @@ public class LicenseTestCase extends TestCase {
     }
 
     private boolean licenseHasJar(String licenstText, String jarName) {
-        return !licenstText.contains(jarName);
+        if (jarName.startsWith("tuscany-")) {
+            return true;
+        } else if (jarName.startsWith("demo-bigbank")) {
+            return true;
+        } else {
+            return licenstText.indexOf(jarName) > -1;
+        }
     }
 
     private String getLicenseText(ZipFile zf) throws IOException {
@@ -121,6 +126,9 @@ public class LicenseTestCase extends TestCase {
             ze = e.nextElement();
             String name = ze.getName();
             if (name.endsWith(".jar")) {
+                if (name.lastIndexOf('/') > -1){
+                    name = name.substring(name.lastIndexOf('/')+1);
+                }
                 jarsInArchive.add(name);
             }
         }
@@ -131,12 +139,12 @@ public class LicenseTestCase extends TestCase {
     private static String readLICENSE(InputStream in) throws java.io.IOException {
         StringBuffer fileData = new StringBuffer();
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        char[] buf = new char[1024];
+        char[] buf = new char[16384];
         int numRead = 0;
         while ((numRead = reader.read(buf)) != -1) {
             String readData = String.valueOf(buf, 0, numRead);
             fileData.append(readData);
-            buf = new char[1024];
+            buf = new char[16384];
         }
         reader.close();
         return fileData.toString();
