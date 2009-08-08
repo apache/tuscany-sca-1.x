@@ -288,6 +288,9 @@ The following components come under Apache Software License 2.0
  jetty-util-6.1.7.jar
  json-rpc-1.0.jar
  log4j-1.2.13.jar
+ lucene-core-2.4-20090511.021259-1.jar
+ lucene-highlighter-2.4-20090511.021339-1.jar
+ lucene-memory-2.4-20090511.021344-1.jar
  mex-1.41-impl.jar
  neethi-2.0.4.jar
  ode-bpel-api-1.1.1.jar
