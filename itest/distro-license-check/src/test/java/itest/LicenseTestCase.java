@@ -36,6 +36,8 @@ import junit.framework.TestCase;
 
 public class LicenseTestCase extends TestCase {
 
+    // TODO: turn this in to a maven plugin that can be run from the module that builds the archive
+    
     public void testCreateComponent() throws ZipException, IOException {
 
         File archive = new File("..\\..\\distribution\\target\\apache-tuscany-sca-1.6-SNAPSHOT.zip");
@@ -103,9 +105,15 @@ public class LicenseTestCase extends TestCase {
     }
 
     private boolean licenseHasJar(String licenstText, String jarName) {
+        // TODO: be good to make these configurable, maybe system props that can
+        // be configured in the pom.xml?
         if (jarName.startsWith("tuscany-")) {
             return true;
         } else if (jarName.startsWith("demo-bigbank")) {
+            return true;
+        } else if (jarName.startsWith("tutorial-")) {
+            return true;
+        } else if (jarName.startsWith("sample-")) {
             return true;
         } else {
             return licenstText.indexOf(jarName) > -1;
