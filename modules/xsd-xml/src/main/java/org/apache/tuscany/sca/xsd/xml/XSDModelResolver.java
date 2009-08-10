@@ -37,6 +37,7 @@ import org.apache.tuscany.sca.contribution.service.ContributionRuntimeException;
 import org.apache.tuscany.sca.xsd.DefaultXSDFactory;
 import org.apache.tuscany.sca.xsd.XSDFactory;
 import org.apache.tuscany.sca.xsd.XSDefinition;
+import org.apache.tuscany.sca.xsd.impl.XSDefinitionImpl;
 import org.apache.ws.commons.schema.XmlSchema;
 import org.apache.ws.commons.schema.XmlSchemaCollection;
 import org.apache.ws.commons.schema.XmlSchemaInclude;
@@ -314,7 +315,24 @@ public class XSDModelResolver implements ModelResolver {
                     url = new URL(new URL(baseUri), schemaLocation);
                 }
                 return XMLDocumentHelper.getInputSource(url);
-            } catch (IOException e) {
+            } catch (IOException e) {               
+            	// If we are not able to resolve the imports using location, then 
+            	// try resolving them using the namespace.
+            	try {
+	                for (Artifact artifact : contribution.getArtifacts()) {
+	        			if (artifact.getModel() instanceof XSDefinitionImpl) {
+	        				String artifactNamespace = ((XSDefinitionImpl)artifact.getModel()).getNamespace();
+	        				if (targetNamespace.equals(artifactNamespace)) {
+	        					URL artifactLocation = ((XSDefinitionImpl)artifact.getModel()).getLocation().toURL();            					
+	        					return XMLDocumentHelper.getInputSource(artifactLocation);
+	        				}
+	        			}
+	        	    }
+                } catch (IOException ex) {
+                	// Invalid URI; return a default InputSource so that the
+                    // XmlSchema code will produce a useful diagnostic
+                    return new InputSource(schemaLocation);
+                }
                 // Invalid URI; return a default InputSource so that the
                 // XmlSchema code will produce a useful diagnostic
                 return new InputSource(schemaLocation);
