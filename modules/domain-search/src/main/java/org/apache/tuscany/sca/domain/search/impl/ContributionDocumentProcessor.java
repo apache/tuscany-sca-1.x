@@ -7,7 +7,6 @@ import org.apache.tuscany.sca.contribution.Artifact;
 import org.apache.tuscany.sca.contribution.Contribution;
 import org.apache.tuscany.sca.domain.search.DocumentMap;
 import org.apache.tuscany.sca.domain.search.DocumentProcessor;
-import org.apache.tuscany.sca.domain.search.Result;
 
 public class ContributionDocumentProcessor implements DocumentProcessor {
 
@@ -24,18 +23,21 @@ public class ContributionDocumentProcessor implements DocumentProcessor {
 					uri = null;
 
 				} else {
-					
-					parent += DomainPathAnalyzer.PATH_SEPARATOR
+
+					parent += Character.toString(DomainPathAnalyzer.PATH_START)
 							+ SearchFields.CONTRIBUTION_FIELD
 							+ DomainPathAnalyzer.TYPE_SEPARATOR + uri;
-					
+
 				}
 
 			}
 
-			if (uri != null && doc == null) {
-				doc = documents.get(uri);
+			if (uri != null) {
 
+				if (doc == null) {
+					doc = documents.get(uri);
+				}
+				
 				doc.add(new Field(SearchFields.CONTRIBUTION_FIELD, uri,
 						Field.Store.YES, Field.Index.ANALYZED));
 
@@ -85,8 +87,9 @@ public class ContributionDocumentProcessor implements DocumentProcessor {
 			if (!object.getClass().getSimpleName().contains("Workspace")) {
 
 				for (Composite composite : contribution.getDeployables()) {
-					Document compositeDoc = parentProcessor.process(parentProcessor,
-							documents, composite, null, parent);
+					Document compositeDoc = parentProcessor
+							.process(parentProcessor, documents, composite,
+									null, parent);
 
 					if (uri != null) {
 
@@ -122,27 +125,6 @@ public class ContributionDocumentProcessor implements DocumentProcessor {
 		}
 
 		throw new IllegalArgumentException();
-
-	}
-
-	public Result processDocument(org.apache.lucene.document.Document document,
-			Result result) {
-		String contributionName = document.get(SearchFields.CONTRIBUTION_FIELD);
-
-		if (contributionName != null) {
-
-			if (result == null) {
-				result = new ContributionResult(contributionName);
-
-			} else if (!(result instanceof ContributionResult)) {
-				throw new IllegalArgumentException();
-			}
-
-			result.setName(contributionName);
-
-		}
-
-		return result;
 
 	}
 

@@ -128,6 +128,7 @@
    	 		<t:binding.atom uri="http://localhost:9990/workspace" title="Contributions"/>
    		</service>
    		<reference name="domainManagerConfiguration" target="DomainManagerConfigurationComponent"/>
+   		<reference name="domainSearch" target="DomainSearchComponent"/>
     </component>
 
     <component name="ContributionServiceComponent">
@@ -154,6 +155,7 @@
    	 		<t:binding.http uri="http://localhost:9990/files"/>
    		</service>
    		<reference name="domainManagerConfiguration" target="DomainManagerConfigurationComponent"/>
+   		<reference name="contributionCollection" target="ContributionCollectionComponent/LocalItemCollection"/>
     </component>
 
     <component name="DomainCompositeCollectionComponent">
@@ -274,7 +276,8 @@
    		</service>
    		
    		<reference name="domainSearch" target="DomainSearchComponent"/>
-   		<reference name="contributionCollection" target="ContributionCollectionComponent/WorkspaceReader"/>
+   		<reference name="contributionCollection" target="ContributionCollectionComponent/LocalItemCollection"/>
+   		<reference name="contributionReader" target="DeployableCompositeCollectionComponent/ContributionsReader"/>
    		
     </component>
 
@@ -311,6 +314,7 @@
     
     <component name="DomainSearchComponent">
         <implementation.java class="org.apache.tuscany.sca.domain.search.impl.DomainSearchImpl"/>
+        <!--<property name="indexDirectoryPath">domainSearchIndex</property>      -->
     </component>
-
+ 
 </composite>

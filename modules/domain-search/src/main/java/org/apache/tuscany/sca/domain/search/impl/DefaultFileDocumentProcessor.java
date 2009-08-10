@@ -25,10 +25,11 @@ public class DefaultFileDocumentProcessor implements DocumentProcessor {
 					doc = documents.get(file.getPath());
 				}
 				
-				doc.add(new Field(SearchFields.FILE_FIELD, file.getName(), Field.Store.YES,
-						Field.Index.ANALYZED));
-				
 				doc.add(new Field(SearchFields.FILE_CONTENT_FIELD, reader));
+				
+				doc.add(new Field(SearchFields.FILE_CONTENT_FIELD,
+						"", Field.Store.YES,
+						Field.Index.ANALYZED));
 				
 				return doc;
 				

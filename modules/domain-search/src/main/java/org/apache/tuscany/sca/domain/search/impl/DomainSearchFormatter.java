@@ -26,5 +26,22 @@ public class DomainSearchFormatter implements Formatter {
 		}
 
 	}
+	
+	public static boolean isHighlighted(String text) {
+		int start = text.indexOf(HIGHLIGHT_START);
+		int end = text.indexOf(HIGHLIGHT_END);
+		
+		if (start < end && start != -1) {
+			start = text.indexOf(HIGHLIGHT_START, start + 1);
+			
+			if (start > end || start == -1) {
+				return true;
+			}
+			
+		}
+		
+		return false;
+		
+	}
 
 }

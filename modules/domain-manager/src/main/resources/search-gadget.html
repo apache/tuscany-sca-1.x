@@ -25,11 +25,39 @@
 <script type="text/javascript" src="../search-gadget/search-gadget.js"></script>
 <script type="text/javascript" src="utils.js"></script>
 
-
-
 <link rel="stylesheet" type="text/css" href="manager.css">
 
+<script type="text/javascript">
 
+	function search() {
+		lastQuery = elementByID(gadget, 'searchField').value;
+		searcher.get("query" + lastQuery, searchResponse);
+		
+	}
+	
+	function getHighlighted(artifact) {
+		searcher.get("highlight" + lastQuery + ";" + artifact, searchResponse);
+	}
+	
+	function highlightResponse(feed) {
+		var entries = feed.getElementsByTagName("entry");
+		var content = entries[0].getElementsByTagName("content");
+		
+		var results = elementByID(gadget, "results");
+		results.innerHTML = content[0].firstChild.data;
+		
+	}
+	
+	function searchResponse(feed) {
+		var entries = feed.getElementsByTagName("entry");
+		var content = entries[0].getElementsByTagName("content");
+		
+		var results = elementByID(gadget, "results");
+		results.innerHTML = content[0].firstChild.data;
+		
+	}
+	
+</script>
 
 </head>
 
@@ -53,28 +81,14 @@
 </body>
 
 <script type="text/javascript">
-
 	//@Reference
 	var searcher = new tuscany.sca.Reference("searcher");
 	
 	var gadget = gadget(window, document);
 	
-	function search() {
-		searcher.get(elementByID(gadget, 'searchField').value, searchResponse);
-	}
+	var lastQuery = "";
 	
-	function searchResponse(feed) {
-		var entries = feed.getElementsByTagName("entry");
-		var content = entries[0].getElementsByTagName("content");
-		
-		// alert(content[0].firstChild.data);
-		
-		var results = elementByID(gadget, "results");
-		results.innerHTML = content[0].firstChild.data;
-		
-	}
-	
-	elementByID(gadget, 'searchButton').onclick = search
+	elementByID(gadget, 'searchButton').onclick = search;
 	
 </script>
 

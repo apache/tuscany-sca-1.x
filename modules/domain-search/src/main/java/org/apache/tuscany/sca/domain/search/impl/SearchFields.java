@@ -2,11 +2,7 @@ package org.apache.tuscany.sca.domain.search.impl;
 
 public interface SearchFields {
 
-	final public static String LOCATION_FIELD = "location";
-	
-	final public static String DIRECTORY_FIELD = "directory";
-	
-	final public static String FILE_FIELD = "file";
+	final public static String ARTIFACT_FIELD = "artifact";
 	
 	final public static String COMPONENT_TYPE_FIELD = "componenttype";
 	
@@ -17,8 +13,6 @@ public interface SearchFields {
 	final public static String SERVICE_FIELD = "service";
 	
 	final public static String BINDING_FIELD = "binding";
-	
-	final public static String ARTIFACT_FIELD = "artifact";
 	
 	final public static String CONTRIBUTION_FIELD = "contribution";
 	
@@ -48,7 +42,7 @@ public interface SearchFields {
 	
 	final public static String INCLUDEDBY_FIELD = "includedby";
 	
-	final public static String KEY_FIELD = "propertykey";
+	final public static String PROPERTY_KEY_FIELD = "propertykey";
 
 	final public static String VALUE_FIELD = "propertyvalue";
 	

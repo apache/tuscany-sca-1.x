@@ -29,7 +29,7 @@ public class ParentField implements Serializable {
 		for (int i = 0; i < length ; i++) {
 			char c = parentFieldValue.charAt(i);
 
-			if (c == DomainPathAnalyzer.PATH_SEPARATOR) {
+			if (c == DomainPathAnalyzer.PATH_SEPARATOR || c == DomainPathAnalyzer.PATH_START) {
 
 				if (sb.length() > 0 || element != null) {
 

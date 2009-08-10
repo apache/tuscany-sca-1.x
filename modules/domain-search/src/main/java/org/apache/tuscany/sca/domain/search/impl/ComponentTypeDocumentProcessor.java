@@ -7,6 +7,7 @@ import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.Service;
 import org.apache.tuscany.sca.domain.search.DocumentMap;
 import org.apache.tuscany.sca.domain.search.DocumentProcessor;
+import org.apache.tuscany.sca.interfacedef.Interface;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
 import org.apache.tuscany.sca.interfacedef.Operation;
 
@@ -35,8 +36,10 @@ public class ComponentTypeDocumentProcessor implements DocumentProcessor {
 			}
 
 			if (uri != null) {
-				
-				parent += DomainPathAnalyzer.PATH_SEPARATOR + SearchFields.COMPONENT_TYPE_FIELD + DomainPathAnalyzer.TYPE_SEPARATOR + uri;
+
+				parent += DomainPathAnalyzer.PATH_SEPARATOR
+						+ SearchFields.COMPONENT_TYPE_FIELD
+						+ DomainPathAnalyzer.TYPE_SEPARATOR + uri;
 
 				doc.add(new Field(SearchFields.COMPONENT_TYPE_FIELD, uri,
 						Field.Store.YES, Field.Index.ANALYZED));
@@ -54,25 +57,35 @@ public class ComponentTypeDocumentProcessor implements DocumentProcessor {
 
 					if (interfaceContract != null) {
 
-						for (Operation operation : interfaceContract
-								.getInterface().getOperations()) {
+						Interface interfac = interfaceContract.getInterface();
 
-							serviceDoc.add(new Field(
-									SearchFields.SERVICE_INTERFACE_FIELD,
-									operation.getName(), Field.Store.YES,
-									Field.Index.ANALYZED));
+						if (interfac != null) {
+
+							for (Operation operation : interfac.getOperations()) {
+
+								serviceDoc.add(new Field(
+										SearchFields.SERVICE_INTERFACE_FIELD,
+										operation.getName(), Field.Store.YES,
+										Field.Index.ANALYZED));
+
+							}
 
 						}
 
-						for (Operation operation : interfaceContract
-								.getCallbackInterface().getOperations()) {
+						interfac = interfaceContract.getCallbackInterface();
 
-							serviceDoc
-									.add(new Field(
-											SearchFields.SERVICE_INTERFACE_CALLBACK_FIELD,
-											operation.getName(),
-											Field.Store.YES,
-											Field.Index.ANALYZED));
+						if (interfac != null) {
+
+							for (Operation operation : interfac.getOperations()) {
+
+								serviceDoc
+										.add(new Field(
+												SearchFields.SERVICE_INTERFACE_CALLBACK_FIELD,
+												operation.getName(),
+												Field.Store.YES,
+												Field.Index.ANALYZED));
+
+							}
 
 						}
 
@@ -122,8 +135,8 @@ public class ComponentTypeDocumentProcessor implements DocumentProcessor {
 
 					}
 
-					referenceDoc.add(new Field(SearchFields.PARENT_FIELD, parent,
-							Field.Store.YES, Field.Index.ANALYZED));
+					referenceDoc.add(new Field(SearchFields.PARENT_FIELD,
+							parent, Field.Store.YES, Field.Index.ANALYZED));
 
 				}
 
@@ -135,8 +148,8 @@ public class ComponentTypeDocumentProcessor implements DocumentProcessor {
 
 				if (uri != null) {
 
-					propertyDoc.add(new Field(SearchFields.PARENT_FIELD, parent,
-							Field.Store.YES, Field.Index.ANALYZED));
+					propertyDoc.add(new Field(SearchFields.PARENT_FIELD,
+							parent, Field.Store.YES, Field.Index.ANALYZED));
 
 				}
 

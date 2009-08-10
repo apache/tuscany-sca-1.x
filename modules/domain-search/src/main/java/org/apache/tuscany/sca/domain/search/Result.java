@@ -5,9 +5,9 @@ import java.util.Map;
 
 public interface Result extends Serializable {
 	
-	String getName();
+	String getValue();
 	
-	void setName(String name);
+	void setValue(String value);
 	
 	Result getContainer();
 	
@@ -18,5 +18,9 @@ public interface Result extends Serializable {
 	void removeContent(Result artifactResult);
 	
 	void setContainer(Result container);
+	
+	String getField();
+	
+	void setField(String field);
 
 }
