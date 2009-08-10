@@ -172,7 +172,7 @@ public class WebImplementationProcessor extends BaseStAXArtifactProcessor implem
             
             // Process componentType side file
             ComponentType componentType = assemblyFactory.createComponentType();
-            componentType.setURI("web.componentType");
+            componentType.setURI("WEB-INF/web.componentType");
             componentType = resolver.resolveModel(ComponentType.class, componentType);
             if (!componentType.isUnresolved()) {
                 
