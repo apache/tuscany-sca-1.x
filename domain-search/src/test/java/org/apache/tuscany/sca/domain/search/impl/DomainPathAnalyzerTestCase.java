@@ -15,12 +15,13 @@ public class DomainPathAnalyzerTestCase extends TestCase {
 	public void test() throws IOException {
 		
 		Tokenizer tokenizer = new DomainPathAnalyzer.DomainPathTokenizer(new StringReader(
-				DomainPathAnalyzer.PATH_SEPARATOR + SearchFields.CONTRIBUTION_FIELD + DomainPathAnalyzer.TYPE_SEPARATOR + "123tuscany" + DomainPathAnalyzer.TYPE_SEPARATOR + "SCA" +
+				Character.toString(DomainPathAnalyzer.PATH_START) + SearchFields.CONTRIBUTION_FIELD + DomainPathAnalyzer.TYPE_SEPARATOR + "123tuscany" + DomainPathAnalyzer.PATH_START + DomainPathAnalyzer.TYPE_SEPARATOR + "SCA" +
 				DomainPathAnalyzer.PATH_SEPARATOR + DomainPathAnalyzer.TYPE_SEPARATOR + "TuscanySCA" + DomainPathAnalyzer.TYPE_SEPARATOR + "321" + DomainPathAnalyzer.URI_SEPARATOR + "123"));
 
-		assertNextToken(Character.toString(DomainPathAnalyzer.PATH_SEPARATOR), tokenizer);
+		assertNextToken(Character.toString(DomainPathAnalyzer.PATH_START), tokenizer);
 		assertNextToken("123", tokenizer);
 		assertNextToken("tuscany", tokenizer);
+		assertNextToken(Character.toString(DomainPathAnalyzer.PATH_START), tokenizer);
 		assertNextToken("sca", tokenizer);
 		assertNextToken(Character.toString(DomainPathAnalyzer.PATH_SEPARATOR), tokenizer);
 		assertNextToken("tuscany", tokenizer);

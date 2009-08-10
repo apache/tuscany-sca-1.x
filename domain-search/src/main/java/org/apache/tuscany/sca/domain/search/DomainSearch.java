@@ -2,15 +2,18 @@ package org.apache.tuscany.sca.domain.search;
 
 import org.apache.lucene.search.Query;
 import org.apache.tuscany.sca.contribution.Contribution;
-import org.apache.tuscany.sca.contribution.service.ContributionRepository;
 import org.osoa.sca.annotations.Remotable;
 
 @Remotable
 public interface DomainSearch {
 	
-	Result[] parseAndSearch(String searchQuery, boolean highlight);
+	boolean indexExists();
 	
-	Result[] search(Query searchQuery, boolean hightlight);
+	Result[] parseAndSearch(String searchQuery, boolean highlight) throws Exception;
+	
+	Result[] search(Query searchQuery, boolean hightlight) throws Exception;
+	
+	String highlight(String field, String text, String searchQuery) throws Exception;
 	
 	/**
      * Notifies the listener that a contribution has been added.
@@ -18,7 +21,7 @@ public interface DomainSearch {
      * @param repository The contribution repository 
      * @param contribution The new contribution
      */
-    void contributionAdded(ContributionRepository repository, Contribution contribution);
+    void contributionAdded(Contribution contribution);
     
     /**
      * Notifies the listener that a contribution has been removed.
@@ -26,7 +29,7 @@ public interface DomainSearch {
      * @param repository The contribution repository 
      * @param contribution The removed contribution.
      */
-    void contributionRemoved(ContributionRepository repository, Contribution contribution);
+    void contributionRemoved(Contribution contribution);
     
     /**
      * Notifies the listener that a contribution has been updated.
@@ -35,6 +38,6 @@ public interface DomainSearch {
      * @param oldContribution The old contribution 
      * @param contribution The new contribution
      */
-    void contributionUpdated(ContributionRepository repository, Contribution oldContribution, Contribution contribution);
+    void contributionUpdated(Contribution oldContribution, Contribution contribution);
 
 }

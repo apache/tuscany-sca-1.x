@@ -88,5 +88,5 @@ public class Document {
 	public boolean containsField(String field) {
 		return this.fieldablesTable.containsKey(field);
 	}
-
+	
 }

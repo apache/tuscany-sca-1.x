@@ -4,11 +4,7 @@ import org.apache.lucene.document.Document;
 
 public interface ResultFactory<T extends Result> {
 	
-	String getType();
-	
-	String getName(Document document);
-	
-	T createResult(String name);
+	T createResult(String field, String value);
 	
 	T createResult(Document document);
 

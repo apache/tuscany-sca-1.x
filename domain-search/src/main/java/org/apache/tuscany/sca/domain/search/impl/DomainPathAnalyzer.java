@@ -10,16 +10,20 @@ import org.apache.lucene.analysis.Tokenizer;
 
 public class DomainPathAnalyzer extends Analyzer {
 
-	final public static char PATH_SEPARATOR = '\u0001';
+	final public static char PATH_START = '\u0001';
+	
+	final public static char PATH_SEPARATOR = '\u0002';
 
-	final public static char TYPE_SEPARATOR = '\u0002';
+	final public static char TYPE_SEPARATOR = '\u0003';
 
-	final public static char URI_SEPARATOR = '\u0003';
+	final public static char URI_SEPARATOR = '\u0004';
+	
+	final public static char ARCHIVE_SEPARATOR = '!';
 
 	static class DomainPathTokenizer extends Tokenizer {
 
 		private int offset = 0, bufferIndex = 0, dataLen = 0;
-		private static final int MAX_WORD_LEN = 255;
+		private static final int MAX_WORD_LEN = 1024;
 		private static final int IO_BUFFER_SIZE = 4096;
 		private final char[] ioBuffer = new char[IO_BUFFER_SIZE];
 		private boolean typeCharFound = false;
@@ -90,8 +94,8 @@ public class DomainPathAnalyzer extends Analyzer {
 				final char c = ioBuffer[bufferIndex++];
 				boolean breakChar = true;
 				boolean includeChar = false;
-
-				if (c == PATH_SEPARATOR) {
+				
+				if (c == PATH_START || c == PATH_SEPARATOR) {
 
 					if (length == 0) {
 						includeChar = true;

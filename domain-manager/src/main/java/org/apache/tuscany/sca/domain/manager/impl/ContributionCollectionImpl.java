@@ -74,6 +74,7 @@ import org.apache.tuscany.sca.data.collection.ItemCollection;
 import org.apache.tuscany.sca.data.collection.LocalItemCollection;
 import org.apache.tuscany.sca.data.collection.NotFoundException;
 import org.apache.tuscany.sca.domain.manager.impl.ContributionCollectionImpl.Cache.ContributionCache;
+import org.apache.tuscany.sca.domain.search.DomainSearch;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.MonitorFactory;
 import org.apache.tuscany.sca.monitor.Problem;
@@ -97,8 +98,8 @@ import org.w3c.dom.Document;
  * @version $Rev$ $Date$
  */
 @Scope("COMPOSITE")
-@Service(interfaces={ItemCollection.class, LocalItemCollection.class, WorkspaceReader.class})
-public class ContributionCollectionImpl implements ItemCollection, LocalItemCollection, WorkspaceReader {
+@Service(interfaces={ItemCollection.class, LocalItemCollection.class})
+public class ContributionCollectionImpl implements ItemCollection, LocalItemCollection {
 
     private static final Logger logger = Logger.getLogger(ContributionCollectionImpl.class.getName());
 
@@ -110,6 +111,9 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
     
     @Reference
     public DomainManagerConfiguration domainManagerConfiguration;
+    
+    @Reference
+    public DomainSearch domainSearch;
     
     private Monitor monitor;
     private ContributionFactory contributionFactory;
@@ -256,6 +260,7 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
                 // Write the workspace
                 writeWorkspace(workspace);
                 return;
+                
             }
         }
         throw new NotFoundException(key);
@@ -479,7 +484,6 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
     private static String title(String contributionURI) {
         return contributionURI;
     }
-
     
     /**
      * Read the workspace.
@@ -652,9 +656,5 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
         }
         return contributions;
     }
-
-	public Workspace getWorkspace() {
-		return readContributions(readWorkspace());
-	}
     
 }

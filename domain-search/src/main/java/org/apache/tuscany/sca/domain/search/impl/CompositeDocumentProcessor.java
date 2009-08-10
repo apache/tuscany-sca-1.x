@@ -15,11 +15,9 @@ public class CompositeDocumentProcessor implements DocumentProcessor {
 
 		if (object instanceof Composite) {
 			Composite composite = (Composite) object;
-			String uri = composite.getURI();
 			QName name = composite.getName();
-
-			uri = (uri == null ? "" : uri) + (name == null ? "" : name.toString());
-
+			String uri = (name == null ? "" : name.getNamespaceURI() + ';'  + name.getLocalPart());
+			
 			if (uri.length() == 0) {
 				uri = null;
 				
@@ -28,7 +26,7 @@ public class CompositeDocumentProcessor implements DocumentProcessor {
 			}
 			
 			if (uri != null) {
-				parent += DomainPathAnalyzer.PATH_SEPARATOR + SearchFields.COMPOSITE_FIELD + DomainPathAnalyzer.TYPE_SEPARATOR + composite.getURI() + DomainPathAnalyzer.URI_SEPARATOR + composite.getName();
+				parent += DomainPathAnalyzer.PATH_SEPARATOR + SearchFields.COMPOSITE_FIELD + DomainPathAnalyzer.TYPE_SEPARATOR + uri;
 			}
 			
 			for (Component component : composite.getComponents()) {

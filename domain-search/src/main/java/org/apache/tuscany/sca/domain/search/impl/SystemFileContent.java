@@ -5,24 +5,26 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class SystemFileContent extends File implements FileContent {
+public class SystemFileContent implements FileContent {
 
 	private static final long serialVersionUID = -8337926886777467728L;
 
 	final boolean leaf;
-
+	
 	final private File file;
 
 	public SystemFileContent(File file) {
-		super(file.getPath());
-
 		this.leaf = !file.isDirectory();
 		this.file = file;
 
 	}
-
+	
+	public File getFile() {
+		return this.file;
+	}
+	
 	public InputStream getInputStream() throws IOException {
-		return new FileInputStream(this);
+		return new FileInputStream(this.file);
 	}
 
 	public FileContent[] getChildren() {
@@ -39,6 +41,14 @@ public class SystemFileContent extends File implements FileContent {
 
 	public boolean isLeaf() {
 		return this.leaf;
+	}
+
+	public String getName() {
+		return this.file.getName();
+	}
+
+	public String getPath() {
+		return this.file.getPath();
 	}
 
 }

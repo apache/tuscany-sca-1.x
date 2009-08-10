@@ -12,7 +12,6 @@ public class DomainSearchResultProcessor extends ResultProcessorList {
 		
 		super(new DomainSearchResultFactory());
 		
-		add(new ArtifactResultProcessor());
 		add(new FileContentResultProcessor());
 		
 	}

@@ -1,110 +1,80 @@
 package org.apache.tuscany.sca.domain.search.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.Enumeration;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import java.net.URL;
 
 import org.apache.lucene.document.Document;
-import org.apache.lucene.search.Query;
 import org.apache.tuscany.sca.domain.search.Result;
-import org.apache.tuscany.sca.domain.search.ResultFactory;
 import org.apache.tuscany.sca.domain.search.ResultProcessor;
 
 public class FileContentResultProcessor implements ResultProcessor {
 
-	public static class FileContentResultFactory implements
-			ResultFactory<FileContentResult> {
+	public Result process(Document document, Result result) {
 
-		public FileContentResultFactory() {
-			// empty constructor
-		}
-
-		public FileContentResult createResult(String name) {
-			return new FileContentResult(name);
-		}
-
-		public String getName(Document document) {
-			return document.get(SearchFields.FILE_FIELD);
-		}
-
-		public String getType() {
-			return SearchFields.FILE_FIELD;
-		}
-
-		public FileContentResult createResult(Document document) {
-			String name = getName(document);
-
-			if (name != null) {
-				return createResult(name);
-			}
-
-			return null;
-
-		}
-
-	}
-
-	public Result process(Document document, Query query, Result result) {
-
-		if (result instanceof FileContentResult) {
-			FileContentResult fileContentResult = (FileContentResult) result;
+		if (document.getFieldable(SearchFields.FILE_CONTENT_FIELD) != null) {
 			Reader reader;
 
 			ParentField parentField = new ParentField(document
 					.get(SearchFields.PARENT_FIELD));
-			String parentURI = parentField.getElementURI(parentField
-					.getElementsCount() - 1);
-			String name = document.get(SearchFields.FILE_FIELD);
 
-			if (name == null) {
-				return result;
-			}
+			int lastParentElementIndex = parentField.getElementsCount() - 1;
+			String parentURI;
 
-			if (parentURI.indexOf(ZipDocumentProcessor.ARCHIVE_SEPARATOR) != -1) {
-				String[] locations = parentURI.split(Character
-						.toString(ZipDocumentProcessor.ARCHIVE_SEPARATOR));
+			if (SearchFields.ARTIFACT_FIELD.equals(parentField
+					.getElementType(lastParentElementIndex))) {
+				parentURI = parentField.getElementURI(lastParentElementIndex);
+
+				// if (parentURI.startsWith("jar:")) {
 
 				try {
-					ZipFile zip = new ZipFile(new File(locations[0]));
-
-					// TODO: normalize the entry path and check if the entry still exists
-					ZipEntry entry = zip.getEntry(locations[1].substring(1) + name);
-					
-					Enumeration<? extends ZipEntry> entries = zip.entries();
-					
-					while (entries.hasMoreElements()) System.out.println(entries.nextElement().getName());
-					
-					reader = new InputStreamReader(zip.getInputStream(entry));
+					reader = new InputStreamReader(new URL(parentURI)
+							.openStream());
 
 				} catch (IOException e) {
 					return result;
 				}
 
-			} else {
+				// } else {
+				//
+				// try {
+				// reader = new InputStreamReader(new FileInputStream(
+				// new File(parentURI + (parentURI.length() > 0 ? "/" : "") +
+				// name)));
+				//
+				// } catch (FileNotFoundException e) {
+				// return result;
+				// }
+				//
+				// }
 
 				try {
-					reader = new InputStreamReader(new FileInputStream(
-							new File(parentURI + '/' + name)));
 
-				} catch (FileNotFoundException e) {
-					return result;
+					StringBuilder sb = new StringBuilder();
+					int c;
+
+					// TODO: load the chars into an array buffer instead of one
+					// at a
+					// time
+					while ((c = reader.read()) != -1) {
+						char character = (char) c;
+
+						if (!Character.isIdentifierIgnorable(character)) {
+							sb.append(character);
+						}
+
+					}
+
+					result.setValue(sb.toString());
+
+				} catch (Exception e) {
+					// ignore content loading, TODO: maybe it should return an
+					// error
+					// message as the content
+
 				}
 
-			}
-
-			try {
-				fileContentResult.setContent(HighlightingUtil
-						.bestFragmentHighlighted(query, reader));
-
-			} catch (IOException e) {
-				// ignore content loading, TODO: maybe it return an error
-				// message as the content
 			}
 
 		}

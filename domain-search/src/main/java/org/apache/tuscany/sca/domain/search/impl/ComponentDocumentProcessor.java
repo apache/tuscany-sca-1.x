@@ -5,6 +5,7 @@ import org.apache.tuscany.sca.assembly.Component;
 import org.apache.tuscany.sca.assembly.ComponentProperty;
 import org.apache.tuscany.sca.assembly.ComponentReference;
 import org.apache.tuscany.sca.assembly.ComponentService;
+import org.apache.tuscany.sca.assembly.Property;
 import org.apache.tuscany.sca.domain.search.DocumentMap;
 import org.apache.tuscany.sca.domain.search.DocumentProcessor;
 import org.apache.tuscany.sca.domain.search.Result;
@@ -32,12 +33,16 @@ public class ComponentDocumentProcessor implements DocumentProcessor {
 				if (doc == null) {
 					doc = documents.get(uri);
 				}
-				
-				parent += DomainPathAnalyzer.PATH_SEPARATOR + SearchFields.COMPONENT_FIELD + DomainPathAnalyzer.TYPE_SEPARATOR + uri + DomainPathAnalyzer.URI_SEPARATOR + component.getName();
+
+				parent += DomainPathAnalyzer.PATH_SEPARATOR
+						+ SearchFields.COMPONENT_FIELD
+						+ DomainPathAnalyzer.TYPE_SEPARATOR + uri
+						+ DomainPathAnalyzer.URI_SEPARATOR
+						+ component.getName();
 
 				doc.add(new Field(SearchFields.COMPONENT_FIELD, uri,
 						Field.Store.YES, Field.Index.ANALYZED));
-				
+
 				for (ComponentService service : component.getServices()) {
 					Document serviceDoc = documents.get(uri + ':'
 							+ service.getName());
@@ -84,8 +89,9 @@ public class ComponentDocumentProcessor implements DocumentProcessor {
 					Document referenceDoc = documents.get(uri + ':'
 							+ reference.getName());
 
-					referenceDoc.add(new Field(SearchFields.REFERENCE_NAME_FIELD,
-							reference.getName(), Field.Store.YES,
+					referenceDoc.add(new Field(
+							SearchFields.REFERENCE_NAME_FIELD, reference
+									.getName(), Field.Store.YES,
 							Field.Index.ANALYZED));
 
 					InterfaceContract interfaceContract = reference
@@ -117,31 +123,38 @@ public class ComponentDocumentProcessor implements DocumentProcessor {
 
 					}
 
-					referenceDoc.add(new Field(SearchFields.PARENT_FIELD, parent,
-							Field.Store.YES, Field.Index.ANALYZED));
+					referenceDoc.add(new Field(SearchFields.PARENT_FIELD,
+							parent, Field.Store.YES, Field.Index.ANALYZED));
 
 				}
 
 			}
 
-			Document implementationDoc = parentProcessor.process(parentProcessor,
-					documents, component.getImplementation(), null, parent);
+			Document implementationDoc = parentProcessor.process(
+					parentProcessor, documents, component.getImplementation(),
+					null, parent);
 
 			if (uri != null && implementationDoc != null) {
 
-				implementationDoc.add(new Field(SearchFields.PARENT_FIELD,
-						uri, Field.Store.YES, Field.Index.ANALYZED));
-				
+				implementationDoc.add(new Field(SearchFields.PARENT_FIELD, uri,
+						Field.Store.YES, Field.Index.ANALYZED));
+
 			}
 
 			for (ComponentProperty componentProperty : component
 					.getProperties()) {
-				Document propertyDoc = parentProcessor.process(parentProcessor,
-						documents, componentProperty.getProperty(), null, parent);
 
-				if (uri != null) {
-					propertyDoc.add(new Field(SearchFields.PARENT_FIELD, parent,
-							Field.Store.YES, Field.Index.ANALYZED));
+				Property property = componentProperty.getProperty();
+				
+				if (property != null) {
+					Document propertyDoc = parentProcessor.process(
+							parentProcessor, documents, property, null, parent);
+
+					if (uri != null) {
+						propertyDoc.add(new Field(SearchFields.PARENT_FIELD,
+								parent, Field.Store.YES, Field.Index.ANALYZED));
+
+					}
 
 				}
 
@@ -176,17 +189,16 @@ public class ComponentDocumentProcessor implements DocumentProcessor {
 
 	}
 
-	public Result processDocument(org.apache.lucene.document.Document document, Result result) {
+	public Result processDocument(org.apache.lucene.document.Document document,
+			Result result) {
 		String componentName = document.get(SearchFields.COMPONENT_FIELD);
-		
+
 		if (componentName != null) {
-			
-			
-			
+
 		}
-		
+
 		return null;
-		
+
 	}
 
 }

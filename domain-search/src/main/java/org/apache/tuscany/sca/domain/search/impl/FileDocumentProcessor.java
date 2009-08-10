@@ -2,7 +2,6 @@ package org.apache.tuscany.sca.domain.search.impl;
 
 import java.util.LinkedList;
 
-import org.apache.lucene.document.Field;
 import org.apache.tuscany.sca.domain.search.DocumentMap;
 import org.apache.tuscany.sca.domain.search.DocumentProcessor;
 
@@ -20,36 +19,36 @@ public class FileDocumentProcessor extends LinkedList<DocumentProcessor>
 			if (!file.isLeaf()) {
 
 				if (doc == null) {
-					doc = documents.get(file.getPath());
+					doc = documents.get(SearchFields.FILE_CONTENT_FIELD + file.getPath());
 				}
 
-				doc.add(new Field(SearchFields.DIRECTORY_FIELD, file
-						.getPath(), Field.Store.YES,
-						Field.Index.ANALYZED));
+				//FileContent[] files = file.getChildren();
 
-				parent += DomainPathAnalyzer.PATH_SEPARATOR
-						+ SearchFields.FILE_FIELD
-						+ DomainPathAnalyzer.TYPE_SEPARATOR + file.getPath()
-						+ DomainPathAnalyzer.URI_SEPARATOR + file.getName();
+//				for (FileContent childFile : files) {
+//					// Document fileDoc = parentProcessor.process(
+//					// parentProcessor, documents, childFile, null,
+//					// parent);
+//
+//					Document fileDoc = null;
+//
+//					fileDoc = process(this, documents, childFile, null, parent);
+//
+//					if (fileDoc == null) {
+//						continue;
+//					}
+//
+//					fileDoc.add(new Field(SearchFields.PARENT_FIELD, parent,
+//							Field.Store.YES, Field.Index.ANALYZED));
+//
+//				}
 
-				FileContent[] files = file.getChildren();
-
-				for (FileContent childFile : files) {
-					Document fileDoc = parentProcessor.process(parentProcessor,
-							documents, childFile, null, parent);
-
-					fileDoc.add(new Field(SearchFields.PARENT_FIELD, parent,
-							Field.Store.YES, Field.Index.ANALYZED));
-
-				}
-				
 				return doc;
 
 			} else {
 
 				for (DocumentProcessor processor : this) {
-					Document newDoc = processor.process(this, documents,
-							object, doc, parent);
+					Document newDoc = processor.process(this, documents, file,
+							doc, parent);
 
 					if (newDoc != null) {
 						return newDoc;
@@ -60,7 +59,7 @@ public class FileDocumentProcessor extends LinkedList<DocumentProcessor>
 			}
 
 		}
-		
+
 		return doc;
 
 	}
@@ -75,7 +74,7 @@ public class FileDocumentProcessor extends LinkedList<DocumentProcessor>
 				return null;
 			}
 
-			return path;
+			return SearchFields.FILE_CONTENT_FIELD + path;
 
 		}
 

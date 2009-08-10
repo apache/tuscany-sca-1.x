@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.apache.tuscany.sca.domain.search.Result;
 
-public abstract class ResultImpl implements Result {
+final public class ResultImpl implements Result {
 
 	private static final long serialVersionUID = 7084570994751217396L;
 
@@ -17,14 +17,26 @@ public abstract class ResultImpl implements Result {
 
 	private HashMap<String, Result> contents;
 
-	private String name;
+	private String value;
+	
+	private String field;
 
 	public ResultImpl() {
 		// empty constructor
 	}
 
-	public ResultImpl(String name) {
-		this.name = name;
+	public ResultImpl(String field, String value) {
+		setValue(value);
+		setField(field);
+		
+	}
+	
+	public String getField() {
+		return this.field;
+	}
+	
+	public void setField(String field) {
+		this.field = field;
 	}
 
 	public Result getContainer() {
@@ -41,8 +53,8 @@ public abstract class ResultImpl implements Result {
 
 	}
 
-	public String getName() {
-		return this.name;
+	public String getValue() {
+		return this.value;
 	}
 
 	public void setContainer(Result container) {
@@ -69,8 +81,8 @@ public abstract class ResultImpl implements Result {
 		if (obj instanceof Result) {
 			Result artifactResult = (Result) obj;
 
-			if (artifactResult.getName() == this.name || this.name != null
-					&& this.name.equals(artifactResult.getName())) {
+			if (artifactResult.getValue() == this.value || this.value != null
+					&& this.value.equals(artifactResult.getValue())) {
 
 				if (artifactResult.getContainer() == this.container
 						|| this.container != null
@@ -96,7 +108,7 @@ public abstract class ResultImpl implements Result {
 	}
 
 	public void addContent(Result artifactResult) {
-		internalGetContents().put(artifactResult.getName(), artifactResult);
+		internalGetContents().put(artifactResult.getValue(), artifactResult);
 		
 		if (artifactResult.getContainer() != this) {
 			artifactResult.setContainer(this);
@@ -139,22 +151,22 @@ public abstract class ResultImpl implements Result {
 				* 31
 				+ (this.contents == null || this.contents.isEmpty() ? 13
 						: this.contents.hashCode());
-		hash = hash * 31 + (this.name == null ? 17 : this.name.hashCode());
+		hash = hash * 31 + (this.value == null ? 17 : this.value.hashCode());
 
 		return hash;
 
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder("<");
 		Result container = getContainer();
 		
-		sb.append(getClass().getName()).append(" name='").append(getName())
-				.append("' container='").append(container != null ? container.getName() : null).append("'>\n");
+		sb.append(getClass().getName()).append(" name='").append(getValue())
+				.append("' container='").append(container != null ? container.getValue() : null).append("'>\n");
 
 		Method[] methods = getClass().getMethods();
 
