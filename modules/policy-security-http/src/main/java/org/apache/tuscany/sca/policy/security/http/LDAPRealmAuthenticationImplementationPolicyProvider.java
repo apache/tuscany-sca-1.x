@@ -62,7 +62,9 @@ public class LDAPRealmAuthenticationImplementationPolicyProvider implements Poli
      */
     
     /**
-     * 
+     * Find applicable authentication policySets
+     * It first check if any explicitly policySet was identified
+     * Otherwise it look into the list of applicablePolicySets
      * @param op
      * @return
      */
@@ -113,6 +115,13 @@ public class LDAPRealmAuthenticationImplementationPolicyProvider implements Poli
         return polices;
     }
     
+    /**
+     * Find applicable authorization policySets
+     * It first check if any explicitly policySet was identified
+     * Otherwise it look into the list of applicablePolicySets
+     * @param op
+     * @return
+     */
     private List<AuthorizationPolicy> findAuthorizationPolicies(Operation op) {
         List<AuthorizationPolicy> polices = new ArrayList<AuthorizationPolicy>();
         
@@ -161,7 +170,11 @@ public class LDAPRealmAuthenticationImplementationPolicyProvider implements Poli
         return polices;
     }
     
-
+    /**
+     * Find a given configured operation
+     * @param operation
+     * @return
+     */
     private ConfiguredOperation findOperation(Operation operation) {
         ConfiguredOperation configuredOperation = null;
         
@@ -174,5 +187,4 @@ public class LDAPRealmAuthenticationImplementationPolicyProvider implements Poli
         
         return configuredOperation;
     }
-
 }
