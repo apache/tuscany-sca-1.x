@@ -28,7 +28,7 @@
     
     <component name="ClientComponent">
         <implementation.java class="helloworld.HelloWorldProxy"/>
-        <reference name="delegate" target="HelloWorldComponent"/>
+        <reference name="delegate" target="HelloWorldComponent/testBean1"/>
     </component>
 
     <component name="HelloWorldComponent">

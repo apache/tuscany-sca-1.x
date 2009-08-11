@@ -41,7 +41,7 @@ public class CalculatorClient {
         node.start();        
               
         CalculatorService calculatorService = 
-            ((SCAClient)node).getService(CalculatorService.class, "CalculatorServiceComponent");
+            ((SCAClient)node).getService(CalculatorService.class, "CalculatorServiceComponent/CalculatorServiceBean");
         
         System.out.println("3 + 2=" + calculatorService.add(3, 2));
         System.out.println("3 - 2=" + calculatorService.subtract(3, 2));

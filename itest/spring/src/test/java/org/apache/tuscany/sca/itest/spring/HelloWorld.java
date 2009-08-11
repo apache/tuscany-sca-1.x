@@ -19,14 +19,11 @@
 
 package org.apache.tuscany.sca.itest.spring;
 
-import org.osoa.sca.annotations.Remotable;
-
 /**
  * Interface for the "hello world" service - predictably simple with a single operation
  * "sayHello"
  *
  */
-@Remotable
 public interface HelloWorld {
 
     public String sayHello(String s);

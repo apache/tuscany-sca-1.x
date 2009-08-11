@@ -19,15 +19,12 @@
 
 package helloworld;
 
-import org.osoa.sca.annotations.Remotable;
-
 /**
  * Interface for the "hello world" service - predictably simple with a single operation
  * "sayHello"
  *
  * @version $Rev$ $Date$
  */
-@Remotable
 public interface HelloWorld {
 
     String sayHello(String s);
