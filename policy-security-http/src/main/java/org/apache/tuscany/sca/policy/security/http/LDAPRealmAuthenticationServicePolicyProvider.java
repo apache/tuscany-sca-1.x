@@ -211,6 +211,11 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
         return polices;
     }
 
+    /**
+     * Find a given configured operation
+     * @param operation
+     * @return
+     */
     private ConfiguredOperation findOperation(Operation operation) {
         ConfiguredOperation configuredOperation = null;
         
