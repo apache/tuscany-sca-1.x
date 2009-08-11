@@ -19,10 +19,12 @@
 
 package org.apache.tuscany.sca.binding.atom.provider;
 
+import org.apache.tuscany.sca.assembly.Service;
 import org.apache.tuscany.sca.binding.atom.AtomBinding;
 import org.apache.tuscany.sca.databinding.Mediator;
 import org.apache.tuscany.sca.host.http.ServletHost;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
+import org.apache.tuscany.sca.interfacedef.wsdl.WSDLInterfaceContract;
 import org.apache.tuscany.sca.invocation.MessageFactory;
 import org.apache.tuscany.sca.provider.ServiceBindingProvider;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
@@ -37,6 +39,7 @@ import org.apache.tuscany.sca.runtime.RuntimeWire;
 class AtomServiceBindingProvider implements ServiceBindingProvider {
 
     private RuntimeComponentService service;
+    private InterfaceContract serviceContract;
     private AtomBinding binding;
     private ServletHost servletHost;
     private MessageFactory messageFactory;
@@ -56,10 +59,22 @@ class AtomServiceBindingProvider implements ServiceBindingProvider {
         this.servletHost = servletHost;
         this.messageFactory = messageFactory;
         this.mediator = mediator;
+        
+        // TUSCANY-3166
+        this.serviceContract = service.getInterfaceContract();
+        if (this.serviceContract instanceof WSDLInterfaceContract) {
+        	for (Service componentService : component.getImplementation().getServices()) {
+        		if (componentService.getName().equals(service.getName())) {
+        			this.serviceContract = (InterfaceContract) componentService.getInterfaceContract();
+        			break;
+        		}
+        	}
+
+        }      
     }
 
     public InterfaceContract getBindingInterfaceContract() {
-        return service.getInterfaceContract();
+        return serviceContract;
     }
     
     public boolean supportsOneWayInvocation() {
