@@ -21,8 +21,6 @@ package org.apache.tuscany.sca.binding.atom.provider;
 
 import java.net.URI;
 
-import javax.xml.namespace.QName;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpClient;
