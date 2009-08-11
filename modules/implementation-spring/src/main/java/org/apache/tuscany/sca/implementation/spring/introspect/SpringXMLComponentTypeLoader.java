@@ -496,6 +496,9 @@ public class SpringXMLComponentTypeLoader {
                         new SpringBeanIntrospector(assemblyFactory, javaFactory, policyFactory, beanElement.getCustructorArgs());
                     ComponentType beanComponentType = assemblyFactory.createComponentType();
                     javaImplementation = beanIntrospector.introspectBean(beanClass, beanComponentType);
+                    // Set the service name as bean name
+                    for (Service componentService : beanComponentType.getServices())                    	
+                    	componentService.setName(beanElement.getId());
                     // Get the service interface defined by this Spring Bean and add to
                     // the component type of the Spring Assembly
                     List<Service> beanServices = beanComponentType.getServices();

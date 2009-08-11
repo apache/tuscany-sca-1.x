@@ -26,4 +26,16 @@
        
     <import resource="CalculatorService-context.xml"/>
     
+    <bean id="CalculatorServiceBean" class="calculator.CalculatorServiceImpl">        
+        <property name="addService" ref="addService"/>
+        <property name="subtractService" ref="subtractService"/>
+        <property name="multiplyService" ref="multiplyService"/>
+        <property name="divideService" ref="divideService"/>
+    </bean>
+    
+    <sca:reference name="addService" type="calculator.AddService"/>
+    <sca:reference name="subtractService" type="calculator.SubtractService"/>   
+    <sca:reference name="multiplyService" type="calculator.MultiplyService"/>    
+    <sca:reference name="divideService" type="calculator.DivideService"/>
+    
 </beans>

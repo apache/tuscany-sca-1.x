@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.sca.itest.spring;
 
+import helloworld.HelloWorld;
+
 /**
  * A simple test Spring bean which provides the HelloWorld service
  *

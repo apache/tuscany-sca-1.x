@@ -35,5 +35,8 @@
     <sca:reference name="subtractService" type="calculator.SubtractService"/>   
     <sca:reference name="multiplyService" type="calculator.MultiplyService"/>    
     <sca:reference name="divideService" type="calculator.DivideService"/>
+    
+    <bean id="AddServiceBean" class="calculator.AddServiceImpl">
+    </bean>
 
 </beans>

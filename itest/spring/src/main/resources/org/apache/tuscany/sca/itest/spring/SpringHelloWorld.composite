@@ -21,7 +21,7 @@
            name="SpringHelloWorld">
 
     <component name="ClientComponent">
-        <implementation.java class="org.apache.tuscany.sca.itest.spring.HelloWorldProxy"/>
+        <implementation.java class="helloworld.HelloWorldProxy"/>
         <reference name="delegate" target="HelloWorldComponent"/>
     </component>
 
