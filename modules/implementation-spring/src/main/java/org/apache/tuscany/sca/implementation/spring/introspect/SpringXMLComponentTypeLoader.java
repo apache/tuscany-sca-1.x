@@ -51,6 +51,7 @@ import org.apache.tuscany.sca.assembly.Multiplicity;
 import org.apache.tuscany.sca.assembly.Property;
 import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.Service;
+import org.apache.tuscany.sca.assembly.impl.ServiceImpl;
 import org.apache.tuscany.sca.contribution.Artifact;
 import org.apache.tuscany.sca.contribution.ContributionFactory;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
@@ -415,6 +416,16 @@ public class SpringXMLComponentTypeLoader {
                 SpringSCAServiceElement serviceElement = its.next();
                 Class<?> interfaze = resolveClass(resolver, serviceElement.getType());
                 Service theService = createService(interfaze, serviceElement.getName());
+                // Spring allows duplication of bean definitions in multiple context scenario,
+                // in such cases, the latest bean definition overrides the older ones, hence 
+                // we will remove any older definition and use the latest.
+                Service duplicate = null;
+                for (Service service : componentType.getServices()) {
+                	if (service.getName().equals(theService.getName()))
+                		duplicate = service;
+                }
+                if (duplicate != null)
+                	componentType.getServices().remove(duplicate);
                 componentType.getServices().add(theService);
                 // Add this service to the Service / Bean map
                 String beanName = serviceElement.getTarget();
@@ -430,7 +441,15 @@ public class SpringXMLComponentTypeLoader {
             while (itr.hasNext()) {
                 SpringSCAReferenceElement referenceElement = itr.next();
                 Class<?> interfaze = resolveClass(resolver, referenceElement.getType());
-                Reference theReference = createReference(interfaze, referenceElement.getName());
+                Reference theReference = createReference(interfaze, referenceElement.getName());                
+                // Override the older bean definition with the latest ones.
+                Reference duplicate = null;
+                for (Reference reference : componentType.getReferences()) {
+                	if (reference.getName().equals(theReference.getName()))
+                		duplicate = reference;
+                }
+                if (duplicate != null)
+                	componentType.getReferences().remove(duplicate);
                 componentType.getReferences().add(theReference);
             } // end while
 
@@ -446,6 +465,14 @@ public class SpringXMLComponentTypeLoader {
                     // Get the Java class and then an XSD element type for the property
                     Class<?> propType = Class.forName(scaproperty.getType());
                     theProperty.setXSDType(JavaXMLMapper.getXMLType(propType));
+                    // Override the older bean definition with the latest ones.
+                    Property duplicate = null;
+                    for (Property property : componentType.getProperties()) {
+                    	if (property.getName().equals(theProperty.getName()))
+                    		duplicate = property;
+                    }
+                    if (duplicate != null)
+                    	componentType.getProperties().remove(duplicate);
                     componentType.getProperties().add(theProperty);
                     // Remember the Java Class (ie the type) for this property
                     implementation.setPropertyClass(theProperty.getName(), propType);
@@ -472,7 +499,7 @@ public class SpringXMLComponentTypeLoader {
                     // Get the service interface defined by this Spring Bean and add to
                     // the component type of the Spring Assembly
                     List<Service> beanServices = beanComponentType.getServices();
-                    componentType.getServices().addAll(beanServices);
+                    componentType.getServices().addAll(beanServices);                    
                     // Add these services to the Service / Bean map
                     for (Service beanService : beanServices) {
                         implementation.setBeanForService(beanService, beanElement);
