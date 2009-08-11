@@ -26,7 +26,7 @@
 	<component name="NewsServiceComponent">
 	      <implementation.java class="test.abdera.impl.NewsServiceImpl"/>
 	      <service name="NewsService">
-	        <!--interface.wsdl interface="http://abdera.test/#wsdl.interface(NewsService)"/-->
+	        <interface.wsdl interface="http://abdera.test/#wsdl.interface(NewsService)"/>
 	        <tuscany:binding.atom uri="http://localhost:8085/NewsService"/>
 	      </service>
 	</component> 
