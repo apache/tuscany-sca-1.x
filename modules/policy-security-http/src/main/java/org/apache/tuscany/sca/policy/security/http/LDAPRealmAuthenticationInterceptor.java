@@ -21,28 +21,27 @@ package org.apache.tuscany.sca.policy.security.http;
 
 import java.util.List;
 
-import javax.security.auth.Subject;
-import javax.security.auth.callback.CallbackHandler;
-import javax.security.auth.login.LoginContext;
-
 import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
 import org.apache.tuscany.sca.policy.authorization.AuthorizationPolicy;
-import org.apache.tuscany.sca.policy.security.http.util.HttpSecurityUtil;
+import org.apache.tuscany.sca.policy.security.http.extensibility.LDAPSecurityHandler;
 import org.osoa.sca.ServiceRuntimeException;
 
 /**
  * @version $Rev$ $Date$
  */
 public class LDAPRealmAuthenticationInterceptor  implements Interceptor {
+    private LDAPSecurityHandler securityHandler;
     private List<LDAPRealmAuthenticationPolicy> authenticationPolicies;
     private List<AuthorizationPolicy> authorizationPolicies;
     private Invoker next;
 
-    public LDAPRealmAuthenticationInterceptor(List<LDAPRealmAuthenticationPolicy> authenticationPolicies,
+    public LDAPRealmAuthenticationInterceptor(LDAPSecurityHandler securityHandler,
+                                              List<LDAPRealmAuthenticationPolicy> authenticationPolicies,
                                               List<AuthorizationPolicy> authorizationPolicies) {
         super();
+        this.securityHandler = securityHandler;
         this.authenticationPolicies = authenticationPolicies;
         this.authorizationPolicies = authorizationPolicies;
     }
@@ -56,72 +55,12 @@ public class LDAPRealmAuthenticationInterceptor  implements Interceptor {
     }
 
     public Message invoke(Message msg) {
-        Subject subject = null;
-        Subject authenticatedSubject = null;
-
         try {
-            // Perform user authentication    
-            LDAPRealmAuthenticationPolicy authenticationPolicy = authenticationPolicies.get(0);
-            if( authenticationPolicy != null) {
-                subject = HttpSecurityUtil.getSubject(msg);
-                CallbackHandler callbackHandler = new LDAPRealmAuthenticationCallbackHandler(subject);
-
-                /* This bypass Java EE */
-                LoginContext lc = new LoginContext(authenticationPolicy.getRealmConfigurationName(), callbackHandler);
-                lc.login();
-
-
-                /* Uses Geronimo to login */
-                /*
-                LoginContext geronimoLoginContext = ContextManager.login(authenticationPolicy.getRealmConfigurationName(), callbackHandler);
-
-                authenticatedSubject = geronimoLoginContext.getSubject();
-                if (authenticatedSubject != null) {
-                    //TODO: add authenticated subject to the msg header ?
-                }
-                */
-            }
-
-            AuthorizationPolicy authorizationPolicy = authorizationPolicies.get(0);
-            if(authorizationPolicy != null) {
-                if(authorizationPolicy.getAccessControl() == AuthorizationPolicy.AcessControl.allow) {
-                    /* Geronimo Specific code */
-                    /*
-                    boolean isAllowed = false;
-                    for (String requiredRole : authorizationPolicy.getRoleNames()) {
-                        isAllowed = isUserInRole(authenticatedSubject, requiredRole);
-                    }
-                    
-                    if(! isAllowed ) {
-                        throw new javax.security.auth.login.LoginException("Insufficient access rights !");
-                    }
-                    */
-                }
-
-            }
+            securityHandler.handleSecurity(msg, authenticationPolicies, authorizationPolicies);
 
         } catch (Exception e) {
             throw new ServiceRuntimeException(e);
         }
         return getNext().invoke(msg);
     }
-    
-    public boolean isUserInRole(Subject subject, String role) {
-        /* Geronimo Specific code */
-        /*
-        AccessControlContext acc = ContextManager.getCurrentContext();
-
-        try {
-            acc.checkPermission(new WebRoleRefPermission("", role));
-        } catch (Exception e) {
-            return false;
-        }
-
-        return true;
-        */
-
-        return false;
-    }
-
-
 }
