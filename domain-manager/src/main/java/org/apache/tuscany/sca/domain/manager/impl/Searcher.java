@@ -393,21 +393,20 @@ public class Searcher implements ItemCollection, LocalItemCollection {
                 this.elementCounter++;
                 writer.write("<div style='margin-top:0em;margin-left:");
                 writer.write(Integer.toString(indentation));
-                writer
-                    .write("em;background-color:#FFE175;max-width:100%;border-style:dashed;border-width:1px;padding:5px'>" + "<p style='margin:0px;padding:0px;font-size:70%'>"
-                        + "<a style='margin:0px;padding:0px' href='#filecontent");
+                writer.write("em;background-color:#FFE175;max-width:100%;border-style:dashed;border-width:1px;padding:5px'>");
+                writer.write("<p style='margin:0px;padding:0px;font-size:70%'>");
+                        //+ "<a style='margin:0px;padding:0px' href='#filecontent");
+                        //writer.write(Integer.toString(this.elementCounter));
 
-                writer.write(Integer.toString(this.elementCounter));
-
-                String contributionPlusArtifact =
-                    getContributionURI(result) + ";" + removeHighlighting(result.getContainer().getValue());
+                String contributionPlusArtifact = getContributionURI(result) + ";" + removeHighlighting(result.getContainer().getValue());
 
                 // writer.write("' onclick='search");
                 // writer.write("'>view all</a>&nbsp;&nbsp;<a href='/files/contribution=");
-                writer.write("' onclick='getHighlighted(\"");
+                writer.write("<a style='margin:0px;padding:0px' href='javascript:document.getElementByID(\"searchGadget\").contentWindow.getHighlighted(\"");
                 writer.write(contributionPlusArtifact);
-                writer.write("\")'>view all</a>&nbsp;&nbsp;<a href='/files/contribution=");
-
+                writer.write("\");'>view all</a>&nbsp;&nbsp;");
+                
+                writer.write("<a href='/files/contribution=");
                 writer.write(contributionPlusArtifact);
                 writer.write("'>download</a></p><p style='margin:8px 0px 0px 0px;padding:0px'>");
 
@@ -418,7 +417,8 @@ public class Searcher implements ItemCollection, LocalItemCollection {
                     i += MAX_CONTENT_LINE_WIDTH;
                 }
 
-                writer.write("</p></div>");
+                writer.write("</p>");
+                writer.write("</div>");
 
             }
 
