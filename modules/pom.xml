@@ -113,7 +113,6 @@
                 <module>definitions</module>
                 <module>definitions-xml</module>
                 <module>domain-manager</module>
-   		        <module>domain-search</module>
                 <module>endpoint</module>
                 <module>extensibility</module>
                 <module>extensibility-osgi</module>
