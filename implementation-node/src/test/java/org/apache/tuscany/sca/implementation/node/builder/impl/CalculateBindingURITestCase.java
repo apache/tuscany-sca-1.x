@@ -45,6 +45,7 @@ import org.apache.tuscany.sca.implementation.node.impl.NodeImplementationFactory
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
+import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
 
 /**
  *
@@ -81,6 +82,20 @@ public class CalculateBindingURITestCase extends TestCase {
             public List<Problem> getProblems() {
                 return null;
             }
+            
+            public Problem createProblem(String sourceClassName, String bundleName,
+        			Severity severity, Object problemObject, String messageId,
+        			Exception cause) {
+        		return new ProblemImpl(sourceClassName, bundleName, severity,
+        				problemObject, messageId, cause);
+        	}
+
+        	public Problem createProblem(String sourceClassName, String bundleName,
+        			Severity severity, Object problemObject, String messageId,
+        			Object... messageParams) {
+        		return new ProblemImpl(sourceClassName, bundleName, severity,
+        				problemObject, messageId, messageParams);
+        	}             
         };
         configurationBuilder = new NodeCompositeBuilderImpl(assemblyFactory, scaBindingFactory, null, null, monitor);
         Binding defaultBinding = new TestBindingImpl();

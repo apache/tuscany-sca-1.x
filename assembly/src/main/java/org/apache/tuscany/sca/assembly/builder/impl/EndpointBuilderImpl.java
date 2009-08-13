@@ -27,6 +27,7 @@ import org.apache.tuscany.sca.assembly.builder.EndpointBuilder;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
+import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
 
 /**
  * A factory for the Endpoint model.
