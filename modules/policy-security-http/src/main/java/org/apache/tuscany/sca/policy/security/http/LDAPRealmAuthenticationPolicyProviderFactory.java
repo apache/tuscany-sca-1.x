@@ -40,7 +40,9 @@ public class LDAPRealmAuthenticationPolicyProviderFactory implements PolicyProvi
         super();
         
         LDAPSecurityHandlerExtensionPoint securityHandlerExtensionPoint = registry.getExtensionPoint(LDAPSecurityHandlerExtensionPoint.class);
-        securityHandler = securityHandlerExtensionPoint.getLDAPSecurityHandlers().get(0);
+        if (securityHandlerExtensionPoint.getLDAPSecurityHandlers().size() > 0) {
+           securityHandler = securityHandlerExtensionPoint.getLDAPSecurityHandlers().get(0);
+        }
     }
 
     public Class<LDAPRealmAuthenticationPolicy> getModelType() {
