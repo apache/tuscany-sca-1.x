@@ -25,7 +25,6 @@ import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
 
-import org.apache.tuscany.sca.assembly.builder.impl.ProblemImpl;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.URLArtifactProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;

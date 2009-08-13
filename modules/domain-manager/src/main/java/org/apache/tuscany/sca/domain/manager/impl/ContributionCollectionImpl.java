@@ -78,6 +78,8 @@ import org.apache.tuscany.sca.domain.search.DomainSearch;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.MonitorFactory;
 import org.apache.tuscany.sca.monitor.Problem;
+import org.apache.tuscany.sca.monitor.Problem.Severity;
+import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
 import org.apache.tuscany.sca.workspace.Workspace;
 import org.apache.tuscany.sca.workspace.WorkspaceFactory;
 import org.apache.tuscany.sca.workspace.builder.ContributionDependencyBuilder;
@@ -413,6 +415,19 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
             public List<Problem> getProblems() {
                 return null;
             }
+            public Problem createProblem(String sourceClassName, String bundleName,
+        			Severity severity, Object problemObject, String messageId,
+        			Exception cause) {
+        		return new ProblemImpl(sourceClassName, bundleName, severity,
+        				problemObject, messageId, cause);
+        	}
+
+        	public Problem createProblem(String sourceClassName, String bundleName,
+        			Severity severity, Object problemObject, String messageId,
+        			Object... messageParams) {
+        		return new ProblemImpl(sourceClassName, bundleName, severity,
+        				problemObject, messageId, messageParams);
+        	}             
         };
         
         StringBuffer sb = new StringBuffer();

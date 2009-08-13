@@ -35,6 +35,7 @@ import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
+import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
 
 /**
  * This class encapsulates utility methods to deal with reference definitions

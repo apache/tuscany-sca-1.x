@@ -34,7 +34,7 @@ import org.apache.tuscany.sca.monitor.Problem.Severity;
  *
  * @version $Rev$ $Date$
  */
-public class DefaultMonitorImpl implements Monitor {
+public class DefaultMonitorImpl extends Monitor {
     private static final Logger logger = Logger.getLogger(DefaultMonitorImpl.class.getName());
     
     // Cache all the problem reported to monitor for further analysis
@@ -76,6 +76,20 @@ public class DefaultMonitorImpl implements Monitor {
         return problemCache;
     }
     
+    public Problem createProblem(String sourceClassName, String bundleName,
+			Severity severity, Object problemObject, String messageId,
+			Exception cause) {
+		return new ProblemImpl(sourceClassName, bundleName, severity,
+				problemObject, messageId, cause);
+	}
+
+	public Problem createProblem(String sourceClassName, String bundleName,
+			Severity severity, Object problemObject, String messageId,
+			Object... messageParams) {
+		return new ProblemImpl(sourceClassName, bundleName, severity,
+				problemObject, messageId, messageParams);
+	}    
+    
     public Problem getLastLoggedProblem(){
         return problemCache.get(problemCache.size() - 1);
     }
@@ -98,5 +112,5 @@ public class DefaultMonitorImpl implements Monitor {
         }
         
         return null;
-    }
+    }    
 }
