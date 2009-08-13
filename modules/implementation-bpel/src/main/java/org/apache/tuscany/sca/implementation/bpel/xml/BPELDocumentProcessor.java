@@ -37,7 +37,6 @@ import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 
-import org.apache.tuscany.sca.assembly.builder.impl.ProblemImpl;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.URLArtifactProcessor;
@@ -55,6 +54,7 @@ import org.apache.tuscany.sca.interfacedef.wsdl.xml.BPELPartnerLinkTypeExt;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
+import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
 
 /**
  * BPEL document processor responsible for reading a BPEL file and producing necessary model info about it

@@ -48,7 +48,6 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 
-import org.apache.tuscany.sca.assembly.builder.impl.ProblemImpl;
 import org.apache.tuscany.sca.contribution.Contribution;
 import org.apache.tuscany.sca.contribution.service.ContributionRepository;
 import org.apache.tuscany.sca.contribution.service.util.FileHelper;
@@ -56,6 +55,7 @@ import org.apache.tuscany.sca.contribution.service.util.IOHelper;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
+import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
 
 /**
  * The default implementation of ContributionRepository

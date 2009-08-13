@@ -20,25 +20,143 @@
 package org.apache.tuscany.sca.monitor;
 
 import java.util.List;
+import org.apache.tuscany.sca.monitor.Problem.Severity;
 
 /**
  * A monitor for the watching for validation problems
  *
  * @version $Rev$ $Date$
  */
-public interface Monitor {
+public abstract class Monitor {
     /**
      * Reports a build problem.
      * 
      * @param problem
      */
-    void problem(Problem problem);
+	public abstract void problem(Problem problem);
     
     /** 
      * Returns a list of reported problems. 
      * 
      * @return the list of problems. The list may be empty
      */
-    List<Problem> getProblems();
+	public abstract List<Problem> getProblems();
+	
+    /**
+     * Create a new problem.
+     * 
+     * @param sourceClassName   the class name reporting the problem
+     * @param bundleName        the name of the message bundle to use
+     * @param severity          the severity of the problem
+     * @param problemObject     the model object for which the problem is being reported
+     * @param messageId         the id of the problem message
+     * @param cause             the exception which caused the problem
+     * @return
+     */
+    public abstract Problem createProblem(String sourceClassName,
+                                          String bundleName,
+                                          Severity severity,
+                                          Object problemObject,
+                                          String messageId,
+                                          Exception cause);
+
+    /**
+     * Create a new problem.
+     *  
+     * @param sourceClassName   the class name reporting the problem
+     * @param bundleName        the name of the message bundle to use
+     * @param severity          the severity of the problem
+     * @param problemObject     the model object for which the problem is being reported
+     * @param messageId         the id of the problem message
+     * @param messageParams     the parameters of the problem message
+     * @return
+     */
+    public abstract Problem createProblem(String sourceClassName,
+                                   String bundleName,
+                                   Severity severity,
+                                   Object problemObject,
+                                   String messageId,
+                                   Object... messageParams);	
+    
+    /**
+     * A utility function for raising a warning. It creates the problem and 
+     * adds it to the monitor
+     * 
+     * @param monitor
+     * @param reportingObject
+     * @param messageBundle
+     * @param messageId
+     * @param messageParameters
+     */
+    public static void warning (Monitor monitor, 
+                                Object reportingObject,
+                                String messageBundle,
+                                String messageId, 
+                                String... messageParameters){
+        if (monitor != null) {
+            Problem problem =
+                monitor.createProblem(reportingObject.getClass().getName(),
+                                      messageBundle,
+                                      Severity.WARNING,
+                                      null,
+                                      messageId,
+                                      (Object[])messageParameters);
+            monitor.problem(problem);
+        }
+    }
+   
+    /**
+     * A utility function for raising an error. It creates the problem and 
+     * adds it to the monitor
+     * 
+     * @param monitor
+     * @param reportingObject
+     * @param messageBundle
+     * @param messageId
+     * @param messageParameters
+     */
+    public static void error (Monitor monitor, 
+                              Object reportingObject,
+                              String messageBundle,
+                              String messageId, 
+                              String... messageParameters){
+        if (monitor != null) {
+            Problem problem =
+                monitor.createProblem(reportingObject.getClass().getName(),
+                                      messageBundle,
+                                      Severity.ERROR,
+                                      null,
+                                      messageId,
+                                      (Object[])messageParameters);
+            monitor.problem(problem);
+        }
+    }
+    
+    /**
+     * A utility function for raising an error. It creates the problem and 
+     * adds it to the monitor
+     * 
+     * @param monitor
+     * @param reportingObject
+     * @param messageBundle
+     * @param messageId
+     * @param exception
+     */
+    public static void error (Monitor monitor, 
+                              Object reportingObject,
+                              String messageBundle,
+                              String messageId, 
+                              Exception cause){
+        if (monitor != null) {
+            Problem problem =
+                monitor.createProblem(reportingObject.getClass().getName(),
+                                      messageBundle,
+                                      Severity.ERROR,
+                                      null,
+                                      messageId,
+                                      cause);
+            monitor.problem(problem);
+        }
+    }  
     
 }
