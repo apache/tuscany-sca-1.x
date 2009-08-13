@@ -22,6 +22,8 @@ package org.apache.tuscany.sca.policy.security.http;
 import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.Implementation;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
+import org.apache.tuscany.sca.policy.security.http.extensibility.LDAPSecurityHandler;
+import org.apache.tuscany.sca.policy.security.http.extensibility.LDAPSecurityHandlerExtensionPoint;
 import org.apache.tuscany.sca.provider.PolicyProvider;
 import org.apache.tuscany.sca.provider.PolicyProviderFactory;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
@@ -32,9 +34,13 @@ import org.apache.tuscany.sca.runtime.RuntimeComponentService;
  * @version $Rev$ $Date$
  */
 public class LDAPRealmAuthenticationPolicyProviderFactory implements PolicyProviderFactory<LDAPRealmAuthenticationPolicy> {
+    private LDAPSecurityHandler securityHandler;
 
     public LDAPRealmAuthenticationPolicyProviderFactory(ExtensionPointRegistry registry) {
         super();
+        
+        LDAPSecurityHandlerExtensionPoint securityHandlerExtensionPoint = registry.getExtensionPoint(LDAPSecurityHandlerExtensionPoint.class);
+        securityHandler = securityHandlerExtensionPoint.getLDAPSecurityHandlers().get(0);
     }
 
     public Class<LDAPRealmAuthenticationPolicy> getModelType() {
@@ -42,7 +48,7 @@ public class LDAPRealmAuthenticationPolicyProviderFactory implements PolicyProvi
     }
 
     public PolicyProvider createImplementationPolicyProvider(RuntimeComponent component, Implementation implementation) {
-        return new LDAPRealmAuthenticationImplementationPolicyProvider(component, implementation);
+        return new LDAPRealmAuthenticationImplementationPolicyProvider(component, implementation, securityHandler);
     }
 
     public PolicyProvider createReferencePolicyProvider(RuntimeComponent component,
@@ -54,7 +60,7 @@ public class LDAPRealmAuthenticationPolicyProviderFactory implements PolicyProvi
     public PolicyProvider createServicePolicyProvider(RuntimeComponent component,
                                                       RuntimeComponentService service,
                                                       Binding binding) {
-        return new LDAPRealmAuthenticationServicePolicyProvider(component, service, binding);
+        return new LDAPRealmAuthenticationServicePolicyProvider(component, service, binding, securityHandler);
     }
 
 

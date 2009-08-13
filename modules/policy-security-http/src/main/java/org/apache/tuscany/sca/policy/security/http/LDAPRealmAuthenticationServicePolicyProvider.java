@@ -30,6 +30,7 @@ import org.apache.tuscany.sca.invocation.Interceptor;
 import org.apache.tuscany.sca.invocation.Phase;
 import org.apache.tuscany.sca.policy.PolicySet;
 import org.apache.tuscany.sca.policy.authorization.AuthorizationPolicy;
+import org.apache.tuscany.sca.policy.security.http.extensibility.LDAPSecurityHandler;
 import org.apache.tuscany.sca.provider.PolicyProvider;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 import org.apache.tuscany.sca.runtime.RuntimeComponentService;
@@ -43,14 +44,16 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
     private RuntimeComponent component;
     private RuntimeComponentService service;
     private Binding binding;
+    LDAPSecurityHandler securityHandler;
 
     private List<Operation> operations = new ArrayList<Operation>();
     
-    public LDAPRealmAuthenticationServicePolicyProvider(RuntimeComponent component, RuntimeComponentService service, Binding binding) {
+    public LDAPRealmAuthenticationServicePolicyProvider(RuntimeComponent component, RuntimeComponentService service, Binding binding, LDAPSecurityHandler securityHandler) {
         super();
         this.component = component;
         this.service = service;
         this.binding = binding;
+        this.securityHandler = securityHandler;
         
         this.operations.addAll(service.getInterfaceContract().getInterface().getOperations());
     }
@@ -71,7 +74,7 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
         if (authenticationPolicies == null || authenticationPolicies.isEmpty()) {
             return null;
         } else {
-            return new LDAPRealmAuthenticationInterceptor(authenticationPolicies, authorizationPolicies);
+            return new LDAPRealmAuthenticationInterceptor(securityHandler, authenticationPolicies, authorizationPolicies);
         }
     }
 
