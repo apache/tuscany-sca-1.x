@@ -5,6 +5,7 @@ Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
 
 TUSCANY-2640 - Should use package(s) when possible in creating JAXBContext, not set of Classes
 TUSCANY-2878 - Moving to Dojo dependencies to Dojo 1.3.0 official release
+TUSCANY-2906 - Resolve wsdl:import and xsd:import using namespace
 TUSCANY-2967 - back out the trial change to bytes format messages so that all wire formats consistently return faults as JMS Object messages.
 TUSCANY-2978 - Add more JEE tests to help show that the nested composites are resolved/built correctly.
 TUSCANY-2984 - Adding prioritization while starting module activators to allow module activators dependencies to start first
@@ -57,9 +58,14 @@ TUSCANY-3172 - domain manager doesn't report errors cleanly to the nodes
 TUSCANY-3174 - Add workspace manager updates to workspace 
 TUSCANY-3177 - create the extension point registry earlier so that any programmatic changes to it are reflected in the runtime configuration
 TUSCANY-3178 - read the validation schema extension point from the extension point registry rather than creating a local copy
+TUSCANY-3185 - Warning message of duplicates during multiple spring application context processing
 TUSCANY-3193 - fully support binding.sca in the domain manager
 TUSCANY-3195 - merge fix from 1.x to 1.5.1 for Inherently-provided intents do not work at operation level
-TUSCANY-3198 - keep generated EJB component implementations distinct. 
+TUSCANY-3198 - keep generated EJB component implementations distinct.
+TUSCANY-3199 - WebImplementationProcessor should prefix web.componentType URI with WEB-INF 
+TUSCANY-3200 - Add the dojo copyright to the NOTICE file to be consistent with the top level binary NOTICE file
+TUSCANY-3202 - Spring bean name as service names for implicit services
+TUSCANY-3213 - ProblemImpl resides in assembly and means that other module have to access an impl packed to create a problem
 
 
 Changes With Apache Tuscany SCA 1.5 May 2009 
