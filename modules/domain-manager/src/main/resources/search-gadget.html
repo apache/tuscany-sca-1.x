@@ -27,49 +27,15 @@
 
 <link rel="stylesheet" type="text/css" href="manager.css">
 
-<script type="text/javascript">
-
-	function search() {
-		lastQuery = elementByID(gadget, 'searchField').value;
-		searcher.get("query" + lastQuery, searchResponse);
-		
-	}
-	
-	function getHighlighted(artifact) {
-		searcher.get("highlight" + lastQuery + ";" + artifact, searchResponse);
-	}
-	
-	function highlightResponse(feed) {
-		var entries = feed.getElementsByTagName("entry");
-		var content = entries[0].getElementsByTagName("content");
-		
-		var results = elementByID(gadget, "results");
-		results.innerHTML = content[0].firstChild.data;
-		
-	}
-	
-	function searchResponse(feed) {
-		var entries = feed.getElementsByTagName("entry");
-		var content = entries[0].getElementsByTagName("content");
-		
-		var results = elementByID(gadget, "results");
-		results.innerHTML = content[0].firstChild.data;
-		
-	}
-	
-</script>
-
 </head>
 
 <body>
-
-
   <div id="domainSearch">
   
   <form id="domainSearchForm">
     
     <p style="margin-top:1em;margin-bottom:1em;margin-left:1em;margin-right:1em">
-     	<input id="searchField" type="text" value="" />&nbsp;<input id="searchButton" type="submit" value="Search" onclick="search()" />
+     	<input id="searchField" type="text" value="" />&nbsp;<input id="searchButton" type="button" value="Search" onclick="search()" />
      </p>
      
      <br>
@@ -89,6 +55,33 @@
 	var lastQuery = "";
 	
 	elementByID(gadget, 'searchButton').onclick = search;
+
+
+	function search() {
+		lastQuery = elementByID(gadget, 'searchField').value;
+		searcher.get("query" + lastQuery, searchResponse);
+	}
+
+	function getHighlighted(artifact) {
+		searcher.get("highlight" + lastQuery + ";" + artifact, searchResponse);
+	}
+	
+	function highlightResponse(feed) {
+		var entries = feed.getElementsByTagName("entry");
+		var content = entries[0].getElementsByTagName("content");
+		
+		var results = elementByID(gadget, "results");
+		results.innerHTML = content[0].firstChild.data;
+	}
+	
+	function searchResponse(feed) {
+		alert("processing results");
+		var entries = feed.getElementsByTagName("entry");
+		var content = entries[0].getElementsByTagName("content");
+		
+		var results = elementByID(gadget, "results");
+		results.innerHTML = content[0].firstChild.data;
+	}
 	
 </script>
 
