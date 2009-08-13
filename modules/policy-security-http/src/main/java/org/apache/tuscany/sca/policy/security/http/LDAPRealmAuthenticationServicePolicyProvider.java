@@ -81,45 +81,64 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
      */
     
     /**
-     * 
+     * Find applicable authorization policySets
+     * It first check if any explicitly policySet was identified
+     * Otherwise it look into the list of applicablePolicySets
      * @param op
      * @return
      */
     private List<LDAPRealmAuthenticationPolicy> findAuthenticationPolicies(Operation op) {
         List<LDAPRealmAuthenticationPolicy> polices = new ArrayList<LDAPRealmAuthenticationPolicy>();
-        // FIXME: How do we get a list of effective policySets for a given operation?
-        for(Operation operation : operations) {
-            if (operation!= null && operation.getName() != null && operation.getName().equals(op.getName())) {
-                for (PolicySet ps : operation.getPolicySets()) {
-                    for (Object p : ps.getPolicies()) {
-                        if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
-                            polices.add((LDAPRealmAuthenticationPolicy)p);
-                        }
+
+        // check explicity added policies first
+        ConfiguredOperation configuredOperation = findOperation(op);
+        if (configuredOperation!= null && configuredOperation.getPolicySets().size() > 0) {
+            for ( PolicySet ps : configuredOperation.getPolicySets()) {
+                for (Object p : ps.getPolicies()) {
+                    if (p instanceof LDAPRealmAuthenticationPolicy) {
+                        polices.add((LDAPRealmAuthenticationPolicy)p);
                     }
                 }
             }
         }
 
-        if (service instanceof OperationsConfigurator) {
-            OperationsConfigurator operationsConfigurator = (OperationsConfigurator)service;
-            for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
-                if (cop!= null && cop.getName() != null && cop.getName().equals(op.getName())) {
-                    for (PolicySet ps : cop.getApplicablePolicySets()) {
+        
+        // otherwise find applicable policySets
+        if ( polices.size() == 0) {
+            // FIXME: How do we get a list of effective policySets for a given operation?
+            for(Operation operation : operations) {
+                if (operation!= null && operation.getName() != null && operation.getName().equals(op.getName())) {
+                    for (PolicySet ps : operation.getPolicySets()) {
                         for (Object p : ps.getPolicies()) {
-                            if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
+                            if (p instanceof LDAPRealmAuthenticationPolicy) {
                                 polices.add((LDAPRealmAuthenticationPolicy)p);
                             }
                         }
                     }
                 }
             }
-        }
 
-        List<PolicySet> policySets = service.getPolicySets();
-        for (PolicySet ps : policySets) {
-            for (Object p : ps.getPolicies()) {
-                if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
-                    polices.add((LDAPRealmAuthenticationPolicy)p);
+            if (service instanceof OperationsConfigurator) {
+                OperationsConfigurator operationsConfigurator = (OperationsConfigurator)service;
+                for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
+                    if (cop!= null && cop.getName() != null && cop.getName().equals(op.getName())) {
+                        for (PolicySet ps : cop.getApplicablePolicySets()) {
+                            for (Object p : ps.getPolicies()) {
+                                if (p instanceof LDAPRealmAuthenticationPolicy) {
+                                    polices.add((LDAPRealmAuthenticationPolicy)p);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            List<PolicySet> policySets = service.getPolicySets();
+            for (PolicySet ps : policySets) {
+                for (Object p : ps.getPolicies()) {
+                    if (p instanceof LDAPRealmAuthenticationPolicy) {
+                        polices.add((LDAPRealmAuthenticationPolicy)p);
+                    }
                 }
             }
         }
@@ -128,50 +147,85 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
     }
     
     /**
-     * 
+     * Find applicable authorization policySets
+     * It first check if any explicitly policySet was identified
+     * Otherwise it look into the list of applicablePolicySets
      * @param op
      * @return
      */
     private List<AuthorizationPolicy> findAuthorizationPolicies(Operation op) {
         List<AuthorizationPolicy> polices = new ArrayList<AuthorizationPolicy>();
-        // FIXME: How do we get a list of effective policySets for a given operation?
-        for(Operation operation : operations) {
-            if (operation!= null && operation.getName() != null && operation.getName().equals(op.getName())) {
-                for (PolicySet ps : operation.getPolicySets()) {
-                    for (Object p : ps.getPolicies()) {
-                        if (AuthorizationPolicy.class.isInstance(p)) {
-                            polices.add((AuthorizationPolicy)p);
-                        }
+        
+        // check explicity added policies first
+        ConfiguredOperation configuredOperation = findOperation(op);
+        if (configuredOperation!= null && configuredOperation.getPolicySets().size() > 0) {
+            for ( PolicySet ps : configuredOperation.getPolicySets()) {
+                for (Object p : ps.getPolicies()) {
+                    if (p instanceof AuthorizationPolicy) {
+                        polices.add((AuthorizationPolicy)p);
                     }
                 }
             }
         }
-
-        if (service instanceof OperationsConfigurator) {
-            OperationsConfigurator operationsConfigurator = (OperationsConfigurator)service;
-            for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
-                if (cop != null && cop.getName() != null && cop.getName().equals(op.getName())) {
-                    for (PolicySet ps : cop.getApplicablePolicySets()) {
+        
+        // otherwise find applicable policySets
+        if ( polices.size() == 0) {
+            // FIXME: How do we get a list of effective policySets for a given operation?
+            for(Operation operation : operations) {
+                if (operation!= null && operation.getName() != null && operation.getName().equals(op.getName())) {
+                    for (PolicySet ps : operation.getPolicySets()) {
                         for (Object p : ps.getPolicies()) {
-                            if (AuthorizationPolicy.class.isInstance(p)) {
+                            if (p instanceof AuthorizationPolicy) {
                                 polices.add((AuthorizationPolicy)p);
                             }
                         }
                     }
                 }
             }
-        }
 
-        List<PolicySet> policySets = service.getPolicySets();
-        for (PolicySet ps : policySets) {
-            for (Object p : ps.getPolicies()) {
-                if (AuthorizationPolicy.class.isInstance(p)) {
-                    polices.add((AuthorizationPolicy)p);
+            if (service instanceof OperationsConfigurator) {
+                OperationsConfigurator operationsConfigurator = (OperationsConfigurator)service;
+                for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
+                    if (cop != null && cop.getName() != null && cop.getName().equals(op.getName())) {
+                        for (PolicySet ps : cop.getApplicablePolicySets()) {
+                            for (Object p : ps.getPolicies()) {
+                                if (p instanceof AuthorizationPolicy) {
+                                    polices.add((AuthorizationPolicy)p);
+                                }
+                            }
+                        }
+                    }
                 }
             }
+
+            List<PolicySet> policySets = service.getPolicySets();
+            for (PolicySet ps : policySets) {
+                for (Object p : ps.getPolicies()) {
+                    if (p instanceof AuthorizationPolicy) {
+                        polices.add((AuthorizationPolicy)p);
+                    }
+                }
+            }            
         }
         
         return polices;
     }
-
+    
+    /**
+     * Find a given configured operation
+     * @param operation
+     * @return
+     */
+    private ConfiguredOperation findOperation(Operation operation) {
+        ConfiguredOperation configuredOperation = null;
+        
+        for (ConfiguredOperation cOperation : ((OperationsConfigurator)component).getConfiguredOperations()) {
+            if(cOperation.getName().equals(operation.getName())) {
+                configuredOperation = cOperation;
+                break;
+            }
+        }
+        
+        return configuredOperation;
+    }
 }

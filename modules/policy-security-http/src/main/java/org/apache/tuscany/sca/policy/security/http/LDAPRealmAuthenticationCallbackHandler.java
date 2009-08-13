@@ -46,10 +46,11 @@ public class LDAPRealmAuthenticationCallbackHandler implements CallbackHandler {
         BasicAuthenticationPrincipal principal =  SecurityUtil.getPrincipal(subject, BasicAuthenticationPrincipal.class);
 
         if (principal != null){
+        	/*
             System.out.println(">>> LDAPRealmAuthenticationCallbackHandler" +
                                " Username: " + principal.getName() + 
                                " Password: " + principal.getPassword());
-            
+            */
             for (int i = 0; i < callbacks.length; i++) {
                 if (callbacks[i] instanceof NameCallback) {
                     NameCallback nc = (NameCallback)callbacks[i];

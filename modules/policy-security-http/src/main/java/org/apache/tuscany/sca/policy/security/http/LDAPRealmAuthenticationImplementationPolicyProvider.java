@@ -62,63 +62,129 @@ public class LDAPRealmAuthenticationImplementationPolicyProvider implements Poli
      */
     
     /**
-     * 
+     * Find applicable authentication policySets
+     * It first check if any explicitly policySet was identified
+     * Otherwise it look into the list of applicablePolicySets
      * @param op
      * @return
      */
     private List<LDAPRealmAuthenticationPolicy> findAuthenticationPolicies(Operation op) {
         List<LDAPRealmAuthenticationPolicy> polices = new ArrayList<LDAPRealmAuthenticationPolicy>();
-        if (implementation instanceof OperationsConfigurator) {
-            OperationsConfigurator operationsConfigurator = (OperationsConfigurator)implementation;
-            for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
-                if (cop != null && cop.getName() != null && cop.getName().equals(op.getName())) {
-                    for (PolicySet ps : cop.getPolicySets()) {
-                        for (Object p : ps.getPolicies()) {
-                            if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
-                                polices.add((LDAPRealmAuthenticationPolicy)p);
-                            }
-                        }
+        
+
+        // check explicity added policies first
+        ConfiguredOperation configuredOperation = findOperation(op);
+        if (configuredOperation!= null && configuredOperation.getPolicySets().size() > 0) {
+            for ( PolicySet ps : configuredOperation.getPolicySets()) {
+                for (Object p : ps.getPolicies()) {
+                    if (p instanceof LDAPRealmAuthenticationPolicy) {
+                        polices.add((LDAPRealmAuthenticationPolicy)p);
                     }
                 }
             }
         }
         
-        List<PolicySet> policySets = component.getPolicySets();
-        for (PolicySet ps : policySets) {
-            for (Object p : ps.getPolicies()) {
-                if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
-                    polices.add((LDAPRealmAuthenticationPolicy)p);
+        // otherwise find applicable policySets
+        if ( polices.size() == 0) {
+
+            if (implementation instanceof OperationsConfigurator) {
+                OperationsConfigurator operationsConfigurator = (OperationsConfigurator)implementation;
+                for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
+                    if (cop != null && cop.getName() != null && cop.getName().equals(op.getName())) {
+                        for (PolicySet ps : cop.getPolicySets()) {
+                            for (Object p : ps.getPolicies()) {
+                                if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
+                                    polices.add((LDAPRealmAuthenticationPolicy)p);
+                                }
+                            }
+                        }
+                    }
                 }
             }
+            
+            List<PolicySet> policySets = component.getPolicySets();
+            for (PolicySet ps : policySets) {
+                for (Object p : ps.getPolicies()) {
+                    if (LDAPRealmAuthenticationPolicy.class.isInstance(p)) {
+                        polices.add((LDAPRealmAuthenticationPolicy)p);
+                    }
+                }
+            }    
         }
+        
         return polices;
     }
     
+    /**
+     * Find applicable authorization policySets
+     * It first check if any explicitly policySet was identified
+     * Otherwise it look into the list of applicablePolicySets
+     * @param op
+     * @return
+     */
     private List<AuthorizationPolicy> findAuthorizationPolicies(Operation op) {
         List<AuthorizationPolicy> polices = new ArrayList<AuthorizationPolicy>();
-        if (implementation instanceof OperationsConfigurator) {
-            OperationsConfigurator operationsConfigurator = (OperationsConfigurator)implementation;
-            for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
-                if (cop != null && cop.getName() != null && cop.getName().equals(op.getName())) {
-                    for (PolicySet ps : cop.getPolicySets()) {
-                        for (Object p : ps.getPolicies()) {
-                            if (AuthorizationPolicy.class.isInstance(p)) {
-                                polices.add((AuthorizationPolicy)p);
-                            }
-                        }
+        
+
+        // check explicity added policies first
+        ConfiguredOperation configuredOperation = findOperation(op);
+        if (configuredOperation!= null && configuredOperation.getPolicySets().size() > 0) {
+            for ( PolicySet ps : configuredOperation.getPolicySets()) {
+                for (Object p : ps.getPolicies()) {
+                    if (p instanceof AuthorizationPolicy) {
+                        polices.add((AuthorizationPolicy)p);
                     }
                 }
             }
         }
         
-        List<PolicySet> policySets = component.getPolicySets();
-        for (PolicySet ps : policySets) {
-            for (Object p : ps.getPolicies()) {
-                if (AuthorizationPolicy.class.isInstance(p)) {
-                    polices.add((AuthorizationPolicy)p);
+        // otherwise find applicable policySets
+        if ( polices.size() == 0) {
+
+            if (implementation instanceof OperationsConfigurator) {
+                OperationsConfigurator operationsConfigurator = (OperationsConfigurator)implementation;
+                for (ConfiguredOperation cop : operationsConfigurator.getConfiguredOperations()) {
+                    if (cop != null && cop.getName() != null && cop.getName().equals(op.getName())) {
+                        for (PolicySet ps : cop.getPolicySets()) {
+                            for (Object p : ps.getPolicies()) {
+                                if (AuthorizationPolicy.class.isInstance(p)) {
+                                    polices.add((AuthorizationPolicy)p);
+                                }
+                            }
+                        }
+                    }
                 }
             }
+            
+            List<PolicySet> policySets = component.getPolicySets();
+            for (PolicySet ps : policySets) {
+                for (Object p : ps.getPolicies()) {
+                    if (AuthorizationPolicy.class.isInstance(p)) {
+                        polices.add((AuthorizationPolicy)p);
+                    }
+                }
+            }
+    
         }
+                
         return polices;
+    }
+    
+    /**
+     * Find a given configured operation
+     * @param operation
+     * @return
+     */
+    private ConfiguredOperation findOperation(Operation operation) {
+        ConfiguredOperation configuredOperation = null;
+        
+        for (ConfiguredOperation cOperation : ((OperationsConfigurator)component).getConfiguredOperations()) {
+            if(cOperation.getName().equals(operation.getName())) {
+                configuredOperation = cOperation;
+                break;
+            }
+        }
+        
+        return configuredOperation;
     }
 }
