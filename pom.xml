@@ -50,7 +50,6 @@
                 <module>binding-ejb-runtime</module>
                 <module>binding-erlang</module>
                 <module>binding-erlang-runtime</module>
-		<module>domain-search</module>
                 <!-- obsolete -->
                 <module>binding-feed</module>
                 <!-- new bindings -->
@@ -114,6 +113,7 @@
                 <module>definitions</module>
                 <module>definitions-xml</module>
                 <module>domain-manager</module>
+                <module>domain-search</module>                
                 <module>endpoint</module>
                 <module>extensibility</module>
                 <module>extensibility-osgi</module>
@@ -127,13 +127,13 @@
                 <module>host-ejb</module>
                 <module>host-embedded</module>
                 <module>host-http</module>
+                <module>host-jetty</module>
                 <module>host-jms</module>
                 <module>host-jms-asf</module>
                 <module>host-openejb</module>
                 <module>host-rmi</module>
-                <module>host-webapp</module>
-                <module>host-jetty</module>
                 <module>host-tomcat</module>
+                <module>host-webapp</module>
                 <module>interface</module>
                 <module>interface-java</module>
                 <module>interface-java-jaxws</module>
@@ -155,7 +155,7 @@
                 <module>implementation-resource-runtime</module>
                 <module>implementation-script</module>
                 <module>implementation-spring</module>
-		<module>implementation-spring-runtime</module>
+		        <module>implementation-spring-runtime</module>
                 <module>implementation-web</module>
                 <module>implementation-web-runtime</module>
                 <module>implementation-widget</module>
@@ -176,6 +176,7 @@
                 <module>policy-logging</module>
                 <module>policy-reliability</module>
                 <module>policy-security</module>
+                <module>policy-security-geronimo</module>                
                 <module>policy-security-http</module>
                 <module>policy-security-jsr250</module>
                 <module>policy-transaction</module>
