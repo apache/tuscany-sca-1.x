@@ -28,16 +28,13 @@ import javax.xml.stream.XMLStreamWriter;
 import org.apache.tuscany.sca.artifact.xyz.XYZ;
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.assembly.ComponentType;
-import org.apache.tuscany.sca.assembly.Service;
 import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
-import org.apache.tuscany.sca.contribution.resolver.ClassReference;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
 import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
-import org.apache.tuscany.sca.interfacedef.InvalidInterfaceException;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.policy.PolicyFactory;
 
@@ -149,7 +146,6 @@ public class ImplementationXYZProcessor implements StAXArtifactProcessor<Impleme
     public void write(ImplementationXYZ implementation, XMLStreamWriter writer) throws ContributionWriteException, XMLStreamException {
         
         // Write <implementation.xyz> element
-        policyProcessor.writePolicyPrefixes(implementation, writer);
         writer.writeStartElement(IMPLEMENTATION_XYZ.getNamespaceURI(), IMPLEMENTATION_XYZ.getLocalPart());
         policyProcessor.writePolicyAttributes(implementation, writer);
         

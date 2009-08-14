@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 package org.apache.tuscany.sca.implementation.widget;
 
@@ -41,56 +41,55 @@ import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
-import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
-
 
 /**
+ *
  * Implements a StAX artifact processor for Widget implementations.
  *
  * @version $Rev$ $Date$
  */
 public class WidgetImplementationProcessor implements StAXArtifactProcessor<WidgetImplementation> {
     private static final QName IMPLEMENTATION_WIDGET = new QName(Constants.SCA10_TUSCANY_NS, "implementation.widget");
-        
+
     private AssemblyFactory assemblyFactory;
     private ContributionFactory contributionFactory;
     private WidgetImplementationFactory implementationFactory;
     private Monitor monitor;
-    
+
     public WidgetImplementationProcessor(ModelFactoryExtensionPoint modelFactories, Monitor monitor) {
     	assemblyFactory = modelFactories.getFactory(AssemblyFactory.class);
         contributionFactory = modelFactories.getFactory(ContributionFactory.class);
-        implementationFactory = new WidgetImplementationFactory(modelFactories); 
+        implementationFactory = new WidgetImplementationFactory(modelFactories);
         this.monitor = monitor;
     }
-    
+
     /**
      * Report a exception.
-     * 
+     *
      * @param problems
      * @param message
      * @param model
      */
     private void error(String message, Object model, Exception ex) {
     	 if (monitor != null) {
-	        Problem problem = new ProblemImpl(this.getClass().getName(), "impl-widget-validation-messages", Severity.ERROR, model, message, ex);
+	        Problem problem = monitor.createProblem(this.getClass().getName(), "impl-widget-validation-messages", Severity.ERROR, model, message, ex);
 	        monitor.problem(problem);
     	 }
     }
-            
+
     /**
      * Report a error.
-     * 
+     *
      * @param problems
      * @param message
      * @param model
      */
     private void error(String message, Object model, Object... messageParameters) {
         if (monitor != null) {
-            Problem problem = new ProblemImpl(this.getClass().getName(), "impl-widget-validation-messages", Severity.ERROR, model, message, (Object[])messageParameters);
+            Problem problem = monitor.createProblem(this.getClass().getName(), "impl-widget-validation-messages", Severity.ERROR, model, message, (Object[])messageParameters);
             monitor.problem(problem);
         }
-    }    
+    }
 
     public QName getArtifactType() {
         // Returns the QName of the XML element processed by this processor
@@ -111,7 +110,7 @@ public class WidgetImplementationProcessor implements StAXArtifactProcessor<Widg
 
         // Read the location attribute specifying the location of the resources
         String location = reader.getAttributeValue(null, "location");
-        if (location != null) {                
+        if (location != null) {
             implementation = implementationFactory.createWidgetImplementation();
             implementation.setLocation(location);
             implementation.setUnresolved(true);
@@ -131,7 +130,7 @@ public class WidgetImplementationProcessor implements StAXArtifactProcessor<Widg
     }
 
     public void resolve(WidgetImplementation implementation, ModelResolver resolver) throws ContributionResolveException {
-        
+
     	if (implementation != null) {
     		// Resolve the resource directory location
             Artifact artifact = contributionFactory.createArtifact();
@@ -139,13 +138,13 @@ public class WidgetImplementationProcessor implements StAXArtifactProcessor<Widg
             Artifact resolved = resolver.resolveModel(Artifact.class, artifact);
             if (resolved.getLocation() != null) {
                 try {
-                    implementation.setLocationURL(new URL(resolved.getLocation()));                 
-                    
+                    implementation.setLocationURL(new URL(resolved.getLocation()));
+
                     //introspect implementation
-                    WidgetImplementationIntrospector widgetIntrospector = 
+                    WidgetImplementationIntrospector widgetIntrospector =
                     	new WidgetImplementationIntrospector(assemblyFactory, implementation);
                     widgetIntrospector.introspectImplementation();
-                    
+
                     implementation.setUnresolved(false);
                 } catch (IOException e) {
                 	ContributionResolveException ce = new ContributionResolveException(e);
@@ -154,23 +153,23 @@ public class WidgetImplementationProcessor implements StAXArtifactProcessor<Widg
                 }
             } else {
                 error("CouldNotResolveLocation", resolver, implementation.getLocation());
-                //throw new ContributionResolveException("Could not resolve implementation.widget location: " + implementation.getLocation());            
+                //throw new ContributionResolveException("Could not resolve implementation.widget location: " + implementation.getLocation());
             }
     	}
     }
 
     public void write(WidgetImplementation implementation, XMLStreamWriter writer) throws ContributionWriteException, XMLStreamException {
-        
+
         // Write <implementation.widget>
-        writer.setPrefix("widget",IMPLEMENTATION_WIDGET.getNamespaceURI());
+        // writer.setPrefix("widget",IMPLEMENTATION_WIDGET.getNamespaceURI());
         writer.writeStartElement(IMPLEMENTATION_WIDGET.getNamespaceURI(), IMPLEMENTATION_WIDGET.getLocalPart());
         writer.writeNamespace("widget",IMPLEMENTATION_WIDGET.getNamespaceURI());
-      
-        
+
+
         if (implementation.getLocation() != null) {
             writer.writeAttribute("location", implementation.getLocation());
         }
-        
+
         writer.writeEndElement();
     }
 }

@@ -91,7 +91,6 @@ public class EchoBindingProcessor implements StAXArtifactProcessor<EchoBinding> 
     public void write(EchoBinding echoBinding, XMLStreamWriter writer) throws ContributionWriteException,
         XMLStreamException {
 
-        policyProcessor.writePolicyPrefixes(echoBinding, writer);
         writer.writeStartElement(BINDING_ECHO.getNamespaceURI(), BINDING_ECHO.getLocalPart());
         policyProcessor.writePolicyAttributes(echoBinding, writer);
 

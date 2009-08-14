@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.tuscany.sca.assembly.builder.impl.ProblemImpl;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.core.UtilityExtensionPoint;
 import org.apache.tuscany.sca.extensibility.ServiceDeclaration;
@@ -87,7 +86,7 @@ public class DefaultLDAPSecurityExtensionPoint implements LDAPSecurityHandlerExt
     */
     private void error(String message, Object model, Exception ex) {
         if (monitor != null) {
-            Problem problem = new ProblemImpl(this.getClass().getName(), null, Severity.ERROR, model, message, ex);
+            Problem problem = monitor.createProblem(this.getClass().getName(), null, Severity.ERROR, model, message, ex);
             monitor.problem(problem);
         }        
     }

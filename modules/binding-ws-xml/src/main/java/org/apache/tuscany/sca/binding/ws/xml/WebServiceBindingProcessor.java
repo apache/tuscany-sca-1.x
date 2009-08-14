@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.binding.ws.xml;
@@ -89,9 +89,9 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
     private ConfiguredOperationProcessor configuredOperationProcessor;
     private StAXAttributeProcessor<Object> extensionAttributeProcessor;
     private Monitor monitor;
-    
+
     public WebServiceBindingProcessor(ExtensionPointRegistry extensionPoints, Monitor monitor) {
-        
+
         this.extensionPoints = extensionPoints;
         ModelFactoryExtensionPoint modelFactories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);
         this.policyFactory = modelFactories.getFactory(PolicyFactory.class);
@@ -102,16 +102,16 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
         this.intentAttachPointTypeFactory = modelFactories.getFactory(IntentAttachPointTypeFactory.class);
         this.monitor = monitor;
         this.configuredOperationProcessor = new ConfiguredOperationProcessor(modelFactories, this.monitor);
-        
+
         XMLInputFactory inputFactory = modelFactories.getFactory(XMLInputFactory.class);
         XMLOutputFactory outputFactory = modelFactories.getFactory(XMLOutputFactory.class);
         StAXAttributeProcessorExtensionPoint attributeExtensionPoint = extensionPoints.getExtensionPoint(StAXAttributeProcessorExtensionPoint.class);
         this.extensionAttributeProcessor = new ExtensibleStAXAttributeProcessor(attributeExtensionPoint ,inputFactory, outputFactory, this.monitor);
     }
-    
+
     /**
      * Report a warning.
-     * 
+     *
      * @param problem
      * @param model
      * @param message data
@@ -122,10 +122,10 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
            monitor.problem(problem);
        }
     }
-         
+
     /**
      * Report an error.
-     * 
+     *
      * @param problem
      * @param model
      * @param message data
@@ -134,12 +134,12 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
         if (monitor != null) {
             Problem problem = new ProblemImpl(this.getClass().getName(), "binding-wsxml-validation-messages", Severity.ERROR, model, message, (Object[])messageParameters);
             monitor.problem(problem);
-        }        
+        }
     }
 
    /**
     * Report an exception.
-    * 
+    *
     * @param problem
     * @param model
     * @param exception
@@ -148,7 +148,7 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
         if (monitor != null) {
             Problem problem = new ProblemImpl(this.getClass().getName(), "binding-wsxml-validation-messages", Severity.ERROR, model, message, ex);
             monitor.problem(problem);
-        }        
+        }
     }
 
     public WebServiceBinding read(XMLStreamReader reader) throws ContributionReadException, XMLStreamException {
@@ -237,12 +237,12 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
 
         // Read wsdlLocation
         wsBinding.setLocation(reader.getAttributeValue(WSDLI_NS, WSDL_LOCATION));
-        
+
         // Handle extended attributes
         for (int a = 0; a < reader.getAttributeCount(); a++) {
             QName attributeName = reader.getAttributeName(a);
             if( attributeName.getNamespaceURI() != null && attributeName.getNamespaceURI() != WSDLI_NS && attributeName.getNamespaceURI().length() > 0) {
-                if( (! Constants.SCA10_NS.equals(attributeName.getNamespaceURI()) && 
+                if( (! Constants.SCA10_NS.equals(attributeName.getNamespaceURI()) &&
                     (! Constants.SCA10_TUSCANY_NS.equals(attributeName.getNamespaceURI()) ))) {
                     Object attributeValue = extensionAttributeProcessor.read(attributeName, reader);
                     Extension attributeExtension;
@@ -294,7 +294,6 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
         XMLStreamException {
 
         // Write a <binding.ws>
-        policyProcessor.writePolicyPrefixes(wsBinding, writer);
         writer.writeStartElement(Constants.SCA10_NS, BINDING_WS);
         policyProcessor.writePolicyAttributes(wsBinding, writer);
 
@@ -361,7 +360,7 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
                 extensionAttributeProcessor.write(extension, writer);
             }
         }
-        
+
         if (wsBinding.getEndPointReference() != null) {
             EndPointReferenceHelper.writeEndPointReference(wsBinding.getEndPointReference(), writer);
         }
@@ -370,10 +369,10 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
     }
 
     public void resolve(WebServiceBinding model, ModelResolver resolver) throws ContributionResolveException {
-        
+
     	if (model == null || !model.isUnresolved())
     		return;
-    		
+
     	WSDLDefinition wsdlDefinition = wsdlFactory.createWSDLDefinition();
         wsdlDefinition.setUnresolved(true);
         wsdlDefinition.setNamespace(model.getNamespace());
@@ -384,7 +383,7 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
             ContributionResolveException ce = new ContributionResolveException(e.getCause());
             error("ContributionResolveException", wsdlDefinition, ce);
             //throw ce;
-        }                        
+        }
 
         if (resolved != null && !resolved.isUnresolved()) {
             wsdlDefinition.setDefinition(resolved.getDefinition());
@@ -435,8 +434,8 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
             			ContributionResolveException ce = new ContributionResolveException("WSDL binding operation output name " + operation.getOutput().getName() + " does not match with PortType Definition");
                         error("ContributionResolveException", wsdlDefinition, ce);
             		}
-            	}            	
-            	
+            	}
+
                 WSDLInterfaceContract interfaceContract = wsdlFactory.createWSDLInterfaceContract();
                 WSDLInterface wsdlInterface = null;
                 try {
@@ -444,7 +443,7 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
                     interfaceContract.setInterface(wsdlInterface);
                     model.setBindingInterfaceContract(interfaceContract);
                 } catch (InvalidInterfaceException e) {
-                	warning("InvalidInterfaceException", wsdlFactory, model.getName()); 
+                	warning("InvalidInterfaceException", wsdlFactory, model.getName());
                 }
             }
         }

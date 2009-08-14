@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.binding.sca.xml;
@@ -52,21 +52,21 @@ import org.apache.tuscany.sca.policy.PolicySetAttachPoint;
  */
 
 public class SCABindingProcessor implements StAXArtifactProcessor<SCABinding>, Constants{
-    
+
     private SCABindingFactory scaBindingFactory;
     private ExtensionFactory extensionFactory;
     private PolicyFactory policyFactory;
     private IntentAttachPointTypeFactory  intentAttachPointTypeFactory;
 
-    private PolicyAttachPointProcessor policyProcessor;    
+    private PolicyAttachPointProcessor policyProcessor;
     private StAXAttributeProcessor<Object> extensionAttributeProcessor;
-    
+
     private Monitor monitor;
 
     protected static final String BINDING_SCA = "binding.sca";
     protected static final QName BINDING_SCA_QNAME = new QName(Constants.SCA10_NS, BINDING_SCA);
 
-    public SCABindingProcessor(ModelFactoryExtensionPoint modelFactories, 
+    public SCABindingProcessor(ModelFactoryExtensionPoint modelFactories,
                                StAXArtifactProcessor extensionProcessor,
                                StAXAttributeProcessor extensionAttributeProcessor,
                                Monitor monitor) {
@@ -74,9 +74,9 @@ public class SCABindingProcessor implements StAXArtifactProcessor<SCABinding>, C
         this.extensionFactory = modelFactories.getFactory(ExtensionFactory.class);
         this.policyFactory = modelFactories.getFactory(PolicyFactory.class);
         this.intentAttachPointTypeFactory = modelFactories.getFactory(IntentAttachPointTypeFactory.class);
-        
+
         this.policyProcessor = new PolicyAttachPointProcessor(policyFactory);
-        this.extensionAttributeProcessor = extensionAttributeProcessor;        
+        this.extensionAttributeProcessor = extensionAttributeProcessor;
 
         this.monitor = monitor;
     }
@@ -95,10 +95,10 @@ public class SCABindingProcessor implements StAXArtifactProcessor<SCABinding>, C
         bindingType.setName(getArtifactType());
         bindingType.setUnresolved(true);
         ((PolicySetAttachPoint)scaBinding).setType(bindingType);
-        
+
         // Read policies
         policyProcessor.readPolicies(scaBinding, reader);
-        
+
         // Read binding name
         String name = reader.getAttributeValue(null, NAME);
         if (name != null) {
@@ -110,12 +110,12 @@ public class SCABindingProcessor implements StAXArtifactProcessor<SCABinding>, C
         if (uri != null) {
             scaBinding.setURI(uri);
         }
-        
+
         // Handle extended attributes
         for (int a = 0; a < reader.getAttributeCount(); a++) {
             QName attributeName = reader.getAttributeName(a);
             if( attributeName.getNamespaceURI() != null && attributeName.getNamespaceURI().length() > 0) {
-                if( (! Constants.SCA10_NS.equals(attributeName.getNamespaceURI()) && 
+                if( (! Constants.SCA10_NS.equals(attributeName.getNamespaceURI()) &&
                     (! Constants.SCA10_TUSCANY_NS.equals(attributeName.getNamespaceURI()) ))) {
                     Object attributeValue = extensionAttributeProcessor.read(attributeName, reader);
                     Extension attributeExtension;
@@ -127,7 +127,7 @@ public class SCABindingProcessor implements StAXArtifactProcessor<SCABinding>, C
                     scaBinding.getAttributeExtensions().add(attributeExtension);
                 }
             }
-        }        
+        }
 
         // Skip to end element
         while (reader.hasNext()) {
@@ -137,15 +137,14 @@ public class SCABindingProcessor implements StAXArtifactProcessor<SCABinding>, C
         }
         return scaBinding;
     }
-    
+
     public void resolve(SCABinding model, ModelResolver resolver) throws ContributionResolveException {
         policyProcessor.resolvePolicies(model, resolver);
-    }    
+    }
 
     public void write(SCABinding scaBinding, XMLStreamWriter writer) throws ContributionWriteException, XMLStreamException {
 
         // Write <binding.sca>
-        policyProcessor.writePolicyPrefixes(scaBinding, writer);
         writer.writeStartElement(Constants.SCA10_NS, BINDING_SCA);
         policyProcessor.writePolicyAttributes(scaBinding, writer);
 
@@ -153,20 +152,20 @@ public class SCABindingProcessor implements StAXArtifactProcessor<SCABinding>, C
         if (scaBinding.getName() != null) {
             writer.writeAttribute(NAME, scaBinding.getName());
         }
-        
+
         // Write binding URI
         if (scaBinding.getURI() != null) {
             writer.writeAttribute(URI, scaBinding.getURI());
         }
-        
+
         // Write extended attributes
         for(Extension extension : scaBinding.getAttributeExtensions()) {
             if(extension.isAttribute()) {
                 extensionAttributeProcessor.write(extension, writer);
             }
-        }         
-        
+        }
+
         writer.writeEndElement();
     }
-    
+
 }

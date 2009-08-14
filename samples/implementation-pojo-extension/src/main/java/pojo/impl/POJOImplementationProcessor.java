@@ -161,7 +161,6 @@ public class POJOImplementationProcessor implements StAXArtifactProcessor<POJOIm
     public void write(POJOImplementation implementation, XMLStreamWriter writer) throws ContributionWriteException, XMLStreamException {
         
         // Write <implementation.pojo> element
-        policyProcessor.writePolicyPrefixes(implementation, writer);
         writer.writeStartElement(IMPLEMENTATION_POJO.getNamespaceURI(), IMPLEMENTATION_POJO.getLocalPart());
         policyProcessor.writePolicyAttributes(implementation, writer);
         
