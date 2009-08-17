@@ -26,15 +26,15 @@ import java.io.InputStream;
  * @version $Rev$ $Date$
  */
 public interface FileContent {
-	
-	String getPath();
-	
-	String getName();
-	
-	FileContent[] getChildren();
-	
-	boolean isLeaf();
-	
-	InputStream getInputStream() throws IOException;
+
+    String getPath();
+
+    String getName();
+
+    FileContent[] getChildren();
+
+    boolean isLeaf();
+
+    InputStream getInputStream() throws IOException;
 
 }

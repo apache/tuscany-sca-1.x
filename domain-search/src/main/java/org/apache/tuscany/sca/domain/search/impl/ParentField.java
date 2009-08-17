@@ -29,178 +29,178 @@ import java.util.List;
  */
 public class ParentField implements Serializable {
 
-	private static final long serialVersionUID = -2090538050273088026L;
+    private static final long serialVersionUID = -2090538050273088026L;
 
-	final private List<ParentFieldElement> elements;
+    final private List<ParentFieldElement> elements;
 
-	public ParentField(String parentFieldValue) {
-		int length = parentFieldValue.length();
+    public ParentField(String parentFieldValue) {
+        int length = parentFieldValue.length();
 
-		if (length == 0) {
-			this.elements = Collections.emptyList();
-			
-			return;
-			
-		}
-		
-		this.elements = new ArrayList<ParentFieldElement>();
+        if (length == 0) {
+            this.elements = Collections.emptyList();
 
-		ParentFieldElement element = null;
-		StringBuilder sb = new StringBuilder();
+            return;
 
-		for (int i = 0; i < length ; i++) {
-			char c = parentFieldValue.charAt(i);
+        }
 
-			if (c == DomainPathAnalyzer.PATH_SEPARATOR || c == DomainPathAnalyzer.PATH_START) {
+        this.elements = new ArrayList<ParentFieldElement>();
 
-				if (sb.length() > 0 || element != null) {
+        ParentFieldElement element = null;
+        StringBuilder sb = new StringBuilder();
 
-					if (element == null) {
-						element = new ParentFieldElement();
-					}
-					
-					if (element.type == null) {
-						element.type = "";
-					}
-					
-					if (element.uri == null) {
-						element.uri = element.name = sb.toString();
-						
-					} else {
-						element.name = sb.toString();
-					}
-					
-					sb.setLength(0);
-					this.elements.add(element);
-					element = null;
+        for (int i = 0; i < length; i++) {
+            char c = parentFieldValue.charAt(i);
 
-				}
+            if (c == DomainPathAnalyzer.PATH_SEPARATOR || c == DomainPathAnalyzer.PATH_START) {
 
-			} else if (c == DomainPathAnalyzer.TYPE_SEPARATOR) {
+                if (sb.length() > 0 || element != null) {
 
-				if (element == null) {
-					element = new ParentFieldElement();
-				}
-				
-				element.type = sb.toString();
-				
-				sb.setLength(0);
+                    if (element == null) {
+                        element = new ParentFieldElement();
+                    }
 
-			} else if (c == DomainPathAnalyzer.URI_SEPARATOR) {
-				
-				if (element == null) {
-					element = new ParentFieldElement();
-				}
-				
-				element.uri = sb.toString();
-				
-				sb.setLength(0);
-				
-			} else {
-				sb.append(c);
-			}
+                    if (element.type == null) {
+                        element.type = "";
+                    }
 
-		}
-		
-		if (sb.length() > 0 || element != null) {
+                    if (element.uri == null) {
+                        element.uri = element.name = sb.toString();
 
-			if (element == null) {
-				element = new ParentFieldElement();
-			}
-			
-			if (element.type == null) {
-				element.type = "";
-			}
-			
-			if (element.uri == null) {
-				element.uri = element.name = sb.toString();
-				
-			} else {
-				element.name = sb.toString();
-			}
-			
-			sb.setLength(0);
-			this.elements.add(element);
-			element = null;
+                    } else {
+                        element.name = sb.toString();
+                    }
 
-		}
+                    sb.setLength(0);
+                    this.elements.add(element);
+                    element = null;
 
-	}
-	
-	public static String getURIPath(ParentField parentField) {
-		return getURIPath(parentField, System.getProperty("file.separator"));
-	}
-	
-	public static String getURIPath(ParentField parentField, String pathSeparator) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(pathSeparator);
-		int elementsCount = parentField.getElementsCount();
-		
-		for (int i = 0 ; i < elementsCount ; i++) {
-			sb.append(parentField.getElementName(i));
-			sb.append(pathSeparator);
-			
-		}
-		
-		if (sb.length() > pathSeparator.length()) {
-			sb.setLength(sb.length() - pathSeparator.length());
-		}
-		
-		return sb.toString();
-		
-	}
+                }
 
-	public static int getParentElementsCount(String parent) {
-		int length = parent.length();
+            } else if (c == DomainPathAnalyzer.TYPE_SEPARATOR) {
 
-		if (length == 0) {
-			return 0;
-		}
+                if (element == null) {
+                    element = new ParentFieldElement();
+                }
 
-		boolean pathSeparatorBefore = true;
-		int count = 1;
+                element.type = sb.toString();
 
-		for (int i = 0; i < length - 1; i++) {
-			char c = parent.charAt(i);
+                sb.setLength(0);
 
-			if (c == DomainPathAnalyzer.PATH_SEPARATOR && !pathSeparatorBefore) {
-				pathSeparatorBefore = true;
-				count++;
+            } else if (c == DomainPathAnalyzer.URI_SEPARATOR) {
 
-			} else {
-				pathSeparatorBefore = false;
-			}
+                if (element == null) {
+                    element = new ParentFieldElement();
+                }
 
-		}
+                element.uri = sb.toString();
 
-		return count;
+                sb.setLength(0);
 
-	}
-	
-	public int getElementsCount() {
-		return this.elements.size();
-	}
-	
-	public String getElementType(int index) {
-		return this.elements.get(index).type;
-	}
-	
-	public String getElementURI(int index) {
-		return this.elements.get(index).uri;
-	}
-	
-	public String getElementName(int index) {
-		return this.elements.get(index).name;
-	}
+            } else {
+                sb.append(c);
+            }
 
-	final private static class ParentFieldElement {
+        }
 
-		String type;
+        if (sb.length() > 0 || element != null) {
 
-		String uri;
+            if (element == null) {
+                element = new ParentFieldElement();
+            }
 
-		String name;
+            if (element.type == null) {
+                element.type = "";
+            }
 
-	}
+            if (element.uri == null) {
+                element.uri = element.name = sb.toString();
+
+            } else {
+                element.name = sb.toString();
+            }
+
+            sb.setLength(0);
+            this.elements.add(element);
+            element = null;
+
+        }
+
+    }
+
+    public static String getURIPath(ParentField parentField) {
+        return getURIPath(parentField, System.getProperty("file.separator"));
+    }
+
+    public static String getURIPath(ParentField parentField, String pathSeparator) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(pathSeparator);
+        int elementsCount = parentField.getElementsCount();
+
+        for (int i = 0; i < elementsCount; i++) {
+            sb.append(parentField.getElementName(i));
+            sb.append(pathSeparator);
+
+        }
+
+        if (sb.length() > pathSeparator.length()) {
+            sb.setLength(sb.length() - pathSeparator.length());
+        }
+
+        return sb.toString();
+
+    }
+
+    public static int getParentElementsCount(String parent) {
+        int length = parent.length();
+
+        if (length == 0) {
+            return 0;
+        }
+
+        boolean pathSeparatorBefore = true;
+        int count = 1;
+
+        for (int i = 0; i < length - 1; i++) {
+            char c = parent.charAt(i);
+
+            if (c == DomainPathAnalyzer.PATH_SEPARATOR && !pathSeparatorBefore) {
+                pathSeparatorBefore = true;
+                count++;
+
+            } else {
+                pathSeparatorBefore = false;
+            }
+
+        }
+
+        return count;
+
+    }
+
+    public int getElementsCount() {
+        return this.elements.size();
+    }
+
+    public String getElementType(int index) {
+        return this.elements.get(index).type;
+    }
+
+    public String getElementURI(int index) {
+        return this.elements.get(index).uri;
+    }
+
+    public String getElementName(int index) {
+        return this.elements.get(index).name;
+    }
+
+    final private static class ParentFieldElement {
+
+        String type;
+
+        String uri;
+
+        String name;
+
+    }
 
 }

@@ -25,9 +25,9 @@ import org.apache.lucene.document.Document;
  * @version $Rev$ $Date$
  */
 public interface ResultFactory<T extends Result> {
-	
-	T createResult(String field, String value);
-	
-	T createResult(Document document);
+
+    T createResult(String field, String value);
+
+    T createResult(Document document);
 
 }

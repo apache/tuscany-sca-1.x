@@ -25,7 +25,7 @@ import org.apache.lucene.document.Document;
  * @version $Rev$ $Date$
  */
 public interface ResultProcessor {
-	
-	Result process(Document document, Result result);
+
+    Result process(Document document, Result result);
 
 }

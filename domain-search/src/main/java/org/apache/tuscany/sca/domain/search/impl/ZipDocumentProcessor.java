@@ -31,66 +31,73 @@ import org.apache.tuscany.sca.domain.search.DocumentProcessor;
  * @version $Rev$ $Date$
  */
 public class ZipDocumentProcessor implements DocumentProcessor {
-	
-	public Object getDocumentKey(Object object) {
 
-		if (object instanceof File) {
-			File file = (File) object;
-			String path = file.getPath();
+    public Object getDocumentKey(Object object) {
 
-			if (path != null && path.length() == 0) {
-				return null;
-			}
+        if (object instanceof File) {
+            File file = (File)object;
+            String path = file.getPath();
 
-			return path;
+            if (path != null && path.length() == 0) {
+                return null;
+            }
 
-		}
+            return path;
 
-		throw new IllegalArgumentException();
+        }
 
-	}
+        throw new IllegalArgumentException();
 
-	public Document process(DocumentProcessor parentProcessor,
-			DocumentMap documents, Object object, Document document,
-			String parent) {
+    }
 
-		if (object instanceof SystemFileContent) {
-			SystemFileContent file = (SystemFileContent) object;
+    public Document process(DocumentProcessor parentProcessor,
+                            DocumentMap documents,
+                            Object object,
+                            Document document,
+                            String parent) {
 
-			try {
-				ZipFile zip = new ZipFile(file.getFile());
-				
-				if (document == null) {
-					document = documents.get(file.getPath());
-				}
+        if (object instanceof SystemFileContent) {
+            SystemFileContent file = (SystemFileContent)object;
 
-				parent += DomainPathAnalyzer.PATH_SEPARATOR
-						+ SearchFields.ARTIFACT_FIELD
-						+ DomainPathAnalyzer.TYPE_SEPARATOR + "jar:file:" + file.getPath() + DomainPathAnalyzer.ARCHIVE_SEPARATOR + '/' + file.getName()
-						+ DomainPathAnalyzer.URI_SEPARATOR + file.getName();
-				
-				document.add(new Field(SearchFields.ARTIFACT_FIELD, file.getName(), Field.Store.YES,
-						Field.Index.ANALYZED));
+            try {
+                ZipFile zip = new ZipFile(file.getFile());
 
-				ZipFileContent[] zipFiles = ZipFileContent.createZipFileContent(zip);
+                if (document == null) {
+                    document = documents.get(file.getPath());
+                }
 
-				for (ZipFileContent zipFile : zipFiles) {
-					
-					parentProcessor.process(parentProcessor, documents,
-							zipFile, document, parent);
-					
-				}
-				
-				return document;
+                parent +=
+                    DomainPathAnalyzer.PATH_SEPARATOR + SearchFields.ARTIFACT_FIELD
+                        + DomainPathAnalyzer.TYPE_SEPARATOR
+                        + "jar:file:"
+                        + file.getPath()
+                        + DomainPathAnalyzer.ARCHIVE_SEPARATOR
+                        + '/'
+                        + file.getName()
+                        + DomainPathAnalyzer.URI_SEPARATOR
+                        + file.getName();
 
-			} catch (IOException e) {
-				// ignore file
-			}
+                document.add(new Field(SearchFields.ARTIFACT_FIELD, file.getName(), Field.Store.YES,
+                                       Field.Index.ANALYZED));
 
-		}
-		
-		return null;
+                ZipFileContent[] zipFiles = ZipFileContent.createZipFileContent(zip);
 
-	}
+                for (ZipFileContent zipFile : zipFiles) {
+
+                    parentProcessor.process(parentProcessor, documents, zipFile, document, parent);
+
+                }
+
+                return document;
+
+            } catch (IOException e) {
+                // ignore file
+            }
+
+        }
+
+        return null;
+
+    }
 
 }

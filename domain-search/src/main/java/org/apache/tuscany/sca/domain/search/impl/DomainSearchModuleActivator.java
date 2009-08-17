@@ -26,17 +26,17 @@ import org.apache.tuscany.sca.core.ModuleActivator;
  * @version $Rev$ $Date$
  */
 public class DomainSearchModuleActivator implements ModuleActivator {
-	
-	public DomainSearchModuleActivator() {
-		// empty constructor
-	}
 
-	public void start(ExtensionPointRegistry registry) {
-		registry.addExtensionPoint(new DefaultSearchContributionListenerExtensionPoint());
-	}
+    public DomainSearchModuleActivator() {
+        // empty constructor
+    }
 
-	public void stop(ExtensionPointRegistry registry) {
-		// does nothing
-	}
+    public void start(ExtensionPointRegistry registry) {
+        registry.addExtensionPoint(new DefaultSearchContributionListenerExtensionPoint());
+    }
+
+    public void stop(ExtensionPointRegistry registry) {
+        // does nothing
+    }
 
 }

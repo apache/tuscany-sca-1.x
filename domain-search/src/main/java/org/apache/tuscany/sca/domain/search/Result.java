@@ -26,23 +26,23 @@ import java.util.Map;
  * @version $Rev$ $Date$
  */
 public interface Result extends Serializable {
-	
-	String getValue();
-	
-	void setValue(String value);
-	
-	Result getContainer();
-	
-	Map<String, Result> getContents();
-	
-	void addContent(Result artifactResult);
-	
-	void removeContent(Result artifactResult);
-	
-	void setContainer(Result container);
-	
-	String getField();
-	
-	void setField(String field);
+
+    String getValue();
+
+    void setValue(String value);
+
+    Result getContainer();
+
+    Map<String, Result> getContents();
+
+    void addContent(Result artifactResult);
+
+    void removeContent(Result artifactResult);
+
+    void setContainer(Result container);
+
+    String getField();
+
+    void setField(String field);
 
 }

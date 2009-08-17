@@ -29,30 +29,30 @@ import org.apache.tuscany.sca.domain.search.ResultFactory;
  * @version $Rev$ $Date$
  */
 public class PriorityFieldListResultFactory extends LinkedList<String> implements ResultFactory<Result> {
-	
-	private static final long serialVersionUID = 6806221945324235828L;
 
-	public PriorityFieldListResultFactory() {
-		// empty constructor
-	}
-	
-	public Result createResult(Document document) {
-		
-		for (String field : this) {
-			String value = document.get(field);
-			
-			if (value != null) {
-				return new ResultImpl(field, value);
-			}
-			
-		}
-		
-		return null;
-		
-	}
+    private static final long serialVersionUID = 6806221945324235828L;
 
-	public Result createResult(String field, String value) {
-		return new ResultImpl(field, value);
-	}
+    public PriorityFieldListResultFactory() {
+        // empty constructor
+    }
+
+    public Result createResult(Document document) {
+
+        for (String field : this) {
+            String value = document.get(field);
+
+            if (value != null) {
+                return new ResultImpl(field, value);
+            }
+
+        }
+
+        return null;
+
+    }
+
+    public Result createResult(String field, String value) {
+        return new ResultImpl(field, value);
+    }
 
 }
