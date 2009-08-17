@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite local="true" name="domain"
+  targetNamespace="http://tuscany.apache.org/xmlns/sca/1.0"
+  xmlns="http://www.osoa.org/xmlns/sca/1.0" xmlns:ns1="http://www.osoa.org/xmlns/sca/1.0">
+  <include name="ns2:Tours" uri="introducing-tours" xmlns:ns2="http://tuscanyscatours.com/"/>
+  <include name="ns2:Trips" uri="introducing-trips" xmlns:ns2="http://goodvaluetrips.com/"/>
+  <include name="ns2:Client" uri="introducing-client" xmlns:ns2="http://client.scatours/"/>
+</composite>
