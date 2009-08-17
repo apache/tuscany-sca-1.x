@@ -24,7 +24,7 @@ import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
-public class LaunchIntroducingNode {
+public class IntroducingLauncher {
 
     public static void main(String[] args) throws Exception {
         SCANode node = SCANodeFactory.newInstance().createSCANode(null, 
