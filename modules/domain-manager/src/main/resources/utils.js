@@ -157,7 +157,9 @@ function toolbar(home, tools) {
 	for (var i = 0; i < tools.length; i++) {
 	   toolbar = toolbar + '<td class=ltbar>' +tools[i].print() + '</td>'
    	}
-   
+   	
+   	toolbar = toolbar + '<td class=ltbar><input id="searchField" type="text" value="" />&nbsp;<input id="searchButton" type="submit" value="Search" onclick="window.location=\'/ui/search/?query=\' + elementByID(gadget(window, document), \'searchField\').value" /></td>'
+   	
    	toolbar = toolbar + '</tr></table></td>' + 
    	'<td class=rtbar><table border="0" cellpadding="0" cellspacing="0" align="right"><tr>' +
    	'<td class=rtbar>' + home.print() + '</td></tr></table></td>' +

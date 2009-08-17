@@ -222,7 +222,12 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
         // Write the workspace
         writeWorkspace(workspace);
         
+        // add it to the search index, contributionUpdated is called to guarantee 
+        // only one contribution with the same URI in the index
+        this.domainSearch.contributionUpdated(contribution, contribution);
+        
         return key;
+        
     }
 
     public void put(String key, Item item) throws NotFoundException {
@@ -256,11 +261,18 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
         Workspace workspace = readWorkspace();
         List<Contribution> contributions = workspace.getContributions();
         for (int i = 0, n = contributions.size(); i < n; i++) {
-            if (contributions.get(i).getURI().equals(key)) {
+        	
+        	Contribution contribution = contributions.get(i);
+        	
+            if (contribution.getURI().equals(key)) {
                 contributions.remove(i);
-
+                
                 // Write the workspace
                 writeWorkspace(workspace);
+                
+                // delete it from the search index
+                this.domainSearch.contributionRemoved(contribution);
+                
                 return;
                 
             }

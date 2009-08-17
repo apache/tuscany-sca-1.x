@@ -1,8 +1,11 @@
 package org.apache.tuscany.sca.domain.manager.impl;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -64,7 +67,9 @@ public class Searcher implements ItemCollection, LocalItemCollection {
     }
 
     public Item get(String key) throws NotFoundException {
+
         try {
+
             if (key.startsWith("highlight")) {
                 int lastSemicolonIndex = key.lastIndexOf(";");
                 String artifact = key.substring(lastSemicolonIndex + 1);
@@ -80,6 +85,7 @@ public class Searcher implements ItemCollection, LocalItemCollection {
             } else {
                 throw new NotFoundException("Invalid operation!");
             }
+
         } catch (Exception t) {
             if (t instanceof NotFoundException) {
                 throw (NotFoundException)t;
@@ -91,61 +97,59 @@ public class Searcher implements ItemCollection, LocalItemCollection {
 
     private Item highlightArtifact(String contribution, String artifact, String query) throws NotFoundException {
 
-        // Item item = this.contributionCollection.get(contribution);
-        //
-        // if (item == null) {
-        // throw new NotFoundException("contribution not found: " +
-        // contribution);
-        // }
-        //
-        // String location = item.getAlternate();
-        //		
-        // if (location.endsWith(".jar") || location.endsWith(".zip")) {
-        // location = "jar:" + (location.startsWith("file:") ? "" : "file:") +
-        // location + '!' + (artifact.startsWith("/") ? "" : "/") + artifact;
-        //			
-        // } else {
-        // location += (location.endsWith("/") ? "" : "/") + artifact;
-        // }
-        //		
-        // try {
-        // Reader reader = new InputStreamReader(new
-        // URL(location).openStream());
-        // StringBuilder sb = new StringBuilder();
-        // int c;
-        //
-        // // TODO: load the chars into an array buffer instead of one
-        // // at a
-        // // time
-        // while ((c = reader.read()) != -1) {
-        // char character = (char) c;
-        //
-        // if (!Character.isIdentifierIgnorable(character)) {
-        // sb.append(character);
-        // }
-        //
-        // }
-        //
-        // String highlightedText =
-        // this.domainSearch.highlight(SearchFields.FILE_CONTENT_FIELD,
-        // sb.toString(), query);
-        // highlightedText =
-        // HighlightingUtil.replaceHighlightMarkupBy(highlightedText,
-        // HIGHLIGHT_START, HIGHLIGHT_END);
-        //			
-        // item = new Item();
-        // item.setTitle("Highlighted Artifact");
-        // item.setContents(highlightedText);
-        //			
-        // return item;
-        //
-        // } catch (Exception e) {
-        // throw new NotFoundException("Could not highlight artifact: " +
-        // e.getMessage(), e);
-        // }
+        Item item = this.contributionCollection.get(contribution);
 
-        return null;
+        if (item == null) {
+            throw new NotFoundException("contribution not found: " + contribution);
+        }
 
+        String location = item.getAlternate();
+
+        if (location.endsWith(".jar") || location.endsWith(".zip")) {
+            location =
+                "jar:" + (location.startsWith("file:") ? "" : "file:")
+                    + location
+                    + '!'
+                    + (artifact.startsWith("/") ? "" : "/")
+                    + artifact;
+
+        } else {
+            location += (location.endsWith("/") ? "" : "/") + artifact;
+        }
+
+        try {
+            Reader reader = new InputStreamReader(new URL(location).openStream());
+            StringBuilder sb = new StringBuilder();
+            int c;
+
+            // TODO: load the chars into an array buffer instead of one
+            // at a
+            // time
+            while ((c = reader.read()) != -1) {
+                char character = (char)c;
+
+                if (!Character.isIdentifierIgnorable(character)) {
+                    sb.append(character);
+                }
+
+            }
+
+            String highlightedText = this.domainSearch.highlight(SearchFields.FILE_CONTENT_FIELD, sb.toString(), query);
+            highlightedText = highlightedText.replaceAll("\n", "<br/>");
+            highlightedText = highlightedText.replaceAll(" ", "&nbsp;");
+            highlightedText =
+                HighlightingUtil.replaceHighlightMarkupBy(highlightedText, HIGHLIGHT_START, HIGHLIGHT_END);
+
+            item = new Item();
+            item.setTitle(contribution + ";" + artifact);
+            item.setContents(highlightedText);
+
+            return item;
+
+        } catch (Exception e) {
+            throw new NotFoundException("Could not highlight artifact: " + e.getMessage(), e);
+        }
+        
     }
 
     private Item executeQuery(String query) throws NotFoundException {
@@ -184,7 +188,7 @@ public class Searcher implements ItemCollection, LocalItemCollection {
 
             String contents = HighlightingUtil.replaceHighlightMarkupBy(sw.getBuffer(), HIGHLIGHT_START, HIGHLIGHT_END);
 
-            item.setContents(replaceAll(contents, 40) + "end");
+            item.setContents(replaceAll(contents, 40));
 
         } else {
             item.setContents("No results match: <u>" + query + "</u>");
@@ -195,43 +199,6 @@ public class Searcher implements ItemCollection, LocalItemCollection {
         return item;
 
     }
-
-    //	
-    // private static String replaceAll(CharSequence c) {
-    // StringBuilder sb = new StringBuilder();
-    // // HashSet<Character> set = new HashSet<Character>();
-    // Arrays.sort(characters);
-    // // int start = 0, end = 4;
-    // // char[] chars = new char[end - start];
-    // // System.arraycopy(characters, start, chars, 0, end - start);
-    //		
-    // for (int i = 0 ; i < c.length() ; i++) {
-    // char actual = c.charAt(i);
-    //			
-    // //if (Arrays.binarySearch(characters, actual) < 0) {
-    //
-    // if (!Character.isIdentifierIgnorable(actual)) {
-    // sb.append(actual);
-    //				
-    // } else {
-    // //sb.append('0');
-    // }
-    //			
-    // }
-    // //
-    // // System.out.println("set-size: " + set.size());
-    // // for (char character : set) {
-    // // System.out.print(",");
-    // // System.out.print((int) character);
-    // // System.out.print("/*" + character + "*/");
-    // //
-    // // }
-    // //
-    // // System.out.println();
-    //		
-    // return sb.toString();
-    //		
-    // }
 
     private static String replaceAll(CharSequence c, int less) {
         StringBuilder sb = new StringBuilder();
@@ -387,37 +354,44 @@ public class Searcher implements ItemCollection, LocalItemCollection {
             String content = result.getValue();
 
             if (content != null && content.length() > 0 && DomainSearchFormatter.isHighlighted(content)) {
-
+                String contributionPlusArtifact =
+                    getContributionURI(result) + ";" + removeHighlighting(result.getContainer().getValue());
+                
                 writer.write(HTML_NEW_LINE);
 
                 this.elementCounter++;
                 writer.write("<div style='margin-top:0em;margin-left:");
                 writer.write(Integer.toString(indentation));
-                writer.write("em;background-color:#FFE175;max-width:100%;border-style:dashed;border-width:1px;padding:5px'>");
+                writer.write("em;background-color:#FFE175;max-width:100%;border-style:dashed;border-width:1px;padding:5px' id='");
+    		writer.write(contributionPlusArtifact);
+    		writer.write("'>");
                 writer.write("<p style='margin:0px;padding:0px;font-size:70%'>");
-                        //+ "<a style='margin:0px;padding:0px' href='#filecontent");
-                        //writer.write(Integer.toString(this.elementCounter));
+                // + "<a style='margin:0px;padding:0px' href='#filecontent");
+                // writer.write(Integer.toString(this.elementCounter));
 
-                String contributionPlusArtifact = getContributionURI(result) + ";" + removeHighlighting(result.getContainer().getValue());
+                
 
                 // writer.write("' onclick='search");
                 // writer.write("'>view all</a>&nbsp;&nbsp;<a href='/files/contribution=");
-                writer.write("<a style='margin:0px;padding:0px' href='javascript:document.getElementByID(\"searchGadget\").contentWindow.getHighlighted(\"");
+                writer.write("<a style='margin:0px;padding:0px' href='javascript:getHighlighted(\"");
                 writer.write(contributionPlusArtifact);
                 writer.write("\");'>view all</a>&nbsp;&nbsp;");
-                
+
                 writer.write("<a href='/files/contribution=");
                 writer.write(contributionPlusArtifact);
-                writer.write("'>download</a></p><p style='margin:8px 0px 0px 0px;padding:0px'>");
+                writer.write("'>download</a></p><div id='");
+                writer.write("test");
+                writer.write("' style='margin:8px 0px 0px 0px;padding:0px'>");
 
                 int i = 0;
                 while (i < content.length()) {
-                    StringEscapeUtils.escapeHtml(writer, content.substring(i, Math.min(i + MAX_CONTENT_LINE_WIDTH,content.length())));
+                    StringEscapeUtils.escapeHtml(writer, content.substring(i, Math.min(i + MAX_CONTENT_LINE_WIDTH,
+                                                                                       content.length())));
                     writer.write(HTML_NEW_LINE);
                     i += MAX_CONTENT_LINE_WIDTH;
                 }
 
-                writer.write("</p>");
+                writer.write("</div>");
                 writer.write("</div>");
 
             }
@@ -450,9 +424,41 @@ public class Searcher implements ItemCollection, LocalItemCollection {
         System.out.println("put");
     }
 
+    @SuppressWarnings("unchecked")
     public Entry<String, Item>[] query(String queryString) {
-        System.out.println("query");
-        return null;
+
+        try {
+
+            Item item;
+            String key;
+
+            if (queryString.startsWith("highlight")) {
+                int lastSemicolonIndex = queryString.lastIndexOf(";");
+                String artifact = queryString.substring(lastSemicolonIndex + 1);
+                int secondLastSemicolonIndex = queryString.lastIndexOf(";", lastSemicolonIndex - 1);
+                String contribution = queryString.substring(secondLastSemicolonIndex + 1, lastSemicolonIndex);
+                String query = queryString.substring("highlight".length(), secondLastSemicolonIndex);
+
+                item = highlightArtifact(contribution, artifact, query);
+                key = queryString.substring("highlight".length());
+
+            } else if (queryString.startsWith("query")) {
+                key = queryString.substring("query".length());
+                item = executeQuery(key);
+
+            } else {
+                throw new NotFoundException("Invalid operation!");
+            }
+
+            Entry<String, Item>[] returnArray = new Entry[1];
+            returnArray[0] = new Entry<String, Item>(key, item);
+
+            return returnArray;
+
+        } catch (Exception t) {
+            return new Entry[0];
+        }
+
     }
 
 }
