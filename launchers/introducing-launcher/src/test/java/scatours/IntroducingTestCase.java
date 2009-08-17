@@ -27,8 +27,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test driver for introducing-tuscanyscatours-contribution and
- * introducing-goodvaluetrips-contribution.
+ * Test case to run the test code in introducing-client-contribution that
+ * tests components and services in introducing-tuscanyscatours-contribution
+ * and introducing-goodvaluetrips-contribution.
  */
 public class IntroducingTestCase {
 
@@ -36,21 +37,17 @@ public class IntroducingTestCase {
 
     @Before
     public void startServer() throws Exception {
-        try {
-            node = SCANodeFactory.newInstance().createSCANode(null, 
-                new SCAContribution("goodvaluetrips", "../../contributions/introducing-goodvaluetrips-contribution/target/classes"),
-                new SCAContribution("tuscanyscatours", "../../contributions/introducing-tuscanyscatours-contribution/target/classes"),
-                new SCAContribution("client", "../../contributions/introducing-client-contribution/target/classes"));
-            node.start();
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-        }
+        node = SCANodeFactory.newInstance().createSCANode(null, 
+            new SCAContribution("introducing-tours", "../../contributions/introducing-tuscanyscatours-contribution/target/classes"),
+            new SCAContribution("introducing-trips", "../../contributions/introducing-goodvaluetrips-contribution/target/classes"),
+            new SCAContribution("introducing-client", "../../contributions/introducing-client-contribution/target/classes"));
+        node.start();
     }
 
     @Test
     public void testClient() throws Exception {
-        Runnable runner = ((SCAClient)node).getService(Runnable.class, "TestClient/Runnable");
-        runner.run();
+        Runnable proxy = ((SCAClient)node).getService(Runnable.class, "TestClient/Runnable");
+        proxy.run();
     }
 
     @After
