@@ -31,54 +31,58 @@ import org.apache.tuscany.sca.domain.search.DocumentProcessor;
  */
 public class PropertyDocumentProcessor implements DocumentProcessor {
 
-	public Document process(DocumentProcessor parentProcessor,
-			DocumentMap documents, Object object, Document doc, String parent) {
+    public Document process(DocumentProcessor parentProcessor,
+                            DocumentMap documents,
+                            Object object,
+                            Document doc,
+                            String parent) {
 
-		if (object instanceof Property) {
-			Property property = (Property) object;
-			String name = property.getName();
+        if (object instanceof Property) {
+            Property property = (Property)object;
+            String name = property.getName();
 
-			if (name != null && name.length() > 0) {
+            if (name != null && name.length() > 0) {
 
-				if (doc == null) {
-					doc = documents.get(name);
-				}
+                if (doc == null) {
+                    doc = documents.get(name);
+                }
 
-				Object value = property.getValue();
+                Object value = property.getValue();
 
-				if (value.getClass().isArray()) {
-					int arraySize = Array.getLength(value);
+                if (value.getClass().isArray()) {
+                    int arraySize = Array.getLength(value);
 
-					for (int i = 0; i < arraySize; i++) {
-						Object arrayValue = Array.get(value, i);
+                    for (int i = 0; i < arraySize; i++) {
+                        Object arrayValue = Array.get(value, i);
 
-						doc.add(new Field(SearchFields.VALUE_FIELD, arrayValue.toString(),
-								Field.Store.YES, Field.Index.ANALYZED));
+                        doc.add(new Field(SearchFields.VALUE_FIELD, arrayValue.toString(), Field.Store.YES,
+                                          Field.Index.ANALYZED));
 
-					}
+                    }
 
-				} else {
+                } else {
 
-					doc.add(new Field(SearchFields.VALUE_FIELD, value.toString(),
-							Field.Store.YES, Field.Index.ANALYZED));
+                    doc
+                        .add(new Field(SearchFields.VALUE_FIELD, value.toString(), Field.Store.YES,
+                                       Field.Index.ANALYZED));
 
-				}
-				
-				return doc == null ? FAKE_DOCUMENT : doc;
+                }
 
-			} else {
-				return FAKE_DOCUMENT;
-			}
+                return doc == null ? FAKE_DOCUMENT : doc;
 
-		}
+            } else {
+                return FAKE_DOCUMENT;
+            }
 
-		throw new IllegalArgumentException();
+        }
 
-	}
+        throw new IllegalArgumentException();
 
-	public Object getDocumentKey(Object object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    }
+
+    public Object getDocumentKey(Object object) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

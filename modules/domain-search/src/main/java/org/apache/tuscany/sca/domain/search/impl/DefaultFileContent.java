@@ -28,30 +28,30 @@ import java.net.URL;
  */
 public class DefaultFileContent implements FileContent {
 
-	final private URL url;
+    final private URL url;
 
-	public DefaultFileContent(URL url) {
-		this.url = url;
-	}
+    public DefaultFileContent(URL url) {
+        this.url = url;
+    }
 
-	public FileContent[] getChildren() {
-		return new FileContent[0];
-	}
+    public FileContent[] getChildren() {
+        return new FileContent[0];
+    }
 
-	public InputStream getInputStream() throws IOException {
-		return this.url.openStream();
-	}
+    public InputStream getInputStream() throws IOException {
+        return this.url.openStream();
+    }
 
-	public String getName() {
-		return this.url.getFile();
-	}
+    public String getName() {
+        return this.url.getFile();
+    }
 
-	public String getPath() {
-		return this.url.getPath();
-	}
+    public String getPath() {
+        return this.url.getPath();
+    }
 
-	public boolean isLeaf() {
-		return false;
-	}
+    public boolean isLeaf() {
+        return false;
+    }
 
 }

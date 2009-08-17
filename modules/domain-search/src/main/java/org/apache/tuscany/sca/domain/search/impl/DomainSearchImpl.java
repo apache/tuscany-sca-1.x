@@ -52,356 +52,338 @@ import org.osoa.sca.annotations.Scope;
 @Scope("COMPOSITE")
 public class DomainSearchImpl implements DomainSearch {
 
-	@Property
-	public String indexDirectoryPath;
+    @Property
+    public String indexDirectoryPath;
 
-	private Directory dir;
+    private Directory dir;
 
-	private Analyzer analyzer = new DomainSearchAnalyzer();
+    private Analyzer analyzer = new DomainSearchAnalyzer();
 
-	private MultiFieldQueryParser qp = new MultiFieldQueryParser(new String[] {
-			SearchFields.ARTIFACT_FIELD, SearchFields.BINDING_FIELD,
-			SearchFields.COMPONENT_FIELD, SearchFields.COMPOSITE_FIELD,
-			SearchFields.CONTRIBUTION_FIELD, SearchFields.EXPORTEDBY_FIELD,
-			SearchFields.FILE_CONTENT_FIELD, SearchFields.IMPLEMENTS_FIELD,
-			SearchFields.IMPORTEDBY_FIELD, SearchFields.INCLUDEDBY_FIELD,
-			SearchFields.PROPERTY_KEY_FIELD, SearchFields.REFERENCE_FIELD,
-			SearchFields.REFERENCE_INTERFACE_CALLBACK_FIELD,
-			SearchFields.REFERENCE_INTERFACE_FIELD,
-			SearchFields.REFERENCE_NAME_FIELD, SearchFields.SERVICE_FIELD,
-			SearchFields.SERVICE_INTERFACE_CALLBACK_FIELD,
-			SearchFields.SERVICE_INTERFACE_FIELD,
-			SearchFields.SERVICE_NAME_FIELD, SearchFields.TYPE_FIELD,
-			SearchFields.VALUE_FIELD }, this.analyzer);
+    private MultiFieldQueryParser qp =
+        new MultiFieldQueryParser(new String[] {SearchFields.ARTIFACT_FIELD, SearchFields.BINDING_FIELD,
+                                                SearchFields.COMPONENT_FIELD, SearchFields.COMPOSITE_FIELD,
+                                                SearchFields.CONTRIBUTION_FIELD, SearchFields.EXPORTEDBY_FIELD,
+                                                SearchFields.FILE_CONTENT_FIELD, SearchFields.IMPLEMENTS_FIELD,
+                                                SearchFields.IMPORTEDBY_FIELD, SearchFields.INCLUDEDBY_FIELD,
+                                                SearchFields.PROPERTY_KEY_FIELD, SearchFields.REFERENCE_FIELD,
+                                                SearchFields.REFERENCE_INTERFACE_CALLBACK_FIELD,
+                                                SearchFields.REFERENCE_INTERFACE_FIELD,
+                                                SearchFields.REFERENCE_NAME_FIELD, SearchFields.SERVICE_FIELD,
+                                                SearchFields.SERVICE_INTERFACE_CALLBACK_FIELD,
+                                                SearchFields.SERVICE_INTERFACE_FIELD, SearchFields.SERVICE_NAME_FIELD,
+                                                SearchFields.TYPE_FIELD, SearchFields.VALUE_FIELD}, this.analyzer);
 
-	public DomainSearchImpl() {
-		this.qp.setAllowLeadingWildcard(true);
+    public DomainSearchImpl() {
+        this.qp.setAllowLeadingWildcard(true);
 
-	}
+    }
 
-	private Directory getIndexDirectory() throws IOException {
+    private Directory getIndexDirectory() throws IOException {
 
-		if (this.dir == null) {
+        if (this.dir == null) {
 
-			if (this.indexDirectoryPath == null
-					|| this.indexDirectoryPath.length() == 0) {
-				this.dir = new RAMDirectory();
+            if (this.indexDirectoryPath == null || this.indexDirectoryPath.length() == 0) {
+                this.dir = new RAMDirectory();
 
-			} else {
+            } else {
 
-				try {
-					this.dir = new FSDirectory(
-							new File(this.indexDirectoryPath),
-							new SimpleFSLockFactory(this.indexDirectoryPath));
+                try {
+                    this.dir =
+                        new FSDirectory(new File(this.indexDirectoryPath),
+                                        new SimpleFSLockFactory(this.indexDirectoryPath));
 
-				} catch (IOException e) {
-					System.err.println("Could not open index at "
-							+ this.indexDirectoryPath);
+                } catch (IOException e) {
+                    System.err.println("Could not open index at " + this.indexDirectoryPath);
 
-					throw e;
+                    throw e;
 
-				}
+                }
 
-			}
+            }
 
-		}
+        }
 
-		return this.dir;
+        return this.dir;
 
-	}
+    }
 
-	@AllowsPassByReference
-	public void contributionAdded(Contribution contribution) {
+    @AllowsPassByReference
+    public void contributionAdded(Contribution contribution) {
 
-		IndexWriter indexWriter = null;
+        IndexWriter indexWriter = null;
 
-		try {
-			indexWriter = new IndexWriter(getIndexDirectory(), this.analyzer,
-					IndexWriter.MaxFieldLength.UNLIMITED);
+        try {
+            indexWriter = new IndexWriter(getIndexDirectory(), this.analyzer, IndexWriter.MaxFieldLength.UNLIMITED);
 
-			contributionAdded(contribution, indexWriter);
+            contributionAdded(contribution, indexWriter);
 
-			indexWriter.commit();
+            indexWriter.commit();
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			if (indexWriter != null) {
+            if (indexWriter != null) {
 
-				try {
-					indexWriter.rollback();
+                try {
+                    indexWriter.rollback();
 
-				} catch (Exception e1) {
-					// ignore exception
-				}
+                } catch (Exception e1) {
+                    // ignore exception
+                }
 
-			}
+            }
 
-			throw new RuntimeException("Problem while indexing!", e);
+            throw new RuntimeException("Problem while indexing!", e);
 
-		} finally {
+        } finally {
 
-			if (indexWriter != null) {
+            if (indexWriter != null) {
 
-				try {
-					indexWriter.close();
+                try {
+                    indexWriter.close();
 
-				} catch (Exception e) {
-					// ignore exception
-				}
+                } catch (Exception e) {
+                    // ignore exception
+                }
 
-			}
+            }
 
-		}
+        }
 
-	}
+    }
 
-	@AllowsPassByReference
-	public void contributionRemoved(Contribution contribution) {
+    @AllowsPassByReference
+    public void contributionRemoved(Contribution contribution) {
 
-		IndexWriter indexWriter = null;
+        IndexWriter indexWriter = null;
 
-		try {
-			indexWriter = new IndexWriter(getIndexDirectory(), this.analyzer,
-					IndexWriter.MaxFieldLength.UNLIMITED);
+        if (indexExists()) {
 
-			contributionRemoved(contribution, indexWriter);
+            try {
+                indexWriter = new IndexWriter(getIndexDirectory(), this.analyzer, IndexWriter.MaxFieldLength.UNLIMITED);
 
-			indexWriter.commit();
+                contributionRemoved(contribution, indexWriter);
 
-		} catch (Exception e) {
+                indexWriter.commit();
 
-			if (indexWriter != null) {
+            } catch (Exception e) {
 
-				try {
-					indexWriter.rollback();
+                if (indexWriter != null) {
 
-				} catch (Exception e1) {
-					// ignore exception
-				}
+                    try {
+                        indexWriter.rollback();
 
-			}
+                    } catch (Exception e1) {
+                        // ignore exception
+                    }
 
-			throw new RuntimeException("Problem while indexing!", e);
+                }
 
-		} finally {
+                throw new RuntimeException("Problem while indexing!", e);
 
-			if (indexWriter != null) {
+            } finally {
 
-				try {
-					indexWriter.close();
+                if (indexWriter != null) {
 
-				} catch (Exception e) {
-					// ignore exception
-				}
+                    try {
+                        indexWriter.close();
 
-			}
+                    } catch (Exception e) {
+                        // ignore exception
+                    }
 
-		}
+                }
 
-	}
+            }
 
-	private void contributionRemoved(Contribution contribution,
-			IndexWriter indexWriter) throws CorruptIndexException, IOException {
+        }
 
-		String contributionURI = contribution.getURI();
-		StringBuilder sb = new StringBuilder(SearchFields.PARENT_FIELD);
-		sb.append(":\"");
-		sb.append(DomainPathAnalyzer.PATH_START);
-		sb.append(contributionURI);
-		sb.append("\" OR ");
-		sb.append(SearchFields.CONTRIBUTION_FIELD);
-		sb.append(":\"");
-		sb.append(contributionURI);
-		sb.append('"');
+    }
 
-		try {
-			Query query = this.qp.parse(sb.toString());
-			indexWriter.deleteDocuments(query);
+    private void contributionRemoved(Contribution contribution, IndexWriter indexWriter) throws CorruptIndexException,
+        IOException {
 
-		} catch (ParseException e) {
-			throw new RuntimeException("Could not parse query: "
-					+ sb.toString(), e);
-		}
+        String contributionURI = contribution.getURI();
+        StringBuilder sb = new StringBuilder(SearchFields.PARENT_FIELD);
+        sb.append(":\"");
+        sb.append(DomainPathAnalyzer.PATH_START);
+        sb.append(contributionURI);
+        sb.append("\" OR ");
+        sb.append(SearchFields.CONTRIBUTION_FIELD);
+        sb.append(":\"");
+        sb.append(contributionURI);
+        sb.append('"');
 
-	}
+        try {
+            Query query = this.qp.parse(sb.toString());
+            indexWriter.deleteDocuments(query);
 
-	private void contributionAdded(Contribution contribution,
-			IndexWriter indexWriter) throws CorruptIndexException, IOException {
+        } catch (ParseException e) {
+            throw new RuntimeException("Could not parse query: " + sb.toString(), e);
+        }
 
-		DomainSearchDocumentProcessorsMap docProcessors = new DomainSearchDocumentProcessorsMap();
-		DocumentMap docs = new DocumentMap();
+    }
 
-		try {
-			docProcessors.process(docProcessors, docs, contribution, null, "");
+    private void contributionAdded(Contribution contribution, IndexWriter indexWriter) throws CorruptIndexException,
+        IOException {
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        DomainSearchDocumentProcessorsMap docProcessors = new DomainSearchDocumentProcessorsMap();
+        DocumentMap docs = new DocumentMap();
 
-		FileWriter writer = new FileWriter("indexed.txt");
-		for (Document doc : docs.values()) {
-			org.apache.lucene.document.Document luceneDoc = doc
-					.createLuceneDocument();
-			writer.write(luceneDoc.toString());
-			writer.write('\n');
-			writer.write('\n');
-			indexWriter.addDocument(luceneDoc);
+        try {
+            docProcessors.process(docProcessors, docs, contribution, null, "");
 
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		writer.close();
+        FileWriter writer = new FileWriter("indexed.txt");
+        for (Document doc : docs.values()) {
+            org.apache.lucene.document.Document luceneDoc = doc.createLuceneDocument();
+            writer.write(luceneDoc.toString());
+            writer.write('\n');
+            writer.write('\n');
+            indexWriter.addDocument(luceneDoc);
 
-		// BufferedReader consoleReader = new BufferedReader(
-		// new InputStreamReader(System.in));
-		//
-		// while (true) {
-		// System.out.print("query: ");
-		// String queryString = consoleReader.readLine();
-		//
-		// if (queryString.equals("exit")) {
-		// break;
-		// }
-		//				
-		// parseAndSearch(queryString, false);
-		//
-		// }
+        }
 
-	}
+        writer.close();
 
-	@AllowsPassByReference
-	public void contributionUpdated(Contribution oldContribution,
-			Contribution contribution) {
+        // BufferedReader consoleReader = new BufferedReader(
+        // new InputStreamReader(System.in));
+        //
+        // while (true) {
+        // System.out.print("query: ");
+        // String queryString = consoleReader.readLine();
+        //
+        // if (queryString.equals("exit")) {
+        // break;
+        // }
+        //				
+        // parseAndSearch(queryString, false);
+        //
+        // }
 
-		IndexWriter indexWriter = null;
+    }
 
-		try {
-			indexWriter = new IndexWriter(getIndexDirectory(), this.analyzer,
-					IndexWriter.MaxFieldLength.UNLIMITED);
+    @AllowsPassByReference
+    public void contributionUpdated(Contribution oldContribution, Contribution contribution) {
 
-			contributionRemoved(oldContribution, indexWriter);
-			contributionAdded(contribution, indexWriter);
+        IndexWriter indexWriter = null;
 
-			indexWriter.commit();
+        try {
+            indexWriter = new IndexWriter(getIndexDirectory(), this.analyzer, IndexWriter.MaxFieldLength.UNLIMITED);
 
-		} catch (Exception e) {
+            contributionRemoved(oldContribution, indexWriter);
+            contributionAdded(contribution, indexWriter);
 
-			if (indexWriter != null) {
+            indexWriter.commit();
 
-				try {
-					indexWriter.rollback();
+        } catch (Exception e) {
 
-				} catch (Exception e1) {
-					// ignore exception
-				}
+            if (indexWriter != null) {
 
-			}
+                try {
+                    indexWriter.rollback();
 
-			throw new RuntimeException("Problem while indexing!", e);
+                } catch (Exception e1) {
+                    // ignore exception
+                }
 
-		} finally {
+            }
 
-			if (indexWriter != null) {
+            throw new RuntimeException("Problem while indexing!", e);
 
-				try {
-					indexWriter.close();
+        } finally {
 
-				} catch (Exception e) {
-					// ignore exception
-				}
+            if (indexWriter != null) {
 
-			}
+                try {
+                    indexWriter.close();
 
-		}
+                } catch (Exception e) {
+                    // ignore exception
+                }
 
-	}
+            }
 
-	public Result[] parseAndSearch(String searchQuery, final boolean highlight)
-			throws Exception {
+        }
 
-		final IndexSearcher searcher = new IndexSearcher(getIndexDirectory());
+    }
 
-		DomainSearchResultProcessor resultProcessor = new DomainSearchResultProcessor(
-				new DomainSearchResultFactory());
+    public Result[] parseAndSearch(String searchQuery, final boolean highlight) throws Exception {
 
-		final Query query = qp.parse(searchQuery);
-		System.out.println("query: " + searchQuery);
+        final IndexSearcher searcher = new IndexSearcher(getIndexDirectory());
 
-		TopDocs topDocs = searcher.search(query, 1000);
+        DomainSearchResultProcessor resultProcessor = new DomainSearchResultProcessor(new DomainSearchResultFactory());
 
-		int indexed = 0;
-		HashSet<String> set = new HashSet<String>();
-		for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
-			org.apache.lucene.document.Document luceneDocument = searcher
-					.doc(scoreDoc.doc);
+        final Query query = qp.parse(searchQuery);
+        System.out.println("query: " + searchQuery);
 
-			resultProcessor.process(luceneDocument, null);
+        TopDocs topDocs = searcher.search(query, 1000);
 
-			indexed++;
-			set.add(luceneDocument.toString());
+        int indexed = 0;
+        HashSet<String> set = new HashSet<String>();
+        for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
+            org.apache.lucene.document.Document luceneDocument = searcher.doc(scoreDoc.doc);
 
-			System.out.println(luceneDocument);
+            resultProcessor.process(luceneDocument, null);
 
-		}
+            indexed++;
+            set.add(luceneDocument.toString());
 
-		/*
-		 * searcher.search(query, new HitCollector() {
-		 * 
-		 * @Override public void collect(int doc, float score) { try {
-		 * org.apache.lucene.document.Document document = searcher .doc(doc);
-		 * 
-		 * luceneDocuments.put(doc, document);
-		 * 
-		 * System.out.println(doc);
-		 * 
-		 * } catch (CorruptIndexException e) { // TODO Auto-generated catch
-		 * block e.printStackTrace(); } catch (IOException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); } }
-		 * 
-		 * });
-		 */
+            System.out.println(luceneDocument);
 
-		System.out.println("indexed = " + indexed);
-		System.out.println("set.size() = " + set.size());
+        }
 
-		Result[] results = resultProcessor.createResultRoots();
+        /*
+         * searcher.search(query, new HitCollector() {
+         * @Override public void collect(int doc, float score) { try {
+         * org.apache.lucene.document.Document document = searcher .doc(doc);
+         * luceneDocuments.put(doc, document); System.out.println(doc); } catch
+         * (CorruptIndexException e) { // TODO Auto-generated catch block
+         * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated
+         * catch block e.printStackTrace(); } } });
+         */
 
-		if (highlight) {
+        System.out.println("indexed = " + indexed);
+        System.out.println("set.size() = " + set.size());
 
-			for (Result result : results) {
-				HighlightingUtil.highlightResult(result, query);
-			}
+        Result[] results = resultProcessor.createResultRoots();
 
-		}
+        if (highlight) {
 
-		return results;
+            for (Result result : results) {
+                HighlightingUtil.highlightResult(result, query);
+            }
 
-	}
+        }
 
-	public Result[] search(Query searchQuery, boolean hightlight) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return results;
 
-	public String highlight(String field, String text, String searchQuery)
-			throws Exception {
-		final Query query = qp.parse(searchQuery);
+    }
 
-		return HighlightingUtil.highlight(field, query, text);
+    public Result[] search(Query searchQuery, boolean hightlight) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	}
+    public String highlight(String field, String text, String searchQuery) throws Exception {
+        final Query query = qp.parse(searchQuery);
 
-	public boolean indexExists() {
+        return HighlightingUtil.highlight(field, query, text);
 
-		if ((this.indexDirectoryPath == null || this.indexDirectoryPath
-				.length() == 0)
-				&& this.dir == null) {
+    }
 
-			return false;
+    public boolean indexExists() {
 
-		} else {
-			return this.dir != null || IndexReader.indexExists(new File(this.indexDirectoryPath));
-		}
+        if ((this.indexDirectoryPath == null || this.indexDirectoryPath.length() == 0) && this.dir == null) {
 
-	}
+            return false;
+
+        } else {
+            return this.dir != null || IndexReader.indexExists(new File(this.indexDirectoryPath));
+        }
+
+    }
 
 }

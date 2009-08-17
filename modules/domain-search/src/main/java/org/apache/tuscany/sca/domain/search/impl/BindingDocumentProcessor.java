@@ -29,52 +29,54 @@ import org.apache.tuscany.sca.domain.search.DocumentProcessor;
  */
 public class BindingDocumentProcessor implements DocumentProcessor {
 
-	public Document process(DocumentProcessor parentProcessor,
-			DocumentMap documents, Object object, Document document, String parent) {
+    public Document process(DocumentProcessor parentProcessor,
+                            DocumentMap documents,
+                            Object object,
+                            Document document,
+                            String parent) {
 
-		if (object instanceof Binding) {
-			Binding binding = (Binding) object;
-			String uri = binding.getURI();
-			
-			if (uri != null && uri.length() == 0) {
-				uri = null;
-			}
+        if (object instanceof Binding) {
+            Binding binding = (Binding)object;
+            String uri = binding.getURI();
 
-			if (uri != null) {
-				
-				if (document == null) {
-					document = documents.get(uri);
-				}
+            if (uri != null && uri.length() == 0) {
+                uri = null;
+            }
 
-				document.add(new Field(SearchFields.BINDING_FIELD, uri,
-						Field.Store.YES, Field.Index.ANALYZED));
+            if (uri != null) {
 
-			}
-			
-			return document == null ? FAKE_DOCUMENT : document;
+                if (document == null) {
+                    document = documents.get(uri);
+                }
 
-		}
+                document.add(new Field(SearchFields.BINDING_FIELD, uri, Field.Store.YES, Field.Index.ANALYZED));
 
-		throw new IllegalArgumentException();
+            }
 
-	}
+            return document == null ? FAKE_DOCUMENT : document;
 
-	public Object getDocumentKey(Object obj) {
+        }
 
-		if (obj instanceof Binding) {
-			Binding binding = (Binding) obj;
-			String uri = binding.getURI();
-			
-			if (uri != null && uri.length() == 0) {
-				return null;
-			}
+        throw new IllegalArgumentException();
 
-			return uri;
+    }
 
-		}
+    public Object getDocumentKey(Object obj) {
 
-		throw new IllegalArgumentException();
+        if (obj instanceof Binding) {
+            Binding binding = (Binding)obj;
+            String uri = binding.getURI();
 
-	}
-	
+            if (uri != null && uri.length() == 0) {
+                return null;
+            }
+
+            return uri;
+
+        }
+
+        throw new IllegalArgumentException();
+
+    }
+
 }

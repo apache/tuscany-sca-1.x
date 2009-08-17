@@ -37,151 +37,152 @@ import org.apache.tuscany.sca.domain.search.Result;
  * @version $Rev$ $Date$
  */
 final public class HighlightingUtil {
-	
-	public static void highlightResult(Result result, Query query) {
-		highlightResult(result, query, new SimpleFragmenter(70));
-	}
-	
-	public static void highlightResult(Result result, Query query, Fragmenter fragmenter) {
-		Map<String, Result> contents = result.getContents();
 
-		if (contents != null) {
+    public static void highlightResult(Result result, Query query) {
+        highlightResult(result, query, new SimpleFragmenter(70));
+    }
 
-			for (Result content : contents.values()) {
-				highlightResult(content, query, fragmenter);
-			}
+    public static void highlightResult(Result result, Query query, Fragmenter fragmenter) {
+        Map<String, Result> contents = result.getContents();
 
-		}
-		
-		try {
-			String highlightedText = HighlightingUtil.bestFragmentHighlighted(
-					result.getField(), query, result.getValue(), fragmenter);
+        if (contents != null) {
 
-			// checks if something was highlighted before resetting the value
-			if (highlightedText != null && highlightedText.length() > 0) {
-				result.setValue(highlightedText);
-			}
+            for (Result content : contents.values()) {
+                highlightResult(content, query, fragmenter);
+            }
 
-		} catch (IOException e) {
-			// ignore highlighting
-		}
+        }
 
-	}
-	
-	public static String highlight(String field, Query query, String text) throws IOException {
-		String highlightedText = bestFragmentHighlighted(field, query, text, new NullFragmenter());
-		
-		if (highlightedText == null || text.length() >= highlightedText.length()) {
-			return text;
-		}
-		
-		return highlightedText;
-		
-	}
-	
-	public static String bestFragmentHighlighted(String field, Query query, String text) throws IOException {
-		return bestFragmentHighlighted(field, query, text, new SimpleFragmenter(100));
-	}
-	
-	public static String bestFragmentHighlighted(String field, Query query, String text, Fragmenter fragmenter) throws IOException {
-		CachingTokenFilter tokenStream = new CachingTokenFilter(new DomainSearchAnalyzer().tokenStream(
-		        field, new StringReader(text)));
-		
-		Highlighter highlighter = new Highlighter(new DomainSearchFormatter(), new SpanScorer(query, field, tokenStream, ""));
-		highlighter.setTextFragmenter(fragmenter);
-		tokenStream.reset();
-		
-	    try {
-			return highlighter.getBestFragments(tokenStream, text, 2, " ... ");
-			
-		} catch (InvalidTokenOffsetsException e) {
-			
-			// could not create fragments, return empty string
-			return "";
-			
-		}
-		
-	}
-	
-	public static String replaceHighlightMarkupBy(CharSequence text,
-			String startHighlight, String endHighlight) {
-		StringBuilder sb = new StringBuilder();
-		int start = 0;
-		int end = 0;
+        try {
+            String highlightedText =
+                HighlightingUtil.bestFragmentHighlighted(result.getField(), query, result.getValue(), fragmenter);
 
-		for (int i = 0; i < text.length(); i++) {
-			char c = text.charAt(i);
+            // checks if something was highlighted before resetting the value
+            if (highlightedText != null && highlightedText.length() > 0) {
+                result.setValue(highlightedText);
+            }
 
-			if (start > 0) {
+        } catch (IOException e) {
+            // ignore highlighting
+        }
 
-				if (c == DomainSearchFormatter.HIGHLIGHT_START.charAt(start)) {
-					start++;
+    }
 
-					if (start == DomainSearchFormatter.HIGHLIGHT_START.length()) {
-						sb.append(startHighlight);
-						start = 0;
+    public static String highlight(String field, Query query, String text) throws IOException {
+        String highlightedText = bestFragmentHighlighted(field, query, text, new NullFragmenter());
 
-					}
+        if (highlightedText == null || text.length() >= highlightedText.length()) {
+            return text;
+        }
 
-				} else {
-					
-					for (int j = 0; j < start; j++) {
-						sb.append(DomainSearchFormatter.HIGHLIGHT_START.charAt(j));
-					}
-					
-					start = 0;
+        return highlightedText;
 
-				}
+    }
 
-			} else if (end > 0) {
+    public static String bestFragmentHighlighted(String field, Query query, String text) throws IOException {
+        return bestFragmentHighlighted(field, query, text, new SimpleFragmenter(100));
+    }
 
-				if (c == DomainSearchFormatter.HIGHLIGHT_END.charAt(end)) {
-					end++;
+    public static String bestFragmentHighlighted(String field, Query query, String text, Fragmenter fragmenter)
+        throws IOException {
+        CachingTokenFilter tokenStream =
+            new CachingTokenFilter(new DomainSearchAnalyzer().tokenStream(field, new StringReader(text)));
 
-					if (end == DomainSearchFormatter.HIGHLIGHT_END.length()) {
-						sb.append(endHighlight);
-						end = 0;
+        Highlighter highlighter =
+            new Highlighter(new DomainSearchFormatter(), new SpanScorer(query, field, tokenStream, ""));
+        highlighter.setTextFragmenter(fragmenter);
+        tokenStream.reset();
 
-					}
+        try {
+            return highlighter.getBestFragments(tokenStream, text, 2, " ... ");
 
-				} else {
+        } catch (InvalidTokenOffsetsException e) {
 
-					for (int j = 0; j < end; j++) {
-						sb.append(DomainSearchFormatter.HIGHLIGHT_END.charAt(j));
-					}
-					
-					end = 0;
+            // could not create fragments, return empty string
+            return "";
 
-				}
+        }
 
-			} else if (c == DomainSearchFormatter.HIGHLIGHT_START.charAt(0)) {
-				start = 1;
+    }
 
-			} else if (c == DomainSearchFormatter.HIGHLIGHT_END.charAt(0)) {
-				end = 1;
+    public static String replaceHighlightMarkupBy(CharSequence text, String startHighlight, String endHighlight) {
+        StringBuilder sb = new StringBuilder();
+        int start = 0;
+        int end = 0;
 
-			} else {
-				sb.append(c);
-			}
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
 
-		}
+            if (start > 0) {
 
-		if (start > 0) {
+                if (c == DomainSearchFormatter.HIGHLIGHT_START.charAt(start)) {
+                    start++;
 
-			for (int j = 0; j < start; j++) {
-				sb.append(DomainSearchFormatter.HIGHLIGHT_START.charAt(j));
-			}
+                    if (start == DomainSearchFormatter.HIGHLIGHT_START.length()) {
+                        sb.append(startHighlight);
+                        start = 0;
 
-		} else if (end > 0) {
+                    }
 
-			for (int j = 0; j < start; j++) {
-				sb.append(DomainSearchFormatter.HIGHLIGHT_END.charAt(j));
-			}
+                } else {
 
-		}
-		
-		return sb.toString();
+                    for (int j = 0; j < start; j++) {
+                        sb.append(DomainSearchFormatter.HIGHLIGHT_START.charAt(j));
+                    }
 
-	}
+                    start = 0;
+
+                }
+
+            } else if (end > 0) {
+
+                if (c == DomainSearchFormatter.HIGHLIGHT_END.charAt(end)) {
+                    end++;
+
+                    if (end == DomainSearchFormatter.HIGHLIGHT_END.length()) {
+                        sb.append(endHighlight);
+                        end = 0;
+
+                    }
+
+                } else {
+
+                    for (int j = 0; j < end; j++) {
+                        sb.append(DomainSearchFormatter.HIGHLIGHT_END.charAt(j));
+                    }
+
+                    end = 0;
+
+                }
+
+            } else if (c == DomainSearchFormatter.HIGHLIGHT_START.charAt(0)) {
+                start = 1;
+
+            } else if (c == DomainSearchFormatter.HIGHLIGHT_END.charAt(0)) {
+                end = 1;
+
+            } else {
+                sb.append(c);
+            }
+
+        }
+
+        if (start > 0) {
+
+            for (int j = 0; j < start; j++) {
+                sb.append(DomainSearchFormatter.HIGHLIGHT_START.charAt(j));
+            }
+
+        } else if (end > 0) {
+
+            for (int j = 0; j < start; j++) {
+                sb.append(DomainSearchFormatter.HIGHLIGHT_END.charAt(j));
+            }
+
+        }
+
+        return sb.toString();
+
+    }
 
 }

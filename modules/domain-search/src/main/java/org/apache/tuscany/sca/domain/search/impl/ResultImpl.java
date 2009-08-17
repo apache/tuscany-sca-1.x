@@ -33,253 +33,238 @@ import org.apache.tuscany.sca.domain.search.Result;
  */
 final public class ResultImpl implements Result {
 
-	private static final long serialVersionUID = 7084570994751217396L;
+    private static final long serialVersionUID = 7084570994751217396L;
 
-	private Result container;
+    private Result container;
 
-	private HashMap<String, Result> contents;
+    private HashMap<String, Result> contents;
 
-	private String value;
-	
-	private String field;
+    private String value;
 
-	public ResultImpl() {
-		// empty constructor
-	}
+    private String field;
 
-	public ResultImpl(String field, String value) {
-		setValue(value);
-		setField(field);
-		
-	}
-	
-	public String getField() {
-		return this.field;
-	}
-	
-	public void setField(String field) {
-		this.field = field;
-	}
+    public ResultImpl() {
+        // empty constructor
+    }
 
-	public Result getContainer() {
-		return this.container;
-	}
+    public ResultImpl(String field, String value) {
+        setValue(value);
+        setField(field);
 
-	public Map<String, Result> getContents() {
+    }
 
-		if (this.contents == null) {
-			return Collections.emptyMap();
-		}
+    public String getField() {
+        return this.field;
+    }
 
-		return Collections.unmodifiableMap(this.contents);
+    public void setField(String field) {
+        this.field = field;
+    }
 
-	}
+    public Result getContainer() {
+        return this.container;
+    }
 
-	public String getValue() {
-		return this.value;
-	}
+    public Map<String, Result> getContents() {
 
-	public void setContainer(Result container) {
+        if (this.contents == null) {
+            return Collections.emptyMap();
+        }
 
-		if (container != this.container) {
-			
-			if (this.container != null) {
-				this.container.removeContent(this);
-			}
+        return Collections.unmodifiableMap(this.contents);
 
-			this.container = container;
+    }
 
-			if (container != null) {
-				container.addContent(this);
-			}
+    public String getValue() {
+        return this.value;
+    }
 
-		}
+    public void setContainer(Result container) {
 
-	}
+        if (container != this.container) {
 
-	@Override
-	public boolean equals(Object obj) {
+            if (this.container != null) {
+                this.container.removeContent(this);
+            }
 
-		if (obj instanceof Result) {
-			Result artifactResult = (Result) obj;
+            this.container = container;
 
-			if (artifactResult.getValue() == this.value || this.value != null
-					&& this.value.equals(artifactResult.getValue())) {
+            if (container != null) {
+                container.addContent(this);
+            }
 
-				if (artifactResult.getContainer() == this.container
-						|| this.container != null
-						&& this.container.equals(artifactResult.getContainer())) {
+        }
 
-					Map<String, Result> contents = artifactResult.getContents();
+    }
 
-					if (this.contents == null) {
-						return contents.isEmpty();
+    @Override
+    public boolean equals(Object obj) {
 
-					} else if (this.contents.equals(contents)) {
-						return true;
-					}
+        if (obj instanceof Result) {
+            Result artifactResult = (Result)obj;
 
-				}
+            if (artifactResult.getValue() == this.value || this.value != null
+                && this.value.equals(artifactResult.getValue())) {
 
-			}
+                if (artifactResult.getContainer() == this.container || this.container != null
+                    && this.container.equals(artifactResult.getContainer())) {
 
-		}
+                    Map<String, Result> contents = artifactResult.getContents();
 
-		return false;
+                    if (this.contents == null) {
+                        return contents.isEmpty();
 
-	}
+                    } else if (this.contents.equals(contents)) {
+                        return true;
+                    }
 
-	public void addContent(Result artifactResult) {
-		internalGetContents().put(artifactResult.getValue(), artifactResult);
-		
-		if (artifactResult.getContainer() != this) {
-			artifactResult.setContainer(this);
-		}
+                }
 
-	}
+            }
 
-	private HashMap<String, Result> internalGetContents() {
+        }
 
-		if (this.contents == null) {
-			this.contents = new HashMap<String, Result>();
-		}
+        return false;
 
-		return this.contents;
+    }
 
-	}
+    public void addContent(Result artifactResult) {
+        internalGetContents().put(artifactResult.getValue(), artifactResult);
 
-	public void removeContent(Result artifactResult) {
+        if (artifactResult.getContainer() != this) {
+            artifactResult.setContainer(this);
+        }
 
-		if (this.contents != null) {
-			this.contents.remove(artifactResult);
+    }
 
-			artifactResult.setContainer(null);
+    private HashMap<String, Result> internalGetContents() {
 
-			if (this.contents.isEmpty()) {
-				this.contents = null;
-			}
+        if (this.contents == null) {
+            this.contents = new HashMap<String, Result>();
+        }
 
-		}
+        return this.contents;
 
-	}
+    }
 
-	@Override
-	public int hashCode() {
-		int hash = 11;
+    public void removeContent(Result artifactResult) {
 
-		hash = hash * 31
-				+ (this.container == null ? 7 : this.container.hashCode());
-		hash = hash
-				* 31
-				+ (this.contents == null || this.contents.isEmpty() ? 13
-						: this.contents.hashCode());
-		hash = hash * 31 + (this.value == null ? 17 : this.value.hashCode());
+        if (this.contents != null) {
+            this.contents.remove(artifactResult);
 
-		return hash;
+            artifactResult.setContainer(null);
 
-	}
+            if (this.contents.isEmpty()) {
+                this.contents = null;
+            }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+        }
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder("<");
-		Result container = getContainer();
-		
-		sb.append(getClass().getName()).append(" name='").append(getValue())
-				.append("' container='").append(container != null ? container.getValue() : null).append("'>\n");
+    }
 
-		Method[] methods = getClass().getMethods();
+    @Override
+    public int hashCode() {
+        int hash = 11;
 
-		for (Method method : methods) {
-			String methodName = method.getName();
+        hash = hash * 31 + (this.container == null ? 7 : this.container.hashCode());
+        hash = hash * 31 + (this.contents == null || this.contents.isEmpty() ? 13 : this.contents.hashCode());
+        hash = hash * 31 + (this.value == null ? 17 : this.value.hashCode());
 
-			if (method.getReturnType() != void.class) {
+        return hash;
 
-				if (method.getParameterTypes().length == 0) {
+    }
 
-					if (methodName.startsWith("get")
-							&& !"getName".equals(methodName)
-							&& !"getContainer".equals(methodName)) {
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-						try {
-							Object returnedObj = method.invoke(this);
+    public String toString() {
+        StringBuilder sb = new StringBuilder("<");
+        Result container = getContainer();
 
-							sb.append('\t');
+        sb.append(getClass().getName()).append(" name='").append(getValue()).append("' container='")
+            .append(container != null ? container.getValue() : null).append("'>\n");
 
-							if (returnedObj instanceof Map<?, ?>) {
+        Method[] methods = getClass().getMethods();
 
-								sb.append("<collection type='").append(
-										returnedObj.getClass()
-												.getGenericInterfaces()[1])
-										.append("'>\n");
+        for (Method method : methods) {
+            String methodName = method.getName();
 
-								for (Object obj : ((Map<?, ?>) returnedObj).values()) {
+            if (method.getReturnType() != void.class) {
 
-									sb.append("\t\t").append(obj.toString())
-											.append("\n");
+                if (method.getParameterTypes().length == 0) {
 
-								}
+                    if (methodName.startsWith("get") && !"getName".equals(methodName)
+                        && !"getContainer".equals(methodName)) {
 
-								sb.append("\t</collection>\n");
+                        try {
+                            Object returnedObj = method.invoke(this);
 
-							} else if (returnedObj instanceof Collection<?>) {
+                            sb.append('\t');
 
-								sb.append("<collection type='").append(
-										returnedObj.getClass()
-												.getGenericInterfaces()[0])
-										.append("'>\n");
+                            if (returnedObj instanceof Map<?, ?>) {
 
-								for (Object obj : (Collection<?>) returnedObj) {
+                                sb.append("<collection type='")
+                                    .append(returnedObj.getClass().getGenericInterfaces()[1]).append("'>\n");
 
-									sb.append("\t\t").append(obj.toString())
-											.append("\n");
+                                for (Object obj : ((Map<?, ?>)returnedObj).values()) {
 
-								}
+                                    sb.append("\t\t").append(obj.toString()).append("\n");
 
-								sb.append("\t</collection>\n");
+                                }
 
-							} else if (returnedObj.getClass().isArray()) {
+                                sb.append("\t</collection>\n");
 
-								sb.append("<array type='").append(
-										returnedObj.getClass()
-												.getComponentType())
-										.append("'>\n");
-								
-								int length = Array.getLength(returnedObj);
+                            } else if (returnedObj instanceof Collection<?>) {
 
-								for (int i = 0 ; i < length ; i++) {
+                                sb.append("<collection type='")
+                                    .append(returnedObj.getClass().getGenericInterfaces()[0]).append("'>\n");
 
-									sb.append("\t\t").append(Array.get(returnedObj, i).toString())
-											.append("\n");
+                                for (Object obj : (Collection<?>)returnedObj) {
 
-								}
+                                    sb.append("\t\t").append(obj.toString()).append("\n");
 
-								sb.append("\t</array>\n");
+                                }
 
-							} else {
-								
-								sb.append('\t').append(returnedObj).append('\n');
-								
-							}
+                                sb.append("\t</collection>\n");
 
-						} catch (Throwable e) {
-							// ignore exceptions and don't print the object
-						}
+                            } else if (returnedObj.getClass().isArray()) {
 
-					}
+                                sb.append("<array type='").append(returnedObj.getClass().getComponentType())
+                                    .append("'>\n");
 
-				}
+                                int length = Array.getLength(returnedObj);
 
-			}
+                                for (int i = 0; i < length; i++) {
 
-		}
-		
-		sb.append("</").append(getClass().getName()).append(">");
+                                    sb.append("\t\t").append(Array.get(returnedObj, i).toString()).append("\n");
 
-		return sb.toString();
+                                }
 
-	}
-	
+                                sb.append("\t</array>\n");
+
+                            } else {
+
+                                sb.append('\t').append(returnedObj).append('\n');
+
+                            }
+
+                        } catch (Throwable e) {
+                            // ignore exceptions and don't print the object
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        sb.append("</").append(getClass().getName()).append(">");
+
+        return sb.toString();
+
+    }
+
 }

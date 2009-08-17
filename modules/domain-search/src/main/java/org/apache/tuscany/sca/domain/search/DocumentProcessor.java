@@ -25,11 +25,15 @@ import org.apache.tuscany.sca.domain.search.impl.Document;
  * @version $Rev$ $Date$
  */
 public interface DocumentProcessor {
-	
-	final public static Document FAKE_DOCUMENT = new Document();
-	
-	Document process(DocumentProcessor parentProcessor, DocumentMap documents, Object object, Document document, String parent);
-	
-	Object getDocumentKey(Object object);
+
+    final public static Document FAKE_DOCUMENT = new Document();
+
+    Document process(DocumentProcessor parentProcessor,
+                     DocumentMap documents,
+                     Object object,
+                     Document document,
+                     String parent);
+
+    Object getDocumentKey(Object object);
 
 }

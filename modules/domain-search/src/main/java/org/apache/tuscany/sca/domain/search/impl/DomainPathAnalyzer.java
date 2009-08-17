@@ -32,205 +32,202 @@ import org.apache.lucene.analysis.Tokenizer;
  */
 public class DomainPathAnalyzer extends Analyzer {
 
-	final public static char PATH_START = '\u0001';
-	
-	final public static char PATH_SEPARATOR = '\u0002';
+    final public static char PATH_START = '\u0001';
 
-	final public static char TYPE_SEPARATOR = '\u0003';
+    final public static char PATH_SEPARATOR = '\u0002';
 
-	final public static char URI_SEPARATOR = '\u0004';
-	
-	final public static char ARCHIVE_SEPARATOR = '!';
+    final public static char TYPE_SEPARATOR = '\u0003';
 
-	static class DomainPathTokenizer extends Tokenizer {
+    final public static char URI_SEPARATOR = '\u0004';
 
-		private int offset = 0, bufferIndex = 0, dataLen = 0;
-		private static final int MAX_WORD_LEN = 1024;
-		private static final int IO_BUFFER_SIZE = 4096;
-		private final char[] ioBuffer = new char[IO_BUFFER_SIZE];
-		private boolean typeCharFound = false;
-		private boolean uriCharFound = false;
+    final public static char ARCHIVE_SEPARATOR = '!';
 
-		public DomainPathTokenizer(Reader reader) {
-			super(reader);
-		}
+    static class DomainPathTokenizer extends Tokenizer {
 
-		@Override
-		public void reset() throws IOException {
-			super.reset();
+        private int offset = 0, bufferIndex = 0, dataLen = 0;
+        private static final int MAX_WORD_LEN = 1024;
+        private static final int IO_BUFFER_SIZE = 4096;
+        private final char[] ioBuffer = new char[IO_BUFFER_SIZE];
+        private boolean typeCharFound = false;
+        private boolean uriCharFound = false;
 
-			typeCharFound = false;
-			uriCharFound = false;
+        public DomainPathTokenizer(Reader reader) {
+            super(reader);
+        }
 
-		}
+        @Override
+        public void reset() throws IOException {
+            super.reset();
 
-		@Override
-		public void reset(Reader input) throws IOException {
-			super.reset(input);
+            typeCharFound = false;
+            uriCharFound = false;
 
-			uriCharFound = false;
-			typeCharFound = false;
+        }
 
-		}
+        @Override
+        public void reset(Reader input) throws IOException {
+            super.reset(input);
 
-		@Override
-		public Token next(Token reusableToken) throws IOException {
-			assert reusableToken != null;
-			reusableToken.clear();
-			int length = 0;
-			int start = bufferIndex;
-			char[] buffer = reusableToken.termBuffer();
+            uriCharFound = false;
+            typeCharFound = false;
 
-			boolean lowercaseCharFound = false;
-			boolean digitFound = false;
+        }
 
-			while (true) {
+        @Override
+        public Token next(Token reusableToken) throws IOException {
+            assert reusableToken != null;
+            reusableToken.clear();
+            int length = 0;
+            int start = bufferIndex;
+            char[] buffer = reusableToken.termBuffer();
 
-				if (bufferIndex >= dataLen) {
-					offset += dataLen;
-					int incr;
+            boolean lowercaseCharFound = false;
+            boolean digitFound = false;
 
-					if (lowercaseCharFound || length == 0) {
-						incr = 0;
+            while (true) {
 
-					} else {
-						incr = 2;
-						ioBuffer[0] = ioBuffer[bufferIndex - 1];
-						ioBuffer[1] = ioBuffer[bufferIndex];
+                if (bufferIndex >= dataLen) {
+                    offset += dataLen;
+                    int incr;
 
-					}
+                    if (lowercaseCharFound || length == 0) {
+                        incr = 0;
 
-					dataLen = input
-							.read(ioBuffer, incr, ioBuffer.length - incr);
-					if (dataLen == -1) {
-						if (length > 0)
-							break;
-						else
-							return null;
-					}
-					bufferIndex = incr;
-					dataLen += incr;
+                    } else {
+                        incr = 2;
+                        ioBuffer[0] = ioBuffer[bufferIndex - 1];
+                        ioBuffer[1] = ioBuffer[bufferIndex];
 
-				}
+                    }
 
-				final char c = ioBuffer[bufferIndex++];
-				boolean breakChar = true;
-				boolean includeChar = false;
-				
-				if (c == PATH_START || c == PATH_SEPARATOR) {
+                    dataLen = input.read(ioBuffer, incr, ioBuffer.length - incr);
+                    if (dataLen == -1) {
+                        if (length > 0)
+                            break;
+                        else
+                            return null;
+                    }
+                    bufferIndex = incr;
+                    dataLen += incr;
 
-					if (length == 0) {
-						includeChar = true;
+                }
 
-					} else {
-						bufferIndex--;
-					}
+                final char c = ioBuffer[bufferIndex++];
+                boolean breakChar = true;
+                boolean includeChar = false;
 
-					typeCharFound = false;
-					uriCharFound = false;
+                if (c == PATH_START || c == PATH_SEPARATOR) {
 
-				} else if (c == TYPE_SEPARATOR && !typeCharFound
-						|| c == URI_SEPARATOR && !uriCharFound) {
-					length = 0;
-					breakChar = false;
-					lowercaseCharFound = false;
-					digitFound = false;
+                    if (length == 0) {
+                        includeChar = true;
 
-				} else {
+                    } else {
+                        bufferIndex--;
+                    }
 
-					if (Character.isDigit(c)) {
+                    typeCharFound = false;
+                    uriCharFound = false;
 
-						if (digitFound || length == 0) {
-							breakChar = false;
-							digitFound = true;
+                } else if (c == TYPE_SEPARATOR && !typeCharFound || c == URI_SEPARATOR && !uriCharFound) {
+                    length = 0;
+                    breakChar = false;
+                    lowercaseCharFound = false;
+                    digitFound = false;
 
-						} else {
-							bufferIndex--;
-						}
+                } else {
 
-						// TODO: normalize accent, it does not index accents for
-						// now
-					} else if (c >= 65 && c <= 90 || c >= 97 && c <= 122) {
+                    if (Character.isDigit(c)) {
 
-						if (digitFound) {
-							bufferIndex--;
+                        if (digitFound || length == 0) {
+                            breakChar = false;
+                            digitFound = true;
 
-						} else if (Character.isLowerCase(c)) {
+                        } else {
+                            bufferIndex--;
+                        }
 
-							if (!(lowercaseCharFound || length <= 1)) {
-								length--;
-								bufferIndex -= 2;
+                        // TODO: normalize accent, it does not index accents for
+                        // now
+                    } else if (c >= 65 && c <= 90 || c >= 97 && c <= 122) {
 
-							} else {
-								lowercaseCharFound = true;
-								breakChar = false;
+                        if (digitFound) {
+                            bufferIndex--;
 
-							}
+                        } else if (Character.isLowerCase(c)) {
 
-						} else if (!lowercaseCharFound) { // && uppercase
-							breakChar = false;
+                            if (!(lowercaseCharFound || length <= 1)) {
+                                length--;
+                                bufferIndex -= 2;
 
-						} else {
-							bufferIndex--;
-						}
+                            } else {
+                                lowercaseCharFound = true;
+                                breakChar = false;
 
-					}
+                            }
 
-				}
+                        } else if (!lowercaseCharFound) { // && uppercase
+                            breakChar = false;
 
-				if (!breakChar || includeChar) {
+                        } else {
+                            bufferIndex--;
+                        }
 
-					if (length == 0) // start of token
-						start = offset + bufferIndex - 1;
-					else if (length == buffer.length)
-						buffer = reusableToken.resizeTermBuffer(1 + length);
+                    }
 
-					if (c == TYPE_SEPARATOR && !typeCharFound) {
-						typeCharFound = true;
+                }
 
-					} else if (c == URI_SEPARATOR && !uriCharFound) {
-						typeCharFound = true;
+                if (!breakChar || includeChar) {
 
-					} else {
-						buffer[length++] = Character.toLowerCase(c); // buffer
-																		// it,
-																		// normalized
-					}
+                    if (length == 0) // start of token
+                        start = offset + bufferIndex - 1;
+                    else if (length == buffer.length)
+                        buffer = reusableToken.resizeTermBuffer(1 + length);
 
-					if (length == MAX_WORD_LEN || (breakChar && length > 0)) // buffer
-																				// overflow!
-						break;
+                    if (c == TYPE_SEPARATOR && !typeCharFound) {
+                        typeCharFound = true;
 
-				} else if (length > 0) {// at non-Letter w/ chars
+                    } else if (c == URI_SEPARATOR && !uriCharFound) {
+                        typeCharFound = true;
 
-					break; // return 'em
+                    } else {
+                        buffer[length++] = Character.toLowerCase(c); // buffer
+                        // it,
+                        // normalized
+                    }
 
-				}
+                    if (length == MAX_WORD_LEN || (breakChar && length > 0)) // buffer
+                        // overflow!
+                        break;
 
-			}
+                } else if (length > 0) {// at non-Letter w/ chars
 
-			reusableToken.setTermLength(length);
-			reusableToken.setStartOffset(start);
-			reusableToken.setEndOffset(start + length);
+                    break; // return 'em
 
-			return reusableToken;
+                }
 
-		}
-	}
+            }
 
-	public TokenStream tokenStream(String fieldName, Reader reader) {
-		return new DomainPathTokenizer(reader);
-	}
+            reusableToken.setTermLength(length);
+            reusableToken.setStartOffset(start);
+            reusableToken.setEndOffset(start + length);
 
-	public TokenStream reusableTokenStream(String fieldName, Reader reader)
-			throws IOException {
-		Tokenizer tokenizer = (Tokenizer) getPreviousTokenStream();
-		if (tokenizer == null) {
-			tokenizer = new DomainPathTokenizer(reader);
-			setPreviousTokenStream(tokenizer);
-		} else
-			tokenizer.reset(reader);
-		return tokenizer;
-	}
+            return reusableToken;
+
+        }
+    }
+
+    public TokenStream tokenStream(String fieldName, Reader reader) {
+        return new DomainPathTokenizer(reader);
+    }
+
+    public TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException {
+        Tokenizer tokenizer = (Tokenizer)getPreviousTokenStream();
+        if (tokenizer == null) {
+            tokenizer = new DomainPathTokenizer(reader);
+            setPreviousTokenStream(tokenizer);
+        } else
+            tokenizer.reset(reader);
+        return tokenizer;
+    }
 
 }

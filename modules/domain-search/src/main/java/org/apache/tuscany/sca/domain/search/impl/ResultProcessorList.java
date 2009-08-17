@@ -30,158 +30,157 @@ import org.apache.tuscany.sca.domain.search.ResultProcessor;
  * 
  * @version $Rev$ $Date$
  */
-public class ResultProcessorList extends LinkedList<ResultProcessor> implements
-		ResultProcessor {
+public class ResultProcessorList extends LinkedList<ResultProcessor> implements ResultProcessor {
 
-	private static final long serialVersionUID = 7147307292452694895L;
 
-	private HashMap<String, ResultHashMap> resultRoots = new HashMap<String, ResultHashMap>();
+    private static final long serialVersionUID = 7147307292452694895L;
 
-	private ResultFactory<? extends Result> resultFactory;
-	
-	public ResultProcessorList(ResultFactory<? extends Result> resultFactory) {
-		this.resultFactory = resultFactory;
-	}
+    private HashMap<String, ResultHashMap> resultRoots = new HashMap<String, ResultHashMap>();
 
-	public Result process(Document document, Result result) {
+    private ResultFactory<? extends Result> resultFactory;
 
-		if (result == null) {
-			result = this.resultFactory.createResult(document);
-			
-			if (result == null) {
-				return null;
-			}
-			
-		}
+    public ResultProcessorList(ResultFactory<? extends Result> resultFactory) {
+        this.resultFactory = resultFactory;
+    }
 
-		ResultHashMap resultHashMap;
+    public Result process(Document document, Result result) {
 
-		String parent = document.get(SearchFields.PARENT_FIELD);
+        if (result == null) {
+            result = this.resultFactory.createResult(document);
 
-		if (parent == null) {
-			resultHashMap = new ResultHashMap(result);
-			resultRoots.put(result.getValue(), resultHashMap);
+            if (result == null) {
+                return null;
+            }
 
-		} else {
+        }
 
-			ParentField parentField = new ParentField(parent);
-			HashMap<String, ResultHashMap> current = this.resultRoots;
-			//Result currentResult = null;
-			int elementsCount = parentField.getElementsCount();
+        ResultHashMap resultHashMap;
 
-			for (int i = 0; i < elementsCount; i++) {
-				String actualName = parentField.getElementName(i);
-				String type = parentField.getElementType(i);
+        String parent = document.get(SearchFields.PARENT_FIELD);
 
-				if (actualName.length() > 0) {
-					ResultHashMap actualResultHashMap = current.get(actualName);
+        if (parent == null) {
+            resultHashMap = new ResultHashMap(result);
+            resultRoots.put(result.getValue(), resultHashMap);
 
-					if (actualResultHashMap == null) {
-						ResultHashMap aux = new ResultHashMap(type, parentField
-								.getElementName(i));
+        } else {
 
-						current.put(aux.result.getValue(), aux);
-//						if (current.put(aux.result.getValue(), aux) == null
-//								&& currentResult != null) {
-//							currentResult.addContent(aux.result);
-//						}
+            ParentField parentField = new ParentField(parent);
+            HashMap<String, ResultHashMap> current = this.resultRoots;
+            // Result currentResult = null;
+            int elementsCount = parentField.getElementsCount();
 
-						current = aux;
-						//currentResult = aux.result;
+            for (int i = 0; i < elementsCount; i++) {
+                String actualName = parentField.getElementName(i);
+                String type = parentField.getElementType(i);
 
-					} else {
-						current = actualResultHashMap;
-						//currentResult = actualResultHashMap.result;
+                if (actualName.length() > 0) {
+                    ResultHashMap actualResultHashMap = current.get(actualName);
 
-					}
+                    if (actualResultHashMap == null) {
+                        ResultHashMap aux = new ResultHashMap(type, parentField.getElementName(i));
 
-				}
+                        current.put(aux.result.getValue(), aux);
+                        // if (current.put(aux.result.getValue(), aux) == null
+                        // && currentResult != null) {
+                        // currentResult.addContent(aux.result);
+                        // }
 
-			}
+                        current = aux;
+                        // currentResult = aux.result;
 
-			resultHashMap = current.get(result.getValue());
+                    } else {
+                        current = actualResultHashMap;
+                        // currentResult = actualResultHashMap.result;
 
-			if (resultHashMap == null) {
-				resultHashMap = new ResultHashMap(result);
-				current.put(result.getValue(), resultHashMap);
+                    }
 
-//				if (currentResult != null) {
-//					currentResult.addContent(result);
-//				}
+                }
 
-			}
+            }
 
-		}
+            resultHashMap = current.get(result.getValue());
 
-		for (ResultProcessor processor : this) {
-			result = processor.process(document, result);
-		}
+            if (resultHashMap == null) {
+                resultHashMap = new ResultHashMap(result);
+                current.put(result.getValue(), resultHashMap);
 
-		resultHashMap.result = result;
+                // if (currentResult != null) {
+                // currentResult.addContent(result);
+                // }
 
-		return result;
+            }
 
-	}
-	
-	private static void addContentsToResult(ResultHashMap resultHashMap) {
-		
-		for (ResultHashMap actual : resultHashMap.values()) {
-			addContentsToResult(actual);
-			
-			resultHashMap.result.addContent(actual.result);
-			
-		}
-		
-	}
+        }
 
-	public Result[] createResultRoots() {
-		int size = this.resultRoots.size();
+        for (ResultProcessor processor : this) {
+            result = processor.process(document, result);
+        }
 
-		if (size == 0) {
-			return new Result[0];
-		}
+        resultHashMap.result = result;
 
-		Result[] res = new Result[size];
+        return result;
 
-		int i = 0;
-		for (ResultHashMap resultHashMap : this.resultRoots.values()) {
-			
-			addContentsToResult(resultHashMap);
-			res[i++] = resultHashMap.result;
-			
-		}
-		
-		this.resultRoots.clear();
+    }
 
-		return res;
+    private static void addContentsToResult(ResultHashMap resultHashMap) {
 
-	}
+        for (ResultHashMap actual : resultHashMap.values()) {
+            addContentsToResult(actual);
 
-	private Result createResult(String field, String value) {
-		Result result = this.resultFactory.createResult(field, value);
-		
-		if (result != null) {
-			return result;
-		}
+            resultHashMap.result.addContent(actual.result);
 
-		throw new IllegalArgumentException();
+        }
 
-	}
+    }
 
-	private class ResultHashMap extends HashMap<String, ResultHashMap> {
+    public Result[] createResultRoots() {
+        int size = this.resultRoots.size();
 
-		private static final long serialVersionUID = 7982561264440904411L;
+        if (size == 0) {
+            return new Result[0];
+        }
 
-		Result result;
+        Result[] res = new Result[size];
 
-		ResultHashMap(String type, String name) {
-			this(createResult(type, name));
-		}
+        int i = 0;
+        for (ResultHashMap resultHashMap : this.resultRoots.values()) {
 
-		ResultHashMap(Result result) {
-			this.result = result;
-		}
+            addContentsToResult(resultHashMap);
+            res[i++] = resultHashMap.result;
 
-	}
+        }
+
+        this.resultRoots.clear();
+
+        return res;
+
+    }
+
+    private Result createResult(String field, String value) {
+        Result result = this.resultFactory.createResult(field, value);
+
+        if (result != null) {
+            return result;
+        }
+
+        throw new IllegalArgumentException();
+
+    }
+
+    private class ResultHashMap extends HashMap<String, ResultHashMap> {
+
+        private static final long serialVersionUID = 7982561264440904411L;
+
+        Result result;
+
+        ResultHashMap(String type, String name) {
+            this(createResult(type, name));
+        }
+
+        ResultHashMap(Result result) {
+            this.result = result;
+        }
+
+    }
 
 }

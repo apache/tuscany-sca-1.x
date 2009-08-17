@@ -32,20 +32,20 @@ import org.apache.tuscany.sca.domain.search.DocumentProcessorsMap;
  * @version $Rev$ $Date$
  */
 public class DomainSearchDocumentProcessorsMap extends DocumentProcessorsMap {
-	
-	private static final long serialVersionUID = -4651637686945322606L;
 
-	public DomainSearchDocumentProcessorsMap() {
-		addDocumentProcessor(Contribution.class, new ContributionDocumentProcessor());
-		addDocumentProcessor(Artifact.class, new ArtifactDocumentProcessor());
-		addDocumentProcessor(Property.class, new PropertyDocumentProcessor());
-		addDocumentProcessor(ComponentType.class, new ComponentTypeDocumentProcessor());
-		addDocumentProcessor(Binding.class, new BindingDocumentProcessor());
-		addDocumentProcessor(Component.class, new ComponentDocumentProcessor());
-		addDocumentProcessor(Composite.class, new CompositeDocumentProcessor());
-		addDocumentProcessor(FileContent.class, new DomainSearchFileDocumentProcessor());
-		addDocumentProcessor(Property.class, new PropertyDocumentProcessor());
-		
-	}
+    private static final long serialVersionUID = -4651637686945322606L;
+
+    public DomainSearchDocumentProcessorsMap() {
+        addDocumentProcessor(Contribution.class, new ContributionDocumentProcessor());
+        addDocumentProcessor(Artifact.class, new ArtifactDocumentProcessor());
+        addDocumentProcessor(Property.class, new PropertyDocumentProcessor());
+        addDocumentProcessor(ComponentType.class, new ComponentTypeDocumentProcessor());
+        addDocumentProcessor(Binding.class, new BindingDocumentProcessor());
+        addDocumentProcessor(Component.class, new ComponentDocumentProcessor());
+        addDocumentProcessor(Composite.class, new CompositeDocumentProcessor());
+        addDocumentProcessor(FileContent.class, new DomainSearchFileDocumentProcessor());
+        addDocumentProcessor(Property.class, new PropertyDocumentProcessor());
+
+    }
 
 }

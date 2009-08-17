@@ -33,54 +33,55 @@ import org.apache.tuscany.sca.domain.search.DocumentProcessor;
  */
 public class DefaultFileDocumentProcessor implements DocumentProcessor {
 
-	public Document process(DocumentProcessor parentProcessor,
-			DocumentMap documents, Object object, Document doc, String parent) {
+    public Document process(DocumentProcessor parentProcessor,
+                            DocumentMap documents,
+                            Object object,
+                            Document doc,
+                            String parent) {
 
-		if (object instanceof FileContent) {
-			FileContent file = (FileContent) object;
-			
-			Reader reader;
-			try {
-				reader = new InputStreamReader(file.getInputStream());
-				
-				if (doc == null) {
-					doc = documents.get(file.getPath());
-				}
-				
-				doc.add(new Field(SearchFields.FILE_CONTENT_FIELD, reader));
-				
-				doc.add(new Field(SearchFields.FILE_CONTENT_FIELD,
-						"", Field.Store.YES,
-						Field.Index.ANALYZED));
-				
-				return doc;
-				
-			} catch (IOException e) {
-				// ignore the file
-			}
-			
-		}
-		
-		return null;
+        if (object instanceof FileContent) {
+            FileContent file = (FileContent)object;
 
-	}
+            Reader reader;
+            try {
+                reader = new InputStreamReader(file.getInputStream());
 
-	public Object getDocumentKey(Object object) {
+                if (doc == null) {
+                    doc = documents.get(file.getPath());
+                }
 
-		if (object instanceof File) {
-			File file = (File) object;
-			String path = file.getPath();
+                doc.add(new Field(SearchFields.FILE_CONTENT_FIELD, reader));
 
-			if (path != null && path.length() == 0) {
-				return null;
-			}
+                doc.add(new Field(SearchFields.FILE_CONTENT_FIELD, "", Field.Store.YES, Field.Index.ANALYZED));
 
-			return path;
+                return doc;
 
-		}
+            } catch (IOException e) {
+                // ignore the file
+            }
 
-		throw new IllegalArgumentException();
+        }
 
-	}
+        return null;
+
+    }
+
+    public Object getDocumentKey(Object object) {
+
+        if (object instanceof File) {
+            File file = (File)object;
+            String path = file.getPath();
+
+            if (path != null && path.length() == 0) {
+                return null;
+            }
+
+            return path;
+
+        }
+
+        throw new IllegalArgumentException();
+
+    }
 
 }

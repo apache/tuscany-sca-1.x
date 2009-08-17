@@ -31,19 +31,18 @@ import org.apache.lucene.analysis.Tokenizer;
  */
 public class NamingAnalyzer extends Analyzer {
 
-	public TokenStream tokenStream(String fieldName, Reader reader) {
-		return new NamingTokenizer(reader);
-	}
+    public TokenStream tokenStream(String fieldName, Reader reader) {
+        return new NamingTokenizer(reader);
+    }
 
-	public TokenStream reusableTokenStream(String fieldName, Reader reader)
-			throws IOException {
-		Tokenizer tokenizer = (Tokenizer) getPreviousTokenStream();
-		if (tokenizer == null) {
-			tokenizer = new NamingTokenizer(reader);
-			setPreviousTokenStream(tokenizer);
-		} else
-			tokenizer.reset(reader);
-		return tokenizer;
-	}
+    public TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException {
+        Tokenizer tokenizer = (Tokenizer)getPreviousTokenStream();
+        if (tokenizer == null) {
+            tokenizer = new NamingTokenizer(reader);
+            setPreviousTokenStream(tokenizer);
+        } else
+            tokenizer.reset(reader);
+        return tokenizer;
+    }
 
 }

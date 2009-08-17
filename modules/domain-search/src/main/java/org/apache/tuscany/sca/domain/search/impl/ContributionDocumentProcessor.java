@@ -32,122 +32,123 @@ import org.apache.tuscany.sca.domain.search.DocumentProcessor;
  */
 public class ContributionDocumentProcessor implements DocumentProcessor {
 
-	public Document process(DocumentProcessor parentProcessor,
-			DocumentMap documents, Object object, Document doc, String parent) {
+    public Document process(DocumentProcessor parentProcessor,
+                            DocumentMap documents,
+                            Object object,
+                            Document doc,
+                            String parent) {
 
-		if (object instanceof Contribution) {
-			Contribution contribution = (Contribution) object;
-			String uri = contribution.getURI();
+        if (object instanceof Contribution) {
+            Contribution contribution = (Contribution)object;
+            String uri = contribution.getURI();
 
-			if (uri != null) {
+            if (uri != null) {
 
-				if (uri.length() == 0) {
-					uri = null;
+                if (uri.length() == 0) {
+                    uri = null;
 
-				} else {
+                } else {
 
-					parent += Character.toString(DomainPathAnalyzer.PATH_START)
-							+ SearchFields.CONTRIBUTION_FIELD
-							+ DomainPathAnalyzer.TYPE_SEPARATOR + uri;
+                    parent +=
+                        Character.toString(DomainPathAnalyzer.PATH_START) + SearchFields.CONTRIBUTION_FIELD
+                            + DomainPathAnalyzer.TYPE_SEPARATOR
+                            + uri;
 
-				}
+                }
 
-			}
+            }
 
-			if (uri != null) {
+            if (uri != null) {
 
-				if (doc == null) {
-					doc = documents.get(uri);
-				}
-				
-				doc.add(new Field(SearchFields.CONTRIBUTION_FIELD, uri,
-						Field.Store.YES, Field.Index.ANALYZED));
+                if (doc == null) {
+                    doc = documents.get(uri);
+                }
 
-			} else {
-				doc = FAKE_DOCUMENT;
-			}
+                doc.add(new Field(SearchFields.CONTRIBUTION_FIELD, uri, Field.Store.YES, Field.Index.ANALYZED));
 
-			for (Artifact artifact : contribution.getArtifacts()) {
-				Document artifactDoc = parentProcessor.process(parentProcessor,
-						documents, artifact, null, parent);
+            } else {
+                doc = FAKE_DOCUMENT;
+            }
 
-				if (uri != null) {
+            for (Artifact artifact : contribution.getArtifacts()) {
+                Document artifactDoc = parentProcessor.process(parentProcessor, documents, artifact, null, parent);
 
-					artifactDoc.add(new Field(SearchFields.PARENT_FIELD,
-							parent, Field.Store.YES, Field.Index.ANALYZED));
+                if (uri != null) {
 
-				}
+                    artifactDoc
+                        .add(new Field(SearchFields.PARENT_FIELD, parent, Field.Store.YES, Field.Index.ANALYZED));
 
-			}
+                }
 
-			// for (Import imprt : contribution.getImports()) {
-			// Document importDoc = processors.process(processors, documents,
-			// imprt, null);
-			//
-			// if (uri != null) {
-			//
-			// importDoc.add(new Field(SearchFields.IMPORTEDBY_FIELD, uri,
-			// Field.Store.YES, Field.Index.ANALYZED));
-			//
-			// }
-			//
-			// }
-			//
-			// for (Export export : contribution.getExports()) {
-			// Document exportDoc = processors.process(processors, documents,
-			// export, null);
-			//
-			// if (uri != null) {
-			//
-			// exportDoc.add(new Field(SearchFields.EXPORTEDBY_FIELD, uri,
-			// Field.Store.YES, Field.Index.ANALYZED));
-			//
-			// }
-			//
-			// }
+            }
 
-			if (!object.getClass().getSimpleName().contains("Workspace")) {
+            // for (Import imprt : contribution.getImports()) {
+            // Document importDoc = processors.process(processors, documents,
+            // imprt, null);
+            //
+            // if (uri != null) {
+            //
+            // importDoc.add(new Field(SearchFields.IMPORTEDBY_FIELD, uri,
+            // Field.Store.YES, Field.Index.ANALYZED));
+            //
+            // }
+            //
+            // }
+            //
+            // for (Export export : contribution.getExports()) {
+            // Document exportDoc = processors.process(processors, documents,
+            // export, null);
+            //
+            // if (uri != null) {
+            //
+            // exportDoc.add(new Field(SearchFields.EXPORTEDBY_FIELD, uri,
+            // Field.Store.YES, Field.Index.ANALYZED));
+            //
+            // }
+            //
+            // }
 
-				for (Composite composite : contribution.getDeployables()) {
-					Document compositeDoc = parentProcessor
-							.process(parentProcessor, documents, composite,
-									null, parent);
+            if (!object.getClass().getSimpleName().contains("Workspace")) {
 
-					if (uri != null) {
+                for (Composite composite : contribution.getDeployables()) {
+                    Document compositeDoc =
+                        parentProcessor.process(parentProcessor, documents, composite, null, parent);
 
-						compositeDoc.add(new Field(SearchFields.PARENT_FIELD,
-								parent, Field.Store.YES, Field.Index.ANALYZED));
+                    if (uri != null) {
 
-					}
+                        compositeDoc.add(new Field(SearchFields.PARENT_FIELD, parent, Field.Store.YES,
+                                                   Field.Index.ANALYZED));
 
-				}
+                    }
 
-			}
+                }
 
-			return doc;
+            }
 
-		}
+            return doc;
 
-		throw new IllegalArgumentException();
+        }
 
-	}
+        throw new IllegalArgumentException();
 
-	public Object getDocumentKey(Object object) {
+    }
 
-		if (object instanceof Contribution) {
-			Contribution contribution = (Contribution) object;
-			String uri = contribution.getURI();
+    public Object getDocumentKey(Object object) {
 
-			if (uri != null && uri.length() == 0) {
-				return null;
-			}
+        if (object instanceof Contribution) {
+            Contribution contribution = (Contribution)object;
+            String uri = contribution.getURI();
 
-			return uri;
+            if (uri != null && uri.length() == 0) {
+                return null;
+            }
 
-		}
+            return uri;
 
-		throw new IllegalArgumentException();
+        }
 
-	}
+        throw new IllegalArgumentException();
+
+    }
 
 }
