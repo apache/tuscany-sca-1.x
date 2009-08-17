@@ -27,21 +27,16 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 public class LaunchIntroducingNode {
 
     public static void main(String[] args) throws Exception {
-        try {
-            SCANode node = SCANodeFactory.newInstance().createSCANode(null, 
-                new SCAContribution("goodvaluetrips", "../../contributions/introducing-goodvaluetrips-contribution/target/classes"),
-                new SCAContribution("tuscanyscatours", "../../contributions/introducing-tuscanyscatours-contribution/target/classes"),
-                new SCAContribution("client", "../../contributions/introducing-client-contribution/target/classes"));
+        SCANode node = SCANodeFactory.newInstance().createSCANode(null, 
+            new SCAContribution("introducing-tours", "../../contributions/introducing-tuscanyscatours-contribution/target/classes"),
+            new SCAContribution("introducing-trips", "../../contributions/introducing-goodvaluetrips-contribution/target/classes"),
+            new SCAContribution("introducing-client", "../../contributions/introducing-client-contribution/target/classes"));
 
-            node.start();
+        node.start();
 
-            Runnable client = ((SCAClient)node).getService(Runnable.class, "TestClient/Runnable");
-            client.run();
-            
-            node.stop();
-            
-        } catch (Throwable th) {
-            th.printStackTrace();
-        }
+        Runnable proxy = ((SCAClient)node).getService(Runnable.class, "TestClient/Runnable");
+        proxy.run();
+        
+        node.stop();
     }
 }
