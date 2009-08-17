@@ -50,6 +50,7 @@ import javax.xml.stream.XMLStreamWriter;
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.assembly.Composite;
 import org.apache.tuscany.sca.assembly.xml.Constants;
+import org.apache.tuscany.sca.contribution.Contribution;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessorExtensionPoint;
@@ -89,11 +90,17 @@ public class DeployedCompositeCollectionImpl implements ItemCollection, LocalIte
     @Reference
     public LocalItemCollection deployableCollection;
     
+    @Reference
+    public DomainSearch domainSearch;
+    
     @Reference(required=false)
     public LocalItemCollection processCollection;
 
     @Reference
     public DomainManagerConfiguration domainManagerConfiguration;
+    
+    @Reference
+    public ContributionsReader contributionReader;
     
     private ModelFactoryExtensionPoint modelFactories;
     private AssemblyFactory assemblyFactory;
@@ -214,6 +221,8 @@ public class DeployedCompositeCollectionImpl implements ItemCollection, LocalIte
         // Write the composite collection
         writeCompositeCollection(compositeCollection);
         
+        updateDomainSearch(contributionURI);
+        
         return key;
     }
 
@@ -237,6 +246,8 @@ public class DeployedCompositeCollectionImpl implements ItemCollection, LocalIte
                 
                 // Write the domain composite
                 writeCompositeCollection(compositeCollection);
+                
+                updateDomainSearch(contributionURI);
                 
                 return;
             }
@@ -267,7 +278,10 @@ public class DeployedCompositeCollectionImpl implements ItemCollection, LocalIte
                 
                 // Write the domain composite
                 writeCompositeCollection(compositeCollection);
+                updateDomainSearch(contributionURI);
+                
                 break;
+                
             }
         }
 
@@ -284,6 +298,22 @@ public class DeployedCompositeCollectionImpl implements ItemCollection, LocalIte
         if (deleted == null) {
             throw new NotFoundException(key);
         }
+    }
+
+    private void updateDomainSearch(String contributionURI) {
+        Contribution[] contributions = this.contributionReader.readContributions();
+        
+        for (Contribution contribution : contributions) {
+            
+            if (contributionURI.equals(contribution.getURI())) {
+                this.domainSearch.contributionUpdated(contribution, contribution);
+                
+                break;
+                
+            }
+            
+        }
+        
     }
 
     public Entry<String, Item>[] query(String queryString) {

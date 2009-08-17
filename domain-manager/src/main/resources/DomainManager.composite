@@ -34,6 +34,11 @@
         <service name="Widget">
         	<t:binding.http uri="http://localhost:9990/ui/search"/>
         </service>
+        
+        <reference name="searcher" target="SearcherCollectionComponent/ItemCollection">
+		 	<t:binding.atom/>
+		 </reference>
+        
     </component>
     
     <component name="HomeGadget">
@@ -216,6 +221,8 @@
         <reference name="deployableCollection" target="DeployableCompositeCollectionComponent/LocalItemCollection"/>
         <reference name="processCollection" target="NodeProcessCollectionFacadeComponent/LocalItemCollection"/>
    		<reference name="domainManagerConfiguration" target="DomainManagerConfigurationComponent"/>
+   		<reference name="domainSearch" target="DomainSearchComponent"/>
+   		<reference name="contributionReader" target="DeployableCompositeCollectionComponent/ContributionsReader"/>
     </component>
 
     <component name="CloudCompositeServiceComponent">
@@ -255,17 +262,6 @@
    		<reference name="domainCompositeCollection" target="DomainCompositeCollectionComponent/LocalItemCollection"/>
    		<reference name="cloudCollection" target="CloudCollectionComponent/LocalItemCollection"/>
    		<reference name="processCollection" target="NodeProcessCollectionComponent/LocalItemCollection"/>
-    </component>
-    
-    <component name="SearchGadget">
-        <t:implementation.widget location="search-gadget.html"/>
-        <service name="Widget">
-        	<t:binding.http uri="http://localhost:9990/ui/search-gadget"/>
-        </service>
-		 <reference name="searcher" target="SearcherCollectionComponent/ItemCollection">
-		 	<t:binding.atom/>
-		 </reference>
-		
     </component>
     
     <component name="SearcherCollectionComponent">

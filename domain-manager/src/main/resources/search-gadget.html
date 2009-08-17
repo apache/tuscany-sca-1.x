@@ -27,41 +27,13 @@
 
 <link rel="stylesheet" type="text/css" href="manager.css">
 
-</head>
-
-<body>
-  <div id="domainSearch">
-  
-  <form id="domainSearchForm">
-    
-    <p style="margin-top:1em;margin-bottom:1em;margin-left:1em;margin-right:1em">
-     	<input id="searchField" type="text" value="" />&nbsp;<input id="searchButton" type="button" value="Search" onclick="search()" />
-     </p>
-     
-     <br>
-     <br>
-     <div id="results"></div>
-  </form>
-  
-  </div>
-</body>
-
 <script type="text/javascript">
-	//@Reference
-	var searcher = new tuscany.sca.Reference("searcher");
-	
-	var gadget = gadget(window, document);
-	
-	var lastQuery = "";
-	
-	elementByID(gadget, 'searchButton').onclick = search;
 
-
-	function search() {
-		lastQuery = elementByID(gadget, 'searchField').value;
-		searcher.get("query" + lastQuery, searchResponse);
+	function search(query) {
+		searcher.get("query" + query, searchResponse);
+		
 	}
-
+	
 	function getHighlighted(artifact) {
 		searcher.get("highlight" + lastQuery + ";" + artifact, searchResponse);
 	}
@@ -72,16 +44,56 @@
 		
 		var results = elementByID(gadget, "results");
 		results.innerHTML = content[0].firstChild.data;
+		
 	}
 	
 	function searchResponse(feed) {
-		alert("processing results");
 		var entries = feed.getElementsByTagName("entry");
 		var content = entries[0].getElementsByTagName("content");
 		
 		var results = elementByID(gadget, "results");
 		results.innerHTML = content[0].firstChild.data;
+		
 	}
+	
+	function getParameter( name )
+	{
+	  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	  var regexS = "[\\?&]"+name+"=([^&#]*)";
+	  var regex = new RegExp( regexS );
+	  var results = regex.exec( window.top.location.href );
+	  if( results == null )
+	    return ""
+	  else
+	    return results[1];
+	}
+	
+	function checkQuery() {
+		var query = getParameter("query");
+		
+		if (query.length > 0) {
+			search(query);
+			
+		} else {
+			search("*:*");
+		}
+		
+	}
+	
+</script>
+
+</head>
+
+<body onload="checkQuery()">
+   <div id="results"></div>
+ </body>
+
+<script type="text/javascript">
+
+	//@Reference
+	var searcher = new tuscany.sca.Reference("searcher");
+	
+	var gadget = gadget(window, document);
 	
 </script>
 

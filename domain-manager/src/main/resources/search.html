@@ -21,46 +21,107 @@
 <title>SCA Domain - Search</title>
 
 <script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript" src="../search/search.js"></script>
 
 <link rel="stylesheet" type="text/css" href="manager.css">
+
+<script type="text/javascript">
+
+	function search(query) {
+		searcher.get("query" + query, searchResponse);
+	}
+	
+	function getHighlighted(artifact) {
+	
+		var query = getParameter("query");
+		
+		if (query.length == 0) {
+			query = "*:*";
+		}
+	
+		searcher.get("highlight" + query + ";" + artifact, highlightResponse);
+	}
+	
+	function highlightResponse(feed) {
+		var entries = feed.getElementsByTagName("entry");
+		var content = entries[0].getElementsByTagName("content");
+		var title = entries[0].getElementsByTagName("title")[0].firstChild.data;
+		
+		var fileContent = document.getElementById(title);
+		fileContent.innerHTML = content[0].firstChild.data;
+		
+	}
+	
+	function searchResponse(feed) {
+		var entries = feed.getElementsByTagName("entry");
+		var content = entries[0].getElementsByTagName("content");
+		
+		var results = document.getElementById("results");
+		results.innerHTML = content[0].firstChild.data;
+		
+	}
+	
+	function getParameter( name )
+	{
+	  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	  var regexS = "[\\?&]"+name+"=([^&#]*)";
+	  var regex = new RegExp( regexS );
+	  var results = regex.exec( window.top.location.href );
+	  if( results == null )
+	    return ""
+	  else
+	    return results[1];
+	}
+	
+	function checkQuery() {
+		var query = getParameter("query");
+		
+		if (query.length > 0) {
+			search(query);
+			
+		} else {
+			search("*:*");
+		}
+		
+	}
+	
+</script>
+
 </head>
 
-<body>
+<body onload="checkQuery()">
   <div id="toolbarGadgetDiv"></div>
   <br>
   
   <span class=hd1>
-  SCA Domain<br><br>
-  Domain Search&nbsp;<a href="/search/"><img src="icons/feed-icon.png" border="0"></a>
+  Results<br>
   </span>
-  <br>
   
   <p>
   	<div id="searchGadgetDiv"></div>
   </p>
   
+  <div id="results"></div>
+  
   <iframe id="toolbarGadget" src="toolbar-gadget.html"></iframe>
-  <iframe id="searchGadget" src="search-gadget.html" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe>
 </body>
 
 <script type="text/javascript">
 	var toolbarGadgetDiv = elementByID(document, 'toolbarGadgetDiv');
-	var searchGadgetDiv = elementByID(document, 'searchGadgetDiv');
-	
 	var toolbarGadget = elementByID(document, 'toolbarGadget');
-	var searchGadget = elementByID(document, 'searchGadget');
 	
 	function ongadget(win, doc) {
 		if (doc == content(toolbarGadget)) {
 			toolbarGadgetDiv.innerHTML = doc.body.innerHTML;
 			return toolbarGadgetDiv;
-		} else if (doc == content(searchGadget)) {
-			searchGadgetDiv.innerHTML = doc.body.innerHTML;
-			searchGadgetDiv.showContributions = true;
-			searchGadgetDiv.showComponents = true; 
-			return searchGadgetDiv;
 		}
 		return document;
 	}
+	
+	//@Reference
+	var searcher = new tuscany.sca.Reference("searcher");
+	
+	var gadget1 = gadget(window, document);
+	
 </script>
 </html>
