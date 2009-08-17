@@ -19,7 +19,6 @@
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
               xmlns:tst="http://tuscanyscatours.com/">
-    <export namespace="http://tuscanyscatours.com/" />
     <export.java package="com.tuscanyscatours" />
     <deployable composite="tst:Tours" />
 </contribution>
