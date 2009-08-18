@@ -16,13 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.tuscanyscatours;
+package com.tuscanyscatours.impl;
 
+import com.goodvaluetrips.Trips;
+import com.tuscanyscatours.Bookings;
+import com.tuscanyscatours.Updates;
 import org.osoa.sca.annotations.Reference;
 
-public class TripBooking implements Bookings {
+public class TripBookingImpl implements Bookings {
     @Reference
-    protected com.goodvaluetrips.Trips mytrips;
+    protected Trips mytrips;
 
     @Reference
     protected Updates cart;

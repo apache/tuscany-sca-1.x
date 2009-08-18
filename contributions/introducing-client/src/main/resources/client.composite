@@ -22,7 +22,7 @@
     name="Client">
 
     <component name="TestClient">
-        <implementation.java class="scatours.client.TestClient" />
+        <implementation.java class="scatours.client.impl.TestClientImpl" />
         <reference name="bookings" target="TripBooking/Bookings" />
         <reference name="checkout" target="ShoppingCart/Checkout" />
      </component>

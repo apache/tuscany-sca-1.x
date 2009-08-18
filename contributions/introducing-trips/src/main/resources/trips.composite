@@ -22,7 +22,7 @@
     name="Trips">
 
     <component name="TripProvider">
-        <implementation.java class="com.goodvaluetrips.TripProvider" />
+        <implementation.java class="com.goodvaluetrips.impl.TripProviderImpl" />
         <service name="Trips">
             <interface.java interface="com.goodvaluetrips.Trips" />
         </service>

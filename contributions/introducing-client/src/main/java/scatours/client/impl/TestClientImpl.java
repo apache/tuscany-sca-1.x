@@ -16,11 +16,32 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.goodvaluetrips;
 
-public class TripProvider implements Trips {
-    public String checkAvailability(String trip, int people) {
-        // call non-SCA code to reserve trip and return booking code
-        return "6R98Y";
+package scatours.client.impl;
+
+import java.math.BigDecimal;
+
+import com.tuscanyscatours.Bookings;
+import com.tuscanyscatours.Checkout;
+
+import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Service;
+
+@Service(Runnable.class)
+public class TestClientImpl {
+    @Reference
+    protected Bookings bookings;
+
+    @Reference
+    protected Checkout checkout;
+
+    public TestClientImpl() {
+    }
+
+    public void run() {
+        String bookingCode = bookings.newBooking("FS1APR4", 1);
+        System.out.println("Booking code is " + bookingCode);
+
+        checkout.makePayment(new BigDecimal("1995.00"), "1234567843218765 10/10");
     }
 }

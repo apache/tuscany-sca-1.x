@@ -16,32 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
+package com.goodvaluetrips.impl;
 
-package scatours.client;
+import com.goodvaluetrips.Trips;
 
-import java.math.BigDecimal;
-
-import com.tuscanyscatours.Bookings;
-import com.tuscanyscatours.Checkout;
-
-import org.osoa.sca.annotations.Reference;
-import org.osoa.sca.annotations.Service;
-
-@Service(Runnable.class)
-public class TestClient {
-    @Reference
-    protected Bookings bookings;
-
-    @Reference
-    protected Checkout checkout;
-
-    public TestClient() {
-    }
-
-    public void run() {
-        String bookingCode = bookings.newBooking("FS1APR4", 1);
-        System.out.println("Booking code is " + bookingCode);
-
-        checkout.makePayment(new BigDecimal("1995.00"), "1234567843218765 10/10");
+public class TripProviderImpl implements Trips {
+    public String checkAvailability(String trip, int people) {
+        // call non-SCA code to reserve trip and return booking code
+        return "6R98Y";
     }
 }

@@ -16,13 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.tuscanyscatours;
+package com.tuscanyscatours.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import com.tuscanyscatours.Checkout;
+import com.tuscanyscatours.Updates;
 
-public class ShoppingCart implements Checkout, Updates {
+public class ShoppingCartImpl implements Checkout, Updates {
 	private static List<String> bookedTrips = new ArrayList<String>();
 	
     public void makePayment(BigDecimal amount, String cardInfo) {

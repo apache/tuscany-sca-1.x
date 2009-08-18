@@ -22,7 +22,7 @@
     name="Tours">
 
     <component name="TripBooking">
-        <implementation.java class="com.tuscanyscatours.TripBooking" />
+        <implementation.java class="com.tuscanyscatours.impl.TripBookingImpl" />
         <service name="Bookings">
             <interface.java interface="com.tuscanyscatours.Bookings" />
         </service>
@@ -35,7 +35,7 @@
     </component>
 
     <component name="ShoppingCart">
-        <implementation.java class="com.tuscanyscatours.ShoppingCart"/>
+        <implementation.java class="com.tuscanyscatours.impl.ShoppingCartImpl"/>
         <service name="Checkout">
             <interface.java interface="com.tuscanyscatours.Checkout" />
         </service>
