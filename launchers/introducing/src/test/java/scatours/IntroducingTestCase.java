@@ -27,9 +27,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test case to run the test code in introducing-client-contribution that
- * tests components and services in introducing-tuscanyscatours-contribution
- * and introducing-goodvaluetrips-contribution.
+ * Test case to run the test code in the introducing-client contribution
+ * that tests components and services in the introducing-tours contribution
+ * and the introducing-trips contribution.
  */
 public class IntroducingTestCase {
 
@@ -38,9 +38,9 @@ public class IntroducingTestCase {
     @Before
     public void startServer() throws Exception {
         node = SCANodeFactory.newInstance().createSCANode(null, 
-            new SCAContribution("introducing-tours", "../../contributions/introducing-tuscanyscatours-contribution/target/classes"),
-            new SCAContribution("introducing-trips", "../../contributions/introducing-goodvaluetrips-contribution/target/classes"),
-            new SCAContribution("introducing-client", "../../contributions/introducing-client-contribution/target/classes"));
+            new SCAContribution("introducing-tours", "../../contributions/introducing-tours/target/classes"),
+            new SCAContribution("introducing-trips", "../../contributions/introducing-trips/target/classes"),
+            new SCAContribution("introducing-client", "../../contributions/introducing-client/target/classes"));
         node.start();
     }
 

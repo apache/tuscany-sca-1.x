@@ -17,16 +17,32 @@
  * under the License.
 -->
 
-<project name="scatours-introducing-trips-launcher" default="run">
+<project name="scatours-launcher-introducing-client" default="compile">
     <property environment="env"/> 
 
-    <target name="run">
-        <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true">
-            <arg value="http://localhost:9990/node-config/TripsNode"/>
+    <target name="compile">
+        <mkdir dir="target/classes"/>
+        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
+            <src path="src/main/java"/>
             <classpath>
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
+        </javac>
+    </target>
+
+    <target name="run">
+        <java classname="scatours.IntroducingClientLauncher" fork="true">
+            <classpath>
+                <pathelement location="target/classes"/>
+                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
+            </classpath>
         </java>
+    </target>
+
+    <target name="clean">
+        <delete includeemptydirs="true">
+            <fileset dir="target"/>
+        </delete>
     </target>
 
 </project>

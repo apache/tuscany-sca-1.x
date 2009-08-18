@@ -25,18 +25,34 @@
         <version>1.6-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent><version>1.0-SNAPSHOT</version>
-    <artifactId>scatours-introducing-tuscanyscatours-contribution</artifactId>
-    <name>Apache Tuscany SCA Tours Introducing TuscanySCATours Contribution</name>
-
+    <artifactId>scatours-launcher-introducing-domain</artifactId>
+    <name>Apache Tuscany SCA Tours Introducing Domain Launcher</name>
+    
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-sca-api</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <artifactId>scatours-contribution-introducing-tours</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>        
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-contribution-introducing-trips</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>        
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-contribution-introducing-client</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>        
     </dependencies>
 
     <build>
         <finalName>${artifactId}</finalName>
     </build>
+
 </project>

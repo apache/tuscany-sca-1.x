@@ -25,34 +25,39 @@
         <version>1.6-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent><version>1.0-SNAPSHOT</version>
-    <artifactId>scatours-introducing-domain-launcher</artifactId>
-    <name>Apache Tuscany SCA Tours Introducing Domain Launcher</name>
-    
+    <artifactId>scatours-launcher-introducing-client</artifactId>
+    <name>Apache Tuscany SCA Tours Introducing Client Launcher</name>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-introducing-tuscanyscatours-contribution</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>        
-        
+            <artifactId>tuscany-node-api</artifactId>
+            <version>1.6-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-introducing-goodvaluetrips-contribution</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>        
-        
+            <artifactId>tuscany-implementation-java-runtime</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-introducing-client-contribution</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>        
+            <artifactId>tuscany-implementation-node-runtime</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.5</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-
+    
     <build>
-        <finalName>${artifactId}</finalName>
+       <finalName>${artifactId}</finalName>
     </build>
-
 </project>

@@ -63,9 +63,9 @@
                 <module>hotel-contribution</module>
                 <module>interaction-client-contribution</module>
                 <module>interaction-service-remote-contribution</module>
-                <module>introducing-client-contribution</module>
-                <module>introducing-goodvaluetrips-contribution</module>
-                <module>introducing-tuscanyscatours-contribution</module>
+                <module>introducing-client</module>
+                <module>introducing-tours</module>
+                <module>introducing-trips</module>
                 <module>notification-contribution</module>
                 <module>notification-ws-contribution</module>
                 <module>notification-corba-contribution</module>

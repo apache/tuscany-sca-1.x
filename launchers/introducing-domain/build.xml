@@ -17,32 +17,20 @@
  * under the License.
 -->
 
-<project name="scatours-introducing-launcher" default="compile">
+<project name="scatours-launcher-introducing-domain" default="run">
     <property environment="env"/> 
 
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
-            <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </javac>
-    </target>
-
     <target name="run">
-        <java classname="scatours.IntroducingLauncher" fork="true">
+        <java classname="org.apache.tuscany.sca.node.launcher.DomainManagerLauncher"
+              dir="target/classes" fork="true">
             <classpath>
-                <pathelement location="target/classes"/>
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
         </java>
     </target>
 
     <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
+        <delete dir="./target"/>
     </target>
 
 </project>

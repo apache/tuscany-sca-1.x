@@ -17,12 +17,12 @@
  * under the License.
 -->
 
-<project name="scatours-introducing-tours-launcher" default="run">
+<project name="scatours-launcher-introducing-trips" default="run">
     <property environment="env"/> 
 
     <target name="run">
         <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true">
-            <arg value="http://localhost:9990/node-config/ToursNode"/>
+            <arg value="http://localhost:9990/node-config/TripsNode"/>
             <classpath>
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>

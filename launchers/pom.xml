@@ -46,9 +46,9 @@
                 <module>databinding-launcher</module>
                 <module>feed-logger-launcher</module>
                 <module>interaction-launcher</module>
-                <module>introducing-launcher</module>
-                <module>introducing-client-launcher</module>
-                <module>introducing-domain-launcher</module>
+                <module>introducing</module>
+                <module>introducing-client</module>
+                <module>introducing-domain</module>
                 <module>jumpstart-launcher</module>
                 <module>fullapp-launcher</module>
                 <module>help-pages-launcher</module>

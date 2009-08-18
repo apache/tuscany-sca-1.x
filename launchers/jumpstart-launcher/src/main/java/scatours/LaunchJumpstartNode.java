@@ -29,8 +29,8 @@ public class LaunchJumpstartNode {
     public static void main(String[] args) throws Exception {
         try {
             SCAContribution gvtContribution = 
-              new SCAContribution("goodvaluetrips", 
-                  "../../contributions/introducing-goodvaluetrips-contribution/target/classes");
+              new SCAContribution("introducing-trips", 
+                  "../../contributions/introducing-trips/target/classes");
             
             SCANode node = SCANodeFactory.newInstance().
                createSCANode("trips.composite", 
