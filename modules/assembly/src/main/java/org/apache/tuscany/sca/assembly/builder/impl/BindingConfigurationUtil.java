@@ -81,8 +81,10 @@ abstract class BindingConfigurationUtil {
                                 && targetNodeBinding != sourceNodeBinding) {
                                 if (!isCallback) {
                                     serviceBinding.setURI(targetNodeBinding.getURI() + serviceBinding.getURI());
+                                    bindingMap.remove(serviceBinding);  // don't add this again
                                 } else {
                                     binding.setURI(sourceNodeBinding.getURI() + binding.getURI());
+                                    bindingMap.remove(binding);  // don't add this again
                                 }
                             }
                         }
