@@ -39,11 +39,11 @@
             <modules>
                 <module>blog-feed-contribution/</module>
                 <module>calendar-contribution</module>
-                <module>car-contribution</module>
-                <module>common-contribution</module>
-                <module>creditcard-payment-jaxb-contribution</module>
+                <module>car</module>
+                <module>common</module>
+                <module>creditcard-payment-jaxb</module>
                 <module>creditcard-payment-sdo-contribution</module>
-                <module>currency-contribution</module>
+                <module>currency</module>
                 <module>currency-corba-contribution</module>
                 <module>currency-jms-contribution</module>
                 <module>currency-jsp-contribution</module>
@@ -52,15 +52,15 @@
                 <module>databinding-client-contribution</module>
                 <module>emailgateway-contribution</module>
                 <module>feed-logger-contribution</module>
-                <module>flight-contribution</module>
-                <module>fullapp-ui-contribution</module>
-                <module>fullapp-frontend-contribution</module>
-                <module>fullapp-currency-contribution</module>
-                <module>fullapp-packagedtrip-contribution</module>
-                <module>fullapp-bespoketrip-contribution</module>
-                <module>fullapp-shoppingcart-contribution</module>
+                <module>flight</module>
+                <module>fullapp-ui</module>
+                <module>fullapp-frontend</module>
+                <module>fullapp-currency</module>
+                <module>fullapp-packagedtrip</module>
+                <module>fullapp-bespoketrip</module>
+                <module>fullapp-shoppingcart</module>
                 <module>help-pages-contribution</module>
-                <module>hotel-contribution</module>
+                <module>hotel</module>
                 <module>interaction-client-contribution</module>
                 <module>interaction-service-remote-contribution</module>
                 <module>introducing-client</module>
@@ -72,12 +72,12 @@
                 <module>notification-ejb-contribution</module>
                 <module>notification-jms-contribution</module>
                 <module>notification-rmi-contribution</module>
-                <module>shoppingcart-contribution</module>   
-                <module>travelcatalog-contribution</module>         
-                <module>tripbooking-contribution</module>
-                <module>trip-contribution</module>
-                <module>scatours-contribution</module>
-                <module>payment-java-contribution</module>
+                <module>shoppingcart</module>   
+                <module>travelcatalog</module>         
+                <module>tripbooking</module>
+                <module>trip</module>
+                <module>scatours</module>
+                <module>payment-java</module>
                 <module>payment-spring-contribution</module>
                 <module>payment-spring-scatag-contribution</module>
                 <module>payment-bpel-contribution</module>
