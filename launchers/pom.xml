@@ -59,6 +59,7 @@
                 <module>notification-ejb-launcher</module>
                 <module>notification-jms-launcher</module>
                 <module>notification-rmi-launcher</module>
+                <module>policy</module>
             </modules>
         </profile>
 

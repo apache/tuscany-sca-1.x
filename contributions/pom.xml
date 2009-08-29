@@ -42,6 +42,7 @@
                 <module>car</module>
                 <module>common</module>
                 <module>creditcard-payment-jaxb</module>
+                <module>creditcard-payment-jaxb-policy</module>
                 <module>creditcard-payment-sdo-contribution</module>
                 <module>currency</module>
                 <module>currency-corba-contribution</module>
@@ -78,10 +79,12 @@
                 <module>trip</module>
                 <module>scatours</module>
                 <module>payment-java</module>
+                <module>payment-java-policy</module>
                 <module>payment-spring-contribution</module>
                 <module>payment-spring-scatag-contribution</module>
                 <module>payment-bpel-contribution</module>
                 <module>payment-groovy-contribution</module>
+                <module>policy-client</module>
             </modules>
         </profile>
 
