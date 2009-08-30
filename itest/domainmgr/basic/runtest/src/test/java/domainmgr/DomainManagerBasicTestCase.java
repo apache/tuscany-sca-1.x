@@ -38,7 +38,7 @@ public class DomainManagerBasicTestCase {
 
     private String home = System.getProperty("java.home");
     private String classpath = System.getProperty("java.class.path");
-    private Runtime runtime = Runtime.getRuntime();
+    //private Runtime runtime = Runtime.getRuntime();
     private BufferedReader domainErrReader;
     private BufferedReader domainOutReader;
 
@@ -56,12 +56,12 @@ public class DomainManagerBasicTestCase {
             // from the "src/test/resources/domain/" directory.
             System.out.println("Starting domain manager");
             String[] domainCommand = {
-                "\"" + home + "/bin/java\"",
+                "" + home + "/bin/java",
                 "-cp",
-                "\"" + classpath + "\"",
+                "" + classpath + "",
                 "org.apache.tuscany.sca.node.launcher.DomainManagerLauncher"};
             String userdir = System.getProperty("user.dir");
-            domainMgr = runtime.exec(domainCommand, null, new File(userdir + "/target/test-classes/domain/"));
+            domainMgr = Runtime.getRuntime().exec(domainCommand, null, new File(userdir + "/target/test-classes/domain/"));
 
             // Get the new process's stdin, stdout and stderr streams so that we
             // can monitor and control execution of the domain manager process.
@@ -226,12 +226,12 @@ public class DomainManagerBasicTestCase {
         void start() throws Exception {
             System.out.println("Starting node " + nodeName);
             String[] nodeCommand = {
-                "\"" + home + "/bin/java\"",
+                "" + home + "/bin/java",
                 "-cp",
-                "\"" + classpath + "\"",
+                "" + classpath + "",
                 "org.apache.tuscany.sca.node.launcher.NodeLauncher",
                 "http://localhost:9990/node-config/" + nodeName};
-            nodeProcess = runtime.exec(nodeCommand, null, new File(nodeDir));
+            nodeProcess = Runtime.getRuntime().exec(nodeCommand, null, new File(nodeDir));
 
             // Get the new process's stdin, stdout and stderr streams so that we
             // can monitor and control execution of the test node process.
