@@ -25,7 +25,7 @@
         <implementation.java class="com.tuscanyscatours.payment.creditcard.impl.CreditCardPaymentImpl" />
         <service name="CreditCardPayment">
             <interface.wsdl interface="http://www.tuscanyscatours.com/CreditCardPayment/#wsdl.interface(CreditCardPayment)" /> 
-            <binding.ws uri="http://localhost:8082/CreditCardPayment" requires=""/>
+            <binding.ws uri="http://localhost:8082/CreditCardPayment" requires="authentication"/>
             <binding.sca/>
         </service>
     </component>

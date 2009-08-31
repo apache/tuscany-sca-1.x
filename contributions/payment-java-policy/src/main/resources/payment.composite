@@ -28,7 +28,9 @@
            <binding.ws uri="http://localhost:8081/Payment"/>
         </service>
         <reference name="customerRegistry" target="CustomerRegistry"/>
-        <reference name="creditCardPayment" requires="">
+        <!-- reference name="creditCardPayment" policySets="BasicAuthenticationPolicySet"-->
+        <!-- reference name="creditCardPayment" requires="authentication"-->
+        <reference name="creditCardPayment">
             <binding.ws uri="http://localhost:8082/CreditCardPayment"/>
         </reference>
         <reference name="emailGateway" target="EmailGateway"/>

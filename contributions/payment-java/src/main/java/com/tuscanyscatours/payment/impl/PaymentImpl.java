@@ -40,15 +40,12 @@ import com.tuscanyscatours.payment.creditcard.CreditCardPayment;
  * The payment implementation
  */
 @Service(Payment.class)
-@RolesAllowed({"Admin", "Billing"})
-@RunAs("Billing")
 public class PaymentImpl implements Payment {
 
     @Reference
     protected CustomerRegistry customerRegistry;
 
     @Reference
-    @Authentication
     protected CreditCardPayment creditCardPayment;
 
     @Reference

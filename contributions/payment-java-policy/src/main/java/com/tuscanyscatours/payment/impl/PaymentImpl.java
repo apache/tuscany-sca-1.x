@@ -25,6 +25,7 @@ import javax.annotation.security.RunAs;
 import org.osoa.sca.annotations.Authentication;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Requires;
 import org.osoa.sca.annotations.Service;
 
 import com.tuscanyscatours.customer.Customer;
@@ -33,22 +34,22 @@ import com.tuscanyscatours.customer.CustomerRegistry;
 import com.tuscanyscatours.emailgateway.EmailGateway;
 import com.tuscanyscatours.payment.Payment;
 import com.tuscanyscatours.payment.creditcard.AuthorizeFault_Exception;
-import com.tuscanyscatours.payment.creditcard.CreditCardDetailsType;
 import com.tuscanyscatours.payment.creditcard.CreditCardPayment;
 
 /**
  * The payment implementation
  */
 @Service(Payment.class)
-@RolesAllowed({"Admin", "Billing"})
-@RunAs("Billing")
+//@RolesAllowed({"Admin", "Billing"})
+//@RunAs("Billing")
 public class PaymentImpl implements Payment {
 
     @Reference
     protected CustomerRegistry customerRegistry;
 
     @Reference
-    @Authentication
+    //@Authentication - not supported
+    @Requires("{http://www.osoa.org/xmlns/sca/1.0}authentication")
     protected CreditCardPayment creditCardPayment;
 
     @Reference
