@@ -85,8 +85,7 @@ public class GoogleBloggerServiceTestCase {
     
     
 
-    //@Test
-    @Ignore("TUSCANY-3006")
+    @Test
     public void testClientPost() throws Exception {
         String blogEntryTitle = "titleByBloogerTestcase000";
         Entry newEntry = new Entry();
@@ -97,8 +96,7 @@ public class GoogleBloggerServiceTestCase {
     }
 
     
-    //@Test
-    @Ignore("TUSCANY-3006")
+    @Test
     public void testClientDelete() throws Exception {
         
         //This test case might fail
