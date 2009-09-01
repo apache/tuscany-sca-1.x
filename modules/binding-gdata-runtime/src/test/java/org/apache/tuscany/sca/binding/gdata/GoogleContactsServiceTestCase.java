@@ -102,7 +102,7 @@ public class GoogleContactsServiceTestCase extends TestCase {
     }
 
     
-    @Ignore("TUSCANY-3164")
+    //@Ignore("TUSCANY-3164")
     @Test
     public void testClientDelete() throws Exception {
         
