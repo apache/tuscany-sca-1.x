@@ -100,7 +100,7 @@ public class GoogleWebAlbumServiceTestCase extends TestCase{
         String entryID = "photoid/5233468700029715874";          
         String newBlogEntryTitle = "updatedTitle:dog";
         testService.clientPut(entryID, newBlogEntryTitle);      //update the title
-        Thread.sleep(300);            
+        Thread.sleep(Constants.SLEEP_INTERVAL);            
         Entry updatedEntry = testService.clientGetEntry(entryID);         
         assertEquals(newBlogEntryTitle, updatedEntry.getTitle().getPlainText());
     }

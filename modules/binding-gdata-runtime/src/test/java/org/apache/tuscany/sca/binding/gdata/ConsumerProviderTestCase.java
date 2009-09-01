@@ -111,7 +111,7 @@ public class ConsumerProviderTestCase extends TestCase {
         newEntry.setContent(new PlainTextConstruct("NewEntry Content to be delted"));
         Entry confirmedNewEntry = testService.clientPost(newEntry);
 
-        Thread.sleep(300);
+        Thread.sleep(Constants.SLEEP_INTERVAL);
        
         Feed feed00 = testService.clientGetFeed();
         int entryNum00 = feed00.getEntries().size(); // The number of entries
