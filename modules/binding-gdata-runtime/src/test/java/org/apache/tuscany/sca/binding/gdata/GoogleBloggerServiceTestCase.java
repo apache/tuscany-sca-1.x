@@ -78,7 +78,7 @@ public class GoogleBloggerServiceTestCase {
         String entryID = "2889832689497686762";          
         String newBlogEntryTitle = "updatedTitleByTestCase2";
         testService.clientPut(entryID, newBlogEntryTitle);      //update the title
-        Thread.sleep(300);            
+        Thread.sleep(Constants.SLEEP_INTERVAL);            
         Entry updatedEntry = testService.clientGetEntry(entryID);         
         Assert.assertEquals(newBlogEntryTitle, updatedEntry.getTitle().getPlainText());
     }
@@ -110,7 +110,7 @@ public class GoogleBloggerServiceTestCase {
         newEntry.setTitle(new PlainTextConstruct("blogEntryShouldNotApear"));
         newEntry.setContent(new PlainTextConstruct("contentByBloggerShouldNotAppear"));
         Entry postedEntry = testService.clientPost(newEntry);
-        Thread.sleep(300);        
+        Thread.sleep(Constants.SLEEP_INTERVAL);        
         int idStartPosition = postedEntry.getId().lastIndexOf("-");
         String postedEntryID = postedEntry.getId().substring(idStartPosition+1);        
         System.out.println("postedEntryID: " + postedEntryID );

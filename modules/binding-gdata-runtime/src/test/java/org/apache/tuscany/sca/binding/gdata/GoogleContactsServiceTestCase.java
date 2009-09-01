@@ -35,7 +35,7 @@ import com.google.gdata.data.Entry;
 import com.google.gdata.data.Feed;
 import com.google.gdata.data.PlainTextConstruct;
 
-public class GoogleContactsServiceTestCase extends TestCase{
+public class GoogleContactsServiceTestCase extends TestCase {
 
     private SCADomain scaDomainConsumer = null;
     private CustomerClient testService = null;    
@@ -84,7 +84,7 @@ public class GoogleContactsServiceTestCase extends TestCase{
         String entryID = "12feeeb38ab87365";          
         String newBlogEntryTitle = "updatedTitleByGoogleContactsConsumerTestCase";
         testService.clientPut(entryID, newBlogEntryTitle);      //update the title
-        Thread.sleep(300);            
+        Thread.sleep(Constants.SLEEP_INTERVAL);            
         Entry updatedEntry = testService.clientGetEntry(entryID);         
         assertEquals(newBlogEntryTitle, updatedEntry.getTitle().getPlainText());
     }
@@ -115,7 +115,7 @@ public class GoogleContactsServiceTestCase extends TestCase{
         newEntry.setTitle(new PlainTextConstruct("contactEntryShouldNotApear"));
         newEntry.setContent(new PlainTextConstruct("contactByBloggerShouldNotAppear"));
         Entry postedEntry = testService.clientPost(newEntry);
-        Thread.sleep(300); 
+        Thread.sleep(Constants.SLEEP_INTERVAL); 
         
         System.out.println("ID: " + postedEntry.getId());
         
