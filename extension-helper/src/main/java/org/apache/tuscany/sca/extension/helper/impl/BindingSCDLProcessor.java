@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.extension.helper.impl;
@@ -45,7 +45,7 @@ import org.apache.tuscany.sca.extension.helper.utils.AbstractBinding;
 /**
  * An SCDL ArtifactProcessor which uses the Binding class getters/setters
  * to define the SCDL attributes.
- * 
+ *
  * TODO: merge this with SCDLProcessor
  *
  * @version $Rev$ $Date$
@@ -126,7 +126,7 @@ public class BindingSCDLProcessor implements StAXArtifactProcessor {
         //FIXME: none of the attributes of Binding seem to be working with PojoBinding
         // For now at least read the binding URI
         String uri = reader.getAttributeValue(null, "uri");
-        
+
         if (elementTextSetter != null) {
             try {
                 String value = reader.getElementText();
@@ -144,7 +144,7 @@ public class BindingSCDLProcessor implements StAXArtifactProcessor {
 
         if (!(impl instanceof Binding)) {
             impl = new PojoBinding(impl);
-            
+
             //FIXME: none of the attributes of Binding seem to be working with PojoBinding
             // For now at least read the binding URI
             if (uri != null) {
@@ -161,8 +161,8 @@ public class BindingSCDLProcessor implements StAXArtifactProcessor {
 
         //FIXME: none of the attributes of Binding seem to be working with PojoBinding
         // For now at least write the binding URI
-        
-        // Find a namespace prefix and write the element 
+
+        // Find a namespace prefix and write the element
         String prefix = writer.getPrefix(scdlQName.getNamespaceURI());
         if (prefix == null) {
             NamespaceContext nsc = writer.getNamespaceContext();
@@ -172,9 +172,10 @@ public class BindingSCDLProcessor implements StAXArtifactProcessor {
                     break;
                 }
             }
-            writer.setPrefix(prefix, scdlQName.getNamespaceURI());
+            // writer.setPrefix(prefix, scdlQName.getNamespaceURI());
         }
         writer.writeStartElement(scdlQName.getNamespaceURI(), scdlQName.getLocalPart());
+        writer.writeNamespace(prefix, scdlQName.getNamespaceURI());
 
         // Write the binding URI attribute
         String uri;
@@ -186,7 +187,7 @@ public class BindingSCDLProcessor implements StAXArtifactProcessor {
         if (uri != null) {
             writer.writeAttribute("uri", uri);
         }
-        
+
         writer.writeEndElement();
 
     }

@@ -304,7 +304,6 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
     public void write(JEEImplementation implementation, XMLStreamWriter writer) throws ContributionWriteException, XMLStreamException {
         
         // Write <implementation.jee>
-        policyProcessor.writePolicyPrefixes(implementation, writer);
         writeStart(writer, IMPLEMENTATION_JEE.getNamespaceURI(), IMPLEMENTATION_JEE.getLocalPart(),
                    new XAttr("archive", implementation.getArchive()));
         

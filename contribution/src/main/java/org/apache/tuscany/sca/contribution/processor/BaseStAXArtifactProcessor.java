@@ -208,7 +208,7 @@ public abstract class BaseStAXArtifactProcessor {
                     break;
                 }
             }
-            writer.setPrefix(prefix, uri);
+            // writer.setPrefix(prefix, uri);
             return prefix;
         }
 
@@ -484,7 +484,7 @@ public abstract class BaseStAXArtifactProcessor {
                             break;
                         }
                     }
-                    writer.setPrefix(prefix, uri);
+                    // writer.setPrefix(prefix, uri);
                     writer.writeNamespace(prefix, uri);
                     return prefix + ":" + qname.getLocalPart();
                 }
@@ -516,7 +516,7 @@ public abstract class BaseStAXArtifactProcessor {
                             break;
                         }
                     }
-                    writer.setPrefix(prefix, uri);
+                    // writer.setPrefix(prefix, uri);
                     writer.writeNamespace(prefix, uri);
                 }
             }
