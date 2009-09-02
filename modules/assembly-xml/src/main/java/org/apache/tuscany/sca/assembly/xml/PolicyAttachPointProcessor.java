@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.assembly.xml;
@@ -43,9 +43,9 @@ import org.apache.tuscany.sca.policy.PolicySetAttachPoint;
  * @version $Rev$ $Date$
  */
 public class PolicyAttachPointProcessor extends BaseStAXArtifactProcessor implements Constants {
-    
+
     private PolicyFactory policyFactory;
-    
+
     public PolicyAttachPointProcessor(PolicyFactory policyFactory) {
         this.policyFactory = policyFactory;
     }
@@ -123,7 +123,7 @@ public class PolicyAttachPointProcessor extends BaseStAXArtifactProcessor implem
                 policySets.add(policySet);
             }
         }
-        
+
         value = reader.getAttributeValue(SCA10_TUSCANY_NS, APPLICABLE_POLICY_SETS);
         if (value != null) {
             List<PolicySet> applicablePolicySets = policySetAttachPoint.getApplicablePolicySets();
@@ -140,7 +140,7 @@ public class PolicyAttachPointProcessor extends BaseStAXArtifactProcessor implem
             }
         }
     }
-    
+
     /**
      * Write policies
      * @param attachPoint
@@ -157,15 +157,6 @@ public class PolicyAttachPointProcessor extends BaseStAXArtifactProcessor implem
      */
     public void writePolicyAttributes(Object attachPoint, XMLStreamWriter writer) throws XMLStreamException {
         writePolicyAttributes(attachPoint, (Operation)null, writer);
-    }
-
-    /**
-     * Write policies
-     * @param attachPoint
-     * @return
-     */
-    public void writePolicyPrefixes(Object attachPoint, XMLStreamWriter writer) throws XMLStreamException {
-        writePolicyPrefixes(attachPoint, (Operation)null, writer);
     }
 
     /**
@@ -234,14 +225,14 @@ public class PolicyAttachPointProcessor extends BaseStAXArtifactProcessor implem
         }
         return new XAttr(Constants.POLICY_SETS, qnames);
     }
-    
+
     public void resolvePolicies(Object attachPoint, ModelResolver resolver) {
         if ( attachPoint instanceof PolicySetAttachPoint ) {
             PolicySetAttachPoint policySetAttachPoint = (PolicySetAttachPoint)attachPoint;
-            
+
             List<Intent> requiredIntents = new ArrayList<Intent>();
             Intent resolvedIntent = null;
-            
+
             if ( policySetAttachPoint.getRequiredIntents() != null && policySetAttachPoint.getRequiredIntents().size() > 0 ) {
                 for ( Intent intent : policySetAttachPoint.getRequiredIntents() ) {
                     resolvedIntent = resolver.resolveModel(Intent.class, intent);
@@ -250,7 +241,7 @@ public class PolicyAttachPointProcessor extends BaseStAXArtifactProcessor implem
                 policySetAttachPoint.getRequiredIntents().clear();
                 policySetAttachPoint.getRequiredIntents().addAll(requiredIntents);
             }
-            
+
             if ( policySetAttachPoint.getPolicySets() != null && policySetAttachPoint.getPolicySets().size() > 0 ) {
                 List<PolicySet> resolvedPolicySets = new ArrayList<PolicySet>();
                 PolicySet resolvedPolicySet = null;

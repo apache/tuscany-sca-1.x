@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 package pojo.impl;
 
@@ -48,25 +48,25 @@ import pojo.POJOImplementationFactory;
 
 /**
  * Implements a STAX based artifact processor for POJO implementations.
- * 
+ *
  * The artifact processor is responsible for processing <implementation.pojo>
  * elements in SCA assembly XML composite files and populating the POJO
  * implementation model, resolving its references to other artifacts in the SCA
- * contribution, and optionally write the model back to SCA assembly XML. 
+ * contribution, and optionally write the model back to SCA assembly XML.
  */
 public class POJOImplementationProcessor implements StAXArtifactProcessor<POJOImplementation> {
     private static final QName IMPLEMENTATION_POJO = new QName("http://pojo", "implementation.pojo");
-    
+
     private AssemblyFactory assemblyFactory;
     private JavaInterfaceFactory javaFactory;
     private POJOImplementationFactory pojoImplementationFactory;
     private PolicyFactory policyFactory;
     private PolicyAttachPointProcessor policyProcessor;
-    
+
     public POJOImplementationProcessor(ModelFactoryExtensionPoint modelFactories, Monitor monitor) {
-        
+
         // Get the assembly and Java interface factories as we'll need them to
-        // create model objects 
+        // create model objects
         assemblyFactory = modelFactories.getFactory(AssemblyFactory.class);
         javaFactory = modelFactories.getFactory(JavaInterfaceFactory.class);
         policyFactory = modelFactories.getFactory(PolicyFactory.class);
@@ -85,36 +85,36 @@ public class POJOImplementationProcessor implements StAXArtifactProcessor<POJOIm
     }
 
     public POJOImplementation read(XMLStreamReader reader) throws ContributionReadException, XMLStreamException {
-    
+
         // Read an <implementation.pojo> element
         POJOImplementation implementation = pojoImplementationFactory.createPOJOImplementation();
-        
+
         // Read policies
         policyProcessor.readPolicies(implementation, reader);
-        
+
         // Read the POJO class attribute.
         String className = reader.getAttributeValue(null, "class");
         implementation.setPOJOName(className);
-        
+
         // Mark the POJO model unresolved to track the fact that it's not
         // completely initialized, its class is not loaded yet and services
         // and references not initialized either
         implementation.setUnresolved(true);
-        
+
         // Skip to end element
         while (reader.hasNext()) {
             if (reader.next() == END_ELEMENT && IMPLEMENTATION_POJO.equals(reader.getName())) {
                 break;
             }
         }
-        
+
         return implementation;
     }
 
     public void resolve(POJOImplementation implementation, ModelResolver resolver) throws ContributionResolveException {
-        
+
         // Resolve the POJO implementation
-        
+
         // First resolve its class
         ClassReference classReference = new ClassReference(implementation.getPOJOName());
         classReference = resolver.resolveModel(ClassReference.class, classReference);
@@ -123,21 +123,21 @@ public class POJOImplementationProcessor implements StAXArtifactProcessor<POJOIm
             throw new ContributionResolveException("Class could not be resolved: " + implementation.getPOJOName());
         }
         implementation.setPOJOClass(pojoClass);
-        
+
         // Check to see if we have a .componentType file describing the POJO class
         ComponentType componentType = assemblyFactory.createComponentType();
         componentType.setUnresolved(true);
         componentType.setURI(implementation.getURI() + ".componentType");
         componentType = resolver.resolveModel(ComponentType.class, componentType);
         if (!componentType.isUnresolved()) {
-            
+
             // We have a component type description, merge it into the POJO model
             implementation.getServices().addAll(componentType.getServices());
             implementation.getReferences().addAll(componentType.getReferences());
             implementation.getProperties().addAll(componentType.getProperties());
-            
+
         } else {
-            
+
             // We have no component type description, simply introspect the POJO and
             // create a single Service for it
             Service service = assemblyFactory.createService();
@@ -153,22 +153,21 @@ public class POJOImplementationProcessor implements StAXArtifactProcessor<POJOIm
             service.setInterfaceContract(interfaceContract);
             implementation.getServices().add(service);
         }
-        
+
         // Mark the implementation resolved now
         implementation.setUnresolved(false);
     }
 
     public void write(POJOImplementation implementation, XMLStreamWriter writer) throws ContributionWriteException, XMLStreamException {
-        
+
         // Write <implementation.pojo> element
-        policyProcessor.writePolicyPrefixes(implementation, writer);
         writer.writeStartElement(IMPLEMENTATION_POJO.getNamespaceURI(), IMPLEMENTATION_POJO.getLocalPart());
         policyProcessor.writePolicyAttributes(implementation, writer);
-        
+
         if (implementation.getPOJOName() != null) {
             writer.writeAttribute("class", implementation.getPOJOName());
         }
-        
+
         writer.writeEndElement();
     }
 }

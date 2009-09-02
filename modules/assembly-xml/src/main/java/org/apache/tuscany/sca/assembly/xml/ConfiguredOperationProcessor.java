@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.assembly.xml;
@@ -34,8 +34,8 @@ import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
 import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
-import org.apache.tuscany.sca.policy.PolicyFactory;
 import org.apache.tuscany.sca.monitor.Monitor;
+import org.apache.tuscany.sca.policy.PolicyFactory;
 
 /**
  * Processor for dealing with  'operation' elements from composite definitions
@@ -43,27 +43,27 @@ import org.apache.tuscany.sca.monitor.Monitor;
  * @version $Rev$ $Date$
  */
 public class ConfiguredOperationProcessor implements StAXArtifactProcessor<ConfiguredOperation>, Constants{
-    
+
     private AssemblyFactory assemblyFactory;
     private PolicyAttachPointProcessor policyProcessor;
     private PolicyFactory policyFactory;
     private Monitor monitor;
-    
+
     public ConfiguredOperationProcessor(ModelFactoryExtensionPoint modelFactories, Monitor monitor) {
         this.assemblyFactory = modelFactories.getFactory(AssemblyFactory.class);
         this.policyFactory = modelFactories.getFactory(PolicyFactory.class);
         this.policyProcessor = new PolicyAttachPointProcessor(policyFactory);
         this.monitor = monitor;
     }
-    
+
     public ConfiguredOperation read(XMLStreamReader reader) throws ContributionReadException, XMLStreamException {
         ConfiguredOperation  configuredOp = assemblyFactory.createConfiguredOperation();
-        
+
         //Read an <operation>
         configuredOp.setName(reader.getAttributeValue(null, NAME));
         configuredOp.setContractName(reader.getAttributeValue(null, SERVICE));
         configuredOp.setUnresolved(true);
-        
+
         // Read policies
         policyProcessor.readPolicies(configuredOp, reader);
 
@@ -73,15 +73,14 @@ public class ConfiguredOperationProcessor implements StAXArtifactProcessor<Confi
                 break;
             }
         }
-        
+
         return configuredOp;
     }
-    
+
     public void write(ConfiguredOperation configuredOperation, XMLStreamWriter writer)
         throws ContributionWriteException, XMLStreamException {
 
         // Write an <operation>
-        policyProcessor.writePolicyPrefixes(configuredOperation, writer);
         writer.writeStartElement(Constants.SCA10_NS, OPERATION);
         policyProcessor.writePolicyAttributes(configuredOperation, writer);
 
@@ -91,15 +90,15 @@ public class ConfiguredOperationProcessor implements StAXArtifactProcessor<Confi
         }
         writer.writeEndElement();
     }
-    
+
     public void resolve(ConfiguredOperation configuredOperation, ModelResolver resolver)
         throws ContributionResolveException {
     }
-    
+
     public QName getArtifactType() {
         return OPERATION_QNAME;
     }
-    
+
     public Class<ConfiguredOperation> getModelType() {
         return ConfiguredOperation.class;
     }

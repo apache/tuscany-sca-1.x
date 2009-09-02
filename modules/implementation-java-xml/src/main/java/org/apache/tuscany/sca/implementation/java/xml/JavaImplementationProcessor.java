@@ -6,15 +6,15 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
+ * under the License.
  */
 
 package org.apache.tuscany.sca.implementation.java.xml;
@@ -98,10 +98,10 @@ public class JavaImplementationProcessor implements StAXArtifactProcessor<JavaIm
         this.configuredOperationProcessor = new ConfiguredOperationProcessor(modelFactories, this.monitor);
         this.extensionAttributeProcessor = extensionAttributeProcessor;
     }
-    
+
     /**
      * Report a error.
-     * 
+     *
      * @param problems
      * @param message
      * @param model
@@ -110,12 +110,12 @@ public class JavaImplementationProcessor implements StAXArtifactProcessor<JavaIm
     	 if (monitor != null) {
     		 Problem problem = new ProblemImpl(this.getClass().getName(), "impl-javaxml-validation-messages", Severity.ERROR, model, message,(Object[])messageParameters);
     	     monitor.problem(problem);
-    	 }        
+    	 }
      }
-     
+
      /**
       * Report a exception.
-      * 
+      *
       * @param problems
       * @param message
       * @param model
@@ -124,32 +124,32 @@ public class JavaImplementationProcessor implements StAXArtifactProcessor<JavaIm
      	 if (monitor != null) {
      		 Problem problem = new ProblemImpl(this.getClass().getName(), "impl-javaxml-validation-messages", Severity.ERROR, model, message, ex);
      	     monitor.problem(problem);
-     	 }        
+     	 }
       }
 
     public JavaImplementation read(XMLStreamReader reader) throws ContributionReadException, XMLStreamException {
 
         // Read an <implementation.java>
         JavaImplementation javaImplementation = javaFactory.createJavaImplementation();
-        
+
         /*if ( javaImplementation instanceof PolicySetAttachPoint ) {
             IntentAttachPointType implType = intentAttachPointTypeFactory.createImplementationType();
             implType.setName(getArtifactType());
             implType.setUnresolved(true);
             ((PolicySetAttachPoint)javaImplementation).setType(implType);
         }*/
-        
+
         javaImplementation.setUnresolved(true);
         javaImplementation.setName(reader.getAttributeValue(null, CLASS));
 
         // Read policies
         policyProcessor.readPolicies(javaImplementation, reader);
-        
+
         // Handle extended attributes
         for (int a = 0; a < reader.getAttributeCount(); a++) {
             QName attributeName = reader.getAttributeName(a);
             if( attributeName.getNamespaceURI() != null && attributeName.getNamespaceURI().length() > 0) {
-                if( (! Constants.SCA10_NS.equals(attributeName.getNamespaceURI()) && 
+                if( (! Constants.SCA10_NS.equals(attributeName.getNamespaceURI()) &&
                     (! Constants.SCA10_TUSCANY_NS.equals(attributeName.getNamespaceURI()) ))) {
                     Object attributeValue = extensionAttributeProcessor.read(attributeName, reader);
                     Extension attributeExtension;
@@ -163,7 +163,7 @@ public class JavaImplementationProcessor implements StAXArtifactProcessor<JavaIm
             }
         }
 
-        
+
 
         // read operation elements if exists or skip unto end element
         int event;
@@ -193,7 +193,6 @@ public class JavaImplementationProcessor implements StAXArtifactProcessor<JavaIm
         XMLStreamException {
 
         // Write an <implementation.java>
-        policyProcessor.writePolicyPrefixes(javaImplementation, writer);
         writer.writeStartElement(Constants.SCA10_NS, IMPLEMENTATION_JAVA);
         policyProcessor.writePolicyAttributes(javaImplementation, writer);
 
@@ -207,7 +206,7 @@ public class JavaImplementationProcessor implements StAXArtifactProcessor<JavaIm
                 extensionAttributeProcessor.write(extension, writer);
             }
         }
-        
+
         writer.writeEndElement();
     }
 
@@ -222,8 +221,8 @@ public class JavaImplementationProcessor implements StAXArtifactProcessor<JavaIm
             //throw new ContributionResolveException(new ClassNotFoundException(javaImplementation.getName()));
         	return;
         }
-        
-        javaImplementation.setJavaClass(javaClass);        
+
+        javaImplementation.setJavaClass(javaClass);
 
         try {
             javaFactory.createJavaImplementation(javaImplementation, javaImplementation.getJavaClass());
@@ -233,7 +232,7 @@ public class JavaImplementationProcessor implements StAXArtifactProcessor<JavaIm
             //throw ce;
         	return;
         }
-        
+
         javaImplementation.setUnresolved(false);
         mergeComponentType(resolver, javaImplementation);
 
