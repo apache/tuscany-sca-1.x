@@ -106,15 +106,14 @@
 			<groupId>org.apache.tuscany.sca</groupId>
 			<artifactId>tuscany-databinding-sdo</artifactId>
 			<version>1.5.1-SNAPSHOT</version>
-			<scope>compile</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.5</version>
-			<scope>compile</scope>
-		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.5</version>
+            <scope>test</scope>
+        </dependency>
 
 	</dependencies>
 	<build>
