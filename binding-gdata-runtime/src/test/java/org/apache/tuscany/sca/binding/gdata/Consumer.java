@@ -36,7 +36,7 @@ public class Consumer {
         
         Feed feed = testService.clientGetFeed();
         
-        System.out.println("#Entries(Before post): "+ testService.clientGetFeed().getEntries().size());
+        //System.out.println("#Entries(Before post): "+ testService.clientGetFeed().getEntries().size());
         
         /*
         String entryID = "tag:blogger.com,1999:blog-4520949313432095990.post-973462497533349425";
@@ -49,11 +49,11 @@ public class Consumer {
         myEntry.setContent(new PlainTextConstruct("contentByConsmer2"));
         testService.clientPost(myEntry);
         
-        System.out.println("#Entries(After post): "+ testService.clientGetFeed().getEntries().size());
+        //System.out.println("#Entries(After post): "+ testService.clientGetFeed().getEntries().size());
         
         String entryID = "tag:blogger.com,1999:blog-4520949313432095990.post-973462497533349425";
         Entry entry = testService.clientGetEntry(entryID);
-        System.out.println("Entry id: " + entry.getId());
+        //System.out.println("Entry id: " + entry.getId());
 
        
     }

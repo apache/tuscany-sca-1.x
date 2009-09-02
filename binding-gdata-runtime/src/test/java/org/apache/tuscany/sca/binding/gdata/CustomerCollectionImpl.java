@@ -69,12 +69,12 @@ public class CustomerCollectionImpl implements Collection {
             // entry.addHtmlLink(""+id, "", "edit");
             // entry.addHtmlLink(""+id, "", "alternate");
             entries.put(id, entry);
-            System.out.println(">>> id=" + id);
+            //System.out.println(">>> id=" + id);
         }
     }
 
     public Entry post(Entry entry) {
-        System.out.println(">>> ResourceCollectionImpl.post entry=" + entry.getTitle());
+        //System.out.println(">>> ResourceCollectionImpl.post entry=" + entry.getTitle());
 
         String id = "urn:uuid:customer-" + UUID.randomUUID().toString();
         entry.setId(id);
@@ -93,30 +93,30 @@ public class CustomerCollectionImpl implements Collection {
         // "alternate");
 
         entries.put(id, entry);
-        System.out.println(">>> ResourceCollectionImpl.post return id=" + id);
+        //System.out.println(">>> ResourceCollectionImpl.post return id=" + id);
         return entry;
     }
 
     public Entry get(String id) {
-        System.out.println(">>> ResourceCollectionImpl.get id= " + id);
+        //System.out.println(">>> ResourceCollectionImpl.get id= " + id);
         return entries.get(id);
     }
 
     public void put(String id, Entry entry) {
-        System.out.println(">>> ResourceCollectionImpl.put id=" + id + " entry=" + entry.getTitle().getPlainText());
+        //System.out.println(">>> ResourceCollectionImpl.put id=" + id + " entry=" + entry.getTitle().getPlainText());
         entry.setUpdated(DateTime.now());
         entries.put(id, entry);
     }
     
 
     public void delete(String id) {
-        System.out.println(">>> ResourceCollectionImpl.delete id=" + id);
+        //System.out.println(">>> ResourceCollectionImpl.delete id=" + id);
         entries.remove(id);
     }
 
     
     public Feed getFeed() {
-        System.out.println(">>> ResourceCollectionImpl.get collection");
+        //System.out.println(">>> ResourceCollectionImpl.get collection");
         
         Feed feed = new Feed();
         feed.setTitle(new PlainTextConstruct("Feedtitle(LocalHostServlet)"));
@@ -136,7 +136,7 @@ public class CustomerCollectionImpl implements Collection {
 
     //FIXME: need to be modified 
     public Feed query(Query query) {
-        System.out.println(">>> ResourceCollectionImpl.query collection ");
+        //System.out.println(">>> ResourceCollectionImpl.query collection ");
         return getFeed();
     }
 

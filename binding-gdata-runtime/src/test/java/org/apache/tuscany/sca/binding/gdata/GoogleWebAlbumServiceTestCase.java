@@ -21,50 +21,46 @@ package org.apache.tuscany.sca.binding.gdata;
 
 import java.net.URL;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.gdata.client.Query;
-import com.google.gdata.data.DateTime;
 import com.google.gdata.data.Entry;
 import com.google.gdata.data.Feed;
-import com.google.gdata.data.PlainTextConstruct;
 
-public class GoogleWebAlbumServiceTestCase extends TestCase{
+public class GoogleWebAlbumServiceTestCase {
 
-    private SCADomain scaDomainConsumer = null;
-    private CustomerClient testService = null;    
+    private static SCADomain scaDomainConsumer = null;
+    private static CustomerClient testService = null;    
     
     public GoogleWebAlbumServiceTestCase(){
 
     }
     
-    @Before
-    @Override
-    public void setUp() throws Exception {
-        System.out.println("Method Test Start-----------------------------------------------------------------------");
+    @BeforeClass
+    public static void setUp() throws Exception {
+        //System.out.println("Method Test Start-----------------------------------------------------------------------");
         
         //Initialize the GData client service (Reference Binding test)
         scaDomainConsumer = SCADomain.newInstance("org/apache/tuscany/sca/binding/gdata/ConsumerGoogleWebAlbum.composite");
         testService = scaDomainConsumer.getService(CustomerClient.class, "CustomerClient");  
     }
 
-    @After
-    @Override
-    public void tearDown(){
-        System.out.println("Method Test End------------------------------------------------------------------------");
-        System.out.println("\n\n");
+    @AfterClass
+    public static void tearDown(){
+        //System.out.println("Method Test End------------------------------------------------------------------------");
+        //System.out.println("\n\n");
     }        
     
     @Test
     public void testClientGetFeed() throws Exception {
         Feed feed = testService.clientGetFeed();
-        System.out.println("feed title: " + feed.getTitle().getPlainText());        
-        assertEquals("flowers", feed.getTitle().getPlainText());
+        //System.out.println("feed title: " + feed.getTitle().getPlainText());        
+        Assert.assertEquals("flowers", feed.getTitle().getPlainText());
      }
     
 
@@ -74,9 +70,9 @@ public class GoogleWebAlbumServiceTestCase extends TestCase{
     public void testClientGetEntry() throws Exception {
         String entryID = "photoid/5233468700029715874";
         Entry contactEntry = testService.clientGetEntry(entryID);
-        System.out.println("Entry ID: " + contactEntry.getId());
-        assertTrue(contactEntry.getId().endsWith(entryID));
-        System.out.println("------------------------------------------------------------\n\n");
+        //System.out.println("Entry ID: " + contactEntry.getId());
+        Assert.assertTrue(contactEntry.getId().endsWith(entryID));
+        //System.out.println("------------------------------------------------------------\n\n");
     }
     
     
@@ -88,8 +84,8 @@ public class GoogleWebAlbumServiceTestCase extends TestCase{
         myQuery.setMaxResults(100);
         myQuery.setFullTextQuery("photo");    
         Feed resultFeed = testService.clientQuery(myQuery);        
-        System.out.println("Query result feed title: " + resultFeed.getTitle().getPlainText());    
-        System.out.println("Query result entry number: "+ resultFeed.getEntries().size());
+        //System.out.println("Query result feed title: " + resultFeed.getTitle().getPlainText());    
+        //System.out.println("Query result entry number: "+ resultFeed.getEntries().size());
         //assertEquals("gdata binding tuscany test", resultFeed.getTitle().getPlainText());
      }
     
@@ -102,7 +98,7 @@ public class GoogleWebAlbumServiceTestCase extends TestCase{
         testService.clientPut(entryID, newBlogEntryTitle);      //update the title
         Thread.sleep(Constants.SLEEP_INTERVAL);            
         Entry updatedEntry = testService.clientGetEntry(entryID);         
-        assertEquals(newBlogEntryTitle, updatedEntry.getTitle().getPlainText());
+        Assert.assertEquals(newBlogEntryTitle, updatedEntry.getTitle().getPlainText());
     }
     
     

@@ -45,7 +45,7 @@ public class GdataBindingProcessor implements StAXArtifactProcessor<GdataBinding
     
     public GdataBindingProcessor(ModelFactoryExtensionPoint modelFactories) {
         this.factory = modelFactories.getFactory(GdataBindingFactory.class);
-        System.out.println("[Debug Info]GdataBindingProcessor reached");
+        //System.out.println("[Debug Info]GdataBindingProcessor reached");
     }
 
     public QName getArtifactType() {

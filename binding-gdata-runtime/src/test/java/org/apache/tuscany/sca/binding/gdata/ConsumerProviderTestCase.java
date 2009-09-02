@@ -19,60 +19,57 @@
 
 package org.apache.tuscany.sca.binding.gdata;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
+
 import org.apache.tuscany.sca.host.embedded.SCADomain;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
 import com.google.gdata.data.Entry;
 import com.google.gdata.data.Feed;
 import com.google.gdata.data.PlainTextConstruct;
 
-public class ConsumerProviderTestCase extends TestCase {
+public class ConsumerProviderTestCase {
 
-    private SCADomain scaDomainProvider = null;
-    private SCADomain scaDomainConsumer = null;
-    private CustomerClient testService = null;
+    private static SCADomain scaDomainProvider = null;
+    private static SCADomain scaDomainConsumer = null;
+    private static CustomerClient testService = null;
 
-    @Before
-    @Override
-    public void setUp() throws Exception {
-        System.out.println("Method Test Start-----------------------------------------------------------------------");
-
+    @BeforeClass
+    public static void setUp() throws Exception {
         // Setup the local GData servlet (Service Binding test)
         scaDomainProvider = SCADomain.newInstance("org/apache/tuscany/sca/binding/gdata/Provider.composite");
-        System.out.println("[Debug Info] Provider.composite ready...");
+        //System.out.println("[Debug Info] Provider.composite ready...");
 
         // Initialize the GData client service (Reference Binding test)
         scaDomainConsumer = SCADomain.newInstance("org/apache/tuscany/sca/binding/gdata/Consumer.composite");
         testService = scaDomainConsumer.getService(CustomerClient.class, "CustomerClient");
     }
 
-    @After
-    @Override
-    public void tearDown() {
+    @AfterClass
+    public static void tearDown() {
+        scaDomainConsumer.close();
         scaDomainProvider.close();
-        System.out.println("Method Test End------------------------------------------------------------------------");
-        System.out.println("\n\n");
     }
     
         
     @Test
     public void testClientGetFeed() throws Exception {
         Feed feed = testService.clientGetFeed();
-        System.out.println(feed.getTitle().getPlainText());
-        assertNotNull(feed);
+        //System.out.println(feed.getTitle().getPlainText());
+        Assert.assertNotNull(feed);
         // Given we are testing on the localhost providing feed, we know the
         // feed title is "Feedtitle(LocalHostServlet)"
-        assertEquals("Feedtitle(LocalHostServlet)", feed.getTitle().getPlainText());
+        Assert.assertEquals("Feedtitle(LocalHostServlet)", feed.getTitle().getPlainText());
     }
 
     @Test
     public void testClientGetEntry() throws Exception {
         String entryID = "urn:uuid:customer-0";
         Entry entry = testService.clientGetEntry(entryID);
-        System.out.println("entryID in testcase: " + entry.getId());
-        assertEquals(entryID, entry.getId());
+        //System.out.println("entryID in testcase: " + entry.getId());
+        Assert.assertEquals(entryID, entry.getId());
     }
 
     @Test
@@ -81,7 +78,7 @@ public class ConsumerProviderTestCase extends TestCase {
         newEntry.setTitle(new PlainTextConstruct("NewEntry title by Post"));
         newEntry.setContent(new PlainTextConstruct("NewEntry Content by Post"));        
         Entry postedEntry = testService.clientPost(newEntry);        
-        assertEquals("NewEntry title by Post", postedEntry.getTitle().getPlainText());
+        Assert.assertEquals("NewEntry title by Post", postedEntry.getTitle().getPlainText());
     }
     
   
@@ -90,12 +87,12 @@ public class ConsumerProviderTestCase extends TestCase {
     public void testClientPut() throws Exception {
         String newTitleValue = "newTitleValueByPut";
         String entryID = "urn:uuid:customer-0";
-        System.out.println("Before clientPut");
+        //System.out.println("Before clientPut");
         testService.clientPut(entryID, newTitleValue);
-        System.out.println("After clientPut");
+        //System.out.println("After clientPut");
         Entry updatedEntry = testService.clientGetEntry(entryID);
-        System.out.println("title: "+ updatedEntry.getTitle().getPlainText());
-        assertEquals(newTitleValue, updatedEntry.getTitle().getPlainText());
+        //System.out.println("title: "+ updatedEntry.getTitle().getPlainText());
+        Assert.assertEquals(newTitleValue, updatedEntry.getTitle().getPlainText());
     }
     
 
@@ -116,22 +113,22 @@ public class ConsumerProviderTestCase extends TestCase {
         Feed feed00 = testService.clientGetFeed();
         int entryNum00 = feed00.getEntries().size(); // The number of entries
                                                         // before deleting
-        System.out.println("entryNum00:" + entryNum00);
+        //System.out.println("entryNum00:" + entryNum00);
                 
         // Delete this newly created entry
         String entryID = confirmedNewEntry.getId();
         Thread.sleep(300);
         
-        System.out.println("confirmed entry ID: " + confirmedNewEntry.getId());
-        System.out.println("confirmed entry title: " + confirmedNewEntry.getTitle().getPlainText());
+        //System.out.println("confirmed entry ID: " + confirmedNewEntry.getId());
+        //System.out.println("confirmed entry title: " + confirmedNewEntry.getTitle().getPlainText());
         
-        System.out.println("Before test clientDelete");
+        //System.out.println("Before test clientDelete");
         testService.clientDelete(entryID);
-        System.out.println("After test clientDelete");
+        //System.out.println("After test clientDelete");
         
         Feed feed01 = testService.clientGetFeed();
         int entryNum01 = feed01.getEntries().size();
-        System.out.println("entryNum01:" + entryNum01); // The number of entries after deleting
+        //System.out.println("entryNum01:" + entryNum01); // The number of entries after deleting
         
         //assertEquals(1, entryNum00 - entryNum01);
     }
