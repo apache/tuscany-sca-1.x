@@ -140,7 +140,7 @@ class GdataBindingInvoker implements Invoker, DataExchangeSemantics {
         @Override
         public Message invoke(Message msg) {
 
-            System.out.println("[Debug Info]GdataBindingInvoker.PostInvoker --- invoke method reached");
+            //System.out.println("[Debug Info]GdataBindingInvoker.PostInvoker --- invoke method reached");
             // Post an entry
             Object[] args = (Object[])msg.getBody();
             com.google.gdata.data.Entry feedEntry = null;
@@ -149,10 +149,10 @@ class GdataBindingInvoker implements Invoker, DataExchangeSemantics {
 
                 // Expect an GData entry
 
-                System.out.println("[Debug Info]GdataBindingInvoker.PostInvoker --- supportsFeedEntries: " + provider.supportsFeedEntries());
+                //System.out.println("[Debug Info]GdataBindingInvoker.PostInvoker --- supportsFeedEntries: " + provider.supportsFeedEntries());
                 feedEntry = (com.google.gdata.data.Entry)args[0];
 
-                System.out.println("[Debug Info]GdataBindingInvoker.PostInvoker --- feedEntry title: " + feedEntry.getTitle().getPlainText());
+                //System.out.println("[Debug Info]GdataBindingInvoker.PostInvoker --- feedEntry title: " + feedEntry.getTitle().getPlainText());
 
             } else {
                 // Expect a key and data item
@@ -222,7 +222,7 @@ class GdataBindingInvoker implements Invoker, DataExchangeSemantics {
                 
                 com.google.gdata.data.Entry toUpdateEntry = googleService.getEntry(entryURL, com.google.gdata.data.Entry.class);
                 
-                System.out.println("EditHtml:" + toUpdateEntry.getEditLink().getHref());
+                //System.out.println("EditHtml:" + toUpdateEntry.getEditLink().getHref());
                 
                 URL editURL = new URL(toUpdateEntry.getEditLink().getHref());
                 
@@ -269,7 +269,7 @@ class GdataBindingInvoker implements Invoker, DataExchangeSemantics {
                 
                com.google.gdata.data.Entry toUpdateEntry = googleService.getEntry(entryURL, com.google.gdata.data.Entry.class);
                 
-               System.out.println("EditHtml:" + toUpdateEntry.getEditLink().getHref());
+               //System.out.println("EditHtml:" + toUpdateEntry.getEditLink().getHref());
                 
                URL editURL = new URL(toUpdateEntry.getEditLink().getHref());
     
@@ -309,7 +309,7 @@ class GdataBindingInvoker implements Invoker, DataExchangeSemantics {
             GetMethod getMethod = new GetMethod(uri);
             getMethod.setRequestHeader("Authorization", authorizationHeader);
 
-            System.out.println("[Debug Info] GdataBindingInvoker.GetAllInvoker.invoke---feedURL: " + uri);
+            //System.out.println("[Debug Info] GdataBindingInvoker.GetAllInvoker.invoke---feedURL: " + uri);
 
             try {
 
@@ -354,7 +354,7 @@ class GdataBindingInvoker implements Invoker, DataExchangeSemantics {
             Object[] args = (Object[])msg.getBody();
             Query myQuery = (Query)args[0];
             
-            System.out.println("[Debug Info] GdataBindingInvoker.QueryInvoker.invoke---feedURL: " + uri);
+            //System.out.println("[Debug Info] GdataBindingInvoker.QueryInvoker.invoke---feedURL: " + uri);
 
             try {
 
