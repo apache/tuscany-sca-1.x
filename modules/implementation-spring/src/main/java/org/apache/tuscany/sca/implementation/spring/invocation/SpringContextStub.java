@@ -47,9 +47,10 @@ public class SpringContextStub {
                                ProxyFactory proxyService,
                                JavaPropertyValueObjectFactory propertyValueObjectFactory,
                                boolean annotationSupport,
-                               String versionSupported) {
+                               String versionSupported,
+                               boolean multipleContextSupport) {
 
-        initTie(component, implementation, propertyValueObjectFactory, annotationSupport, versionSupported);        
+        initTie(component, implementation, propertyValueObjectFactory, annotationSupport, versionSupported, multipleContextSupport);        
 
     }
 
@@ -57,7 +58,8 @@ public class SpringContextStub {
                          SpringImplementation implementation,
                          JavaPropertyValueObjectFactory propertyValueObjectFactory,
                          boolean annotationSupport,
-                         String versionSupported) {
+                         String versionSupported,
+                         boolean multipleContextSupport) {
 
         // TODO: what class loader to use?
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -69,8 +71,8 @@ public class SpringContextStub {
             Object stub = stubConstructor.newInstance(new SpringImplementationTie(implementation, component, propertyValueObjectFactory));
 
             Class<?> tieClass = Class.forName("org.apache.tuscany.sca.implementation.spring.runtime.context.SpringContextTie", true, cl);
-            Constructor<?> tieConstructor = tieClass.getConstructor(new Class<?>[]{stubClass, URL.class, boolean.class, String.class});
-            this.tie = tieConstructor.newInstance(stub, implementation.getResource(), annotationSupport, versionSupported);
+            Constructor<?> tieConstructor = tieClass.getConstructor(new Class<?>[]{stubClass, URL.class, boolean.class, String.class, boolean.class});
+            this.tie = tieConstructor.newInstance(stub, implementation.getResource(), annotationSupport, versionSupported, multipleContextSupport);
             
             this.startMethod = tieClass.getMethod("start");
             this.closeMethod = tieClass.getMethod("close");

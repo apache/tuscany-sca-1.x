@@ -4,6 +4,8 @@ public interface ConfigurationPropertiesExtensionPoint {
 	
 	boolean isAnnotationSupported();
 	
+	boolean isMultipleContextSupported();
+	
 	String getSupportedVersion();
 
 }

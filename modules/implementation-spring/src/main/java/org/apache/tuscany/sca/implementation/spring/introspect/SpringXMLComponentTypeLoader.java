@@ -91,19 +91,22 @@ public class SpringXMLComponentTypeLoader {
     private AssemblyFactory assemblyFactory;
     private JavaInterfaceFactory javaFactory;
     private PolicyFactory policyFactory;
+    private boolean isMultipleContextSupported;
 
     private SpringBeanIntrospector beanIntrospector;
 
     public SpringXMLComponentTypeLoader(ModelFactoryExtensionPoint factories,
                                         AssemblyFactory assemblyFactory,
                                         JavaInterfaceFactory javaFactory,
-                                        PolicyFactory policyFactory) {
+                                        PolicyFactory policyFactory,
+                                        boolean multipleContextSupport) {
         super();
         this.assemblyFactory = assemblyFactory;
         this.javaFactory = javaFactory;
         this.policyFactory = policyFactory;
         this.contributionFactory = factories.getFactory(ContributionFactory.class);
         this.xmlInputFactory = factories.getFactory(XMLInputFactory.class);
+        this.isMultipleContextSupported = multipleContextSupport;
     }
 
     protected Class<SpringImplementation> getImplementationClass() {
@@ -338,7 +341,7 @@ public class SpringXMLComponentTypeLoader {
                             if (reader.getAttributeValue(null, "value") != null) {
                             	String value = reader.getAttributeValue(null, "value");
                             	constructorArg.addValue(value);
-                            	if ((value.indexOf(".xml") != -1)) {
+                            	if ((isMultipleContextSupported) && (value.indexOf(".xml") != -1)) {
                                     if (bean.getClassName().indexOf(".ClassPathXmlApplicationContext") != -1) {
                                         XMLStreamReader creader = getApplicationContextReader(resolver, value);
                                         // Read the context definition for the constructor-arg resources
@@ -359,7 +362,7 @@ public class SpringXMLComponentTypeLoader {
                             if (constructorArg != null) {
                             	constructorArg.addValue(value);
                                 // Identify the XML resource specified for the constructor-arg element
-                                if ((value.indexOf(".xml") != -1)) {
+                                if ((isMultipleContextSupported) && (value.indexOf(".xml") != -1)) {
                                     if (bean.getClassName().indexOf(".ClassPathXmlApplicationContext") != -1) {
                                         XMLStreamReader creader = getApplicationContextReader(resolver, value);
                                         // Read the context definition for the constructor-arg resources

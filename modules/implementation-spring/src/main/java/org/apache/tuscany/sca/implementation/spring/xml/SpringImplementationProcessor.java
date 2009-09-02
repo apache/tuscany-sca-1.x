@@ -31,6 +31,7 @@ import org.apache.tuscany.sca.assembly.ComponentType;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.core.ExtensionPointRegistry;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
@@ -38,6 +39,8 @@ import org.apache.tuscany.sca.contribution.service.ContributionResolveException;
 import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
 import org.apache.tuscany.sca.implementation.spring.SpringImplementation;
 import org.apache.tuscany.sca.implementation.spring.introspect.SpringXMLComponentTypeLoader;
+import org.apache.tuscany.sca.implementation.spring.invocation.ConfigurationPropertiesExtensionPoint;
+import org.apache.tuscany.sca.implementation.spring.invocation.DefaultConfigurationPropertiesExtensionPoint;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterfaceFactory;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.Problem;
@@ -62,16 +65,24 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
     private JavaInterfaceFactory javaFactory;
     private PolicyFactory policyFactory;
     private PolicyAttachPointProcessor policyProcessor;
+    private ConfigurationPropertiesExtensionPoint configProperties;
     private Monitor monitor;
-
+    
     private ModelFactoryExtensionPoint factories;
+    private boolean multipleContextSupport;
 
-    public SpringImplementationProcessor(ModelFactoryExtensionPoint modelFactories, Monitor monitor) {
-        this.factories = modelFactories;
-        this.assemblyFactory = modelFactories.getFactory(AssemblyFactory.class);
-        this.javaFactory = modelFactories.getFactory(JavaInterfaceFactory.class);
-        this.policyFactory = modelFactories.getFactory(PolicyFactory.class);
+    public SpringImplementationProcessor(ExtensionPointRegistry extensionPoints, Monitor monitor) {
+        this.factories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);    	
+        this.assemblyFactory = factories.getFactory(AssemblyFactory.class);
+        this.javaFactory = factories.getFactory(JavaInterfaceFactory.class);
+        this.policyFactory = factories.getFactory(PolicyFactory.class);
         this.policyProcessor = new PolicyAttachPointProcessor(policyFactory);
+                
+        this.configProperties = extensionPoints.getExtensionPoint(ConfigurationPropertiesExtensionPoint.class);
+        if (configProperties == null) {
+        	configProperties = new DefaultConfigurationPropertiesExtensionPoint();
+        }        
+        this.multipleContextSupport = configProperties.isMultipleContextSupported();
         this.monitor = monitor;
     }
 
@@ -196,7 +207,7 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
 
         /* Load the Spring component type by reading the Spring application context */
         SpringXMLComponentTypeLoader springLoader =
-            new SpringXMLComponentTypeLoader(factories, assemblyFactory, javaFactory, policyFactory);
+            new SpringXMLComponentTypeLoader(factories, assemblyFactory, javaFactory, policyFactory, multipleContextSupport);
         try {
             // Load the Spring Implementation information from its application context file...
             springLoader.load(springImplementation, resolver);

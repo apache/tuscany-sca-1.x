@@ -58,6 +58,7 @@ public class SpringContextTie {
     private SpringImplementationStub implementation;
     private boolean isAnnotationSupported;
     private String versionSupported;
+    private boolean isMultipleContextSupport;
     
     // TUSCANY-3128
     // extension of the generic application context just to force the classloader
@@ -81,10 +82,11 @@ public class SpringContextTie {
         }
     }
     
-    public SpringContextTie(SpringImplementationStub implementation, URL resource, boolean annotationSupport, String versionSupported) throws Exception {
+    public SpringContextTie(SpringImplementationStub implementation, URL resource, boolean annotationSupport, String versionSupported, boolean multipleContextSupport) throws Exception {
         this.implementation = implementation;
         this.isAnnotationSupported = annotationSupport;
         this.versionSupported = versionSupported;
+        this.isMultipleContextSupport = multipleContextSupport;
         if (! this.versionSupported.equals("ANY")) {
         	if ((SpringVersion.getVersion()!= null) && (! SpringVersion.getVersion().equals(versionSupported)))
         		throw new RuntimeException("Unsupported version: Use only Spring Framework Version " + versionSupported);
@@ -116,44 +118,46 @@ public class SpringContextTie {
         beanFactory.setBeanClassLoader(implementation.getClassLoader());
         AbstractApplicationContext appContext = null;
         
-        for (String bean : beanFactory.getBeanDefinitionNames()) {
-            String beanClassName = (beanFactory.getType(bean)).getName();
-            // Using FileSystemXmlApplicationContext is not supported, as the 
-            // SCA runtime does not support paths relative to current VM working directory.
-            if (beanClassName.indexOf(".FileSystemXmlApplicationContext") != -1) {
-            	throw new RuntimeException("Usage of FileSystemXmlApplicationContext Bean is not supported");
-            }
-            	
-            if (beanClassName.indexOf(".ClassPathXmlApplicationContext") != -1) {
-            	BeanDefinition beanDef = beanFactory.getBeanDefinition(bean);                           
-                String[] configLocations = null;
-                List<ConstructorArgumentValues.ValueHolder> conArgs = 
-                        beanDef.getConstructorArgumentValues().getGenericArgumentValues();
-                for (ConstructorArgumentValues.ValueHolder conArg : conArgs) {
-                	if (conArg.getValue() instanceof TypedStringValue) {
-                        TypedStringValue value = (TypedStringValue) conArg.getValue();
-                        if (value.getValue().indexOf(".xml") != -1)
-                        	configLocations = new String[]{value.getValue()};
-                	}
-                    if (conArg.getValue() instanceof ManagedList) {
-                        Iterator itml = ((ManagedList)conArg.getValue()).iterator();
-                        StringBuffer values = new StringBuffer();
-                        while (itml.hasNext()) {
-                            TypedStringValue next = (TypedStringValue)itml.next();
-                            if (next.getValue().indexOf(".xml") != -1) {
-                            	values.append(implementation.getClassLoader().getResource(next.getValue()).toString());
-                                values.append("~");
-                            }
-                        }
-                        configLocations = (values.toString()).split("~");                                    
-                    }
-                }
-                
-	            appContext = new ClassPathXmlApplicationContext(configLocations, true, scaParentContext);	            
-	            if (isAnnotationSupported)
-	            	includeAnnotationProcessors(appContext.getBeanFactory());
-	            return appContext;
-            }               
+        if (isMultipleContextSupport) {
+	        for (String bean : beanFactory.getBeanDefinitionNames()) {
+	            String beanClassName = (beanFactory.getType(bean)).getName();
+	            // Using FileSystemXmlApplicationContext is not supported, as the 
+	            // SCA runtime does not support paths relative to current VM working directory.
+	            /*if (beanClassName.indexOf(".FileSystemXmlApplicationContext") != -1) {
+	            	throw new RuntimeException("Usage of FileSystemXmlApplicationContext Bean is not supported");
+	            }*/
+	            	
+	            if (beanClassName.indexOf(".ClassPathXmlApplicationContext") != -1) {
+	            	BeanDefinition beanDef = beanFactory.getBeanDefinition(bean);                           
+	                String[] configLocations = null;
+	                List<ConstructorArgumentValues.ValueHolder> conArgs = 
+	                        beanDef.getConstructorArgumentValues().getGenericArgumentValues();
+	                for (ConstructorArgumentValues.ValueHolder conArg : conArgs) {
+	                	if (conArg.getValue() instanceof TypedStringValue) {
+	                        TypedStringValue value = (TypedStringValue) conArg.getValue();
+	                        if (value.getValue().indexOf(".xml") != -1)
+	                        	configLocations = new String[]{value.getValue()};
+	                	}
+	                    if (conArg.getValue() instanceof ManagedList) {
+	                        Iterator itml = ((ManagedList)conArg.getValue()).iterator();
+	                        StringBuffer values = new StringBuffer();
+	                        while (itml.hasNext()) {
+	                            TypedStringValue next = (TypedStringValue)itml.next();
+	                            if (next.getValue().indexOf(".xml") != -1) {
+	                            	values.append(implementation.getClassLoader().getResource(next.getValue()).toString());
+	                                values.append("~");
+	                            }
+	                        }
+	                        configLocations = (values.toString()).split("~");                                    
+	                    }
+	                }
+	                
+		            appContext = new ClassPathXmlApplicationContext(configLocations, true, scaParentContext);	            
+		            if (isAnnotationSupported)
+		            	includeAnnotationProcessors(appContext.getBeanFactory());
+		            return appContext;
+	            }               
+	        }
         }
         
         // use the generic application context as default 
