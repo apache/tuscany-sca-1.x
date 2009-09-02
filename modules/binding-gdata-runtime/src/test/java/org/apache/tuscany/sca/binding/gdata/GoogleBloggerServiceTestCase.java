@@ -42,8 +42,6 @@ public class GoogleBloggerServiceTestCase {
     
     @BeforeClass
     public static void setUp() throws Exception {
-        System.out.println("Method Test Start-----------------------------------------------------------------------");
-        
         //Initialize the GData client service (Reference Binding test)
         scaDomainConsumer = SCADomain.newInstance("org/apache/tuscany/sca/binding/gdata/ConsumerGoogleBlogger.composite");
         testService = scaDomainConsumer.getService(CustomerClient.class, "CustomerClient");  
@@ -51,14 +49,13 @@ public class GoogleBloggerServiceTestCase {
 
     @AfterClass
     public static void tearDown(){
-        System.out.println("Method Test End------------------------------------------------------------------------");
-        System.out.println("\n\n");
+        scaDomainConsumer.close();
     }        
     
     @Test
     public void testClientGetFeed() throws Exception {
         Feed feed = testService.clientGetFeed();
-        System.out.println("feed title: " + feed.getTitle().getPlainText());        
+        //System.out.println("feed title: " + feed.getTitle().getPlainText());        
         Assert.assertEquals("gdata binding tuscany test", feed.getTitle().getPlainText());
      }
     
@@ -67,9 +64,9 @@ public class GoogleBloggerServiceTestCase {
     public void testClientGetEntry() throws Exception {
         String entryID = "8308734583601887890";
         Entry blogEntry = testService.clientGetEntry(entryID);
-        System.out.println("Entry ID: " + blogEntry.getId());
+        //System.out.println("Entry ID: " + blogEntry.getId());
         Assert.assertTrue(blogEntry.getId().endsWith(entryID));
-        System.out.println("------------------------------------------------------------\n\n");
+        //System.out.println("------------------------------------------------------------\n\n");
     }
     
     
@@ -85,8 +82,7 @@ public class GoogleBloggerServiceTestCase {
     
     
 
-    //@Test
-    //@Ignore("TUSCANY-3006")
+    @Test
     public void testClientPost() throws Exception {
         String blogEntryTitle = "titleByBloogerTestcase000";
         Entry newEntry = new Entry();
@@ -97,14 +93,13 @@ public class GoogleBloggerServiceTestCase {
     }
 
     
-    //@Test
-    //@Ignore("TUSCANY-3006")
+    @Test
     public void testClientDelete() throws Exception {
         
         //This test case might fail
         //because Google blogger service has limitation on new posts allowed everyday/every hour?
         
-        System.out.println("testClientDelete");
+        //System.out.println("testClientDelete");
         //We create a new post, and then delete it
         Entry newEntry = new Entry();
         newEntry.setTitle(new PlainTextConstruct("blogEntryShouldNotApear"));
@@ -113,11 +108,11 @@ public class GoogleBloggerServiceTestCase {
         Thread.sleep(Constants.SLEEP_INTERVAL);        
         int idStartPosition = postedEntry.getId().lastIndexOf("-");
         String postedEntryID = postedEntry.getId().substring(idStartPosition+1);        
-        System.out.println("postedEntryID: " + postedEntryID );
+        //System.out.println("postedEntryID: " + postedEntryID );
         
         //Before deletion
         Entry entry00 = testService.clientGetEntry(postedEntryID);
-        System.out.println("Before Deleteion: " + entry00.getId());
+        //System.out.println("Before Deleteion: " + entry00.getId());
         
         //Delete this entry
         testService.clientDelete(postedEntryID);
@@ -137,8 +132,8 @@ public class GoogleBloggerServiceTestCase {
         //myQuery.setUpdatedMin(startTime);
         myQuery.setUpdatedMax(DateTime.now());
         Feed resultFeed = testService.clientQuery(myQuery);        
-        System.out.println("Query result feed title: " + resultFeed.getTitle().getPlainText());    
-        System.out.println("Query result entry number: "+ resultFeed.getEntries().size());
+        //System.out.println("Query result feed title: " + resultFeed.getTitle().getPlainText());    
+        //System.out.println("Query result entry number: "+ resultFeed.getEntries().size());
         //assertEquals("gdata binding tuscany test", resultFeed.getTitle().getPlainText());
      }
 

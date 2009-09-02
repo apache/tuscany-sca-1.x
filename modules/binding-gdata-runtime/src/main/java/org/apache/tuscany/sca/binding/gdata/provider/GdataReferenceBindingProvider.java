@@ -88,9 +88,9 @@ class GdataReferenceBindingProvider implements ReferenceBindingProvider {
         String usernane = binding.getUsername();
         String password = binding.getPassword();
         
-        System.out.println("[Debug Info] binding.getServiceType()" + serviceType);
-        System.out.println("[Debug Info] binding.getName()" +usernane);
-        System.out.println("[Debug Info] binding.getPassword()" + password);    
+        //System.out.println("[Debug Info] binding.getServiceType()" + serviceType);
+        //System.out.println("[Debug Info] binding.getName()" +usernane);
+        //System.out.println("[Debug Info] binding.getPassword()" + password);    
         
         googleService = new GoogleService(serviceType, "");
         if(binding.getUsername().equals("admin") == false && binding.getPassword().equals("admin")==false){

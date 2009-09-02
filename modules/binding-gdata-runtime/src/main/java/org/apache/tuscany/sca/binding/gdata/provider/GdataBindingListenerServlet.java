@@ -39,7 +39,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 
 import org.apache.abdera.parser.ParseException;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.tuscany.sca.data.collection.Entry;
 import org.apache.tuscany.sca.databinding.Mediator;
@@ -158,7 +157,7 @@ class GdataBindingListenerServlet extends HttpServlet {
         qname = new QName(qname.getNamespaceURI(), itemClass.getSimpleName());
         itemClassType = new DataTypeImpl<XMLType>("java:complexType", itemClass, new XMLType(qname, null));
 
-        System.out.println("[Debug Info]GdataBindingListenerServlet --- initilized!");
+        //System.out.println("[Debug Info]GdataBindingListenerServlet --- initilized!");
     }
 
     
@@ -166,14 +165,13 @@ class GdataBindingListenerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // No authentication required for a get request
-        System.out.println("[Debug Info]GdataBindingListenerServlet doGet() --- I am good here 00");
+        //System.out.println("[Debug Info]GdataBindingListenerServlet doGet() --- I am good here 00");
 
         // Get the request path
         String path = URLDecoder.decode(request.getRequestURI().substring(request.getServletPath().length()), "UTF-8");
 
-        System.out.println("[Debug Info]GdataBindingListenerServlet doGet() --- request.getRequestURI():  " + request
-            .getRequestURI());
-        System.out.println("[Debug Info]GdataBindingListenerServlet doGet()--- path: " + path);
+        //System.out.println("[Debug Info]GdataBindingListenerServlet doGet() --- request.getRequestURI():  " + request.getRequestURI());
+        //System.out.println("[Debug Info]GdataBindingListenerServlet doGet()--- path: " + path);
 
         // FIXME: Log this get http request, commented out for testing
         logger.fine("get " + request.getRequestURI());
@@ -218,25 +216,25 @@ class GdataBindingListenerServlet extends HttpServlet {
 
             // get HTTP request asking for a feed
 
-            System.out.println("[Debug Info]GdataBindingListenerServlet doGet() --- I am good here brach 02");
+            //System.out.println("[Debug Info]GdataBindingListenerServlet doGet() --- I am good here brach 02");
 
             // Return a feed containing the entries in the collection
             com.google.gdata.data.Feed feed = null;
 
             if (supportsFeedEntries) {
 
-                System.out.println("[Debug Info]GdataBindingListenerServlet doGet() --- supportsFeedEntries: " + supportsFeedEntries);
+                //System.out.println("[Debug Info]GdataBindingListenerServlet doGet() --- supportsFeedEntries: " + supportsFeedEntries);
 
                 // The service implementation supports feed entries, invoke its
                 // getFeed operation
                 Message requestMessage = messageFactory.createMessage();
                 Message responseMessage;
                 if (request.getQueryString() != null) {
-                    System.out.println("getQueryString != null");
+                    //System.out.println("getQueryString != null");
                     requestMessage.setBody(new Object[] {request.getQueryString()});
                     responseMessage = queryInvoker.invoke(requestMessage);
                 } else {
-                    System.out.println("getQueryString == null");
+                    //System.out.println("getQueryString == null");
                     responseMessage = getFeedInvoker.invoke(requestMessage);
                 }
                 if (responseMessage.isFault()) {
@@ -247,11 +245,11 @@ class GdataBindingListenerServlet extends HttpServlet {
 
                 feed = (com.google.gdata.data.Feed)responseMessage.getBody();
 
-                System.out.println("feed title: " + feed.getTitle().getPlainText());
+                //System.out.println("feed title: " + feed.getTitle().getPlainText());
 
             } else {
 
-                System.out.println("GdataBindingListenerServlet doGet(): do not supportsFeedEntries");
+                //System.out.println("GdataBindingListenerServlet doGet(): do not supportsFeedEntries");
 
                 // The service implementation does not support feed entries,
                 // invoke its getAll operation to get the data item collection,
@@ -317,7 +315,7 @@ class GdataBindingListenerServlet extends HttpServlet {
                 out.println(stringWriter.toString());
                 out.close();
 
-                System.out.println("Feed content in plain text:" + stringWriter.toString());
+                //System.out.println("Feed content in plain text:" + stringWriter.toString());
             } else {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
@@ -342,7 +340,7 @@ class GdataBindingListenerServlet extends HttpServlet {
                 // The service implementation returns a feed entry
                 feedEntry = (com.google.gdata.data.Entry)responseMessage.getBody();
 
-                System.out.println("entry title: " + feedEntry.getTitle().getPlainText());
+                //System.out.println("entry title: " + feedEntry.getTitle().getPlainText());
 
             } else {
                 // The service implementation only returns a data item, create
@@ -387,7 +385,7 @@ class GdataBindingListenerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
         IOException {
 
-        System.out.println("[Debug Info]GdataBindingListenerServlet doPost() --- reached");
+        //System.out.println("[Debug Info]GdataBindingListenerServlet doPost() --- reached");
 
         // Authenticate the user
         String user = processAuthorizationHeader(request);
@@ -399,7 +397,7 @@ class GdataBindingListenerServlet extends HttpServlet {
         // Get the request path
         String path = URLDecoder.decode(request.getRequestURI().substring(request.getServletPath().length()), "UTF-8");
 
-        System.out.println("[Debug Info]GdataBindingListenerServlet path --- " + path);
+        //System.out.println("[Debug Info]GdataBindingListenerServlet path --- " + path);
 
         if (path == null || path.length() == 0 || path.equals("/")) {
             // Create a new Gdata entry
@@ -534,7 +532,7 @@ class GdataBindingListenerServlet extends HttpServlet {
         // Get the request path
         String path = request.getRequestURI().substring(request.getServletPath().length());
 
-        System.out.println("[Debug Info] localServlet doPut --- path: " + path);
+        //System.out.println("[Debug Info] localServlet doPut --- path: " + path);
         
         if (path != null && path.startsWith("/")) {
             String id = path.substring(1);
@@ -549,7 +547,7 @@ class GdataBindingListenerServlet extends HttpServlet {
                     ParseSource source = new ParseSource(request.getReader());
                     feedEntry = com.google.gdata.data.Entry.readEntry(source, com.google.gdata.data.Entry.class, null);
                 
-                    System.out.println("[Debug Info] localServlet doPut --- feedEntry title: " + feedEntry.getTitle().getPlainText());
+                    //System.out.println("[Debug Info] localServlet doPut --- feedEntry title: " + feedEntry.getTitle().getPlainText());
                 } catch (ParseException pe) {
                     throw new ServletException(pe);
                 } catch (com.google.gdata.util.ParseException e) {
@@ -565,7 +563,7 @@ class GdataBindingListenerServlet extends HttpServlet {
                 // Let the component implementation create it
                 if (supportsFeedEntries) {
 
-                    System.out.println("[Debug Info] localServlet doPut --- supportsFeedEntries: " + supportsFeedEntries);
+                    //System.out.println("[Debug Info] localServlet doPut --- supportsFeedEntries: " + supportsFeedEntries);
                     
                     // The service implementation supports feed entries, pass
                     // the entry to it
