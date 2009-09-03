@@ -209,8 +209,7 @@ public class InterfaceContractMapperImpl implements InterfaceContractMapper {
         }
 
         for (Operation operation : source.getCallbackInterface().getOperations()) {
-            Operation targetOperation =
-                getOperation(target.getCallbackInterface().getOperations(), operation.getName());
+            Operation targetOperation = map(target.getCallbackInterface(), operation);
             if (targetOperation == null) {
                 if (!silent) {
                     throw new IncompatibleInterfaceContractException("Callback operation not found on target", source,
@@ -221,7 +220,7 @@ public class InterfaceContractMapperImpl implements InterfaceContractMapper {
             }
             if (!source.getCallbackInterface().isRemotable()) {
                 // FIXME: for remotable operation, only compare name for now
-                if (!operation.equals(targetOperation)) {
+                if (!isCompatible(operation, targetOperation, false)) {
                     if (!silent) {
                         throw new IncompatibleInterfaceContractException("Target callback operation is not compatible",
                                                                          source, target, operation, targetOperation);
