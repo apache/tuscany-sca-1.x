@@ -18,7 +18,9 @@
  */
 package composite;
 
+import org.osoa.sca.ComponentContext;
 import org.osoa.sca.annotations.Callback;
+import org.osoa.sca.annotations.Context;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
@@ -27,15 +29,16 @@ import org.osoa.sca.annotations.Service;
 @Scope("COMPOSITE")
 public class TargetImpl implements Target {
 
-    private SourceCallback sourceCallback;
+    private ComponentContext ctx; 
 
-    @Callback
-    public void setSourceCallback(SourceCallback sourceCallback) {
-        this.sourceCallback = sourceCallback;
+    @Context 
+    public void setContext(ComponentContext context) {
+        ctx = context;
     }
 
     public void someMethod(String arg) {
         System.out.println("Target: " + arg);
+        SourceCallback sourceCallback = (SourceCallback)ctx.getRequestContext().getCallbackReference().getService();
         sourceCallback.receiveResult(arg + " -> Target.someMethod");
     }
 }
