@@ -60,7 +60,7 @@ public class WidgetImplementationProcessor implements StAXArtifactProcessor<Widg
     public WidgetImplementationProcessor(ModelFactoryExtensionPoint modelFactories, Monitor monitor) {
     	assemblyFactory = modelFactories.getFactory(AssemblyFactory.class);
         contributionFactory = modelFactories.getFactory(ContributionFactory.class);
-        implementationFactory = new WidgetImplementationFactory(modelFactories);
+        implementationFactory = modelFactories.getFactory(WidgetImplementationFactory.class);
         this.monitor = monitor;
     }
 
