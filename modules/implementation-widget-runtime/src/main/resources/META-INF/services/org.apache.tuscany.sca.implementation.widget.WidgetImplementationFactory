@@ -16,4 +16,4 @@
 # under the License. 
 
 # Implementation class for model factory
-org.apache.tuscany.sca.implementation.widget.WidgetImplementationFactory
+org.apache.tuscany.sca.implementation.widget.impl.WidgetImplementationFactoryImpl
