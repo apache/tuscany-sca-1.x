@@ -792,6 +792,19 @@ public abstract class BaseConfigurationBuilderImpl {
      * @param service
      */
     private ComponentReference createCallbackReference(Component component, ComponentService service) {
+        return createCallbackReference(component, service, assemblyFactory);
+    }
+
+    /**
+     * Create a callback reference for a component service
+     * 
+     * @param component
+     * @param service
+     * @param assemblyFactory
+     */
+    protected static ComponentReference createCallbackReference(Component component,
+                                                                ComponentService service,
+                                                                AssemblyFactory assemblyFactory) {
         ComponentReference componentReference = assemblyFactory.createComponentReference();
         componentReference.setIsCallback(true);
         componentReference.setName(service.getName());
