@@ -175,6 +175,8 @@ public class SpringXMLComponentTypeLoader {
 
             // System.out.println("Spring TypeLoader - starting to read context file");
             readContextDefinition(resolver, reader, contextPath, beans, services, references, scaproperties);
+            
+            reader.close();
 
         } catch (IOException e) {
             throw new ContributionReadException(e);
