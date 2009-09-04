@@ -22,9 +22,11 @@ package org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 
 import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamReader;
 
 import org.apache.tuscany.sca.assembly.Composite;
@@ -33,7 +35,6 @@ import org.apache.tuscany.sca.binding.http.HTTPBinding;
 import org.apache.tuscany.sca.binding.http.operationselector.jsonrpc.JSONRPCOperationSelector;
 import org.apache.tuscany.sca.contribution.processor.DefaultStAXArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.ExtensibleStAXArtifactProcessor;
-import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.core.DefaultExtensionPointRegistry;
 import org.apache.tuscany.sca.core.UtilityExtensionPoint;
@@ -52,26 +53,28 @@ import org.junit.Test;
 public class JSONRPCOperationSelectorProcessorTestCase {
 
     public static final String COMPOSITE_WITH_OPERATION_SELECTOR =
-        "<?xml version=\"1.0\" encoding=\"ASCII\"?>" 
-        + "<composite xmlns=\"http://www.osoa.org/xmlns/sca/1.0\" targetNamespace=\"http://binding-http\" xmlns:tuscany=\"http://tuscany.apache.org/xmlns/sca/1.0\" name=\"binding-http\">"
-            + " <component name=\"HelloWorldComponent\">"
-            + "   <implementation.java class=\"services.HelloWorld\"/>"
-            + "      <service name=\"HelloWorldService\">"
-            + "          <tuscany:binding.http uri=\"http://localhost:8080/uri\" >"
-            + "              <tuscany:operationSelector.jsonrpc/>"
-            + "          </tuscany:binding.http>"
-            + "      </service>"
-            + " </component>"
+        "<?xml version='1.0' encoding='UTF-8'?>" 
+        + "<composite xmlns=\"http://www.osoa.org/xmlns/sca/1.0\" xmlns:ns1=\"http://www.osoa.org/xmlns/sca/1.0\" targetNamespace=\"http://binding-http\" name=\"binding-http\">"
+            + "<component name=\"HelloWorldComponent\">"
+            +     "<implementation.java class=\"services.HelloWorld\" />"
+            +        "<service name=\"HelloWorldService\">"
+            +            "<wstxns1:binding.http xmlns:wstxns1=\"http://tuscany.apache.org/xmlns/sca/1.0\" xmlns:ns2=\"http://tuscany.apache.org/xmlns/sca/1.0\" uri=\"http://localhost:8080/uri\">"
+            +                "<ns2:operationSelector.jsonrpc />"
+            +            "</wstxns1:binding.http>"
+            +        "</service>"
+            +  "</component>"
             + "</composite>";
     
     private static XMLInputFactory inputFactory;
-    private static StAXArtifactProcessor<Object> staxProcessor;
+    private static XMLOutputFactory outputFactory;
+    private static ExtensibleStAXArtifactProcessor staxProcessor;
     private static Monitor monitor;
     
     @BeforeClass
     public static void setUp() throws Exception {
         DefaultExtensionPointRegistry extensionPoints = new DefaultExtensionPointRegistry();
         inputFactory = XMLInputFactory.newInstance();
+        outputFactory = XMLOutputFactory.newInstance();
         // Create a monitor
         UtilityExtensionPoint utilities = extensionPoints.getExtensionPoint(UtilityExtensionPoint.class);
         MonitorFactory monitorFactory = new DefaultMonitorFactoryImpl();  
@@ -80,7 +83,7 @@ public class JSONRPCOperationSelectorProcessorTestCase {
                 utilities.addUtility(monitorFactory);
         }
         StAXArtifactProcessorExtensionPoint staxProcessors = new DefaultStAXArtifactProcessorExtensionPoint(extensionPoints);
-        staxProcessor = new ExtensibleStAXArtifactProcessor(staxProcessors, inputFactory, null, monitor);
+        staxProcessor = new ExtensibleStAXArtifactProcessor(staxProcessors, inputFactory, outputFactory, monitor);
 
     }
     
@@ -100,5 +103,24 @@ public class JSONRPCOperationSelectorProcessorTestCase {
         
         OperationSelector operationSelector = binding.getOperationSelector();
         assertEquals(JSONRPCOperationSelector.class, operationSelector.getClass().getInterfaces()[0]);
-    } 
+    }
+    
+    @Test
+    public void testWriteWireFormat() throws Exception {
+        XMLStreamReader reader = inputFactory.createXMLStreamReader(new StringReader(COMPOSITE_WITH_OPERATION_SELECTOR));
+        
+        Composite composite = (Composite)staxProcessor.read(reader);
+        assertNotNull(composite);
+        reader.close();
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        staxProcessor.write(composite, bos);
+
+        // used for debug comparison
+        // System.out.println(COMPOSITE_WITH_OPERATION_SELECTOR);
+        // System.out.println(bos.toString());
+
+        assertEquals(COMPOSITE_WITH_OPERATION_SELECTOR, bos.toString());      
+        
+    }
 }
