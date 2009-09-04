@@ -29,7 +29,6 @@
     </service>
 
     <component name="StockQuoteServiceComponent">
-        <implementation.spring location="META-INF/spring/beanRefContext.xml"/>
+        <implementation.spring location="springapps"/>
     </component>
-
 </composite>
