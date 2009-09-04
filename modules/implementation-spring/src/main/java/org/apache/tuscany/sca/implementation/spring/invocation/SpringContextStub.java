@@ -22,7 +22,7 @@ package org.apache.tuscany.sca.implementation.spring.invocation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.URL;
+import java.util.List;
 
 import org.apache.tuscany.sca.core.invocation.ProxyFactory;
 import org.apache.tuscany.sca.implementation.java.injection.JavaPropertyValueObjectFactory;
@@ -69,7 +69,7 @@ public class SpringContextStub {
             Object stub = stubConstructor.newInstance(new SpringImplementationTie(implementation, component, propertyValueObjectFactory));
 
             Class<?> tieClass = Class.forName("org.apache.tuscany.sca.implementation.spring.runtime.context.SpringContextTie", true, cl);
-            Constructor<?> tieConstructor = tieClass.getConstructor(new Class<?>[]{stubClass, URL.class, boolean.class, String.class});
+            Constructor<?> tieConstructor = tieClass.getConstructor(new Class<?>[]{stubClass, List.class, boolean.class, String.class});
             this.tie = tieConstructor.newInstance(stub, implementation.getResource(), annotationSupport, versionSupported);
             
             this.startMethod = tieClass.getMethod("start");
