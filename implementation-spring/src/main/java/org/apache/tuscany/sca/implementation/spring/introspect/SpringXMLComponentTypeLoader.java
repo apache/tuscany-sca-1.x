@@ -554,8 +554,7 @@ public class SpringXMLComponentTypeLoader {
                     		// Create a component type reference/property if the constructor-arg element has a
                             // type attribute OR index attribute declared...
                     	    if ((conArgElement.getType() != null && paramType.equals(conArgElement.getType())) ||
-                    		    (conArgElement.getIndex() != -1 && (conArgElement.getIndex() == parameter.getIndex())) ||
-                    		    (conArgElement.getAutoIndex() == parameter.getIndex()))
+                    		    (conArgElement.getIndex() != -1 && (conArgElement.getIndex() == parameter.getIndex())))
                     		{                    		
                     			if (parameter.getClassifer().getName().equals("org.osoa.sca.annotations.Reference")) {
                     				Reference theReference = createReference(interfaze, conArgElement.getRef());
