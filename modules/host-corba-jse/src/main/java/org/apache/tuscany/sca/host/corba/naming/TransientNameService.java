@@ -172,7 +172,6 @@ public class TransientNameService {
         // only destroy this if we created the orb instance.
         if (createdOrb != null) {
             createdOrb.shutdown(false);
-            createdOrb.destroy();
             
             try {
                 // This is a workaround to close the sockets for SUN ORB
@@ -189,6 +188,10 @@ public class TransientNameService {
             } catch (Throwable e) {
                 // Ignore
             }
+            
+            // Call destroy after close the acceptors
+            // In JDK 1.6u14 or later, destroy clean up the acceptors but it doesn't close them
+            createdOrb.destroy();
             createdOrb = null;
         }
     }
