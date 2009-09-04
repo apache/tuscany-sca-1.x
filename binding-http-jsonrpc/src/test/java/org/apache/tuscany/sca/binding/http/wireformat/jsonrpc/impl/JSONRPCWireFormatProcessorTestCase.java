@@ -35,7 +35,6 @@ import org.apache.tuscany.sca.binding.http.HTTPBinding;
 import org.apache.tuscany.sca.binding.http.wireformat.jsonrpc.JSONRPCWireFormat;
 import org.apache.tuscany.sca.contribution.processor.DefaultStAXArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.contribution.processor.ExtensibleStAXArtifactProcessor;
-import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.core.DefaultExtensionPointRegistry;
 import org.apache.tuscany.sca.core.UtilityExtensionPoint;
