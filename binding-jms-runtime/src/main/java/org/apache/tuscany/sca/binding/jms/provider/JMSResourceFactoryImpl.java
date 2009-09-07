@@ -89,6 +89,15 @@ public class JMSResourceFactoryImpl implements JMSResourceFactory {
     /*
      * (non-Javadoc)
      * 
+     * @see org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactory#closeSession(javax.jms.Session)
+     */
+    public void closeSession(Session session) throws JMSException {
+        session.close();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.tuscany.sca.binding.jms.provider.JMSResourceFactory#startConnection()
      */
     public void startConnection() throws JMSException, NamingException {
@@ -227,6 +236,10 @@ public class JMSResourceFactoryImpl implements JMSResourceFactory {
 
     public Session createResponseSession() throws JMSException, NamingException {
         return getResponseConnection().createSession(false, Session.AUTO_ACKNOWLEDGE);
+    }
+
+    public void closeResponseSession(Session session) throws JMSException {
+        session.close();
     }
 
     public Connection getResponseConnection() throws NamingException, JMSException {
