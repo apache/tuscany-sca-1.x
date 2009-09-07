@@ -66,7 +66,7 @@ public class JMSBindingContext {
     public synchronized void closeJmsSession() {
         if (jmsSession != null) {
             try {
-                jmsSession.close();
+                getJmsResourceFactory().closeSession(jmsSession);
             } catch (Exception e) {
                 throw new JMSBindingException(e);
             } finally {
@@ -89,7 +89,7 @@ public class JMSBindingContext {
     public synchronized void closeJmsResponseSession() {
         if (jmsResponseSession != null) {
             try {
-                jmsResponseSession.close();
+                getJmsResourceFactory().closeResponseSession(jmsResponseSession);
             } catch (Exception e) {
                 throw new JMSBindingException(e);
             } finally {
