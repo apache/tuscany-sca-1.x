@@ -43,6 +43,8 @@ public interface JMSResourceFactory {
      */
     public abstract Session createSession() throws JMSException, NamingException;
 
+    public abstract void closeSession(Session session) throws JMSException;
+
     /*
      * (non-Javadoc)
      * 
@@ -80,6 +82,7 @@ public interface JMSResourceFactory {
      */
     public abstract Session createResponseSession() throws JMSException, NamingException;
 
+    public abstract void closeResponseSession(Session session) throws JMSException;
     
     public abstract void closeResponseConnection() throws JMSException;
 
