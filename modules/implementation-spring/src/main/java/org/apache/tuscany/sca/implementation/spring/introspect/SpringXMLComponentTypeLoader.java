@@ -51,7 +51,6 @@ import org.apache.tuscany.sca.assembly.Multiplicity;
 import org.apache.tuscany.sca.assembly.Property;
 import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.Service;
-import org.apache.tuscany.sca.assembly.impl.ServiceImpl;
 import org.apache.tuscany.sca.contribution.Artifact;
 import org.apache.tuscany.sca.contribution.ContributionFactory;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
@@ -574,8 +573,7 @@ public class SpringXMLComponentTypeLoader {
                     		// Create a component type reference/property if the constructor-arg element has a
                             // type attribute OR index attribute declared...
                     		if ((conArgElement.getType() != null && paramType.equals(conArgElement.getType())) ||
-                    		    (conArgElement.getIndex() != -1 && (conArgElement.getIndex() == parameter.getIndex())) ||
-                    		    (conArgElement.getAutoIndex() == parameter.getIndex()))
+                    		    (conArgElement.getIndex() != -1 && (conArgElement.getIndex() == parameter.getIndex())))
                     		{
                     			if (parameter.getClassifer().getName().equals("org.osoa.sca.annotations.Reference")) {
                     				Reference theReference = createReference(interfaze, conArgElement.getRef());
