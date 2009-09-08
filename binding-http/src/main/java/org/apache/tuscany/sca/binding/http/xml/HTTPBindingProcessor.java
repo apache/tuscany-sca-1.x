@@ -134,8 +134,6 @@ public class HTTPBindingProcessor extends BaseStAXArtifactProcessor implements S
     }
 
     public void write(HTTPBinding httpBinding, XMLStreamWriter writer) throws ContributionWriteException, XMLStreamException {
-        //writer.writeStartElement(Constants.SCA10_NS, BINDING_HTTP);
-        
         writeStart(writer, BINDING_HTTP_QNAME.getNamespaceURI(), BINDING_HTTP_QNAME.getLocalPart());
 
         //write policies
@@ -159,7 +157,6 @@ public class HTTPBindingProcessor extends BaseStAXArtifactProcessor implements S
         	extensionProcessor.write(httpBinding.getOperationSelector(), writer);
         }
         writeEnd(writer);
-        //writer.writeEndElement();
     }
 
 
