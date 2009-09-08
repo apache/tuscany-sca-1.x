@@ -116,7 +116,6 @@
                 <module>endpoint</module>
                 <module>extensibility</module>
                 <module>extensibility-osgi</module>
-                <module>extensibility-equinox</module>
                 <module>extension-helper</module>
                 <module>host-android</module>
                 <module>host-corba</module>
