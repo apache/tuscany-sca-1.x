@@ -115,7 +115,7 @@ public class DomainManagerCallbackTestCase {
             otherNode.checkNodeErr();
             otherNode.checkNodeOut();
             System.out.println("Sleeping ...");
-            Thread.sleep(1000);
+            Thread.sleep(4000);
             otherNode.checkNodeErr();
             otherNode.checkNodeOut();
             assertEquals("-> someMethod -> receiveResult", tester.getResult());
