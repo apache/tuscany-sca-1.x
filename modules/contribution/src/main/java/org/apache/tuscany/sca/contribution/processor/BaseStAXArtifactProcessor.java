@@ -222,8 +222,8 @@ public abstract class BaseStAXArtifactProcessor {
      * @throws XMLStreamException
      */
     protected void writeStart(XMLStreamWriter writer, String uri, String name, XAttr... attrs) throws XMLStreamException {
-        String prefix = writeElementPrefix(writer, uri);
         writer.writeStartElement(uri, name);
+        String prefix = writeElementPrefix(writer, uri);
         if (prefix != null){
             writer.writeNamespace(prefix,uri);
         }

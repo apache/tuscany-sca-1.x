@@ -33,6 +33,7 @@ import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.contribution.Artifact;
 import org.apache.tuscany.sca.contribution.ContributionFactory;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
@@ -48,7 +49,7 @@ import org.apache.tuscany.sca.monitor.Problem.Severity;
  *
  * @version $Rev$ $Date$
  */
-public class WidgetImplementationProcessor implements StAXArtifactProcessor<WidgetImplementation> {
+public class WidgetImplementationProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<WidgetImplementation> {
     private static final QName IMPLEMENTATION_WIDGET = new QName(Constants.SCA10_TUSCANY_NS, "implementation.widget");
 
     private AssemblyFactory assemblyFactory;
@@ -159,17 +160,13 @@ public class WidgetImplementationProcessor implements StAXArtifactProcessor<Widg
     }
 
     public void write(WidgetImplementation implementation, XMLStreamWriter writer) throws ContributionWriteException, XMLStreamException {
-
-        // Write <implementation.widget>
-        // writer.setPrefix("widget",IMPLEMENTATION_WIDGET.getNamespaceURI());
-        writer.writeStartElement(IMPLEMENTATION_WIDGET.getNamespaceURI(), IMPLEMENTATION_WIDGET.getLocalPart());
-        writer.writeNamespace("widget",IMPLEMENTATION_WIDGET.getNamespaceURI());
-
+        // Write <implementation.widget>        
+        writeStart(writer, IMPLEMENTATION_WIDGET.getNamespaceURI(), IMPLEMENTATION_WIDGET.getLocalPart());
 
         if (implementation.getLocation() != null) {
             writer.writeAttribute("location", implementation.getLocation());
         }
 
-        writer.writeEndElement();
+        writeEnd(writer);
     }
 }
