@@ -49,7 +49,7 @@
                 <module>introducing</module>
                 <module>introducing-client</module>
                 <module>introducing-domain</module>
-                <module>jumpstart-launcher</module>
+                <module>jumpstart</module>
                 <module>fullapp</module>
                 <module>fullapp-domain</module>
                 <module>fullapp-nodes</module>
