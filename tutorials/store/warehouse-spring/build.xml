@@ -63,7 +63,7 @@
         <include name="tuscany-policy-1.6-SNAPSHOT.jar"/>
         <include name="tuscany-sca-api-1.6-SNAPSHOT.jar"/>
         <include name="tuscany-sca-api-extension-1.6-SNAPSHOT.jar"/>
-        <include name="tutorial-assets-1.6-SNAPSHOT.jar"/>
+        <include name="tutorial-assets.jar"/>
     </fileset>
     <fileset id="3rdparty.jars" dir="../../../lib">
         <include name="derby-10.3.1.4.jar"/>
