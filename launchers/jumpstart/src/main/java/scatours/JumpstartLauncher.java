@@ -16,39 +16,33 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
+
 package scatours;
 
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
-/**
- * Tests the Jump Start scenario
- */
-public class NodeTestCase {
+public class JumpstartLauncher {
 
-    private SCANode node;
-
-    @Before
-    public void startServer() throws Exception {
-        node = SCANodeFactory.newInstance().createSCANode("trips.composite", 
-            new SCAContribution("introducing-trips", "../../contributions/introducing-trips/target/classes"));
+    public static void main(String[] args) throws Exception {
+        SCAContribution gvtContribution = 
+          new SCAContribution("introducing-trips", 
+              "../../contributions/introducing-trips/target/classes");
+        
+        SCANode node = SCANodeFactory.newInstance().
+           createSCANode("trips.composite", 
+                         gvtContribution);
+        
         node.start();
-    }
 
-    @Test
-    public void testClient() throws Exception {
-        Trips tripProvider = ((SCAClient)node).getService(Trips.class, "TripProvider/Trips");
+        Trips tripProvider = ((SCAClient)node).getService(Trips.class, 
+                                                          "TripProvider/Trips");
+        
         System.out.println("Trip boooking code = " + 
                            tripProvider.checkAvailability("FS1APR4", 2));
-    }
 
-    @After
-    public void stopServer() throws Exception {
         node.stop();
     }
 }

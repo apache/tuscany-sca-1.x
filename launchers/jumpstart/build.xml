@@ -17,7 +17,7 @@
  * under the License.
 -->
 
-<project name="scatours-jumpstart-launcher" default="compile">
+<project name="scatours-launcher-jumpstart" default="compile">
     <property environment="env"/> 
 
     <target name="compile">
@@ -28,15 +28,15 @@
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
         </javac>
-        <jar destfile="target/scatours-jumpstart-launcher.jar" basedir="target/classes">
+        <jar destfile="target/scatours-launcher-jumpstart.jar" basedir="target/classes">
             <manifest>
-                <attribute name="Main-Class" value="scatours.LaunchNode"/>
+                <attribute name="Main-Class" value="scatours.JumpstartLauncher"/>
             </manifest>
         </jar>
     </target>
 
     <target name="run">
-        <java classname="scatours.LaunchNode" fork="true">
+        <java classname="scatours.JumpstartLauncher" fork="true">
             <classpath>
                 <pathelement location="target/classes"/>
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>

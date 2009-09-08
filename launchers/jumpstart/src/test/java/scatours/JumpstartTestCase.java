@@ -16,38 +16,39 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-
 package scatours;
 
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class LaunchJumpstartNode {
+/**
+ * Tests the Jump Start scenario
+ */
+public class JumpstartTestCase {
 
-    public static void main(String[] args) throws Exception {
-        try {
-            SCAContribution gvtContribution = 
-              new SCAContribution("introducing-trips", 
-                  "../../contributions/introducing-trips/target/classes");
-            
-            SCANode node = SCANodeFactory.newInstance().
-               createSCANode("trips.composite", 
-                             gvtContribution);
-            
-            node.start();
+    private SCANode node;
 
-            Trips tripProvider = ((SCAClient)node).getService(Trips.class, 
-                                                              "TripProvider/Trips");
-            
-            System.out.println("Trip boooking code = " + 
-                               tripProvider.checkAvailability("FS1APR4", 2));
+    @Before
+    public void startServer() throws Exception {
+        node = SCANodeFactory.newInstance().createSCANode("trips.composite", 
+            new SCAContribution("introducing-trips", "../../contributions/introducing-trips/target/classes"));
+        node.start();
+    }
 
-            node.stop();
-            
-        } catch (Throwable th) {
-            th.printStackTrace();
-        }
+    @Test
+    public void testClient() throws Exception {
+        Trips tripProvider = ((SCAClient)node).getService(Trips.class, "TripProvider/Trips");
+        System.out.println("Trip boooking code = " + 
+                           tripProvider.checkAvailability("FS1APR4", 2));
+    }
+
+    @After
+    public void stopServer() throws Exception {
+        node.stop();
     }
 }
