@@ -83,7 +83,9 @@
                 <module>payment-spring-contribution</module>
                 <module>payment-spring-scatag-contribution</module>
                 <module>payment-bpel-contribution</module>
+                <!-- currently broken because of TUSCANY-3267
                 <module>payment-groovy-contribution</module>
+                -->
                 <module>policy-client</module>
             </modules>
         </profile>
