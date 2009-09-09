@@ -224,7 +224,9 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
         
         // add it to the search index, contributionUpdated is called to guarantee 
         // only one contribution with the same URI in the index
-        this.domainSearch.contributionUpdated(contribution, contribution);
+        if (domainSearch != null) {  // can be null in unit tests
+            domainSearch.contributionUpdated(contribution, contribution);
+        }
         
         return key;
         
@@ -271,7 +273,9 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
                 writeWorkspace(workspace);
                 
                 // delete it from the search index
-                this.domainSearch.contributionRemoved(contribution);
+                if (domainSearch != null) {  // can be null in unit tests
+                    domainSearch.contributionRemoved(contribution);
+                }
                 
                 return;
                 
