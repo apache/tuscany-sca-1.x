@@ -24,7 +24,9 @@
     <component name="Payment">
         <implementation.java class="com.tuscanyscatours.payment.impl.PaymentImpl" />
         <service name="Payment">
-           <binding.ws uri="http://localhost:8081/Payment"/>
+            <!-- use interface.wsdl to work around TUSCANY-3267 -->
+            <interface.wsdl interface="http://www.tuscanyscatours.com/Payment/#wsdl.interface(Payment)" />
+            <binding.ws uri="http://localhost:8081/Payment"/>
         </service>
         <reference name="customerRegistry" target="CustomerRegistry"/>
         <reference name="creditCardPayment">
