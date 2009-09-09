@@ -38,7 +38,7 @@
             </activation>
             <modules>
                 <module>blog-feed-contribution/</module>
-                <module>calendar-contribution</module>
+                <module>calendar</module>
                 <module>car</module>
                 <module>common</module>
                 <module>creditcard-payment-jaxb</module>
@@ -62,8 +62,8 @@
                 <module>fullapp-shoppingcart</module>
                 <module>help-pages-contribution</module>
                 <module>hotel</module>
-                <module>interaction-client-contribution</module>
-                <module>interaction-service-remote-contribution</module>
+                <module>interaction-client</module>
+                <module>interaction-service-remote</module>
                 <module>introducing-client</module>
                 <module>introducing-tours</module>
                 <module>introducing-trips</module>
