@@ -26,6 +26,8 @@
     <component name="PaymentClient">
         <implementation.java class="payment.client.PaymentClientImpl" />
         <reference name="payment">
+            <!-- use interface.wsdl to work around TUSCANY-3267 -->
+            <interface.wsdl interface="http://www.tuscanyscatours.com/Payment/#wsdl.interface(Payment)" />
             <binding.ws uri="http://localhost:8081/Payment" />
         </reference>
     </component> 
