@@ -117,11 +117,33 @@ public class GoogleContactsServiceTestCase {
         //System.out.println("postedEntryID: " + postedEntryID );
         
         //Before deletion
-        Entry entry00 = testService.clientGetEntry(postedEntryID);
-        //System.out.println("Before Deleteion: " + entry00.getId());
+        for (int i = 0; i < 5; i++) { // make 5 attempts because of timing issues 
+            try {
+                Entry entry00 = testService.clientGetEntry(postedEntryID);
+                //System.out.println("Before Deletion: " + entry00.getId());
+                break;  // get was successful
+            } catch (Exception e) {
+                if (i < 4) {
+                    System.out.println("Get failed, retrying...");
+                } else {
+                    throw e;  // final attempt, give up
+                }
+            }
+        }
         
         //Delete this entry
-        testService.clientDelete(postedEntryID);
+        for (int i = 0; i < 5; i++) { // make 5 attempts because of timing issues 
+            try {
+                testService.clientDelete(postedEntryID);
+                break;  // delete was successful
+            } catch (Exception e) {
+                if (i < 4) {
+                    System.out.println("Delete failed, retrying...");
+                } else {
+                    throw e;  // final attempt, give up
+                }
+            }
+        }
 
         //Worked: this newly posted entry did not appear in the contact list
         //But we need a Junit assertion here
