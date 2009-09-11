@@ -99,6 +99,7 @@
                 <module>interop-soap-round2-client</module>
                 <module>interop-soap-service</module>
                 -->
+                <module>jaxws</module>
                 <module>jms</module>
                 <module>jms-args</module>
                 <module>jms-callbacks</module>
