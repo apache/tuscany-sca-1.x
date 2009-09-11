@@ -26,8 +26,6 @@
      <component name="PaymentComponent">
         <implementation.spring location="Payment-context.xml"/>
         <service name="Payment">
-            <!-- use interface.wsdl to work around TUSCANY-3267 -->
-            <interface.wsdl interface="http://www.tuscanyscatours.com/Payment/#wsdl.interface(Payment)" />
             <binding.ws uri="http://localhost:8081/Payment"/>
         </service>
         <reference name="creditCardPaymentReference">
