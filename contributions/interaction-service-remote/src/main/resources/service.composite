@@ -28,7 +28,7 @@
                     callbackInterface="com.tuscanyscatours.common.SearchCallback"/>
             <binding.ws uri="http://localhost:8081/Hotel/Search"/>
             <callback>
-                <binding.ws name="callback" uri="http://localhost:8080/Client/SearchCallback"/>
+                <binding.ws name="callback"/>
             </callback>            
         </service>
     </component> 
@@ -40,7 +40,7 @@
                     callbackInterface="com.tuscanyscatours.common.SearchCallback"/>
             <binding.ws uri="http://localhost:8081/Hotel/SearchConversational"/>
             <callback>
-                <binding.ws name="callback" uri="http://localhost:8080/Client/SearchCallbackConversational"/>
+                <binding.ws name="callback"/>
             </callback>            
         </service>
     </component>     

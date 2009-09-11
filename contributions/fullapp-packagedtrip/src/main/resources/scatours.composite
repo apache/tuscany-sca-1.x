@@ -28,7 +28,7 @@
             <binding.ws name="searchws" uri="http://localhost:8085/Trip/Search"/>
             <tuscany:binding.jsonrpc name="searchjsonrpc"/>
             <callback>
-                <binding.ws uri="http://localhost:8084/Trip/SearchCallback"/>
+                <binding.ws/>
             </callback> 
         </service>
         <service name="Book"/>        

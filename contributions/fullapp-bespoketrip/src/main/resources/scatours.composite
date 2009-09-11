@@ -28,7 +28,7 @@
             <binding.ws name="searchws" uri="http://localhost:8086/Hotel/Search"/>
             <!-- tuscany:binding.jsonrpc name="searchjsonrpc"/-->
             <callback>
-                <binding.ws uri="http://localhost:8084/Hotel/SearchCallback"/>
+                <binding.ws/>
             </callback> 
         </service>
         <service name="Book"/>
@@ -42,7 +42,7 @@
             <binding.ws name="searchws" uri="http://localhost:8086/Flight/Search"/>
             <tuscany:binding.jsonrpc name="searchjsonrpc"/>
             <callback>
-                <binding.ws uri="http://localhost:8084/Flight/SearchCallback"/>
+                <binding.ws/>
             </callback>            
         </service>
         <service name="Book"/>
@@ -54,7 +54,7 @@
             <binding.ws name="searchws" uri="http://localhost:8086/Car/Search"/>
             <tuscany:binding.jsonrpc name="searchjsonrpc"/>
             <callback>
-                <binding.ws uri="http://localhost:8084/Car/SearchCallback"/>
+                <binding.ws/>
             </callback> 
         </service>
         <service name="Book"/>        
