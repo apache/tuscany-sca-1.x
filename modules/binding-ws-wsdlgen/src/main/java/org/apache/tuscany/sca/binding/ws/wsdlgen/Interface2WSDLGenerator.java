@@ -78,6 +78,7 @@ import org.apache.ws.commons.schema.XmlSchemaException;
 import org.apache.ws.commons.schema.utils.NamespaceMap;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -340,6 +341,29 @@ public class Interface2WSDLGenerator {
             }
             List<XSDefinition> xsDefinitions = helper.getSchemaDefinitions(xsdFactory, resolver, en.getValue());
             for (XSDefinition xsDef: xsDefinitions) {
+                // TUSCANY-2757 and TUSCANY-3267 - flip global wrapper elements with nillable 
+                // set true to be set to false.  The JAXB RI seems to be generating this setting
+                // incorrectly according to the JAXB spec.
+                Document doc = xsDef.getDocument();
+                if (doc != null) {
+                    NodeList nodes = doc.getFirstChild().getChildNodes();
+                    for (int i = 0; i < nodes.getLength(); i++) {
+                        Node aNode = nodes.item(i);
+                        if (aNode.getLocalName() != null && aNode.getLocalName().equals("element")) {
+                            NamedNodeMap attributes = aNode.getAttributes();
+                            Node nameAttr = attributes.getNamedItem("name");
+                            if (nameAttr != null) { 
+                                QName elementName = new QName(xsDef.getNamespace(), nameAttr.getNodeValue());
+                                if (wrappers.containsKey(elementName)) {
+                                    Node nillable = attributes.getNamedItem("nillable");
+                                    if (nillable != null) {
+                                        nillable.setNodeValue("false");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 addSchemaExtension(xsDef, schemaCollection, wsdlDefinition, definition);
             }
         }
