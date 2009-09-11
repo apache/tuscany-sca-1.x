@@ -34,19 +34,6 @@
             <artifactId>tuscany-node-api</artifactId>
             <version>1.6-SNAPSHOT</version>
         </dependency>
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-node-launcher</artifactId>
-            <version>1.6-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-domain-manager</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
@@ -64,41 +51,6 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-widget-runtime</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-resource-runtime</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-atom-abdera</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-jsonrpc-runtime</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-http-runtime</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-ws-axis2</artifactId>
             <version>1.6-SNAPSHOT</version>
             <scope>runtime</scope>
@@ -106,39 +58,17 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-sca-axis2</artifactId>
+            <artifactId>tuscany-host-jetty</artifactId>
             <version>1.6-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-ejb-runtime</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.5</version>
+            <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-ejb</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-bpel-ode</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>        
-
-        <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <version>10.3.1.4</version>
-            <scope>runtime</scope>
-        </dependency>
-
     </dependencies>
     
     <build>
