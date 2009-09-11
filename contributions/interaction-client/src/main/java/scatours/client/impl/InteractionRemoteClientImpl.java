@@ -28,7 +28,7 @@ import com.tuscanyscatours.common.TripItem;
 import com.tuscanyscatours.common.TripLeg;
 
 @Service(Runnable.class)
-public class InteractionRemoteClient implements Runnable, SearchCallback {
+public class InteractionRemoteClientImpl implements Runnable, SearchCallback {
 	
     @Reference
     protected Search hotelSearchRemote;

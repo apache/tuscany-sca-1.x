@@ -21,6 +21,10 @@ package scatours.client.impl;
 
 import java.util.concurrent.CountDownLatch;
 
+import org.osoa.sca.ComponentContext;
+import org.osoa.sca.ServiceReference;
+import org.osoa.sca.annotations.Context;
+import org.osoa.sca.annotations.ConversationID;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
@@ -30,23 +34,38 @@ import com.tuscanyscatours.common.SearchCallback;
 import com.tuscanyscatours.common.TripItem;
 import com.tuscanyscatours.common.TripLeg;
 
-@Scope("COMPOSITE")
+@Scope("CONVERSATION")
 @Service(Runnable.class)
-public class InteractionOneWayCallbackClient implements Runnable, SearchCallback{
+public class InteractionStatefulCallbackClientImpl implements Runnable, SearchCallback {
 	
     @Reference
-    protected Search hotelSearchOneWayCallback;
+    protected Search flightSearchStatefulCallback;
+    
+    @Context
+    protected ComponentContext componentContext;
     
     CountDownLatch resultsReceivedCountdown;
     
     public void run() {
-    	System.out.println("\nCalling hotel component using both one way and callback interation patterns");
+    	System.out.println("\nCalling flight component using stateful callback interation pattern");
     	resultsReceivedCountdown = new CountDownLatch(1);
     	TripLeg tripLeg = getTestTripLeg();
-    	hotelSearchOneWayCallback.searchAsynch(tripLeg);
     	
-    	// start other searched here while the hotel search progresses
-    	
+        ServiceReference<Search> dynamicFlightSearchStatefulCallback = 
+            componentContext.getServiceReference(Search.class, "flightSearchStatefulCallback");
+        dynamicFlightSearchStatefulCallback.setConversationID("SomeUniqeID"); 
+        Search flightSearch = dynamicFlightSearchStatefulCallback.getService();
+       
+        flightSearch.searchAsynch(tripLeg);
+    	       
+        // wait for a while and see how the flight search is getting one
+        try {
+            Thread.sleep(1200);
+        } catch(Exception ex){
+            // do nothing
+        }
+        System.out.println("Flight search is " + flightSearch.getPercentComplete() + "% complete");
+        	
     	// wait for responses to come back
         try {
             resultsReceivedCountdown.await();
@@ -55,22 +74,23 @@ public class InteractionOneWayCallbackClient implements Runnable, SearchCallback
     }
     
     public void searchResults(TripItem[] items){
+        System.out.println("Received results in conversation - " + componentContext.getRequestContext().getServiceReference().getConversation().getConversationID());
         for (TripItem tripItem : items){
-            System.out.println("Found hotel - " + tripItem.getName());
+            System.out.println("Found flight - " + tripItem.getName());
         }
         resultsReceivedCountdown.countDown();
-    }  
+    }      
     
     public void setPercentComplete(String searchComponent, int percentComplete){
-        // Not used in this sample
+        System.out.println(searchComponent + " search is " + percentComplete + "% complete");
     }    
     
     private TripLeg getTestTripLeg(){
     	TripLeg tripLeg = new TripLeg();
     	tripLeg.setFromLocation("LGW");
     	tripLeg.setToLocation("FLR");
-    	tripLeg.setFromDate("06/12/09 00:00");
-    	tripLeg.setToDate("13/12/09 00:00");
+    	tripLeg.setFromDate("06/12/09");
+    	tripLeg.setToDate("13/12/09");
     	tripLeg.setNoOfPeople("1");
     	tripLeg.setId("TRIP27");
     	return tripLeg;

@@ -23,7 +23,7 @@
 
     <!-- Local interaction -->
     <component name="InteractionLocalClient">
-        <implementation.java class="scatours.client.impl.InteractionLocalClient" />
+        <implementation.java class="scatours.client.impl.InteractionLocalClientImpl" />
         <reference name="calendarLocal" 
                    target="Calendar"/>
      </component>
@@ -34,7 +34,7 @@
     
     <!-- Remote interaction -->
     <component name="InteractionRemoteClient">
-        <implementation.java class="scatours.client.impl.InteractionRemoteClient" />
+        <implementation.java class="scatours.client.impl.InteractionRemoteClientImpl" />
         <reference name="hotelSearchRemote">
             <binding.ws uri="http://localhost:8081/Hotel/Search"/>
         </reference>
@@ -42,7 +42,7 @@
      
     <!-- Request response interaction -->
     <component name="InteractionRequestResponseClient">
-        <implementation.java class="scatours.client.impl.InteractionRequestResponseClient" />
+        <implementation.java class="scatours.client.impl.InteractionRequestResponseClientImpl" />
         <reference name="currencyConverterRequestResponse" target="CurrencyConverter"/>
     </component>
      
@@ -52,7 +52,7 @@
     
     <!-- One way and callback interaction -->
     <component name="InteractionOneWayCallbackClient">
-        <implementation.java class="scatours.client.impl.InteractionOneWayCallbackClient" />
+        <implementation.java class="scatours.client.impl.InteractionOneWayCallbackClientImpl" />
         <reference name="hotelSearchOneWayCallback">
             <interface.java interface="com.tuscanyscatours.common.Search" 
                     callbackInterface="com.tuscanyscatours.common.SearchCallback"/>
@@ -65,7 +65,7 @@
      
      <!-- Conversational interaction -->
      <component name="InteractionConversationClient">
-        <implementation.java class="scatours.client.impl.InteractionConversationClient" />
+        <implementation.java class="scatours.client.impl.InteractionConversationClientImpl" />
         <reference name="cartStoreConversation" target="CartStore"/>
      </component>
               
@@ -76,7 +76,7 @@
     
     <!-- Stateful callback interaction -->
     <component name="InteractionStatefulCallbackClient">
-        <implementation.java class="scatours.client.impl.InteractionStatefulCallbackClient" />
+        <implementation.java class="scatours.client.impl.InteractionStatefulCallbackClientImpl" />
         <reference name="flightSearchStatefulCallback">
             <interface.java interface="com.tuscanyscatours.common.Search" 
                     callbackInterface="com.tuscanyscatours.common.SearchCallback"/>

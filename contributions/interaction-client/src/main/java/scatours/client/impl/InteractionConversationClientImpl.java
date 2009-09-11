@@ -33,7 +33,7 @@ import com.tuscanyscatours.shoppingcart.CartStore;
 
 @Scope("COMPOSITE")
 @Service(Runnable.class)
-public class InteractionConversationClient implements Runnable {
+public class InteractionConversationClientImpl implements Runnable {
 	
     @Reference
     protected CartStore cartStoreConversation;
