@@ -26,26 +26,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>itest-domainmgr-basic-runtest</artifactId>
-    <name>Apache Tuscany SCA iTest Domain Manager Basic Run Test</name>
+    <name>Apache Tuscany SCA iTest Domain Manager Transaction Run Test</name>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>itest-domainmgr-basic-trips</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>itest-domainmgr-basic-tours</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>itest-domainmgr-basic-client</artifactId>
+            <artifactId>itest-domainmgr-transaction-payment</artifactId>
             <version>1.5.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
@@ -59,18 +45,32 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-binding-ws-axis2</artifactId>
+            <version>1.5.1-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-policy-security</artifactId>
+            <version>1.5.1-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-policy-transaction</artifactId>
+            <version>1.5.1-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-domain-manager</artifactId>
             <version>1.5.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency> 
         
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-sca-axis2</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
