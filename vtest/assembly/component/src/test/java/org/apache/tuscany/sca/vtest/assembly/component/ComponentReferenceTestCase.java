@@ -91,7 +91,7 @@ public class ComponentReferenceTestCase {
         try {
         	initDomain("referencename_2.composite"); 
         } catch (ServiceRuntimeException ex){
-            Assert.assertEquals("Duplicate component reference name: Component = ClientComponent2 Reference = b", ex.getMessage());
+            Assert.assertEquals("org.apache.tuscany.sca.monitor.MonitorRuntimeException: Duplicate component reference name: Component = ClientComponent2 Reference = b", ex.getMessage());
             return;
         }
         Assert.fail();         
@@ -138,7 +138,7 @@ public class ComponentReferenceTestCase {
         try {
             initDomain("referencename_4.composite");   
         } catch (ServiceRuntimeException ex){
-            Assert.assertEquals("Reference not found for component reference: Component = ClientComponent1 Reference = bb", ex.getMessage());
+            Assert.assertEquals("org.apache.tuscany.sca.monitor.MonitorRuntimeException: Reference not found for component reference: Component = ClientComponent1 Reference = bb", ex.getMessage());
             return;
         }
     	   	
