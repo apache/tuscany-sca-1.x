@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -376,6 +377,13 @@ final class NodeLauncherUtil {
             return node;
             
         } catch (Exception e) {
+            Throwable ce = e instanceof InvocationTargetException ? e.getCause() : e;
+            if (ce.getClass().getName().equals("org.osoa.sca.ServiceRuntimeException") &&
+                ce.getCause() != null &&
+                ce.getCause().getClass().getName().equals("org.apache.tuscany.sca.monitor.MonitorRuntimeException")) {
+                NodeLauncher.logger.log(Level.SEVERE, "SCA Node could not be created");
+                throw new LauncherException("SCA Node could not be created");
+           }
             NodeLauncher.logger.log(Level.SEVERE, "SCA Node could not be created", e);
             throw new LauncherException(e);
         } finally {

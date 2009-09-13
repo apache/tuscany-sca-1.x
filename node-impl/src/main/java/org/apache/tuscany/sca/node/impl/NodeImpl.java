@@ -58,6 +58,7 @@ import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessorExtens
 import org.apache.tuscany.sca.contribution.processor.URLArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.URLArtifactProcessorExtensionPoint;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
+import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 import org.apache.tuscany.sca.contribution.service.ContributionService;
 import org.apache.tuscany.sca.contribution.service.util.FileHelper;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
@@ -68,6 +69,7 @@ import org.apache.tuscany.sca.implementation.node.ConfiguredNodeImplementation;
 import org.apache.tuscany.sca.implementation.node.NodeImplementationFactory;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.MonitorFactory;
+import org.apache.tuscany.sca.monitor.MonitorRuntimeException;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
 import org.apache.tuscany.sca.node.SCAClient;
@@ -140,6 +142,8 @@ public class NodeImpl implements SCANode, SCAClient {
             // Configure the node
             configureNode(configuration);
 
+        } catch (ServiceRuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new ServiceRuntimeException(e);
         }
@@ -376,6 +380,8 @@ public class NodeImpl implements SCANode, SCAClient {
             // Configure the node
             configureNode(configuration);
 
+        } catch (ServiceRuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new ServiceRuntimeException(e);
         }
@@ -440,6 +446,8 @@ public class NodeImpl implements SCANode, SCAClient {
             // Configure the node
             configureNode(configuration);
 
+        } catch (ServiceRuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new ServiceRuntimeException(e);
         }
@@ -584,7 +592,11 @@ public class NodeImpl implements SCANode, SCAClient {
             logger.log(Level.INFO, "Loading composite: " + compositeURL);
             // InputStream is = compositeURL.openStream();
             // XMLStreamReader reader = inputFactory.createXMLStreamReader(is);
-            composite = compositeDocProcessor.read(null, uri, compositeURL);
+            try {
+                composite = compositeDocProcessor.read(null, uri, compositeURL);
+            } catch (ContributionReadException e) {
+                // ignore - errors will be detected by analyzeProblems() call below
+            }
             // reader.close();
 
             analyzeProblems();
@@ -696,9 +708,9 @@ public class NodeImpl implements SCANode, SCAClient {
         for (Problem problem : monitor.getProblems()) {
             if ((problem.getSeverity() == Severity.ERROR) && (!problem.getMessageId().equals("SchemaError"))) {
                 if (problem.getCause() != null) {
-                    throw problem.getCause();
+                    throw new ServiceRuntimeException(new MonitorRuntimeException(problem.getCause()));
                 } else {
-                    throw new ServiceRuntimeException(problem.toString());
+                    throw new ServiceRuntimeException(new MonitorRuntimeException(problem.toString()));
                 }
             }
         }
