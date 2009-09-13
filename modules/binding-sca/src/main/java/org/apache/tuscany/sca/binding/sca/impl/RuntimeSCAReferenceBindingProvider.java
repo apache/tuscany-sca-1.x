@@ -126,7 +126,7 @@ public class RuntimeSCAReferenceBindingProvider implements ReferenceBindingProvi
 
     private ReferenceBindingProvider getDistributedProvider() {
 
-        if (isTargetRemote()) {
+        if (isTargetRemote() || isRemotableCallback()) {
             // initialize the remote provider if it hasn't been done already
             if (distributedProvider == null) {
                 if (reference.getInterfaceContract() != null && !reference.getInterfaceContract().getInterface().isRemotable()) {
@@ -153,6 +153,22 @@ public class RuntimeSCAReferenceBindingProvider implements ReferenceBindingProvi
         }
 
         return distributedProvider;
+    }
+
+    /*
+     * This test is needed to make sure the distributed binding provider
+     * is started and stopped if this is a callback binding that might
+     * need to make a remote invocation.
+     */
+    private boolean isRemotableCallback() {
+        if (reference.isCallback() &&
+            reference.getInterfaceContract() != null &&
+            reference.getInterfaceContract().getInterface().isRemotable() &&
+            distributedProviderFactory != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public InterfaceContract getBindingInterfaceContract() {

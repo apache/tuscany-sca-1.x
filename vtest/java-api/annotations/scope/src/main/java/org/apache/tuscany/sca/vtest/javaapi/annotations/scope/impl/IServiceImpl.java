@@ -71,7 +71,9 @@ public class IServiceImpl implements IService {
 
 	@Init
     public void initIService() throws Exception {
-    	initCalledCounter++;
+        synchronized (IServiceImpl.class) {
+            initCalledCounter++;
+        }
     	if (p1.equals("p1") && a1.getName().equals("AService"))
     		isInitReady = true;
     	System.out.println("IService" + currentInstanceId + "->initIService");
@@ -79,7 +81,9 @@ public class IServiceImpl implements IService {
 
     @Destroy
     public void destroyIService() {
-    	destroyCalledCounter++;
+        synchronized (IServiceImpl.class) {
+            destroyCalledCounter++;
+        }
     	System.out.println("IService" + currentInstanceId + "->destroyIService");
     }
     
