@@ -25,8 +25,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.xml.namespace.QName;
@@ -168,12 +170,13 @@ public class DistributeComponents {
         SCABindingFactory scaBindingFactory = modelFactories.getFactory(SCABindingFactory.class);
         IntentAttachPointTypeFactory attachPointTypeFactory = modelFactories.getFactory(IntentAttachPointTypeFactory.class);
         InterfaceContractMapper contractMapper = utilities.getUtility(InterfaceContractMapper.class);
+        Map<Binding, Binding> bindingMap = new HashMap<Binding, Binding>();
         domainCompositeBuilder = new CompositeBuilderImpl(assemblyFactory, scaBindingFactory, attachPointTypeFactory,
-                                                          documentBuilderFactory, transformerFactory, contractMapper, monitor);
+                                                          documentBuilderFactory, transformerFactory, contractMapper, monitor, bindingMap);
         
         // Create a node composite builder
         nodeCompositeBuilder = new NodeCompositeBuilderImpl(assemblyFactory, scaBindingFactory,
-                                                            documentBuilderFactory, transformerFactory, contractMapper, null, monitor);
+                                                            documentBuilderFactory, transformerFactory, contractMapper, null, monitor, bindingMap);
     }
     
 

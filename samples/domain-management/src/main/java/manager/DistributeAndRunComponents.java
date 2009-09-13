@@ -157,12 +157,13 @@ public class DistributeAndRunComponents {
         SCABindingFactory scaBindingFactory = modelFactories.getFactory(SCABindingFactory.class);
         IntentAttachPointTypeFactory attachPointTypeFactory = modelFactories.getFactory(IntentAttachPointTypeFactory.class);
         InterfaceContractMapper contractMapper = utilities.getUtility(InterfaceContractMapper.class);
+        Map<Binding, Binding> bindingMap = new HashMap<Binding, Binding>();
         domainCompositeBuilder = new CompositeBuilderImpl(assemblyFactory, scaBindingFactory, attachPointTypeFactory,
-                                                          documentBuilderFactory, transformerFactory, contractMapper, monitor);
+                                                          documentBuilderFactory, transformerFactory, contractMapper, monitor, bindingMap);
         
         // Create a node composite builder
         nodeCompositeBuilder = new NodeCompositeBuilderImpl(assemblyFactory, scaBindingFactory,
-                                                            documentBuilderFactory, transformerFactory, contractMapper, null, monitor);
+                                                            documentBuilderFactory, transformerFactory, contractMapper, null, monitor, bindingMap);
     }
     
 

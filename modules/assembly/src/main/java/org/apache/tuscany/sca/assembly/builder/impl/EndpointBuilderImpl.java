@@ -19,6 +19,7 @@
 
 package org.apache.tuscany.sca.assembly.builder.impl;
 
+import java.util.Map;
 import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.ComponentService;
 import org.apache.tuscany.sca.assembly.CompositeService;
@@ -37,9 +38,11 @@ import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
 public abstract class EndpointBuilderImpl implements EndpointBuilder {
     
     private Monitor monitor;
+    private Map<Binding, Binding> bindingMap;
     
-    public EndpointBuilderImpl (Monitor monitor){
+    public EndpointBuilderImpl (Monitor monitor, Map<Binding, Binding> bindingMap) {
         this.monitor = monitor;
+        this.bindingMap = bindingMap;
     }
     
     private void warning(String message, Object model, String... messageParameters) {
@@ -99,7 +102,8 @@ public abstract class EndpointBuilderImpl implements EndpointBuilder {
         Binding resolvedBinding = BindingConfigurationUtil.matchBinding(endpoint.getTargetComponent(),
                                                                         endpoint.getTargetComponentService(),
                                                                         endpoint.getCandidateBindings(),
-                                                                        endpoint.getTargetComponentService().getBindings());
+                                                                        endpoint.getTargetComponentService().getBindings(),
+                                                                        bindingMap, false);
         if (resolvedBinding == null) {
             warning("NoMatchingBinding", 
                     endpoint.getSourceComponentReference(),
@@ -113,7 +117,8 @@ public abstract class EndpointBuilderImpl implements EndpointBuilder {
             Binding resolvedCallbackBinding = BindingConfigurationUtil.matchBinding(endpoint.getTargetComponent(),
                                                                                     endpoint.getTargetComponentService(),
                                                                                     endpoint.getSourceComponentReference().getCallback().getBindings(),
-                                                                                    endpoint.getTargetComponentService().getCallback().getBindings());
+                                                                                    endpoint.getTargetComponentService().getCallback().getBindings(),
+                                                                                    bindingMap, true);
             if (resolvedBinding == null) {
                 warning("NoMatchingCallbackBinding", 
                         endpoint.getSourceComponentReference(),
