@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -7,31 +6,27 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- *
+ * 
  *   http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           targetNamespace="http://scatours"
-           xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
-           xmlns:c="http://scatours"
-           name="payment">
+ * under the License.    
+ */
 
-     <component name="PaymentComponent">
-        <implementation.spring location="Payment-context.xml"/>
-        <service name="Payment">
-            <binding.ws uri="http://localhost:8081/Payment"/>
-        </service>
-        <reference name="creditCardPaymentReference">
-            <binding.ws uri="http://localhost:8082/CreditCardPayment"/>
-        </reference>
-        <property name="transactionFee">1.23</property>
-    </component>
+package com.tuscanyscatours.emailgateway.impl;
 
-</composite>
+import com.tuscanyscatours.emailgateway.EmailGateway;
+import com.tuscanyscatours.emailgateway.EmailType;
+
+public class EmailGatewayImpl implements EmailGateway {
+
+    public String sendEmail(EmailType email) {
+        System.out.println("Sending mail to " + email.getTo());
+        return "SENT";
+    }
+
+}
