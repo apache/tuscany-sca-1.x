@@ -72,9 +72,9 @@ abstract class BindingConfigurationUtil {
                         //Customise the binding name to make it unique 
                         // regardless of how many bindings or targets there are
                         if ( targetComponent != null){
-                            cloned.setName(binding.getName() + "#" + targetComponent.getName() + "/" + serviceBinding.getName());
+                            cloned.setName(binding.getName() + "--" + targetComponent.getName() + ".." + serviceBinding.getName());
                         } else {
-                            cloned.setName(binding.getName() + "#" + serviceBinding.getName());
+                            cloned.setName(binding.getName() + "--" + serviceBinding.getName());
                         }
                         
                         // Set the binding URI to the URI of the target service

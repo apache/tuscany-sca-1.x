@@ -90,6 +90,7 @@
                 <module>databindings</module>
                 <module>distro-license-check</module>
                 <!--module>domain</module-->
+                <module>domainmgr</module>
                 <module>exceptions</module>
                 <module>exceptions-cross-binding</module>
                 <module>exceptions-cross-binding-ws</module>
