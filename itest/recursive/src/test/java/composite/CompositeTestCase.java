@@ -39,13 +39,12 @@ public class CompositeTestCase extends TestCase {
     }
 
     public void test() throws Exception {
-        try {
-            System.out.println("Main thread " + Thread.currentThread());
-            source.clientMethod("Client.main");
-            System.out.println("Sleeping ...");
-            Thread.sleep(1000);
-        } catch (Throwable t) {
-            t.printStackTrace();
+        System.out.println("Main thread " + Thread.currentThread());
+        source.clientMethod("Client.main");
+        System.out.println("Sleeping ...");
+        Thread.sleep(1000);
+        if (SourceImpl.callbackCount != 2) {
+            throw new IllegalStateException("Expected callbacks not received");
         }
     }
 }
