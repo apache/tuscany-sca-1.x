@@ -18,32 +18,39 @@
  */
 package scatours.calendar;
 
-import junit.framework.TestCase;
-
-import org.apache.tuscany.sca.host.embedded.SCADomain;
+import org.apache.tuscany.sca.node.SCAClient;
+import org.apache.tuscany.sca.node.SCAContribution;
+import org.apache.tuscany.sca.node.SCANode;
+import org.apache.tuscany.sca.node.SCANodeFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.tuscanyscatours.calendar.Calendar;
 
 /**
  * This shows how to test the Calculator service component.
  */
-public class CalendarTestCase extends TestCase {
+public class CalendarTestCase {
 
-    private Calendar calendar;
-    private SCADomain scaDomain;
+    private SCANode node;
 
-    @Override
-    protected void setUp() throws Exception {
-        scaDomain = SCADomain.newInstance("calendar.composite");
-        calendar = scaDomain.getService(Calendar.class, "Calendar");
+    @Before
+    public void startNode() throws Exception {
+        node = SCANodeFactory.newInstance().createSCANode("calendar.composite",
+                new SCAContribution("calendar", "./target/classes"),
+                new SCAContribution("calendar-test", "./target/test-classes"));
+        node.start();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        scaDomain.close();
-    }
-
+    @Test
     public void testCalendar() throws Exception {
+        Calendar calendar = ((SCAClient)node).getService(Calendar.class, "Calendar");
         System.out.println(calendar.getEndDate("07/10/96 04:05", 3));
+    }
+    
+    @After
+    public void stopNode() throws Exception {
+        node.stop();
     }
 }
