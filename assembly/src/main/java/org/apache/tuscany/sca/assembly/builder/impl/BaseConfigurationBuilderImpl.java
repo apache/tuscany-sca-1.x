@@ -939,18 +939,49 @@ public abstract class BaseConfigurationBuilderImpl {
         // Initialize composite service binding URIs
         List<Service> compositeServices = composite.getServices();
         for (Service service : compositeServices) {
-            // Set default binding names 
-            
+
             // Create default SCA binding
             if (service.getBindings().isEmpty()) {
                 SCABinding scaBinding = createSCABinding();
                 service.getBindings().add(scaBinding);
             }
-    
+
+            // Create default SCA callback binding
+            if (service.getInterfaceContract() != null
+                && service.getInterfaceContract().getCallbackInterface() != null
+                && service.getCallback() != null
+                && service.getCallback().getBindings().isEmpty()) {
+                SCABinding scaBinding = createSCABinding();
+                scaBinding.setName(service.getName() + "Callback");
+                service.getCallback().getBindings().add(scaBinding);
+            }
+
             // Initialize binding names and URIs
             for (Binding binding : service.getBindings()) {  
                 constructBindingName(service, binding);
                 constructBindingURI(parentComponentURI, composite, service, binding, defaultBindings);
+            }
+        }
+
+        // Initialize composite reference callback binding URIs
+        for (Reference reference : composite.getReferences()) {
+
+            // Create default SCA callback binding
+            if (reference.getInterfaceContract() != null
+                && reference.getInterfaceContract().getCallbackInterface() != null
+                && reference.getCallback() != null
+                && reference.getCallback().getBindings().isEmpty()) {
+                SCABinding scaBinding = createSCABinding();
+                scaBinding.setName(reference.getName() + "Callback");
+                reference.getCallback().getBindings().add(scaBinding);
+            }
+
+            // Initialize binding names and URIs
+            if (reference.getCallback() != null) {
+                for (Binding binding : reference.getCallback().getBindings()) {
+                    constructBindingName(reference, binding);
+                    constructBindingURI(parentComponentURI, composite, reference, binding, defaultBindings);
+                }
             }
         }
         
@@ -986,22 +1017,52 @@ public abstract class BaseConfigurationBuilderImpl {
             reconcileServices(component, services, componentServices);
             reconcileReferences(component, references, componentReferences);
             reconcileProperties(component, properties, componentProperties);
-            
+
             for (ComponentService service : component.getServices()) {
-    
+
                 // Create default SCA binding
                 if (service.getBindings().isEmpty()) {
                     SCABinding scaBinding = createSCABinding();
                     service.getBindings().add(scaBinding);
                 }
+
+                // Create default SCA callback binding
+                if (service.getInterfaceContract() != null
+                    && service.getInterfaceContract().getCallbackInterface() != null
+                    && service.getCallback() != null
+                    && service.getCallback().getBindings().isEmpty()) {
+                    SCABinding scaBinding = createSCABinding();
+                    scaBinding.setName(service.getName() + "Callback");
+                    service.getCallback().getBindings().add(scaBinding);
+                }
     
                 // Initialize binding names and URIs
                 for (Binding binding : service.getBindings()) {
-                    
                     constructBindingName(service, binding);
                     constructBindingURI(component, service, binding, defaultBindings);
                 }
-            } 
+            }
+            
+            for (ComponentReference reference : component.getReferences()) {
+    
+                // Create default SCA callback binding
+                if (reference.getInterfaceContract() != null
+                    && reference.getInterfaceContract().getCallbackInterface() != null
+                    && reference.getCallback() != null
+                    && reference.getCallback().getBindings().isEmpty()) {
+                    SCABinding scaBinding = createSCABinding();
+                    scaBinding.setName(reference.getName() + "Callback");
+                    reference.getCallback().getBindings().add(scaBinding);
+                }
+
+                // Initialize binding names and URIs
+                if (reference.getCallback() != null) {
+                    for (Binding binding : reference.getCallback().getBindings()) {
+                        constructBindingName(reference, binding);
+                        constructBindingURI(component, reference, binding, defaultBindings);
+                    }
+                }
+            }
         }
     }
 
@@ -1133,6 +1194,14 @@ public abstract class BaseConfigurationBuilderImpl {
         constructBindingURI(parentComponentURI, service, binding, includeBindingName, defaultBindings);
     }
 
+    private void constructBindingURI(String parentComponentURI, Composite composite, Reference reference, Binding binding, List<Binding> defaultBindings) 
+    throws CompositeBuilderException{
+        // This is a composite reference so there is no component to provide a component URI
+        // The path to this composite (through nested composites) is used.
+        boolean includeBindingName = true;
+        constructBindingURI(parentComponentURI, reference, binding, includeBindingName, defaultBindings);
+    }
+
      /**
       * URI construction for component bindings based on Assembly Specification section 1.7.2. This method
       * calculates the component URI part based on component information before calling the generic
@@ -1148,6 +1217,12 @@ public abstract class BaseConfigurationBuilderImpl {
         boolean includeBindingName = component.getServices().size() != 1;
         constructBindingURI(component.getURI(), service, binding, includeBindingName, defaultBindings);
     }
+
+    private void constructBindingURI(Component component, Reference reference, Binding binding, List<Binding> defaultBindings)
+        throws CompositeBuilderException{
+        boolean includeBindingName = true;
+        constructBindingURI(component.getURI(), reference, binding, includeBindingName, defaultBindings);
+    }
             
     /**
      * Generic URI construction for bindings based on Assembly Specification section 1.7.2
@@ -1159,7 +1234,7 @@ public abstract class BaseConfigurationBuilderImpl {
      * @param defaultBindings the list of default binding configurations
      * @throws CompositeBuilderException
      */
-    private void constructBindingURI(String componentURIString, Service service, Binding binding, boolean includeBindingName, List<Binding> defaultBindings) 
+    private void constructBindingURI(String componentURIString, Contract contract, Binding binding, boolean includeBindingName, List<Binding> defaultBindings) 
         throws CompositeBuilderException{
         
         try {
@@ -1234,7 +1309,7 @@ public abstract class BaseConfigurationBuilderImpl {
             
             binding.setURI(constructBindingURI(baseURI, componentURI, bindingURI, includeBindingName, bindingName));
         } catch (URISyntaxException ex) {
-            error("URLSyntaxException", binding, componentURIString, service.getName(), binding.getName());
+            error("URLSyntaxException", binding, componentURIString, contract.getName(), binding.getName());
         }      
     }
     
