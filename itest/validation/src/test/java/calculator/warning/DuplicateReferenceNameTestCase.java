@@ -54,7 +54,7 @@ public class DuplicateReferenceNameTestCase extends TestCase {
             node.start();
             calculatorService = ((SCAClient)node).getService(CalculatorService.class, "CalculatorServiceComponent");
         } catch (ServiceRuntimeException ex) {
-            if (ex.getMessage().equals("org.osoa.sca.ServiceRuntimeException: Duplicate component reference name: Component = CalculatorServiceComponent Reference = addService")){
+            if (ex.getMessage().equals("org.apache.tuscany.sca.monitor.MonitorRuntimeException: Duplicate component reference name: Component = CalculatorServiceComponent Reference = addService")){
                 duplicateReferenceException = true;
             }
         }

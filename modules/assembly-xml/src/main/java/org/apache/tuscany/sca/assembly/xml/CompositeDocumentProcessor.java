@@ -23,6 +23,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
@@ -119,10 +120,18 @@ public class CompositeDocumentProcessor extends BaseAssemblyProcessor implements
         try {
             URLConnection connection = url.openConnection();
             connection.setUseCaches(false);
-            scdlStream = connection.getInputStream();
+            try {
+                scdlStream = connection.getInputStream();
+            } catch (IOException e) {
+                if (e.getClass() == IOException.class && connection instanceof HttpURLConnection
+                        && ((HttpURLConnection)connection).getResponseCode() == HttpURLConnection.HTTP_INTERNAL_ERROR) {
+                    error("HttpServerError", url, ((HttpURLConnection)connection).getResponseMessage());
+                }
+                throw e;
+            }
         } catch (IOException e) {
             ContributionReadException ce = new ContributionReadException(e);
-            error("ContributionReadException", url, ce);
+            error("ContributionReadException", url, e);
             throw ce;
         }
         return read(uri, scdlStream);
@@ -161,11 +170,11 @@ public class CompositeDocumentProcessor extends BaseAssemblyProcessor implements
                 } 
             } catch ( IOException e ) {
             	ContributionReadException ce = new ContributionReadException(e);
-            	error("ContributionReadException", scdlStream, ce);
+            	error("ContributionReadException", scdlStream, e);
             	throw ce;
             } catch ( Exception e ) {
             	ContributionReadException ce = new ContributionReadException(e);
-            	error("ContributionReadException", scdlStream, ce);
+            	error("ContributionReadException", scdlStream, e);
                 //throw ce;
             }
             
@@ -203,7 +212,7 @@ public class CompositeDocumentProcessor extends BaseAssemblyProcessor implements
             
         } catch (XMLStreamException e) {
         	ContributionReadException ce = new ContributionReadException(e);
-        	error("ContributionReadException", inputFactory, ce);
+        	error("ContributionReadException", inputFactory, e);
             throw ce;
         } finally {
             try {
