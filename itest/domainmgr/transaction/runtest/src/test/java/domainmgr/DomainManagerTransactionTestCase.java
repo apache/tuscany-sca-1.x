@@ -23,9 +23,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import org.apache.tuscany.sca.node.SCAClient;
-import org.apache.tuscany.sca.node.SCANode;
-import org.apache.tuscany.sca.node.SCANodeFactory;
+
 import org.junit.Test;
 
 /**
@@ -56,9 +54,9 @@ public class DomainManagerTransactionTestCase {
             // from the "src/test/resources/domain/" directory.
             System.out.println("Starting domain manager");
             String[] domainCommand = {
-                "\"" + home + "/bin/java\"",
+                "" + home + "/bin/java",
                 "-cp",
-                "\"" + classpath + "\"",
+                "" + classpath + "",
                 "org.apache.tuscany.sca.node.launcher.DomainManagerLauncher"};
             String userdir = System.getProperty("user.dir");
             domainMgr = runtime.exec(domainCommand, null, new File(userdir + "/target/test-classes/domain/"));
@@ -210,9 +208,9 @@ public class DomainManagerTransactionTestCase {
         void start() throws Exception {
             System.out.println("Starting node " + nodeName);
             String[] nodeCommand = {
-                "\"" + home + "/bin/java\"",
+                "" + home + "/bin/java",
                 "-cp",
-                "\"" + classpath + "\"",
+                "" + classpath + "",
                 "org.apache.tuscany.sca.node.launcher.NodeLauncher",
                 "http://localhost:9990/node-config/" + nodeName};
             nodeProcess = runtime.exec(nodeCommand, null, new File(nodeDir));

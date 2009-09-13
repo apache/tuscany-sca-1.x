@@ -58,9 +58,9 @@ public class DomainManagerCallbackTestCase {
             // from the "src/test/resources/domain/" directory.
             System.out.println("Starting domain manager");
             String[] domainCommand = {
-                "\"" + home + "/bin/java\"",
+                "" + home + "/bin/java",
                 "-cp",
-                "\"" + classpath + "\"",
+                "" + classpath + "",
                 "org.apache.tuscany.sca.node.launcher.DomainManagerLauncher"};
             String userdir = System.getProperty("user.dir");
             domainMgr = runtime.exec(domainCommand, null, new File(userdir + "/target/test-classes/domain/"));
@@ -115,7 +115,7 @@ public class DomainManagerCallbackTestCase {
             otherNode.checkNodeErr();
             otherNode.checkNodeOut();
             System.out.println("Sleeping ...");
-            Thread.sleep(1000);
+            Thread.sleep(4000);
             otherNode.checkNodeErr();
             otherNode.checkNodeOut();
             assertEquals("-> someMethod -> receiveResult", tester.getResult());
@@ -232,9 +232,9 @@ public class DomainManagerCallbackTestCase {
         void start() throws Exception {
             System.out.println("Starting node " + nodeName);
             String[] nodeCommand = {
-                "\"" + home + "/bin/java\"",
+                "" + home + "/bin/java",
                 "-cp",
-                "\"" + classpath + "\"",
+                "" + classpath + "",
                 "org.apache.tuscany.sca.node.launcher.NodeLauncher",
                 "http://localhost:9990/node-config/" + nodeName};
             nodeProcess = runtime.exec(nodeCommand, null, new File(nodeDir));
