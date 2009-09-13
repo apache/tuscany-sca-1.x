@@ -24,29 +24,24 @@ import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
-public class LaunchPolicyNode {
+public class PolicyLauncher {
 
     public static void main(String[] args) throws Exception {
-        try {
-            SCANode node1 = SCANodeFactory.newInstance().createSCANode(null, 
-                new SCAContribution("client", "../../contributions/policy-client/target/classes"),
-                new SCAContribution("payment", "../../contributions/payment-java-policy/target/classes"));
+        SCANode node1 = SCANodeFactory.newInstance().createSCANode(null, 
+            new SCAContribution("client", "../../contributions/policy-client/target/classes"),
+            new SCAContribution("payment", "../../contributions/payment-java-policy/target/classes"));
 
-            node1.start();
-            
-            SCANode node2 = SCANodeFactory.newInstance().createSCANode(null, 
-                    new SCAContribution("creditcard", "../../contributions/creditcard-payment-jaxb-policy/target/classes"));
-            
-            node2.start();
-            
-            Runnable client = ((SCAClient)node1).getService(Runnable.class, "TestClient/Runnable");
-            client.run();
-            
-            node1.stop();
-            node2.stop();
-            
-        } catch (Throwable th) {
-            th.printStackTrace();
-        }
+        node1.start();
+        
+        SCANode node2 = SCANodeFactory.newInstance().createSCANode(null, 
+                new SCAContribution("creditcard", "../../contributions/creditcard-payment-jaxb-policy/target/classes"));
+        
+        node2.start();
+        
+        Runnable client = ((SCAClient)node1).getService(Runnable.class, "TestClient/Runnable");
+        client.run();
+        
+        node1.stop();
+        node2.stop();
     }
 }

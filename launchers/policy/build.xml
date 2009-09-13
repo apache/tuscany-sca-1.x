@@ -17,7 +17,7 @@
  * under the License.
 -->
 
-<project name="scatours-introducing-launcher" default="compile">
+<project name="scatours-launcher-policy" default="compile">
     <property environment="env"/> 
 
     <target name="compile">
@@ -31,7 +31,7 @@
     </target>
 
     <target name="run">
-        <java classname="scatours.IntroducingLauncher" fork="true">
+        <java classname="scatours.PolicyLauncher" fork="true">
             <classpath>
                 <pathelement location="target/classes"/>
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
