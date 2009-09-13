@@ -27,6 +27,7 @@ import org.osoa.sca.annotations.Service;
 @Scope("COMPOSITE")
 public class SourceImpl implements Source, SourceCallback {
 
+    public static int callbackCount = 0;
     private Target targetReference;
     private Target targetReference2;
 
@@ -49,6 +50,9 @@ public class SourceImpl implements Source, SourceCallback {
     }
 
     public void receiveResult(String result) {
+        synchronized(this) {
+            callbackCount += 1;
+        }
         System.out.println("Work thread " + Thread.currentThread());
         System.out.println("Result: " + result);
     }
