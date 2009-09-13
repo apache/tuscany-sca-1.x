@@ -19,6 +19,8 @@
 
 package org.apache.tuscany.sca.assembly.builder;
 
+import java.util.Map;
+import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.builder.impl.EndpointBuilderImpl;
 import org.apache.tuscany.sca.monitor.Monitor;
 
@@ -28,7 +30,7 @@ import org.apache.tuscany.sca.monitor.Monitor;
  * @version $Rev$ $Date$
  */
 public class DefaultEndpointBuilder extends EndpointBuilderImpl {
-    public DefaultEndpointBuilder (Monitor monitor){
-        super(monitor);
+    public DefaultEndpointBuilder (Monitor monitor, Map<Binding, Binding> bindingMap){
+        super(monitor, bindingMap);
     }
 }

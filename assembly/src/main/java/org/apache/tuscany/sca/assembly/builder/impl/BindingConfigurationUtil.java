@@ -20,6 +20,7 @@ package org.apache.tuscany.sca.assembly.builder.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.Component;
@@ -58,7 +59,9 @@ abstract class BindingConfigurationUtil {
     }
     
     
-    static Binding matchBinding(Component targetComponent, ComponentService targetComponentService, List<Binding> source, List<Binding> target) {
+    static Binding matchBinding(Component targetComponent, ComponentService targetComponentService,
+                                List<Binding> source, List<Binding> target,
+                                Map<Binding, Binding> bindingMap, boolean isCallback) {
         List<Binding> matched = new ArrayList<Binding>();
         // Find the corresponding bindings from the service side
         for (Binding binding : source) {
@@ -67,6 +70,25 @@ abstract class BindingConfigurationUtil {
                     hasCompatiblePolicySets(binding, serviceBinding)) {
 
                     try {
+                        // If the service binding or callback binding was given a tentative URI by
+                        // constructBindingURI() and the target component is running on a different node
+                        // than the source component, add host/port information to the binding URI
+                        if (bindingMap != null) {
+                            Binding sourceNodeBinding = bindingMap.get(binding);
+                            Binding targetNodeBinding = bindingMap.get(serviceBinding);
+                            if (targetNodeBinding != null
+                                && sourceNodeBinding != null
+                                && targetNodeBinding != sourceNodeBinding) {
+                                if (!isCallback) {
+                                    serviceBinding.setURI(targetNodeBinding.getURI() + serviceBinding.getURI());
+                                    bindingMap.remove(serviceBinding);  // don't add this again
+                                } else {
+                                    binding.setURI(sourceNodeBinding.getURI() + binding.getURI());
+                                    bindingMap.remove(binding);  // don't add this again
+                                }
+                            }
+                        }
+
                         Binding cloned = (Binding)binding.clone();
                         
                         //Customise the binding name to make it unique 
@@ -76,7 +98,7 @@ abstract class BindingConfigurationUtil {
                         } else {
                             cloned.setName(binding.getName() + "--" + serviceBinding.getName());
                         }
-                        
+
                         // Set the binding URI to the URI of the target service
                         // that has been matched
                         if (binding.getURI() == null) {
@@ -121,11 +143,12 @@ abstract class BindingConfigurationUtil {
      * @param service The component service
      * @return Resolved binding
      */
-    static Binding resolveBindings(ComponentReference reference, Component component, ComponentService service) {
+    static Binding resolveBindings(ComponentReference reference, Component component, ComponentService service,
+                                   Map<Binding, Binding> bindingMap) {
         List<Binding> source = reference.getBindings();
         List<Binding> target = service.getBindings();
     
-        return matchBinding(component, service, source, target);
+        return matchBinding(component, service, source, target, bindingMap, false);
     
     }
     
@@ -135,11 +158,12 @@ abstract class BindingConfigurationUtil {
      * @param service
      * @return
      */
-    static Binding resolveCallbackBindings(ComponentReference reference, Component component, ComponentService service) {
+    static Binding resolveCallbackBindings(ComponentReference reference, Component component, ComponentService service,
+                                           Map<Binding, Binding> bindingMap) {
         List<Binding> source = reference.getCallback().getBindings();
         List<Binding> target = service.getCallback().getBindings();
     
-        return matchBinding(component, service, source, target);
+        return matchBinding(component, service, source, target, bindingMap, true);
     }
     
   

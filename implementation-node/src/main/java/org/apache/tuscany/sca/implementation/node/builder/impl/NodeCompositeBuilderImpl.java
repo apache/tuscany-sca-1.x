@@ -21,6 +21,7 @@ package org.apache.tuscany.sca.implementation.node.builder.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.TransformerFactory;
@@ -65,10 +66,11 @@ public class NodeCompositeBuilderImpl extends BaseConfigurationBuilderImpl imple
                                                   TransformerFactory transformerFactory,
                                                   InterfaceContractMapper interfaceContractMapper,
                                                   SCADefinitions policyDefinitions,
-                                                  Monitor monitor) {
+                                                  Monitor monitor,
+                                                  Map<Binding, Binding> bindingMap) {
         super(assemblyFactory, scaBindingFactory,
               documentBuilderFactory, transformerFactory,
-              interfaceContractMapper, policyDefinitions, monitor);
+              interfaceContractMapper, policyDefinitions, monitor, bindingMap);
     }
 
     public void build(Composite composite) throws CompositeBuilderException {
