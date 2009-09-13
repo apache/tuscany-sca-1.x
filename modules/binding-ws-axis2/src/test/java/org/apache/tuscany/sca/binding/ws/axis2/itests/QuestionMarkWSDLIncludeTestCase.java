@@ -35,17 +35,14 @@ import javax.xml.namespace.QName;
 
 import junit.framework.TestCase;
 
-import org.apache.axis2.transport.http.server.HttpUtils;
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 
 /**
  * Test ?wsdl works and that the returned WSDL has the correct endpoint
  * 
- * ********* Currently broken, see TUSCANY-2942
- *
  * @version $Rev: 660340 $ $Date: 2008-05-27 01:08:32 +0100 (Tue, 27 May 2008) $
  */
-public class QuestionMarkWSDLIncludeTestCaseFIXME extends TestCase {
+public class QuestionMarkWSDLIncludeTestCase extends TestCase {
 
     private SCADomain domain;
 
@@ -71,8 +68,7 @@ public class QuestionMarkWSDLIncludeTestCaseFIXME extends TestCase {
         Port port = service.getPort("AccountSoapPort");
 
         String endpoint = getEndpoint(port);
-        String ip = HttpUtils.getIpAddress();
-        assertEquals("http://" + ip + ":8085/AccountService", endpoint);
+        assertEquals("http://localhost:8085/AccountService", endpoint);
     }
 
     private String getEndpoint(Port port) {

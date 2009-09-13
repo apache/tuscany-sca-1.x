@@ -53,7 +53,6 @@ import org.apache.axis2.description.AxisService;
 import org.apache.axis2.description.Parameter;
 import org.apache.axis2.description.PolicyInclude;
 import org.apache.axis2.transport.http.ListingAgent;
-import org.apache.axis2.transport.http.server.HttpUtils;
 import org.apache.axis2.util.ExternalPolicySerializer;
 import org.apache.axis2.util.JavaUtils;
 import org.apache.axis2.wsdl.WSDLConstants;
@@ -225,7 +224,7 @@ public class TuscanyListingAgent extends ListingAgent {
             int wsdlPort = wsdlURIObj.getPort();
             String wsdlAddr = wsdlHost + (wsdlPort != -1 ? ":" + Integer.toString(wsdlPort) : "");
             URI requestURIObj = new URI(requestURI);
-            String ipAddr = HttpUtils.getIpAddress();
+            String ipAddr = requestURIObj.getHost();
             int requestPort = requestURIObj.getPort();
             String newAddr = ipAddr + (requestPort != -1 ? ":" + Integer.toString(requestPort) : "");
             return wsdlURI.replace(wsdlAddr, newAddr);

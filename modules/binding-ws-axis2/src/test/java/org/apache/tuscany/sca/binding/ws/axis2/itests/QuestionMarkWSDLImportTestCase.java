@@ -35,7 +35,6 @@ import javax.xml.namespace.QName;
 
 import junit.framework.TestCase;
 
-import org.apache.axis2.transport.http.server.HttpUtils;
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 
 /**
@@ -69,8 +68,7 @@ public class QuestionMarkWSDLImportTestCase extends TestCase {
         Port port = service.getPort("AccountSoapPort");
 
         String endpoint = getEndpoint(port);
-        String ip = HttpUtils.getIpAddress();
-        assertEquals("http://" + ip + ":8086/AccountService", endpoint);
+        assertEquals("http://localhost:8086/AccountService", endpoint);
     }
 
     private String getEndpoint(Port port) {

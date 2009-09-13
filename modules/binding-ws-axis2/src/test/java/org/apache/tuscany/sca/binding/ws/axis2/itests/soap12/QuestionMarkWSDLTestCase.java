@@ -32,7 +32,6 @@ import javax.xml.namespace.QName;
 
 import junit.framework.TestCase;
 
-import org.apache.axis2.transport.http.server.HttpUtils;
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 
 /**
@@ -61,8 +60,7 @@ public class QuestionMarkWSDLTestCase extends TestCase {
         Port port = service.getPort(newGenerator ? "HelloWorldPort" : "HelloWorldSOAP11port_http");
 
         String endpoint = getSOAP11Endpoint(port);
-        String ip = HttpUtils.getIpAddress();
-        assertEquals("http://" + ip + ":8085/ep1", endpoint);
+        assertEquals("http://localhost:8085/ep1", endpoint);
     }
 
     /**
@@ -81,8 +79,7 @@ public class QuestionMarkWSDLTestCase extends TestCase {
         Port port = service.getPort(newGenerator ? "HelloWorldPort" : "HelloWorldSOAP11port_http");
 
         String endpoint = getSOAP11Endpoint(port);
-        String ip = HttpUtils.getIpAddress();
-        assertEquals("http://" + ip + ":8085/ep2", endpoint);
+        assertEquals("http://localhost:8085/ep2", endpoint);
     }
 
     /**
@@ -101,8 +98,7 @@ public class QuestionMarkWSDLTestCase extends TestCase {
         Port port = service.getPort(newGenerator ? "HelloWorldPort" : "HelloWorldSOAP12port_http");
 
         String endpoint = getSOAP12Endpoint(port);
-        String ip = HttpUtils.getIpAddress();
-        assertEquals("http://" + ip + ":8085/ep3", endpoint);
+        assertEquals("http://localhost:8085/ep3", endpoint);
     }
 
     protected String getSOAP11Endpoint(Port port) {

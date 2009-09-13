@@ -35,7 +35,6 @@ import javax.xml.namespace.QName;
 
 import junit.framework.TestCase;
 
-import org.apache.axis2.transport.http.server.HttpUtils;
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 
 /**
@@ -70,8 +69,7 @@ public class QuestionMarkWSDLTestCase extends TestCase {
         Port port = service.getPort("HelloWorldSoapPort");
 
         String endpoint = getEndpoint(port);
-        String ip = HttpUtils.getIpAddress();
-        assertEquals("http://" + ip + ":8085/services/HelloWorldWebService", endpoint);
+        assertEquals("http://localhost:8085/services/HelloWorldWebService", endpoint);
     }
 
     /**
@@ -97,8 +95,7 @@ public class QuestionMarkWSDLTestCase extends TestCase {
         Port port = service.getPort("HelloWorldPort");
 
         String endpoint = getEndpoint(port);
-        String ip = HttpUtils.getIpAddress();
-        assertEquals("http://" + ip + ":8085/foo/bar", endpoint);
+        assertEquals("http://localhost:8085/foo/bar", endpoint);
     }
 
     protected String getEndpoint(Port port) {
