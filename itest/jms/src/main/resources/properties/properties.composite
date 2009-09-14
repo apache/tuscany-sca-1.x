@@ -36,7 +36,7 @@
                   <headers JMSType="op2Type"
                      JMSCorrelationID="op2CID"
                      JMSDeliveryMode="NON_PERSISTENT"
-                     JMSTimeToLive="6"
+                     JMSTimeToLive="6000"
                      JMSPriority="8">
                      <property name="op2P2">foo</property>
                   </headers>
