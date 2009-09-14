@@ -24,8 +24,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.SoftReference;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
@@ -464,10 +466,18 @@ public class JAXBContextCache {
         for (Class<?> cls : classes) {
             Package pkg = getPackage(cls);
             if (pkg != null) {
-                pkgs.put(pkg, cls.getClassLoader());
+                pkgs.put(pkg, getClassLoader(cls));
             }
         }
         return pkgs;
+    }
+    
+    private static ClassLoader getClassLoader(final Class<?> cls) {
+	    return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
+	        public ClassLoader run(){ //throws ClassNotFoundException{
+	            return cls.getClassLoader();
+	        }
+	    });
     }
 
     /**
