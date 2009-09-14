@@ -26,18 +26,18 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 
 import scatours.currencyconverter.CurrencyConverter;
 
-public class LaunchCurrencyConverterWSNode {
+public class CurrencyConverterWSLauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution currencyWSContribution = 
             new SCAContribution("currency-ws", 
-              "../../contributions/currency-ws-contribution/target/classes");
+              "../../contributions/currency-ws/target/classes");
         SCAContribution currencyContribution = 
           new SCAContribution("currency", 
-              "../../contributions/currency-contribution/target/classes");
+              "../../contributions/currency/target/classes");
         
         SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "currency-converter-ws.composite",currencyContribution, currencyWSContribution);
+            "currencyconverterws.composite", currencyContribution, currencyWSContribution);
         node.start();
 
         System.out.println("Quick currency converter test");
@@ -50,9 +50,7 @@ public class LaunchCurrencyConverterWSNode {
 
         System.out.println("Node started - Press enter to shutdown.");
         System.in.read();
-        
-        
-        
+
         node.stop();
     }
 }

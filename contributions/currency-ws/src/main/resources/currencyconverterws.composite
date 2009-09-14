@@ -18,14 +18,14 @@
  * under the License.    
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-    targetNamespace="http://goodvaluetrips.com/"
-    name="currencyconverter">
+    targetNamespace="http://tuscanyscatours.com/"
+    name="currencyconverterws">
 
     <component name="CurrencyConverter">
-        <implementation.java class="scatours.currencyconverter.CurrencyConverterImpl" />
+        <implementation.java class="com.tuscanyscatours.currencyconverter.impl.CurrencyConverterImpl" />
         <service name="CurrencyConverter">
-            <interface.java interface="scatours.currencyconverter.CurrencyConverter" />
-            <binding.ws/>
+            <interface.java interface="com.tuscanyscatours.currencyconverter.CurrencyConverter" />
+            <binding.ws />
         </service>
     </component>
 </composite>

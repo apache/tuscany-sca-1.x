@@ -25,7 +25,7 @@
         <version>1.6-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent><version>1.0-SNAPSHOT</version>
-    <artifactId>scatours-currency-ws-contribution</artifactId>
+    <artifactId>scatours-contribution-currency-ws</artifactId>
     <name>Apache Tuscany SCA Tours Currency Converter Contribution With Web Service Binding</name>
 
     <dependencies>

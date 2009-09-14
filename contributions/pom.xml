@@ -49,7 +49,7 @@
                 <module>currency-jms-contribution</module>
                 <module>currency-jsp-contribution</module>
                 <module>currency-rmi-contribution</module>
-                <module>currency-ws-contribution</module>
+                <module>currency-ws</module>
                 <module>databinding-client-contribution</module>
                 <module>emailgateway</module>
                 <module>feed-logger-contribution</module>
