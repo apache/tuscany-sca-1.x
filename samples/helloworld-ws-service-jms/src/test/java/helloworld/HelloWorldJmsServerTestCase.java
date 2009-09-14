@@ -48,7 +48,7 @@ public class HelloWorldJmsServerTestCase{
         jmsBroker = new BrokerService(); 
         jmsBroker.setPersistent(false);
         jmsBroker.setUseJmx(false);
-        jmsBroker.addConnector("tcp://localhost:51293");
+        jmsBroker.addConnector("tcp://localhost:61619");
         jmsBroker.start();
     }
     
