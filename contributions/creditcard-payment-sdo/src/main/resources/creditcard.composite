@@ -18,17 +18,15 @@
  * under the License.    
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
-           targetNamespace="http://creditcard"
-           xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
-           xmlns:c="http://creditcard" 
+           targetNamespace="http://tuscanyscatours.com/"
            name="creditcard">
 
-    <component name="CreditCardPaymentComponent">
-        <implementation.java class="payment.creditcard.impl.CreditCardPaymentImpl" />
+    <component name="CreditCardPayment">
+        <implementation.java class="com.tuscanyscatours.payment.creditcard.impl.CreditCardPaymentImpl" />
         <service name="CreditCardPayment">
-            <interface.wsdl interface="http://www.example.org/CreditCardPayment/#wsdl.interface(CreditCardPayment)"/>
+            <interface.wsdl interface="http://www.tuscanyscatours.com/CreditCardPayment/#wsdl.interface(CreditCardPayment)"/>
             <binding.ws uri="http://localhost:8082/CreditCardPayment" />
-            <binding.sca/>
+            <binding.sca />
         </service>
     </component>
     

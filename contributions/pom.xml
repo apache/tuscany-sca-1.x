@@ -43,7 +43,7 @@
                 <module>common</module>
                 <module>creditcard-payment-jaxb</module>
                 <module>creditcard-payment-jaxb-policy</module>
-                <module>creditcard-payment-sdo-contribution</module>
+                <module>creditcard-payment-sdo</module>
                 <module>currency</module>
                 <module>currency-corba-contribution</module>
                 <module>currency-jms-contribution</module>
