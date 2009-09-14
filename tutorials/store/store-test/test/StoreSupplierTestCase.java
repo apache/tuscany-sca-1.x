@@ -58,6 +58,15 @@ public class StoreSupplierTestCase {
         domainManager = managerLauncher.createDomainManager(domainDir);
         domainManager.start();
         
+        /* helpful for debugging
+        try {
+            System.out.println("press enter to continue)");
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }     
+       */   
+        
         NodeLauncher nodeLauncher = NodeLauncher.newInstance();
         storeSupplierNode = nodeLauncher.createNodeFromURL("http://localhost:9990/node-config/StoreSupplierNode");
         storeSupplierNode.start();
@@ -78,8 +87,9 @@ public class StoreSupplierTestCase {
         domainManager.stop();
     }
     
-/*    
+    
     @Test
+    @Ignore
     public void testWaitForInput() {
         try {
             System.out.println("press enter to continue)");
@@ -88,7 +98,7 @@ public class StoreSupplierTestCase {
             e.printStackTrace();
         }
     }
-*/
+
     
     @Test
     public void testShop() {
