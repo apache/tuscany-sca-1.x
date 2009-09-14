@@ -24,20 +24,20 @@
                            http://www.springframework.org/schema/sca http://www.osoa.org/xmlns/sca/1.0/spring-sca.xsd">
 
     <sca:service name="Payment"
-                 type="payment.Payment" 
+                 type="com.tuscanyscatours.payment.Payment" 
                  target="Payment"/>
 
-    <bean id="Payment" class="payment.PaymentImpl">
+    <bean id="Payment" class="com.tuscanyscatours.payment.impl.PaymentImpl">
         <property name="creditCardPayment" ref="creditCardPayment"/>
         <property name="emailGateway" ref="EmailGateway"/>
         <property name="transactionFee" ref="transactionFee"/>
     </bean>
 
-    <bean id="EmailGateway" class="scatours.emailgateway.EmailGatewayImpl">
+    <bean id="EmailGateway" class="com.tuscanyscatours.emailgateway.impl.EmailGatewayImpl">
     </bean>
     
     <sca:reference name="creditCardPayment" 
-                   type="payment.creditcard.CreditCardPayment"/>  
+                   type="com.tuscanyscatours.payment.creditcard.CreditCardPayment"/>  
                    
     <sca:property name="transactionFee"
                   type="java.lang.Float"/>    

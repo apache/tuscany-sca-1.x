@@ -7,25 +7,26 @@
     * to you under the Apache License, Version 2.0 (the
     * "License"); you may not use this file except in compliance
     * with the License.  You may obtain a copy of the License at
-    * 
+    *
     *   http://www.apache.org/licenses/LICENSE-2.0
-    * 
+    *
     * Unless required by applicable law or agreed to in writing,
     * software distributed under the License is distributed on an
     * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
     * KIND, either express or implied.  See the License for the
     * specific language governing permissions and limitations
-    * under the License.    
+    * under the License.
 -->
 <project>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.6-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent>
-    <artifactId>scatours-payment-spring-scatag-contribution</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <artifactId>scatours-contribution-payment-spring-scatag</artifactId>
     <name>Apache Tuscany SCA Tours Payment Spring SCA Tag Contribution</name>
 
     <dependencies>
@@ -62,21 +63,24 @@
             <version>1.6-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
-        
+
+        <!--
+            https://issues.apache.org/jira/browse/TUSCANY-3069
+        -->
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-spring</artifactId>
             <version>1.6-SNAPSHOT</version>
             <scope>runtime</scope>
-        </dependency>     
-        
+        </dependency>
+
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-spring-runtime</artifactId>
             <version>1.6-SNAPSHOT</version>
             <scope>runtime</scope>
-        </dependency>  
-        
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -85,6 +89,18 @@
         </dependency>
 
     </dependencies>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>java.net2</id>
+            <name>java.net Maven 2.x Repository</name>
+            <url>http://download.java.net/maven/2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
     <build>
         <finalName>${artifactId}</finalName>
         <plugins>
@@ -110,7 +126,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
-                <version>1.9</version>
+                <version>1.12</version>
                 <executions>
                     <execution>
                         <id>payment</id>
@@ -119,17 +135,17 @@
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
-                            <packageName>payment</packageName>
+                            <packageName>com.tuscanyscatours.payment</packageName>
                             <wsdlDirectory>${basedir}/src/main/resources</wsdlDirectory>
                             <wsdlFiles>
                                 <wsdlFile>Payment.wsdl</wsdlFile>
                             </wsdlFiles>
                             <sourceDestDir>${project.build.directory}/jaxws-source</sourceDestDir>
-                            <staleFile>${project.build.directory}/jaxws-source/stale/payment.stale</staleFile> 
+                            <staleFile>${project.build.directory}/jaxws-source/stale/payment.stale</staleFile>
                             <verbose>false</verbose>
                             <xnocompile>true</xnocompile>
                         </configuration>
-                    </execution> 
+                    </execution>
                     <execution>
                         <id>payment.creditcard</id>
                         <phase>process-sources</phase>
@@ -137,7 +153,7 @@
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
-                            <packageName>payment.creditcard</packageName>
+                            <packageName>com.tuscanyscatours.payment.creditcard</packageName>
                             <wsdlDirectory>${basedir}/src/main/resources</wsdlDirectory>
                             <wsdlFiles>
                                 <wsdlFile>CreditCardPayment.wsdl</wsdlFile>
@@ -147,7 +163,7 @@
                             <verbose>false</verbose>
                             <xnocompile>true</xnocompile>
                         </configuration>
-                    </execution> 
+                    </execution>
                     <execution>
                         <id>scatours.emailgateway</id>
                         <phase>process-sources</phase>
@@ -155,7 +171,7 @@
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
-                            <packageName>scatours.emailgateway</packageName>
+                            <packageName>com.tuscanyscatours.emailgateway</packageName>
                             <wsdlDirectory>${basedir}/src/main/resources</wsdlDirectory>
                             <wsdlFiles>
                                 <wsdlFile>EmailGateway.wsdl</wsdlFile>
@@ -165,9 +181,9 @@
                             <verbose>false</verbose>
                             <xnocompile>true</xnocompile>
                         </configuration>
-                    </execution> 
+                    </execution>
                 </executions>
-            </plugin>      
+            </plugin>
         </plugins>
     </build>
 </project>

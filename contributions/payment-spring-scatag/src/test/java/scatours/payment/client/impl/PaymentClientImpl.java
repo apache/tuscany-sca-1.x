@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,18 +15,22 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
-           xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
-           xmlns:pp="http://www.tuscanyscatours.com/Payment" 
-           targetNamespace="http://www.tuscanyscatours.com/Payment" 
-           name="paymentClient">
-           
-    <component name="PaymentClient">
-        <implementation.java class="payment.client.PaymentClientImpl" />
-        <reference name="payment">
-            <binding.ws uri="http://localhost:8081/Payment" />
-        </reference>
-    </component> 
+ */
 
-</composite>
+package scatours.payment.client.impl;
+
+import com.tuscanyscatours.payment.Payment;
+import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Service;
+
+@Service(Payment.class)
+public class PaymentClientImpl implements Payment {
+    @Reference
+    protected Payment payment;
+
+    public String makePaymentMember(String customerId, float amount) {
+        // Delegate the external web service
+        return payment.makePaymentMember(customerId, amount);
+    }
+
+}

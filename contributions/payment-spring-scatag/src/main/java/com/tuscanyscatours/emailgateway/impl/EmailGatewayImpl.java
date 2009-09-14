@@ -17,21 +17,16 @@
  * under the License.    
  */
 
-package payment.client;
+package com.tuscanyscatours.emailgateway.impl;
 
-import org.osoa.sca.annotations.Reference;
-import org.osoa.sca.annotations.Service;
+import com.tuscanyscatours.emailgateway.EmailGateway;
+import com.tuscanyscatours.emailgateway.EmailType;
 
-import payment.Payment;
+public class EmailGatewayImpl implements EmailGateway {
 
-@Service(Payment.class)
-public class PaymentClientImpl implements Payment {
-    @Reference
-    protected Payment payment;
-
-    public String makePaymentMember(String customerId, float amount) {
-        // Delegate the external web service
-        return payment.makePaymentMember(customerId, amount);
+    public String sendEmail(EmailType email) {
+        System.out.println("Sending mail to " + email.getTo());
+        return "SENT";
     }
 
 }

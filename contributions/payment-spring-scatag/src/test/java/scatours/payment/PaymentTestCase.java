@@ -17,8 +17,9 @@
  * under the License.    
  */
 
-package payment;
+package scatours.payment;
 
+import com.tuscanyscatours.payment.Payment;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -36,21 +37,16 @@ public class PaymentTestCase {
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {  
-        try {
-            creditCardNode = SCANodeFactory.newInstance().createSCANode("creditcard.composite",
-                new SCAContribution("creditcard", "../creditcard-payment-jaxb/target/classes"),
-                new SCAContribution("creditcard-test", "../creditcard-payment-jaxb/target/test-classes"));
-            
-            creditCardNode.start();
-                       
-            paymentNode = SCANodeFactory.newInstance().createSCANode(null, 
-                new SCAContribution("payment-spring-annotation", "./target/classes"),
-                new SCAContribution("payment-spring-annotation-test", "./target/test-classes"));
-    
-            paymentNode.start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        creditCardNode = SCANodeFactory.newInstance().createSCANode("creditcard.composite",
+            new SCAContribution("creditcard", "../creditcard-payment-jaxb/target/classes"));
+        
+        creditCardNode.start();
+                   
+        paymentNode = SCANodeFactory.newInstance().createSCANode(null, 
+            new SCAContribution("payment-spring-annotation", "./target/classes"),
+            new SCAContribution("payment-spring-annotation-test", "./target/test-classes"));
+
+        paymentNode.start();
     }
     
     @Test
@@ -64,7 +60,6 @@ public class PaymentTestCase {
     public static void tearDownAfterClass() throws Exception {
         paymentNode.stop();
         creditCardNode.stop();
-        //emailGatewayNode.stop();
     }
 
 }

@@ -17,15 +17,16 @@
  * under the License.    
  */
 
-package payment;
+package com.tuscanyscatours.payment.impl;
 
-import payment.creditcard.CreditCardDetailsType;
-import payment.creditcard.CreditCardPayment;
-import payment.creditcard.CreditCardTypeType;
-import payment.creditcard.ObjectFactory;
-import payment.creditcard.PayerType;
-import scatours.emailgateway.EmailGateway;
-import scatours.emailgateway.EmailType;
+import com.tuscanyscatours.emailgateway.EmailGateway;
+import com.tuscanyscatours.emailgateway.EmailType;
+import com.tuscanyscatours.payment.Payment;
+import com.tuscanyscatours.payment.creditcard.CreditCardDetailsType;
+import com.tuscanyscatours.payment.creditcard.CreditCardPayment;
+import com.tuscanyscatours.payment.creditcard.CreditCardTypeType;
+import com.tuscanyscatours.payment.creditcard.ObjectFactory;
+import com.tuscanyscatours.payment.creditcard.PayerType;
 
 //@Service(Payment.class)
 public class PaymentImpl implements Payment {
@@ -61,7 +62,7 @@ public class PaymentImpl implements Payment {
         
         String status = creditCardPayment.authorize(ccDetails, amount);
         
-        scatours.emailgateway.ObjectFactory emailFactory = new scatours.emailgateway.ObjectFactory();
+        com.tuscanyscatours.emailgateway.ObjectFactory emailFactory = new com.tuscanyscatours.emailgateway.ObjectFactory();
         EmailType email = emailFactory.createEmailType();
         email.setTitle("Payment Received");
         email.setTo(customerId);
