@@ -45,10 +45,10 @@ public class PropertiesTestCase {
 
         client.aClientMethod();
 
-        // wait for up to 5 seconds but should wake up as soon as done
+        // wait for up to 10 seconds but should wake up as soon as done
         synchronized(MsgServiceImpl.lock) {
             if (MsgServiceImpl.msg == null) {
-                MsgServiceImpl.lock.wait(5000);
+                MsgServiceImpl.lock.wait(10000);
             }
         }
         assertNotNull(MsgServiceImpl.msg);
@@ -66,10 +66,10 @@ public class PropertiesTestCase {
 
         client.op2();
 
-        // wait for up to 5 seconds but should wake up as soon as done
+        // wait for up to 10 seconds but should wake up as soon as done
         synchronized(MsgServiceImpl.lock) {
             if (MsgServiceImpl.msg == null) {
-                MsgServiceImpl.lock.wait(6000);
+                MsgServiceImpl.lock.wait(10000);
             }
         }
         assertNotNull(MsgServiceImpl.msg);
