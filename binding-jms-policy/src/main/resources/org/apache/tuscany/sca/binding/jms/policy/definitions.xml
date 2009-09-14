@@ -51,7 +51,7 @@
     
     <intent name="deliveryMode.nonPersistent">
         <description>
-            Message are sent persistently
+            Message are sent non-persistently
         </description>
     </intent>
         
