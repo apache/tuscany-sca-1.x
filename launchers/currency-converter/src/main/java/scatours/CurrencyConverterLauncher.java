@@ -26,15 +26,15 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 
 import scatours.currencyconverter.CurrencyConverter;
 
-public class LaunchCurrencyConverterNode {
+public class CurrencyConverterLauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution currencyContribution = 
           new SCAContribution("currency", 
-              "../../contributions/currency-contribution/target/classes");
+              "../../contributions/currency/target/classes");
         
         SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "currency-converter.composite",currencyContribution);
+            "currencyconverter.composite",currencyContribution);
         node.start();
 
         System.out.println("Quick currency converter test");
