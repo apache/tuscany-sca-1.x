@@ -19,14 +19,14 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
     xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-    targetNamespace="http://goodvaluetrips.com/"
-    name="feed-logger">
+    targetNamespace="http://tuscanyscatours.com/"
+    name="feedLogger">
 
     <service name="FeedLogger" promote="FeedLogger">
     </service>
 
     <component name="FeedLogger">
-        <implementation.java class="scatours.feedlogger.FeedLoggerImpl"/>
+        <implementation.java class="com.tuscanyscatours.feedlogger.impl.FeedLoggerImpl"/>
         <reference name="scaToursBlogAtom">
             <tuscany:binding.atom uri="http://scatours.wordpress.com/?feed=atom"/>
         </reference>

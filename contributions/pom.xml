@@ -52,7 +52,7 @@
                 <module>currency-ws</module>
                 <module>databinding-client</module>
                 <module>emailgateway</module>
-                <module>feed-logger-contribution</module>
+                <module>feed-logger</module>
                 <module>flight</module>
                 <module>fullapp-ui</module>
                 <module>fullapp-frontend</module>

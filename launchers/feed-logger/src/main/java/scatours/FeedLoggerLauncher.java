@@ -26,12 +26,12 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 
 import scatours.feedlogger.FeedLogger;
 
-public class LaunchFeedLoggerNode {
+public class FeedLoggerLauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution feedContribution = 
           new SCAContribution("feed-logger", 
-              "../../contributions/feed-logger-contribution/target/classes");
+              "../../contributions/feed-logger/target/classes");
 
         SCANode node = SCANodeFactory.newInstance().createSCANode(
             "feed-logger.composite", feedContribution);

@@ -17,9 +17,11 @@
  * under the License.
  */
 
-package scatours.feedlogger;
+package com.tuscanyscatours.feedlogger.impl;
 
 import java.util.List;
+
+import com.tuscanyscatours.feedlogger.FeedLogger;
 
 import org.apache.abdera.model.Entry;
 import org.apache.abdera.model.Feed;

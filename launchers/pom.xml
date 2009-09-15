@@ -44,7 +44,7 @@
                 <module>currency-converter-rmi</module>
                 <module>currency-converter-ws</module>
                 <module>databinding</module>
-                <module>feed-logger-launcher</module>
+                <module>feed-logger</module>
                 <module>interaction</module>
                 <module>introducing</module>
                 <module>introducing-client</module>

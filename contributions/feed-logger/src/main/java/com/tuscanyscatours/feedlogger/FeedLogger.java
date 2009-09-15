@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package scatours.feedlogger;
+package com.tuscanyscatours.feedlogger;
 
 public interface FeedLogger {
 
