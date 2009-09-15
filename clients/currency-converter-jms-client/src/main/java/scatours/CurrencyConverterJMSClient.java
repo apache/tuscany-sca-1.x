@@ -36,7 +36,7 @@ import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMText;
 import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 
-public class LaunchJMSClient {
+public class CurrencyConverterJMSClient {
 
     private static Connection activeMQConnection;
     private static Session activeMQSession;
