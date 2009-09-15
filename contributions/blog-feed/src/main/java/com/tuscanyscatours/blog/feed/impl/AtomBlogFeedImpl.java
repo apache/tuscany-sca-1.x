@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package scatours.blog.feed;
+package com.tuscanyscatours.blog.feed.impl;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ import org.apache.abdera.model.Entry;
 import org.apache.abdera.model.Feed;
 import org.apache.tuscany.sca.binding.atom.collection.NotFoundException;
 
-import scatours.blog.BlogPost;
+import com.tuscanyscatours.blog.BlogPost;
 
 /**
  * An Atom feed that implements the org.apache.tuscany.sca.binding.atom.collection.Collection

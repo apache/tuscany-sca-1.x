@@ -17,14 +17,14 @@
  * under the License.
  */
 
-package scatours.blog.feed;
+package com.tuscanyscatours.blog.feed.impl;
 
 import java.util.List;
 
 import org.apache.tuscany.sca.data.collection.Entry;
 import org.apache.tuscany.sca.data.collection.Item;
 
-import scatours.blog.BlogPost;
+import com.tuscanyscatours.blog.BlogPost;
 
 /**
  * Implementation of the blog feed that uses the Tuscany Data API so

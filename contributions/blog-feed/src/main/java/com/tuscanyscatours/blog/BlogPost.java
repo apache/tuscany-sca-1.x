@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package scatours.blog;
+package com.tuscanyscatours.blog;
 
 import java.util.Date;
 

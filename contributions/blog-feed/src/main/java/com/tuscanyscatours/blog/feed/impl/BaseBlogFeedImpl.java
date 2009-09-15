@@ -17,14 +17,14 @@
  * under the License.
  */
 
-package scatours.blog.feed;
+package com.tuscanyscatours.blog.feed.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import scatours.blog.BlogPost;
+import com.tuscanyscatours.blog.BlogPost;
 
 /**
  * Base class for all blog feeds that provides the common methods

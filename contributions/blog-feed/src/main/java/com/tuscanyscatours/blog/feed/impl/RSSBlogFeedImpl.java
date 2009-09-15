@@ -17,13 +17,13 @@
  * under the License.
  */
 
-package scatours.blog.feed;
+package com.tuscanyscatours.blog.feed.impl;
 
 import java.util.List;
 
 import org.apache.tuscany.sca.binding.rss.collection.NotFoundException;
 
-import scatours.blog.BlogPost;
+import com.tuscanyscatours.blog.BlogPost;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
