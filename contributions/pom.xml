@@ -45,7 +45,7 @@
                 <module>creditcard-payment-jaxb-policy</module>
                 <module>creditcard-payment-sdo</module>
                 <module>currency</module>
-                <module>currency-corba-contribution</module>
+                <module>currency-corba</module>
                 <module>currency-jms-contribution</module>
                 <module>currency-jsp-contribution</module>
                 <module>currency-rmi-contribution</module>
