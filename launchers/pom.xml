@@ -54,11 +54,11 @@
                 <module>fullapp-domain</module>
                 <module>fullapp-nodes</module>
                 <module>help-pages</module>
-                <module>notification-ws-launcher</module>
-                <module>notification-corba-launcher</module>
-                <module>notification-ejb-launcher</module>
-                <module>notification-jms-launcher</module>
-                <module>notification-rmi-launcher</module>
+                <module>notification-ws</module>
+                <module>notification-corba</module>
+                <module>notification-ejb</module>
+                <module>notification-jms</module>
+                <module>notification-rmi</module>
                 <module>policy</module>
             </modules>
         </profile>
