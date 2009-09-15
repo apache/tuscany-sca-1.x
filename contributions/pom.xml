@@ -50,7 +50,7 @@
                 <module>currency-jsp</module>
                 <module>currency-rmi</module>
                 <module>currency-ws</module>
-                <module>databinding-client-contribution</module>
+                <module>databinding-client</module>
                 <module>emailgateway</module>
                 <module>feed-logger-contribution</module>
                 <module>flight</module>

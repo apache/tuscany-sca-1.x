@@ -24,13 +24,14 @@
     <component name="Payment">
         <implementation.java class="com.tuscanyscatours.payment.impl.PaymentImpl" />
         <service name="Payment">
-            <binding.ws uri="http://localhost:8081/Payment"/>
+            <binding.ws uri="http://localhost:8081/Payment" />
+            <binding.sca />
         </service>
-        <reference name="customerRegistry" target="CustomerRegistry"/>
+        <reference name="customerRegistry" target="CustomerRegistry" />
         <reference name="creditCardPayment">
-            <binding.ws uri="http://localhost:8082/CreditCardPayment"/>
+            <binding.ws uri="http://localhost:8082/CreditCardPayment" />
         </reference>
-        <reference name="emailGateway" target="EmailGateway"/>
+        <reference name="emailGateway" target="EmailGateway" />
         <property name="transactionFee">0.02</property>
     </component>
         

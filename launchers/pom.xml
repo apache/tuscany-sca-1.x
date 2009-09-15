@@ -43,7 +43,7 @@
                 <module>currency-converter-jms</module>
                 <module>currency-converter-rmi</module>
                 <module>currency-converter-ws</module>
-                <module>databinding-launcher</module>
+                <module>databinding</module>
                 <module>feed-logger-launcher</module>
                 <module>interaction</module>
                 <module>introducing</module>
