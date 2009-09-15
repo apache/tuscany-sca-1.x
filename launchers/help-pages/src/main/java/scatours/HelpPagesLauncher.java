@@ -23,15 +23,15 @@ import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
-public class LaunchHelpPagesNode {
+public class HelpPagesLauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution helpContribution = 
           new SCAContribution("help-pages", 
-              "../../contributions/help-pages-contribution/target/classes");
+              "../../contributions/help-pages/target/classes");
 
         SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "help-pages.composite",helpContribution);
+            "help-pages.composite", helpContribution);
         node.start();
 
         System.out.println("Node started - Press enter to shutdown.");

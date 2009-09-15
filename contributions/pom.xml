@@ -60,7 +60,7 @@
                 <module>fullapp-packagedtrip</module>
                 <module>fullapp-bespoketrip</module>
                 <module>fullapp-shoppingcart</module>
-                <module>help-pages-contribution</module>
+                <module>help-pages</module>
                 <module>hotel</module>
                 <module>interaction-client</module>
                 <module>interaction-service-remote</module>

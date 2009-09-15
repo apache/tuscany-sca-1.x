@@ -53,7 +53,7 @@
                 <module>fullapp</module>
                 <module>fullapp-domain</module>
                 <module>fullapp-nodes</module>
-                <module>help-pages-launcher</module>
+                <module>help-pages</module>
                 <module>notification-ws-launcher</module>
                 <module>notification-corba-launcher</module>
                 <module>notification-ejb-launcher</module>
