@@ -67,12 +67,12 @@
                 <module>introducing-client</module>
                 <module>introducing-tours</module>
                 <module>introducing-trips</module>
-                <module>notification-contribution</module>
-                <module>notification-ws-contribution</module>
-                <module>notification-corba-contribution</module>
-                <module>notification-ejb-contribution</module>
-                <module>notification-jms-contribution</module>
-                <module>notification-rmi-contribution</module>
+                <module>notification</module>
+                <module>notification-ws</module>
+                <module>notification-corba</module>
+                <module>notification-ejb</module>
+                <module>notification-jms</module>
+                <module>notification-rmi</module>
                 <module>shoppingcart</module>   
                 <module>travelcatalog</module>         
                 <module>tripbooking</module>
