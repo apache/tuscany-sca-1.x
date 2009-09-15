@@ -23,6 +23,6 @@
 
     <component name="TestClient">
         <implementation.java class="scatours.client.TestClient" />
-        <reference name="payment" target="PaymentComponent" />
-     </component>
+        <reference name="payment" target="Payment" />
+    </component>
 </composite>

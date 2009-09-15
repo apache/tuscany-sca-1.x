@@ -73,14 +73,14 @@
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-emailgateway-contribution</artifactId>
+            <artifactId>scatours-contribution-emailgateway</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-creditcard-payment-jaxb-contribution</artifactId>
+            <artifactId>scatours-contribution-creditcard-payment-jaxb</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>        

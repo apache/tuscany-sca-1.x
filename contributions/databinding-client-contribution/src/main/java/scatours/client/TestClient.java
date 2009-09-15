@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
-import payment.Payment;
+import com.tuscanyscatours.payment.Payment;
 
 @Service(Runnable.class)
 public class TestClient {
