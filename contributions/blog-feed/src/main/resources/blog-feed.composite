@@ -19,9 +19,8 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
     xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-    targetNamespace="http://goodvaluetrips.com/"
-    name="blog-feed">
-
+    targetNamespace="http://tuscanyscatours.com/"
+    name="blogFeed">
 
     <!-- Example that shows using the Tuscany Data APIs to create a feed that -->
     <!-- is independent of the Feed API -->
@@ -34,7 +33,7 @@
     </service>
 
     <component name="BlogFeed">
-        <implementation.java class="scatours.blog.feed.GenericBlogFeedImpl"/>
+        <implementation.java class="com.tuscanyscatours.blog.feed.impl.GenericBlogFeedImpl"/>
     </component>
 
     <!-- Example that shows using the Atom Collections API to create a feed that -->
@@ -44,7 +43,7 @@
     </service>
 
     <component name="BlogAtom">
-        <implementation.java class="scatours.blog.feed.AtomBlogFeedImpl"/>
+        <implementation.java class="com.tuscanyscatours.blog.feed.impl.AtomBlogFeedImpl"/>
     </component>
 
     <!-- Example that shows using the RSS Collections API to create a feed that -->
@@ -54,6 +53,6 @@
     </service>
 
     <component name="BlogRSS">
-        <implementation.java class="scatours.blog.feed.RSSBlogFeedImpl"/>
+        <implementation.java class="com.tuscanyscatours.blog.feed.impl.RSSBlogFeedImpl"/>
     </component>
 </composite>
