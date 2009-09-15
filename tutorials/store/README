@@ -20,12 +20,12 @@ Running The Tutorial Application
 Start the SCA Domain Manager on linux:
 
    cd domain
-   java -jar ../../../modules/tuscany-node-launcher-1.5.jar domain
+   java -jar ../../../modules/tuscany-node-launcher-1.5.1.jar domain
 
 Start the SCA Domain Manager on windows:
 
    cd domain
-   java -jar ..\..\..\modules\tuscany-node-launcher-1.5.jar domain
+   java -jar ..\..\..\modules\tuscany-node-launcher-1.5.1.jar domain
 
 Access the SCA Domain Manager application by pointing your Web browser at:
 
