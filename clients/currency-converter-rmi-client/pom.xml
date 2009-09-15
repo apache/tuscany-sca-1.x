@@ -25,7 +25,7 @@
         <version>1.6-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent><version>1.0-SNAPSHOT</version>
-    <artifactId>currency-converter-rmi-client</artifactId>
+    <artifactId>scatours-client-currency-converter-rmi</artifactId>
     <name>Apache Tuscany SCA Tours Currency Converter RMI Client</name>
 
     <dependencies>
