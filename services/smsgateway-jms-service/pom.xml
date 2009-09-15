@@ -25,7 +25,7 @@
         <version>1.6-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
     </parent><version>1.0-SNAPSHOT</version>
-    <artifactId>smsgateway-jms-service</artifactId>
+    <artifactId>scatours-service-smsgateway-jms</artifactId>
     <name>Apache Tuscany SCA Tours SMS Gateway JMS Service</name>
 
     <dependencies>
