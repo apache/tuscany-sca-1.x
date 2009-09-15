@@ -16,17 +16,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package scatours.smsgateway;
+package com.tuscanyscatours.smsgateway;
 
-import javax.jws.WebMethod;
 import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
-import javax.jws.soap.SOAPBinding.Style;
 
-@WebService
-@SOAPBinding(style = Style.RPC)
-public interface SMSGatewayService {
+@WebService(endpointInterface = "com.tuscanyscatours.smsgateway.SMSGatewayService")
+public class SMSGatewayServiceImpl implements SMSGatewayService {
 
-    @WebMethod
-    boolean sendSMS(String fromNumber, String toNumber, String text);
+    public boolean sendSMS(String fromNumber, String toNumber, String text) {
+        System.out.println("Sending SMS message");
+        System.out.println("From:    " + fromNumber);
+        System.out.println("To:      " + toNumber);
+        System.out.println("Message: " + text);
+        return true;
+    }
 }

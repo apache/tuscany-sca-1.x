@@ -16,18 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package scatours.smsgateway;
+package com.tuscanyscatours.smsgateway;
 
-import javax.jws.WebService;
+import javax.xml.ws.Endpoint;
 
-@WebService(endpointInterface = "scatours.smsgateway.SMSGatewayService")
-public class SMSGatewayServiceImpl implements SMSGatewayService {
+public class SMSGatewayServiceBootstrap {
 
-    public boolean sendSMS(String fromNumber, String toNumber, String text) {
-        System.out.println("Sending SMS message");
-        System.out.println("From:    " + fromNumber);
-        System.out.println("To:      " + toNumber);
-        System.out.println("Message: " + text);
-        return true;
+    public static void main(String[] args) {
+        System.out.println("Publishing SMS Gateway Service as web service");
+        
+        Endpoint.publish("http://localhost:8081/SMSGatewayService",
+                new SMSGatewayServiceImpl());
     }
 }
