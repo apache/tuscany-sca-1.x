@@ -17,7 +17,7 @@
  * under the License.    
 -->
 <project name="holder-ws-service" default="compile">
-    <property name="test.class" value="org.example.orderservice.OrderServiceTestCase" />
+    <property name="test.class" value="org.example.orderservice.OrderServiceServer" />
 	<property name="test.jar"   value="sample-holder-ws-service.jar" />
 	
     <target name="init">
