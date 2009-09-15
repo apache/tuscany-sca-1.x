@@ -33,11 +33,11 @@ public class CurrencyConverterCORBALauncher {
             new SCAContribution("currency-corba", 
               "../../contributions/currency-corba/target/classes");
         SCAContribution currencyContribution = 
-          new SCAContribution("currency", 
+            new SCAContribution("currency", 
               "../../contributions/currency/target/classes");
         
         SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "currency-converter-corba.composite",currencyContribution, currencyCORBAContribution);
+            "currency-converter-corba.composite", currencyContribution, currencyCORBAContribution);
         node.start();
 
         System.out.println("Quick currency converter test");
