@@ -30,11 +30,11 @@ public class CurrencyConverterLauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution currencyContribution = 
-          new SCAContribution("currency", 
+            new SCAContribution("currency", 
               "../../contributions/currency/target/classes");
         
         SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "currencyconverter.composite",currencyContribution);
+            "currency-converter.composite", currencyContribution);
         node.start();
 
         System.out.println("Quick currency converter test");

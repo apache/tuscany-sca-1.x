@@ -33,11 +33,11 @@ public class CurrencyConverterWSLauncher {
             new SCAContribution("currency-ws", 
               "../../contributions/currency-ws/target/classes");
         SCAContribution currencyContribution = 
-          new SCAContribution("currency", 
+            new SCAContribution("currency", 
               "../../contributions/currency/target/classes");
         
         SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "currencyconverterws.composite", currencyContribution, currencyWSContribution);
+            "currency-converter-ws.composite", currencyContribution, currencyWSContribution);
         node.start();
 
         System.out.println("Quick currency converter test");
