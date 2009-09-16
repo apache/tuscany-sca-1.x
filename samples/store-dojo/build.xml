@@ -80,7 +80,6 @@
         <include name="tuscany-web-javascript-dojo-1.5.1-SNAPSHOT.jar"/>    
     </fileset>
     
-    <fileset id="3rdparty.jars" dir="../../lib">
-        <include name="saxon-8.7.jar"/>
-    </fileset>
+    <fileset id="3rdparty.jars" dir="../../lib"/>
+
 </project>
