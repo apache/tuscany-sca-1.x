@@ -100,16 +100,17 @@ public class QuickStartServiceImpl extends HttpServlet {
             String compositeURI = request.getParameter("composite");
             String start = request.getParameter("start");
     
-            logger.fine("Composite Quick Start.");
-            logger.fine("Contribution URI: " + contributionURI);
-            logger.fine("Contribution location: " + contributionLocation);
-            logger.fine("Composite URI: " + compositeURI);
+            logger.info("Composite Quick Start.");
+            logger.info("Contribution URI: " + contributionURI);
+            logger.info("Contribution location: " + contributionLocation);
+            logger.info("Composite URI: " + compositeURI);
             
             // Look for the contribution in the workspace
             Entry<String, Item>[] contributionEntries = contributionCollection.getAll();
             Entry<String, Item> contributionEntry = null;
             for (Entry<String, Item> entry: contributionEntries) {
-                if (contributionURI.equals(entry.getKey())) {
+                if (entry.getKey() != null && 
+                    contributionURI.equals(entry.getKey())) {
                     contributionEntry = entry;
                     break;
                 }
@@ -127,13 +128,17 @@ public class QuickStartServiceImpl extends HttpServlet {
             Entry<String, Item>[] deployableEntries = deployableCollection.query("contribution=" + contributionURI);
             for (Entry<String, Item> entry: deployableEntries) {
                 Item item = entry.getData();
-                if (contributionURI.equals(contributionURI(entry.getKey())) && item.getAlternate().endsWith(compositeURI)) {
+                String compositeFileName = compositeURI.substring(compositeURI.lastIndexOf("/") + 1);
+                if (contributionURI.equals(contributionURI(entry.getKey())) && 
+                    (item.getAlternate().endsWith(compositeURI) ||
+                     item.getAlternate().endsWith(compositeFileName))) {
                     compositeKey = entry.getKey();
                     break;
                 }
             }
             
             if (compositeKey == null) {
+            	logger.info("Composite not found");
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, compositeURI);
                 return;
             }
