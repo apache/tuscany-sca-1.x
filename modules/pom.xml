@@ -48,8 +48,6 @@
                 <module>binding-dwr</module>
                 <module>binding-ejb</module>
                 <module>binding-ejb-runtime</module>
-                <module>binding-erlang</module>
-                <module>binding-erlang-runtime</module>
                 <module>binding-atom</module>
                 <module>binding-atom-js</module>
                 <module>binding-atom-js-dojo</module>
