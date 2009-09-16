@@ -37,10 +37,10 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>currency-converter-corba-client</module>
-                <module>currency-converter-jms-client</module>
-                <module>currency-converter-rmi-client</module>
-                <module>currency-converter-ws-jaxws-client</module>
+                <module>currency-converter-corba</module>
+                <module>currency-converter-jms</module>
+                <module>currency-converter-rmi</module>
+                <module>currency-converter-ws-jaxws</module>
             </modules>
         </profile>
 
