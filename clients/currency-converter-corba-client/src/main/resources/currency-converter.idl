@@ -17,11 +17,13 @@
  * under the License.
  */
  
-module scatours {
-    module currencyconverter {
-        interface CurrencyConverter {
-            double getExchangeRate(in string fromCurrencyCode, in string toCurrencyCode);
-            double convert(in string fromCurrencyCode, in string toCurrencyCode, in double amount);
+module com {
+    module tuscanyscatours {
+        module currencyconverter {
+            interface CurrencyConverter {
+                double getExchangeRate(in string fromCurrencyCode, in string toCurrencyCode);
+                double convert(in string fromCurrencyCode, in string toCurrencyCode, in double amount);
+            };
         };
     };
 };

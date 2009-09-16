@@ -21,7 +21,7 @@ package scatours;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import scatours.currencyconverter.CurrencyConverter;
+import com.tuscanyscatours.currencyconverter.CurrencyConverter;
 
 
 public class CurrencyConverterRMIClient {

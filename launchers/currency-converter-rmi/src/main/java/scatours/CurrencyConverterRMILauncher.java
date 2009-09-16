@@ -24,7 +24,7 @@ import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
-import scatours.currencyconverter.CurrencyConverter;
+import com.tuscanyscatours.currencyconverter.CurrencyConverter;
 
 public class CurrencyConverterRMILauncher {
 

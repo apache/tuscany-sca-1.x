@@ -17,12 +17,12 @@
  * specific language governing permissions and limitations
  * under the License.    
  -->
-<wsdl:definitions name="CurrencyConverterService" targetNamespace="http://currencyconverter.scatours/"
-    xmlns:tns="http://currencyconverter.scatours/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+<wsdl:definitions name="CurrencyConverterService" targetNamespace="http://currencyconverter.tuscanyscatours.com/"
+    xmlns:tns="http://currencyconverter.tuscanyscatours.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" 
     xmlns:SOAP11="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
-    <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://currencyconverter.scatours/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://currencyconverter.tuscanyscatours.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="getExchangeRate">
         <xs:complexType>
           <xs:sequence>
@@ -109,7 +109,7 @@
   </wsdl:binding>
   <wsdl:service name="CurrencyConverterService">
     <wsdl:port name="CurrencyConverterPort" binding="tns:CurrencyConverterBinding">
-      <SOAP:address location="http://10.10.10.135:8080/CurrencyConverter"/>
+      <SOAP:address location="http://localhost:8080/CurrencyConverter"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

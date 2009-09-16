@@ -21,8 +21,8 @@ package scatours;
 import org.omg.CORBA.ORB;
 import org.omg.CORBA.Object;
 
-import scatours.currencyconverter.CurrencyConverter;
-import scatours.currencyconverter.CurrencyConverterHelper;
+import com.tuscanyscatours.currencyconverter.CurrencyConverter;
+import com.tuscanyscatours.currencyconverter.CurrencyConverterHelper;
 
 public class CurrencyConverterCORBAClient {
 

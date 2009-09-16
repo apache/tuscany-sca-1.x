@@ -16,11 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package scatours.currencyconverter;
+package com.tuscanyscatours.currencyconverter;
+
+import org.osoa.sca.annotations.Remotable;
 
 /**
  * The CurrencyConverter service interface
  */
+@Remotable
 public interface CurrencyConverter {
 
     double getExchangeRate(String fromCurrencyCode, 
