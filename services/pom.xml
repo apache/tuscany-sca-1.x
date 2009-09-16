@@ -37,12 +37,12 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>creditcard-payment-jaxws-service</module>
-                <module>smsgateway-jaxws-service</module>
-                <module>smsgateway-corba-service</module>
-                <module>smsgateway-ejb-service</module>
-                <module>smsgateway-jms-service</module>
-                <module>smsgateway-rmi-service</module>
+                <module>creditcard-payment-jaxws</module>
+                <module>smsgateway-jaxws</module>
+                <module>smsgateway-corba</module>
+                <module>smsgateway-ejb</module>
+                <module>smsgateway-jms</module>
+                <module>smsgateway-rmi</module>
             </modules>
         </profile>
 
