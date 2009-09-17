@@ -129,9 +129,9 @@ public class QuickStartServiceImpl extends HttpServlet {
             for (Entry<String, Item> entry: deployableEntries) {
                 Item item = entry.getData();
                 String compositeFileName = compositeURI.substring(compositeURI.lastIndexOf("/") + 1);
-                if (contributionURI.equals(contributionURI(entry.getKey())) && 
-                    (item.getAlternate().endsWith(compositeURI) ||
-                     item.getAlternate().endsWith(compositeFileName))) {
+                if ( contributionURI.equals(contributionURI(entry.getKey())) ||
+                     item.getAlternate().endsWith(compositeURI) ||
+                     item.getAlternate().endsWith(compositeFileName)) {
                     compositeKey = entry.getKey();
                     break;
                 }
