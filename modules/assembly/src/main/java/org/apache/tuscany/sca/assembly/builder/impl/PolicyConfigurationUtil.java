@@ -558,30 +558,45 @@ abstract class PolicyConfigurationUtil {
     private static void addInheritedOpConfOnBindings(OperationsConfigurator source, 
                                               OperationsConfigurator target,
                                               PolicySetAttachPoint attachPoint) throws PolicyValidationException {
-        boolean found = false;
-        
+
         List<ConfiguredOperation> additionalOperations = new ArrayList<ConfiguredOperation>();
         for ( ConfiguredOperation sourceConfOp : source.getConfiguredOperations() ) {
-            for ( ConfiguredOperation targetConfOp : target.getConfiguredOperations() ) {
-                if ( sourceConfOp.getName().equals(targetConfOp.getName())) {
-                    List<Intent> prunedIntents = computeInheritableIntents(attachPoint.getType(), 
-                                                                           sourceConfOp.getRequiredIntents());
-                    PolicyComputationUtils.addInheritedIntents(prunedIntents, 
-                                                               targetConfOp.getRequiredIntents());
-                    
-                    List<PolicySet> prunedPolicySets  = computeInheritablePolicySets(sourceConfOp.getPolicySets(), 
-                                                                                     attachPoint.getApplicablePolicySets());
-                    PolicyComputationUtils.addInheritedPolicySets(prunedPolicySets, targetConfOp.getPolicySets(), true);
+            boolean found = false;
+            ConfiguredOperation targetConfOp = null;
+            for ( ConfiguredOperation confOp : target.getConfiguredOperations() ) {
+                if ( sourceConfOp.getName().equals(confOp.getName())) {
+                    targetConfOp = confOp;
                     found = true;
                     break;
                 }
-            }
-            
+            }                    
             if ( !found ) {
-                additionalOperations.add(sourceConfOp);
+                // Create a new target configured operation and copy everything from the source
+                // except the intents and policy sets (which must be computed below).
+                try {
+                    targetConfOp = (ConfiguredOperation)sourceConfOp.clone();
+                    targetConfOp.setRequiredIntents(new ArrayList<Intent>());
+                    targetConfOp.setPolicySets(new ArrayList<PolicySet>());
+                } catch (CloneNotSupportedException e) {
+                    // will not happen
+                }                            
+            }
+
+            List<Intent> prunedIntents =
+                computeInheritableIntents(attachPoint.getType(), sourceConfOp.getRequiredIntents());
+            PolicyComputationUtils.addInheritedIntents(prunedIntents, targetConfOp.getRequiredIntents());
+
+            List<PolicySet> prunedPolicySets =
+                computeInheritablePolicySets(sourceConfOp.getPolicySets(), attachPoint.getApplicablePolicySets());
+            PolicyComputationUtils.addInheritedPolicySets(prunedPolicySets, targetConfOp.getPolicySets(), true);
+
+            // If this is a new target configured operation, we will add it to the target list
+            // if it has required intents or policy sets.
+            if (!found && (!targetConfOp.getRequiredIntents().isEmpty() || !targetConfOp.getPolicySets().isEmpty())) {
+                additionalOperations.add(targetConfOp);
             }
         }
-        
+
         if ( !additionalOperations.isEmpty() ) {
             target.getConfiguredOperations().addAll(additionalOperations);
         }

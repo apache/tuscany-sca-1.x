@@ -88,6 +88,9 @@ public class ConfiguredOperationImpl extends BaseImpl implements ConfiguredOpera
     public List<PolicySet> getApplicablePolicySets() {
         return applicablePolicySets;
     }
-    
-    
+
+    public Object clone() throws CloneNotSupportedException {
+        // Note this is a shallow copy.
+        return super.clone();
+    }    
 }
