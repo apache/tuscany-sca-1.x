@@ -18,6 +18,10 @@
  */
 package org.apache.tuscany.sca.assembly;
 
+import java.util.List;
+
+import org.apache.tuscany.sca.policy.Intent;
+import org.apache.tuscany.sca.policy.PolicySet;
 import org.apache.tuscany.sca.policy.PolicySetAttachPoint;
 
 /**
@@ -27,7 +31,7 @@ import org.apache.tuscany.sca.policy.PolicySetAttachPoint;
  *
  * @version $Rev$ $Date$
  */
-public interface ConfiguredOperation extends Base, PolicySetAttachPoint {
+public interface ConfiguredOperation extends Base, Cloneable, PolicySetAttachPoint {
     /**
      * Returns the name of the operation.
      * 
@@ -58,4 +62,26 @@ public interface ConfiguredOperation extends Base, PolicySetAttachPoint {
      * @param contractName the name of the contract to which this operation belongs
      */
     void setContractName(String contractName);
+    
+
+    /**
+     * Sets a list of policy sets.
+     * 
+     * @param policySets
+     */
+    public void setPolicySets(List<PolicySet> policySets);
+
+    /**
+     * Sets a list of required intents.
+     * 
+     * @param intents
+     */
+    public void setRequiredIntents(List<Intent> intents);
+
+    /**
+     * Clone the ConfiguredOperation
+     * 
+     * @return
+     */
+    Object clone() throws CloneNotSupportedException; 
 }
