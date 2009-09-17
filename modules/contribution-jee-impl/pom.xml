@@ -63,6 +63,9 @@
             <version>1.5.1-SNAPSHOT</version>
         </dependency>
         
+        <!-- TUSCANY-3165 Waiting for 3.0.2 to be released so 
+             reverting to 3.0.1 for now. JEE itest will no work on 
+             windows due to this  
         <dependency>
             <groupId>org.apache.openejb</groupId>
             <artifactId>openejb-core</artifactId>
@@ -74,6 +77,19 @@
             <artifactId>openejb-jee</artifactId>
             <version>3.0.2-SNAPSHOT</version>
         </dependency>
+        -->
+        
+        <dependency>
+            <groupId>org.apache.openejb</groupId>
+            <artifactId>openejb-core</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.openejb</groupId>
+            <artifactId>openejb-jee</artifactId>
+            <version>3.0.1</version>
+        </dependency>        
 
         <dependency>
             <groupId>org.codehaus.woodstox</groupId>

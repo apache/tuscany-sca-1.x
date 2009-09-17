@@ -79,7 +79,9 @@
                 <!-- 
                 <module>contribution-classloader</module> 
                 -->
+                <!-- TUSCANY-3165 - waiting for OpenEJB 3.0.2 release
                 <module>contribution-jee</module>
+                -->
                 <module>contribution-jee-samples</module>
                 <module>conversations</module>
                 <module>corba</module>
