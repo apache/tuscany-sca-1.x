@@ -1,5 +1,5 @@
-Changes With Apache Tuscany SCA 1.5.1 August 2009 
-=================================================
+Changes With Apache Tuscany SCA 1.5.1 September 2009 
+====================================================
 
 Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
 
@@ -66,7 +66,19 @@ TUSCANY-3199 - WebImplementationProcessor should prefix web.componentType URI wi
 TUSCANY-3200 - Add the dojo copyright to the NOTICE file to be consistent with the top level binary NOTICE file
 TUSCANY-3202 - Spring bean name as service names for implicit services
 TUSCANY-3213 - ProblemImpl resides in assembly and means that other module have to access an impl packed to create a problem
-
+TUSCANY-3235 - Java2 security problem
+TUSCANY-3237 - Remove auto indexing logic for constructors
+TUSCANY-3238 - Use of WS binding results in exception when returning data
+TUSCANY-3240 - Closing reader after processing spring application-context.xml
+TUSCANY-3247 - Making interfaces and instantiatng widget factory via extension point mechanism
+TUSCANY-3248 - Removing quoted tokens to avoid issues on linux/mac os environment
+TUSCANY-3249 - providing on/off feature for multiple application context support
+TUSCANY-3251 - Fix interface compatibility checking for callback operations
+TUSCANY-3254 - null returned by RequestContext.getCallbackReference()
+TUSCANY-3255 - Consolidate JMS session management in JMSResourceFactory
+TUSCANY-3264 - Tyiding up how we write the schema prefix as per StAX spec
+TUSCANY-3267 - ensure wrapper elements have nillable=false
+TUSCANY-3272 - create class to run holder tests when run from the distribution
 
 Changes With Apache Tuscany SCA 1.5 May 2009 
 ============================================
