@@ -23,7 +23,7 @@
 
 <html>
 <body>
-<h2>SCA Tours Currency Converter</h2>
+<h2>SCA Tours Currency Converter JSP</h2>
 Welcome to the SCA Tours Currency Converter:
 <p>
 
