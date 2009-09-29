@@ -334,12 +334,35 @@ public class Interface2WSDLGenerator {
         // call each helper in turn to populate the wsdl.types element
         XmlSchemaCollection schemaCollection = new XmlSchemaCollection(); 
 
-        for (Map.Entry<XMLTypeHelper, List<DataType>> en: getDataTypes(interfaze, false, helpers).entrySet()) {
+        for (Map.Entry<XMLTypeHelper, List<DataType>> en: getDataTypes(interfaze, true, helpers).entrySet()) {
             XMLTypeHelper helper = en.getKey();
             if (helper == null) {
                 continue;
             }
             List<XSDefinition> xsDefinitions = helper.getSchemaDefinitions(xsdFactory, resolver, en.getValue());
+            
+            // TUSCANY-3283 find any schema that has been generated without a namespace
+            //              and any schema using the default WSDL schema
+            XSDefinition noNamespaceSchema = null;
+            XSDefinition defaultNamespaceSchema = null;
+            
+            for (XSDefinition xsDef: xsDefinitions) {
+                if (xsDef.getNamespace().equals("")){
+                    noNamespaceSchema = xsDef;
+                }
+                if (xsDef.getNamespace().equals(namespaceURI)){
+                    defaultNamespaceSchema = xsDef;
+                }
+            }
+            
+            // TUSCANY-3283 merge the no namespace schema into the default namespace schema
+            if (noNamespaceSchema != null && defaultNamespaceSchema != null){
+                // remove the no namespace schema from our list of schema
+                xsDefinitions.remove(noNamespaceSchema);
+                // merge the schema with no namespace into the schema with the default namspace for this WSDL
+                mergeSchema(noNamespaceSchema, defaultNamespaceSchema, xsDefinitions);
+            }
+            
             for (XSDefinition xsDef: xsDefinitions) {
                 // TUSCANY-2757 and TUSCANY-3267 - flip global wrapper elements with nillable 
                 // set true to be set to false.  The JAXB RI seems to be generating this setting
@@ -368,6 +391,10 @@ public class Interface2WSDLGenerator {
             }
         }
 
+/* TUSCANY-3283  
+ * the value "true" in the above call to getDataTypes(interfaze, true, helpers) means that
+ * wrappers are generated in the context of all of the other types being generated. 
+ * 
         // remove global wrapper elements with schema definitions from generation list
         for (QName wrapperName: new HashSet<QName>(wrappers.keySet())) {
             if (wsdlDefinition.getXmlSchemaElement(wrapperName) != null) {
@@ -454,6 +481,7 @@ public class Interface2WSDLGenerator {
                             }
                             QName typeName = element.getType().getQName();
                             String nsURI = typeName.getNamespaceURI();
+                            // we shouldn't have type in a null namespace here
                             if ("".equals(nsURI)) {
                                 xsElement.setAttribute("type", typeName.getLocalPart());
                                 addSchemaImport(schema, "", schemaDoc);
@@ -486,10 +514,100 @@ public class Interface2WSDLGenerator {
                 wsdlDefinition.getXmlSchemas().add(xsDef);
             }
         }
+*/        
 
         return definition;
     }
+    
+    /**
+     * TUSCANY-3283 
+     * Merge the no namespace schema into the defualt namespace schema
+     * Relies on being called just after the getSchemaDefinitions call when the XSDefinitions 
+     * have only the DOM information set
+     * 
+     * @param noNamespaceSchema
+     * @param defaultNamespaceSchema
+     * @param xsDefinitions
+     */
+    private void mergeSchema(XSDefinition noNamespaceSchema, XSDefinition defaultNamespaceSchema, List<XSDefinition> xsDefinitions){
+        Document toDoc = defaultNamespaceSchema.getDocument();
+        Document fromDoc = noNamespaceSchema.getDocument();
+                
+        // merge types from the no namespace schema into the default namespace schema
+        for(int i = 0; i < fromDoc.getDocumentElement().getChildNodes().getLength(); i++){
+            // merge the DOM types
+            Node node = fromDoc.getDocumentElement().getChildNodes().item(i);
+            Node newNode = toDoc.importNode(node, true);
+            toDoc.getDocumentElement().appendChild(newNode);
+            
+            if (node.getLocalName() != null && 
+                node.getLocalName().equals("complexType")){
+                Node typeName = node.getAttributes().getNamedItem("name");
+                fixUpNoNamespaceReferences(xsDefinitions, typeName.getNodeValue(), defaultNamespaceSchema.getNamespace());
+            }
+        }
+    }
+    
+    /**
+     * TUSCANY-3283 
+     * Correct any references in the schema list that used to point to types in the
+     * no namespace schema
+     * 
+     * @param fromSchema
+     * @param toSchema
+     */
+    private void fixUpNoNamespaceReferences(List<XSDefinition> xsDefinitions, String typeName, String defaultNamespace){
+        
+        // fix up any references in any other schema that points to this type
+        for (XSDefinition xsDef: xsDefinitions) {
 
+            // look for any imports of the no namespace schema
+            Document refSchema = xsDef.getDocument();
+            NodeList imports = refSchema.getElementsByTagNameNS("http://www.w3.org/2001/XMLSchema","import");
+            
+            for (int j = 0; j < imports.getLength(); j++){
+                Element _import = (Element)imports.item(j);
+                
+                // we only need to process this schema if JAXB determined that 
+                // it needed to import the no namespace schema
+                if (_import.getAttributes().getLength() == 0){
+                    if (xsDef.getNamespace().equals(defaultNamespace)){
+                        // remove the import
+                        _import.getParentNode().removeChild(_import);                        
+                    } else {
+                        // update the import to refer to the default namespace
+                        _import.setAttribute("namespace", defaultNamespace);
+                    }
+
+                    // look for any type attributes that refer to the 
+                    // node being merged
+                    NodeList elements = refSchema.getElementsByTagNameNS("http://www.w3.org/2001/XMLSchema","element");
+                    for (int k = 0; k < elements.getLength(); k++){
+                        Element element = (Element) elements.item(k);
+                        if (element != null && element.getAttributes() != null) {
+                            Node type = element.getAttributes().getNamedItem("type");
+                            
+                            if (type != null &&
+                                type.getNodeValue().equals(typeName)){
+                                if (xsDef.getNamespace().equals(defaultNamespace)){
+                                    // just add "tns" in front of the type name as
+                                    // we have merged the type into this schema
+                                    type.setNodeValue("tns:" + type.getNodeValue());
+                                } else {
+                                    // add a namespace 
+                                    refSchema.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:__nnns", defaultNamespace);
+    
+                                    // prefix the type name with the namespace
+                                    type.setNodeValue("__nnns:" + type.getNodeValue());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private static void addSchemaImport(Element schema, String nsURI, Document schemaDoc) {
         Element imp = schemaDoc.createElementNS(SCHEMA_NS, "xs:import");
         if (!"".equals(nsURI)) {
