@@ -104,8 +104,18 @@ public class Axis2BindingBasicAuthenticationConfigurator {
         
         // get the security context
         Subject subject = SecurityUtil.getSubject(msg);
-        BasicAuthenticationPrincipal principal =  new BasicAuthenticationPrincipal(username,
-                                                                                   password);
+        BasicAuthenticationPrincipal principal = null;
+        try {
+            principal =  new BasicAuthenticationPrincipal(username,
+                                                          password);
+        } catch (Exception ex) {
+            // null test will throw a suitable exceptions
+        }
+        
+        if (principal == null){
+            throw new ServiceRuntimeException("User credentials for authentication expected");
+        }
+        
         subject.getPrincipals().add(principal);
     }    
 }

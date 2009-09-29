@@ -31,6 +31,10 @@
           <tuscany:userName>myname</tuscany:userName>
           <tuscany:password>mypassword</tuscany:password>
         </tuscany:basicAuthentication>
+        <tuscany:basicAuthentication>
+          <tuscany:userName>myname1</tuscany:userName>
+          <tuscany:password>mypassword1</tuscany:password>
+        </tuscany:basicAuthentication>
     </sca:policySet>
     
     <sca:policySet name="ImplementationIdentityPolicySet"

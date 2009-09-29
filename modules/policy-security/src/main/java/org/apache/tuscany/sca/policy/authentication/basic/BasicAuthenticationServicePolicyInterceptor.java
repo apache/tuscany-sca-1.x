@@ -27,6 +27,7 @@ import org.apache.tuscany.sca.invocation.Invoker;
 import org.apache.tuscany.sca.invocation.Message;
 import org.apache.tuscany.sca.policy.PolicySet;
 import org.apache.tuscany.sca.policy.SecurityUtil;
+import org.osoa.sca.ServiceRuntimeException;
 
 
 /**
@@ -51,14 +52,7 @@ public class BasicAuthenticationServicePolicyInterceptor implements Interceptor 
     }
 
     private void init() {
-        if (policySet != null) {
-            for (Object policyObject : policySet.getPolicies()){
-                if (policyObject instanceof BasicAuthenticationPolicy){
-                    policy = (BasicAuthenticationPolicy)policyObject;
-                    break;
-                }
-            }
-        }
+
     }
 
     public Message invoke(Message msg) {
@@ -66,17 +60,35 @@ public class BasicAuthenticationServicePolicyInterceptor implements Interceptor 
         Subject subject = SecurityUtil.getSubject(msg);
         BasicAuthenticationPrincipal principal =  SecurityUtil.getPrincipal(subject, 
                                                                             BasicAuthenticationPrincipal.class);
-
+        boolean authenticated = false;
+        
         if (principal != null){
             
-            System.out.println("Username: " + 
-                               principal.getName() + 
-                               " Password: " + 
-                               principal.getPassword());
+            System.out.println("Authenticating user: " + 
+                               principal.getName());
             
             // could call out here to some 3rd party system to do whatever you 
-            // need to do do with username and password
-           
+            // need to do do with username and password. For this very simple
+            // interceptor just check that the credentials match crendentials in 
+            // the policy
+            
+            if (policySet != null) {
+                for (Object policyObject : policySet.getPolicies()){
+                    if (policyObject instanceof BasicAuthenticationPolicy){
+                        BasicAuthenticationPolicy policy = (BasicAuthenticationPolicy)policyObject;
+                        
+                        if (policy.getUserName().equals(principal.getName())){
+                            if (policy.getPassword().equals(principal.getPassword())){
+                                authenticated = true;
+                            }
+                        } 
+                    }
+                }
+            }
+        }
+        
+        if (authenticated == false){
+            throw new ServiceRuntimeException("User: " + principal.getName() + " cannot be authenticated");
         }
     
         return getNext().invoke(msg);
