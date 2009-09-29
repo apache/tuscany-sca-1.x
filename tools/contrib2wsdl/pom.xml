@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca-tools</artifactId>
-        <version>1.5.1-SNAPSHOT</version>
+        <version>1.5.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>tuscany-contrib2wsdl</artifactId>
@@ -31,37 +31,37 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-sca-api</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.1</version>
         </dependency>        
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-node-impl</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.1</version>
         </dependency> 
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-java-runtime</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.1</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-jms-runtime</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-host-jms-asf</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.1</version>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-ws-axis2</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.1</version>
         </dependency>        
 
         <dependency>
