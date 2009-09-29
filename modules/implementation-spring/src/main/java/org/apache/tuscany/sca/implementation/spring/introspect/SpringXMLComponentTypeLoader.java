@@ -706,7 +706,7 @@ public class SpringXMLComponentTypeLoader {
                     return appXmlFile.toURL();
                 }
             } catch (IOException e) {
-                throw new ContributionReadException("Error reading manifest " + manifestFile);
+                throw new ContributionReadException("Error reading manifest inside the folder: ", e);
             }
         } else {
         	if (locationFile.isFile() && locationFile.getName().endsWith(".jar")) {
@@ -769,14 +769,14 @@ public class SpringXMLComponentTypeLoader {
                             }
 	        			}
             		} catch (IOException e) {
-                        throw new ContributionReadException("Error reading manifest " + manifestFile);
+            			throw new ContributionReadException("Error reading manifest inside the jar folder: ", e);
                     }
         		}
         	}
         }
 
         throw new ContributionReadException("SpringXMLLoader getApplicationContextResource: "
-                                        + "META-INF/spring/" + SpringImplementationConstants.APPLICATION_CONTEXT + "not found");
+                                        + "META-INF/spring/" + SpringImplementationConstants.APPLICATION_CONTEXT + " not found");
     } // end method getApplicationContextResource
 
     /**
