@@ -219,7 +219,7 @@ public class Axis2ServiceProvider {
         
         // find out which policies are active
         if (wsBinding instanceof PolicySetAttachPoint) {
-            List<PolicySet> policySets = ((PolicySetAttachPoint)wsBinding).getApplicablePolicySets();
+            List<PolicySet> policySets = ((PolicySetAttachPoint)wsBinding).getPolicySets();
             for (PolicySet ps : policySets) {
                 for (Object p : ps.getPolicies()) {
                     if (BasicAuthenticationPolicy.class.isInstance(p)) {
