@@ -18,13 +18,17 @@
  */
 package helloworld;
 
-import java.util.Vector;
+import javax.jws.WebService;
 
 import org.osoa.sca.annotations.Service;
+
+import anotherpackage.BBean;
+import anotherpackage.CBean;
 
 /**
  * This class implements the HelloWorld service.
  */
+@WebService
 @Service(HelloWorldService.class)
 public class HelloWorldImpl implements HelloWorldService {
 
@@ -45,4 +49,12 @@ public class HelloWorldImpl implements HelloWorldService {
         return "Hello " + bean.get(0).getField1() + " " + bean.get(0).getField2();
     }
     */
+    
+    public String getGreetingsBBean(BBean bean){
+        return "Hello " + bean.getField1() + " " + bean.getField2();
+    }
+    
+    public String getGreetingsCBean(CBean bean){
+        return "Hello " + bean.getField1() + " " + bean.getField2();
+    }    
 }

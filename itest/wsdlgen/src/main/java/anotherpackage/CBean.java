@@ -16,15 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package helloworld;
+package anotherpackage;
 
-import anotherpackage.BBean;
+import javax.xml.bind.annotation.XmlType;
 
-public class ABean {
+@XmlType(name="")
+public class CBean {
     
     protected String field1;
     protected String field2;
-    protected BBean field3;
 
     public String getField1() {
         return field1;
@@ -40,14 +40,6 @@ public class ABean {
     
     public void setField2(String field2) {
         this.field2 = field2;
-    }
-    
-    public BBean getField3() {
-        return field3;
-    }
-    
-    public void setField3(BBean field3) {
-        this.field3 = field3;
     }
 }
 

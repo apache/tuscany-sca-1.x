@@ -18,9 +18,10 @@
  */
 package helloworld;
 
-import java.util.Vector;
-
 import org.osoa.sca.annotations.Remotable;
+
+import anotherpackage.BBean;
+import anotherpackage.CBean;
 
 /**
  * This is the business interface of the HelloWorld greetings service.
@@ -32,5 +33,7 @@ public interface HelloWorldService {
     public String getGreetingsBean(ABean bean);
     public String getGreetingsBeanArray(ABean[] bean);
     //public String getGreetingsBeanVector(Vector<ABean> bean);
+    public String getGreetingsBBean(BBean bean);
+    public String getGreetingsCBean(CBean bean);
 }
 
