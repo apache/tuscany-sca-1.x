@@ -119,6 +119,8 @@
                 <exclude>feed-aggregator-webapp/target/sample-feed-aggregator-webapp</exclude>
                 <exclude>feed-aggregator-webapp/target/sample-feed-aggregator-webapp/**/*</exclude>
                 <exclude>feed-aggregator-webapp/target/war</exclude>
+                <exclude>store-dojo</exclude>
+                <exclude>store-dojo/**/*</exclude>
                 <exclude>store-webapp/target</exclude>
                 <exclude>store-webapp/target/**/*</exclude>
                 <exclude>helloworld-dojo-webapp/src/main/webapp/dojo</exclude>
