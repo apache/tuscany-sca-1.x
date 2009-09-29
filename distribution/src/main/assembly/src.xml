@@ -106,8 +106,6 @@
                 <exclude>itest/domain/work/**/*</exclude>
                 <exclude>itest/exceptions-simple-ws/work</exclude>
                 <exclude>itest/exceptions-simple-ws/work/**/*</exclude>
-                <exclude>itest/large-sdo-ws/</exclude>
-                <exclude>itest/large-sdo-ws/**/*</exclude>
                 <exclude>itest/late-reference-resolution/work</exclude>
                 <exclude>itest/late-reference-resolution/work/**/*</exclude>
                 <exclude>itest/policy/work</exclude>

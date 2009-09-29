@@ -113,7 +113,6 @@
                 <module>jms-nulls</module>
                 <module>jms-selectors</module>
                 <module>jms-ttl</module>
-                <module>large-sdo-ws</module>
                 <module>late-reference-resolution</module>
                 <module>oneway</module>
                 <module>operation-overloading</module>
@@ -214,7 +213,6 @@
                 <module>interfaces</module>
                 <module>wires</module>
                 <module>scopes</module>
-                <module>large-sdo-ws</module>
             </modules>
 
 
