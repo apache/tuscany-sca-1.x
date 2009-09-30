@@ -22,11 +22,23 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>itest-domainmgr</artifactId>
-        <version>1.5.1-SNAPSHOT</version>
+        <version>1.6-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>itest-domainmgr-error</artifactId>
     <name>Apache Tuscany SCA iTest Domain Manager Error Handling</name>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>java.net</id>
+            <name>java.net Maven 2.x Repository</name>
+            <url>http://download.java.net/maven/2</url>
+            <layout>legacy</layout>
+        </repository>
+    </repositories>
 
     <packaging>pom</packaging>
     <build>
