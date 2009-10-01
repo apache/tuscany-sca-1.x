@@ -18,8 +18,8 @@
  */
 package helloworld;
 
-import javax.jws.WebService;
 
+import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
 import yetanotherpackage.DBean;
@@ -30,40 +30,39 @@ import anotherpackage.CBean;
 /**
  * This class implements the HelloWorld service.
  */
-@WebService
 @Service(HelloWorldService.class)
-public class HelloWorldImpl implements HelloWorldService {
+public class HelloWorldClientImpl implements HelloWorldService {
+    
+    @Reference
+    protected HelloWorldService hwService;
 
     public String getGreetings(String name) {
-        return "Hello " + name;
-    }
-
-    public String getGreetingsBean(ABean bean) {
-        return "Hello " + bean.getField1() + " " + bean.getField2()
-                + bean.getField3().getField1() + " "
-                + bean.getField3().getField2();
-    }
-
-    public String getGreetingsBeanArray(ABean[] bean) {
-        return "Hello " + bean[0].getField1() + " " + bean[0].getField2();
-    }
-
-    /*
-     * public String getGreetingsBeanVector(Vector<ABean> bean){ return "Hello "
-     * + bean.get(0).getField1() + " " + bean.get(0).getField2(); }
-     */
-
-    public String getGreetingsBBean(BBean bean) {
-        return "Hello " + bean.getField1() + " " + bean.getField2();
-    }
-
-    public String getGreetingsCBean(CBean bean) {
-        return "Hello " + bean.getField1() + " " + bean.getField2();
+        return "Hello " + hwService.getGreetings(name);
     }
     
-    public String getGreetingsDBean(DBean bean) {
-        return "Hello " + bean.getField1() + " " + bean.getField2() + " "
-                + bean.getField3().getField1() + " "
-                + bean.getField3().getField2();
+    public String getGreetingsBean(ABean bean){
+        return "Hello " + hwService.getGreetingsBean(bean);
+    }
+
+    public String getGreetingsBeanArray(ABean[] bean){
+        return "Hello " + hwService.getGreetingsBeanArray(bean);
+    }
+   
+    /*
+    public String getGreetingsBeanVector(Vector<ABean> bean){
+        return "Hello " + bean.get(0).getField1() + " " + bean.get(0).getField2();
+    }
+    */
+    
+    public String getGreetingsBBean(BBean bean){
+        return "Hello " + hwService.getGreetingsBBean(bean);
+    }
+    
+    public String getGreetingsCBean(CBean bean){
+        return "Hello " + hwService.getGreetingsCBean(bean);
     }    
+    
+    public String getGreetingsDBean(DBean bean){
+        return "Hello " + hwService.getGreetingsDBean(bean);
+    }      
 }

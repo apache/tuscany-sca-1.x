@@ -20,6 +20,8 @@ package helloworld;
 
 import anotherpackage.BBean;
 
+
+
 public class ABean {
     
     protected String field1;
@@ -41,7 +43,7 @@ public class ABean {
     public void setField2(String field2) {
         this.field2 = field2;
     }
-    
+
     public BBean getField3() {
         return field3;
     }

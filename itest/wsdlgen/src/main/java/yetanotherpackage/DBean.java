@@ -16,30 +16,38 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package helloworld;
-
-import javax.jws.WebService;
-
-import org.osoa.sca.annotations.Remotable;
-
-import yetanotherpackage.DBean;
+package yetanotherpackage;
 
 import anotherpackage.BBean;
-import anotherpackage.CBean;
 
-/**
- * This is the business interface of the HelloWorld greetings service.
- */
-@WebService
-@Remotable
-public interface HelloWorldService {
+public class DBean {
+    
+    protected String field1;
+    protected String field2;
+    protected BBean field3;
 
-    public String getGreetings(String name);
-    public String getGreetingsBean(ABean bean);
-    public String getGreetingsBeanArray(ABean[] bean);
-    //public String getGreetingsBeanVector(Vector<ABean> bean);
-    public String getGreetingsBBean(BBean bean);
-    public String getGreetingsCBean(CBean bean);
-    public String getGreetingsDBean(DBean bean);
+    public String getField1() {
+        return field1;
+    }
+    
+    public void setField1(String field1) {
+        this.field1 = field1;
+    }
+    
+    public String getField2() {
+        return field2;
+    }
+    
+    public void setField2(String field2) {
+        this.field2 = field2;
+    }
+    
+    public BBean getField3() {
+        return field3;
+    }
+    
+    public void setField3(BBean field3) {
+        this.field3 = field3;
+    }
 }
 

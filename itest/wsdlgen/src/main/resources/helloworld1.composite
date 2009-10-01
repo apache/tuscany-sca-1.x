@@ -22,11 +22,21 @@
 	targetNamespace="http://helloworld"
 	xmlns:hw="http://helloworld"
     name="helloworldws">
+    
+    <component name="HelloWorldClientComponent1">
+        <implementation.java class="helloworld.HelloWorldClientImpl" />
+        <service name="HelloWorldService">
+            <binding.sca/>
+        </service>
+        <reference name="hwService">
+            <binding.ws uri="http://L3AW203:8085/HelloWorldServiceComponent1"/>
+        </reference>
+    </component>    
 
     <component name="HelloWorldServiceComponent1">
         <implementation.java class="helloworld.HelloWorldImpl" />
 	    <service name="HelloWorldService">
-            <binding.ws/>
+            <binding.ws uri="http://L3AW203:8085/HelloWorldServiceComponent1"/>
         </service>
     </component>
     

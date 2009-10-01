@@ -87,6 +87,27 @@
     
     <build>
        <finalName>${artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>1.9</version>
+                <executions>
+                    <execution>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>wsgen</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sei>helloworld.HelloWorldImpl</sei>
+                    <genWsdl>true</genWsdl>           
+                    <keep>true</keep>
+                </configuration>
+            </plugin>           
+        </plugins>
+  
     </build>
 
 </project>
