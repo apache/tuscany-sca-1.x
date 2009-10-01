@@ -745,7 +745,7 @@ public class SpringXMLComponentTypeLoader {
         			// Deal with the directory inside a jar file, in case the contribution itself is a JAR file.
         			try {
 	        			if (locationFile.getPath().indexOf(".jar") > 0) {
-	        				String jarPath = url.getPath().substring(6, url.getPath().indexOf("!"));
+	        				String jarPath = url.getPath().substring(5, url.getPath().indexOf("!"));
 	        				JarFile jf = new JarFile(jarPath);
 	        				JarEntry je = jf.getJarEntry(url.getPath().substring(url.getPath().indexOf("!/")+2)
 	        												+ "/" + "META-INF" + "/" + "MANIFEST.MF");
