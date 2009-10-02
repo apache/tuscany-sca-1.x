@@ -1,5 +1,5 @@
-Changes With Apache Tuscany SCA 1.5.1 September 2009 
-====================================================
+Changes With Apache Tuscany SCA 1.5.1 October 2009 
+==================================================
 
 Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
 
@@ -79,6 +79,7 @@ TUSCANY-3255 - Consolidate JMS session management in JMSResourceFactory
 TUSCANY-3264 - Tyiding up how we write the schema prefix as per StAX spec
 TUSCANY-3267 - ensure wrapper elements have nillable=false
 TUSCANY-3272 - create class to run holder tests when run from the distribution
+TUSCANY-3292 - fixing how spring context path is calculated 
 
 Changes With Apache Tuscany SCA 1.5 May 2009 
 ============================================
