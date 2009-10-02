@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>itest-contribution-jee-samples</artifactId>
-        <version>1.5.1-SNAPSHOT</version>
+        <version>1.5.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-sca-api</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.1</version>
             <scope>provided</scope>
         </dependency>
 
@@ -49,14 +49,14 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>itest-contribution-jee-samples-00-jar-shared</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.1</version>
             <scope>provided</scope>
         </dependency>        
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>itest-contribution-jee-samples-08-ejb-enhanced</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.1</version>
             <type>ejb</type>
             <scope>provided</scope>
         </dependency>
@@ -64,7 +64,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>itest-contribution-jee-samples-01-war-nonenhanced</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.1</version>
             <type>war</type>
             <scope>provided</scope>
         </dependency>

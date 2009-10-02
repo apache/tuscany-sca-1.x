@@ -77,7 +77,7 @@
     </target>
     
     <fileset id="tuscany.jars" dir="../../modules">
-        <include name="tuscany-web-javascript-dojo-1.5.1-SNAPSHOT.jar"/>    
+        <include name="tuscany-web-javascript-dojo-1.5.1.jar"/>    
     </fileset>
     
     <fileset id="3rdparty.jars" dir="../../lib"/>
