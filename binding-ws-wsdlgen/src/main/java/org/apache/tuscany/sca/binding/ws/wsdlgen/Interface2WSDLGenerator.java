@@ -47,6 +47,12 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.databinding.DataBinding;
@@ -76,6 +82,7 @@ import org.apache.ws.commons.schema.XmlSchema;
 import org.apache.ws.commons.schema.XmlSchemaCollection;
 import org.apache.ws.commons.schema.XmlSchemaException;
 import org.apache.ws.commons.schema.utils.NamespaceMap;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -353,6 +360,8 @@ public class Interface2WSDLGenerator {
                 if (xsDef.getNamespace().equals(namespaceURI)){
                     defaultNamespaceSchema = xsDef;
                 }
+                // useful for debugging DOM issues
+                //printDOM(xsDef.getDocument());
             }
             
             // TUSCANY-3283 merge the no namespace schema into the default namespace schema
@@ -387,6 +396,9 @@ public class Interface2WSDLGenerator {
                         }
                     }
                 }
+                // TUSCANY-3283
+                // useful for debugging DOM issues
+                //printDOM(doc);
                 addSchemaExtension(xsDef, schemaCollection, wsdlDefinition, definition);
             }
         }
@@ -394,7 +406,7 @@ public class Interface2WSDLGenerator {
 /* TUSCANY-3283  
  * the value "true" in the above call to getDataTypes(interfaze, true, helpers) means that
  * wrappers are generated in the context of all of the other types being generated. 
- * 
+
         // remove global wrapper elements with schema definitions from generation list
         for (QName wrapperName: new HashSet<QName>(wrappers.keySet())) {
             if (wsdlDefinition.getXmlSchemaElement(wrapperName) != null) {
@@ -530,20 +542,67 @@ public class Interface2WSDLGenerator {
      * @param xsDefinitions
      */
     private void mergeSchema(XSDefinition noNamespaceSchema, XSDefinition defaultNamespaceSchema, List<XSDefinition> xsDefinitions){
-        Document toDoc = defaultNamespaceSchema.getDocument();
         Document fromDoc = noNamespaceSchema.getDocument();
+        Document toDoc = defaultNamespaceSchema.getDocument();
+          
+        // merge namespace definitions from the nonamespace schema into the default namespace schema
+        for(int i = 0; i < fromDoc.getDocumentElement().getAttributes().getLength(); i++){
+            Attr attribute = (Attr)fromDoc.getDocumentElement().getAttributes().item(i);
+            String attribName = attribute.getName();
+            if (attribName.startsWith("xmlns:")){
                 
+                String fromPrefix = attribName.substring(attribName.indexOf(":") + 1);
+                
+                if (fromPrefix.equals("xs") != true){        
+                    // create a new namespace prefix to prevent clashes
+                    toDoc.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", 
+                                                              "xmlns:__" + fromPrefix, 
+                                                              attribute.getValue());
+                    
+                    // fix up any references to the existing namespace prefix
+                    fixUpNoNamespaceNamespaces(fromDoc, fromPrefix);
+                }
+            }
+        }
+        
+        Node toDocFirstChild = toDoc.getDocumentElement().getFirstChild();
+        
         // merge types from the no namespace schema into the default namespace schema
         for(int i = 0; i < fromDoc.getDocumentElement().getChildNodes().getLength(); i++){
             // merge the DOM types
             Node node = fromDoc.getDocumentElement().getChildNodes().item(i);
             Node newNode = toDoc.importNode(node, true);
-            toDoc.getDocumentElement().appendChild(newNode);
+            toDoc.getDocumentElement().insertBefore(newNode, toDocFirstChild);
             
+            // correct any references to no name types in other schema
             if (node.getLocalName() != null && 
                 node.getLocalName().equals("complexType")){
                 Node typeName = node.getAttributes().getNamedItem("name");
                 fixUpNoNamespaceReferences(xsDefinitions, typeName.getNodeValue(), defaultNamespaceSchema.getNamespace());
+            }
+        }
+    }
+    
+    /**
+     * TUSCANY-3283 
+     * Correct any namespace prefixes in the no namespace schema to prevent them from 
+     * clashing when the non namespace schema is merged with the default schema
+     * 
+     * @param fromSchema
+     * @param fromPrefix
+     * @param toPrefix
+     */
+    private void fixUpNoNamespaceNamespaces(Document fromSchema, String fromPrefix){
+        NodeList elements = fromSchema.getElementsByTagNameNS("http://www.w3.org/2001/XMLSchema","element");
+        for (int k = 0; k < elements.getLength(); k++){
+            Element element = (Element) elements.item(k);
+            if (element != null && element.getAttributes() != null) {
+                Node type = element.getAttributes().getNamedItem("type");
+                
+                if (type != null &&
+                    type.getNodeValue().startsWith(fromPrefix)){
+                    type.setNodeValue("__" + type.getNodeValue());
+               }
             }
         }
     }
@@ -605,6 +664,20 @@ public class Interface2WSDLGenerator {
                     }
                 }
             }
+        }
+    }
+    
+    /*
+     * Just used when debugging DOM problems
+     */
+    private void printDOM(Document document){
+        try {
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            Source source = new DOMSource(document);
+            Result result = new StreamResult(System.out);
+            transformer.transform(source, result);
+        } catch (Exception ex){
+            ex.toString();
         }
     }
     
