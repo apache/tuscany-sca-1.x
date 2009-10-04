@@ -285,5 +285,15 @@ public class WSDLDefinitionImpl implements WSDLDefinition {
     public void setBinding(Binding binding) {
         this.binding = binding;
     }
+    
+    public XSDefinition getSchema(String namespace){
+        for (XSDefinition xsDef : schemas){
+            if (xsDef.getNamespace().equals(namespace)){
+                return xsDef;
+            }
+        }
+        
+        return null;
+    }
 
 }

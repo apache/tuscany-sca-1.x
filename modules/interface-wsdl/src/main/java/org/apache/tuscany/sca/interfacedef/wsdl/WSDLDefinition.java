@@ -137,4 +137,12 @@ public interface WSDLDefinition extends Base {
      * @param binding the WSDL binding
      */
     void setBinding(Binding binding);
+    
+    /**
+     * Find the schema definition for the provided namespace
+     * 
+     * @param namespace
+     * @return the schema definition relating to the provided namespace or null if not found
+     */
+    XSDefinition getSchema(String namespace);
 }

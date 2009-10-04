@@ -339,7 +339,7 @@ public class Interface2WSDLGenerator {
         wsdlDefinition.setBinding(binding);
 
         // call each helper in turn to populate the wsdl.types element
-        XmlSchemaCollection schemaCollection = new XmlSchemaCollection(); 
+        XmlSchemaCollection schemaCollection = new XmlSchemaCollection();
 
         for (Map.Entry<XMLTypeHelper, List<DataType>> en: getDataTypes(interfaze, true, helpers).entrySet()) {
             XMLTypeHelper helper = en.getKey();
@@ -361,7 +361,7 @@ public class Interface2WSDLGenerator {
                     defaultNamespaceSchema = xsDef;
                 }
                 // useful for debugging DOM issues
-                //printDOM(xsDef.getDocument());
+                // printDOM(xsDef.getDocument());
             }
             
             // TUSCANY-3283 merge the no namespace schema into the default namespace schema
@@ -396,16 +396,9 @@ public class Interface2WSDLGenerator {
                         }
                     }
                 }
-                // TUSCANY-3283
-                // useful for debugging DOM issues
-                //printDOM(doc);
                 addSchemaExtension(xsDef, schemaCollection, wsdlDefinition, definition);
-            }
+            }              
         }
-
-/* TUSCANY-3283  
- * the value "true" in the above call to getDataTypes(interfaze, true, helpers) means that
- * wrappers are generated in the context of all of the other types being generated. 
 
         // remove global wrapper elements with schema definitions from generation list
         for (QName wrapperName: new HashSet<QName>(wrappers.keySet())) {
@@ -414,14 +407,21 @@ public class Interface2WSDLGenerator {
             }
         }
 
+
         // generate schema elements for wrappers that aren't defined in the schemas
         if (wrappers.size() > 0) {
             int i = 0;
             int index = 0;
             Map<String, XSDefinition> wrapperXSDs = new HashMap<String, XSDefinition>();
+
             Map<Element, Map<String, String>> prefixMaps = new HashMap<Element, Map<String, String>>();
             for (Map.Entry<QName, List<ElementInfo>> entry: wrappers.entrySet()) {
                 String targetNS = entry.getKey().getNamespaceURI();
+                // make sure wrappers are generated into the default namespace
+                if (targetNS == null ||
+                    targetNS.equals("")){
+                    targetNS = namespaceURI;
+                }
                 Document schemaDoc = null;
                 Element schema = null;
                 XSDefinition xsDef = wrapperXSDs.get(targetNS);
@@ -429,25 +429,34 @@ public class Interface2WSDLGenerator {
                     schemaDoc = xsDef.getDocument();
                     schema = schemaDoc.getDocumentElement();
                 } else {
-                    schemaDoc = createDocument();
-                    schema = schemaDoc.createElementNS(SCHEMA_NS, "xs:schema");
-                    // The elementFormDefault should be set to unqualified, see TUSCANY-2388
-                    schema.setAttribute("elementFormDefault", "unqualified");
-                    schema.setAttribute("attributeFormDefault", "qualified");
-                    schema.setAttribute("targetNamespace", targetNS);
-                    schema.setAttributeNS(XMLNS_NS, "xmlns:xs", SCHEMA_NS);
-                    schemaDoc.appendChild(schema);
-                    Schema schemaExt = createSchemaExt(definition);
-                    schemaExt.setElement(schema);
-                    prefixMaps.put(schema, new HashMap<String, String>());
-                    xsDef = xsdFactory.createXSDefinition();
-                    xsDef.setUnresolved(true);
-                    xsDef.setNamespace(targetNS);
-                    xsDef.setDocument(schemaDoc);
-                    // TUSCANY-2465: Set the system id to avoid schema conflict
-                    xsDef.setLocation(URI.create("xsd_" + index + ".xsd"));
-                    index++;
-                    wrapperXSDs.put(targetNS, xsDef);
+                    // check schema is not already in the set identified so far   
+                    xsDef = wsdlDefinition.getSchema(targetNS);
+                    if (xsDef != null) {
+                        schemaDoc = xsDef.getDocument();
+                        schema = schemaDoc.getDocumentElement();
+                        wrapperXSDs.put(targetNS, xsDef);
+                    } else {
+                        // create a new schema document
+                        schemaDoc = createDocument();
+                        schema = schemaDoc.createElementNS(SCHEMA_NS, "xs:schema");
+                        // The elementFormDefault should be set to unqualified, see TUSCANY-2388
+                        schema.setAttribute("elementFormDefault", "unqualified");
+                        schema.setAttribute("attributeFormDefault", "qualified");
+                        schema.setAttribute("targetNamespace", targetNS);
+                        schema.setAttributeNS(XMLNS_NS, "xmlns:xs", SCHEMA_NS);
+                        schemaDoc.appendChild(schema);
+                        Schema schemaExt = createSchemaExt(definition);
+                        schemaExt.setElement(schema);
+                        prefixMaps.put(schema, new HashMap<String, String>());
+                        xsDef = xsdFactory.createXSDefinition();
+                        xsDef.setUnresolved(true);
+                        xsDef.setNamespace(targetNS);
+                        xsDef.setDocument(schemaDoc);
+                        // TUSCANY-2465: Set the system id to avoid schema conflict
+                        xsDef.setLocation(URI.create("xsd_" + index + ".xsd"));
+                        index++;
+                        wrapperXSDs.put(targetNS, xsDef);
+                    } 
                 }
                 Element wrapper = schemaDoc.createElementNS(SCHEMA_NS, "xs:element");
                 schema.appendChild(wrapper);
@@ -522,11 +531,27 @@ public class Interface2WSDLGenerator {
  
             // resolve XSDefinitions containing generated wrappers
             for (XSDefinition xsDef: wrapperXSDs.values()) {
-                loadXSD(schemaCollection, xsDef);
-                wsdlDefinition.getXmlSchemas().add(xsDef);
+                if (wsdlDefinition.getSchema(xsDef.getNamespace()) == null){
+                    wsdlDefinition.getXmlSchemas().add(xsDef);
+                }
             }
+        }   
+        
+        // TUSCANY-3283 reload all of the schema to take account of any wrapper editing that's
+        //             happened. Can't just extend what's there as the schema collection won't
+        //             let me reload a schema that's already been loaded. 
+        schemaCollection = new XmlSchemaCollection();
+        for (XSDefinition xsDef: wsdlDefinition.getXmlSchemas()) {
+            xsDef.setSchema(null);
+            xsDef.setSchemaCollection(null);
+            loadXSD(schemaCollection, xsDef);
         }
-*/        
+        
+        // TUSCANY-3283
+        // useful for debugging DOM issues
+        for (XSDefinition xsDef : wsdlDefinition.getXmlSchemas()){
+            printDOM(xsDef.getDocument());
+        }
 
         return definition;
     }
