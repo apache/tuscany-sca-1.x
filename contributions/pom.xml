@@ -49,6 +49,7 @@
                 <module>currency-jms</module>
                 <module>currency-jsp</module>
                 <module>currency-rmi</module>
+                <module>currency-servlet</module>
                 <module>currency-ws</module>
                 <module>databinding-client</module>
                 <module>emailgateway</module>
