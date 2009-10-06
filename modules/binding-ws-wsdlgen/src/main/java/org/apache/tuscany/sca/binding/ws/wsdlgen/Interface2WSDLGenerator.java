@@ -549,9 +549,9 @@ public class Interface2WSDLGenerator {
         
         // TUSCANY-3283
         // useful for debugging DOM issues
-        for (XSDefinition xsDef : wsdlDefinition.getXmlSchemas()){
-            printDOM(xsDef.getDocument());
-        }
+        //for (XSDefinition xsDef : wsdlDefinition.getXmlSchemas()){
+        //    printDOM(xsDef.getDocument());
+        //}
 
         return definition;
     }
