@@ -25,7 +25,9 @@ import org.apache.openejb.OpenEJBException;
 import org.apache.openejb.config.AnnotationDeployer;
 import org.apache.openejb.config.AppModule;
 import org.apache.openejb.config.DeploymentLoader;
+import org.apache.openejb.config.EjbModule;
 import org.apache.openejb.config.ReadDescriptors;
+import org.apache.openejb.config.WebModule;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
 
 /**
@@ -40,6 +42,64 @@ public class JavaEEModuleHelper {
             appModule = loader.load(new File(jarFilePath));
         } catch (OpenEJBException e) {
             throw new ContributionReadException(e);
+        }
+
+        // Set the Thread context class loader as the module's class loader and all the Web and EJB modules
+        // inside. Otherwise, SCA annotations could not be processed
+        // TODO: Eliminate the use of reflection for setting the class loader
+        java.lang.reflect.Field field = null;
+        try {
+            field = appModule.getClass().getDeclaredField("classLoader");
+        } catch (SecurityException e) {
+            throw new ContributionReadException(e);
+        } catch (NoSuchFieldException e) {
+            throw new ContributionReadException(e);
+        }
+        field.setAccessible(true);
+        try{
+            field.set(appModule, Thread.currentThread().getContextClassLoader());
+        } catch (IllegalArgumentException e) {
+            throw new ContributionReadException(e);
+        } catch (IllegalAccessException e) {
+            throw new ContributionReadException(e);
+        }
+        
+        for(EjbModule ejbModule:appModule.getEjbModules()) {
+            java.lang.reflect.Field field1 = null;
+            try {
+                field1 = ejbModule.getClass().getDeclaredField("classLoader");
+            } catch (SecurityException e) {
+                throw new ContributionReadException(e);
+            } catch (NoSuchFieldException e) {
+                throw new ContributionReadException(e);
+            }
+            field1.setAccessible(true);
+            try {
+                field1.set(ejbModule, Thread.currentThread().getContextClassLoader());
+            } catch (IllegalArgumentException e) {
+                throw new ContributionReadException(e);
+            } catch (IllegalAccessException e) {
+                throw new ContributionReadException(e);
+            }
+        }
+
+        for(WebModule webModule:appModule.getWebModules()) {
+            java.lang.reflect.Field field1 = null;
+            try {
+                field1 = webModule.getClass().getDeclaredField("classLoader");
+            } catch (SecurityException e) {
+                throw new ContributionReadException(e);
+            } catch (NoSuchFieldException e) {
+                throw new ContributionReadException(e);
+            }
+            field1.setAccessible(true);
+            try {
+                field1.set(webModule, Thread.currentThread().getContextClassLoader());
+            } catch (IllegalArgumentException e) {
+                throw new ContributionReadException(e);
+            } catch (IllegalAccessException e) {
+                throw new ContributionReadException(e);
+            }
         }
 
         // Process deployment descriptor files
