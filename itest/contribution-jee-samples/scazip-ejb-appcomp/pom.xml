@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.5.1-SNAPSHOT</version>
+        <version>1.5.2-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>itest-contribution-jee-samples-10-scazip-ejb-appcomp</artifactId>
@@ -39,14 +39,14 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-sca-api</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-java-runtime</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.2-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>        
         
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>itest-contribution-jee-samples-12-ejb-appcomp-contrib-implicit</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.2-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>   
 

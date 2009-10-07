@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-itest</artifactId>
-        <version>1.5.1-SNAPSHOT</version>
+        <version>1.5.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>itest-workspace-manager</artifactId>
@@ -32,19 +32,19 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-workspace-manager</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.2-SNAPSHOT</version>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-core-spi</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.2-SNAPSHOT</version>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-assembly-xml</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
+            <version>1.5.2-SNAPSHOT</version>
         </dependency>         
                         
     </dependencies>
