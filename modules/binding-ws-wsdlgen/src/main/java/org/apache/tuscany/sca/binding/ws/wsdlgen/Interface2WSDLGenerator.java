@@ -22,6 +22,7 @@ package org.apache.tuscany.sca.binding.ws.wsdlgen;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +48,12 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.databinding.DataBinding;
@@ -72,10 +79,13 @@ import org.apache.tuscany.sca.monitor.Problem.Severity;
 import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
 import org.apache.tuscany.sca.xsd.XSDFactory;
 import org.apache.tuscany.sca.xsd.XSDefinition;
+import org.apache.tuscany.sca.xsd.impl.XSDefinitionImpl;
 import org.apache.ws.commons.schema.XmlSchema;
 import org.apache.ws.commons.schema.XmlSchemaCollection;
+import org.apache.ws.commons.schema.XmlSchemaElement;
 import org.apache.ws.commons.schema.XmlSchemaException;
 import org.apache.ws.commons.schema.utils.NamespaceMap;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -330,7 +340,7 @@ public class Interface2WSDLGenerator {
         binding.setUndefined(false);
         definition.addBinding(binding);
         wsdlDefinition.setBinding(binding);
-
+        
         // call each helper in turn to populate the wsdl.types element
         XmlSchemaCollection schemaCollection = new XmlSchemaCollection(); 
 
@@ -340,12 +350,14 @@ public class Interface2WSDLGenerator {
                 continue;
             }
             List<XSDefinition> xsDefinitions = helper.getSchemaDefinitions(xsdFactory, resolver, en.getValue());
+            
             for (XSDefinition xsDef: xsDefinitions) {
-                // TUSCANY-2757 and TUSCANY-3267 - flip global wrapper elements with nillable 
-                // set true to be set to false.  The JAXB RI seems to be generating this setting
-                // incorrectly according to the JAXB spec.
+
                 Document doc = xsDef.getDocument();
-                if (doc != null) {
+                if (doc != null) {                    
+                    // TUSCANY-2757 and TUSCANY-3267 - flip global wrapper elements with nillable 
+                    // set true to be set to false.  The JAXB RI seems to be generating this setting
+                    // incorrectly according to the JAXB spec.                    
                     NodeList nodes = doc.getFirstChild().getChildNodes();
                     for (int i = 0; i < nodes.getLength(); i++) {
                         Node aNode = nodes.item(i);
@@ -364,7 +376,9 @@ public class Interface2WSDLGenerator {
                         }
                     }
                 }
-                addSchemaExtension(xsDef, schemaCollection, wsdlDefinition, definition);
+                
+                loadXSD(schemaCollection, xsDef);
+                wsdlDefinition.getXmlSchemas().add(xsDef);
             }
         }
 
@@ -374,6 +388,8 @@ public class Interface2WSDLGenerator {
                 wrappers.remove(wrapperName);
             }
         }
+        
+        schemaCollection = new XmlSchemaCollection(); 
 
         // generate schema elements for wrappers that aren't defined in the schemas
         if (wrappers.size() > 0) {
@@ -390,25 +406,41 @@ public class Interface2WSDLGenerator {
                     schemaDoc = xsDef.getDocument();
                     schema = schemaDoc.getDocumentElement();
                 } else {
-                    schemaDoc = createDocument();
-                    schema = schemaDoc.createElementNS(SCHEMA_NS, "xs:schema");
-                    // The elementFormDefault should be set to unqualified, see TUSCANY-2388
-                    schema.setAttribute("elementFormDefault", "unqualified");
-                    schema.setAttribute("attributeFormDefault", "qualified");
-                    schema.setAttribute("targetNamespace", targetNS);
-                    schema.setAttributeNS(XMLNS_NS, "xmlns:xs", SCHEMA_NS);
-                    schemaDoc.appendChild(schema);
-                    Schema schemaExt = createSchemaExt(definition);
-                    schemaExt.setElement(schema);
-                    prefixMaps.put(schema, new HashMap<String, String>());
-                    xsDef = xsdFactory.createXSDefinition();
-                    xsDef.setUnresolved(true);
-                    xsDef.setNamespace(targetNS);
-                    xsDef.setDocument(schemaDoc);
-                    // TUSCANY-2465: Set the system id to avoid schema conflict
-                    xsDef.setLocation(URI.create("xsd_" + index + ".xsd"));
-                    index++;
-                    wrapperXSDs.put(targetNS, xsDef);
+                    xsDef = wsdlDefinition.getSchema(targetNS);
+                    if (xsDef != null) {
+                        schemaDoc = xsDef.getDocument();
+                        schema = schemaDoc.getDocumentElement();
+                        wrapperXSDs.put(targetNS, xsDef);
+                        Map<String, String> prefixMap = prefixMaps.get(schema);
+                        if (prefixMap == null){
+                            prefixMap = new HashMap<String, String>();
+                            prefixMaps.put(schema, prefixMap);
+                            String [] prefixes = xsDef.getSchema().getNamespaceContext().getDeclaredPrefixes();
+                            for (int j = 0; j < prefixes.length; j++){
+                                prefixMap.put(xsDef.getSchema().getNamespaceContext().getNamespaceURI(prefixes[j]),
+                                              prefixes[j]);
+                            }
+                        }                        
+                    } else {
+                        schemaDoc = createDocument();
+                        schema = schemaDoc.createElementNS(SCHEMA_NS, "xs:schema");
+                        // The elementFormDefault should be set to unqualified, see TUSCANY-2388
+                        schema.setAttribute("elementFormDefault", "unqualified");
+                        schema.setAttribute("attributeFormDefault", "qualified");
+                        schema.setAttribute("targetNamespace", targetNS);
+                        schema.setAttributeNS(XMLNS_NS, "xmlns:xs", SCHEMA_NS);
+                        schema.setAttributeNS(XMLNS_NS, "xmlns:tns", targetNS);
+                        schemaDoc.appendChild(schema);
+                        prefixMaps.put(schema, new HashMap<String, String>());
+                        xsDef = xsdFactory.createXSDefinition();
+                        xsDef.setUnresolved(true);
+                        xsDef.setNamespace(targetNS);
+                        xsDef.setDocument(schemaDoc);
+                        // TUSCANY-2465: Set the system id to avoid schema conflict
+                        xsDef.setLocation(URI.create("xsd_" + index + ".xsd"));
+                        index++;
+                        wrapperXSDs.put(targetNS, xsDef);
+                    }  
                 }
                 Element wrapper = schemaDoc.createElementNS(SCHEMA_NS, "xs:element");
                 schema.appendChild(wrapper);
@@ -429,6 +461,9 @@ public class Interface2WSDLGenerator {
                         String prefix = prefixMap.get(nsURI);
                         if (prefix == null) {
                             prefix = "ns" + i++;
+                            while(prefixMap.containsValue(prefix)){
+                                prefix = "ns" + i++;
+                            }
                             prefixMap.put(nsURI, prefix);
                             schema.setAttributeNS(XMLNS_NS, "xmlns:" + prefix, nsURI);
                             addSchemaImport(schema, nsURI, schemaDoc);
@@ -467,6 +502,9 @@ public class Interface2WSDLGenerator {
 									    prefix = "tns";
 									} else {
                                         prefix = "ns" + i++;
+                                        while(prefixMap.containsValue(prefix)){
+                                            prefix = "ns" + i++;
+                                        }
                                         addSchemaImport(schema, nsURI, schemaDoc);
 									}
                                     prefixMap.put(nsURI, prefix);
@@ -482,14 +520,231 @@ public class Interface2WSDLGenerator {
  
             // resolve XSDefinitions containing generated wrappers
             for (XSDefinition xsDef: wrapperXSDs.values()) {
+                if (wsdlDefinition.getSchema(xsDef.getNamespace()) == null) {
+                     wsdlDefinition.getXmlSchemas().add(xsDef);
+                }
+                
+                xsDef.setSchema(null);
+                xsDef.setSchemaCollection(null);
                 loadXSD(schemaCollection, xsDef);
-                wsdlDefinition.getXmlSchemas().add(xsDef);
             }
         }
+        
+        XSDefinition noNamespaceSchema = null;
+        XSDefinition defaultNamespaceSchema = null;     
 
+        for (XSDefinition xsDef: wsdlDefinition.getXmlSchemas()) {
+            // only apply these changes if we have a DOM to work with
+            // this will generally come from the JAXB generation. SDO
+            // just goes straight to generating XmlSchema structures
+            Document doc = xsDef.getDocument();
+            if (doc != null) {
+                // TUSCANY-3283 find any schema that has been generated without a namespace
+                //              and any schema using the default WSDL schema so that we can
+                //              merge the two together              
+                if (xsDef.getNamespace().equals("")){
+                    noNamespaceSchema = xsDef;
+                }
+                if (xsDef.getNamespace().equals(namespaceURI)){
+                    defaultNamespaceSchema = xsDef;
+                } 
+            }
+        }     
+        
+        // TUSCANY-3283 merge the no namespace schema into the default namespace schema
+        if (noNamespaceSchema != null && defaultNamespaceSchema != null){
+            // remove the no namespace schema from our list of schema
+            wsdlDefinition.getXmlSchemas().remove(noNamespaceSchema);
+            // merge the schema with no namespace into the schema with the default namspace for this WSDL
+            mergeSchema(noNamespaceSchema, defaultNamespaceSchema, wsdlDefinition.getXmlSchemas());
+            
+            schemaCollection = new XmlSchemaCollection();
+            defaultNamespaceSchema.setSchema(null);
+            defaultNamespaceSchema.setSchemaCollection(null);
+            loadXSD(schemaCollection, defaultNamespaceSchema);
+        }        
+        
+        // push the schema into the WSDL 
+        for (XSDefinition xsDef: wsdlDefinition.getXmlSchemas()){
+            addSchemaExtension(xsDef, schemaCollection, wsdlDefinition, definition);
+        }
+        
+        // useful for debugging DOM issues
+        //System.out.println("======================= Schema DOM =======================" );
+        //for (XSDefinition xsDef : wsdlDefinition.getXmlSchemas()) {
+        //    if (xsDef.getDocument() != null) {
+        //        printDOM(xsDef.getDocument());
+        //    }
+        //}        
+        
         return definition;
+    }        
+   
+    /**
+     * TUSCANY-3283 
+     * Merge the no namespace schema into the defualt namespace schema
+     * Relies on being called just after the getSchemaDefinitions call when the XSDefinitions 
+     * have only the DOM information set
+     * 
+     * @param noNamespaceSchema
+     * @param defaultNamespaceSchema
+     * @param xsDefinitions
+     */
+    private void mergeSchema(XSDefinition noNamespaceSchema, XSDefinition defaultNamespaceSchema, Collection<XSDefinition> xsDefinitions){
+        Document fromDoc = noNamespaceSchema.getDocument();
+        Document toDoc = defaultNamespaceSchema.getDocument();
+          
+        // merge namespace definitions from the nonamespace schema into the default namespace schema
+        for(int i = 0; i < fromDoc.getDocumentElement().getAttributes().getLength(); i++){
+            Attr attribute = (Attr)fromDoc.getDocumentElement().getAttributes().item(i);
+            String attribName = attribute.getName();
+            if (attribName.startsWith("xmlns:")){
+                
+                String fromPrefix = attribName.substring(attribName.indexOf(":") + 1);
+                
+                if (fromPrefix.equals("xs") != true){        
+                    // create a new namespace prefix to prevent clashes
+                    toDoc.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", 
+                                                              "xmlns:__" + fromPrefix, 
+                                                              attribute.getValue());
+                    
+                    // fix up any references to the existing namespace prefix
+                    fixUpNoNamespaceNamespaces(fromDoc, fromPrefix);
+                }
+            }
+        }
+        
+        Node toDocFirstChild = toDoc.getDocumentElement().getFirstChild();
+        
+        // merge types from the no namespace schema into the default namespace schema
+        for(int i = 0; i < fromDoc.getDocumentElement().getChildNodes().getLength(); i++){
+            // merge the DOM types
+            Node node = fromDoc.getDocumentElement().getChildNodes().item(i);
+            Node newNode = toDoc.importNode(node, true);
+            
+            if (newNode.getLocalName() != null && 
+                (newNode.getLocalName().equals("import") || 
+                 newNode.getLocalName().equals("include") ||
+                 newNode.getLocalName().equals("redefine") ||
+                 newNode.getLocalName().equals("annotation") )){
+            	toDoc.getDocumentElement().insertBefore(newNode, toDocFirstChild);
+            } else {
+            	toDoc.getDocumentElement().appendChild(newNode);
+            }
+        }
+        
+        // fix up any references to the types we've just moved
+        for(int i = 0; i < fromDoc.getDocumentElement().getChildNodes().getLength(); i++){
+            Node node = fromDoc.getDocumentElement().getChildNodes().item(i);
+            
+            // correct any references to no name types in other schema
+            if (node.getLocalName() != null && 
+                node.getLocalName().equals("complexType")){
+                Node typeName = node.getAttributes().getNamedItem("name");
+                fixUpNoNamespaceReferences(xsDefinitions, typeName.getNodeValue(), defaultNamespaceSchema.getNamespace());
+            }
+        }
+    }
+    
+    /**
+     * TUSCANY-3283 
+     * Correct any namespace prefixes in the no namespace schema to prevent them from 
+     * clashing when the no namespace schema is merged with the default schema
+     * 
+     * @param fromSchema
+     * @param fromPrefix
+     * @param toPrefix
+     */   
+    private void fixUpNoNamespaceNamespaces(Document fromSchema, String fromPrefix){
+        NodeList elements = fromSchema.getElementsByTagNameNS("http://www.w3.org/2001/XMLSchema","element");
+        for (int k = 0; k < elements.getLength(); k++){
+            Element element = (Element) elements.item(k);
+            if (element != null && element.getAttributes() != null) {
+                Node type = element.getAttributes().getNamedItem("type");
+                
+                if (type != null &&
+                    type.getNodeValue().startsWith(fromPrefix)){
+                    type.setNodeValue("__" + type.getNodeValue());
+               }
+            }
+        }
     }
 
+    /**
+     * TUSCANY-3283 
+     * Correct any references in the schema list that used to point to types in the
+     * no namespace schema
+     * 
+     * @param fromSchema
+     * @param toSchema
+     */  
+    private void fixUpNoNamespaceReferences(Collection<XSDefinition> xsDefinitions, String typeName, String defaultNamespace){
+        
+        // fix up any references in any other schema that points to this type
+        for (XSDefinition xsDef: xsDefinitions) {
+
+        	if (xsDef.getDocument() != null){
+	            // look for any imports of the no namespace schema
+	            Document refSchema = xsDef.getDocument();
+	            NodeList imports = refSchema.getElementsByTagNameNS("http://www.w3.org/2001/XMLSchema","import");
+	            
+	            for (int j = 0; j < imports.getLength(); j++){
+	                Element _import = (Element)imports.item(j);
+	                
+	                // Fix up the import
+	                if (_import.getAttributes().getLength() == 0){
+	                    if (xsDef.getNamespace().equals(defaultNamespace)){
+	                        // remove the import
+	                        _import.getParentNode().removeChild(_import);                        
+	                    } else {
+	                        // update the import to refer to the default namespace
+	                        _import.setAttribute("namespace", defaultNamespace);
+	                    }
+	                }
+	            }
+	
+	            // look for any type attributes that refer to the 
+	            // node being merged
+	            NodeList elements = refSchema.getElementsByTagNameNS("http://www.w3.org/2001/XMLSchema","element");
+	            for (int k = 0; k < elements.getLength(); k++){
+	                Element element = (Element) elements.item(k);
+	                if (element != null && element.getAttributes() != null) {
+	                    Node type = element.getAttributes().getNamedItem("type");
+	                    
+	                    if (type != null &&
+	                        type.getNodeValue().equals(typeName)){
+	                        if (xsDef.getNamespace().equals(defaultNamespace)){
+	                            // just add "tns" in front of the type name as
+	                            // we have merged the type into this schema
+	                            type.setNodeValue("tns:" + type.getNodeValue());
+	                        } else {
+	                            // add a namespace 
+	                            refSchema.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:__nnns", defaultNamespace);
+	
+	                            // prefix the type name with the namespace
+	                            type.setNodeValue("__nnns:" + type.getNodeValue());
+	                        }
+	                    }
+	                }
+	            }
+        	}
+        }
+    }
+
+    /*
+     * Just used when debugging DOM problems
+     */
+    private void printDOM(Document document){
+        try {
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            Source source = new DOMSource(document);
+            Result result = new StreamResult(System.out);
+            transformer.transform(source, result);
+        } catch (Exception ex){
+            ex.toString();
+        }
+    }
+    
     private static void addSchemaImport(Element schema, String nsURI, Document schemaDoc) {
         Element imp = schemaDoc.createElementNS(SCHEMA_NS, "xs:import");
         if (!"".equals(nsURI)) {
@@ -548,8 +803,8 @@ public class Interface2WSDLGenerator {
                     throw new RuntimeException(e);
                 }
             }
-            loadXSD(schemaCollection, xsDef);
-            wsdlDefinition.getXmlSchemas().add(xsDef);
+            //loadXSD(schemaCollection, xsDef);
+            //wsdlDefinition.getXmlSchemas().add(xsDef);
             Element schema = document.getDocumentElement();
             Schema schemaExt = createSchemaExt(definition);
             schemaExt.setDocumentBaseURI(document.getDocumentURI());
