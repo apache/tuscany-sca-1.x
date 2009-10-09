@@ -40,7 +40,7 @@ public class LicenseTestCase extends TestCase {
     
     public void testCreateComponent() throws ZipException, IOException {
 
-        File archive = new File("..\\..\\distribution\\target\\apache-tuscany-sca-1.5.1-SNAPSHOT.zip");
+        File archive = new File("..\\..\\distribution\\target\\apache-tuscany-sca-1.5.2-SNAPSHOT.zip");
         ZipFile zf = new ZipFile(archive);
         try {
 
@@ -121,7 +121,7 @@ public class LicenseTestCase extends TestCase {
     }
 
     private String getLicenseText(ZipFile zf) throws IOException {
-        ZipEntry ze = zf.getEntry("tuscany-sca-1.5.1-SNAPSHOT/LICENSE");
+        ZipEntry ze = zf.getEntry("tuscany-sca-1.5.2-SNAPSHOT/LICENSE");
         InputStream in = zf.getInputStream(ze);
         String l = readLICENSE(in);
         return l;
