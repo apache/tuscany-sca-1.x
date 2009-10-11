@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,21 +15,15 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
--->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
-           targetNamespace="http://tuscanyscatours.com/"
-           name="shoppingcart">
-    
-    <component name="ShoppingCart">
-        <implementation.java class="com.tuscanyscatours.shoppingcart.impl.ShoppingCartImpl"/>
-        <reference name="cartStore" target="CartStore"/>     
-        <reference name="payment">
-            <binding.ws uri="http://localhost:8081/Payment" />
-        </reference> 
-    </component>    
-    
-    <component name="CartStore">
-        <implementation.java class="com.tuscanyscatours.shoppingcart.impl.CartStoreImpl"/>
-    </component> 
+ */
+package com.tuscanyscatours.shoppingcart;
 
-</composite>
+import org.osoa.sca.annotations.Remotable;
+
+import com.tuscanyscatours.common.TripItem;
+
+@Remotable
+public interface CartUpdates {
+    void addTrip(String cartId,TripItem trip);
+    void removeTrip(String cartId,TripItem trip);
+}

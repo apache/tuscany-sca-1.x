@@ -66,7 +66,7 @@
         <reference name="flightBook" target="Trip/Book"/>
         <reference name="carBook" target="Car/Book"/>   
         <reference name="tripBook" target="Trip/Book"/>  
-        <reference name="shoppingCart" target="ShoppingCart"/>      
+        <reference name="cartUpdates" target="ShoppingCart/CartUpdates"/>      
     </component>    
 
 </composite>

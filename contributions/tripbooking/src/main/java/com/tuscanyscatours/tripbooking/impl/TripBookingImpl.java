@@ -26,7 +26,7 @@ import org.osoa.sca.annotations.Service;
 
 import com.tuscanyscatours.common.Book;
 import com.tuscanyscatours.common.TripItem;
-import com.tuscanyscatours.shoppingcart.ShoppingCart;
+import com.tuscanyscatours.shoppingcart.CartUpdates;
 import com.tuscanyscatours.tripbooking.TripBooking;
 
 /**
@@ -48,7 +48,7 @@ public class TripBookingImpl implements TripBooking{
     protected Book tripBook;   
     
     @Reference 
-    protected ShoppingCart shoppingCart;
+    protected CartUpdates cartUpdates;
     
     @Context
     protected ComponentContext componentContext;     
@@ -81,8 +81,8 @@ public class TripBookingImpl implements TripBooking{
         }
         
         // add trip to the shopping cart
-        ServiceReference<ShoppingCart> cart = componentContext.getServiceReference(ShoppingCart.class, 
-                                                                                   "shoppingCart");
+        ServiceReference<CartUpdates> cart = componentContext.getServiceReference(CartUpdates.class, 
+                                                                                 "cartUpdates");
         cart.setConversationID(cartId);
         cart.getService().addTrip(cartId, trip);
         

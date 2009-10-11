@@ -18,13 +18,6 @@
  */
 package com.tuscanyscatours.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import org.osoa.sca.ComponentContext;
-import org.osoa.sca.ServiceReference;
-import org.osoa.sca.annotations.Context;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
@@ -34,7 +27,8 @@ import com.tuscanyscatours.SCAToursCart;
 import com.tuscanyscatours.SCAToursSearch;
 import com.tuscanyscatours.common.TripItem;
 import com.tuscanyscatours.common.TripLeg;
-import com.tuscanyscatours.shoppingcart.ShoppingCart;
+import com.tuscanyscatours.shoppingcart.CartCheckout;
+import com.tuscanyscatours.shoppingcart.CartInitialize;
 import com.tuscanyscatours.travelcatalog.TravelCatalogSearch;
 import com.tuscanyscatours.tripbooking.TripBooking;
 
@@ -53,7 +47,10 @@ public class SCAToursImpl implements SCAToursSearch, SCAToursBooking, SCAToursCa
     protected TripBooking tripBooking;
     
     @Reference 
-    protected ShoppingCart shoppingCart; 
+    protected CartInitialize cartInitialize; 
+    
+    @Reference 
+    protected CartCheckout cartCheckout; 
         
     // SCAToursSearch methods
     
@@ -71,17 +68,17 @@ public class SCAToursImpl implements SCAToursSearch, SCAToursBooking, SCAToursCa
     // SCAToursCart methods
     
     public String newCart(){
-        String cartId = shoppingCart.newCart();
+        String cartId = cartInitialize.newCart();
         return cartId;
     }  
     
     public TripItem[] getTrips(String cartId){
-        return shoppingCart.getTrips(cartId);
+        return cartInitialize.getTrips(cartId);
     }
     
     public void checkout(String cartId){
         // need to get the user id from the context here but
     	// just make one up for the time being
-    	shoppingCart.checkout(cartId, "c-0");
+        cartCheckout.checkout(cartId, "c-0");
     }   
 }

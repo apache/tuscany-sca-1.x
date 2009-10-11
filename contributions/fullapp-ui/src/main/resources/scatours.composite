@@ -51,7 +51,8 @@
         </service>        
         <reference name="travelCatalogSearch" target="TravelCatalog/TravelCatalogSearch"/>
         <reference name="tripBooking" target="TripBooking"/>
-        <reference name="shoppingCart" target="ShoppingCart"/>       
+        <reference name="cartInitialize" target="ShoppingCart/CartInitialize"/>    
+        <reference name="cartCheckout" target="ShoppingCart/CartCheckout"/>       
     </component>    
    
 </composite>
