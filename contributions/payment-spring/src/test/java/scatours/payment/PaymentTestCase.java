@@ -53,7 +53,7 @@ public class PaymentTestCase {
     public void testPayment() {
         SCAClient client = (SCAClient) paymentNode;
         Payment payment = client.getService(Payment.class, "PaymentClient");
-        System.out.println("Result = " + payment.makePaymentMember("Fred", 100.00f));
+        System.out.println("Result = " + payment.makePaymentMember("c-0", 100.00f));
     }
 
     @AfterClass

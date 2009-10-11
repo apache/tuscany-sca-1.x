@@ -26,10 +26,14 @@
     <bean id="Payment" class="com.tuscanyscatours.payment.impl.PaymentImpl">
         <property name="creditCardPayment" ref="creditCardPaymentReference"/>
         <property name="emailGateway" ref="EmailGateway"/>
+        <property name="customerRegistry" ref="CustomerRegistry"/>
         <property name="transactionFee" value="0.5f"/>
     </bean>
 
-    <bean id="EmailGateway" class="com.tuscanyscatours.emailgateway.impl.EmailGatewayImpl">
+    <bean id="CustomerRegistry" class="com.tuscanyscatours.customer.impl.CustomerRegistryImpl">
     </bean>
+    
+    <bean id="EmailGateway" class="com.tuscanyscatours.emailgateway.impl.EmailGatewayImpl">
+    </bean>    
   
 </beans>
