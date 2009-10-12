@@ -20,6 +20,8 @@ package org.apache.tuscany.sca.databinding;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -223,12 +225,17 @@ public class DefaultDataBindingExtensionPoint implements DataBindingExtensionPoi
     }
 
     private boolean introspectArray(DataType dataType, Operation operation) {
-        Class physical = dataType.getPhysical();
+        Class<?> physical = dataType.getPhysical();
         if (!physical.isArray() || physical == byte[].class) {
             return false;
         }
-        Class componentType = physical.getComponentType();
-        DataType logical = new DataTypeImpl(componentType, dataType.getLogical());
+        Class<?> componentType = physical.getComponentType();
+        Type genericComponentType = componentType;
+        
+        if(dataType.getGenericType() instanceof GenericArrayType) {
+            genericComponentType = ((GenericArrayType) dataType.getGenericType()).getGenericComponentType();
+        }
+        DataType logical = new DataTypeImpl(dataType.getDataBinding(), componentType, genericComponentType, dataType.getLogical());
         introspectType(logical, operation);
         dataType.setDataBinding("java:array");
         dataType.setLogical(logical);
