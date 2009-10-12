@@ -55,7 +55,7 @@ public class NewsServiceTestCase {
     }
     
     @Test
-    @Ignore("TUSCANY-3288")
+    //@Ignore("TUSCANY-3288")
     public void testNewsService() throws Exception {
         Entry<String, Headline>[] entries = newsService.getAll();
         

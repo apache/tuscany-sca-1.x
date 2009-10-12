@@ -22,8 +22,6 @@ package org.apache.tuscany.sca.binding.atom.news;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.bind.annotation.XmlSeeAlso;
-
 import org.apache.tuscany.sca.data.collection.Entry;
 import org.apache.tuscany.sca.data.collection.NotFoundException;
 import org.osoa.sca.annotations.Init;
