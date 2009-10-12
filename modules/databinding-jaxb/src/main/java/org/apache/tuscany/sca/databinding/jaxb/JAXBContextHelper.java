@@ -59,10 +59,7 @@ import org.apache.tuscany.sca.interfacedef.util.XMLType;
  */
 // FIXME: [rfeng] We probably should turn this into a pluggable system service
 public class JAXBContextHelper {
-    // public static final String JAXB_CLASSES = "jaxb.classes";
-
-    // public static final String JAXB_CONTEXT_PATH = "jaxb.contextPath";
-
+    
     private static final JAXBContextCache cache = new JAXBContextCache();
 
     private JAXBContextHelper() {
@@ -82,7 +79,7 @@ public class JAXBContextHelper {
         if (tContext == null)
             throw new TransformationException("JAXB context is not set for the transformation.");
 
-        // TODO: [rfeng] Need to figure out what's the best grantularity to create the JAXBContext
+        // TODO: [rfeng] Need to figure out what's the best granularity to create the JAXBContext
         // per interface, operation or parameter
         Operation op = source ? tContext.getSourceOperation() : tContext.getTargetOperation();
         if (op != null) {
@@ -114,6 +111,7 @@ public class JAXBContextHelper {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static JAXBContext createJAXBContext(DataType dataType) throws JAXBException {
         return createJAXBContext(findClasses(dataType));
     }
@@ -202,6 +200,7 @@ public class JAXBContextHelper {
      * @return
      * @throws JAXBException
      */
+    @SuppressWarnings("unchecked")
     public static JAXBContext createJAXBContext(Interface intf, boolean useWrapper) throws JAXBException {
         synchronized (cache) {
             LRUCache<Object, JAXBContext> map = cache.getCache();
@@ -217,6 +216,7 @@ public class JAXBContextHelper {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static JAXBContext createJAXBContext(List<DataType> dataTypes) throws JAXBException {
         JAXBContext context;
         Set<Class<?>> classes = new HashSet<Class<?>>();
@@ -229,6 +229,7 @@ public class JAXBContextHelper {
         return context;
     }
 
+    @SuppressWarnings("unchecked")
     private static Set<Class<?>> findClasses(DataType d) {
         Set<Class<?>> classes = new HashSet<Class<?>>();
         Set<Type> visited = new HashSet<Type>();
@@ -236,6 +237,7 @@ public class JAXBContextHelper {
         return classes;
     }
 
+    @SuppressWarnings("unchecked")
     private static void findClasses(DataType d, Set<Class<?>> classes, Set<Type> visited) {
         if (d == null) {
             return;
@@ -257,6 +259,7 @@ public class JAXBContextHelper {
      * @param classSet
      * @param visited
      */
+    @SuppressWarnings("unchecked")
     private static void findClasses(Type type, Set<Class<?>> classSet, Set<Type> visited) {
         if (visited.contains(type) || type == null) {
             return;
@@ -302,6 +305,7 @@ public class JAXBContextHelper {
      * @param useWrapper Use wrapper classes?
      * @return
      */
+    @SuppressWarnings("unchecked")
     private static List<DataType> getDataTypes(Interface intf, boolean useWrapper) {
         List<DataType> dataTypes = new ArrayList<DataType>();
         for (Operation op : intf.getOperations()) {
@@ -310,6 +314,7 @@ public class JAXBContextHelper {
         return dataTypes;
     }
 
+    @SuppressWarnings("unchecked")
     private static List<DataType> getDataTypes(Operation op, boolean useWrapper) {
         List<DataType> dataTypes = new ArrayList<DataType>();
         getDataTypes(dataTypes, op, useWrapper);
@@ -333,6 +338,7 @@ public class JAXBContextHelper {
         return dataTypes;
     }
 
+    @SuppressWarnings("unchecked")
     private static void getDataTypes(List<DataType> dataTypes, Operation op, boolean useWrapper) {
         WrapperInfo inputWrapperInfo = op.getInputWrapper();
         WrapperInfo outputWrapperInfo = op.getOutputWrapper();
@@ -368,6 +374,7 @@ public class JAXBContextHelper {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static Class<?> getJavaType(DataType<?> dataType) {
         if (dataType == null) {
             return null;
