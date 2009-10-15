@@ -81,6 +81,20 @@
 			        </dependency>
 			    </dependencies>
                 <executions>
+                    <execution> 
+                        <id>install-dojo</id>                       
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <ant antfile="./build-dojo.xml" target="install-dojo">
+                                    <property name="localRepository" value="${settings.localRepository}"/>
+                                </ant>
+                            </tasks>
+                        </configuration>
+                    </execution>                
                     <execution>
                         <id>copy-dojo-files</id>
                         <phase>generate-resources</phase>
