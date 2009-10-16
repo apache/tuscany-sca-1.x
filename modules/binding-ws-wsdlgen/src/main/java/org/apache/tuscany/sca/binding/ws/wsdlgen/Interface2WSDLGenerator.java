@@ -687,6 +687,7 @@ public class Interface2WSDLGenerator {
 	            // look for any imports of the no namespace schema
 	            Document refSchema = xsDef.getDocument();
 	            NodeList imports = refSchema.getElementsByTagNameNS("http://www.w3.org/2001/XMLSchema","import");
+	            List<Node> importsToDelete = new ArrayList<Node>();
 	            
 	            for (int j = 0; j < imports.getLength(); j++){
 	                Element _import = (Element)imports.item(j);
@@ -695,12 +696,17 @@ public class Interface2WSDLGenerator {
 	                if (_import.getAttributes().getLength() == 0){
 	                    if (xsDef.getNamespace().equals(defaultNamespace)){
 	                        // remove the import
-	                        _import.getParentNode().removeChild(_import);                        
+	                        //_import.getParentNode().removeChild(_import);
+	                        importsToDelete.add(_import);
 	                    } else {
 	                        // update the import to refer to the default namespace
 	                        _import.setAttribute("namespace", defaultNamespace);
 	                    }
 	                }
+	            }
+	            
+	            for (Node _import : importsToDelete){
+	                _import.getParentNode().removeChild(_import);
 	            }
 	
 	            // look for any type attributes that refer to the 
