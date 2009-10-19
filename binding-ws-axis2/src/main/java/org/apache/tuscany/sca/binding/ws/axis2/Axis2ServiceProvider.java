@@ -683,6 +683,12 @@ public class Axis2ServiceProvider {
         //FIXME: can we use the Axis2 addressing support for this?
         SOAPHeader header = inMC.getEnvelope().getHeader();
         if (header != null) {
+            List<Object> hdrList = msg.getHeaders();
+            Iterator it = header.getChildElements();
+            while (it.hasNext()) {
+                hdrList.add(it.next());
+            }
+
             OMElement from = header.getFirstChildWithName(QNAME_WSA_FROM);
             if (from != null) {
                 OMElement callbackAddrElement = from.getFirstChildWithName(QNAME_WSA_ADDRESS);
