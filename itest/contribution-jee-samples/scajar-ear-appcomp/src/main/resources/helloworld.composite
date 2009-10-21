@@ -29,7 +29,7 @@
     </component>
 
     <component name="HelloworldServiceComponent">
-        <implementation.jee archive="itest-contribution-jee-samples-29-ear-appcomp-contrib-implicit.ear"/>
+        <implementation.jee archive="./itest-contribution-jee-samples-29-ear-appcomp-contrib-implicit.ear"/>
         <reference name="JavaReference" target="HelloworldTargetComponent"/>
     </component>
     
