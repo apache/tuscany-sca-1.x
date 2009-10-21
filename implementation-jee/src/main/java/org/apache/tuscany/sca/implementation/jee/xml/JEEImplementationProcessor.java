@@ -106,8 +106,6 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
         JEEImplementation implementation = implementationFactory.createJEEImplementation();
         implementation.setUnresolved(true);
         
-        implementation.setName(IMPLEMENTATION_JEE);
-
         // Read the archive attribute
         String archive = getString(reader, "archive");
         if (archive != null) {
@@ -116,6 +114,25 @@ public class JEEImplementationProcessor extends BaseStAXArtifactProcessor implem
             // Set the URI of the component type 
             implementation.setURI(archive);
         }
+        
+        // the resulting implementation (composite) will be cached by the CompositeModelResolver
+        // based on it's name so we need to derive a unique name for this implementation based
+        // on the name of the archive that it represents
+        String path = URI.create(archive).getPath();
+        String localName = "impl-jee-current-dir-archive";
+        if (path != null){
+            int s = path.lastIndexOf('/');
+            if (s > -1){
+                localName = path.substring(s + 1);
+            } else {
+                if (path.length() > 0 && !path.equals(".")){
+                    localName = path;
+                }   
+            }
+        } 
+        
+        QName name = new QName(Constants.SCA10_TUSCANY_NS, localName);
+        implementation.setName(name);
 
         // Read policies
         policyProcessor.readPolicies(implementation, reader);
