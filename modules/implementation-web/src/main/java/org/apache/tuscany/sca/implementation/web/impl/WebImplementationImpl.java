@@ -19,7 +19,9 @@
 package org.apache.tuscany.sca.implementation.web.impl;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.tuscany.sca.assembly.Component;
 import org.apache.tuscany.sca.assembly.ConstrainingType;
@@ -28,6 +30,8 @@ import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.Service;
 import org.apache.tuscany.sca.assembly.builder.ComponentPreProcessor;
 import org.apache.tuscany.sca.assembly.impl.ImplementationImpl;
+import org.apache.tuscany.sca.implementation.java.impl.JavaElementImpl;
+import org.apache.tuscany.sca.implementation.java.impl.JavaResourceImpl;
 import org.apache.tuscany.sca.implementation.web.WebImplementation;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 
@@ -39,6 +43,11 @@ class WebImplementationImpl extends ImplementationImpl implements WebImplementat
 
     private String webURI;
 
+    private Map<String, JavaElementImpl> propertyInjectionPoints = new HashMap<String, JavaElementImpl>();
+
+    private Map<String, JavaElementImpl> referenceInjectionPoints = new HashMap<String, JavaElementImpl>();
+
+    private Map<String, JavaResourceImpl> resourceInjectionPoints = new HashMap<String, JavaResourceImpl>();
     /**
      * Constructs a new Web implementation.
      */
@@ -130,6 +139,18 @@ class WebImplementationImpl extends ImplementationImpl implements WebImplementat
             throw new AssertionError(e); // should not ever happen
         }
         return newProperty;
+    }
+
+    public Map<String, JavaElementImpl> getPropertyInjectionPoints() {
+        return propertyInjectionPoints;
+    }
+
+    public Map<String, JavaElementImpl> getReferenceInjectionPoints() {
+        return referenceInjectionPoints;
+    }
+
+    public Map<String, JavaResourceImpl> getResourceInjectionPoints() {
+        return resourceInjectionPoints;
     }
 
 }

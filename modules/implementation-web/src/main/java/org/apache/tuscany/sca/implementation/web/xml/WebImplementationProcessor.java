@@ -23,6 +23,7 @@ import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
@@ -49,6 +50,10 @@ import org.apache.tuscany.sca.implementation.java.DefaultJavaImplementationFacto
 import org.apache.tuscany.sca.implementation.java.IntrospectionException;
 import org.apache.tuscany.sca.implementation.java.JavaImplementation;
 import org.apache.tuscany.sca.implementation.java.JavaImplementationFactory;
+import org.apache.tuscany.sca.implementation.java.impl.JavaElementImpl;
+import org.apache.tuscany.sca.implementation.java.impl.JavaResourceImpl;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.ComponentNameProcessor;
+import org.apache.tuscany.sca.implementation.java.introspect.impl.ContextProcessor;
 import org.apache.tuscany.sca.implementation.web.WebImplementation;
 import org.apache.tuscany.sca.implementation.web.WebImplementationFactory;
 import org.apache.tuscany.sca.implementation.web.introspect.PropertyProcessor;
@@ -85,6 +90,8 @@ public class WebImplementationProcessor extends BaseStAXArtifactProcessor implem
         this.javaInterfaceFactory = modelFactories.getFactory(JavaInterfaceFactory.class);
         javaImplementationFactory.addClassVisitor(new ReferenceProcessor(assemblyFactory, javaInterfaceFactory));
         javaImplementationFactory.addClassVisitor(new PropertyProcessor(assemblyFactory));
+        javaImplementationFactory.addClassVisitor(new ComponentNameProcessor(assemblyFactory));
+        javaImplementationFactory.addClassVisitor(new ContextProcessor(assemblyFactory));
     }
 
     public QName getArtifactType() {
@@ -154,6 +161,15 @@ public class WebImplementationProcessor extends BaseStAXArtifactProcessor implem
             }
             implementation.getReferences().addAll(ji.getReferences());
             implementation.getProperties().addAll(ji.getProperties());
+            for(Map.Entry<String, JavaElementImpl> entry : ji.getReferenceMembers().entrySet()) { 
+                implementation.getReferenceInjectionPoints().put(entry.getKey(), entry.getValue());
+            }
+            for(Map.Entry<String, JavaElementImpl> entry : ji.getPropertyMembers().entrySet()) { 
+                implementation.getPropertyInjectionPoints().put(entry.getKey(), entry.getValue());
+            }
+            for(Map.Entry<String, JavaResourceImpl> entry : ji.getResources().entrySet()) { 
+                implementation.getResourceInjectionPoints().put(entry.getKey(), entry.getValue());
+            }
 
             // SCA References in JSP Tags
             for(JspReferenceTagInfo jspRefTag : webModuleInfo.getJspReferenceTags()) {
