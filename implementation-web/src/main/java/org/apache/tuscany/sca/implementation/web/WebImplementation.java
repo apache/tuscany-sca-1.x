@@ -18,7 +18,11 @@
  */
 package org.apache.tuscany.sca.implementation.web;
 
+import java.util.Map;
+
 import org.apache.tuscany.sca.assembly.Implementation;
+import org.apache.tuscany.sca.implementation.java.impl.JavaElementImpl;
+import org.apache.tuscany.sca.implementation.java.impl.JavaResourceImpl;
 
 
 
@@ -39,4 +43,24 @@ public interface WebImplementation extends Implementation {
      */
     void setWebURI(String webappURI);
 
+    /**
+     * Returns the injection points for SCA references
+     * 
+     * @return Map with injection points for SCA references
+     */
+    Map<String, JavaElementImpl> getReferenceInjectionPoints();
+    
+    /**
+     * Returns the injection points for SCA properties
+     * 
+     * @return Map with injection points for SCA properties
+     */
+    Map<String, JavaElementImpl> getPropertyInjectionPoints();
+
+    /**
+     * Returns the injection points for SCA resources like component context, component name, etc.
+     * 
+     * @return Map with injection points for SCA resources
+     */
+    Map<String, JavaResourceImpl> getResourceInjectionPoints();
 }
