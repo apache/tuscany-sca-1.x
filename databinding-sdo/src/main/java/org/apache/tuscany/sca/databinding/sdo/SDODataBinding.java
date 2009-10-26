@@ -69,7 +69,7 @@ public class SDODataBinding extends BaseDataBinding {
             }
         });
 
-        Type type = context.getTypeHelper().getType(javaType);
+        final Type type = context.getTypeHelper().getType(javaType);
         if (type == null) {
             // FIXME: Need a better to test dynamic SDO
             if (DataObject.class.isAssignableFrom(javaType)) {
@@ -92,10 +92,12 @@ public class SDODataBinding extends BaseDataBinding {
             public Object run() {
                 if (context == SDOContextHelper.getDefaultHelperContext()) {
                     HelperContext newContext = SDOUtil.createHelperContext();
-                    SDOContextHelper.register(newContext, javaType);
+                    SDOContextHelper.register(newContext, type);
                     if (operation != null) {
                         operation.getInputType().setMetaData(HelperContext.class, newContext);
                     }
+                } else {
+                    SDOContextHelper.register(context, type);
                 }
                 return null;
             }

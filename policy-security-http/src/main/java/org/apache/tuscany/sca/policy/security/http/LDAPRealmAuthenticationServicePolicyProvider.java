@@ -213,7 +213,7 @@ public class LDAPRealmAuthenticationServicePolicyProvider implements PolicyProvi
         
         return polices;
     }
-
+    
     /**
      * Find a given configured operation
      * @param operation

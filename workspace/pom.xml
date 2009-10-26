@@ -29,12 +29,6 @@
     <name>Apache Tuscany SCA Domain Workspace Model</name>
 
     <dependencies>
-         <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-sca-api</artifactId>
-            <version>1.6-SNAPSHOT</version>
-        </dependency>
-        
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-contribution</artifactId>

@@ -52,13 +52,14 @@ public class SpringImplementationProvider implements ImplementationProvider {
                                         ProxyFactory proxyService,
                                         JavaPropertyValueObjectFactory propertyValueObjectFactory,
                                         boolean annotationSupport,
-                                        String versionSupported) {
+                                        String versionSupported,
+                                        boolean multipleContextSupport) {
         super();
         this.implementation = implementation;
         this.component = component;
         this.propertyValueObjectFactory = propertyValueObjectFactory;
 
-        springContext = new SpringContextStub(component, implementation, proxyService, propertyValueObjectFactory, annotationSupport, versionSupported);        
+        springContext = new SpringContextStub(component, implementation, proxyService, propertyValueObjectFactory, annotationSupport, versionSupported, multipleContextSupport);        
         
     } // end constructor
 

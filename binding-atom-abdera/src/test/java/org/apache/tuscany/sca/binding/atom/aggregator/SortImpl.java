@@ -30,7 +30,7 @@ import org.osoa.sca.annotations.Property;
 /**
  * Implementation of a Feed Sort service component.
  * 
- * @version $Rev: 685663 $ $Date: 2008-08-13 13:11:20 -0700 (Wed, 13 Aug 2008) $
+ * @version $Rev$ $Date$
  */
 public class SortImpl implements Sort {
 

@@ -139,8 +139,6 @@ class GdataBindingInvoker implements Invoker, DataExchangeSemantics {
         @SuppressWarnings("finally")
         @Override
         public Message invoke(Message msg) {
-
-            //System.out.println("[Debug Info]GdataBindingInvoker.PostInvoker --- invoke method reached");
             // Post an entry
             Object[] args = (Object[])msg.getBody();
             com.google.gdata.data.Entry feedEntry = null;

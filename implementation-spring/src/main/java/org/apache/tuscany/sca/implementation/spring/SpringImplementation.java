@@ -44,7 +44,7 @@ public class SpringImplementation extends ImplementationImpl implements Implemen
     // The location attribute which points to the Spring application-context XML file
     private String location;
     // The application-context file as a Spring Resource
-    private List<URL> resource;
+    private URL resource;
     private ComponentType componentType;
     // Mapping of Services to Beans
     private Hashtable<String, SpringBeanElement> serviceMap;
@@ -78,11 +78,11 @@ public class SpringImplementation extends ImplementationImpl implements Implemen
         return;
     }
 
-    public void setResource(List<URL> resource) {
+    public void setResource(URL resource) {
         this.resource = resource;
     }
 
-    public List<URL> getResource() {
+    public URL getResource() {
         return resource;
     }
 

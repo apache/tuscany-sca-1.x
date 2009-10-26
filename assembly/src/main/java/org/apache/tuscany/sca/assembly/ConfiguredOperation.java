@@ -62,7 +62,6 @@ public interface ConfiguredOperation extends Base, Cloneable, PolicySetAttachPoi
      * @param contractName the name of the contract to which this operation belongs
      */
     void setContractName(String contractName);
-    
 
     /**
      * Sets a list of policy sets.

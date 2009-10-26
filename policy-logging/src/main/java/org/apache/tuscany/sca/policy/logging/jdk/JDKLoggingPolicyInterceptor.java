@@ -101,7 +101,7 @@ public class JDKLoggingPolicyInterceptor implements Interceptor {
             }
 
             Object[] logParams = new Object[] {operation.getName(), sb.toString()};
-            logger.logp(Level.FINER, context, "", "Invoking operation {0} with arguments ({1})", logParams);
+            logger.logp(Level.FINER, context, "", "Invoking operation {0} with arguments {1}", logParams);
         }
 
         Message responseMsg = null;
@@ -115,7 +115,7 @@ public class JDKLoggingPolicyInterceptor implements Interceptor {
             if (responseMsg != null) {
                 Object[] logParams = new Object[] {operation.getName(), responseMsg.getBody()};
                 logger.logp(Level.INFO, context, "", "Returned from operation - " + operation.getName());
-                logger.logp(Level.FINER, context, "", "Returning from operation {0} with return value ({1})", logParams);
+                logger.logp(Level.FINER, context, "", "Returning from operation {0} with return value {1}", logParams);
             }
         }
     }

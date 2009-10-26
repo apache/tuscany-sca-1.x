@@ -30,7 +30,7 @@ import org.apache.tuscany.sca.workspace.WorkspaceFactory;
  */
 public class WorkspaceFactoryImpl implements WorkspaceFactory {
     
-    public WorkspaceFactoryImpl() {
+    protected WorkspaceFactoryImpl() {
     }
     
     public Workspace createWorkspace() {

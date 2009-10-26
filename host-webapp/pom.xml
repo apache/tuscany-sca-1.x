@@ -49,6 +49,22 @@
         </dependency>
 
         <dependency>
+           <groupId>commons-logging</groupId>
+           <artifactId>commons-logging</artifactId>
+           <version>1.1.1</version>
+           <exclusions>
+               <exclusion>
+                   <groupId>javax.servlet</groupId>
+                   <artifactId>servlet-api</artifactId>
+               </exclusion>
+               <exclusion>
+                   <groupId>avalon-framework</groupId>
+                   <artifactId>avalon-framework</artifactId>
+               </exclusion>
+           </exclusions>
+        </dependency>          
+
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.4</version> <!-- to keep compatible with older servlet containers --> 
@@ -60,22 +76,6 @@
             <artifactId>geronimo-jsp_2.1_spec</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>avalon-framework</groupId>
-                    <artifactId>avalon-framework</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
     </dependencies>

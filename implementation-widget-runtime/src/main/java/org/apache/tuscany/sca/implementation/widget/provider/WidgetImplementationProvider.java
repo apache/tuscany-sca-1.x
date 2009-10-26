@@ -90,7 +90,7 @@ class WidgetImplementationProvider implements ImplementationProvider {
             WidgetComponentScriptServlet widgetScriptServlet;
             widgetScriptServlet = new WidgetComponentScriptServlet(this.component, javaScriptGenerator);
             servletHost.addServletMapping(scriptURI, widgetScriptServlet);
-        }       
+        }     
     }
 
     public void stop() {

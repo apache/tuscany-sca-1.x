@@ -97,7 +97,6 @@ public class CustomerClientImpl implements CustomerClient {
         entry.setTitle(new PlainTextConstruct(newTitle));
         resourceCollection.put(entryID, entry);
         //System.out.println("!!! Updated entry with id=" + entry.getId() + " title=" + entry.getTitle());
-        //System.out.println("\n");
     }
 
     

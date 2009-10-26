@@ -90,19 +90,22 @@ public class SpringXMLComponentTypeLoader {
     private AssemblyFactory assemblyFactory;
     private JavaInterfaceFactory javaFactory;
     private PolicyFactory policyFactory;
+    private boolean isMultipleContextSupported;
 
     private SpringBeanIntrospector beanIntrospector;
 
     public SpringXMLComponentTypeLoader(ModelFactoryExtensionPoint factories,
                                         AssemblyFactory assemblyFactory,
                                         JavaInterfaceFactory javaFactory,
-                                        PolicyFactory policyFactory) {
+                                        PolicyFactory policyFactory,
+                                        boolean multipleContextSupport) {
         super();
         this.assemblyFactory = assemblyFactory;
         this.javaFactory = javaFactory;
         this.policyFactory = policyFactory;
         this.contributionFactory = factories.getFactory(ContributionFactory.class);
         this.xmlInputFactory = factories.getFactory(XMLInputFactory.class);
+        this.isMultipleContextSupported = multipleContextSupport;
     }
 
     protected Class<SpringImplementation> getImplementationClass() {
@@ -156,25 +159,23 @@ public class SpringXMLComponentTypeLoader {
         List<SpringSCAPropertyElement> scaproperties = new ArrayList<SpringSCAPropertyElement>();
 
         URL resource;
-        List<URL> contextResources = new ArrayList<URL>();
+
         String contextPath = implementation.getLocation();
 
         try {
             resource = resolveLocation(resolver, contextPath);
-            contextResources = getApplicationContextResource(resource);
+            resource = getApplicationContextResource(resource);
 
             implementation.setClassLoader(new ContextClassLoader(resolver));
-            implementation.setResource(contextResources);
+            implementation.setResource(resource);
             // The URI is used to uniquely identify the Implementation
             implementation.setURI(resource.toString());
+            reader = xmlInputFactory.createXMLStreamReader(resource.openStream());
+
+            // System.out.println("Spring TypeLoader - starting to read context file");
+            readContextDefinition(resolver, reader, contextPath, beans, services, references, scaproperties);
             
-            for (URL contextResource : contextResources) {
-            	reader = xmlInputFactory.createXMLStreamReader(contextResource.openStream());
-            	// System.out.println("Spring TypeLoader - starting to read context file");
-            	readContextDefinition(resolver, reader, contextPath, beans, services, references, scaproperties);
-            	
-            	reader.close();
-            }
+            reader.close();
 
         } catch (IOException e) {
             throw new ContributionReadException(e);
@@ -218,7 +219,7 @@ public class SpringXMLComponentTypeLoader {
     private XMLStreamReader getApplicationContextReader(ModelResolver resolver, String location) throws ContributionReadException {
 
         try {
-            URL resource = getApplicationContextResource(resolveLocation(resolver, location)).get(0);
+            URL resource = getApplicationContextResource(resolveLocation(resolver, location));
             XMLStreamReader reader =
             	xmlInputFactory.createXMLStreamReader(resource.openStream());
             return reader;
@@ -341,6 +342,13 @@ public class SpringXMLComponentTypeLoader {
                             if (reader.getAttributeValue(null, "value") != null) {
                             	String value = reader.getAttributeValue(null, "value");
                             	constructorArg.addValue(value);
+                            	if ((isMultipleContextSupported) && (value.indexOf(".xml") != -1)) {
+                                    if (bean.getClassName().indexOf(".ClassPathXmlApplicationContext") != -1) {
+                                        XMLStreamReader creader = getApplicationContextReader(resolver, value);
+                                        // Read the context definition for the constructor-arg resources
+                                        readContextDefinition(resolver, creader, contextPath, beans, services, references, scaproperties);
+                                    }
+                                }
                             }
                             bean.addCustructorArgs(constructorArg);
                         } else if (SpringImplementationConstants.REF_ELEMENT.equals(qname)) {
@@ -352,8 +360,17 @@ public class SpringXMLComponentTypeLoader {
                         } else if (SpringImplementationConstants.VALUE_ELEMENT.equals(qname)) {
                             String value = reader.getElementText();
                             // Check if the parent element is a constructor-arg
-                            if (constructorArg != null)
+                            if (constructorArg != null) {
                             	constructorArg.addValue(value);
+                                // Identify the XML resource specified for the constructor-arg element
+                                if ((isMultipleContextSupported) && (value.indexOf(".xml") != -1)) {
+                                    if (bean.getClassName().indexOf(".ClassPathXmlApplicationContext") != -1) {
+                                        XMLStreamReader creader = getApplicationContextReader(resolver, value);
+                                        // Read the context definition for the constructor-arg resources
+                                        readContextDefinition(resolver, creader, contextPath, beans, services, references, scaproperties);
+                                    }
+                                }
+                            }
                         } // end if
                         break;
                     case END_ELEMENT:
@@ -555,9 +572,9 @@ public class SpringXMLComponentTypeLoader {
                     		Class<?> interfaze = resolveClass(resolver, paramType);
                     		// Create a component type reference/property if the constructor-arg element has a
                             // type attribute OR index attribute declared...
-                    	    if ((conArgElement.getType() != null && paramType.equals(conArgElement.getType())) ||
+                    		if ((conArgElement.getType() != null && paramType.equals(conArgElement.getType())) ||
                     		    (conArgElement.getIndex() != -1 && (conArgElement.getIndex() == parameter.getIndex())))
-                    		{                    		
+                    		{
                     			if (parameter.getClassifer().getName().equals("org.osoa.sca.annotations.Reference")) {
                     				Reference theReference = createReference(interfaze, conArgElement.getRef());
                     				componentType.getReferences().add(theReference);
@@ -653,19 +670,19 @@ public class SpringXMLComponentTypeLoader {
      * @param locationAttr - the location attribute from the <implementation.spring../> element
      * @param cl - the ClassLoader for the Spring implementation
      */
-    protected List<URL> getApplicationContextResource(URL url)
+    protected URL getApplicationContextResource(URL url)
         throws ContributionReadException {
         File manifestFile = null;
         File appXmlFile;
         File locationFile = null;
-        List<URL> appCtxResources = new ArrayList<URL>();
 
         if (url != null) {
             String path = url.getPath();
             locationFile = new File(path);
         } else {
-            throw new ContributionReadException("SpringXMLComponentTypeLoader getApplicationContextResource: " 
-            		            + "unable to find resource file " + url);
+            throw new ContributionReadException(
+                    "SpringXMLLoader getApplicationContextResource: " + "unable to find resource file "
+                        + url);
         }
 
         if (locationFile.isDirectory()) {
@@ -675,26 +692,21 @@ public class SpringXMLComponentTypeLoader {
                     Manifest mf = new Manifest(new FileInputStream(manifestFile));
                     Attributes mainAttrs = mf.getMainAttributes();
                     String appCtxPath = mainAttrs.getValue("Spring-Context");
-                    if (appCtxPath != null) {                    	
-	            		String[] cxtPaths = appCtxPath.split(";");
-	            		for (String path : cxtPaths) {
-	            			appXmlFile = new File(locationFile, path);
-	            			if (appXmlFile.exists()) {
-	            				appCtxResources.add(appXmlFile.toURI().toURL());
-	            			}
-	            		}
-	            		return appCtxResources;
+                    if (appCtxPath != null) {
+                        appXmlFile = new File(locationFile, appCtxPath);
+                        if (appXmlFile.exists()) {
+                            return appXmlFile.toURL();
+                        }
                     }
                 }
                 // no manifest-specified Spring context, use default
                 appXmlFile = new File(locationFile, "META-INF" + File.separator + "spring"
                                                         + File.separator + SpringImplementationConstants.APPLICATION_CONTEXT);
                 if (appXmlFile.exists()) {
-                	appCtxResources.add(appXmlFile.toURI().toURL());
-                	return appCtxResources;
+                    return appXmlFile.toURL();
                 }
             } catch (IOException e) {
-                throw new ContributionReadException("Error reading manifest " + manifestFile);
+                throw new ContributionReadException("Error reading manifest inside the folder: ", e);
             }
         } else {
         	if (locationFile.isFile() && locationFile.getName().endsWith(".jar")) {
@@ -706,22 +718,18 @@ public class SpringXMLComponentTypeLoader {
                         Attributes mainAttrs = mf.getMainAttributes();
                         String appCtxPath = mainAttrs.getValue("Spring-Context");
                         if (appCtxPath != null) {
-                        	String[] cxtPaths = appCtxPath.split(";");
-    	            		for (String path : cxtPaths) {
-    	            			je = jf.getJarEntry(path);
-    	            			if (je != null) {
-    	            				appCtxResources.add(new URL("jar:" + locationFile.toURI().toURL() + "!/" + appCtxPath));
-    	            			}
-    	            		}
-    	            		return appCtxResources;
+                            je = jf.getJarEntry(appCtxPath);
+                            if (je != null) {
+                                // TODO return a Spring specific Resource type for jars
+                                return new URL("jar:" + locationFile.toURI().toURL() + "!/" + appCtxPath);
+                            }
                         }
                     }
                     // Look for the default applicaiton-context.xml file, when MANIFEST.MF is absent.
                     je = jf.getJarEntry("META-INF" + "/" + "spring" + "/" + SpringImplementationConstants.APPLICATION_CONTEXT);
                     if (je != null) {
-                    	appCtxResources.add(new URL("jar:" + locationFile.toURI().toURL() + "!/" +
-                        		"META-INF" + "/" + "spring" + "/" + SpringImplementationConstants.APPLICATION_CONTEXT));
-                    	return appCtxResources;                        
+                        return new URL("jar:" + locationFile.toURI().toURL() + "!/" +
+                        		"META-INF" + "/" + "spring" + "/" + SpringImplementationConstants.APPLICATION_CONTEXT);
                     }
                 } catch (IOException e) {
                     // TODO: create a more appropriate exception type
@@ -731,14 +739,13 @@ public class SpringXMLComponentTypeLoader {
         	}
         	else {
         		if (locationFile.getName().endsWith(".xml")) {
-        			appCtxResources.add(url);
-                	return appCtxResources;
+        			return url;
         		}
         		else {
         			// Deal with the directory inside a jar file, in case the contribution itself is a JAR file.
         			try {
 	        			if (locationFile.getPath().indexOf(".jar") > 0) {
-	        				String jarPath = url.getPath().substring(6, url.getPath().indexOf("!"));
+	        				String jarPath = url.getPath().substring(5, url.getPath().indexOf("!"));
 	        				JarFile jf = new JarFile(jarPath);
 	        				JarEntry je = jf.getJarEntry(url.getPath().substring(url.getPath().indexOf("!/")+2)
 	        												+ "/" + "META-INF" + "/" + "MANIFEST.MF");
@@ -747,34 +754,29 @@ public class SpringXMLComponentTypeLoader {
 	        					Attributes mainAttrs = mf.getMainAttributes();
 	                            String appCtxPath = mainAttrs.getValue("Spring-Context");
 	                            if (appCtxPath != null) {
-	                            	String[] cxtPaths = appCtxPath.split(";");
-	        	            		for (String path : cxtPaths) {
-		                                je = jf.getJarEntry(url.getPath().substring(url.getPath().indexOf("!/")+2) + "/" + path);
-		                                if (je != null) {
-		                                	appCtxResources.add(new URL("jar:" + url.getPath() + "/" + path));
-		    	                        	return appCtxResources;
-		                                }
-	        	            		}
+	                                je = jf.getJarEntry(url.getPath().substring(url.getPath().indexOf("!/")+2) + "/" + appCtxPath);
+	                                if (je != null) {
+	                                    return new URL("jar:" + url.getPath() + "/" + appCtxPath);
+	                                }
 	                            }
 	        				}
 	        			    // Look for the default applicaiton-context.xml file, when MANIFEST.MF is absent.
         			    	je = jf.getJarEntry(url.getPath().substring(url.getPath().indexOf("!/")+2) + "/" + 
                         			"META-INF" + "/" + "spring" + "/" + SpringImplementationConstants.APPLICATION_CONTEXT);
                             if (je != null) {
-                            	appCtxResources.add(new URL("jar:" + url.getPath() + "/" + 
-                                    	"META-INF" + "/" + "spring" + "/" + SpringImplementationConstants.APPLICATION_CONTEXT));
-	                        	return appCtxResources;
+                                return new URL("jar:" + url.getPath() + "/" + 
+                                	"META-INF" + "/" + "spring" + "/" + SpringImplementationConstants.APPLICATION_CONTEXT);
                             }
 	        			}
             		} catch (IOException e) {
-                        throw new ContributionReadException("Error reading manifest " + manifestFile);
+            			throw new ContributionReadException("Error reading manifest inside the jar folder: ", e);
                     }
         		}
         	}
         }
 
-        throw new ContributionReadException("SpringXMLComponentTypeLoader getApplicationContextResource: " 
-        		                            + "unable to read resource file " + url);
+        throw new ContributionReadException("SpringXMLLoader getApplicationContextResource: "
+                                        + "META-INF/spring/" + SpringImplementationConstants.APPLICATION_CONTEXT + " not found");
     } // end method getApplicationContextResource
 
     /**

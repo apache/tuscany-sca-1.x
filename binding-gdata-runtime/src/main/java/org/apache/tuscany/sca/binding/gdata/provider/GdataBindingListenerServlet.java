@@ -39,7 +39,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 
 import org.apache.abdera.parser.ParseException;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.tuscany.sca.data.collection.Entry;
 import org.apache.tuscany.sca.databinding.Mediator;

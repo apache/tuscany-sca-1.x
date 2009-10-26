@@ -16,23 +16,38 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.binding.atom.aggregator;
+package org.apache.tuscany.sca.binding.ws.axis2.itests.pojo;
 
-import java.util.List;
+//import java.io.Serializable;
 
-import org.apache.tuscany.sca.data.collection.Entry;
+public class Data {
 
-/**
- * The Sort service business interface.
- * 
- * @version $Rev$ $Date$
- */
-public interface Sort {
+    private Data2[] a = null;
+    private int b = 0;
+    private float c = 0.0f;
+    
+    public Data2[] getA() {
+        return this.a;
+    }
 
-    /**
-     * Sort feed entries by published date.
-     * @param entries
-     * @return
-     */
-    List<Entry> sort(List<Entry> entries);
+    public void setA(Data2[] a) {
+        this.a = a;
+    }
+
+    public int getB() {
+        return this.b;
+    }
+
+    public void setB(int b) {
+        this.b = b;
+    }
+
+    public float getC() {
+        return this.c;
+    }
+
+    public void setC(float c) {
+        this.c = c;
+    }
+    
 }

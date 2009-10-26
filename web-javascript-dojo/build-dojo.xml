@@ -74,7 +74,7 @@
             <patternset>
                 <include name="dojo-release-${dojo.version}/dojo/**"/>
                 <exclude name="dojo-release-${dojo.version}/dojo/tests/**"/>
-                <include name="dojo-release-${dojo.version}/dijit/**"/>
+                <exclude name="dojo-release-${dojo.version}/dijit/**"/>
                 <exclude name="dojo-release-${dojo.version}/dojox/**"/>
                 <exclude name="dojo-release-${dojo.version}/util/**"/>
             </patternset>

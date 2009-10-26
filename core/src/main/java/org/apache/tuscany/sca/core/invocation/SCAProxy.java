@@ -33,7 +33,7 @@ public class SCAProxy extends Proxy
      // This is a cache containing the proxy class constructor for each business interface.
      // This improves performance compared to calling Proxy.newProxyInstance()
      // every time that a proxy is needed.
-     private static WeakHashMap cache = new WeakHashMap<Class, Object>();
+     private static WeakHashMap cache = new WeakHashMap<String, Object>();
      
      public static Object newProxyInstance(ClassLoader classloader, Class aclass[], InvocationHandler invocationhandler)
         throws IllegalArgumentException
@@ -44,13 +44,13 @@ public class SCAProxy extends Proxy
             // Lookup cached constructor.  aclass[0] is the reference's business interface.
             Constructor proxyCTOR;
             synchronized(cache) {
-                proxyCTOR = (Constructor) cache.get(aclass[0]);
+                proxyCTOR = (Constructor) cache.get(aclass[0].hashCode());
             }
             if(proxyCTOR == null) {
                 Class proxyClass = getProxyClass(classloader, aclass);
                 proxyCTOR = proxyClass.getConstructor(constructorParams);
                 synchronized(cache){
-                    cache.put(aclass[0],proxyCTOR);
+                    cache.put(aclass[0].hashCode(),proxyCTOR);
                 }
             }
             return proxyCTOR.newInstance(new Object[] { invocationhandler });

@@ -20,6 +20,7 @@
 package org.apache.tuscany.sca.implementation.spring.runtime.context;
 
 import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.tuscany.sca.implementation.spring.processor.ComponentNameAnnotationProcessor;
@@ -30,11 +31,17 @@ import org.apache.tuscany.sca.implementation.spring.processor.PropertyAnnotation
 import org.apache.tuscany.sca.implementation.spring.processor.PropertyValueStub;
 import org.apache.tuscany.sca.implementation.spring.processor.ReferenceAnnotationProcessor;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.config.ConstructorArgumentValues;
+import org.springframework.beans.factory.config.TypedStringValue;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.SpringVersion;
@@ -51,11 +58,35 @@ public class SpringContextTie {
     private SpringImplementationStub implementation;
     private boolean isAnnotationSupported;
     private String versionSupported;
+    private boolean isMultipleContextSupport;
     
-    public SpringContextTie(SpringImplementationStub implementation, List<URL> resource, boolean annotationSupport, String versionSupported) throws Exception {
+    // TUSCANY-3128
+    // extension of the generic application context just to force the classloader
+    // on the bean factory to stay set to the contribution classloader
+    // instead of being set back to the application classloader
+    private class LocalGenericApplicationContext extends GenericApplicationContext{
+        
+        ClassLoader classloader = null;
+        
+        public LocalGenericApplicationContext(DefaultListableBeanFactory beanFactory, 
+                                              ApplicationContext parent,
+                                              ClassLoader classloader) {
+            super(beanFactory, parent);
+            this.classloader = classloader;
+        }
+        
+        @Override
+        protected void postProcessBeanFactory(
+                ConfigurableListableBeanFactory beanFactory) {
+            beanFactory.setBeanClassLoader(classloader);
+        }
+    }
+    
+    public SpringContextTie(SpringImplementationStub implementation, URL resource, boolean annotationSupport, String versionSupported, boolean multipleContextSupport) throws Exception {
         this.implementation = implementation;
         this.isAnnotationSupported = annotationSupport;
         this.versionSupported = versionSupported;
+        this.isMultipleContextSupport = multipleContextSupport;
         if (! this.versionSupported.equals("ANY")) {
         	if ((SpringVersion.getVersion()!= null) && (! SpringVersion.getVersion().equals(versionSupported)))
         		throw new RuntimeException("Unsupported version: Use only Spring Framework Version " + versionSupported);
@@ -81,36 +112,63 @@ public class SpringContextTie {
     /**
      * Create appropriate ApplicationContext by reading the bean definitions.
      */
-    private AbstractApplicationContext createApplicationContext(SCAParentApplicationContext scaParentContext, List<URL> resources) {
+    private AbstractApplicationContext createApplicationContext(SCAParentApplicationContext scaParentContext, URL resource) {
 
-    	XmlBeanFactory beanFactory = null;
-    	AbstractApplicationContext appContext = null;
-    	
-    	if (resources.size() > 1) 
-    	{
-    		GenericApplicationContext appCtx = 
-    			new SCAGenericApplicationContext(scaParentContext, implementation.getClassLoader());
-    		XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(appCtx);
-    		for (URL resource : resources) {
-    			xmlReader.loadBeanDefinitions(new UrlResource(resource));
-    		}
-    		xmlReader.setBeanClassLoader(implementation.getClassLoader());    		
-    		if (isAnnotationSupported)
-            	includeAnnotationProcessors(appCtx.getBeanFactory());
-    		return appCtx;
-    		
-    	} else {
-    		beanFactory = new XmlBeanFactory(new UrlResource(resources.get(0)));
-            beanFactory.setBeanClassLoader(implementation.getClassLoader());
-    	}
+        XmlBeanFactory beanFactory = new XmlBeanFactory(new UrlResource(resource));
+        beanFactory.setBeanClassLoader(implementation.getClassLoader());
+        AbstractApplicationContext appContext = null;
+        
+        if (isMultipleContextSupport) {
+	        for (String bean : beanFactory.getBeanDefinitionNames()) {
+	            String beanClassName = (beanFactory.getType(bean)).getName();
+	            // Using FileSystemXmlApplicationContext is not supported, as the 
+	            // SCA runtime does not support paths relative to current VM working directory.
+	            /*if (beanClassName.indexOf(".FileSystemXmlApplicationContext") != -1) {
+	            	throw new RuntimeException("Usage of FileSystemXmlApplicationContext Bean is not supported");
+	            }*/
+	            	
+	            if (beanClassName.indexOf(".ClassPathXmlApplicationContext") != -1) {
+	            	BeanDefinition beanDef = beanFactory.getBeanDefinition(bean);                           
+	                String[] configLocations = null;
+	                List<ConstructorArgumentValues.ValueHolder> conArgs = 
+	                        beanDef.getConstructorArgumentValues().getGenericArgumentValues();
+	                for (ConstructorArgumentValues.ValueHolder conArg : conArgs) {
+	                	if (conArg.getValue() instanceof TypedStringValue) {
+	                        TypedStringValue value = (TypedStringValue) conArg.getValue();
+	                        if (value.getValue().indexOf(".xml") != -1)
+	                        	configLocations = new String[]{value.getValue()};
+	                	}
+	                    if (conArg.getValue() instanceof ManagedList) {
+	                        Iterator itml = ((ManagedList)conArg.getValue()).iterator();
+	                        StringBuffer values = new StringBuffer();
+	                        while (itml.hasNext()) {
+	                            TypedStringValue next = (TypedStringValue)itml.next();
+	                            if (next.getValue().indexOf(".xml") != -1) {
+	                            	values.append(implementation.getClassLoader().getResource(next.getValue()).toString());
+	                                values.append("~");
+	                            }
+	                        }
+	                        configLocations = (values.toString()).split("~");                                    
+	                    }
+	                }
+	                
+		            appContext = new ClassPathXmlApplicationContext(configLocations, true, scaParentContext);	            
+		            if (isAnnotationSupported)
+		            	includeAnnotationProcessors(appContext.getBeanFactory());
+		            return appContext;
+	            }               
+	        }
+        }
         
         // use the generic application context as default 
-        if (isAnnotationSupported) {            
+        if (isAnnotationSupported)
+        {            
         	includeAnnotationProcessors(beanFactory);
-        }        
-        appContext = new SCAGenericApplicationContext(beanFactory, 
-                                                      scaParentContext,
-                                                      implementation.getClassLoader());
+        }
+        
+        appContext = new LocalGenericApplicationContext(beanFactory, 
+                                                        scaParentContext,
+                                                        implementation.getClassLoader());
         return appContext;
     }
 

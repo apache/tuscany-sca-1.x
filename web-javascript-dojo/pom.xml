@@ -30,14 +30,6 @@
     <name>Apache Tuscany SCA Web JavaScript for DOJO</name>
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.dojotoolkit</groupId>
-            <artifactId>dojo</artifactId>
-            <version>1.3.0</version>
-            <type>zip</type>
-        </dependency>
-
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-core</artifactId>
@@ -81,8 +73,8 @@
 			        </dependency>
 			    </dependencies>
                 <executions>
-                    <execution> 
-                        <id>install-dojo</id>                       
+                    <execution>
+                        <id>install-dojo</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>run</goal>
@@ -94,7 +86,7 @@
                                 </ant>
                             </tasks>
                         </configuration>
-                    </execution>                
+                    </execution>
                     <execution>
                         <id>copy-dojo-files</id>
                         <phase>generate-resources</phase>

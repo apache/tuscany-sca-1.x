@@ -28,7 +28,7 @@ import org.osgi.framework.BundleContext;
 /**
  * The Bundle Activator that creates the Equinox-based service discoverer 
  *
- * @version $Rev: $ $Date: $
+ * @version $Rev$ $Date$
  */
 public class EquinoxServiceDiscoveryActivator implements BundleActivator {
     private static Logger logger = Logger.getLogger(EquinoxServiceDiscoveryActivator.class.getName());

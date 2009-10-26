@@ -139,5 +139,4 @@ public class CustomerCollectionImpl implements Collection {
         //System.out.println(">>> ResourceCollectionImpl.query collection ");
         return getFeed();
     }
-
 }
