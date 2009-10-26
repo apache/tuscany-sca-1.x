@@ -69,7 +69,7 @@ public class DojoModuleActivator implements ModuleActivator {
 
     public void stop(ExtensionPointRegistry registry) {
         Servlet servlet = servletHost.getServletMapping(dojoBaseUri);
-        if(servlet == null) {
+        if(servlet != null) {
             servletHost.removeServletMapping(dojoBaseUri);
             servletHost.removeServletMapping(dojoUri);
 

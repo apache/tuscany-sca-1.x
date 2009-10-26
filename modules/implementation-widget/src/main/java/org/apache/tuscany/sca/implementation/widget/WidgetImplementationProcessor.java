@@ -160,7 +160,7 @@ public class WidgetImplementationProcessor extends BaseStAXArtifactProcessor imp
     }
 
     public void write(WidgetImplementation implementation, XMLStreamWriter writer) throws ContributionWriteException, XMLStreamException {
-        // Write <implementation.widget>
+        // Write <implementation.widget>        
         writeStart(writer, IMPLEMENTATION_WIDGET.getNamespaceURI(), IMPLEMENTATION_WIDGET.getLocalPart());
 
         if (implementation.getLocation() != null) {

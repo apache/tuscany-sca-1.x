@@ -32,7 +32,6 @@ import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.MonitorFactory;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
-import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
 
 
 /**
@@ -87,7 +86,7 @@ public class DefaultLDAPSecurityExtensionPoint implements LDAPSecurityHandlerExt
     */
     private void error(String message, Object model, Exception ex) {
         if (monitor != null) {
-            Problem problem = new ProblemImpl(this.getClass().getName(), null, Severity.ERROR, model, message, ex);
+            Problem problem = monitor.createProblem(this.getClass().getName(), null, Severity.ERROR, model, message, ex);
             monitor.problem(problem);
         }        
     }

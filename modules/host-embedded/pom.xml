@@ -105,7 +105,14 @@
             <artifactId>tuscany-host-http</artifactId>
             <version>1.6-SNAPSHOT</version>
             <scope>compile</scope>
-        </dependency>       
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-endpoint</artifactId>
+            <version>1.6-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>        
      
 
     </dependencies>

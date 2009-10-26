@@ -574,13 +574,14 @@ abstract class PolicyConfigurationUtil {
                 // Create a new target configured operation and copy everything from the source
                 // except the intents and policy sets (which must be computed below).
                 try {
-                    targetConfOp = (ConfiguredOperation)sourceConfOp.clone();
+                    targetConfOp = (ConfiguredOperation) sourceConfOp.clone();
                     targetConfOp.setRequiredIntents(new ArrayList<Intent>());
                     targetConfOp.setPolicySets(new ArrayList<PolicySet>());
                 } catch (CloneNotSupportedException e) {
                     // will not happen
-                }                            
+                }  
             }
+
 
             List<Intent> prunedIntents =
                 computeInheritableIntents(attachPoint.getType(), sourceConfOp.getRequiredIntents());

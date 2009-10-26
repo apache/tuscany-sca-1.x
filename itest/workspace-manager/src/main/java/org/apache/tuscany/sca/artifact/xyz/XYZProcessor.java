@@ -34,8 +34,6 @@ import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.Problem;
 import org.apache.tuscany.sca.monitor.Problem.Severity;
 import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
-import org.apache.tuscany.sca.xsd.XSDFactory;
-import org.apache.tuscany.sca.xsd.XSDefinition;
 
 /**
  * An ArtifactProcessor for XYZ documents.
@@ -44,12 +42,10 @@ import org.apache.tuscany.sca.xsd.XSDefinition;
  */
 public class XYZProcessor implements URLArtifactProcessor<XYZ> {
 
-    private XSDFactory factory;
     private XMLInputFactory inputFactory;
     private Monitor monitor;
 
     public XYZProcessor(ModelFactoryExtensionPoint modelFactories, Monitor monitor) {
-        this.factory = modelFactories.getFactory(XSDFactory.class);
         this.inputFactory = modelFactories.getFactory(XMLInputFactory.class);
         this.monitor = monitor;
     }

@@ -21,6 +21,7 @@ package org.apache.tuscany.sca.assembly.builder.impl;
 
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.assembly.Component;
+import org.apache.tuscany.sca.assembly.ComponentReference;
 import org.apache.tuscany.sca.assembly.ComponentService;
 import org.apache.tuscany.sca.assembly.Composite;
 import org.apache.tuscany.sca.assembly.CompositeService;
@@ -83,6 +84,11 @@ public class ComponentServicePromotionBuilderImpl implements CompositeBuilder {
                                 newComponentService.setCallback(assemblyFactory.createCallback());
                                 newComponentService.getCallback().getBindings()
                                         .addAll(componentService.getCallback().getBindings());
+                                ComponentReference callbackReference =
+                                    BaseConfigurationBuilderImpl.createCallbackReference(promotedComponent, newComponentService,
+                                                                                         assemblyFactory);
+                                callbackReference.getBindings().addAll(componentService.getCallback().getBindings());
+                                newComponentService.setCallbackReference(callbackReference);
                             }
 
                             // Change the composite service to now promote the

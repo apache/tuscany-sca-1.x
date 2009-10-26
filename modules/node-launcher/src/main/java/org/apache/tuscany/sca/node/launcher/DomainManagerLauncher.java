@@ -100,11 +100,9 @@ public class DomainManagerLauncher {
                 int k = 0;
                 try {
                     while ((k != 'q') && (k != 'r')) {
-                       // k = System.in.read();
-                    	Thread.sleep(100);
-                    	
+                        k = System.in.read();
                     }
-                } catch (Exception e) {
+                } catch (IOException e) {
                     
                     // Wait forever
                     Object lock = new Object();

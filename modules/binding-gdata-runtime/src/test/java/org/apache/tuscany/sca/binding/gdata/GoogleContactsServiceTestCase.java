@@ -58,7 +58,7 @@ public class GoogleContactsServiceTestCase {
     @Test
     public void testClientGetFeed() throws Exception {
         Feed feed = testService.clientGetFeed();
-        //System.out.println("feed title: " + feed.getTitle().getPlainText());        
+        System.out.println("feed title: " + feed.getTitle().getPlainText());        
         Assert.assertEquals("Haibo Zhao's Contacts", feed.getTitle().getPlainText());
      }
     
@@ -69,7 +69,6 @@ public class GoogleContactsServiceTestCase {
         Entry contactEntry = testService.clientGetEntry(entryID);
         //System.out.println("Entry ID: " + contactEntry.getId());
         Assert.assertTrue(contactEntry.getId().endsWith(entryID));
-        //System.out.println("------------------------------------------------------------\n\n");
     }
     
     

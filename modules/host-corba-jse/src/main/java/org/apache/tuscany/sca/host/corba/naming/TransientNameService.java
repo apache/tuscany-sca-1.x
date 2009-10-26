@@ -188,10 +188,10 @@ public class TransientNameService {
             } catch (Throwable e) {
                 // Ignore
             }
-
+            
             // Call destroy after close the acceptors
             // In JDK 1.6u14 or later, destroy clean up the acceptors but it doesn't close them
-            createdOrb.destroy();            
+            createdOrb.destroy();
             createdOrb = null;
         }
     }

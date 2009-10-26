@@ -39,7 +39,7 @@ public class GoogleCalendarServiceTestCase {
     private static SCADomain scaDomainConsumer = null;
     private static CustomerClient testService = null;    
     
-    public GoogleCalendarServiceTestCase(){
+    public GoogleCalendarServiceTestCase() {
 
     }
     
@@ -83,8 +83,6 @@ public class GoogleCalendarServiceTestCase {
         Assert.assertEquals(newBlogEntryTitle, updatedEntry.getTitle().getPlainText());
     }
     
-    
-
     @Test
     public void testClientPost() throws Exception {
         String blogEntryTitle = "titleByGoogleCalendarTestcase";
@@ -95,7 +93,6 @@ public class GoogleCalendarServiceTestCase {
         Assert.assertEquals(blogEntryTitle, postedEntry.getTitle().getPlainText());
     }
 
-    
     @Test
     public void testClientDelete() throws Exception {
         

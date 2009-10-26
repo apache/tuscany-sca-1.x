@@ -26,6 +26,7 @@ import junit.framework.Assert;
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gdata.client.Query;
@@ -43,8 +44,6 @@ public class GoogleWebAlbumServiceTestCase {
     
     @BeforeClass
     public static void setUp() throws Exception {
-        //System.out.println("Method Test Start-----------------------------------------------------------------------");
-        
         //Initialize the GData client service (Reference Binding test)
         scaDomainConsumer = SCADomain.newInstance("org/apache/tuscany/sca/binding/gdata/ConsumerGoogleWebAlbum.composite");
         testService = scaDomainConsumer.getService(CustomerClient.class, "CustomerClient");  
@@ -52,8 +51,7 @@ public class GoogleWebAlbumServiceTestCase {
 
     @AfterClass
     public static void tearDown(){
-        //System.out.println("Method Test End------------------------------------------------------------------------");
-        //System.out.println("\n\n");
+        scaDomainConsumer.close();
     }        
     
     @Test
@@ -103,6 +101,7 @@ public class GoogleWebAlbumServiceTestCase {
     
     
     @Test
+    @Ignore("Not testing anything")
     public void testClientDelete() throws Exception {
         
     	//Tested and it worked, but only once because we can not delete the same entry twice

@@ -1,6 +1,11 @@
 Spring Bigbank Sample
 ======================
-This sample is made of 3 modules that represent the different aspects of a fictitious banking application.
+This sample is different from the simple-bigbank in that it is made of 4 separate modules that represent the different aspects of a fictitious banking application.
+
+simple-bigbank-spring (this module)
+spring-bigbank-calculator
+spring-bigbank-checkaccount
+spring-bigbank-stockquote
 
 To run the simple-bigbank-spring sample you need to first run spring-bigbank-calculator, spring-bigbank-checkaccount and spring-bigbank-stockquote composites. 
 This will bring up Tuscany runtime and load the three applications and make them available as services.

@@ -26,7 +26,7 @@
                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	          name="helloworld">
 	          
-    <wsdl:import namespace="http://helloworld3" location="../../helloworld-import.wsdl"/>
+    <wsdl:import namespace="http://helloworld3" location="../../helloworld-import.wsdl" />
     
     <wsdl:binding name="HelloWorldSoapBinding" type="tns3:HelloWorld">
         <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>

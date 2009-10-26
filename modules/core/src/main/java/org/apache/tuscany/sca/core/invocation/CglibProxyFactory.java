@@ -56,6 +56,25 @@ public class CglibProxyFactory implements ProxyFactory {
         return createProxy(serviceReference);
     }
 
+    private class CglibClassLoader extends ClassLoader {
+    	private ClassLoader appLoader;
+    	private ClassLoader bundleLoader;
+    	
+    	@Override
+		public Class<?> loadClass(String className)
+				throws ClassNotFoundException {
+			try { 
+				return appLoader.loadClass(className);
+			} catch (ClassNotFoundException ex ) {
+				return bundleLoader.loadClass(className);
+			}
+		}
+
+		CglibClassLoader(ClassLoader app, ClassLoader bundle) {
+    		this.appLoader = app;
+    		this.bundleLoader = bundle;
+    	}
+    }
     /**
      * create the proxy with cglib. use the same JDKInvocationHandler as
      * JDKProxyService.
@@ -63,6 +82,8 @@ public class CglibProxyFactory implements ProxyFactory {
     public <T> T createProxy(CallableReference<T> callableReference) throws ProxyCreationException {
         Enhancer enhancer = new Enhancer();
         Class<T> interfaze = callableReference.getBusinessInterface();
+        ClassLoader cl = new CglibClassLoader(interfaze.getClassLoader(), getClass().getClassLoader());       
+        enhancer.setClassLoader(cl);
         enhancer.setSuperclass(interfaze);
         enhancer.setCallback(new CglibMethodInterceptor<T>(callableReference));
         Object proxy = enhancer.create();

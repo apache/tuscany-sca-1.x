@@ -19,7 +19,6 @@
 package test.abdera;
 
 import java.net.Socket;
-import java.util.List;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.junit.AfterClass;

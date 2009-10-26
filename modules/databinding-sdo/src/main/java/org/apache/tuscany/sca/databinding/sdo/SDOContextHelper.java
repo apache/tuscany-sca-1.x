@@ -138,16 +138,26 @@ public final class SDOContextHelper {
         }
         try {
             Type type = helperContext.getTypeHelper().getType(javaType);
-            if (type != null && (!type.isDataType())) {
+            return register(helperContext, type);
+        } catch (Exception e) {
+            throw new TransformationException(e);
+        }
+    }
+
+    public static boolean register(HelperContext helperContext, Type type) {
+        if (type != null && (!type.isDataType())) {
+            try {
                 Method method = type.getClass().getMethod("getEPackage");
                 Object factory = method.invoke(type, new Object[] {});
                 method = factory.getClass().getMethod("register", HelperContext.class);
                 method.invoke(factory, new Object[] {helperContext});
                 return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
             }
+        } else {
             return false;
-        } catch (Exception e) {
-            throw new TransformationException(e);
         }
     }
 

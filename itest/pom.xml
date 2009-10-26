@@ -79,8 +79,7 @@
                 <!-- 
                 <module>contribution-classloader</module> 
                 -->
-                <module>contribution-jee-samples</module>
-                <!--TUSCANY-3165
+                <!-- TUSCANY-3165 - waiting for OpenEJB 3.0.2 release
                 <module>contribution-jee</module>
                 -->
                 <module>contribution-jee-samples</module>
@@ -88,7 +87,6 @@
                 <module>corba</module>
                 <module>conversations-ws</module>
                 <module>databindings</module>
-                <module>distro-license-check</module>
                 <!--module>domain</module-->
                 <module>domainmgr</module>
                 <module>exceptions</module>
@@ -115,7 +113,6 @@
                 <module>jms-nulls</module>
                 <module>jms-selectors</module>
                 <module>jms-ttl</module>
-                <module>large-sdo-ws</module>
                 <module>late-reference-resolution</module>
                 <module>oneway</module>
                 <module>operation-overloading</module>
@@ -216,7 +213,6 @@
                 <module>interfaces</module>
                 <module>wires</module>
                 <module>scopes</module>
-                <module>large-sdo-ws</module>
             </modules>
 
 

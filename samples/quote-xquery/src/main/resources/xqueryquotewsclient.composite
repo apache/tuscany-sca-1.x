@@ -18,7 +18,9 @@
     * under the License.    
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" targetNamespace="http://quote.xquery/client"
-    xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0" xmlns:xq="http://quote.xquery/client"
+    xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
+    xmlns:dbsdo="http://tuscany.apache.org/xmlns/sca/databinding/sdo/1.0" 
+    xmlns:xq="http://quote.xquery/client"
     name="xqueryquotewsclient">
 
     <component name="QuoteJoinLocalComponent">
@@ -101,9 +103,8 @@
     </component>
 
     <reference name="availQuoteProvider" promote="QuoteJoinExternalReferencesComponent/availQuoteProvider">
-        <!-- removed because it doesn't work with TUSCANY-2324 fix
+        <!-- removed because it doesn't work with TUSCANY-2324 fix -->
         <interface.java interface="xquery.quote.AvailQuoteProviderService" />
-        -->
         <binding.ws wsdlElement="http://quote.xquery#wsdl.port(AvailQuoteProviderService/AvailQuoteProviderSoapPort)" />
     </reference>
     <reference name="quoteJoinWs" promote="QuoteJoinLocalComponent/quoteJoinWs">

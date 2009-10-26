@@ -19,7 +19,6 @@
 
 package org.apache.tuscany.sca.implementation.widget;
 
-
 /**
  * Factory for the widget implementation model.
  *

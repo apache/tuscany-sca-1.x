@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sca:composite xmlns:federation="http://eclipse.org/SCAExample1/src/resources/federation"
+    xmlns:sca="http://www.osoa.org/xmlns/sca/1.0" name="clinicalLaboratory"
+    targetNamespace="http://eclipse.org/SCAExample1/src/resources/clinicalLaboratory">
+
+    <sca:component name="BiochemicalCircleComponent">
+        <sca:implementation.java class="services.bcircle.BiochemicalCircleImpl" />
+        <sca:service name="BiochemicalCircle">
+            <sca:interface.java interface="services.bcircle.BiochemicalCircle" />
+            <sca:binding.ws uri="http://localhost:8080/SCA1/MyServiceComponent" />
+        </sca:service>
+    </sca:component>
+    <!--
+    <sca:service name="BiochemicalCircle" promote="BiochemicalCircleComponent/BiochemicalCircle" />
+     -->
+</sca:composite>

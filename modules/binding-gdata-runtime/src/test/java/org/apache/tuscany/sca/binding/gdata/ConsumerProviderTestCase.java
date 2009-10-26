@@ -40,7 +40,6 @@ public class ConsumerProviderTestCase {
     public static void setUp() throws Exception {
         // Setup the local GData servlet (Service Binding test)
         scaDomainProvider = SCADomain.newInstance("org/apache/tuscany/sca/binding/gdata/Provider.composite");
-        //System.out.println("[Debug Info] Provider.composite ready...");
 
         // Initialize the GData client service (Reference Binding test)
         scaDomainConsumer = SCADomain.newInstance("org/apache/tuscany/sca/binding/gdata/Consumer.composite");

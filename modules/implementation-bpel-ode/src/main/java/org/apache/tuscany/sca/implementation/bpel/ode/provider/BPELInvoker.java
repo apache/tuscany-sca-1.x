@@ -21,7 +21,6 @@ package org.apache.tuscany.sca.implementation.bpel.ode.provider;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import javax.transaction.SystemException;
 import javax.transaction.TransactionManager;
@@ -56,10 +55,7 @@ import org.w3c.dom.Element;
  * @version $Rev$ $Date$
  */
 public class BPELInvoker implements Invoker {
-    private final static long TIME_OUT = 2000L;
-    
     protected final Log __log = LogFactory.getLog(getClass());
-    
     
     private EmbeddedODEServer odeServer;
     private TransactionManager txMgr;
@@ -155,8 +151,7 @@ public class BPELInvoker implements Invoker {
         // Waiting until the reply is ready in case the engine needs to continue in a different thread
         if (onhold != null) {
             try {
-                //add timeout to avoid blocking when there is a exception/failure
-                onhold.get(TIME_OUT, TimeUnit.MILLISECONDS);
+                onhold.get();
             } catch (Exception e) {
                 throw new InvocationTargetException(e,"Error invoking BPEL process : " + e.getMessage());
             }

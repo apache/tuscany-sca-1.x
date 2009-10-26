@@ -106,7 +106,6 @@
 			<groupId>org.apache.tuscany.sca</groupId>
 			<artifactId>tuscany-databinding-sdo</artifactId>
 			<version>1.6-SNAPSHOT</version>
-			<scope>compile</scope>
 		</dependency>
 
         <dependency>

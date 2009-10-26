@@ -24,7 +24,6 @@
 
     <component name="HelloWorldServiceComponent">
 	    <service name="HelloWorldService">
-	        <!--<interface.wsdl interface="http://helloworld3#wsdl.interface(HelloWorld)"  />-->
 	        <interface.java interface="helloworld.HelloWorldService"/>
 	        <binding.ws wsdlElement="http://helloworld#wsdl.port(HelloWorldService/HelloWorldSoapPort)" />
 	    </service>
