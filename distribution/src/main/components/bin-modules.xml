@@ -48,6 +48,7 @@
 
         <dependencySet>
             <outputDirectory>contributions</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <unpack>false</unpack>
             <includes>
                 <include>org.apache.tuscany.sca:scatours-contribution-*</include>
@@ -56,6 +57,7 @@
         </dependencySet>
         <dependencySet>
             <outputDirectory>launchers</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <unpack>false</unpack>
             <includes>
                 <include>org.apache.tuscany.sca:scatours-launcher-*</include>
@@ -64,6 +66,7 @@
         </dependencySet>
         <dependencySet>
             <outputDirectory>services</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <unpack>false</unpack>
             <includes>
                 <include>org.apache.tuscany.sca:scatours-service-*</include>
@@ -71,6 +74,7 @@
             <scope>runtime</scope>
         </dependencySet>
         <dependencySet>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <outputDirectory>client</outputDirectory>
             <unpack>false</unpack>
             <includes>
