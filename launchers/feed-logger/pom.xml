@@ -22,16 +22,17 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.5</version>
+        <version>1.6-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
-    </parent><version>1.0-SNAPSHOT</version>
+    </parent>
+    <version>1.0-SNAPSHOT</version>
     <artifactId>scatours-launcher-feed-logger</artifactId>
     <name>Apache Tuscany SCA Tours Feed Logger Launcher</name>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-embedded</artifactId>
+            <artifactId>tuscany-node-impl</artifactId>
             <version>1.6-SNAPSHOT</version>
         </dependency>
 

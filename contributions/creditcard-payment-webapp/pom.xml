@@ -24,7 +24,8 @@
         <artifactId>tuscany-sca</artifactId>
         <version>1.6-SNAPSHOT</version>
         <!--relativePath>../../pom.xml</relativePath-->
-    </parent><version>1.0-SNAPSHOT</version>
+    </parent>
+    <version>1.0-SNAPSHOT</version>
     <artifactId>scatours-contribution-creditcard-payment-webapp</artifactId>
     <packaging>war</packaging>
     <name>Apache Tuscany SCA Tours CreditCard Payment WebApp Contribution</name>
