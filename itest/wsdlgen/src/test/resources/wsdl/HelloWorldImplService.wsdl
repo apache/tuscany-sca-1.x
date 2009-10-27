@@ -130,7 +130,7 @@
   </binding>
   <service name="HelloWorldImplService">
     <port name="HelloWorldImplPort" binding="tns:HelloWorldImplPortBinding">
-      <soap:address location="http://L3AW203:8085/HelloWorldServiceComponent1"/>
+      <soap:address location="http://localhost:8085/HelloWorldServiceComponent1"/>
     </port>
   </service>
 </definitions>

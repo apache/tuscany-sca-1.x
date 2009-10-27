@@ -29,14 +29,14 @@
             <binding.sca/>
         </service>
         <reference name="hwService">
-            <binding.ws uri="http://L3AW203:8085/HelloWorldServiceComponent1"/>
+            <binding.ws uri="http://localhost:8085/HelloWorldServiceComponent1"/>
         </reference>
     </component>    
 
     <component name="HelloWorldServiceComponent1">
         <implementation.java class="helloworld.HelloWorldImpl" />
 	    <service name="HelloWorldService">
-            <binding.ws uri="http://L3AW203:8085/HelloWorldServiceComponent1"/>
+            <binding.ws uri="http://localhost:8085/HelloWorldServiceComponent1"/>
         </service>
     </component>
     
