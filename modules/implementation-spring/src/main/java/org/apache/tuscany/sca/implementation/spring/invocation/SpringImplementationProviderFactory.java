@@ -41,7 +41,6 @@ public class SpringImplementationProviderFactory implements ImplementationProvid
     private ConfigurationPropertiesExtensionPoint configProperties;
     private boolean annotationSupport;
     private String versionSupported;
-    private boolean multipleContextSupport;
 
     /**
      * Simple constructor
@@ -59,7 +58,6 @@ public class SpringImplementationProviderFactory implements ImplementationProvid
         }
         annotationSupport = configProperties.isAnnotationSupported();
         versionSupported = configProperties.getSupportedVersion();
-        multipleContextSupport = configProperties.isMultipleContextSupported();
         
         // TODO: could the runtime have a default PropertyValueObjectFactory?
         propertyFactory = new JavaPropertyValueObjectFactory(new MediatorImpl(extensionPoints));
@@ -79,8 +77,7 @@ public class SpringImplementationProviderFactory implements ImplementationProvid
                                                 proxyFactory, 
                                                 propertyFactory,
                                                 annotationSupport,
-                                                versionSupported,
-                                                multipleContextSupport);
+                                                versionSupported);
     }
 
     /**

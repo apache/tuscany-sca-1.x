@@ -8,14 +8,8 @@ public class DefaultConfigurationPropertiesExtensionPoint implements Configurati
 	}
 	
 	// By default SCA annotations for implementation.spring
-	// will be supproted for Tuscany.
+	// will be supproted.
 	public boolean isAnnotationSupported() {
-		return true;
-	}
-	
-	// By default multiple application context implementation.spring
-	// will be supproted for Tuscany.
-	public boolean isMultipleContextSupported() {
 		return true;
 	}
 	
