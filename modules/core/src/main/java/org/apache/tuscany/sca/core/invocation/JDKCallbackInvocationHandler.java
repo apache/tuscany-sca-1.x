@@ -24,8 +24,11 @@ import java.lang.reflect.Method;
 import org.apache.tuscany.sca.core.assembly.RuntimeWireImpl;
 import org.apache.tuscany.sca.core.context.CallableReferenceImpl;
 import org.apache.tuscany.sca.core.conversation.ConversationState;
+import org.apache.tuscany.sca.core.scope.TargetResolutionException;
 import org.apache.tuscany.sca.invocation.InvocationChain;
+import org.apache.tuscany.sca.invocation.Message;
 import org.apache.tuscany.sca.invocation.MessageFactory;
+import org.apache.tuscany.sca.runtime.ReferenceParameters;
 import org.apache.tuscany.sca.runtime.RuntimeWire;
 import org.osoa.sca.NoRegisteredCallbackException;
 import org.osoa.sca.ServiceRuntimeException;
@@ -106,5 +109,16 @@ public class JDKCallbackInvocationHandler extends JDKInvocationHandler {
             ((RuntimeWireImpl)wire).releaseWire();
         }
     }
+    
+    /**
+     * 
+     */
+    @Override
+    protected void handleCallback(Message msg, RuntimeWire wire, Object currentConversationID)
+        throws TargetResolutionException {
+        ReferenceParameters parameters = msg.getFrom().getReferenceParameters();
+        parameters.setCallbackID(getCallbackID());
+    }
+
 
 }

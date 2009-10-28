@@ -381,14 +381,15 @@ public class JDKInvocationHandler implements InvocationHandler, Serializable {
      * @param interfaze
      * @throws TargetResolutionException
      */
-    private void handleCallback(Message msg, RuntimeWire wire, Object currentConversationID)
+    protected void handleCallback(Message msg, RuntimeWire wire, Object currentConversationID)
         throws TargetResolutionException {
-        ReferenceParameters parameters = msg.getFrom().getReferenceParameters();
-        parameters.setCallbackID(getCallbackID());
+
         if (msg.getFrom() == null || msg.getFrom().getCallbackEndpoint() == null) {
             return;
         }
 
+        ReferenceParameters parameters = msg.getFrom().getReferenceParameters();
+        parameters.setCallbackID(getCallbackID());
         parameters.setCallbackReference(msg.getFrom().getCallbackEndpoint());
 
         // If we are passing out a callback target
