@@ -75,6 +75,7 @@ import org.apache.tuscany.sca.data.collection.LocalItemCollection;
 import org.apache.tuscany.sca.data.collection.NotFoundException;
 import org.apache.tuscany.sca.domain.manager.impl.ContributionCollectionImpl.Cache.ContributionCache;
 import org.apache.tuscany.sca.domain.search.DomainSearch;
+import org.apache.tuscany.sca.domain.search.IndexException;
 import org.apache.tuscany.sca.monitor.Monitor;
 import org.apache.tuscany.sca.monitor.MonitorFactory;
 import org.apache.tuscany.sca.monitor.Problem;
@@ -225,7 +226,14 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
         // add it to the search index, contributionUpdated is called to guarantee 
         // only one contribution with the same URI in the index
         if (domainSearch != null) {  // can be null in unit tests
-            domainSearch.contributionUpdated(contribution, contribution);
+            
+            try {
+                domainSearch.updateContribution(contribution, contribution);
+                
+            } catch (IndexException e) {
+                logger.warning("Could not update contribution on index: " + contribution.getURI());
+            }
+            
         }
         
         return key;
@@ -274,7 +282,13 @@ public class ContributionCollectionImpl implements ItemCollection, LocalItemColl
                 
                 // delete it from the search index
                 if (domainSearch != null) {  // can be null in unit tests
-                    domainSearch.contributionRemoved(contribution);
+                    
+                    try {
+                        domainSearch.removeContribution(contribution);
+                    } catch (IndexException e) {
+                        logger.warning("Could not remove contribution from index: " + contribution.getURI());
+                    }
+                    
                 }
                 
                 return;

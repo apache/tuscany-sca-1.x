@@ -16,27 +16,30 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package org.apache.tuscany.sca.domain.search.impl;
 
-import org.apache.tuscany.sca.core.ExtensionPointRegistry;
-import org.apache.tuscany.sca.core.ModuleActivator;
+package org.apache.tuscany.sca.domain.search;
 
 /**
+ * Exception thrown when a exception occurs while accessing the index.
  * 
  * @version $Rev$ $Date$
  */
-public class DomainSearchModuleActivator implements ModuleActivator {
+public class IndexException extends Exception {
 
-    public DomainSearchModuleActivator() {
-        // empty constructor
+    private static final long serialVersionUID = -6395734136706805723L;
+
+    /**
+     * @see Exception#Exception(String)
+     */
+    public IndexException(String message) {
+        super(message);
     }
 
-    public void start(ExtensionPointRegistry registry) {
-        registry.addExtensionPoint(new DefaultSearchContributionListenerExtensionPoint());
-    }
-
-    public void stop(ExtensionPointRegistry registry) {
-        // does nothing
+    /**
+     * @see Exception#Exception(String,Throwable)
+     */
+    public IndexException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

@@ -19,7 +19,6 @@
 package org.apache.tuscany.sca.domain.search.impl;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
 
@@ -40,13 +39,13 @@ import org.apache.lucene.store.SimpleFSLockFactory;
 import org.apache.tuscany.sca.contribution.Contribution;
 import org.apache.tuscany.sca.domain.search.DocumentMap;
 import org.apache.tuscany.sca.domain.search.DomainSearch;
+import org.apache.tuscany.sca.domain.search.IndexException;
 import org.apache.tuscany.sca.domain.search.Result;
 import org.osoa.sca.annotations.AllowsPassByReference;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Scope;
 
 /**
- * 
  * @version $Rev$ $Date$
  */
 @Scope("COMPOSITE")
@@ -75,7 +74,6 @@ public class DomainSearchImpl implements DomainSearch {
 
     public DomainSearchImpl() {
         this.qp.setAllowLeadingWildcard(true);
-
     }
 
     private Directory getIndexDirectory() throws IOException {
@@ -108,7 +106,7 @@ public class DomainSearchImpl implements DomainSearch {
     }
 
     @AllowsPassByReference
-    public void contributionAdded(Contribution contribution) {
+    public void addContribution(Contribution contribution) throws IndexException {
 
         IndexWriter indexWriter = null;
 
@@ -132,7 +130,7 @@ public class DomainSearchImpl implements DomainSearch {
 
             }
 
-            throw new RuntimeException("Problem while indexing!", e);
+            throw new IndexException(e.getMessage(), e);
 
         } finally {
 
@@ -152,7 +150,7 @@ public class DomainSearchImpl implements DomainSearch {
     }
 
     @AllowsPassByReference
-    public void contributionRemoved(Contribution contribution) {
+    public void removeContribution(Contribution contribution) throws IndexException {
 
         IndexWriter indexWriter = null;
 
@@ -178,7 +176,7 @@ public class DomainSearchImpl implements DomainSearch {
 
                 }
 
-                throw new RuntimeException("Problem while indexing!", e);
+                throw new IndexException(e.getMessage(), e);
 
             } finally {
 
@@ -199,8 +197,7 @@ public class DomainSearchImpl implements DomainSearch {
 
     }
 
-    private void contributionRemoved(Contribution contribution, IndexWriter indexWriter) throws CorruptIndexException,
-        IOException {
+    private void contributionRemoved(Contribution contribution, IndexWriter indexWriter) throws IndexException {
 
         String contributionURI = contribution.getURI();
         StringBuilder sb = new StringBuilder(SearchFields.PARENT_FIELD);
@@ -218,14 +215,18 @@ public class DomainSearchImpl implements DomainSearch {
             indexWriter.deleteDocuments(query);
 
         } catch (ParseException e) {
-            throw new RuntimeException("Could not parse query: " + sb.toString(), e);
+            // ignore exception
+
+        } catch (CorruptIndexException ex) {
+            throw new IndexException(ex.getMessage(), ex);
+
+        } catch (IOException ex) {
+            throw new IndexException(ex.getMessage(), ex);
         }
 
     }
 
-    private void contributionAdded(Contribution contribution, IndexWriter indexWriter) throws CorruptIndexException,
-        IOException {
-
+    private void contributionAdded(Contribution contribution, IndexWriter indexWriter) throws IndexException {
         DomainSearchDocumentProcessorsMap docProcessors = new DomainSearchDocumentProcessorsMap();
         DocumentMap docs = new DocumentMap();
 
@@ -236,37 +237,30 @@ public class DomainSearchImpl implements DomainSearch {
             e.printStackTrace();
         }
 
-        FileWriter writer = new FileWriter("indexed.txt");
+        // FileWriter writer = new FileWriter("indexed.txt");
         for (Document doc : docs.values()) {
             org.apache.lucene.document.Document luceneDoc = doc.createLuceneDocument();
-            writer.write(luceneDoc.toString());
-            writer.write('\n');
-            writer.write('\n');
-            indexWriter.addDocument(luceneDoc);
-
+            // writer.write(luceneDoc.toString());
+            // writer.write('\n');
+            // writer.write('\n');
+            
+            try {
+                indexWriter.addDocument(luceneDoc);
+                
+            } catch (CorruptIndexException e) {
+                throw new IndexException(e.getMessage(), e);
+                
+            } catch (IOException e) {
+                throw new IndexException(e.getMessage(), e);
+            }
+            
         }
-
-        writer.close();
-
-        // BufferedReader consoleReader = new BufferedReader(
-        // new InputStreamReader(System.in));
-        //
-        // while (true) {
-        // System.out.print("query: ");
-        // String queryString = consoleReader.readLine();
-        //
-        // if (queryString.equals("exit")) {
-        // break;
-        // }
-        //				
-        // parseAndSearch(queryString, false);
-        //
-        // }
+        // writer.close();
 
     }
 
     @AllowsPassByReference
-    public void contributionUpdated(Contribution oldContribution, Contribution contribution) {
+    public void updateContribution(Contribution oldContribution, Contribution contribution) throws IndexException {
 
         IndexWriter indexWriter = null;
 
@@ -291,7 +285,7 @@ public class DomainSearchImpl implements DomainSearch {
 
             }
 
-            throw new RuntimeException("Problem while indexing!", e);
+            throw new IndexException(e.getMessage(), e);
 
         } finally {
 
@@ -310,65 +304,53 @@ public class DomainSearchImpl implements DomainSearch {
 
     }
 
-    public Result[] parseAndSearch(String searchQuery, final boolean highlight) throws Exception {
+    public Result[] parseAndSearch(String searchQuery, final boolean highlight) throws IndexException, ParseException {
+        return search(this.qp.parse(searchQuery), highlight);
+    }
 
-        final IndexSearcher searcher = new IndexSearcher(getIndexDirectory());
+    public Result[] search(Query searchQuery, boolean highlight) throws IndexException {
 
-        DomainSearchResultProcessor resultProcessor = new DomainSearchResultProcessor(new DomainSearchResultFactory());
+        try {
+            final IndexSearcher searcher = new IndexSearcher(getIndexDirectory());
+            DomainSearchResultProcessor resultProcessor =
+                new DomainSearchResultProcessor(new DomainSearchResultFactory());
+            TopDocs topDocs = searcher.search(searchQuery, 1000);
 
-        final Query query = qp.parse(searchQuery);
-        System.out.println("query: " + searchQuery);
+            int indexed = 0;
+            HashSet<String> set = new HashSet<String>();
+            for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
+                org.apache.lucene.document.Document luceneDocument = searcher.doc(scoreDoc.doc);
 
-        TopDocs topDocs = searcher.search(query, 1000);
+                resultProcessor.process(luceneDocument, null);
 
-        int indexed = 0;
-        HashSet<String> set = new HashSet<String>();
-        for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
-            org.apache.lucene.document.Document luceneDocument = searcher.doc(scoreDoc.doc);
+                indexed++;
+                set.add(luceneDocument.toString());
 
-            resultProcessor.process(luceneDocument, null);
-
-            indexed++;
-            set.add(luceneDocument.toString());
-
-            System.out.println(luceneDocument);
-
-        }
-
-        /*
-         * searcher.search(query, new HitCollector() {
-         * @Override public void collect(int doc, float score) { try {
-         * org.apache.lucene.document.Document document = searcher .doc(doc);
-         * luceneDocuments.put(doc, document); System.out.println(doc); } catch
-         * (CorruptIndexException e) { // TODO Auto-generated catch block
-         * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated
-         * catch block e.printStackTrace(); } } });
-         */
-
-        System.out.println("indexed = " + indexed);
-        System.out.println("set.size() = " + set.size());
-
-        Result[] results = resultProcessor.createResultRoots();
-
-        if (highlight) {
-
-            for (Result result : results) {
-                HighlightingUtil.highlightResult(result, query);
             }
 
+            Result[] results = resultProcessor.createResultRoots();
+
+            if (highlight) {
+
+                for (Result result : results) {
+                    HighlightingUtil.highlightResult(result, searchQuery);
+                }
+
+            }
+
+            return results;
+
+        } catch (CorruptIndexException ex) {
+            throw new IndexException(ex.getMessage(), ex);
+
+        } catch (IOException ex) {
+            throw new IndexException(ex.getMessage(), ex);
         }
 
-        return results;
-
     }
 
-    public Result[] search(Query searchQuery, boolean hightlight) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public String highlight(String field, String text, String searchQuery) throws Exception {
-        final Query query = qp.parse(searchQuery);
+    public String highlight(String field, String text, String searchQuery) throws ParseException {
+        final Query query = this.qp.parse(searchQuery);
 
         return HighlightingUtil.highlight(field, query, text);
 
