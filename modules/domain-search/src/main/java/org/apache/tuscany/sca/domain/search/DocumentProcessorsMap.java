@@ -19,129 +19,86 @@
 package org.apache.tuscany.sca.domain.search;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.tuscany.sca.domain.search.impl.Document;
+
 /**
+ * This class is a {@link DocumentProcessor} that holds a map from {@link Class}
+ * -> {@link DocumentProcessor}, and based on this map this processor delegates
+ * the object to be processed to its respective {@link DocumentProcessor}.
  * 
  * @version $Rev$ $Date$
  */
-public class DocumentProcessorsMap extends
-		HashMap<Class<?>, List<DocumentProcessor>> implements DocumentProcessor {
+public class DocumentProcessorsMap extends HashMap<Class<?>, DocumentProcessor> implements DocumentProcessor {
 
     private static final long serialVersionUID = 3967390896890947159L;
 
-    private Object documentKey;
+    private DocumentProcessor findDocumentProcessor(Object object, Class<?> clazz) {
+        DocumentProcessor processor = get(clazz);
 
-    public void addDocumentProcessor(Class<?> clazz, DocumentProcessor processor) {
-        List<DocumentProcessor> processors = get(clazz);
-
-        if (processors == null) {
-            processors = new LinkedList<DocumentProcessor>();
-            put(clazz, processors);
-
-        }
-
-        processors.add(processor);
-
-    }
-
-    private void appendProcessors(LinkedList<DocumentProcessor> processorsList,
-                                  List<DocumentProcessor> processors,
-                                  Object object) {
-
-        if (processors != null) {
-
-            for (DocumentProcessor processor : processors) {
-
-                if (this.documentKey == null) {
-                    this.documentKey = processor.getDocumentKey(object);
-
-                    if (processorsList == null) {
-                        return;
-                    }
-
-                }
-
-                if (processorsList != null) {
-                    processorsList.add(processor);
-                }
-
-            }
-
-        }
-
-    }
-
-    private void findAllDocumentProcessors(LinkedList<DocumentProcessor> processorsList, Object object) {
-        Class<?> clazz = object.getClass();
-        appendProcessors(processorsList, get(clazz), object);
-
-        while (clazz != null) {
+        if (processor == null) {
             Class<?>[] interfaces = clazz.getInterfaces();
 
             for (Class<?> interfac : interfaces) {
-                Class<?>[] interfaces2 = interfac.getInterfaces();
-                appendProcessors(processorsList, get(interfac), object);
+                processor = findDocumentProcessor(object, interfac);
 
-                for (Class<?> interface2 : interfaces2) {
-                    appendProcessors(processorsList, get(interface2), object);
+                if (processor != null) {
+                    return processor;
                 }
 
             }
 
-            clazz = clazz.getSuperclass();
-            appendProcessors(processorsList, get(clazz), object);
+            if (!clazz.isInterface()) {
+                return findDocumentProcessor(object, clazz.getSuperclass());
+            }
 
         }
 
+        return processor;
+
     }
 
+    /**
+     * @see DocumentProcessor#getDocumentKey(Object)
+     */
     public Document process(DocumentProcessor parentProcessor,
                             DocumentMap documents,
                             Object object,
                             Document document,
                             String parent) {
 
-        LinkedList<DocumentProcessor> processorsList;
+        DocumentProcessor processor = findDocumentProcessor(object, object.getClass());
 
-        try {
+        if (processor == null) {
+            throw new IllegalArgumentException();
+        }
 
-            this.documentKey = document;
-            processorsList = new LinkedList<DocumentProcessor>();
-            findAllDocumentProcessors(processorsList, object);
+        if (document == null) {
+            document = documents.get(processor.getDocumentKey(object));
 
-            if (document == null && this.documentKey != null) {
-                document = documents.get(this.documentKey);
-
-                if (document == null) {
-                    document = FAKE_DOCUMENT;
-                }
-
+            if (document == null) {
+                document = FAKE_DOCUMENT;
             }
 
-        } finally {
-            this.documentKey = null;
         }
 
-        for (DocumentProcessor processor : processorsList) {
-            processor.process(parentProcessor, documents, object, document, parent);
-        }
+        processor.process(parentProcessor, documents, object, document, parent);
 
         return document;
 
     }
 
+    /**
+     * @see DocumentProcessor#getDocumentKey(Object)
+     */
     public Object getDocumentKey(Object object) {
+        DocumentProcessor processor = findDocumentProcessor(object, object.getClass());
 
-        try {
-            findAllDocumentProcessors(null, object);
+        if (processor != null) {
+            return processor.getDocumentKey(object);
 
-            return this.documentKey;
-
-        } finally {
-            this.documentKey = null;
+        } else {
+            return null;
         }
 
     }

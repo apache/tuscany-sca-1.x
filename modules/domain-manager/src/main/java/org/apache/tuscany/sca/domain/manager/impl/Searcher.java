@@ -17,6 +17,7 @@ import org.apache.tuscany.sca.data.collection.ItemCollection;
 import org.apache.tuscany.sca.data.collection.LocalItemCollection;
 import org.apache.tuscany.sca.data.collection.NotFoundException;
 import org.apache.tuscany.sca.domain.search.DomainSearch;
+import org.apache.tuscany.sca.domain.search.IndexException;
 import org.apache.tuscany.sca.domain.search.Result;
 import org.apache.tuscany.sca.domain.search.impl.DomainSearchFormatter;
 import org.apache.tuscany.sca.domain.search.impl.HighlightingUtil;
@@ -52,7 +53,7 @@ public class Searcher implements ItemCollection, LocalItemCollection {
     private int elementCounter;
 
     public void delete(String key) throws NotFoundException {
-        System.out.println("delete");
+        
     }
 
     private static void startIndentation(int size, StringWriter writer) {
@@ -159,7 +160,13 @@ public class Searcher implements ItemCollection, LocalItemCollection {
 
             for (Contribution contribution : contributions) {
                 if (!contribution.getURI().equals(DomainManagerUtil.DEPLOYMENT_CONTRIBUTION_URI)) {
-                    this.domainSearch.contributionUpdated(contribution, contribution);
+                    
+                    try {
+                        this.domainSearch.updateContribution(contribution, contribution);
+                    } catch (IndexException e) {
+                        
+                    }
+                    
                 }
             }
         }
@@ -194,7 +201,7 @@ public class Searcher implements ItemCollection, LocalItemCollection {
             item.setContents("No results match: <u>" + query + "</u>");
         }
 
-        System.out.println(item.getContents());
+        // System.out.println(item.getContents());
 
         return item;
 
@@ -234,16 +241,6 @@ public class Searcher implements ItemCollection, LocalItemCollection {
             }
 
         }
-        //		
-        // System.out.println("set-size: " + set.size());
-        // for (char character : set) {
-        // System.out.print(",");
-        // System.out.print((int) character);
-        // System.out.print("/*" + character + "*/");
-        //			
-        // }
-        //		
-        // System.out.println();
 
         return sb.toString();
 

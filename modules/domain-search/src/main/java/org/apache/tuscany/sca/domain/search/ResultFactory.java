@@ -21,13 +21,31 @@ package org.apache.tuscany.sca.domain.search;
 import org.apache.lucene.document.Document;
 
 /**
+ * This interface should be implemented to provide a way to create
+ * {@link Result} objects from a field name and its value or a {@link Document}
+ * resulted from a search.
  * 
+ * @see Result
  * @version $Rev$ $Date$
  */
 public interface ResultFactory<T extends Result> {
 
+    /**
+     * Creates a {@link Result} instance from a field name and its value.
+     * 
+     * @param field the field name
+     * @param value the value
+     * @return the {@link Result} instance
+     */
     T createResult(String field, String value);
 
+    /**
+     * Creates a {@link Result} instance from a {@link Document} object resulted
+     * from a search.
+     * 
+     * @param document the result {@link Document}
+     * @return the {@link Result} instance
+     */
     T createResult(Document document);
 
 }

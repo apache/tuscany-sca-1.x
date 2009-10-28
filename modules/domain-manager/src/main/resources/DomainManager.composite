@@ -310,7 +310,7 @@
     
     <component name="DomainSearchComponent">
         <implementation.java class="org.apache.tuscany.sca.domain.search.impl.DomainSearchImpl"/>
-        <!--<property name="indexDirectoryPath">domainSearchIndex</property>      -->
+        <property name="indexDirectoryPath">domainSearchIndex</property>
     </component>
  
 </composite>

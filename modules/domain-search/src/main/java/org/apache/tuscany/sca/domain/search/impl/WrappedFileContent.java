@@ -25,7 +25,6 @@ import java.net.JarURLConnection;
 import java.net.URL;
 
 /**
- * 
  * @version $Rev$ $Date$
  */
 public class WrappedFileContent implements FileContent {
@@ -37,48 +36,8 @@ public class WrappedFileContent implements FileContent {
 
         if (protocol.equals("jar")) {
             JarURLConnection jarConn = (JarURLConnection)url.openConnection();
-            // Enumeration<JarEntry> entries = jarConn.getJarFile().entries();
             String file = url.getFile();
             file = file.substring(file.lastIndexOf('!') + 1);
-
-            // if (file.charAt(file.length() - 1) != '/') {
-            //				
-            // int beginIndex;
-            //				
-            // if (file.charAt(0) == '/') {
-            // beginIndex = 1;
-            //					 
-            // } else {
-            // beginIndex = 0;
-            // }
-            //				
-            // file = file.substring(beginIndex);
-            //			
-            // while (entries.hasMoreElements()) {
-            // String actualFile = entries.nextElement().getName();
-            //					
-            // if (actualFile.charAt(0) == '/') {
-            // beginIndex = 1;
-            //						
-            // } else {
-            // beginIndex = 0;
-            // }
-            //					
-            // if (actualFile.length() - beginIndex == file.length() + 1 &&
-            // actualFile.charAt(actualFile.length() - 1) == '/') {
-            //						
-            // if (actualFile.startsWith(file, beginIndex)) {
-            // file = actualFile;
-            //							
-            // break;
-            //							
-            // }
-            //						
-            // }
-            //					
-            // }
-            //				
-            // }
 
             this.fileContent = ZipFileContent.createZipFileContent(jarConn.getJarFile(), file);
 

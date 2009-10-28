@@ -33,7 +33,6 @@ import org.apache.lucene.search.highlight.SpanScorer;
 import org.apache.tuscany.sca.domain.search.Result;
 
 /**
- * 
  * @version $Rev$ $Date$
  */
 final public class HighlightingUtil {
@@ -53,22 +52,17 @@ final public class HighlightingUtil {
 
         }
 
-        try {
-            String highlightedText =
-                HighlightingUtil.bestFragmentHighlighted(result.getField(), query, result.getValue(), fragmenter);
+        String highlightedText =
+            HighlightingUtil.bestFragmentHighlighted(result.getField(), query, result.getValue(), fragmenter);
 
-            // checks if something was highlighted before resetting the value
-            if (highlightedText != null && highlightedText.length() > 0) {
-                result.setValue(highlightedText);
-            }
-
-        } catch (IOException e) {
-            // ignore highlighting
+        // checks if something was highlighted before resetting the value
+        if (highlightedText != null && highlightedText.length() > 0) {
+            result.setValue(highlightedText);
         }
 
     }
 
-    public static String highlight(String field, Query query, String text) throws IOException {
+    public static String highlight(String field, Query query, String text) {
         String highlightedText = bestFragmentHighlighted(field, query, text, new NullFragmenter());
 
         if (highlightedText == null || text.length() >= highlightedText.length()) {
@@ -83,25 +77,29 @@ final public class HighlightingUtil {
         return bestFragmentHighlighted(field, query, text, new SimpleFragmenter(100));
     }
 
-    public static String bestFragmentHighlighted(String field, Query query, String text, Fragmenter fragmenter)
-        throws IOException {
-        CachingTokenFilter tokenStream =
-            new CachingTokenFilter(new DomainSearchAnalyzer().tokenStream(field, new StringReader(text)));
-
-        Highlighter highlighter =
-            new Highlighter(new DomainSearchFormatter(), new SpanScorer(query, field, tokenStream, ""));
-        highlighter.setTextFragmenter(fragmenter);
-        tokenStream.reset();
+    public static String bestFragmentHighlighted(String field, Query query, String text, Fragmenter fragmenter) {
 
         try {
-            return highlighter.getBestFragments(tokenStream, text, 2, " ... ");
+            CachingTokenFilter tokenStream =
+                new CachingTokenFilter(new DomainSearchAnalyzer().tokenStream(field, new StringReader(text)));
 
-        } catch (InvalidTokenOffsetsException e) {
+            Highlighter highlighter =
+                new Highlighter(new DomainSearchFormatter(), new SpanScorer(query, field, tokenStream, ""));
+            highlighter.setTextFragmenter(fragmenter);
+            tokenStream.reset();
 
-            // could not create fragments, return empty string
-            return "";
+            try {
+                return highlighter.getBestFragments(tokenStream, text, 2, " ... ");
 
+            } catch (InvalidTokenOffsetsException e) {
+                // could not create fragments, return empty string
+            }
+
+        } catch (IOException ex) {
+            // should never happen
         }
+
+        return "";
 
     }
 
