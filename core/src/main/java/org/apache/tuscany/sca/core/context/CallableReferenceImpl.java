@@ -370,7 +370,7 @@ public class CallableReferenceImpl<B> implements CallableReference<B>, Externali
                 }
                 this.proxyFactory = compositeActivator.getProxyFactory();
             }
-        } else {
+        } else if (compositeActivator == null || proxyFactory == null) {
             this.compositeActivator = ComponentContextHelper.getCurrentCompositeActivator();
             if (this.compositeActivator != null) {
                 this.proxyFactory = this.compositeActivator.getProxyFactory();
