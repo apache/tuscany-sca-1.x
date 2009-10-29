@@ -30,6 +30,7 @@ import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.Service;
 import org.apache.tuscany.sca.assembly.builder.ComponentPreProcessor;
 import org.apache.tuscany.sca.assembly.impl.ImplementationImpl;
+import org.apache.tuscany.sca.contribution.jee.InjectionTarget;
 import org.apache.tuscany.sca.implementation.java.impl.JavaElementImpl;
 import org.apache.tuscany.sca.implementation.java.impl.JavaResourceImpl;
 import org.apache.tuscany.sca.implementation.web.WebImplementation;
@@ -48,6 +49,8 @@ class WebImplementationImpl extends ImplementationImpl implements WebImplementat
     private Map<String, JavaElementImpl> referenceInjectionPoints = new HashMap<String, JavaElementImpl>();
 
     private Map<String, JavaResourceImpl> resourceInjectionPoints = new HashMap<String, JavaResourceImpl>();
+    
+    private Map<InjectionTarget, Class<?>> optExtReferenceInjectionPoints = new HashMap<InjectionTarget, Class<?>>();
     /**
      * Constructs a new Web implementation.
      */
@@ -153,4 +156,7 @@ class WebImplementationImpl extends ImplementationImpl implements WebImplementat
         return resourceInjectionPoints;
     }
 
+    public Map<InjectionTarget, Class<?>> getOptExtensionReferenceInjectionPoints() {
+        return optExtReferenceInjectionPoints;
+    }
 }

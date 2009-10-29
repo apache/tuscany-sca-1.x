@@ -18,17 +18,11 @@
  */
 package org.apache.tuscany.sca.contribution.jee;
 
+
 /**
  * @version $Rev$ $Date$
  */
-public class EjbReferenceInfo {
-    public enum EjbType {STATELESS, STATEFUL, SESSION_UNKNOWN, UNKNOWN};
-    public enum RefType {LOCAL, REMOTE, UNKNOWN};
-    public String referenceName;
-    public EjbType ejbType;
-    public RefType referenceType;
-    public Class<?> businessInterface;
-    public String ejbLink;
-    public String mappedName;
-    public InjectionTarget injectionTarget = new InjectionTarget();
+public class InjectionTarget {
+    public String targetClass;
+    public String targetName;
 }

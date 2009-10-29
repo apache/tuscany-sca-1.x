@@ -21,6 +21,7 @@ package org.apache.tuscany.sca.implementation.web;
 import java.util.Map;
 
 import org.apache.tuscany.sca.assembly.Implementation;
+import org.apache.tuscany.sca.contribution.jee.InjectionTarget;
 import org.apache.tuscany.sca.implementation.java.impl.JavaElementImpl;
 import org.apache.tuscany.sca.implementation.java.impl.JavaResourceImpl;
 
@@ -63,4 +64,6 @@ public interface WebImplementation extends Implementation {
      * @return Map with injection points for SCA resources
      */
     Map<String, JavaResourceImpl> getResourceInjectionPoints();
+    
+    Map<InjectionTarget, Class<?>> getOptExtensionReferenceInjectionPoints();
 }
