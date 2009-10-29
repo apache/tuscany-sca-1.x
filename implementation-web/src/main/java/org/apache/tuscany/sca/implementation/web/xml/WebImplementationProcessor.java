@@ -35,6 +35,7 @@ import org.apache.tuscany.sca.assembly.ComponentReference;
 import org.apache.tuscany.sca.assembly.ComponentType;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.jee.EjbReferenceInfo;
 import org.apache.tuscany.sca.contribution.jee.JspReferenceTagInfo;
 import org.apache.tuscany.sca.contribution.jee.WebModuleInfo;
 import org.apache.tuscany.sca.contribution.jee.JavaEEExtension;
@@ -142,6 +143,11 @@ public class WebImplementationProcessor extends BaseStAXArtifactProcessor implem
                 ComponentType ct = jeeOptionalExtension.createImplementationWebComponentType(webModuleInfo);
                 implementation.getReferences().addAll(ct.getReferences());
                 implementation.getProperties().addAll(ct.getProperties());
+                // Injection points from optional extension
+                for(Map.Entry<String, EjbReferenceInfo> entry : webModuleInfo.getEjbReferences().entrySet()) {
+                    EjbReferenceInfo ejbRef = entry.getValue();
+                    implementation.getOptExtensionReferenceInjectionPoints().put(ejbRef.injectionTarget, ejbRef.businessInterface);
+                }
             }
             
             // Introspection of classes

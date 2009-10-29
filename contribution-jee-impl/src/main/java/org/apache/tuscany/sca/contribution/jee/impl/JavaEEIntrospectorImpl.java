@@ -38,6 +38,7 @@ import org.apache.openejb.jee.EjbReference;
 import org.apache.openejb.jee.EnterpriseBean;
 import org.apache.openejb.jee.EnvEntry;
 import org.apache.openejb.jee.Filter;
+import org.apache.openejb.jee.InjectionTarget;
 import org.apache.openejb.jee.Listener;
 import org.apache.openejb.jee.MessageDrivenBean;
 import org.apache.openejb.jee.Servlet;
@@ -187,6 +188,11 @@ public class JavaEEIntrospectorImpl implements JavaEEIntrospector {
 
         ejbReferenceInfo.ejbLink = ejbRef.getEjbLink();
         ejbReferenceInfo.mappedName = ejbRef.getMappedName();
+        if(ejbRef.getInjectionTarget().size() > 0) {
+            InjectionTarget it = ejbRef.getInjectionTarget().iterator().next();
+            ejbReferenceInfo.injectionTarget.targetClass = it.getInjectionTargetClass();
+            ejbReferenceInfo.injectionTarget.targetName = it.getInjectionTargetName();
+        }
 
         return ejbReferenceInfo;
     }
