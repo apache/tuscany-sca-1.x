@@ -36,6 +36,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.xml.namespace.QName;
@@ -61,6 +62,7 @@ import org.apache.tuscany.sca.data.collection.ItemCollection;
 import org.apache.tuscany.sca.data.collection.LocalItemCollection;
 import org.apache.tuscany.sca.data.collection.NotFoundException;
 import org.apache.tuscany.sca.domain.search.DomainSearch;
+import org.apache.tuscany.sca.domain.search.IndexException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.osoa.sca.ServiceRuntimeException;
@@ -306,7 +308,13 @@ public class DeployedCompositeCollectionImpl implements ItemCollection, LocalIte
         for (Contribution contribution : contributions) {
             
             if (contributionURI.equals(contribution.getURI())) {
-                this.domainSearch.contributionUpdated(contribution, contribution);
+            	
+                try {
+					this.domainSearch.updateContribution(contribution, contribution);
+					
+				} catch (IndexException e) {
+					logger.log(Level.WARNING, "Could not update contribution " + contribution.getURI() + " on the index, reason: " + e.getMessage());
+				}
                 
                 break;
                 
