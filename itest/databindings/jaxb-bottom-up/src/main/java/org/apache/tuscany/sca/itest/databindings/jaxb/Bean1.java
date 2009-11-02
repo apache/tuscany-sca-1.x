@@ -18,9 +18,12 @@
  */
 package org.apache.tuscany.sca.itest.databindings.jaxb;
 
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 /**
  * @version $Rev$ $Date$
  */
+@XmlSeeAlso({Bean10.class, Bean11.class, Bean10[].class, Bean11[].class})
 public class Bean1<T> {
     private T item;
     
