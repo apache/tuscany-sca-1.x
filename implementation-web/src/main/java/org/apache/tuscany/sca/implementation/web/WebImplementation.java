@@ -66,4 +66,6 @@ public interface WebImplementation extends Implementation {
     Map<String, JavaResourceImpl> getResourceInjectionPoints();
     
     Map<InjectionTarget, Class<?>> getOptExtensionReferenceInjectionPoints();
+
+    Map<String, String> getOptExtensionPropertyInjectionPoints();
 }

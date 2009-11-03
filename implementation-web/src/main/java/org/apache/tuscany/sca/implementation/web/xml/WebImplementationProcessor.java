@@ -33,9 +33,11 @@ import javax.xml.stream.XMLStreamWriter;
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.assembly.ComponentReference;
 import org.apache.tuscany.sca.assembly.ComponentType;
+import org.apache.tuscany.sca.assembly.Property;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.jee.EjbReferenceInfo;
+import org.apache.tuscany.sca.contribution.jee.EnvEntryInfo;
 import org.apache.tuscany.sca.contribution.jee.JspReferenceTagInfo;
 import org.apache.tuscany.sca.contribution.jee.WebModuleInfo;
 import org.apache.tuscany.sca.contribution.jee.JavaEEExtension;
@@ -143,10 +145,20 @@ public class WebImplementationProcessor extends BaseStAXArtifactProcessor implem
                 ComponentType ct = jeeOptionalExtension.createImplementationWebComponentType(webModuleInfo);
                 implementation.getReferences().addAll(ct.getReferences());
                 implementation.getProperties().addAll(ct.getProperties());
+                List<String> propertyNames = new ArrayList<String>();
+                for(Property prop : ct.getProperties()) {
+                    propertyNames.add(prop.getName());
+                }
                 // Injection points from optional extension
                 for(Map.Entry<String, EjbReferenceInfo> entry : webModuleInfo.getEjbReferences().entrySet()) {
                     EjbReferenceInfo ejbRef = entry.getValue();
                     implementation.getOptExtensionReferenceInjectionPoints().put(ejbRef.injectionTarget, ejbRef.businessInterface);
+                }
+                for(Map.Entry<String, EnvEntryInfo> entry : webModuleInfo.getEnvEntries().entrySet()) {
+                    EnvEntryInfo envEntry = entry.getValue();
+                    if(propertyNames.contains(envEntry.name.replace("/", "_"))) {
+                        implementation.getOptExtensionPropertyInjectionPoints().put(envEntry.name, envEntry.type);
+                    }
                 }
             }
             
