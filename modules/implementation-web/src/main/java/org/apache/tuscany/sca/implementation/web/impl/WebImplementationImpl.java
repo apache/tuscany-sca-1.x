@@ -51,6 +51,8 @@ class WebImplementationImpl extends ImplementationImpl implements WebImplementat
     private Map<String, JavaResourceImpl> resourceInjectionPoints = new HashMap<String, JavaResourceImpl>();
     
     private Map<InjectionTarget, Class<?>> optExtReferenceInjectionPoints = new HashMap<InjectionTarget, Class<?>>();
+    
+    private Map<String, String> optExtPropertyInjectionPoints = new HashMap<String, String>();
     /**
      * Constructs a new Web implementation.
      */
@@ -158,5 +160,9 @@ class WebImplementationImpl extends ImplementationImpl implements WebImplementat
 
     public Map<InjectionTarget, Class<?>> getOptExtensionReferenceInjectionPoints() {
         return optExtReferenceInjectionPoints;
+    }
+
+    public Map<String, String> getOptExtensionPropertyInjectionPoints() {
+        return optExtPropertyInjectionPoints;
     }
 }
