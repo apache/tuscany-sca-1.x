@@ -75,7 +75,7 @@
         </dependencySet>
         <dependencySet>
             <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
-            <outputDirectory>client</outputDirectory>
+            <outputDirectory>clients</outputDirectory>
             <unpack>false</unpack>
             <includes>
                 <include>org.apache.tuscany.sca:scatours-client-*</include>
