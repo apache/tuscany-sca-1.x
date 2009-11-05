@@ -33,13 +33,13 @@ public class InteractionLauncher {
             locate("currency"),
             locate("calendar"),
             locate("shoppingcart"),
-            locate("client"));
+            locate("interaction-client"));
     	
     	SCANode node2 = SCANodeFactory.newInstance().createSCANode("service.composite", 
             locate("common"),
             locate("hotel"),
             locate("flight"),
-            locate("remoteService"));
+            locate("interaction-service-remote"));
 
     	node2.start();
         node1.start();
