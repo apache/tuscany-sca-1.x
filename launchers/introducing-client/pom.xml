@@ -44,9 +44,9 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-node-runtime</artifactId>
+            <artifactId>tuscany-node-impl</artifactId>
             <version>${tuscany.version}</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
