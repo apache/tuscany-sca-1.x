@@ -19,6 +19,8 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
@@ -27,8 +29,7 @@ public class HelpPagesLauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution helpContribution = 
-          new SCAContribution("help-pages", 
-              "../../contributions/help-pages/target/classes");
+          locate("help-pages");
 
         SCANode node = SCANodeFactory.newInstance().createSCANode(
             "help-pages.composite", helpContribution);

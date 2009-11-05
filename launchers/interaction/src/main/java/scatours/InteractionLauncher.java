@@ -19,8 +19,9 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAClient;
-import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
@@ -28,17 +29,17 @@ public class InteractionLauncher {
 
     public static void main(String[] args) throws Exception {
     	SCANode node1 = SCANodeFactory.newInstance().createSCANode("client.composite", 
-            new SCAContribution("common", "../../contributions/common/target/classes"),
-            new SCAContribution("currency", "../../contributions/currency/target/classes"),
-            new SCAContribution("calendar", "../../contributions/calendar/target/classes"),
-            new SCAContribution("shoppingcart", "../../contributions/shoppingcart/target/classes"),
-            new SCAContribution("client", "../../contributions/interaction-client/target/classes"));
+            locate("common"),
+            locate("currency"),
+            locate("calendar"),
+            locate("shoppingcart"),
+            locate("client"));
     	
     	SCANode node2 = SCANodeFactory.newInstance().createSCANode("service.composite", 
-            new SCAContribution("common", "../../contributions/common/target/classes"),
-            new SCAContribution("hotel", "../../contributions/hotel/target/classes"),
-            new SCAContribution("flight", "../../contributions/flight/target/classes"),
-            new SCAContribution("remoteService", "../../contributions/interaction-service-remote/target/classes"));
+            locate("common"),
+            locate("hotel"),
+            locate("flight"),
+            locate("remoteService"));
 
     	node2.start();
         node1.start();

@@ -29,7 +29,7 @@ import org.omg.PortableServer.POAHelper;
 public class SMSGatewayCORBAServiceBootstrap {
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Publishing SMS Gateway Service as a CORBA service");
+        System.out.println("Publishing SMS Gateway Service as a CORBA service: SMSGatewayCORBAService (port=5080)");
         
         String[] orbArgs = {"-ORBInitialPort", "5080"};
         ORB orb = ORB.init( orbArgs, null );

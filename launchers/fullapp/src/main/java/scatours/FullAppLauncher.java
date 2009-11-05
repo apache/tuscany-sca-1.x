@@ -19,35 +19,38 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import java.io.IOException;
 
-import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
 public class FullAppLauncher {
 
+
     public static void main(String[] args) throws Exception {
-        SCANode node = SCANodeFactory.newInstance().createSCANode(null,
-            new SCAContribution("common", "../../contributions/common/target/classes"),
-            new SCAContribution("currency", "../../contributions/currency/target/classes"),
-            new SCAContribution("hotel", "../../contributions/hotel/target/classes"),
-            new SCAContribution("flight", "../../contributions/flight/target/classes"),
-            new SCAContribution("car", "../../contributions/car/target/classes"),
-            new SCAContribution("trip", "../../contributions/trip/target/classes"),
-            new SCAContribution("tripbooking", "../../contributions/tripbooking/target/classes"),
-            new SCAContribution("travelcatalog", "../../contributions/travelcatalog/target/classes"),
-            new SCAContribution("payment", "../../contributions/payment-java/target/classes"),
-            //new SCAContribution("payment", "../../contributions/payment-spring/target/classes"),
-            new SCAContribution("creditcard", "../../contributions/creditcard-payment-jaxb/target/classes"),
-            new SCAContribution("shoppingcart", "../../contributions/shoppingcart/target/classes"),
-            new SCAContribution("scatours", "../../contributions/scatours/target/classes"),
-            new SCAContribution("fullapp-ui", "../../contributions/fullapp-ui/target/classes"),
-            new SCAContribution("fullapp-frontend", "../../contributions/fullapp-frontend/target/classes"),
-            new SCAContribution("fullapp-currency", "../../contributions/fullapp-currency/target/classes"),
-            new SCAContribution("fullapp-packagedtrip", "../../contributions/fullapp-packagedtrip/target/classes"),
-            new SCAContribution("fullapp-bespoketrip", "../../contributions/fullapp-bespoketrip/target/classes"),
-            new SCAContribution("fullapp-shoppingcart", "../../contributions/fullapp-shoppingcart/target/classes"));
+        SCANode node =
+            SCANodeFactory.newInstance().createSCANode(null,
+                                                       locate("common"),
+                                                       locate("currency"),
+                                                       locate("hotel"),
+                                                       locate("flight"),
+                                                       locate("car"),
+                                                       locate("trip"),
+                                                       locate("tripbooking"),
+                                                       locate("travelcatalog"),
+                                                       locate("payment"),
+                                                       //locate("payment"),
+                                                       locate("creditcard"),
+                                                       locate("shoppingcart"),
+                                                       locate("scatours"),
+                                                       locate("fullapp-ui"),
+                                                       locate("fullapp-frontend"),
+                                                       locate("fullapp-currency"),
+                                                       locate("fullapp-packagedtrip"),
+                                                       locate("fullapp-bespoketrip"),
+                                                       locate("fullapp-shoppingcart"));
 
         node.start();
 
@@ -56,7 +59,8 @@ public class FullAppLauncher {
 
         try {
             System.in.read();
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
 
         node.stop();
     }

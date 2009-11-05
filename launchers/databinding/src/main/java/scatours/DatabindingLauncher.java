@@ -19,19 +19,20 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAClient;
-import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
 public class DatabindingLauncher {
     public static void main(String[] args) throws Exception {
         SCANode node1 = SCANodeFactory.newInstance().createSCANode(null, 
-                new SCAContribution("paymentjava", "../../contributions/payment-java/target/classes"),
-                new SCAContribution("client", "../../contributions/databinding-client/target/classes"));
+                locate("paymentjava"),
+                locate("client"));
         
         SCANode node2 = SCANodeFactory.newInstance().createSCANode(null, 
-                new SCAContribution("creditcardpaymentsdo", "../../contributions/creditcard-payment-sdo/target/classes"));
+                locate("creditcardpaymentsdo"));
         
         node1.start();
         node2.start();

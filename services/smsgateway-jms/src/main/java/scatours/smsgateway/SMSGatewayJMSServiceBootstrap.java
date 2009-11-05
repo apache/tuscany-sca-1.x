@@ -26,7 +26,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 public class SMSGatewayJMSServiceBootstrap {
 
     public static void main(String[] args) throws Exception {
-      System.out.println("Publishing SMS Gateway Service as a JMS service");
+      System.out.println("Publishing SMS Gateway Service as a JMS service: tcp://localhost:61619");
 
       ActiveMQConnectionFactory connectionFactory 
           = new ActiveMQConnectionFactory("tcp://localhost:61619");

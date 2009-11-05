@@ -19,8 +19,9 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAClient;
-import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
@@ -28,13 +29,13 @@ public class PolicyLauncher {
 
     public static void main(String[] args) throws Exception {
         SCANode node1 = SCANodeFactory.newInstance().createSCANode(null, 
-            new SCAContribution("client", "../../contributions/policy-client/target/classes"),
-            new SCAContribution("payment", "../../contributions/payment-java-policy/target/classes"));
+            locate("client"),
+            locate("payment"));
 
         node1.start();
         
         SCANode node2 = SCANodeFactory.newInstance().createSCANode(null, 
-                new SCAContribution("creditcard", "../../contributions/creditcard-payment-jaxb-policy/target/classes"));
+                locate("creditcard"));
         
         node2.start();
         

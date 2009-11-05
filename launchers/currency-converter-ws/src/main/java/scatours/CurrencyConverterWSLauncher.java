@@ -19,6 +19,8 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -30,11 +32,9 @@ public class CurrencyConverterWSLauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution currencyWSContribution = 
-            new SCAContribution("currency-ws", 
-              "../../contributions/currency-ws/target/classes");
+            locate("currency-ws");
         SCAContribution currencyContribution = 
-            new SCAContribution("currency", 
-              "../../contributions/currency/target/classes");
+            locate("currency");
         
         SCANode node = SCANodeFactory.newInstance().createSCANode(
             "currency-converter-ws.composite", currencyContribution, currencyWSContribution);

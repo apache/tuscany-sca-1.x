@@ -29,7 +29,14 @@
     <name>Apache Tuscany SCA Tours Currency Converter RMI Launcher</name>
 
     <dependencies>
+    
         <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-launcher-common</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+            
+       <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-node-api</artifactId>
             <version>1.6-SNAPSHOT</version>

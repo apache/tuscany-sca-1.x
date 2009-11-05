@@ -30,6 +30,13 @@
     <name>Apache Tuscany SCA Tours Databinding Launcher</name>
 
     <dependencies>
+    
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-launcher-common</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+            
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-node-api</artifactId>

@@ -19,6 +19,8 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
@@ -26,10 +28,8 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 public class CurrencyConverterJMSLauncher {
 
     public static void main(String[] args) throws Exception {
-        SCAContribution currencyJMSContribution = 
-            new SCAContribution("currency-jms", "../../contributions/currency-jms/target/classes");
-        SCAContribution currencyContribution = 
-            new SCAContribution("currency", "../../contributions/currency/target/classes");
+        SCAContribution currencyJMSContribution = locate("currency-jms");
+        SCAContribution currencyContribution = locate("currency");
 
         SCANode node = SCANodeFactory.newInstance().createSCANode(
                 "currency-converter-jms.composite", currencyContribution, currencyJMSContribution);

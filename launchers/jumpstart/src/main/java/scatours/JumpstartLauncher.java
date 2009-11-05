@@ -19,6 +19,8 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -28,8 +30,7 @@ public class JumpstartLauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution gvtContribution = 
-          new SCAContribution("introducing-trips", 
-              "../../contributions/introducing-trips/target/classes");
+          locate("introducing-trips");
         
         SCANode node = SCANodeFactory.newInstance().
            createSCANode("trips.composite", 

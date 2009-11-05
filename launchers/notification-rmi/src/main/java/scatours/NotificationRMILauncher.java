@@ -19,6 +19,8 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -30,11 +32,9 @@ public class NotificationRMILauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution notificationContribution = 
-          new SCAContribution("notification", 
-            "../../contributions/notification/target/classes");
+          locate("notification");
         SCAContribution notificationRMIContribution = 
-          new SCAContribution("notification-rmi", 
-            "../../contributions/notification-rmi/target/classes");
+          locate("notification-rmi");
 
         SCANode node = SCANodeFactory.newInstance().createSCANode(
             "notification-rmi.composite", notificationContribution, notificationRMIContribution);

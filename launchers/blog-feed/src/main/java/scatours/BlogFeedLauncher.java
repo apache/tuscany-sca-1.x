@@ -19,6 +19,8 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
@@ -27,8 +29,7 @@ public class BlogFeedLauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution feedContribution = 
-          new SCAContribution("blog-feed", 
-              "../../contributions/blog-feed/target/classes");
+          locate("blog-feed");
 
         SCANode node = SCANodeFactory.newInstance().createSCANode(
             "blog-feed.composite", feedContribution);

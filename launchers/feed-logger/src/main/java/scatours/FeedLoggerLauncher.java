@@ -19,6 +19,8 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -30,8 +32,7 @@ public class FeedLoggerLauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution feedContribution = 
-          new SCAContribution("feed-logger", 
-              "../../contributions/feed-logger/target/classes");
+          locate("feed-logger");
 
         SCANode node = SCANodeFactory.newInstance().createSCANode(
             "feed-logger.composite", feedContribution);

@@ -19,6 +19,8 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -30,11 +32,9 @@ public class NotificationJMSLauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution notificationContribution = 
-          new SCAContribution("notification", 
-            "../../contributions/notification/target/classes");
+          locate("notification");
         SCAContribution notificationJMSContribution = 
-          new SCAContribution("notification-jms", 
-            "../../contributions/notification-jms/target/classes");
+          locate("notification-jms");
 
         SCANode node = SCANodeFactory.newInstance().createSCANode(
             "notification-jms.composite", notificationContribution, notificationJMSContribution);

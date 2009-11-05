@@ -37,6 +37,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>common</module>
                 <module>blog-feed</module>
                 <module>currency-converter</module>
                 <module>currency-converter-corba</module>

@@ -19,6 +19,8 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -30,11 +32,9 @@ public class CurrencyConverterRMILauncher {
 
     public static void main(String[] args) throws Exception {
         SCAContribution currencyRMIContribution = 
-            new SCAContribution("currency-rmi", 
-              "../../contributions/currency-rmi/target/classes");
+            locate("currency-rmi");
         SCAContribution currencyContribution = 
-            new SCAContribution("currency", 
-              "../../contributions/currency/target/classes");
+            locate("currency");
         
         SCANode node = SCANodeFactory.newInstance().createSCANode(
             "currency-converter-rmi.composite", currencyContribution, currencyRMIContribution);

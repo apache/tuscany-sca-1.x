@@ -19,6 +19,8 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import javax.naming.Context;
 
 import org.apache.tuscany.sca.node.SCAClient;
@@ -35,11 +37,9 @@ public class NotificationEJBLauncher {
         System.setProperty(Context.PROVIDER_URL, "ejbd://localhost:4201");
 
         SCAContribution notificationContribution = 
-          new SCAContribution("notification", 
-            "../../contributions/notification/target/classes");
+          locate("notification");
         SCAContribution notificationEJBContribution = 
-          new SCAContribution("notification-ejb", 
-            "../../contributions/notification-ejb/target/classes");
+          locate("notification-ejb");
 
         SCANode node = SCANodeFactory.newInstance().createSCANode(
             "notification-ejb.composite", notificationContribution, notificationEJBContribution);

@@ -19,8 +19,9 @@
 
 package scatours;
 
+import static scatours.launcher.LauncherUtil.locate;
+
 import org.apache.tuscany.sca.node.SCAClient;
-import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
@@ -28,9 +29,9 @@ public class IntroducingLauncher {
 
     public static void main(String[] args) throws Exception {
         SCANode node = SCANodeFactory.newInstance().createSCANode(null, 
-            new SCAContribution("introducing-tours", "../../contributions/introducing-tuscanyscatours-contribution/target/classes"),
-            new SCAContribution("introducing-trips", "../../contributions/introducing-goodvaluetrips-contribution/target/classes"),
-            new SCAContribution("introducing-client", "../../contributions/introducing-client-contribution/target/classes"));
+            locate("introducing-tours"),
+            locate("introducing-trips"),
+            locate("introducing-client"));
 
         node.start();
 
