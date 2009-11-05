@@ -116,6 +116,13 @@
             <version>${tuscany.version}</version>
             <scope>runtime</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-host-jetty</artifactId>
+            <version>${tuscany.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
