@@ -19,60 +19,55 @@
 
 package scatours.client.impl;
 
-import java.util.concurrent.CountDownLatch;
-
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
-import com.tuscanyscatours.common.Search;
-import com.tuscanyscatours.common.SearchCallback;
 import com.tuscanyscatours.common.TripItem;
-import com.tuscanyscatours.common.TripLeg;
 import com.tuscanyscatours.shoppingcart.CartStore;
 
 @Scope("COMPOSITE")
 @Service(Runnable.class)
 public class InteractionConversationClientImpl implements Runnable {
-	
+
     @Reference
     protected CartStore cartStoreConversation;
-       
-    public void run() {
-    	System.out.println("\nCalling cart store using the conversational interaction pattern");
 
-    	// add some trip items to the cart store
-    	TripItem tripItem = getTestTripItem();
-    	cartStoreConversation.addTrip(tripItem);
-    	
-    	tripItem.setDescription("2nd trip item");
-    	cartStoreConversation.addTrip(tripItem);
-    	
+    public void run() {
+        System.out.println("\nCalling cart store using the conversational interaction pattern");
+
+        // add some trip items to the cart store
+        TripItem tripItem = getTestTripItem();
+        cartStoreConversation.addTrip(tripItem);
+
+        tripItem.setDescription("2nd trip item");
+        cartStoreConversation.addTrip(tripItem);
+
         tripItem.setDescription("3rd trip item");
         cartStoreConversation.addTrip(tripItem);
 
         System.out.println("Trip items now in cart");
-	    TripItem[] tripItems = cartStoreConversation.getTrips();
-        for (TripItem item : tripItems){
+        TripItem[] tripItems = cartStoreConversation.getTrips();
+        for (TripItem item : tripItems) {
             System.out.println("Item - " + item.getDescription());
         }
-	    
+
         System.out.println("Reset the cart");
         cartStoreConversation.reset();
-        
+
         System.out.println("Trip items now in cart");
         tripItems = cartStoreConversation.getTrips();
-        for (TripItem item : tripItems){
+        for (TripItem item : tripItems) {
             System.out.println("Item - " + item.getDescription());
         }
-    }     
-    
-    private TripItem getTestTripItem(){
+    }
+
+    private TripItem getTestTripItem() {
         TripItem tripItem = new TripItem();
         tripItem.setLocation("FLR");
         tripItem.setFromDate("06/12/09 00:00");
         tripItem.setToDate("13/12/09 00:00");
         tripItem.setDescription("1st trip item");
-    	return tripItem;
-    }    
+        return tripItem;
+    }
 }

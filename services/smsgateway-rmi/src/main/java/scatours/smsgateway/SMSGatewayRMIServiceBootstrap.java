@@ -24,17 +24,17 @@ import java.rmi.registry.Registry;
 public class SMSGatewayRMIServiceBootstrap {
 
     public static void main(String[] args) throws Exception {
-      System.out.println("Publishing SMS Gateway Service as a RMI service");
+        System.out.println("Publishing SMS Gateway Service as a RMI service");
 
-      String serviceName = "SMSGatewayRMI";
-      SMSGatewayImpl smsGatewayImpl = new SMSGatewayImpl();
-      Registry rmiRegistry = LocateRegistry.createRegistry(8099);
-      rmiRegistry.bind(serviceName, smsGatewayImpl);
+        String serviceName = "SMSGatewayRMI";
+        SMSGatewayImpl smsGatewayImpl = new SMSGatewayImpl();
+        Registry rmiRegistry = LocateRegistry.createRegistry(8099);
+        rmiRegistry.bind(serviceName, smsGatewayImpl);
 
-      System.out.println("RMI server running - waiting for requests");
-      System.out.println("Press enter to shutdown.");
-      System.in.read();
-      rmiRegistry.unbind(serviceName);
-      System.exit(-1);
+        System.out.println("RMI server running - waiting for requests");
+        System.out.println("Press enter to shutdown.");
+        System.in.read();
+        rmiRegistry.unbind(serviceName);
+        System.exit(-1);
     }
 }

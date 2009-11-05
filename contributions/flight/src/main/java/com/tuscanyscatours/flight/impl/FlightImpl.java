@@ -24,7 +24,6 @@ import java.util.List;
 import org.osoa.sca.annotations.Callback;
 import org.osoa.sca.annotations.ComponentName;
 import org.osoa.sca.annotations.Init;
-import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
@@ -38,14 +37,14 @@ import com.tuscanyscatours.common.TripLeg;
  * An implementation of the Flight service
  */
 @Scope("CONVERSATION")
-@Service(interfaces={Search.class, Book.class})
+@Service(interfaces = {Search.class, Book.class})
 public class FlightImpl implements Search, Book {
-    
+
     private List<FlightInfo> flights = new ArrayList<FlightInfo>();
-    
+
     @Callback
-    protected SearchCallback searchCallback; 
-    
+    protected SearchCallback searchCallback;
+
     @ComponentName
     protected String componentName;
 
@@ -53,97 +52,69 @@ public class FlightImpl implements Search, Book {
 
     @Init
     public void init() {
-        flights.add(new FlightInfo("EA26", 
-                                   "Europe Airlines Airbus A300",
-                                   "LGW",
-                                   "FLR",
-                                   "06/12/09",
-                                   "06/12/09",
-                                   "350",
-                                   250,
-                                   "EUR",
-                                   "http://localhost:8085/tbd" ));
-        flights.add(new FlightInfo("EA27", 
-                                   "Europe Airlines Airbus A300",
-                                   "FLR",
-                                   "LGW",
-                                   "13/12/09",
-                                   "13/12/09",
-                                   "350",
-                                   250,
-                                   "EUR",
-                                   "http://localhost:8085/tbd" ));
+        flights.add(new FlightInfo("EA26", "Europe Airlines Airbus A300", "LGW", "FLR", "06/12/09", "06/12/09", "350",
+                                   250, "EUR", "http://localhost:8085/tbd"));
+        flights.add(new FlightInfo("EA27", "Europe Airlines Airbus A300", "FLR", "LGW", "13/12/09", "13/12/09", "350",
+                                   250, "EUR", "http://localhost:8085/tbd"));
 
     }
-    
+
     public TripItem[] searchSynch(TripLeg tripLeg) {
         List<TripItem> items = new ArrayList<TripItem>();
-        
+
         // find outbound leg
-        for(FlightInfo flight : flights){
-            if ((flight.getFromLocation().equals(tripLeg.getFromLocation())) &&
-                (flight.getToLocation().equals(tripLeg.getToLocation())) &&
-                (flight.getFromDate().equals(tripLeg.getFromDate()))){
-                TripItem item = new TripItem("",
-                                             "",
-                                             TripItem.FLIGHT,
-                                             flight.getName(), 
-                                             flight.getDescription(), 
-                                             flight.getFromLocation() + " - " + flight.getToLocation(),
-                                             flight.getFromDate(),
-                                             flight.getToDate(),
-                                             flight.getPricePerSeat(),
-                                             flight.getCurrency(),
-                                             flight.getLink());
+        for (FlightInfo flight : flights) {
+            if ((flight.getFromLocation().equals(tripLeg.getFromLocation())) && (flight.getToLocation().equals(tripLeg
+                .getToLocation()))
+                && (flight.getFromDate().equals(tripLeg.getFromDate()))) {
+                TripItem item =
+                    new TripItem("", "", TripItem.FLIGHT, flight.getName(), flight.getDescription(), flight
+                        .getFromLocation() + " - "
+                        + flight.getToLocation(), flight.getFromDate(), flight.getToDate(), flight.getPricePerSeat(),
+                                 flight.getCurrency(), flight.getLink());
                 items.add(item);
             }
         }
-        
+
         // find return leg
-        for(FlightInfo flight : flights){
-            if ((flight.getFromLocation().equals(tripLeg.getToLocation())) &&
-                (flight.getToLocation().equals(tripLeg.getFromLocation())) &&
-                (flight.getFromDate().equals(tripLeg.getToDate()))){
-                TripItem item = new TripItem("",
-                                             "",
-                                             TripItem.FLIGHT,
-                                             flight.getName(), 
-                                             flight.getDescription(), 
-                                             flight.getFromLocation() + " - " + flight.getToLocation(),
-                                             flight.getFromDate(),
-                                             tripLeg.getToDate(),
-                                             flight.getPricePerSeat(),
-                                             flight.getCurrency(),
-                                             flight.getLink());
+        for (FlightInfo flight : flights) {
+            if ((flight.getFromLocation().equals(tripLeg.getToLocation())) && (flight.getToLocation().equals(tripLeg
+                .getFromLocation()))
+                && (flight.getFromDate().equals(tripLeg.getToDate()))) {
+                TripItem item =
+                    new TripItem("", "", TripItem.FLIGHT, flight.getName(), flight.getDescription(), flight
+                        .getFromLocation() + " - "
+                        + flight.getToLocation(), flight.getFromDate(), tripLeg.getToDate(), flight.getPricePerSeat(),
+                                 flight.getCurrency(), flight.getLink());
                 items.add(item);
             }
-        }        
-        
+        }
+
         return items.toArray(new TripItem[items.size()]);
     }
-    
+
     public void searchAsynch(TripLeg tripLeg) {
-    	System.out.println("Starting flight search");
-    	
+        System.out.println("Starting flight search");
+
         // pretend that this processing takes some time to complete
-        while ( percentComplete < 100 ){ 
+        while (percentComplete < 100) {
             try {
                 Thread.sleep(50);
-            } catch(Exception ex){
+            } catch (Exception ex) {
                 // do nothing
             }
             percentComplete = percentComplete + 10;
             searchCallback.setPercentComplete(componentName, percentComplete);
         }
-        
+
         // return available flights
-        searchCallback.searchResults(searchSynch(tripLeg));  
+        searchCallback.searchResults(searchSynch(tripLeg));
     }
-    
-    public int getPercentComplete(){
+
+    public int getPercentComplete() {
         return 100;
-    }    
-    
+    }
+
     public String book(TripItem tripItem) {
         return "flight1";
     }

@@ -19,7 +19,6 @@
 
 package scatours.payment;
 
-import com.tuscanyscatours.payment.Payment;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -29,26 +28,31 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.tuscanyscatours.payment.Payment;
+
 public class PaymentTestCase {
     private static SCANode node;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        node = SCANodeFactory.newInstance().createSCANode(null, 
-                new SCAContribution("payment", "./target/classes"),
-                new SCAContribution("creditcard", "../../contributions/creditcard-payment-jaxb/target/classes"));
+        node =
+            SCANodeFactory.newInstance()
+                .createSCANode(null,
+                               new SCAContribution("payment", "./target/classes"),
+                               new SCAContribution("creditcard",
+                                                   "../../contributions/creditcard-payment-jaxb/target/classes"));
         node.start();
     }
-    
+
     @Test
     public void testPayment() {
-        SCAClient client = (SCAClient) node;
+        SCAClient client = (SCAClient)node;
         Payment payment = client.getService(Payment.class, "Payment");
-        
+
         System.out.println("\n\nSuccessful Payment - Status = \n\n" + payment.makePaymentMember("c-0", 100.00f));
         System.out.println("\n\nFailed Payment - Status = \n\n" + payment.makePaymentMember("c-1", 100.00f));
     }
-    
+
     @Test
     @Ignore
     public void testWaitForInput() {
@@ -58,7 +62,7 @@ public class PaymentTestCase {
         } catch (Exception ex) {
         }
         System.out.println("Shutting down");
-    }    
+    }
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {

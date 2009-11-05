@@ -19,13 +19,6 @@
 
 package scatours.payment.creditcard;
 
-import com.tuscanyscatours.payment.creditcard.AuthorizeFault_Exception;
-import com.tuscanyscatours.payment.creditcard.CreditCardDetailsType;
-import com.tuscanyscatours.payment.creditcard.CreditCardPayment;
-import com.tuscanyscatours.payment.creditcard.CreditCardTypeType;
-import com.tuscanyscatours.payment.creditcard.ObjectFactory;
-import com.tuscanyscatours.payment.creditcard.PayerType;
-
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -34,6 +27,13 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import com.tuscanyscatours.payment.creditcard.AuthorizeFault_Exception;
+import com.tuscanyscatours.payment.creditcard.CreditCardDetailsType;
+import com.tuscanyscatours.payment.creditcard.CreditCardPayment;
+import com.tuscanyscatours.payment.creditcard.CreditCardTypeType;
+import com.tuscanyscatours.payment.creditcard.ObjectFactory;
+import com.tuscanyscatours.payment.creditcard.PayerType;
 
 /**
  *
@@ -46,19 +46,19 @@ public class CreditCardPaymentTestCase {
      */
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-    	try {
-	        node = SCANodeFactory.newInstance().createSCANode(null,
-	            new SCAContribution("creditcard", "./target/classes"));
+        try {
+            node =
+                SCANodeFactory.newInstance().createSCANode(null, new SCAContribution("creditcard", "./target/classes"));
 
-	        node.start();
-    	} catch (Exception ex) {
-    		ex.printStackTrace();
-    	}
+            node.start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Test
     public void testCreditCardPayment() {
-        SCAClient client = (SCAClient) node;
+        SCAClient client = (SCAClient)node;
         CreditCardPayment cc = client.getService(CreditCardPayment.class, "CreditCardPayment");
 
         ObjectFactory objectFactory = new ObjectFactory();

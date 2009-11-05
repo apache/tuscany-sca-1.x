@@ -33,7 +33,8 @@ import com.tuscanyscatours.blog.BlogPost;
  * An Atom feed that implements the org.apache.tuscany.sca.binding.atom.collection.Collection
  * interface and uses the Atom APIs to construct the Atom feed.
  */
-public class AtomBlogFeedImpl extends BaseBlogFeedImpl implements org.apache.tuscany.sca.binding.atom.collection.Collection {
+public class AtomBlogFeedImpl extends BaseBlogFeedImpl implements
+    org.apache.tuscany.sca.binding.atom.collection.Collection {
 
     /**
      * Gets an Atom feed containing all the blog posts.

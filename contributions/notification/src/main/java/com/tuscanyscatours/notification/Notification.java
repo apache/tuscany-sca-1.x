@@ -20,7 +20,7 @@
 package com.tuscanyscatours.notification;
 
 public interface Notification {
-  
-  boolean notify(String accountID, String subject, String message);
+
+    boolean notify(String accountID, String subject, String message);
 
 }

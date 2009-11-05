@@ -30,30 +30,30 @@ public class SMSGatewayCORBAServiceBootstrap {
 
     public static void main(String[] args) throws Exception {
         System.out.println("Publishing SMS Gateway Service as a CORBA service: SMSGatewayCORBAService (port=5080)");
-        
+
         String[] orbArgs = {"-ORBInitialPort", "5080"};
-        ORB orb = ORB.init( orbArgs, null );
+        ORB orb = ORB.init(orbArgs, null);
 
         NamingContextExt namingCtx;
         try {
-          Object objRef = orb.resolve_initial_references("NameService");
-          namingCtx = NamingContextExtHelper.narrow(objRef);
+            Object objRef = orb.resolve_initial_references("NameService");
+            namingCtx = NamingContextExtHelper.narrow(objRef);
         } catch (Exception ex) {
-          System.err.println("ERROR: Failed to resolve Name Service.");
-          System.err.println("Don't forget to run it with:");
-          System.err.println("  tnameserv -ORBInitialPort 5080");
-          return;
+            System.err.println("ERROR: Failed to resolve Name Service.");
+            System.err.println("Don't forget to run it with:");
+            System.err.println("  tnameserv -ORBInitialPort 5080");
+            return;
         }
 
         Object rootPoaRef = orb.resolve_initial_references("RootPOA");
         POA rootPoa = POAHelper.narrow(rootPoaRef);
         rootPoa.the_POAManager().activate();
-        
+
         SMSGatewayServant smsGateway = new SMSGatewayServant();
         Object smsGatewayRef = rootPoa.servant_to_reference(smsGateway);
 
         String corbaServerName = "SMSGatewayCORBAService";
-        NameComponent[]  name = { new NameComponent(corbaServerName, "") };
+        NameComponent[] name = {new NameComponent(corbaServerName, "")};
         namingCtx.rebind(name, smsGatewayRef);
 
         System.out.println("CORBA server running - waiting for requests");

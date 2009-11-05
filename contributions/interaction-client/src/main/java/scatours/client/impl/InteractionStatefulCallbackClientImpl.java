@@ -24,7 +24,6 @@ import java.util.concurrent.CountDownLatch;
 import org.osoa.sca.ComponentContext;
 import org.osoa.sca.ServiceReference;
 import org.osoa.sca.annotations.Context;
-import org.osoa.sca.annotations.ConversationID;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
@@ -37,62 +36,63 @@ import com.tuscanyscatours.common.TripLeg;
 @Scope("CONVERSATION")
 @Service(Runnable.class)
 public class InteractionStatefulCallbackClientImpl implements Runnable, SearchCallback {
-	
+
     @Reference
     protected Search flightSearchStatefulCallback;
-    
+
     @Context
     protected ComponentContext componentContext;
-    
+
     CountDownLatch resultsReceivedCountdown;
-    
+
     public void run() {
-    	System.out.println("\nCalling flight component using stateful callback interation pattern");
-    	resultsReceivedCountdown = new CountDownLatch(1);
-    	TripLeg tripLeg = getTestTripLeg();
-    	
-        ServiceReference<Search> dynamicFlightSearchStatefulCallback = 
+        System.out.println("\nCalling flight component using stateful callback interation pattern");
+        resultsReceivedCountdown = new CountDownLatch(1);
+        TripLeg tripLeg = getTestTripLeg();
+
+        ServiceReference<Search> dynamicFlightSearchStatefulCallback =
             componentContext.getServiceReference(Search.class, "flightSearchStatefulCallback");
-        dynamicFlightSearchStatefulCallback.setConversationID("SomeUniqeID"); 
+        dynamicFlightSearchStatefulCallback.setConversationID("SomeUniqeID");
         Search flightSearch = dynamicFlightSearchStatefulCallback.getService();
-       
+
         flightSearch.searchAsynch(tripLeg);
-    	       
+
         // wait for a while and see how the flight search is getting one
         try {
             Thread.sleep(1200);
-        } catch(Exception ex){
+        } catch (Exception ex) {
             // do nothing
         }
         System.out.println("Flight search is " + flightSearch.getPercentComplete() + "% complete");
-        	
-    	// wait for responses to come back
+
+        // wait for responses to come back
         try {
             resultsReceivedCountdown.await();
-        } catch (InterruptedException ex){
+        } catch (InterruptedException ex) {
         }
     }
-    
-    public void searchResults(TripItem[] items){
-        System.out.println("Received results in conversation - " + componentContext.getRequestContext().getServiceReference().getConversation().getConversationID());
-        for (TripItem tripItem : items){
+
+    public void searchResults(TripItem[] items) {
+        System.out.println("Received results in conversation - " + componentContext.getRequestContext()
+            .getServiceReference().getConversation().getConversationID());
+        for (TripItem tripItem : items) {
             System.out.println("Found flight - " + tripItem.getName());
         }
         resultsReceivedCountdown.countDown();
-    }      
-    
-    public void setPercentComplete(String searchComponent, int percentComplete){
+    }
+
+    public void setPercentComplete(String searchComponent, int percentComplete) {
         System.out.println(searchComponent + " search is " + percentComplete + "% complete");
-    }    
-    
-    private TripLeg getTestTripLeg(){
-    	TripLeg tripLeg = new TripLeg();
-    	tripLeg.setFromLocation("LGW");
-    	tripLeg.setToLocation("FLR");
-    	tripLeg.setFromDate("06/12/09");
-    	tripLeg.setToDate("13/12/09");
-    	tripLeg.setNoOfPeople("1");
-    	tripLeg.setId("TRIP27");
-    	return tripLeg;
-    }    
+    }
+
+    private TripLeg getTestTripLeg() {
+        TripLeg tripLeg = new TripLeg();
+        tripLeg.setFromLocation("LGW");
+        tripLeg.setToLocation("FLR");
+        tripLeg.setFromDate("06/12/09");
+        tripLeg.setToDate("13/12/09");
+        tripLeg.setNoOfPeople("1");
+        tripLeg.setId("TRIP27");
+        return tripLeg;
+    }
 }

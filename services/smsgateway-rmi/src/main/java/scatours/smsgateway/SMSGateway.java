@@ -22,7 +22,6 @@ package scatours.smsgateway;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-
 /**
  * A gateway to send SMS messages.
  */

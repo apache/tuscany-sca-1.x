@@ -65,7 +65,7 @@ public class CreditCardPaymentImpl implements CreditCardPayment {
             return "FAILURE: Invalid Credit Card Number";
         }
 
-        return "SUCCESS: Auth Code=" + UUID.randomUUID() + " (EUR"+amount+"->USD" + charge + ")";
+        return "SUCCESS: Auth Code=" + UUID.randomUUID() + " (EUR" + amount + "->USD" + charge + ")";
     }
 
     private void print(CreditCardDetailsType creditCard) throws JAXBException, PropertyException {

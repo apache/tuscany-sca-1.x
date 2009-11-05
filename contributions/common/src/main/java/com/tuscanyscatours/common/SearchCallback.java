@@ -28,5 +28,6 @@ import org.osoa.sca.annotations.Remotable;
 public interface SearchCallback {
     @EndsConversation
     void searchResults(TripItem[] items);
+
     void setPercentComplete(String searchComponent, int percentComplete);
 }

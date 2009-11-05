@@ -31,8 +31,10 @@ public class CurrencyConverterJMSLauncher {
         SCAContribution currencyJMSContribution = locate("currency-jms");
         SCAContribution currencyContribution = locate("currency");
 
-        SCANode node = SCANodeFactory.newInstance().createSCANode(
-                "currency-converter-jms.composite", currencyContribution, currencyJMSContribution);
+        SCANode node =
+            SCANodeFactory.newInstance().createSCANode("currency-converter-jms.composite",
+                                                       currencyContribution,
+                                                       currencyJMSContribution);
         node.start();
 
         System.out.println("Node started - Press enter to shutdown.");

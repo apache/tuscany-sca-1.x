@@ -24,49 +24,47 @@ import java.util.List;
 import org.osoa.sca.annotations.ConversationID;
 import org.osoa.sca.annotations.Destroy;
 import org.osoa.sca.annotations.Init;
-import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
 import com.tuscanyscatours.common.TripItem;
-import com.tuscanyscatours.payment.Payment;
 import com.tuscanyscatours.shoppingcart.CartStore;
 
 /**
  * An implementation of the CartStore service
  */
 @Scope("CONVERSATION")
-@Service(interfaces={CartStore.class})
-public class CartStoreImpl implements CartStore{
+@Service(interfaces = {CartStore.class})
+public class CartStoreImpl implements CartStore {
 
     @ConversationID
     protected String cartId;
-    
+
     private List<TripItem> trips = new ArrayList<TripItem>();
-        
+
     @Init
     public void initCart() {
         System.out.println("CartStore init for id: " + cartId);
     }
-    
+
     @Destroy
     public void destroyCart() {
         System.out.println("CartStore destroy for id: " + cartId);
     }
-    
+
     public void addTrip(TripItem trip) {
         trips.add(trip);
     }
-    
+
     public void removeTrip(TripItem trip) {
         trips.remove(trip);
     }
-    
-    public TripItem[] getTrips(){
+
+    public TripItem[] getTrips() {
         return trips.toArray(new TripItem[trips.size()]);
     }
-    
-    public void reset(){ 
+
+    public void reset() {
         trips.clear();
-    }   
+    }
 }

@@ -19,7 +19,6 @@
 
 package com.tuscanyscatours.customer;
 
-
 public class CustomerNotFoundException extends Exception {
     private static final long serialVersionUID = -129752837478357452L;
 

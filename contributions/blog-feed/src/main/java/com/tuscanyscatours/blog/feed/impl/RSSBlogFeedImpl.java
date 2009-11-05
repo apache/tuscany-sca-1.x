@@ -23,20 +23,20 @@ import java.util.List;
 
 import org.apache.tuscany.sca.binding.rss.collection.NotFoundException;
 
-import com.tuscanyscatours.blog.BlogPost;
-
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
+import com.tuscanyscatours.blog.BlogPost;
 
 /**
  * An RSS feed that implements the org.apache.tuscany.sca.binding.rss.collection.Collection
  * interface and uses the RSS APIs to construct the RSS feed.
  */
-public class RSSBlogFeedImpl extends BaseBlogFeedImpl implements org.apache.tuscany.sca.binding.rss.collection.Collection {
+public class RSSBlogFeedImpl extends BaseBlogFeedImpl implements
+    org.apache.tuscany.sca.binding.rss.collection.Collection {
 
     /**
      * Gets an RSS feed containing all the blog posts.
@@ -57,7 +57,7 @@ public class RSSBlogFeedImpl extends BaseBlogFeedImpl implements org.apache.tusc
             entry.setUri(nextBlogID());
             entry.setAuthor(blogEntry.getAuthor());
             entry.setTitle(blogEntry.getTitle());
-            
+
             SyndContent content = new SyndContentImpl();
             content.setType("text");
             content.setValue(blogEntry.getContent());

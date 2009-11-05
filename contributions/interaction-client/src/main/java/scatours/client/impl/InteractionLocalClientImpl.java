@@ -27,26 +27,27 @@ import com.tuscanyscatours.common.TripLeg;
 
 @Service(Runnable.class)
 public class InteractionLocalClientImpl implements Runnable {
-	
+
     @Reference
     protected Calendar calendarLocal;
 
-    public void run() {   	
-    	System.out.println("\nCalling calendar component over a local binding");
-    	TripLeg tripLeg = getTestTripLeg();
-    	String toDate = calendarLocal.getEndDate(tripLeg.getFromDate(), 10);
-    	tripLeg.setToDate(toDate);
-    	System.out.println("Calculated trip end date - " + toDate);;
+    public void run() {
+        System.out.println("\nCalling calendar component over a local binding");
+        TripLeg tripLeg = getTestTripLeg();
+        String toDate = calendarLocal.getEndDate(tripLeg.getFromDate(), 10);
+        tripLeg.setToDate(toDate);
+        System.out.println("Calculated trip end date - " + toDate);
+        ;
     }
-    
-    private TripLeg getTestTripLeg(){
-    	TripLeg tripLeg = new TripLeg();
-    	tripLeg.setFromLocation("LGW");
-    	tripLeg.setToLocation("FLR");
-    	tripLeg.setFromDate("06/12/09 00:00");
-    	tripLeg.setToDate("13/12/09 00:00");
-    	tripLeg.setNoOfPeople("1");
-    	tripLeg.setId("TRIP27");
-    	return tripLeg;
+
+    private TripLeg getTestTripLeg() {
+        TripLeg tripLeg = new TripLeg();
+        tripLeg.setFromLocation("LGW");
+        tripLeg.setToLocation("FLR");
+        tripLeg.setFromDate("06/12/09 00:00");
+        tripLeg.setToDate("13/12/09 00:00");
+        tripLeg.setNoOfPeople("1");
+        tripLeg.setId("TRIP27");
+        return tripLeg;
     }
 }

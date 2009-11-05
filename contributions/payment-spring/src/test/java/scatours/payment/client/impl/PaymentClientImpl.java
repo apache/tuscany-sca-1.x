@@ -19,9 +19,10 @@
 
 package scatours.payment.client.impl;
 
-import com.tuscanyscatours.payment.Payment;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
+
+import com.tuscanyscatours.payment.Payment;
 
 @Service(Payment.class)
 public class PaymentClientImpl implements Payment {

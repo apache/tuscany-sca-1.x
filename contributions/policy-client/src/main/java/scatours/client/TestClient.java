@@ -33,6 +33,6 @@ public class TestClient {
     }
 
     public void run() {
-        System.out.println("TestClient - Successful Payment - Status = " + payment.makePaymentMember("c-0", 100.00f));    
+        System.out.println("TestClient - Successful Payment - Status = " + payment.makePaymentMember("c-0", 100.00f));
     }
 }

@@ -42,8 +42,8 @@ public class CurrencyConverterServlet extends HttpServlet {
             // The Currency Converter reference will only be injected from the @Reference 
             // annotation in containers supporting SCA "deep" integration. In other 
             // environments in can be looked up from the ComponentContext.
-            ComponentContext context = (ComponentContext) config.getServletContext()
-                    .getAttribute("org.osoa.sca.ComponentContext");
+            ComponentContext context =
+                (ComponentContext)config.getServletContext().getAttribute("org.osoa.sca.ComponentContext");
             currencyConverter = context.getService(CurrencyConverter.class, "currencyConverter");
         }
     }
@@ -60,11 +60,11 @@ public class CurrencyConverterServlet extends HttpServlet {
         out.write("</form><p>");
 
         String dollarsStr = request.getParameter("dollars");
-        if ( dollarsStr != null) {
-           double dollars = Double.parseDouble(dollarsStr);
-           double converted = currencyConverter.convert("USD", "GBP", dollars);
-           out.write(dollars + " US Dollars = " + converted + " GB Pounds");
-       }
+        if (dollarsStr != null) {
+            double dollars = Double.parseDouble(dollarsStr);
+            double converted = currencyConverter.convert("USD", "GBP", dollars);
+            out.write(dollars + " US Dollars = " + converted + " GB Pounds");
+        }
 
         out.write("</body></html>");
         out.write("</body></html>");

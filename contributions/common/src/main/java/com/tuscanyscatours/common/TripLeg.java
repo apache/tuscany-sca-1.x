@@ -19,9 +19,8 @@
 
 package com.tuscanyscatours.common;
 
-
 public class TripLeg {
-    
+
     private String id;
     private String fromLocation;
     private String toLocation;
@@ -29,69 +28,58 @@ public class TripLeg {
     private String toDate;
     private String noOfPeople;
 
-    
     public TripLeg() {
     }
-    
-    public TripLeg(String id, 
-                       String fromLocation, 
-                       String toLocation, 
-                       String fromDate, 
-                       String toDate, 
-                       String noOfPeople) {
-    }    
-    
+
+    public TripLeg(String id, String fromLocation, String toLocation, String fromDate, String toDate, String noOfPeople) {
+    }
+
     public String getId() {
         return id;
     }
-    
+
     public void setId(String id) {
         this.id = id;
-    }    
-    
+    }
+
     public String getFromLocation() {
         return fromLocation;
     }
-    
+
     public void setFromLocation(String fromLocation) {
         this.fromLocation = fromLocation;
     }
-    
+
     public String getToLocation() {
         return toLocation;
     }
-    
+
     public void setToLocation(String toLocation) {
         this.toLocation = toLocation;
-    }     
-    
+    }
+
     public String getFromDate() {
         return fromDate;
     }
-    
+
     public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
-    
+
     public String getToDate() {
         return toDate;
     }
-    
+
     public void setToDate(String toDate) {
         this.toDate = toDate;
-    }    
+    }
 
     public String getNoOfPeople() {
         return noOfPeople;
     }
-    
+
     public void setNoOfPeople(String noOfPeople) {
         this.noOfPeople = noOfPeople;
     }
-    
-    
-    
 
-    
-  
 }

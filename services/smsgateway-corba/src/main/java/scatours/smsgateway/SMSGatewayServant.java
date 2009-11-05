@@ -18,7 +18,6 @@
  */
 package scatours.smsgateway;
 
-
 public class SMSGatewayServant extends SMSGatewayPOA {
 
     public boolean sendSMS(String fromNumber, String toNumber, String text) {

@@ -28,16 +28,17 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 public class IntroducingLauncher {
 
     public static void main(String[] args) throws Exception {
-        SCANode node = SCANodeFactory.newInstance().createSCANode(null, 
-            locate("introducing-tours"),
-            locate("introducing-trips"),
-            locate("introducing-client"));
+        SCANode node =
+            SCANodeFactory.newInstance().createSCANode(null,
+                                                       locate("introducing-tours"),
+                                                       locate("introducing-trips"),
+                                                       locate("introducing-client"));
 
         node.start();
 
         Runnable proxy = ((SCAClient)node).getService(Runnable.class, "TestClient/Runnable");
         proxy.run();
-        
+
         node.stop();
     }
 }

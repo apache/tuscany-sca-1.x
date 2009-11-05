@@ -37,48 +37,48 @@ import com.tuscanyscatours.tripbooking.TripBooking;
  * the outward facing bindings to be changed without changing the individual contributions
  */
 @Scope("COMPOSITE")
-@Service(interfaces={SCAToursSearch.class, SCAToursBooking.class, SCAToursCart.class})
-public class SCAToursImpl implements SCAToursSearch, SCAToursBooking, SCAToursCart{
-    
+@Service(interfaces = {SCAToursSearch.class, SCAToursBooking.class, SCAToursCart.class})
+public class SCAToursImpl implements SCAToursSearch, SCAToursBooking, SCAToursCart {
+
     @Reference
     protected TravelCatalogSearch travelCatalogSearch;
-    
-    @Reference 
+
+    @Reference
     protected TripBooking tripBooking;
-    
-    @Reference 
-    protected CartInitialize cartInitialize; 
-    
-    @Reference 
-    protected CartCheckout cartCheckout; 
-        
+
+    @Reference
+    protected CartInitialize cartInitialize;
+
+    @Reference
+    protected CartCheckout cartCheckout;
+
     // SCAToursSearch methods
-    
+
     public TripItem[] search(TripLeg tripLeg) {
         return travelCatalogSearch.search(tripLeg);
-    } 
+    }
 
     // SCAToursBooking methods
-    
-    public String bookTrip(String cartId, TripItem trip){
+
+    public String bookTrip(String cartId, TripItem trip) {
         TripItem bookedTrip = tripBooking.bookTrip(cartId, trip);
         return bookedTrip.getBookingCode();
     }
-    
+
     // SCAToursCart methods
-    
-    public String newCart(){
+
+    public String newCart() {
         String cartId = cartInitialize.newCart();
         return cartId;
-    }  
-    
-    public TripItem[] getTrips(String cartId){
+    }
+
+    public TripItem[] getTrips(String cartId) {
         return cartInitialize.getTrips(cartId);
     }
-    
-    public void checkout(String cartId){
+
+    public void checkout(String cartId) {
         // need to get the user id from the context here but
-    	// just make one up for the time being
+        // just make one up for the time being
         cartCheckout.checkout(cartId, "c-0");
-    }   
+    }
 }

@@ -34,41 +34,42 @@ public class PaymentImpl implements Payment {
     protected CreditCardPayment creditCardPayment;
     protected EmailGateway emailGateway;
     protected float transactionFee = 0;
-    
+
     //@Reference
     public void setCreditCardPayment(CreditCardPayment creditCardPayment) {
         this.creditCardPayment = creditCardPayment;
     }
-    
+
     public void setEmailGateway(EmailGateway emailGateway) {
         this.emailGateway = emailGateway;
     }
-    
+
     //@Property
     public void setTransactionFee(Float transactionFee) {
         this.transactionFee = transactionFee;
     }
-    
+
     public String makePaymentMember(String customerId, float amount) {
-        
+
         ObjectFactory objectFactory = new ObjectFactory();
         CreditCardDetailsType ccDetails = objectFactory.createCreditCardDetailsType();
         ccDetails.setCreditCardType(CreditCardTypeType.fromValue("Visa"));
         PayerType ccOwner = objectFactory.createPayerType();
         ccOwner.setName(customerId);
         ccDetails.setCardOwner(ccOwner);
-        
+
         amount += transactionFee;
-        
+
         String status = creditCardPayment.authorize(ccDetails, amount);
-        
-        com.tuscanyscatours.emailgateway.ObjectFactory emailFactory = new com.tuscanyscatours.emailgateway.ObjectFactory();
+
+        com.tuscanyscatours.emailgateway.ObjectFactory emailFactory =
+            new com.tuscanyscatours.emailgateway.ObjectFactory();
         EmailType email = emailFactory.createEmailType();
         email.setTitle("Payment Received");
         email.setTo(customerId);
-        
+
         emailGateway.sendEmail(email);
-        
+
         return status;
     }
 

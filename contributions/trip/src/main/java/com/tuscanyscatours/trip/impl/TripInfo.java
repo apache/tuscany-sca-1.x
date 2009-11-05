@@ -19,9 +19,8 @@
 
 package com.tuscanyscatours.trip.impl;
 
-
 public class TripInfo {
-    
+
     private String name;
     private String description;
     private String fromLocation;
@@ -32,12 +31,12 @@ public class TripInfo {
     private double pricePerPerson;
     private String currency;
     private String link;
-    
+
     public TripInfo() {
-    }  
-    
-    public TripInfo(String name, 
-                    String description, 
+    }
+
+    public TripInfo(String name,
+                    String description,
                     String fromLocation,
                     String toLocation,
                     String fromDate,
@@ -47,7 +46,6 @@ public class TripInfo {
                     String currency,
                     String link) {
 
-        
         this.name = name;
         this.description = description;
         this.fromLocation = fromLocation;
@@ -58,84 +56,84 @@ public class TripInfo {
         this.pricePerPerson = pricePerPerson;
         this.currency = currency;
         this.link = link;
-    }  
-    
+    }
+
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
-    }    
-    
+    }
+
     public String getDescription() {
         return description;
     }
-    
+
     public void setDescription(String description) {
-        this.description = description; 
-    }   
-    
+        this.description = description;
+    }
+
     public String getFromLocation() {
         return fromLocation;
     }
-    
+
     public void setFromLocation(String fromLocation) {
         this.fromLocation = fromLocation;
     }
-    
+
     public String getToLocation() {
         return toLocation;
-    }    
-    
+    }
+
     public void setToLocation(String toLocation) {
         this.toLocation = toLocation;
     }
-    
+
     public String getFromDate() {
         return fromDate;
     }
-    
+
     public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
-    
+
     public String getToDate() {
         return toDate;
     }
-    
+
     public void setToDate(String toDate) {
         this.toDate = toDate;
     }
-    
+
     public String getSpaces() {
         return spaces;
     }
-    
+
     public void setSpaces(String spaces) {
         this.spaces = spaces;
     }
-    
+
     public double getPricePerPerson() {
         return pricePerPerson;
     }
-    
+
     public void setPricePerPerson(double pricePerPerson) {
         this.pricePerPerson = pricePerPerson;
     }
-    
+
     public String getCurrency() {
         return currency;
     }
-    
+
     public void setCurrency(String currency) {
         this.currency = currency;
     }
-    
+
     public String getLink() {
         return link;
     }
-    
+
     public void setLink(String link) {
         this.link = link;
     }

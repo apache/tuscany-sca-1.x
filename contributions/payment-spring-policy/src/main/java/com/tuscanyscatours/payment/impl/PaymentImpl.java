@@ -33,45 +33,45 @@ public class PaymentImpl implements Payment {
     private CustomerRegistry customerRegistry;
     private EmailGateway emailGateway;
     private float transactionFee;
-    
+
     public void setCreditCardPayment(CreditCardPayment creditCardPayment) {
         this.creditCardPayment = creditCardPayment;
     }
-    
+
     public void setCustomerRegistry(CustomerRegistry customerRegistry) {
         this.customerRegistry = customerRegistry;
-    }    
-    
+    }
+
     public void setEmailGateway(EmailGateway emailGateway) {
         this.emailGateway = emailGateway;
     }
-    
+
     public void setTransactionFee(Float transactionFee) {
         this.transactionFee = transactionFee;
     }
-    
+
     public String makePaymentMember(String customerId, float amount) {
         try {
             Customer customer = customerRegistry.getCustomer(customerId);
-            
+
             amount += transactionFee;
-            
+
             String status = creditCardPayment.authorize(customer.getCreditCard(), amount);
-            
-            com.tuscanyscatours.emailgateway.ObjectFactory emailFactory
-                = new com.tuscanyscatours.emailgateway.ObjectFactory();
+
+            com.tuscanyscatours.emailgateway.ObjectFactory emailFactory =
+                new com.tuscanyscatours.emailgateway.ObjectFactory();
             EmailType email = emailFactory.createEmailType();
             email.setTitle("Payment Received");
             email.setTo(customerId);
-            
+
             emailGateway.sendEmail(email);
-            
+
             return status;
         } catch (CustomerNotFoundException ex) {
             return "Payment failed due to " + ex.getMessage();
         } catch (Throwable t) {
             return "Payment failed due to system error " + t.getMessage();
-        }         
+        }
     }
 
 }

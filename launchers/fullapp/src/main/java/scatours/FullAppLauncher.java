@@ -28,7 +28,6 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 
 public class FullAppLauncher {
 
-
     public static void main(String[] args) throws Exception {
         SCANode node =
             SCANodeFactory.newInstance().createSCANode(null,

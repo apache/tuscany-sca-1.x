@@ -25,5 +25,6 @@ import com.tuscanyscatours.common.TripItem;
 @Remotable
 public interface CartInitialize {
     String newCart();
+
     TripItem[] getTrips(String cartId);
 }

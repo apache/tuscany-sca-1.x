@@ -28,20 +28,17 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 public class PolicyLauncher {
 
     public static void main(String[] args) throws Exception {
-        SCANode node1 = SCANodeFactory.newInstance().createSCANode(null, 
-            locate("client"),
-            locate("payment"));
+        SCANode node1 = SCANodeFactory.newInstance().createSCANode(null, locate("client"), locate("payment"));
 
         node1.start();
-        
-        SCANode node2 = SCANodeFactory.newInstance().createSCANode(null, 
-                locate("creditcard"));
-        
+
+        SCANode node2 = SCANodeFactory.newInstance().createSCANode(null, locate("creditcard"));
+
         node2.start();
-        
+
         Runnable client = ((SCAClient)node1).getService(Runnable.class, "TestClient/Runnable");
         client.run();
-        
+
         node1.stop();
         node2.stop();
     }

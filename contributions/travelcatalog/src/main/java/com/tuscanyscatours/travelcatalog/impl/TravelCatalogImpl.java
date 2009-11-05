@@ -43,87 +43,85 @@ import com.tuscanyscatours.travelcatalog.TravelCatalogSearch;
  * An implementation of the travel catalog service
  */
 @Scope("COMPOSITE")
-@Service(interfaces={TravelCatalogSearch.class})
-public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback{
-    
-    @Reference 
+@Service(interfaces = {TravelCatalogSearch.class})
+public class TravelCatalogImpl implements TravelCatalogSearch, SearchCallback {
+
+    @Reference
     protected Search hotelSearch;
-    
-    @Reference 
+
+    @Reference
     protected Search flightSearch;
-    
-    @Reference 
+
+    @Reference
     protected Search carSearch;
-    
-    @Reference 
-    protected Search tripSearch;    
-           
+
+    @Reference
+    protected Search tripSearch;
+
     @Property
     public String quoteCurrencyCode = "USD";
-    
+
     @Reference
-    protected CurrencyConverter currencyConverter;    
-    
+    protected CurrencyConverter currencyConverter;
+
     @Context
     protected ComponentContext componentContext;
-        
+
     private List<TripItem> searchResults = new ArrayList<TripItem>();
-    
+
     CountDownLatch resultsReceivedCountdown;
-    
+
     // TravelSearch methods
-    
+
     public TripItem[] search(TripLeg tripLeg) {
-        
-    	resultsReceivedCountdown = new CountDownLatch(4);
+
+        resultsReceivedCountdown = new CountDownLatch(4);
         searchResults.clear();
-        
-        ServiceReference<Search> dynamicHotelSearch = 
-            componentContext.getServiceReference(Search.class, "hotelSearch");
-        
-        dynamicHotelSearch.setCallbackID("HotelSearchCallbackID-" + tripLeg.getId());        
+
+        ServiceReference<Search> dynamicHotelSearch = componentContext.getServiceReference(Search.class, "hotelSearch");
+
+        dynamicHotelSearch.setCallbackID("HotelSearchCallbackID-" + tripLeg.getId());
         dynamicHotelSearch.getService().searchAsynch(tripLeg);
-        
-        flightSearch.searchAsynch(tripLeg); 
+
+        flightSearch.searchAsynch(tripLeg);
         carSearch.searchAsynch(tripLeg);
         tripSearch.searchAsynch(tripLeg);
-        
+
         System.out.println("going into wait");
-        
+
         try {
-        	resultsReceivedCountdown.await();
-        } catch (InterruptedException ex){
+            resultsReceivedCountdown.await();
+        } catch (InterruptedException ex) {
         }
-        
-        for (TripItem tripItem : searchResults){
+
+        for (TripItem tripItem : searchResults) {
             tripItem.setId(UUID.randomUUID().toString());
             tripItem.setTripId(tripLeg.getId());
-            tripItem.setPrice(currencyConverter.convert(tripItem.getCurrency(), 
-                                                        quoteCurrencyCode, 
-                                                        tripItem.getPrice()));
+            tripItem
+                .setPrice(currencyConverter.convert(tripItem.getCurrency(), quoteCurrencyCode, tripItem.getPrice()));
             tripItem.setCurrency(quoteCurrencyCode);
         }
-        
+
         return searchResults.toArray(new TripItem[searchResults.size()]);
     }
-    
+
     // SearchCallback methods
-    
-    public synchronized void searchResults(TripItem[] items){
+
+    public synchronized void searchResults(TripItem[] items) {
         RequestContext requestContext = componentContext.getRequestContext();
         Object callbackID = requestContext.getServiceReference().getCallbackID();
         System.out.println("Asynch response - " + callbackID);
-        
+
         if (items != null) {
-            for(int i = 0; i < items.length; i++ ){
+            for (int i = 0; i < items.length; i++) {
                 searchResults.add(items[i]);
             }
         }
-        
+
         resultsReceivedCountdown.countDown();
-    } 
-    
-    public void setPercentComplete(String searchComponent, int percentComplete){
+    }
+
+    public void setPercentComplete(String searchComponent, int percentComplete) {
         // Not used at the moment
     }
 }

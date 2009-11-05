@@ -23,11 +23,8 @@ package com.tuscanyscatours.currencyconverter;
  */
 public interface CurrencyConverter {
 
-    double getExchangeRate(String fromCurrencyCode, 
-                           String toCurrencyCode);
-    
-    double convert(String fromCurrencyCode, 
-                   String toCurrencyCode, 
-                   double amount);    
+    double getExchangeRate(String fromCurrencyCode, String toCurrencyCode);
+
+    double convert(String fromCurrencyCode, String toCurrencyCode, double amount);
 
 }

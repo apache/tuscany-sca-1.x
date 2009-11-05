@@ -32,47 +32,47 @@ import com.tuscanyscatours.common.TripLeg;
 
 @Scope("COMPOSITE")
 @Service(Runnable.class)
-public class InteractionOneWayCallbackClientImpl implements Runnable, SearchCallback{
-	
+public class InteractionOneWayCallbackClientImpl implements Runnable, SearchCallback {
+
     @Reference
     protected Search hotelSearchOneWayCallback;
-    
+
     CountDownLatch resultsReceivedCountdown;
-    
+
     public void run() {
-    	System.out.println("\nCalling hotel component using both one way and callback interation patterns");
-    	resultsReceivedCountdown = new CountDownLatch(1);
-    	TripLeg tripLeg = getTestTripLeg();
-    	hotelSearchOneWayCallback.searchAsynch(tripLeg);
-    	
-    	// start other searched here while the hotel search progresses
-    	
-    	// wait for responses to come back
+        System.out.println("\nCalling hotel component using both one way and callback interation patterns");
+        resultsReceivedCountdown = new CountDownLatch(1);
+        TripLeg tripLeg = getTestTripLeg();
+        hotelSearchOneWayCallback.searchAsynch(tripLeg);
+
+        // start other searched here while the hotel search progresses
+
+        // wait for responses to come back
         try {
             resultsReceivedCountdown.await();
-        } catch (InterruptedException ex){
+        } catch (InterruptedException ex) {
         }
     }
-    
-    public void searchResults(TripItem[] items){
-        for (TripItem tripItem : items){
+
+    public void searchResults(TripItem[] items) {
+        for (TripItem tripItem : items) {
             System.out.println("Found hotel - " + tripItem.getName());
         }
         resultsReceivedCountdown.countDown();
-    }  
-    
-    public void setPercentComplete(String searchComponent, int percentComplete){
+    }
+
+    public void setPercentComplete(String searchComponent, int percentComplete) {
         // Not used in this sample
-    }    
-    
-    private TripLeg getTestTripLeg(){
-    	TripLeg tripLeg = new TripLeg();
-    	tripLeg.setFromLocation("LGW");
-    	tripLeg.setToLocation("FLR");
-    	tripLeg.setFromDate("06/12/09 00:00");
-    	tripLeg.setToDate("13/12/09 00:00");
-    	tripLeg.setNoOfPeople("1");
-    	tripLeg.setId("TRIP27");
-    	return tripLeg;
-    }    
+    }
+
+    private TripLeg getTestTripLeg() {
+        TripLeg tripLeg = new TripLeg();
+        tripLeg.setFromLocation("LGW");
+        tripLeg.setToLocation("FLR");
+        tripLeg.setFromDate("06/12/09 00:00");
+        tripLeg.setToDate("13/12/09 00:00");
+        tripLeg.setNoOfPeople("1");
+        tripLeg.setId("TRIP27");
+        return tripLeg;
+    }
 }

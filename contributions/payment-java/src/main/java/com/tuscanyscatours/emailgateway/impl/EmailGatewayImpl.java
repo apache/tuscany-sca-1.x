@@ -20,6 +20,7 @@
 package com.tuscanyscatours.emailgateway.impl;
 
 import org.osoa.sca.annotations.Service;
+
 import com.tuscanyscatours.emailgateway.EmailGateway;
 
 @Service(EmailGateway.class)

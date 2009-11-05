@@ -19,9 +19,8 @@
 
 package com.tuscanyscatours.flight.impl;
 
-
 public class FlightInfo {
-    
+
     private String name;
     private String description;
     private String fromLocation;
@@ -32,12 +31,12 @@ public class FlightInfo {
     private double pricePerSeat;
     private String currency;
     private String link;
-    
+
     public FlightInfo() {
-    }  
-    
-    public FlightInfo(String name, 
-                      String description, 
+    }
+
+    public FlightInfo(String name,
+                      String description,
                       String fromLocation,
                       String toLocation,
                       String fromDate,
@@ -47,7 +46,6 @@ public class FlightInfo {
                       String currency,
                       String link) {
 
-        
         this.name = name;
         this.description = description;
         this.fromLocation = fromLocation;
@@ -58,84 +56,84 @@ public class FlightInfo {
         this.pricePerSeat = pricePerSeat;
         this.currency = currency;
         this.link = link;
-    }  
-    
+    }
+
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
-    }    
-    
+    }
+
     public String getDescription() {
         return description;
     }
-    
+
     public void setDescription(String description) {
-        this.description = description; 
-    }   
-    
+        this.description = description;
+    }
+
     public String getFromLocation() {
         return fromLocation;
     }
-    
+
     public void setFromLocation(String fromLocation) {
         this.fromLocation = fromLocation;
     }
-    
+
     public String getToLocation() {
         return toLocation;
     }
-    
+
     public void setToLocation(String toLocation) {
         this.toLocation = toLocation;
     }
-    
+
     public String getFromDate() {
         return fromDate;
     }
-    
+
     public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
-    
+
     public String getToDate() {
         return toDate;
     }
-    
+
     public void setToDate(String toDate) {
         this.toDate = toDate;
     }
-    
+
     public String getSeats() {
         return seats;
     }
-    
+
     public void setSeats(String seats) {
         this.seats = seats;
     }
-    
+
     public double getPricePerSeat() {
         return pricePerSeat;
     }
-    
+
     public void setPricePerSeat(double pricePerSeat) {
         this.pricePerSeat = pricePerSeat;
     }
-    
+
     public String getCurrency() {
         return currency;
     }
-    
+
     public void setCurrency(String currency) {
         this.currency = currency;
     }
-    
+
     public String getLink() {
         return link;
     }
-    
+
     public void setLink(String link) {
         this.link = link;
     }

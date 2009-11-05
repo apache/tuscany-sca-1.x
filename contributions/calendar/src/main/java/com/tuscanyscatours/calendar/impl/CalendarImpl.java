@@ -28,20 +28,20 @@ import com.tuscanyscatours.calendar.Calendar;
  */
 public class CalendarImpl implements Calendar {
 
-    public String getEndDate(String startDate, int duration){
+    public String getEndDate(String startDate, int duration) {
         String returnDate = "Invalid Date";
-        
+
         try {
             Date date = DateFormat.getInstance().parse(startDate);
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTime(date);
             calendar.add(java.util.Calendar.DATE, duration);
             returnDate = DateFormat.getInstance().format(calendar.getTime());
-        } catch (Exception ex){
+        } catch (Exception ex) {
             // do nothing  
             System.out.println(ex.toString());
         }
-        
+
         return returnDate;
     }
 }

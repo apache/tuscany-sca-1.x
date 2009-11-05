@@ -35,16 +35,18 @@ public class JumpstartTestCase {
 
     @Before
     public void startServer() throws Exception {
-        node = SCANodeFactory.newInstance().createSCANode("trips.composite", 
-            new SCAContribution("introducing-trips", "../../contributions/introducing-trips/target/classes"));
+        node =
+            SCANodeFactory.newInstance()
+                .createSCANode("trips.composite",
+                               new SCAContribution("introducing-trips",
+                                                   "../../contributions/introducing-trips/target/classes"));
         node.start();
     }
 
     @Test
     public void testClient() throws Exception {
         Trips tripProvider = ((SCAClient)node).getService(Trips.class, "TripProvider/Trips");
-        System.out.println("Trip boooking code = " + 
-                           tripProvider.checkAvailability("FS1APR4", 2));
+        System.out.println("Trip boooking code = " + tripProvider.checkAvailability("FS1APR4", 2));
     }
 
     @After

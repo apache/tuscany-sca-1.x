@@ -19,10 +19,6 @@
 
 package com.tuscanyscatours.payment.impl;
 
-import javax.annotation.security.RolesAllowed;
-import javax.annotation.security.RunAs;
-
-import org.osoa.sca.annotations.Authentication;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
@@ -33,7 +29,6 @@ import com.tuscanyscatours.customer.CustomerRegistry;
 import com.tuscanyscatours.emailgateway.EmailGateway;
 import com.tuscanyscatours.payment.Payment;
 import com.tuscanyscatours.payment.creditcard.AuthorizeFault_Exception;
-import com.tuscanyscatours.payment.creditcard.CreditCardDetailsType;
 import com.tuscanyscatours.payment.creditcard.CreditCardPayment;
 
 /**
@@ -57,11 +52,10 @@ public class PaymentImpl implements Payment {
     public String makePaymentMember(String customerId, float amount) {
         try {
             Customer customer = customerRegistry.getCustomer(customerId);
-            String status = creditCardPayment.authorize(customer.getCreditCard(), 
-                                                        amount + transactionFee);
-            emailGateway.sendEmail("order@tuscanyscatours.com", 
-                                   customer.getEmail(), 
-                                   "Status for your payment", 
+            String status = creditCardPayment.authorize(customer.getCreditCard(), amount + transactionFee);
+            emailGateway.sendEmail("order@tuscanyscatours.com",
+                                   customer.getEmail(),
+                                   "Status for your payment",
                                    customer + " >>> Status = " + status);
             return status;
         } catch (CustomerNotFoundException ex) {
@@ -70,6 +64,6 @@ public class PaymentImpl implements Payment {
             return e.getFaultInfo().getErrorCode();
         } catch (Throwable t) {
             return "Payment failed due to system error " + t.getMessage();
-        } 
+        }
     }
 }

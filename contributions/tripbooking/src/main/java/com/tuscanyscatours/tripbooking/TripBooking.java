@@ -27,6 +27,6 @@ import com.tuscanyscatours.common.TripItem;
  */
 @Remotable
 public interface TripBooking {
-       
+
     TripItem bookTrip(String cartId, TripItem trip);
 }

@@ -29,20 +29,15 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 public class JumpstartLauncher {
 
     public static void main(String[] args) throws Exception {
-        SCAContribution gvtContribution = 
-          locate("introducing-trips");
-        
-        SCANode node = SCANodeFactory.newInstance().
-           createSCANode("trips.composite", 
-                         gvtContribution);
-        
+        SCAContribution gvtContribution = locate("introducing-trips");
+
+        SCANode node = SCANodeFactory.newInstance().createSCANode("trips.composite", gvtContribution);
+
         node.start();
 
-        Trips tripProvider = ((SCAClient)node).getService(Trips.class, 
-                                                          "TripProvider/Trips");
-        
-        System.out.println("Trip boooking code = " + 
-                           tripProvider.checkAvailability("FS1APR4", 2));
+        Trips tripProvider = ((SCAClient)node).getService(Trips.class, "TripProvider/Trips");
+
+        System.out.println("Trip boooking code = " + tripProvider.checkAvailability("FS1APR4", 2));
 
         node.stop();
     }

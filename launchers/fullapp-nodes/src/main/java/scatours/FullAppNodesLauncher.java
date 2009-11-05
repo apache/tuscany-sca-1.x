@@ -25,27 +25,34 @@ import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 
 public class FullAppNodesLauncher {
-      	
+
     public static void main(String[] args) throws Exception {
-        SCANode nodeCreditcard = SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/creditcard");
+        SCANode nodeCreditcard =
+            SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/creditcard");
         nodeCreditcard.start();
 
-        SCANode nodePayment = SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/payment");
-        nodePayment.start();        	
+        SCANode nodePayment =
+            SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/payment");
+        nodePayment.start();
 
-        SCANode nodeShoppingcart = SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/shoppingcart");
-       	nodeShoppingcart.start();
+        SCANode nodeShoppingcart =
+            SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/shoppingcart");
+        nodeShoppingcart.start();
 
-        SCANode nodeCurrency = SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/currency");
+        SCANode nodeCurrency =
+            SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/currency");
         nodeCurrency.start();
 
-        SCANode nodePackagedtrip = SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/packagedtrip");
-       	nodePackagedtrip.start();
+        SCANode nodePackagedtrip =
+            SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/packagedtrip");
+        nodePackagedtrip.start();
 
-        SCANode nodeBespoketrip = SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/bespoketrip");
+        SCANode nodeBespoketrip =
+            SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/bespoketrip");
         nodeBespoketrip.start();
 
-        SCANode nodeFrontend = SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/frontend");
+        SCANode nodeFrontend =
+            SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/frontend");
         nodeFrontend.start();
 
         SCANode nodeUI = SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/ui");
@@ -55,14 +62,15 @@ public class FullAppNodesLauncher {
 
         try {
             System.in.read();
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
 
         nodeCreditcard.stop();
         nodePayment.stop();
         nodeShoppingcart.stop();
         nodeCurrency.stop();
         nodePackagedtrip.stop();
-        nodeBespoketrip.stop();             
+        nodeBespoketrip.stop();
         nodeFrontend.stop();
         nodeUI.stop();
     }

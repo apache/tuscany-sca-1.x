@@ -26,16 +26,16 @@ import com.tuscanyscatours.currencyconverter.CurrencyConverterHelper;
 
 public class CurrencyConverterCORBAClient {
 
-  public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 
-    String[] orbArgs = {"-ORBInitialPort", "5080"};
-    ORB orb = ORB.init( orbArgs, null );
+        String[] orbArgs = {"-ORBInitialPort", "5080"};
+        ORB orb = ORB.init(orbArgs, null);
 
-    String ior = "corbaname::localhost:5080#CurrencyConverterCORBAService";
-    Object obj = orb.string_to_object(ior);
-    CurrencyConverter converter = CurrencyConverterHelper.narrow(obj);
+        String ior = "corbaname::localhost:5080#CurrencyConverterCORBAService";
+        Object obj = orb.string_to_object(ior);
+        CurrencyConverter converter = CurrencyConverterHelper.narrow(obj);
 
-    System.out.println("USD -> GBP = " + converter.getExchangeRate("USD", "GBP"));
-    System.out.println("100 USD = " + converter.convert("USD", "GBP", 100.0) + "GBP");
-  }
+        System.out.println("USD -> GBP = " + converter.getExchangeRate("USD", "GBP"));
+        System.out.println("100 USD = " + converter.convert("USD", "GBP", 100.0) + "GBP");
+    }
 }

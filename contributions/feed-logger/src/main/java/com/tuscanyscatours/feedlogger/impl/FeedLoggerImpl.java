@@ -21,14 +21,13 @@ package com.tuscanyscatours.feedlogger.impl;
 
 import java.util.List;
 
-import com.tuscanyscatours.feedlogger.FeedLogger;
-
 import org.apache.abdera.model.Entry;
 import org.apache.abdera.model.Feed;
 import org.osoa.sca.annotations.Reference;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
+import com.tuscanyscatours.feedlogger.FeedLogger;
 
 public class FeedLoggerImpl implements FeedLogger {
 
@@ -89,7 +88,7 @@ public class FeedLoggerImpl implements FeedLogger {
     private void logRSSFeed(org.apache.tuscany.sca.binding.rss.collection.Collection rssFeed, int maxEntries) {
         SyndFeed feed = rssFeed.getFeed();
         System.out.println("Feed: " + feed.getTitle());
-        
+
         List<SyndEntry> entries = feed.getEntries();
         for (int i = 0; i < entries.size() && i < maxEntries; i++) {
             SyndEntry entry = entries.get(i);

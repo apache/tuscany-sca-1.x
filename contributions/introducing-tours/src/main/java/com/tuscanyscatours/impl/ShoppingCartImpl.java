@@ -21,21 +21,26 @@ package com.tuscanyscatours.impl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.tuscanyscatours.Checkout;
 import com.tuscanyscatours.Updates;
 
 public class ShoppingCartImpl implements Checkout, Updates {
-	private static List<String> bookedTrips = new ArrayList<String>();
-	
+    private static List<String> bookedTrips = new ArrayList<String>();
+
     public void makePayment(BigDecimal amount, String cardInfo) {
-    	System.out.print("Charged $" + amount + " to card " + cardInfo + " for " +
-                         (bookedTrips.size() > 1 ? "trips" : "trip"));
-    	for (String trip : bookedTrips){
-    		System.out.print(" " + trip);
-    	}
-    	System.out.println();
-    	bookedTrips.clear();
+        System.out.print("Charged $" + amount
+            + " to card "
+            + cardInfo
+            + " for "
+            + (bookedTrips.size() > 1 ? "trips" : "trip"));
+        for (String trip : bookedTrips) {
+            System.out.print(" " + trip);
+        }
+        System.out.println();
+        bookedTrips.clear();
     }
+
     public void addTrip(String resCode) {
         bookedTrips.add(resCode);
     }

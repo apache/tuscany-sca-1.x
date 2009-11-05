@@ -28,11 +28,9 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 public class BlogFeedLauncher {
 
     public static void main(String[] args) throws Exception {
-        SCAContribution feedContribution = 
-          locate("blog-feed");
+        SCAContribution feedContribution = locate("blog-feed");
 
-        SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "blog-feed.composite", feedContribution);
+        SCANode node = SCANodeFactory.newInstance().createSCANode("blog-feed.composite", feedContribution);
         node.start();
 
         System.out.println("Node started - Press enter to shutdown.");

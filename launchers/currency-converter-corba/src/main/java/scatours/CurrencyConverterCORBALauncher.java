@@ -31,22 +31,19 @@ import scatours.currencyconverter.CurrencyConverter;
 public class CurrencyConverterCORBALauncher {
 
     public static void main(String[] args) throws Exception {
-        SCAContribution currencyCORBAContribution = 
-            locate("currency-corba");
-        SCAContribution currencyContribution = 
-            locate("currency");
-        
-        SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "currency-converter-corba.composite", currencyContribution, currencyCORBAContribution);
+        SCAContribution currencyCORBAContribution = locate("currency-corba");
+        SCAContribution currencyContribution = locate("currency");
+
+        SCANode node =
+            SCANodeFactory.newInstance().createSCANode("currency-converter-corba.composite",
+                                                       currencyContribution,
+                                                       currencyCORBAContribution);
         node.start();
 
         System.out.println("Quick currency converter test");
-        CurrencyConverter converter = ((SCAClient)node).getService(
-            CurrencyConverter.class, "CurrencyConverter");
-        System.out.println("USD -> GBP = " 
-            + converter.getExchangeRate("USD", "GBP"));
-        System.out.println("100 USD = " 
-            + converter.convert("USD", "GBP", 100) + "GBP");
+        CurrencyConverter converter = ((SCAClient)node).getService(CurrencyConverter.class, "CurrencyConverter");
+        System.out.println("USD -> GBP = " + converter.getExchangeRate("USD", "GBP"));
+        System.out.println("100 USD = " + converter.convert("USD", "GBP", 100) + "GBP");
 
         System.out.println("Node started - Press enter to shutdown.");
         System.in.read();

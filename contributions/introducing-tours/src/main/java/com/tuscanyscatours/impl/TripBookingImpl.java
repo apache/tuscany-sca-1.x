@@ -18,10 +18,11 @@
  */
 package com.tuscanyscatours.impl;
 
+import org.osoa.sca.annotations.Reference;
+
 import com.goodvaluetrips.Trips;
 import com.tuscanyscatours.Bookings;
 import com.tuscanyscatours.Updates;
-import org.osoa.sca.annotations.Reference;
 
 public class TripBookingImpl implements Bookings {
     @Reference
@@ -29,7 +30,7 @@ public class TripBookingImpl implements Bookings {
 
     @Reference
     protected Updates cart;
- 
+
     public String newBooking(String trip, int people) {
         String resCode = mytrips.checkAvailability(trip, people);
         cart.addTrip(resCode);

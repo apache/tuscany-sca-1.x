@@ -26,15 +26,14 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 public class SMSGatewayJMSServiceBootstrap {
 
     public static void main(String[] args) throws Exception {
-      System.out.println("Publishing SMS Gateway Service as a JMS service: tcp://localhost:61619");
+        System.out.println("Publishing SMS Gateway Service as a JMS service: tcp://localhost:61619");
 
-      ActiveMQConnectionFactory connectionFactory 
-          = new ActiveMQConnectionFactory("tcp://localhost:61619");
-      Connection connection = connectionFactory.createConnection();
-      connection.start();
-      Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61619");
+        Connection connection = connectionFactory.createConnection();
+        connection.start();
+        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-      SMSGatewayImpl impl = new SMSGatewayImpl(session);
-      impl.start();
+        SMSGatewayImpl impl = new SMSGatewayImpl(session);
+        impl.start();
     }
 }

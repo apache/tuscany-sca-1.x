@@ -18,7 +18,6 @@
  */
 package com.tuscanyscatours;
 
-
 import org.osoa.sca.annotations.Remotable;
 
 import com.tuscanyscatours.common.TripItem;

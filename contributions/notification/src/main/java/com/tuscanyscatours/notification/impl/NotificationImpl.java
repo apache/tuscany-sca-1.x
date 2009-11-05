@@ -28,32 +28,31 @@ import com.tuscanyscatours.smsgateway.SMSGateway;
 @Service(Notification.class)
 public class NotificationImpl implements Notification {
 
-  /**
-   * Use "Fake" phone number that has been reserved by Ofcom.
-   * See: http://www.ofcom.org.uk/telecoms/ioi/numbers/num_drama?a=87101
-   */
-  private static final String SCA_TOURS_SMS ="+44(0)2079460723";
-  
-  @Reference
-  protected SMSGateway smsGateway;
+    /**
+     * Use "Fake" phone number that has been reserved by Ofcom.
+     * See: http://www.ofcom.org.uk/telecoms/ioi/numbers/num_drama?a=87101
+     */
+    private static final String SCA_TOURS_SMS = "+44(0)2079460723";
 
-  public boolean notify(String accountID,
-      String subject, String message) {
-    
-    boolean result = true;
-   
-    String sms = getSMSAddress(accountID);
-    if (sms != null) {
-      System.out.println("Sending SMS to " + sms + " for accountID " + accountID);
-      result &= smsGateway.sendSMS(SCA_TOURS_SMS, sms, subject + ". " + message);
+    @Reference
+    protected SMSGateway smsGateway;
+
+    public boolean notify(String accountID, String subject, String message) {
+
+        boolean result = true;
+
+        String sms = getSMSAddress(accountID);
+        if (sms != null) {
+            System.out.println("Sending SMS to " + sms + " for accountID " + accountID);
+            result &= smsGateway.sendSMS(SCA_TOURS_SMS, sms, subject + ". " + message);
+        }
+
+        return result;
     }
 
-    return result;
-  }
-
-  private String getSMSAddress(String accountID) {
-    // Use "Fake" phone number that has been reserved by Ofcom.
-    // See: http://www.ofcom.org.uk/telecoms/ioi/numbers/num_drama?a=87101
-    return "+44(0)7700900812";
-  }
+    private String getSMSAddress(String accountID) {
+        // Use "Fake" phone number that has been reserved by Ofcom.
+        // See: http://www.ofcom.org.uk/telecoms/ioi/numbers/num_drama?a=87101
+        return "+44(0)7700900812";
+    }
 }

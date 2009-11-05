@@ -31,15 +31,12 @@ import scatours.feedlogger.FeedLogger;
 public class FeedLoggerLauncher {
 
     public static void main(String[] args) throws Exception {
-        SCAContribution feedContribution = 
-          locate("feed-logger");
+        SCAContribution feedContribution = locate("feed-logger");
 
-        SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "feed-logger.composite", feedContribution);
+        SCANode node = SCANodeFactory.newInstance().createSCANode("feed-logger.composite", feedContribution);
         node.start();
-        
-        FeedLogger logger = ((SCAClient)node).getService(
-                        FeedLogger.class, "FeedLogger");
+
+        FeedLogger logger = ((SCAClient)node).getService(FeedLogger.class, "FeedLogger");
         logger.logFeeds(5);
 
         node.stop();

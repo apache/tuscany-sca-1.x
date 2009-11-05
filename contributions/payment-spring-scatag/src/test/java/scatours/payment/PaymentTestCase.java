@@ -19,7 +19,6 @@
 
 package scatours.payment;
 
-import com.tuscanyscatours.payment.Payment;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -27,6 +26,8 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.tuscanyscatours.payment.Payment;
 
 /**
  * 
@@ -36,22 +37,27 @@ public class PaymentTestCase {
     private static SCANode creditCardNode;
 
     @BeforeClass
-    public static void setUpBeforeClass() throws Exception {  
-        creditCardNode = SCANodeFactory.newInstance().createSCANode("creditcard.composite",
-            new SCAContribution("creditcard", "../creditcard-payment-jaxb/target/classes"));
-        
+    public static void setUpBeforeClass() throws Exception {
+        creditCardNode =
+            SCANodeFactory.newInstance()
+                .createSCANode("creditcard.composite",
+                               new SCAContribution("creditcard", "../creditcard-payment-jaxb/target/classes"));
+
         creditCardNode.start();
-                   
-        paymentNode = SCANodeFactory.newInstance().createSCANode(null, 
-            new SCAContribution("payment-spring-annotation", "./target/classes"),
-            new SCAContribution("payment-spring-annotation-test", "./target/test-classes"));
+
+        paymentNode =
+            SCANodeFactory.newInstance().createSCANode(null,
+                                                       new SCAContribution("payment-spring-annotation",
+                                                                           "./target/classes"),
+                                                       new SCAContribution("payment-spring-annotation-test",
+                                                                           "./target/test-classes"));
 
         paymentNode.start();
     }
-    
+
     @Test
     public void testPayment() {
-        SCAClient client = (SCAClient) paymentNode;
+        SCAClient client = (SCAClient)paymentNode;
         Payment payment = client.getService(Payment.class, "PaymentClient");
         System.out.println("Result = " + payment.makePaymentMember("Fred", 100.00f));
     }

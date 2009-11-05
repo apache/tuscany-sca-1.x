@@ -26,11 +26,8 @@ import org.osoa.sca.annotations.Remotable;
 @Remotable
 public interface CurrencyConverter {
 
-    double getExchangeRate(String fromCurrencyCode, 
-                           String toCurrencyCode);
-    
-    double convert(String fromCurrencyCode, 
-                   String toCurrencyCode, 
-                   double amount);    
+    double getExchangeRate(String fromCurrencyCode, String toCurrencyCode);
+
+    double convert(String fromCurrencyCode, String toCurrencyCode, double amount);
 
 }

@@ -23,15 +23,14 @@ import java.rmi.registry.Registry;
 
 import com.tuscanyscatours.currencyconverter.CurrencyConverter;
 
-
 public class CurrencyConverterRMIClient {
 
-  public static void main(String[] args) throws Exception {
-    Registry registry = LocateRegistry.getRegistry("localhost", 8099);
-    String name = "CurrencyConverterRMI";
-    CurrencyConverter converter = (CurrencyConverter) registry.lookup(name);
+    public static void main(String[] args) throws Exception {
+        Registry registry = LocateRegistry.getRegistry("localhost", 8099);
+        String name = "CurrencyConverterRMI";
+        CurrencyConverter converter = (CurrencyConverter)registry.lookup(name);
 
-    System.out.println("USD -> GBP = " + converter.getExchangeRate("USD", "GBP"));
-    System.out.println("100 USD = " + converter.convert("USD", "GBP", 100.0) + "GBP");
-  }
+        System.out.println("USD -> GBP = " + converter.getExchangeRate("USD", "GBP"));
+        System.out.println("100 USD = " + converter.convert("USD", "GBP", 100.0) + "GBP");
+    }
 }

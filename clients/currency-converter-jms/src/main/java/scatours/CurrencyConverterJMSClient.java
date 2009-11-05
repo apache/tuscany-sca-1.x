@@ -47,58 +47,57 @@ public class CurrencyConverterJMSClient {
     private static OMFactory omFactory;
 
     public static void main(String[] args) throws JMSException, XMLStreamException {
-      startActiveMQSession();
+        startActiveMQSession();
 
-      OMElement request = omFactory.createOMElement("convert", "http://goodvaluetrips.com/", "ns2");
-      request.addChild(createArg(0, "USD"));
-      request.addChild(createArg(1, "GBP"));
-      request.addChild(createArg(2, "100.0"));
+        OMElement request = omFactory.createOMElement("convert", "http://goodvaluetrips.com/", "ns2");
+        request.addChild(createArg(0, "USD"));
+        request.addChild(createArg(1, "GBP"));
+        request.addChild(createArg(2, "100.0"));
 
-      TextMessage message = activeMQSession.createTextMessage("convert");
-      message.setStringProperty("scaOperationName", "convert");
-      message.setJMSReplyTo(responseDestination);
-      message.setText(request.toString());
-      activeMQProducer.send(message);
+        TextMessage message = activeMQSession.createTextMessage("convert");
+        message.setStringProperty("scaOperationName", "convert");
+        message.setJMSReplyTo(responseDestination);
+        message.setText(request.toString());
+        activeMQProducer.send(message);
 
-      TextMessage response = (TextMessage) consumer.receive();
-      StAXOMBuilder builder = new StAXOMBuilder(
-              new ByteArrayInputStream(response.getText().getBytes()));
-      OMText returnElement = (OMText) builder.getDocumentElement().getFirstOMChild();
-      String returnValue = returnElement.getText();
-      System.out.println("100 USD = " + returnValue + "GBP");
+        TextMessage response = (TextMessage)consumer.receive();
+        StAXOMBuilder builder = new StAXOMBuilder(new ByteArrayInputStream(response.getText().getBytes()));
+        OMText returnElement = (OMText)builder.getDocumentElement().getFirstOMChild();
+        String returnValue = returnElement.getText();
+        System.out.println("100 USD = " + returnValue + "GBP");
 
-      stopActiveMQSession();
+        stopActiveMQSession();
     }
 
     private static void startActiveMQSession() throws JMSException {
-      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61619");
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61619");
 
-      activeMQConnection = connectionFactory.createConnection();
-      activeMQConnection.start();
+        activeMQConnection = connectionFactory.createConnection();
+        activeMQConnection.start();
 
-      activeMQSession = activeMQConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        activeMQSession = activeMQConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-      requestDestination = activeMQSession.createQueue("RequestQueue");
-      activeMQProducer = activeMQSession.createProducer(requestDestination);
+        requestDestination = activeMQSession.createQueue("RequestQueue");
+        activeMQProducer = activeMQSession.createProducer(requestDestination);
 
-      responseDestination = activeMQSession.createQueue("ResponseQueue");
-      consumer = activeMQSession.createConsumer(responseDestination);
+        responseDestination = activeMQSession.createQueue("ResponseQueue");
+        consumer = activeMQSession.createConsumer(responseDestination);
 
-      omFactory = OMAbstractFactory.getOMFactory();
+        omFactory = OMAbstractFactory.getOMFactory();
     }
 
     private static void stopActiveMQSession() throws JMSException {
         consumer.close();
-          activeMQProducer.close();
-          activeMQSession.close();
-          activeMQConnection.close();
+        activeMQProducer.close();
+        activeMQSession.close();
+        activeMQConnection.close();
     }
 
     private static OMElement createArg(int argNumber, String value) {
-      OMFactory omFactory = OMAbstractFactory.getOMFactory();
-      OMElement arg = omFactory.createOMElement("arg" + argNumber, null);
-      OMText senderOM = omFactory.createOMText(value);
-      arg.addChild(senderOM);
-      return arg;
+        OMFactory omFactory = OMAbstractFactory.getOMFactory();
+        OMElement arg = omFactory.createOMElement("arg" + argNumber, null);
+        OMText senderOM = omFactory.createOMText(value);
+        arg.addChild(senderOM);
+        return arg;
     }
-  }
+}

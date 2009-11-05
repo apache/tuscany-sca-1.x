@@ -59,16 +59,11 @@ public class GenericBlogFeedImpl extends BaseBlogFeedImpl {
      */
     private Entry<Object, Object> convertBlogPostToFeedItem(BlogPost post) {
         // Convert Blog entry into an Item
-        final Item item = new Item(
-                        post.getTitle(), 
-                        post.getContent(), 
-                        post.getLink(), 
-                        post.getRelated(), 
-                        post.getUpdated());
+        final Item item =
+            new Item(post.getTitle(), post.getContent(), post.getLink(), post.getRelated(), post.getUpdated());
 
         // Add item to entry 
-        final Entry<Object, Object> entry = new Entry<Object, Object>(
-                        nextBlogID(), item);
+        final Entry<Object, Object> entry = new Entry<Object, Object>(nextBlogID(), item);
 
         return entry;
     }

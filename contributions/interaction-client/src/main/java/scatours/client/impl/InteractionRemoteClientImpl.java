@@ -29,36 +29,36 @@ import com.tuscanyscatours.common.TripLeg;
 
 @Service(Runnable.class)
 public class InteractionRemoteClientImpl implements Runnable, SearchCallback {
-	
+
     @Reference
     protected Search hotelSearchRemote;
-    
+
     public void run() {
-    	System.out.println("\nCalling hotel component over a remote binding");
-    	TripLeg tripLeg = getTestTripLeg();
-    	TripItem[] tripItems = hotelSearchRemote.searchSynch(tripLeg);
-    	for (TripItem tripItem : tripItems){
-    		System.out.println("Found hotel - " + tripItem.getName());
-    	}
+        System.out.println("\nCalling hotel component over a remote binding");
+        TripLeg tripLeg = getTestTripLeg();
+        TripItem[] tripItems = hotelSearchRemote.searchSynch(tripLeg);
+        for (TripItem tripItem : tripItems) {
+            System.out.println("Found hotel - " + tripItem.getName());
+        }
     }
-    
-    public void searchResults(TripItem[] items){
+
+    public void searchResults(TripItem[] items) {
         // we are calling the hotel component synchronously here
-    	// so the callback interface is not used
-    }      
-    
-    public void setPercentComplete(String searchComponent, int percentComplete){
+        // so the callback interface is not used
+    }
+
+    public void setPercentComplete(String searchComponent, int percentComplete) {
         // Not used in this sample
-    }    
-    
-    private TripLeg getTestTripLeg(){
-    	TripLeg tripLeg = new TripLeg();
-    	tripLeg.setFromLocation("LGW");
-    	tripLeg.setToLocation("FLR");
-    	tripLeg.setFromDate("06/12/09 00:00");
-    	tripLeg.setToDate("13/12/09 00:00");
-    	tripLeg.setNoOfPeople("1");
-    	tripLeg.setId("TRIP27");
-    	return tripLeg;
-    }    
+    }
+
+    private TripLeg getTestTripLeg() {
+        TripLeg tripLeg = new TripLeg();
+        tripLeg.setFromLocation("LGW");
+        tripLeg.setToLocation("FLR");
+        tripLeg.setFromDate("06/12/09 00:00");
+        tripLeg.setToDate("13/12/09 00:00");
+        tripLeg.setNoOfPeople("1");
+        tripLeg.setId("TRIP27");
+        return tripLeg;
+    }
 }

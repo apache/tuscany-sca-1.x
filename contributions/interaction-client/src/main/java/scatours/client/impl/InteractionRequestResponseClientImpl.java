@@ -22,21 +22,18 @@ package scatours.client.impl;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
-import com.tuscanyscatours.calendar.Calendar;
-
-import com.tuscanyscatours.common.TripLeg;
 import com.tuscanyscatours.currencyconverter.CurrencyConverter;
 
 @Service(Runnable.class)
 public class InteractionRequestResponseClientImpl implements Runnable {
-	
+
     @Reference
     protected CurrencyConverter currencyConverterRequestResponse;
 
-    public void run() {   	
-    	System.out.println("\nCalling currency converter component using request response interation pattern");
-    	double exchangeRate = currencyConverterRequestResponse.getExchangeRate("GBP", "USD");
-    	System.out.println("GBP to USD exchange rate is " + exchangeRate);
+    public void run() {
+        System.out.println("\nCalling currency converter component using request response interation pattern");
+        double exchangeRate = currencyConverterRequestResponse.getExchangeRate("GBP", "USD");
+        System.out.println("GBP to USD exchange rate is " + exchangeRate);
     }
-    
+
 }

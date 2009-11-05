@@ -26,7 +26,6 @@ import java.util.Map;
 import org.osoa.sca.annotations.Destroy;
 import org.osoa.sca.annotations.EagerInit;
 import org.osoa.sca.annotations.Init;
-import org.osoa.sca.annotations.Requires;
 import org.osoa.sca.annotations.Scope;
 import org.osoa.sca.annotations.Service;
 
@@ -63,12 +62,12 @@ public class CustomerRegistryImpl implements CustomerRegistry {
         cc.setExpYear(2012);
         createCustomer("John Smith", "john@xyz.com", cc);
     }
-    
+
     @Destroy
     public void destroy() {
         // Save the customers
     }
-    
+
     public Customer createCustomer(String name, String email, CreditCardDetailsType creditCard) {
         Customer customer = new Customer();
         customer.setId("c-" + idGenerator++);
@@ -89,11 +88,11 @@ public class CustomerRegistryImpl implements CustomerRegistry {
 
     public Customer getCustomer(String id) throws CustomerNotFoundException {
         Customer customer = customers.get(id);
-        
-        if (customer == null){
+
+        if (customer == null) {
             throw new CustomerNotFoundException("Customer " + id + " not found");
         }
-        
+
         return customer;
     }
 

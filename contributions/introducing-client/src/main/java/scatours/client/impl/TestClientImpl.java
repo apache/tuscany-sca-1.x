@@ -21,11 +21,11 @@ package scatours.client.impl;
 
 import java.math.BigDecimal;
 
-import com.tuscanyscatours.Bookings;
-import com.tuscanyscatours.Checkout;
-
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
+
+import com.tuscanyscatours.Bookings;
+import com.tuscanyscatours.Checkout;
 
 @Service(Runnable.class)
 public class TestClientImpl {

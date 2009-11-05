@@ -20,13 +20,12 @@ package scatours.creditcard;
 
 import javax.jws.WebService;
 
-@WebService(endpointInterface 
-        = "scatours.creditcard.CreditCardService")
+@WebService(endpointInterface = "scatours.creditcard.CreditCardService")
 public class CreditCardServiceImpl implements CreditCardService {
 
     public String makePayment(String cardNumber, String name, double amount) {
         System.out.println("Payment request from " + name);
-        
+
         if (cardNumber != null && cardNumber.startsWith("1")) {
             return "AUTH_ID:" + System.currentTimeMillis();
         }

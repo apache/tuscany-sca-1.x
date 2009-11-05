@@ -19,8 +19,6 @@
 
 package scatours.client;
 
-import java.math.BigDecimal;
-
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
@@ -35,7 +33,7 @@ public class TestClient {
     }
 
     public void run() {
-    	System.out.println("Call Payment component");
+        System.out.println("Call Payment component");
         System.out.println(payment.makePaymentMember("c-0", 100.00f));
         System.out.println(payment.makePaymentMember("c-1", 100.00f));
     }

@@ -31,20 +31,15 @@ import scatours.currencyconverter.CurrencyConverter;
 public class CurrencyConverterLauncher {
 
     public static void main(String[] args) throws Exception {
-        SCAContribution currencyContribution = 
-            locate("currency");
-        
-        SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "currency-converter.composite", currencyContribution);
+        SCAContribution currencyContribution = locate("currency");
+
+        SCANode node = SCANodeFactory.newInstance().createSCANode("currency-converter.composite", currencyContribution);
         node.start();
 
         System.out.println("Quick currency converter test");
-        CurrencyConverter converter = ((SCAClient)node).getService(
-            CurrencyConverter.class, "CurrencyConverter");
-        System.out.println("USD -> GBP = " 
-            + converter.getExchangeRate("USD", "GBP"));
-        System.out.println("100 USD = " 
-            + converter.convert("USD", "GBP", 100) + "GBP");
+        CurrencyConverter converter = ((SCAClient)node).getService(CurrencyConverter.class, "CurrencyConverter");
+        System.out.println("USD -> GBP = " + converter.getExchangeRate("USD", "GBP"));
+        System.out.println("100 USD = " + converter.convert("USD", "GBP", 100) + "GBP");
 
         System.out.println("Node started - Press enter to shutdown.");
         System.in.read();

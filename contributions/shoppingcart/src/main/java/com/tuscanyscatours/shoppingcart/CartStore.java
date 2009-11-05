@@ -29,13 +29,13 @@ import com.tuscanyscatours.common.TripItem;
  */
 @Remotable
 @Conversational
-public interface CartStore{
+public interface CartStore {
     void addTrip(TripItem trip);
-    
+
     void removeTrip(TripItem trip);
-    
+
     TripItem[] getTrips();
-    
+
     @EndsConversation
-    void reset();  
+    void reset();
 }

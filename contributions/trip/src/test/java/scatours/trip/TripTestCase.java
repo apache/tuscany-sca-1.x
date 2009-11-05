@@ -34,37 +34,29 @@ import com.tuscanyscatours.common.TripItem;
  * 
  */
 public class TripTestCase {
-    private static SCANode tripNode; 
+    private static SCANode tripNode;
 
     @BeforeClass
-    public static void setUpBeforeClass() throws Exception {  
-        try {        
-            tripNode = SCANodeFactory.newInstance().createSCANode("trip.composite", 
-                    new SCAContribution("trip", "./target/classes"),
-                    new SCAContribution("trip-test", "./target/test-classes"));
-    
+    public static void setUpBeforeClass() throws Exception {
+        try {
+            tripNode =
+                SCANodeFactory.newInstance().createSCANode("trip.composite",
+                                                           new SCAContribution("trip", "./target/classes"),
+                                                           new SCAContribution("trip-test", "./target/test-classes"));
 
             tripNode.start();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-    
+
     @Test
     public void testPayment() {
-        SCAClient client = (SCAClient) tripNode;
+        SCAClient client = (SCAClient)tripNode;
         Book booking = client.getService(Book.class, "Trip/Book");
-        TripItem tripItem = new TripItem("1234",
-                                         "5678",
-                                         TripItem.TRIP,
-                                         "FS1DEC06",
-                                         "Florence and Siena pre-packaged tour",
-                                         "FLR",
-                                         "06/12/09",
-                                         "13/12/09",
-                                         450,
-                                         "EUR",
-                                         "http://localhost:8085/tbd");
+        TripItem tripItem =
+            new TripItem("1234", "5678", TripItem.TRIP, "FS1DEC06", "Florence and Siena pre-packaged tour", "FLR",
+                         "06/12/09", "13/12/09", 450, "EUR", "http://localhost:8085/tbd");
         System.out.println("Result = " + booking.book(tripItem) + "\n");
     }
 

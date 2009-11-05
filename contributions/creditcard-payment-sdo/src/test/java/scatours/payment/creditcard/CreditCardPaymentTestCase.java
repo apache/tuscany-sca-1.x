@@ -19,18 +19,18 @@
 
 package scatours.payment.creditcard;
 
-import com.tuscanyscatours.payment.creditcard.CreditCardDetailsType;
-import com.tuscanyscatours.payment.creditcard.CreditCardPayment;
-import com.tuscanyscatours.payment.creditcard.CreditCardPaymentFactory;
-import com.tuscanyscatours.payment.creditcard.PayerType;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
+
+import com.tuscanyscatours.payment.creditcard.CreditCardDetailsType;
+import com.tuscanyscatours.payment.creditcard.CreditCardPayment;
+import com.tuscanyscatours.payment.creditcard.CreditCardPaymentFactory;
+import com.tuscanyscatours.payment.creditcard.PayerType;
 
 /**
  * 
@@ -44,16 +44,15 @@ public class CreditCardPaymentTestCase {
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         SCANodeFactory factory = SCANodeFactory.newInstance();
-        node = factory.createSCANode(null,
-                    new SCAContribution("creditcard-sdo", "./target/classes"));
+        node = factory.createSCANode(null, new SCAContribution("creditcard-sdo", "./target/classes"));
         node.start();
     }
-    
+
     @Test
     public void testCreditCardPayment() {
-        SCAClient client = (SCAClient) node;
+        SCAClient client = (SCAClient)node;
         CreditCardPayment cc = client.getService(CreditCardPayment.class, "CreditCardPayment");
-        
+
         CreditCardPaymentFactory factory = CreditCardPaymentFactory.INSTANCE;
         CreditCardDetailsType ccDetails = factory.createCreditCardDetailsType();
         ccDetails.setCreditCardType("Visa");
@@ -63,7 +62,7 @@ public class CreditCardPaymentTestCase {
         PayerType ccOwner = factory.createPayerType();
         ccOwner.setName("Fred");
         ccDetails.setCardOwner(ccOwner);
-        
+
         System.out.println(cc.authorize(ccDetails, 100.00f));
     }
 

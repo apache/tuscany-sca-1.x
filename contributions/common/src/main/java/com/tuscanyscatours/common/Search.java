@@ -29,9 +29,9 @@ import org.osoa.sca.annotations.Remotable;
 @Callback(SearchCallback.class)
 public interface Search {
     TripItem[] searchSynch(TripLeg tripLeg);
-    
+
     @OneWay
     void searchAsynch(TripLeg tripLeg);
-    
+
     int getPercentComplete();
 }

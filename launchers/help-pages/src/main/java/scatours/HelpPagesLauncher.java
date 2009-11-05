@@ -28,11 +28,9 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 public class HelpPagesLauncher {
 
     public static void main(String[] args) throws Exception {
-        SCAContribution helpContribution = 
-          locate("help-pages");
+        SCAContribution helpContribution = locate("help-pages");
 
-        SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "help-pages.composite", helpContribution);
+        SCANode node = SCANodeFactory.newInstance().createSCANode("help-pages.composite", helpContribution);
         node.start();
 
         System.out.println("Node started - Press enter to shutdown.");

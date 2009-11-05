@@ -24,6 +24,7 @@ import com.tuscanyscatours.common.TripItem;
 
 @Remotable
 public interface CartUpdates {
-    void addTrip(String cartId,TripItem trip);
-    void removeTrip(String cartId,TripItem trip);
+    void addTrip(String cartId, TripItem trip);
+
+    void removeTrip(String cartId, TripItem trip);
 }

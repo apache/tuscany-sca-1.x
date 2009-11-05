@@ -23,11 +23,11 @@ import scatours.curencyconverter.client.CurrencyConverterService;
 
 public class CurrencyConverterWSClient {
 
-  public static void main(String[] args) throws Exception {
-    CurrencyConverterService service = new CurrencyConverterService();
-    CurrencyConverter converter = service.getPort(CurrencyConverter.class);
+    public static void main(String[] args) throws Exception {
+        CurrencyConverterService service = new CurrencyConverterService();
+        CurrencyConverter converter = service.getPort(CurrencyConverter.class);
 
-    System.out.println("USD -> GBP = " + converter.getExchangeRate("USD", "GBP"));
-    System.out.println("100 USD = " + converter.convert("USD", "GBP", 100.0) + "GBP");
-  }
+        System.out.println("USD -> GBP = " + converter.getExchangeRate("USD", "GBP"));
+        System.out.println("100 USD = " + converter.convert("USD", "GBP", 100.0) + "GBP");
+    }
 }

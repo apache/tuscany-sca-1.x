@@ -37,9 +37,10 @@ public class CalendarTestCase {
 
     @Before
     public void startNode() throws Exception {
-        node = SCANodeFactory.newInstance().createSCANode("calendar.composite",
-                new SCAContribution("calendar", "./target/classes"),
-                new SCAContribution("calendar-test", "./target/test-classes"));
+        node =
+            SCANodeFactory.newInstance().createSCANode("calendar.composite",
+                                                       new SCAContribution("calendar", "./target/classes"),
+                                                       new SCAContribution("calendar-test", "./target/test-classes"));
         node.start();
     }
 
@@ -48,7 +49,7 @@ public class CalendarTestCase {
         Calendar calendar = ((SCAClient)node).getService(Calendar.class, "Calendar");
         System.out.println(calendar.getEndDate("07/10/96 04:05", 3));
     }
-    
+
     @After
     public void stopNode() throws Exception {
         node.stop();

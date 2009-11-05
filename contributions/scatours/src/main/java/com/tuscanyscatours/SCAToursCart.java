@@ -26,8 +26,10 @@ import com.tuscanyscatours.common.TripItem;
  * The ShoppingCart service interface
  */
 @Remotable
-public interface SCAToursCart{
+public interface SCAToursCart {
     String newCart();
+
     TripItem[] getTrips(String cartId);
-    void checkout(String cartId);  
+
+    void checkout(String cartId);
 }

@@ -36,82 +36,59 @@ import com.tuscanyscatours.common.TripLeg;
  * An implementation of the Trip service
  */
 @Scope("STATELESS")
-@Service(interfaces={Search.class, Book.class})
+@Service(interfaces = {Search.class, Book.class})
 public class TripImpl implements Search, Book {
-    
+
     private List<TripInfo> trips = new ArrayList<TripInfo>();
-    
+
     @Callback
-    protected SearchCallback searchCallback; 
+    protected SearchCallback searchCallback;
 
     @Init
     public void init() {
-        trips.add(new TripInfo("FS1DEC06", 
-                               "Florence and Siena pre-packaged tour",
-                               "LGW",
-                               "FLR",
-                               "06/12/09",
-                               "13/12/09",
-                               "27",
-                               450,
-                               "EUR",
-                               "http://localhost:8085/tbd" ));
-        trips.add(new TripInfo("FS1DEC13", 
-                               "Florence and Siena pre-packaged tour 2",
-                               "LGW",
-                               "FLR",
-                               "13/12/09",
-                               "20/12/09",
-                               "27",
-                               550,
-                               "EUR",
-                               "http://localhost:8085/tbd" ));
+        trips.add(new TripInfo("FS1DEC06", "Florence and Siena pre-packaged tour", "LGW", "FLR", "06/12/09",
+                               "13/12/09", "27", 450, "EUR", "http://localhost:8085/tbd"));
+        trips.add(new TripInfo("FS1DEC13", "Florence and Siena pre-packaged tour 2", "LGW", "FLR", "13/12/09",
+                               "20/12/09", "27", 550, "EUR", "http://localhost:8085/tbd"));
     }
-    
+
     public TripItem[] searchSynch(TripLeg tripLeg) {
         List<TripItem> items = new ArrayList<TripItem>();
-        
+
         // find the pre-package trip
-        for(TripInfo trip : trips){
-            if ((trip.getFromLocation().equals(tripLeg.getFromLocation())) &&
-                (trip.getToLocation().equals(tripLeg.getToLocation())) &&
-                (trip.getFromDate().equals(tripLeg.getFromDate()))){
-                TripItem item = new TripItem("",
-                                             "",
-                                             TripItem.TRIP,
-                                             trip.getName(), 
-                                             trip.getDescription(), 
-                                             trip.getFromLocation() + " - " + trip.getToLocation(),
-                                             trip.getFromDate(),
-                                             trip.getToDate(),
-                                             trip.getPricePerPerson(),
-                                             trip.getCurrency(),
-                                             trip.getLink());
+        for (TripInfo trip : trips) {
+            if ((trip.getFromLocation().equals(tripLeg.getFromLocation())) && (trip.getToLocation().equals(tripLeg
+                .getToLocation()))
+                && (trip.getFromDate().equals(tripLeg.getFromDate()))) {
+                TripItem item =
+                    new TripItem("", "", TripItem.TRIP, trip.getName(), trip.getDescription(),
+                                 trip.getFromLocation() + " - " + trip.getToLocation(), trip.getFromDate(), trip
+                                     .getToDate(), trip.getPricePerPerson(), trip.getCurrency(), trip.getLink());
                 items.add(item);
             }
-        }      
-        
+        }
+
         return items.toArray(new TripItem[items.size()]);
     }
-    
+
     public void searchAsynch(TripLeg tripLeg) {
-    	System.out.println("Starting trip search");
-    	
-    	try {
-    		Thread.sleep(2000);
-    	} catch(Exception ex){
-        	// do nothing
+        System.out.println("Starting trip search");
+
+        try {
+            Thread.sleep(2000);
+        } catch (Exception ex) {
+            // do nothing
         }
-    	
+
         // return available hotels
-        searchCallback.searchResults(searchSynch(tripLeg));  
+        searchCallback.searchResults(searchSynch(tripLeg));
     }
-    
-    public int getPercentComplete(){
+
+    public int getPercentComplete() {
         return 100;
     }
-    
+
     public String book(TripItem tripItem) {
         return "trip1";
-    }      
+    }
 }

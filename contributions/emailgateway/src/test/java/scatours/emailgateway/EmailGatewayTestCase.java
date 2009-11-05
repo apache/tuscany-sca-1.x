@@ -19,9 +19,6 @@
 
 package scatours.emailgateway;
 
-import com.tuscanyscatours.emailgateway.EmailGateway;
-import com.tuscanyscatours.emailgateway.EmailType;
-import com.tuscanyscatours.emailgateway.ObjectFactory;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -29,6 +26,10 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.tuscanyscatours.emailgateway.EmailGateway;
+import com.tuscanyscatours.emailgateway.EmailType;
+import com.tuscanyscatours.emailgateway.ObjectFactory;
 
 /**
  * 
@@ -42,15 +43,16 @@ public class EmailGatewayTestCase {
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         SCANodeFactory factory = SCANodeFactory.newInstance();
-        node = factory.createSCANode("emailgateway.composite",
-                new SCAContribution("emailgateway", "./target/classes"),
-                new SCAContribution("emailgateway-test", "./target/test-classes"));
+        node =
+            factory.createSCANode("emailgateway.composite",
+                                  new SCAContribution("emailgateway", "./target/classes"),
+                                  new SCAContribution("emailgateway-test", "./target/test-classes"));
         node.start();
     }
-    
+
     @Test
     public void testEmailGateway() {
-        SCAClient client = (SCAClient) node;
+        SCAClient client = (SCAClient)node;
         EmailGateway cc = client.getService(EmailGateway.class, "EmailGatewayClient");
         ObjectFactory objectFactory = new ObjectFactory();
         EmailType email = objectFactory.createEmailType();
@@ -59,7 +61,7 @@ public class EmailGatewayTestCase {
         email.setBody("A message");
         System.out.println(cc.sendEmail(email));
     }
-    
+
     /**
      * @throws java.lang.Exception
      */

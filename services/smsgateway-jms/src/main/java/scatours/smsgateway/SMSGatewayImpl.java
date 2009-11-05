@@ -44,83 +44,83 @@ public class SMSGatewayImpl implements SMSGateway {
     private final MessageProducer producer;
 
     public SMSGatewayImpl(Session session) throws JMSException {
-      this.session = session;
-      Destination requestDest = session.createQueue("SMSRequestQueue");
-      consumer = session.createConsumer(requestDest);
+        this.session = session;
+        Destination requestDest = session.createQueue("SMSRequestQueue");
+        consumer = session.createConsumer(requestDest);
 
-      Destination responseDest = session.createQueue("SMSResponseQueue");
-      producer = session.createProducer(responseDest);
+        Destination responseDest = session.createQueue("SMSResponseQueue");
+        producer = session.createProducer(responseDest);
     }
 
     public void start() throws JMSException, XMLStreamException {
-      while (true) {
-        Message message = consumer.receive();
-        handleRequest(message);
-      }
+        while (true) {
+            Message message = consumer.receive();
+            handleRequest(message);
+        }
     }
 
     private void handleRequest(Message inMessage) throws XMLStreamException, JMSException {
-      OMElement xml = parseXMLPayload(inMessage);
+        OMElement xml = parseXMLPayload(inMessage);
 
-      String fromNumber = getStringArg(xml, 0);
-      String toNumber = getStringArg(xml, 1);
-      String text = getStringArg(xml, 2);
+        String fromNumber = getStringArg(xml, 0);
+        String toNumber = getStringArg(xml, 1);
+        String text = getStringArg(xml, 2);
 
-      boolean result = sendSMS(fromNumber, toNumber, text);
+        boolean result = sendSMS(fromNumber, toNumber, text);
 
-      String responseXML = createXMLResponse(result);
+        String responseXML = createXMLResponse(result);
 
-      TextMessage outMessage = createResponseMessage(inMessage.getJMSMessageID(), responseXML);
-      producer.send(outMessage);
+        TextMessage outMessage = createResponseMessage(inMessage.getJMSMessageID(), responseXML);
+        producer.send(outMessage);
     }
 
     private OMElement parseXMLPayload(Message inMessage) throws JMSException, XMLStreamException {
-      final byte[] msgData;
-      if (inMessage instanceof TextMessage) {
-          msgData = ((TextMessage) inMessage).getText().getBytes();
-      } else if (inMessage instanceof BytesMessage) {
-          BytesMessage bytesMessage = (BytesMessage) inMessage;
-          msgData = new byte[(int) bytesMessage.getBodyLength()];
-          bytesMessage.readBytes(msgData);
-      } else {
-          throw new JMSException("Unsupported JMS message type of " + inMessage.getClass().getName());
-      }
-      ByteArrayInputStream in = new ByteArrayInputStream(msgData);
-      StAXOMBuilder builder = new StAXOMBuilder(in);
-      OMElement doc = builder.getDocumentElement();
-      return doc;
+        final byte[] msgData;
+        if (inMessage instanceof TextMessage) {
+            msgData = ((TextMessage)inMessage).getText().getBytes();
+        } else if (inMessage instanceof BytesMessage) {
+            BytesMessage bytesMessage = (BytesMessage)inMessage;
+            msgData = new byte[(int)bytesMessage.getBodyLength()];
+            bytesMessage.readBytes(msgData);
+        } else {
+            throw new JMSException("Unsupported JMS message type of " + inMessage.getClass().getName());
+        }
+        ByteArrayInputStream in = new ByteArrayInputStream(msgData);
+        StAXOMBuilder builder = new StAXOMBuilder(in);
+        OMElement doc = builder.getDocumentElement();
+        return doc;
     }
 
     private String getStringArg(OMElement doc, int i) {
-      QName argQName = new QName("arg" + i);
-      OMElement arg = doc.getFirstChildWithName(argQName);
-      if (arg == null) {
-        return null;
-      }
-      return arg.getText();
+        QName argQName = new QName("arg" + i);
+        OMElement arg = doc.getFirstChildWithName(argQName);
+        if (arg == null) {
+            return null;
+        }
+        return arg.getText();
     }
 
     public boolean sendSMS(String fromNumber, String toNumber, String text) {
-      System.out.println("From: " + fromNumber);
-      System.out.println("To: " + toNumber);
-      System.out.println(text);
-      return true;
+        System.out.println("From: " + fromNumber);
+        System.out.println("To: " + toNumber);
+        System.out.println(text);
+        return true;
     }
 
     private String createXMLResponse(boolean result) {
-      OMFactory omFactory = OMAbstractFactory.getOMFactory();
-      OMElement response = omFactory.createOMElement("sendSMS", "http://smsgateway.scatours/", "ns2");
-      OMElement returnValue = omFactory.createOMElement("return", null);
-      OMText returnV = omFactory.createOMText(Boolean.toString(result));
-      returnValue.addChild(returnV);
-      response.addChild(returnValue);
-      return response.toString();
+        OMFactory omFactory = OMAbstractFactory.getOMFactory();
+        OMElement response = omFactory.createOMElement("sendSMS", "http://smsgateway.scatours/", "ns2");
+        OMElement returnValue = omFactory.createOMElement("return", null);
+        OMText returnV = omFactory.createOMText(Boolean.toString(result));
+        returnValue.addChild(returnV);
+        response.addChild(returnValue);
+        return response.toString();
     }
 
     private TextMessage createResponseMessage(String correlationID, String responseXML) throws JMSException {
-      TextMessage outMessage = session.createTextMessage("sendSMS");
-      outMessage.setText(responseXML);
-      outMessage.setJMSCorrelationID(correlationID);
-      return outMessage;
+        TextMessage outMessage = session.createTextMessage("sendSMS");
+        outMessage.setText(responseXML);
+        outMessage.setJMSCorrelationID(correlationID);
+        return outMessage;
     }
-  }
+}

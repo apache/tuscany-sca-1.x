@@ -35,7 +35,7 @@ public class InteractionTestCase {
     public void testLauncher() throws Exception {
         InteractionLauncher.main(null);
     }
-    
+
     @After
     public void stopServer() throws Exception {
     }

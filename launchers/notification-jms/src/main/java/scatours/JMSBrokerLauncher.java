@@ -23,16 +23,16 @@ import org.apache.activemq.broker.BrokerService;
 public class JMSBrokerLauncher {
 
     public static void main(String[] args) throws Exception {
-      final BrokerService jmsBroker = new BrokerService();
-      jmsBroker.setPersistent(false);
-      jmsBroker.setUseJmx(false);
-      jmsBroker.addConnector("tcp://localhost:61619");
-      jmsBroker.start();
+        final BrokerService jmsBroker = new BrokerService();
+        jmsBroker.setPersistent(false);
+        jmsBroker.setUseJmx(false);
+        jmsBroker.addConnector("tcp://localhost:61619");
+        jmsBroker.start();
 
-      System.out.println("JMS Message Broker started");
-      System.out.println("Press enter to shutdown.");
-      System.in.read();
+        System.out.println("JMS Message Broker started");
+        System.out.println("Press enter to shutdown.");
+        System.in.read();
 
-      jmsBroker.stop();
+        jmsBroker.stop();
     }
-  }
+}

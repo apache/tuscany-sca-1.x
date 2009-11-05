@@ -26,12 +26,13 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 public class IntroducingClientLauncher {
 
     public static void main(String[] args) throws Exception {
-        SCANode node = SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/ClientNode");
+        SCANode node =
+            SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/ClientNode");
         node.start();
 
         Runnable client = ((SCAClient)node).getService(Runnable.class, "TestClient/Runnable");
         client.run();
-            
+
         node.stop();
     }
 }

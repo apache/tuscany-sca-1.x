@@ -31,18 +31,17 @@ import scatours.notification.Notification;
 public class NotificationWSLauncher {
 
     public static void main(String[] args) throws Exception {
-        SCAContribution notificationContribution = 
-          locate("notification");
-        SCAContribution notificationWSContribution = 
-          locate("notification-ws");
+        SCAContribution notificationContribution = locate("notification");
+        SCAContribution notificationWSContribution = locate("notification-ws");
 
-        SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "notification-ws.composite", notificationContribution, notificationWSContribution);
+        SCANode node =
+            SCANodeFactory.newInstance().createSCANode("notification-ws.composite",
+                                                       notificationContribution,
+                                                       notificationWSContribution);
         node.start();
 
         System.out.println("Quick notification test");
-        Notification notification = ((SCAClient)node).getService(
-            Notification.class, "Notification");
+        Notification notification = ((SCAClient)node).getService(Notification.class, "Notification");
         String accountID = "1234";
         String subject = "Holiday payment taken";
         String message = "Payment of £102.37 accepted...";

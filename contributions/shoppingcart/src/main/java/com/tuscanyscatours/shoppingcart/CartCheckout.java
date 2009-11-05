@@ -22,5 +22,5 @@ import org.osoa.sca.annotations.Remotable;
 
 @Remotable
 public interface CartCheckout {
-    void checkout(String cartId,String name);
+    void checkout(String cartId, String name);
 }

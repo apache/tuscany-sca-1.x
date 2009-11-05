@@ -32,61 +32,60 @@ import com.tuscanyscatours.tripbooking.TripBooking;
 /**
  * An implementation of the TripBooking service
  */
-@Service(interfaces={TripBooking.class})
-public class TripBookingImpl implements TripBooking{
+@Service(interfaces = {TripBooking.class})
+public class TripBookingImpl implements TripBooking {
 
-    @Reference 
+    @Reference
     protected Book hotelBook;
-    
-    @Reference 
+
+    @Reference
     protected Book flightBook;
-    
-    @Reference 
+
+    @Reference
     protected Book carBook;
-    
-    @Reference 
-    protected Book tripBook;   
-    
-    @Reference 
+
+    @Reference
+    protected Book tripBook;
+
+    @Reference
     protected CartUpdates cartUpdates;
-    
+
     @Context
-    protected ComponentContext componentContext;     
-    
+    protected ComponentContext componentContext;
+
     public TripItem bookTrip(String cartId, TripItem trip) {
-        
+
         String bookingCode = "";
-        
+
         // book any nested items
         TripItem[] nestedItems = trip.getTripItems();
-        if (nestedItems != null){
-            for(int i = 0; i < nestedItems.length; i++ ){
+        if (nestedItems != null) {
+            for (int i = 0; i < nestedItems.length; i++) {
                 TripItem tripItem = nestedItems[i];
-                if (tripItem.getType().equals(TripItem.CAR)){
+                if (tripItem.getType().equals(TripItem.CAR)) {
                     tripItem.setBookingCode(carBook.book(tripItem));
-                } else if (tripItem.getType().equals(TripItem.FLIGHT)){
+                } else if (tripItem.getType().equals(TripItem.FLIGHT)) {
                     tripItem.setBookingCode(flightBook.book(tripItem));
-                } else if (tripItem.getType().equals(TripItem.HOTEL)){
+                } else if (tripItem.getType().equals(TripItem.HOTEL)) {
                     tripItem.setBookingCode(hotelBook.book(tripItem));
                 } else {
                     tripItem.setBookingCode(tripItem.getType() + " is invalid");
                 }
             }
         }
-        
+
         // book the top level item if it's a packaged trip
-        if (trip.getType().equals(TripItem.TRIP)){
+        if (trip.getType().equals(TripItem.TRIP)) {
             bookingCode = tripBook.book(trip);
             trip.setBookingCode(bookingCode);
         }
-        
+
         // add trip to the shopping cart
-        ServiceReference<CartUpdates> cart = componentContext.getServiceReference(CartUpdates.class, 
-                                                                                 "cartUpdates");
+        ServiceReference<CartUpdates> cart = componentContext.getServiceReference(CartUpdates.class, "cartUpdates");
         cart.setConversationID(cartId);
         cart.getService().addTrip(cartId, trip);
-        
+
         return trip;
     }
- 
+
 }

@@ -26,20 +26,20 @@ import javax.naming.InitialContext;
 public class SMSGatewayEJBServiceBootstrap {
 
     public static void main(String[] args) throws Exception {
-      System.out.println("Publishing SMS Gateway Service as an EJB service");
+        System.out.println("Publishing SMS Gateway Service as an EJB service");
 
-      Properties properties = new Properties();
-      properties.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
-      properties.setProperty("openejb.embedded.remotable", "true");
+        Properties properties = new Properties();
+        properties.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
+        properties.setProperty("openejb.embedded.remotable", "true");
 
-      InitialContext initialContext = new InitialContext(properties);
+        InitialContext initialContext = new InitialContext(properties);
 
-//      Object object = initialContext.lookup("SMSGatewayImplRemote");
-//      SMSGateway smsGateway = (SMSGateway) object;
-//      smsGateway.sendSMS("From", "to", "Message");
+        //      Object object = initialContext.lookup("SMSGatewayImplRemote");
+        //      SMSGateway smsGateway = (SMSGateway) object;
+        //      smsGateway.sendSMS("From", "to", "Message");
 
-      System.out.println("EJB server running - waiting for requests");
-      System.out.println("Press enter to shutdown.");
-      System.in.read();
+        System.out.println("EJB server running - waiting for requests");
+        System.out.println("Press enter to shutdown.");
+        System.in.read();
     }
 }

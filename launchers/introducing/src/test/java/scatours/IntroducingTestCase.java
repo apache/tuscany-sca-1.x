@@ -37,10 +37,15 @@ public class IntroducingTestCase {
 
     @Before
     public void startServer() throws Exception {
-        node = SCANodeFactory.newInstance().createSCANode(null, 
-            new SCAContribution("introducing-tours", "../../contributions/introducing-tours/target/classes"),
-            new SCAContribution("introducing-trips", "../../contributions/introducing-trips/target/classes"),
-            new SCAContribution("introducing-client", "../../contributions/introducing-client/target/classes"));
+        node =
+            SCANodeFactory.newInstance()
+                .createSCANode(null,
+                               new SCAContribution("introducing-tours",
+                                                   "../../contributions/introducing-tours/target/classes"),
+                               new SCAContribution("introducing-trips",
+                                                   "../../contributions/introducing-trips/target/classes"),
+                               new SCAContribution("introducing-client",
+                                                   "../../contributions/introducing-client/target/classes"));
         node.start();
     }
 

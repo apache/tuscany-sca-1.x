@@ -73,13 +73,12 @@ public abstract class BaseBlogFeedImpl {
         List<BlogPost> blogEntries = new ArrayList<BlogPost>();
 
         // Create a sample entry
-        final BlogPost samplePost = new BlogPost(
-             FEED_AUTHOR, 
-             "Apache Tuscany in Action book features SCA Tours",
-            "We are famous as SCA Tours has been featured in the Apache Tuscany in Action book published by Manning",
-            new Date(),
-            "http://www.manning.com/laws/",
-            null);
+        final BlogPost samplePost =
+            new BlogPost(
+                         FEED_AUTHOR,
+                         "Apache Tuscany in Action book features SCA Tours",
+                         "We are famous as SCA Tours has been featured in the Apache Tuscany in Action book published by Manning",
+                         new Date(), "http://www.manning.com/laws/", null);
 
         // Add sample post to the list of posts
         blogEntries.add(samplePost);

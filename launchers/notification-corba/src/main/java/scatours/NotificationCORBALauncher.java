@@ -31,18 +31,17 @@ import scatours.notification.Notification;
 public class NotificationCORBALauncher {
 
     public static void main(String[] args) throws Exception {
-        SCAContribution notificationContribution = 
-          locate("notification");
-        SCAContribution notificationCORBAContribution = 
-          locate("notification-corba");
+        SCAContribution notificationContribution = locate("notification");
+        SCAContribution notificationCORBAContribution = locate("notification-corba");
 
-        SCANode node = SCANodeFactory.newInstance().createSCANode(
-            "notification-corba.composite", notificationContribution, notificationCORBAContribution);
+        SCANode node =
+            SCANodeFactory.newInstance().createSCANode("notification-corba.composite",
+                                                       notificationContribution,
+                                                       notificationCORBAContribution);
         node.start();
 
         System.out.println("Quick notification test");
-        Notification notification = ((SCAClient)node).getService(
-            Notification.class, "Notification");
+        Notification notification = ((SCAClient)node).getService(Notification.class, "Notification");
         String accountID = "1234";
         String subject = "Holiday payment taken";
         String message = "Payment of £102.37 accepted...";
