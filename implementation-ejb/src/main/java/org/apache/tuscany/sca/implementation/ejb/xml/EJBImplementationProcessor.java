@@ -21,6 +21,10 @@ package org.apache.tuscany.sca.implementation.ejb.xml;
 import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.xml.namespace.QName;
@@ -30,10 +34,13 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.tuscany.sca.assembly.AssemblyFactory;
 import org.apache.tuscany.sca.assembly.ComponentType;
+import org.apache.tuscany.sca.assembly.Property;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.jee.EjbInfo;
 import org.apache.tuscany.sca.contribution.jee.EjbModuleInfo;
+import org.apache.tuscany.sca.contribution.jee.EjbReferenceInfo;
+import org.apache.tuscany.sca.contribution.jee.EnvEntryInfo;
 import org.apache.tuscany.sca.contribution.jee.JavaEEExtension;
 import org.apache.tuscany.sca.contribution.jee.JavaEEOptionalExtension;
 import org.apache.tuscany.sca.contribution.jee.impl.EjbModuleInfoImpl;
@@ -49,6 +56,8 @@ import org.apache.tuscany.sca.implementation.java.DefaultJavaImplementationFacto
 import org.apache.tuscany.sca.implementation.java.IntrospectionException;
 import org.apache.tuscany.sca.implementation.java.JavaImplementation;
 import org.apache.tuscany.sca.implementation.java.JavaImplementationFactory;
+import org.apache.tuscany.sca.implementation.java.impl.JavaElementImpl;
+import org.apache.tuscany.sca.implementation.java.impl.JavaResourceImpl;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.PropertyProcessor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.ReferenceProcessor;
 import org.apache.tuscany.sca.implementation.java.introspect.impl.ServiceProcessor;
@@ -175,6 +184,23 @@ public class EJBImplementationProcessor extends BaseStAXArtifactProcessor implem
                 if (ct != null){
                     implementation.getReferences().addAll(ct.getReferences());
                     implementation.getProperties().addAll(ct.getProperties());
+                    
+                    // Injection points
+                    List<String> propertyNames = new ArrayList<String>();
+                    for(Property prop : ct.getProperties()) {
+                        propertyNames.add(prop.getName());
+                    }
+                    EjbInfo ejbInfo = ejbModuleInfo.getEjbInfo(uri);
+                    for(Map.Entry<String, EjbReferenceInfo> entry : ejbInfo.ejbReferences.entrySet()) {
+                        EjbReferenceInfo ejbRef = entry.getValue();
+                        implementation.getOptExtensionReferenceInjectionPoints().put(ejbRef.injectionTarget, ejbRef.businessInterface);
+                    }
+                    for(Map.Entry<String, EnvEntryInfo> entry : ejbInfo.envEntries.entrySet()) {
+                        EnvEntryInfo envEntry = entry.getValue();
+                        if(propertyNames.contains(envEntry.name.replace("/", "_"))) {
+                            implementation.getOptExtensionPropertyInjectionPoints().put(envEntry.name, envEntry.type);
+                        }
+                    }
                 }
             }
 
@@ -191,6 +217,18 @@ public class EJBImplementationProcessor extends BaseStAXArtifactProcessor implem
                     implementation.getReferences().addAll(ji.getReferences());
                     implementation.getProperties().addAll(ji.getProperties());
                     implementation.getServices().addAll(ji.getServices());
+                    for(Map.Entry<String, JavaElementImpl> entry : ji.getReferenceMembers().entrySet()) { 
+                        implementation.getReferenceInjectionPoints().put(entry.getKey(), entry.getValue());
+                    }
+                    for(Map.Entry<String, JavaElementImpl> entry : ji.getPropertyMembers().entrySet()) { 
+                        implementation.getPropertyInjectionPoints().put(entry.getKey(), entry.getValue());
+                    }
+                    for(Map.Entry<String, JavaResourceImpl> entry : ji.getResources().entrySet()) { 
+                        implementation.getResourceInjectionPoints().put(entry.getKey(), entry.getValue());
+                    }
+                    for(Map.Entry<String, Collection<JavaElementImpl>> entry : ji.getCallbackMembers().entrySet()) {
+                        implementation.getCallbackInjectionPoints().put(entry.getKey(), entry.getValue());
+                    }
                 } catch (IntrospectionException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
