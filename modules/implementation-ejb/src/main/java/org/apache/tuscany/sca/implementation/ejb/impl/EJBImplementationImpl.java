@@ -18,6 +18,10 @@
  */
 package org.apache.tuscany.sca.implementation.ejb.impl;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.tuscany.sca.assembly.Component;
 import org.apache.tuscany.sca.assembly.ConstrainingType;
 import org.apache.tuscany.sca.assembly.Property;
@@ -25,7 +29,10 @@ import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.Service;
 import org.apache.tuscany.sca.assembly.builder.ComponentPreProcessor;
 import org.apache.tuscany.sca.assembly.impl.ImplementationImpl;
+import org.apache.tuscany.sca.contribution.jee.InjectionTarget;
 import org.apache.tuscany.sca.implementation.ejb.EJBImplementation;
+import org.apache.tuscany.sca.implementation.java.impl.JavaElementImpl;
+import org.apache.tuscany.sca.implementation.java.impl.JavaResourceImpl;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
 
 
@@ -37,6 +44,18 @@ import org.apache.tuscany.sca.runtime.RuntimeComponent;
 class EJBImplementationImpl extends ImplementationImpl implements EJBImplementation, ComponentPreProcessor {
 
     private String ejbLink;
+
+    private Map<String, JavaElementImpl> propertyInjectionPoints = new HashMap<String, JavaElementImpl>();
+
+    private Map<String, JavaElementImpl> referenceInjectionPoints = new HashMap<String, JavaElementImpl>();
+
+    private Map<String, JavaResourceImpl> resourceInjectionPoints = new HashMap<String, JavaResourceImpl>();
+
+    private final Map<String, Collection<JavaElementImpl>> callbackInjectionPoints = new HashMap<String, Collection<JavaElementImpl>>();
+    
+    private Map<InjectionTarget, Class<?>> optExtReferenceInjectionPoints = new HashMap<InjectionTarget, Class<?>>();
+    
+    private Map<String, String> optExtPropertyInjectionPoints = new HashMap<String, String>();
 
     /**
      * Constructs a new EJB implementation.
@@ -64,6 +83,30 @@ class EJBImplementationImpl extends ImplementationImpl implements EJBImplementat
         this.ejbLink = ejbLink;
     }
     
+    public Map<String, JavaElementImpl> getPropertyInjectionPoints() {
+        return propertyInjectionPoints;
+    }
+
+    public Map<String, JavaElementImpl> getReferenceInjectionPoints() {
+        return referenceInjectionPoints;
+    }
+
+    public Map<String, JavaResourceImpl> getResourceInjectionPoints() {
+        return resourceInjectionPoints;
+    }
+
+    public Map<String, Collection<JavaElementImpl>> getCallbackInjectionPoints() {
+        return callbackInjectionPoints;
+    }
+
+    public Map<InjectionTarget, Class<?>> getOptExtensionReferenceInjectionPoints() {
+        return optExtReferenceInjectionPoints;
+    }
+
+    public Map<String, String> getOptExtensionPropertyInjectionPoints() {
+        return optExtPropertyInjectionPoints;
+    }
+
     /**
      * Use preProcess to add any references and properties dynamically
      */

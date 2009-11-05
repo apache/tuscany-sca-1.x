@@ -18,7 +18,13 @@
  */
 package org.apache.tuscany.sca.implementation.ejb;
 
+import java.util.Collection;
+import java.util.Map;
+
 import org.apache.tuscany.sca.assembly.Implementation;
+import org.apache.tuscany.sca.contribution.jee.InjectionTarget;
+import org.apache.tuscany.sca.implementation.java.impl.JavaElementImpl;
+import org.apache.tuscany.sca.implementation.java.impl.JavaResourceImpl;
 
 
 
@@ -41,4 +47,35 @@ public interface EJBImplementation extends Implementation {
      */
     void setEJBLink(String ejbLink);
 
+    /**
+     * Returns the injection points for SCA references
+     * 
+     * @return Map with injection points for SCA references
+     */
+    Map<String, JavaElementImpl> getReferenceInjectionPoints();
+    
+    /**
+     * Returns the injection points for SCA properties
+     * 
+     * @return Map with injection points for SCA properties
+     */
+    Map<String, JavaElementImpl> getPropertyInjectionPoints();
+
+    /**
+     * Returns the injection points for SCA resources like component context, component name, etc.
+     * 
+     * @return Map with injection points for SCA resources
+     */
+    Map<String, JavaResourceImpl> getResourceInjectionPoints();
+    
+    /**
+     * Returns the injection points for SCA callbacks
+     * 
+     * @return Map with injection points for SCA callbacks
+     */
+    Map<String, Collection<JavaElementImpl>> getCallbackInjectionPoints();
+    
+    Map<InjectionTarget, Class<?>> getOptExtensionReferenceInjectionPoints();
+
+    Map<String, String> getOptExtensionPropertyInjectionPoints();
 }
