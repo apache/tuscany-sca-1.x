@@ -48,7 +48,9 @@
 
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
+<!--
             <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+-->
             <unpack>false</unpack>
             <includes>
                 <include>org.apache.tuscany.sca:scatours-launcher-common</include>

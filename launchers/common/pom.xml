@@ -29,17 +29,11 @@
     <name>Apache Tuscany SCA Tours Common Utility for Launchers</name>
 
     <dependencies>
-    
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-node-api</artifactId>
             <version>${tuscany.version}</version>
         </dependency>
-        
-
     </dependencies>
     
-    <build>
-       <finalName>${artifactId}</finalName>
-    </build>
 </project>
