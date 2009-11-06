@@ -47,6 +47,12 @@ public class ServicesTestCase {
     public void testAService() {
         AComponent a1 = domain.getService(AComponent.class, "AComponent1");
         assertEquals("AComponent", a1.foo());
+        
+        // Call twice
+        assertEquals("AComponent", a1.foo());
+        
+        a1 = domain.getService(AComponent.class, "AComponent1");
+        assertEquals("AComponent", a1.foo());
 
         AComponent a2 = domain.getService(AComponent.class, "AComponent2/AComponent");
         assertEquals("AComponent", a2.foo());
