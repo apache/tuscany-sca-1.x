@@ -23,7 +23,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -82,7 +82,7 @@ public class JDKInvocationHandler implements InvocationHandler, Serializable {
 
     protected boolean fixedWire = true;
 
-    protected transient Map<Method, InvocationChain> chains = new HashMap<Method, InvocationChain>();
+    protected transient Map<Method, InvocationChain> chains = new IdentityHashMap<Method, InvocationChain>();
 
     public JDKInvocationHandler(MessageFactory messageFactory, Class<?> businessInterface, RuntimeWire wire) {
         this.messageFactory = messageFactory;
@@ -288,8 +288,11 @@ public class JDKInvocationHandler implements InvocationHandler, Serializable {
     }
 
     protected synchronized InvocationChain getInvocationChain(Method method, RuntimeWire wire) {
-        if (fixedWire && chains.containsKey(method)) {
-            return chains.get(method);
+        if (fixedWire) {
+            InvocationChain chain = chains.get(method);
+            if (chain != null) {
+                return chain;
+            }
         }
         InvocationChain found = null;
         for (InvocationChain chain : wire.getInvocationChains()) {
