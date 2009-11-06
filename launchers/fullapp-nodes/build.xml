@@ -28,9 +28,6 @@
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
         </javac>
-        <copy todir="target/classes">
-            <fileset dir="src\main\resources"/>
-        </copy>
         <jar destfile="target/scatours-launcher-fullapp-nodes.jar" basedir="target/classes">
             <manifest>
                 <attribute name="Main-Class" value="scatours.FullAppNodesLauncher"/>
