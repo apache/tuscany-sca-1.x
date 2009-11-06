@@ -33,6 +33,7 @@
         <!-- Add all the Tuscany modules to the modules directory -->
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}.${artifact.extension}</outputFileNameMapping>
             <unpack>false</unpack>
             <includes>
                 <include>*:*</include>
@@ -45,9 +46,6 @@
 
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
-<!--
-            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
--->
             <unpack>false</unpack>
             <includes>
                 <include>org.apache.tuscany.sca:scatours-launcher-common</include>
