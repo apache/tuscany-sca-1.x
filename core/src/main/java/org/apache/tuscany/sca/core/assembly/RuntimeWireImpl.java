@@ -21,7 +21,9 @@ package org.apache.tuscany.sca.core.assembly;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.Component;
@@ -79,6 +81,10 @@ public class RuntimeWireImpl implements RuntimeWire {
 
     private List<InvocationChain> chains;
     private InvocationChain bindingInvocationChain;
+    // Cache
+    private transient final Map<Operation, InvocationChain> invocationChainMap =
+        new IdentityHashMap<Operation, InvocationChain>();
+
 
     /**
      * @param source
@@ -129,20 +135,30 @@ public class RuntimeWireImpl implements RuntimeWire {
     }
 
     public InvocationChain getInvocationChain(Operation operation) {
-        for (InvocationChain chain : getInvocationChains()) {
-            Operation op = null;
-            if (wireSource.getContract() != null) {
-                // Reference chain
-                op = chain.getSourceOperation();
+        synchronized (invocationChainMap) {
+            InvocationChain cached = invocationChainMap.get(operation);
+            if (cached == null) {
+                for (InvocationChain chain : getInvocationChains()) {
+                    Operation op = null;
+                    if (wireSource.getContract() != null) {
+                        // Reference chain
+                        op = chain.getSourceOperation();
+                    } else {
+                        // Service chain
+                        op = chain.getTargetOperation();
+                    }
+                    if (interfaceContractMapper.isCompatible(operation, op, op.getInterface().isRemotable())) {
+                        invocationChainMap.put(operation, chain);
+                        return chain;
+                    }
+                }
+                invocationChainMap.put(operation, null);
+                return null;
+
             } else {
-                // Service chain
-                op = chain.getTargetOperation();
-            }
-            if (interfaceContractMapper.isCompatible(operation, op, op.getInterface().isRemotable())) {
-                return chain;
+                return cached;
             }
         }
-        return null;
     }
     
     public Object invoke(Message msg) throws InvocationTargetException {
