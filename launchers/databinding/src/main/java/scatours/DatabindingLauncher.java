@@ -27,7 +27,9 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 
 public class DatabindingLauncher {
     public static void main(String[] args) throws Exception {
-        SCANode node1 = SCANodeFactory.newInstance().createSCANode(null, locate("payment-java"), locate("client"));
+        SCANode node1 = SCANodeFactory.newInstance().createSCANode(null, 
+                                                                   locate("payment-java"), 
+                                                                   locate("databinding-client"));
 
         SCANode node2 = SCANodeFactory.newInstance().createSCANode(null, locate("creditcard-payment-sdo"));
 
