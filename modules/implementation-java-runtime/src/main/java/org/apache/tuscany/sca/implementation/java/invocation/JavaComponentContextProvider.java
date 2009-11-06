@@ -51,6 +51,7 @@ import org.apache.tuscany.sca.core.invocation.WireObjectFactory;
 import org.apache.tuscany.sca.core.scope.ScopeContainer;
 import org.apache.tuscany.sca.core.scope.TargetResolutionException;
 import org.apache.tuscany.sca.databinding.DataBindingExtensionPoint;
+import org.apache.tuscany.sca.implementation.java.context.InstanceFactory;
 import org.apache.tuscany.sca.implementation.java.impl.JavaConstructorImpl;
 import org.apache.tuscany.sca.implementation.java.impl.JavaElementImpl;
 import org.apache.tuscany.sca.implementation.java.impl.JavaResourceImpl;
@@ -78,6 +79,7 @@ public class JavaComponentContextProvider {
     private RuntimeComponent component;
     private JavaInstanceFactoryProvider<?> instanceFactoryProvider;
     private ProxyFactory proxyFactory;
+    private InstanceFactory instanceFactory;
 
     public JavaComponentContextProvider(RuntimeComponent component,
                                         JavaInstanceFactoryProvider configuration,
@@ -99,7 +101,7 @@ public class JavaComponentContextProvider {
     }
 
     InstanceWrapper<?> createInstanceWrapper() throws ObjectCreationException {
-        return instanceFactoryProvider.createFactory().newInstance();
+        return instanceFactory.newInstance();
     }
 
     void configureProperties(List<ComponentProperty> definedProperties) {
@@ -272,6 +274,8 @@ public class JavaComponentContextProvider {
         ccImpl.setPropertyValueFactory(propertyValueFactory);
 
         //setUpPolicyHandlers();
+        this.instanceFactory = instanceFactoryProvider.createFactory();
+
     }
 
     void addResourceFactory(String name, ObjectFactory<?> factory) {
