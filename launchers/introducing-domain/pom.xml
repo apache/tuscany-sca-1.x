@@ -60,15 +60,11 @@
                 <version>2.2</version>
                 <configuration>
                     <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>../lib/</classpathPrefix>
-                            <mainClass>org.apache.tuscany.sca.node.launcher.DomainManagerLauncher</mainClass>
-                        </manifest>
+                        <manifestFile>META-INF/MANIFEST.MF</manifestFile>
                     </archive>
                 </configuration>
             </plugin>
-        </plugins>                              
+        </plugins>                      
     </build>
 
 </project>
