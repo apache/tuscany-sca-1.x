@@ -21,9 +21,9 @@ package org.apache.tuscany.sca.core.assembly;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.Component;
@@ -82,8 +82,8 @@ public class RuntimeWireImpl implements RuntimeWire {
     private List<InvocationChain> chains;
     private InvocationChain bindingInvocationChain;
     // Cache
-    private transient final Map<Operation, InvocationChain> invocationChainMap =
-        new IdentityHashMap<Operation, InvocationChain>();
+    private transient final Map<Integer, InvocationChain> invocationChainMap =
+        new ConcurrentHashMap<Integer, InvocationChain>();
 
 
     /**
@@ -135,29 +135,28 @@ public class RuntimeWireImpl implements RuntimeWire {
     }
 
     public InvocationChain getInvocationChain(Operation operation) {
-        synchronized (invocationChainMap) {
-            InvocationChain cached = invocationChainMap.get(operation);
-            if (cached == null) {
-                for (InvocationChain chain : getInvocationChains()) {
-                    Operation op = null;
-                    if (wireSource.getContract() != null) {
-                        // Reference chain
-                        op = chain.getSourceOperation();
-                    } else {
-                        // Service chain
-                        op = chain.getTargetOperation();
-                    }
-                    if (interfaceContractMapper.isCompatible(operation, op, op.getInterface().isRemotable())) {
-                        invocationChainMap.put(operation, chain);
-                        return chain;
-                    }
+        Integer id = operation == null ? new Integer(0) : new Integer(System.identityHashCode(operation));
+        InvocationChain cached = invocationChainMap.get(id);
+        if (cached == null) {
+            for (InvocationChain chain : getInvocationChains()) {
+                Operation op = null;
+                if (wireSource.getContract() != null) {
+                    // Reference chain
+                    op = chain.getSourceOperation();
+                } else {
+                    // Service chain
+                    op = chain.getTargetOperation();
                 }
-                invocationChainMap.put(operation, null);
-                return null;
-
-            } else {
-                return cached;
+                if (interfaceContractMapper.isCompatible(operation, op, op.getInterface().isRemotable())) {
+                    invocationChainMap.put(id, chain);
+                    return chain;
+                }
             }
+            invocationChainMap.put(id, null);
+            return null;
+
+        } else {
+            return cached;
         }
     }
     
