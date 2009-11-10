@@ -82,8 +82,8 @@ public class RuntimeWireImpl implements RuntimeWire {
     private List<InvocationChain> chains;
     private InvocationChain bindingInvocationChain;
     // Cache
-    private transient final Map<Integer, InvocationChain> invocationChainMap =
-        new ConcurrentHashMap<Integer, InvocationChain>();
+    private transient final Map<Operation, InvocationChain> invocationChainMap =
+        new ConcurrentHashMap<Operation, InvocationChain>();
 
 
     /**
@@ -135,8 +135,7 @@ public class RuntimeWireImpl implements RuntimeWire {
     }
 
     public InvocationChain getInvocationChain(Operation operation) {
-        Integer id = operation == null ? new Integer(0) : new Integer(System.identityHashCode(operation));
-        InvocationChain cached = invocationChainMap.get(id);
+        InvocationChain cached = invocationChainMap.get(operation);
         if (cached == null) {
             for (InvocationChain chain : getInvocationChains()) {
                 Operation op = null;
@@ -148,11 +147,11 @@ public class RuntimeWireImpl implements RuntimeWire {
                     op = chain.getTargetOperation();
                 }
                 if (interfaceContractMapper.isCompatible(operation, op, op.getInterface().isRemotable())) {
-                    invocationChainMap.put(id, chain);
+                    invocationChainMap.put(operation, chain);
                     return chain;
                 }
             }
-            invocationChainMap.put(id, null);
+            invocationChainMap.put(operation, null);
             return null;
 
         } else {
