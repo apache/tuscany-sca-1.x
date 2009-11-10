@@ -366,7 +366,7 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
     }    
 
     private boolean hasReferenceAnnotation(InjectionTarget injectionTarget) {
-        if(injectionTarget.targetClass != null || injectionTarget.targetClass.equals("")) {
+        if(injectionTarget.targetClass == null || injectionTarget.targetClass.equals("")) {
             return false;
         }
         try {
