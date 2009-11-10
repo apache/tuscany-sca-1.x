@@ -147,6 +147,10 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
         // Process Remote EJB References
         for(Map.Entry<String, EjbReferenceInfo> entry : ejbInfo.ejbReferences.entrySet()) {
             EjbReferenceInfo ejbRef = entry.getValue();
+            // If the EJB reference has @Reference SCA annotation, then skip that reference
+            if(!hasReferenceAnnotation(ejbRef.injectionTarget)) {
+                continue;
+            }
             String referenceName = entry.getKey();
             referenceName = referenceName.replace("/", "_");
             Reference reference = assemblyFactory.createComponentReference();
