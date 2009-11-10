@@ -30,6 +30,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-ejb_3.0_spec</artifactId>
+            <version>1.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-contribution</artifactId>
             <version>1.6-SNAPSHOT</version>

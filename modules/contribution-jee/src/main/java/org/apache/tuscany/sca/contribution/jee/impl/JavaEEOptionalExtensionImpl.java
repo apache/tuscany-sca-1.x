@@ -18,6 +18,8 @@
  */
 package org.apache.tuscany.sca.contribution.jee.impl;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +42,7 @@ import org.apache.tuscany.sca.contribution.jee.EjbInfo;
 import org.apache.tuscany.sca.contribution.jee.EjbModuleInfo;
 import org.apache.tuscany.sca.contribution.jee.EjbReferenceInfo;
 import org.apache.tuscany.sca.contribution.jee.EnvEntryInfo;
+import org.apache.tuscany.sca.contribution.jee.InjectionTarget;
 import org.apache.tuscany.sca.contribution.jee.JavaEEApplicationInfo;
 import org.apache.tuscany.sca.contribution.jee.JavaEEOptionalExtension;
 import org.apache.tuscany.sca.contribution.jee.WebImplementationGenerated;
@@ -93,6 +96,10 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
         // Process Remote EJB References
         for(Map.Entry<String, EjbReferenceInfo> entry : webModule.getEjbReferences().entrySet()) {
             EjbReferenceInfo ejbRef = entry.getValue();
+            // If the EJB reference has @Reference SCA annotation, then skip that reference
+            if(!hasReferenceAnnotation(ejbRef.injectionTarget)) {
+                continue;
+            }
             String referenceName = entry.getKey();
             referenceName = referenceName.replace("/", "_");
             Reference reference = assemblyFactory.createComponentReference();
@@ -129,6 +136,7 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
         
         return componentType;
     }
+
     public ComponentType createImplementationEjbComponentType(EjbModuleInfo ejbModule, String ejbName) {
         ComponentType componentType = assemblyFactory.createComponentType();
         EjbInfo ejbInfo = ejbModule.getEjbInfo(ejbName);
@@ -356,4 +364,31 @@ public class JavaEEOptionalExtensionImpl implements JavaEEOptionalExtension {
         compositeReference.setName(reference.getName());
         compositeReference.getPromotedReferences().add(reference);        
     }    
+
+    private boolean hasReferenceAnnotation(InjectionTarget injectionTarget) {
+        if(injectionTarget.targetClass != null || injectionTarget.targetClass.equals("")) {
+            return false;
+        }
+        try {
+            Class<?> clazz = Class.forName(injectionTarget.targetClass);
+            try {
+                Method method = clazz.getDeclaredMethod("set"+injectionTarget.targetName);
+                if(method.isAnnotationPresent(javax.ejb.EJB.class)) {
+                    return method.isAnnotationPresent(org.osoa.sca.annotations.Reference.class);
+                } else {
+                    // The method does not have @EJB annotation. So, the method is not good for us.
+                    throw new NoSuchMethodException("set"+injectionTarget.targetName);
+                }
+            } catch(NoSuchMethodException nsme) {
+                try {
+                    Field field = clazz.getDeclaredField(injectionTarget.targetName);
+                    return field.isAnnotationPresent(org.osoa.sca.annotations.Reference.class);
+                } catch(NoSuchFieldException nsfe) {
+                    return false;
+                }
+            }
+        } catch(ClassNotFoundException cnfe) {
+            return false;
+        }
+    }
 }
