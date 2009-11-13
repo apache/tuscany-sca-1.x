@@ -1,0 +1,100 @@
+<!--
+    * Licensed to the Apache Software Foundation (ASF) under one
+    * or more contributor license agreements.  See the NOTICE file
+    * distributed with this work for additional information
+    * regarding copyright ownership.  The ASF licenses this file
+    * to you under the Apache License, Version 2.0 (the
+    * "License"); you may not use this file except in compliance
+    * with the License.  You may obtain a copy of the License at
+    * 
+    *   http://www.apache.org/licenses/LICENSE-2.0
+    * 
+    * Unless required by applicable law or agreed to in writing,
+    * software distributed under the License is distributed on an
+    * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    * KIND, either express or implied.  See the License for the
+    * specific language governing permissions and limitations
+    * under the License.    
+-->
+<html>
+
+<head>
+
+<title>SCA Domain - Domain Composite</title>
+
+<script type="text/javascript" src="../search-gadget/search-gadget.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+
+<link rel="stylesheet" type="text/css" href="manager.css">
+
+<script type="text/javascript">
+
+	function search(query) {
+		searcher.get("query" + query, searchResponse);
+		
+	}
+	
+	function getHighlighted(artifact) {
+		searcher.get("highlight" + lastQuery + ";" + artifact, searchResponse);
+	}
+	
+	function highlightResponse(feed) {
+		var entries = feed.getElementsByTagName("entry");
+		var content = entries[0].getElementsByTagName("content");
+		
+		var results = elementByID(gadget, "results");
+		results.innerHTML = content[0].firstChild.data;
+		
+	}
+	
+	function searchResponse(feed) {
+		var entries = feed.getElementsByTagName("entry");
+		var content = entries[0].getElementsByTagName("content");
+		
+		var results = elementByID(gadget, "results");
+		results.innerHTML = content[0].firstChild.data;
+		
+	}
+	
+	function getParameter( name )
+	{
+	  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	  var regexS = "[\\?&]"+name+"=([^&#]*)";
+	  var regex = new RegExp( regexS );
+	  var results = regex.exec( window.top.location.href );
+	  if( results == null )
+	    return ""
+	  else
+	    return results[1];
+	}
+	
+	function checkQuery() {
+		var query = getParameter("query");
+		
+		if (query.length > 0) {
+			search(query);
+			
+		} else {
+			search("*:*");
+		}
+		
+	}
+	
+</script>
+
+</head>
+
+<body onload="checkQuery()">
+   <div id="results"></div>
+ </body>
+
+<script type="text/javascript">
+
+	//@Reference
+	var searcher = new tuscany.sca.Reference("searcher");
+	
+	var gadget = gadget(window, document);
+	
+</script>
+
+</html>

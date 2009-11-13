@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://eclipse.org/SCAExample1/src/resources/clinicalLaboratory"
+    xmlns:tns="http://eclipse.org/SCAExample1/src/resources/clinicalLaboratory"
+    elementFormDefault="qualified">
+    <complexType name="Practice">
+        <sequence>
+            <element name="name" type="string" />
+        </sequence>
+    </complexType>
+    <complexType name="Laboratory">
+        <sequence>
+            <element name="name" type="string" />
+            <element name="practices" type="tns:Practice" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+</schema>

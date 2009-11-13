@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.    
+-->
+<wsdl:definitions 
+    targetNamespace="http://filetransfer" 
+    xmlns:tns="http://filetransfer" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+    xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="filetransfer">
+
+    <wsdl:types>
+        <schema elementFormDefault="qualified" targetNamespace="http://filetransfer" xmlns="http://www.w3.org/2001/XMLSchema">
+            
+            <element name="uploadImageFile">
+                <complexType>
+                    <sequence>
+                        <element name="attachment" type="xsd:base64Binary"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="uploadImageFileResponse">
+                <complexType>
+                    <sequence>
+                        <element name="uploadImageFileReturn" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="uploadSourceFile">
+                <complexType>
+                    <sequence>
+                        <element name="attachment" type="xsd:base64Binary"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="uploadSourceFileResponse">
+                <complexType>
+                    <sequence>
+                        <element name="uploadSourceFileReturn" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="uploadDataHandlerFile">
+                <complexType>
+                    <sequence>
+                        <element name="attachment" type="xsd:base64Binary"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="uploadDataHandlerFileResponse">
+                <complexType>
+                    <sequence>
+                        <element name="uploadDataHandlerFileReturn" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="uploadOMElementFile">
+                <complexType>
+                    <sequence>
+                        <element name="attachment" type="xsd:base64Binary"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="uploadOMElementFileResponse">
+                <complexType>
+                    <sequence>
+                        <element name="uploadOMElementFileReturn" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="sendMyException">
+                <complexType>
+                    <sequence>
+                        <element name="attachment" type="xsd:anyType"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="sendMyExceptionResponse">
+                <complexType>
+                    <sequence>
+                        <element name="sendMyExceptionReturn" type="xsd:string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            
+        </schema>
+    </wsdl:types>
+
+    <wsdl:message name="uploadImageFileRequest">
+        <wsdl:part element="tns:uploadImageFile" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="uploadImageFileResponse">
+        <wsdl:part element="tns:uploadImageFileResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="uploadSourceFileRequest">
+        <wsdl:part element="tns:uploadSourceFile" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="uploadSourceFileResponse">
+        <wsdl:part element="tns:uploadSourceFileResponse" name="parameters"/>
+    </wsdl:message>
+    
+    <wsdl:message name="uploadDataHandlerFileRequest">
+        <wsdl:part element="tns:uploadDataHandlerFile" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="uploadDataHandlerFileResponse">
+        <wsdl:part element="tns:uploadDataHandlerFileResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="uploadOMElementFileRequest">
+        <wsdl:part element="tns:uploadOMElementFile" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="uploadOMElementFileResponse">
+        <wsdl:part element="tns:uploadOMElementFileResponse" name="parameters"/>
+    </wsdl:message>
+    
+    <wsdl:message name="sendMyExceptionRequest">
+        <wsdl:part element="tns:sendMyException" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="sendMyExceptionResponse">
+        <wsdl:part element="tns:sendMyExceptionResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:portType name="FileTransfer">
+        <wsdl:operation name="uploadImageFile">
+            <wsdl:input message="tns:uploadImageFileRequest" name="uploadImageFileRequest" wsaw:Action="attachment"/>
+            <wsdl:output message="tns:uploadImageFileResponse" name="uploadImageFileResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="uploadSourceFile">
+            <wsdl:input message="tns:uploadSourceFileRequest" name="uploadSourceFileRequest" wsaw:Action="attachment"/>
+            <wsdl:output message="tns:uploadSourceFileResponse" name="uploadSourceFileResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="uploadDataHandlerFile">
+            <wsdl:input message="tns:uploadDataHandlerFileRequest" name="uploadDataHandlerFileRequest" wsaw:Action="attachment"/>
+            <wsdl:output message="tns:uploadDataHandlerFileResponse" name="uploadDataHandlerFileResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="uploadOMElementFile">
+            <wsdl:input message="tns:uploadOMElementFileRequest" name="uploadOMElementFileRequest" wsaw:Action="attachment"/>
+            <wsdl:output message="tns:uploadOMElementFileResponse" name="uploadOMElementFileResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="sendMyException">
+            <wsdl:input message="tns:sendMyExceptionRequest" name="sendMyExceptionRequest"/>
+            <wsdl:output message="tns:sendMyExceptionResponse" name="sendMyExceptionResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="FileTransferSoapBinding" type="tns:FileTransfer">
+        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>        
+        <wsdl:operation name="uploadImageFile">
+            <wsdlsoap:operation soapAction="attachment" style="document"/>
+            <wsdl:input name="uploadImageFileRequest">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="uploadImageFileResponse">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="uploadSourceFile">
+            <wsdlsoap:operation soapAction="attachment" style="document"/>
+            <wsdl:input name="uploadSourceFileRequest">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="uploadSourceFileResponse">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="uploadDataHandlerFile">
+            <wsdlsoap:operation soapAction="attachment" style="document"/>
+            <wsdl:input name="uploadDataHandlerFileRequest">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="uploadDataHandlerFileResponse">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="uploadOMElementFile">
+            <wsdlsoap:operation soapAction="attachment" style="document"/>
+            <wsdl:input name="uploadOMElementFileRequest">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="uploadOMElementFileResponse">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sendMyException">
+            <wsdlsoap:operation soapAction="" style="document"/>
+            <wsdl:input name="sendMyExceptionRequest">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="sendMyExceptionResponse">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="FileTransferService">
+        <wsdl:port binding="tns:FileTransferSoapBinding" name="FileTransferSoapPort">
+            <wsdlsoap:address location="http://localhost:8085/FileTransferServiceComponent"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

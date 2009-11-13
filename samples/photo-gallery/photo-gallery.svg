@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+-->
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09448"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.45pre1"
+   sodipodi:docbase="D:\Opensource\Apache\Tuscany\source\java-sca-1.x\samples\photo-gallery"
+   sodipodi:docname="photo-gallery.svg"
+   version="1.0"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="D:\Opensource\Apache\Tuscany\source\java-sca-1.x\samples\photo-gallery\photo-gallery.png"
+   inkscape:export-xdpi="52.84"
+   inkscape:export-ydpi="52.84"
+   sodipodi:modified="true">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="538.06165"
+     inkscape:cy="341.69129"
+     inkscape:document-units="px"
+     inkscape:current-layer="g2997"
+     inkscape:window-width="1466"
+     inkscape:window-height="831"
+     inkscape:window-x="117"
+     inkscape:window-y="80" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g2997">
+      <rect
+         rx="14.335117"
+         ry="17.743465"
+         y="197.1973"
+         x="447.35422"
+         height="419.39099"
+         width="464.23727"
+         id="rect2067"
+         style="opacity:1;fill:#90baf4;fill-opacity:1;stroke:#060000;stroke-width:2.28840661;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <flowRoot
+         id="flowRoot2954"
+         xml:space="preserve"
+         transform="translate(189.90868,1.0101522)"
+         style="text-anchor:start;text-align:start;writing-mode:lr;line-height:125%"><flowRegion
+           id="flowRegion2956"><rect
+             y="212.66591"
+             x="281.42856"
+             height="61.42857"
+             width="170"
+             id="rect2958"
+             style="text-anchor:start;text-align:start;writing-mode:lr;line-height:125%" /></flowRegion><flowPara
+           id="flowPara2214">photo-gallery</flowPara></flowRoot>      <rect
+         style="fill:#317fed;fill-opacity:1;stroke:#060000;stroke-width:2.30182266;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect2175"
+         width="118.21779"
+         height="111.27543"
+         x="492.31448"
+         y="342.04559"
+         rx="7.1507306"
+         ry="9.2311935" />
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot2177"
+         transform="translate(224.57279,135.95616)"
+         style="text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start"><flowRegion
+           id="flowRegion2179"><rect
+             id="rect2181"
+             width="170"
+             height="61.42857"
+             x="281.42856"
+             y="212.66591"
+             style="text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start" /></flowRegion><flowPara
+           id="flowPara2216">gallery</flowPara></flowRoot>      <path
+         style="fill:#5b9d05;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 475.01306,373.74169 L 508.3481,373.74169 L 514.40901,386.87367 L 507.33795,398.99551 L 475.01306,398.99551 L 482.58921,386.87367 L 475.01306,373.74169 z "
+         id="path2187" />
+      <rect
+         style="opacity:1;fill:#0064ff;fill-opacity:1;stroke:#000000;stroke-width:0.9612025;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect2223"
+         width="104.08451"
+         height="113.17588"
+         x="138.37151"
+         y="350.1156"
+         rx="0"
+         ry="0.048917599" />
+      <path
+         style="fill:#1a73fe;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+         d="M 138.21429,462.66591 L 115.35714,479.80877 L 267.85714,479.80877 L 241.78571,463.02305 L 138.21429,462.66591 z "
+         id="path3197" />
+      <rect
+         style="opacity:1;fill:#f1f4f8;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect3199"
+         width="92.5"
+         height="97.14286"
+         x="143.57143"
+         y="358.38019"
+         ry="3.6203461"
+         rx="3.9285715" />
+      <image
+         y="366.6889"
+         x="156.24066"
+         id="image3323"
+         height="78.571434"
+         width="58.57143"
+         sodipodi:absref="C:\simon\tuscany\evangelism\whitepapers\shoppingcart.png"
+         xlink:href="C:\simon\tuscany\evangelism\whitepapers\shoppingcart.png" />
+      <image
+         y="364.80875"
+         x="527.14288"
+         id="image3342"
+         height="78.571434"
+         width="58.57143"
+         sodipodi:absref="C:\simon\tuscany\evangelism\whitepapers\shoppingcart.png"
+         xlink:href="C:\simon\tuscany\evangelism\whitepapers\shoppingcart.png" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.98866588px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 625.70862,383.37452 C 744.37642,384.82859 746.43425,383.37452 746.43425,383.37452"
+         id="path3354"
+         sodipodi:nodetypes="cc" />
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot3364"
+         transform="translate(-199.33705,8.0748553)"><flowRegion
+           id="flowRegion3366"><rect
+             id="rect3368"
+             width="142.14285"
+             height="21.428572"
+             x="655"
+             y="349.80878" /></flowRegion><flowPara
+           id="flowPara3370">HTTP</flowPara></flowRoot>      <flowRoot
+         xml:space="preserve"
+         id="flowRoot3372"
+         transform="translate(9.9486586,3.0748553)"><flowRegion
+           id="flowRegion3374"><rect
+             id="rect3376"
+             width="142.14285"
+             height="21.428572"
+             x="655"
+             y="349.80878" /></flowRegion><flowPara
+           id="flowPara3378">JSONRPC</flowPara></flowRoot>      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.17523563px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 246.15904,386.72177 C 481.89588,387.75606 485.98382,386.72177 485.98382,386.72177"
+         id="path2220"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <rect
+       style="fill:#317fed;fill-opacity:1;stroke:#060000;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect2988"
+       width="115.66247"
+       height="85.862968"
+       x="728.71185"
+       y="338.41565"
+       rx="6.9961648"
+       ry="7.1230249" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot2966"
+       transform="translate(461.12105,132.47712)"
+       style="text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start"><flowRegion
+         id="flowRegion2968"><rect
+           id="rect2970"
+           width="170"
+           height="61.42857"
+           x="281.42856"
+           y="212.66591"
+           style="text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start" /></flowRegion><flowPara
+         id="flowPara2218">Album</flowPara></flowRoot>    <path
+       style="fill:#5b9d05;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 711.56132,370.26264 L 744.89636,370.26264 L 750.95727,383.39462 L 743.88621,395.51646 L 711.56132,395.51646 L 719.13747,383.39462 L 711.56132,370.26264 z "
+       id="path3017" />
+    <path
+       style="fill:#ae62bf;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 588.38519,369.13865 L 621.72023,369.13865 L 627.78114,382.27063 L 620.71008,394.39247 L 588.38519,394.39247 L 595.96134,382.27063 L 588.38519,369.13865 z "
+       id="path3019" />
+  </g>
+</svg>

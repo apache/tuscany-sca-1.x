@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
+           xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
+           xmlns:c="http://client.scatours/"
+           targetNamespace="http://tuscany.apache.org/cloud"
+           name="ClientNode">
+    <component name="ClientNode">
+        <t:implementation.node uri="client" composite="c:Client" />
+        <service name="Node">
+            <binding.sca uri="http://localhost:8081" />
+        </service>
+    </component>
+</composite>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ASCII"?>
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.    
+-->
+<sca:definitions xmlns="http://www.osoa.org/xmlns/sca/1.0"
+ 			targetNamespace="http://www.osoa.org/xmlns/sca/1.0"
+ 			xmlns:sca="http://www.osoa.org/xmlns/sca/1.0"
+ 			xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
+ 			xmlns:store="http://store">
+
+ 
+   <sca:policySet name="widgetBindingAuthenticationPolicySet"
+ 	provides="sca:authentication"
+ 	appliesTo="tuscany:binding.http">
+        <tuscany:authenticationConfiguration>
+             <tuscany:user username="admin" password="tuscany" roles="admin"/>
+             <tuscany:user username="user1" password="tuscany" roles="user"/>
+             <tuscany:user username="user2" password="tuscany" roles="user"/>
+        </tuscany:authenticationConfiguration>
+  </sca:policySet>
+  
+   <sca:policySet name="widgetConfidentialityConfigurationPolicySet"
+ 	provides="sca:confidentiality"
+ 	appliesTo="tuscany:binding.http">
+        <tuscany:confidentiality>
+          <tuscany:keyStore type="JKS" file="target/classes/tuscany.keyStore" password="apache"/>
+          <tuscany:trustStore type="" file="" password=""/>
+        </tuscany:confidentiality>
+  </sca:policySet>  
+  
+  
+  
+  
+ 
+ </sca:definitions>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, catalog</string>
+    <string name="app_name">store</string>
+    <string name="app_tag">Tuscany</string>
+    <string name="btn_clean">Erase cart</string>
+    <string name="btn_add_del1">Delete</string>
+    <string name="btn_add_del2">Add</string>
+    <string name="txt_empty">Nothing to display. The cart is currently empty</string>
+    <string name="tab_catalog">catalog_tab</string>
+    <string name="tab_shop">shopping_cart_tab</string>
+    <string name="title_catalog">Catalog Items</string>
+    <string name="title_shop">Shopping Cart</string>
+    <string name="get_tag">Catalog GET!!</string>
+    <string name="start_tag">Activity started</string>
+    <string name="txt_total">Total: </string>
+    <string name="add_entry_ok">Entry added: </string>
+    <string name="add_entry_ko">Unable to add entry: </string>
+    <string name="del_entry_ok">Entry removed: </string>
+    <string name="del_entry_ko">Unable to delete item: </string>
+    <string name="alert_yes">Yes</string>
+    <string name="alert_cancel">Cancel</string>
+    <string name="del_all_ok">All entries have been removed</string>
+    <string name="title_thx">Thanks for Shopping With Us!</string>
+    <string name="title_order">Your order</string>
+    <string name="howto_del">Click on an item below to remove it</string>
+    
+</resources>

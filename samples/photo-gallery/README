@@ -1,0 +1,20 @@
+Photo-Gallery Sample
+======================================
+
+This is a sample picture gallery application using Tuscany SCA.
+
+Building And Running The Sample Using Ant
+-----------------------------------------
+With the binary distribution the sample can be built using Ant as follows:
+
+cd photo-gallery
+ant compile
+
+and then, to run:
+
+ant run
+
+Once the store application is running use your browser to visit the following
+URL:
+
+http://localhost:8080/gallery/

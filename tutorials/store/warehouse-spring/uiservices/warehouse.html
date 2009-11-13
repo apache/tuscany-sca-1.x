@@ -1,0 +1,76 @@
+<!--
+    * Licensed to the Apache Software Foundation (ASF) under one
+    * or more contributor license agreements.  See the NOTICE file
+    * distributed with this work for additional information
+    * regarding copyright ownership.  The ASF licenses this file
+    * to you under the Apache License, Version 2.0 (the
+    * "License"); you may not use this file except in compliance
+    * with the License.  You may obtain a copy of the License at
+    * 
+    *   http://www.apache.org/licenses/LICENSE-2.0
+    * 
+    * Unless required by applicable law or agreed to in writing,
+    * software distributed under the License is distributed on an
+    * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    * KIND, either express or implied.  See the License for the
+    * specific language governing permissions and limitations
+    * under the License.    
+-->
+<html>
+<head>
+<title>Warehouse</title>
+
+<script type="text/javascript" src="warehouse.js"></script>
+
+<script language="JavaScript">
+
+	//@Reference
+	var warehouse = new tuscany.sca.Reference("warehouse");
+
+    function getOrders() {
+        warehouse.getOrders(warehouse_getOrdersResponse);
+    }
+    	
+	function warehouse_getOrdersResponse(orders,exception) {
+        if(exception){
+            alert(exception.message);
+            return;
+        }
+
+        var orderHTML = "";
+        for (var i=0; i<orders.length; i++) {
+          var order = orders[i];
+          var items = order.items;
+          orderHTML += "Order</br>";
+          for (var j=0; j<items.length; j++) {
+            var item = items[j].name + ' - ' + items[j].price;
+            orderHTML += "  " + item + "<br/>";
+          }
+        }
+        document.getElementById('orders').innerHTML=orderHTML;
+	}			
+	    
+	function init() {
+		try {
+			getOrders();
+		}
+		catch(e) {
+			alert(e);
+		}
+	}
+	
+</script>
+
+</head>
+
+<body onload="init()">
+<h1>Pending Orders</h1>
+  <div id="warehouse">
+   	<form name="ordersForm">
+		<div id="orders" ></div>
+		<br>
+		<input type="button" onClick="getOrders()"  value="Refresh">
+   	</form>
+  </div>
+</body>
+</html>
