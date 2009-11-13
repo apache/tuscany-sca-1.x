@@ -18,6 +18,7 @@
  */
 package org.apache.tuscany.sca.core.invocation;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
@@ -33,7 +34,7 @@ public class SCAProxy extends Proxy
      // This is a cache containing the proxy class constructor for each business interface.
      // This improves performance compared to calling Proxy.newProxyInstance()
      // every time that a proxy is needed.
-     private static WeakHashMap cache = new WeakHashMap<String, Object>();
+     private static WeakHashMap cache = new WeakHashMap<Class, WeakReference<Constructor>>();
      
      public static Object newProxyInstance(ClassLoader classloader, Class aclass[], InvocationHandler invocationhandler)
         throws IllegalArgumentException
@@ -42,15 +43,18 @@ public class SCAProxy extends Proxy
             if(invocationhandler == null)
                 throw new NullPointerException();
             // Lookup cached constructor.  aclass[0] is the reference's business interface.
-            Constructor proxyCTOR;
+            Constructor proxyCTOR = null;
             synchronized(cache) {
-                proxyCTOR = (Constructor) cache.get(aclass[0].hashCode());
+                WeakReference<Constructor> ref = (WeakReference<Constructor>) cache.get(aclass[0]);
+                if (ref != null){
+                    proxyCTOR = ref.get();
+                }
             }
             if(proxyCTOR == null) {
                 Class proxyClass = getProxyClass(classloader, aclass);
                 proxyCTOR = proxyClass.getConstructor(constructorParams);
                 synchronized(cache){
-                    cache.put(aclass[0].hashCode(),proxyCTOR);
+                    cache.put(aclass[0],new WeakReference<Constructor>(proxyCTOR));
                 }
             }
             return proxyCTOR.newInstance(new Object[] { invocationhandler });
