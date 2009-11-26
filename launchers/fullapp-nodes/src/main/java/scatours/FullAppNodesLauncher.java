@@ -52,7 +52,7 @@ public class FullAppNodesLauncher {
         nodeBespoketrip.start();
 
         SCANode nodeFrontend =
-            SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/frontend");
+            SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/coordination");
         nodeFrontend.start();
 
         SCANode nodeUI = SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/ui");
