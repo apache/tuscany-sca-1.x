@@ -57,7 +57,7 @@
                 <module>feed-logger</module>
                 <module>flight</module>
                 <module>fullapp-ui</module>
-                <module>fullapp-frontend</module>
+                <module>fullapp-coordination</module>
                 <module>fullapp-currency</module>
                 <module>fullapp-packagedtrip</module>
                 <module>fullapp-bespoketrip</module>

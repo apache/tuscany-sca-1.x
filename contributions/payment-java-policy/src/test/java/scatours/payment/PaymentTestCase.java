@@ -31,22 +31,27 @@ import org.junit.Test;
 import com.tuscanyscatours.payment.Payment;
 
 public class PaymentTestCase {
-    private static SCANode node;
+    private static SCANode node1;
+    private static SCANode node2;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        node =
+        node1 =
             SCANodeFactory.newInstance()
-                .createSCANode(null,
-                               new SCAContribution("payment", "./target/classes"),
+                .createSCANode("payment.composite",
+                               new SCAContribution("payment", "./target/classes"));
+        node2 =
+            SCANodeFactory.newInstance()
+                .createSCANode("creditcard.composite",        
                                new SCAContribution("creditcard",
                                                    "../../contributions/creditcard-payment-jaxb/target/classes"));
-        node.start();
+        node1.start();
+        node2.start();
     }
 
     @Test
     public void testPayment() {
-        SCAClient client = (SCAClient)node;
+        SCAClient client = (SCAClient)node1;
         Payment payment = client.getService(Payment.class, "Payment");
 
         System.out.println("\n\nSuccessful Payment - Status = \n\n" + payment.makePaymentMember("c-0", 100.00f));
@@ -66,10 +71,15 @@ public class PaymentTestCase {
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
-        if (node != null) {
-            node.stop();
-            node = null;
+        if (node1 != null) {
+            node1.stop();
+            node1 = null;
         }
+        
+        if (node2 != null) {
+            node2.stop();
+            node2 = null;
+        }        
     }
 
 }

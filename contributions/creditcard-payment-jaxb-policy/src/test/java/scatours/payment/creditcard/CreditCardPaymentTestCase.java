@@ -48,7 +48,7 @@ public class CreditCardPaymentTestCase {
     public static void setUpBeforeClass() throws Exception {
         try {
             node =
-                SCANodeFactory.newInstance().createSCANode(null, new SCAContribution("creditcard", "./target/classes"));
+                SCANodeFactory.newInstance().createSCANode("creditcard.composite", new SCAContribution("creditcard", "./target/classes"));
 
             node.start();
         } catch (Exception ex) {

@@ -20,9 +20,9 @@
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
            targetNamespace="http://tuscanyscatours.com/"
            xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-           name="packagedtrip">
+           name="fullapp-packagedtrip">
 
-    <component name="Trip">
+    <component name="TripPartner">
         <implementation.java class="com.tuscanyscatours.trip.impl.TripImpl"/>
         <service name="Search">
             <binding.ws name="searchws" uri="http://localhost:8085/Trip/Search"/>

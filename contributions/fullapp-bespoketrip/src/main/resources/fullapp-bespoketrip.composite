@@ -20,9 +20,9 @@
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
            targetNamespace="http://tuscanyscatours.com/"
            xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-           name="bespoketrip">
+           name="fullapp-bespoketrip">
     
-    <component name="Hotel">
+    <component name="HotelPartner">
         <implementation.java class="com.tuscanyscatours.hotel.impl.HotelImpl"/>
         <service name="Search">
             <binding.ws name="searchws" uri="http://localhost:8086/Hotel/Search"/>
@@ -34,7 +34,7 @@
         <service name="Book"/>
     </component>  
     
-    <component name="Flight">
+    <component name="FlightPartner">
         <implementation.java class="com.tuscanyscatours.flight.impl.FlightImpl"/>
         <service name="Search">
             <interface.java interface="com.tuscanyscatours.common.Search" 
@@ -48,7 +48,7 @@
         <service name="Book"/>
     </component> 
     
-    <component name="Car">
+    <component name="CarPartner">
         <implementation.java class="com.tuscanyscatours.car.impl.CarImpl"/>
         <service name="Search">
             <binding.ws name="searchws" uri="http://localhost:8086/Car/Search"/>

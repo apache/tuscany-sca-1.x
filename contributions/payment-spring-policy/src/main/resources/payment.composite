@@ -26,8 +26,8 @@
         <service name="Payment">
             <binding.ws uri="http://localhost:8081/Payment"/>
         </service>
-        <reference name="creditCardPaymentReference" requires="authentication">
-            <binding.ws uri="http://localhost:8083/CreditCardPayment"/>
+        <reference name="creditCardPaymentReference" >
+            <binding.ws uri="http://localhost:8083/CreditCardPayment" requires="authentication"/>
         </reference>
         <reference name="emailGateway" target="EmailGateway"/>
          <reference name="customerRegistry" target="CustomerRegistry"/>

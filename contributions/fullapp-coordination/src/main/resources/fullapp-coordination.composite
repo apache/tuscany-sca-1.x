@@ -19,7 +19,7 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
            targetNamespace="http://tuscanyscatours.com/"
-           name="frontend">
+           name="fullapp-coordination">
     
     <component name="TravelCatalog">
         <implementation.java class="com.tuscanyscatours.travelcatalog.impl.TravelCatalogImpl"/>
@@ -62,10 +62,10 @@
     <component name="TripBooking">
         <implementation.java class="com.tuscanyscatours.tripbooking.impl.TripBookingImpl"/>
         <service name="TripBooking"/>
-        <reference name="hotelBook" target="Hotel/Book"/>
-        <reference name="flightBook" target="Trip/Book"/>
-        <reference name="carBook" target="Car/Book"/>   
-        <reference name="tripBook" target="Trip/Book"/>  
+        <reference name="hotelBook" target="HotelPartner/Book"/>
+        <reference name="flightBook" target="TripPartner/Book"/>
+        <reference name="carBook" target="CarPartner/Book"/>   
+        <reference name="tripBook" target="TripPartner/Book"/>  
         <reference name="cartUpdates" target="ShoppingCart/CartUpdates"/>      
     </component>    
 
