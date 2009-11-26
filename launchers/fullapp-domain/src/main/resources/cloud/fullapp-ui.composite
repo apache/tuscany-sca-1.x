@@ -24,7 +24,7 @@
 		name="ui">
 
     <component name="ui">
-        <t:implementation.node uri="fullapp-ui" composite="s:ui"/>
+        <t:implementation.node uri="fullapp-ui" composite="s:fullapp-ui"/>
         <service name="Node">
             <binding.sca uri="http://localhost:8080"/>
         </service>

@@ -25,11 +25,11 @@
        
   <include name="ns2:creditcard" uri="fullapp-creditcard" />         
   <include name="ns2:payment" uri="fullapp-payment" />    
-  <include name="ns2:shoppingcart" uri="fullapp-shoppingcart" />
-  <include name="ns2:currency" uri="fullapp-currency" />
-  <include name="ns2:packagedtrip" uri="fullapp-packagedtrip" /> 
-  <include name="ns2:bespoketrip" uri="fullapp-bespoketrip" />
-  <include name="ns2:frontend" uri="fullapp-frontend" />         
-  <include name="ns2:ui" uri="fullapp-ui" /> 
+  <include name="ns2:fullapp-shoppingcart" uri="fullapp-shoppingcart" />
+  <include name="ns2:fullapp-currency" uri="fullapp-currency" />
+  <include name="ns2:fullapp-packagedtrip" uri="fullapp-packagedtrip" /> 
+  <include name="ns2:fullapp-bespoketrip" uri="fullapp-bespoketrip" />
+  <include name="ns2:fullapp-fcoordination" uri="fullapp-coordination" />         
+  <include name="ns2:fullapp-ui" uri="fullapp-ui" /> 
 
 </composite>

@@ -25,7 +25,7 @@
 		name="bespoketrip">
 
     <component name="bespoketrip">
-        <t:implementation.node uri="fullapp-bespoketrip" composite="s:bespoketrip"/>
+        <t:implementation.node uri="fullapp-bespoketrip" composite="s:fullapp-bespoketrip"/>
         <service name="Node">
             <binding.sca uri="http://localhost:8086"/>
             <binding.ws uri="http://localhost:8086"/>

@@ -24,7 +24,7 @@
            xmlns:ns2="http://tuscany.apache.org/cloud">
       
   <include name="ns2:ui" uri="http://tuscany.apache.org/cloud" />
-  <include name="ns2:frontend" uri="http://tuscany.apache.org/cloud" />
+  <include name="ns2:coordination" uri="http://tuscany.apache.org/cloud" />
   <include name="ns2:packagedtrip" uri="http://tuscany.apache.org/cloud" />
   <include name="ns2:bespoketrip" uri="http://tuscany.apache.org/cloud" />
   <include name="ns2:currency" uri="http://tuscany.apache.org/cloud" />

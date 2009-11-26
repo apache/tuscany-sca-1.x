@@ -25,7 +25,7 @@
 		name="currency">
 
     <component name="currency">
-        <t:implementation.node uri="fullapp-currency" composite="s:currency"/>
+        <t:implementation.node uri="fullapp-currency" composite="s:fullapp-currency"/>
         <service name="Node">
             <binding.sca uri="http://localhost:8083"/>
             <binding.ws uri="http://localhost:8083"/>

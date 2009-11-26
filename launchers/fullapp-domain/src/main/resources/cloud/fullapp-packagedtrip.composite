@@ -25,7 +25,7 @@
 		name="packagedtrip">
 
     <component name="packagedtrip">
-        <t:implementation.node uri="fullapp-packagedtrip" composite="s:packagedtrip"/>
+        <t:implementation.node uri="fullapp-packagedtrip" composite="s:fullapp-packagedtrip"/>
         <service name="Node">
             <binding.sca uri="http://localhost:8085"/>
             <tuscany:binding.jsonrpc uri="http://localhost:8085"/>

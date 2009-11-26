@@ -25,7 +25,7 @@
 		name="shoppingcart">
 
     <component name="shoppingcart">
-        <t:implementation.node uri="fullapp-shoppingcart" composite="s:shoppingcart"/>
+        <t:implementation.node uri="fullapp-shoppingcart" composite="s:fullapp-shoppingcart"/>
         <service name="Node">
             <binding.sca uri="http://localhost:8087"/>
             <binding.ws uri="http://localhost:8087"/>
