@@ -29,7 +29,7 @@
   <include name="ns2:fullapp-currency" uri="fullapp-currency" />
   <include name="ns2:fullapp-packagedtrip" uri="fullapp-packagedtrip" /> 
   <include name="ns2:fullapp-bespoketrip" uri="fullapp-bespoketrip" />
-  <include name="ns2:fullapp-fcoordination" uri="fullapp-coordination" />         
+  <include name="ns2:fullapp-coordination" uri="fullapp-coordination" />         
   <include name="ns2:fullapp-ui" uri="fullapp-ui" /> 
 
 </composite>
