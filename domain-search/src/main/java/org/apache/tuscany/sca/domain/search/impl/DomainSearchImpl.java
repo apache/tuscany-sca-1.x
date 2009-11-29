@@ -87,7 +87,7 @@ public class DomainSearchImpl implements DomainSearch {
 
                 try {
                     this.dir =
-                        new FSDirectory(new File(this.indexDirectoryPath),
+                        FSDirectory.getDirectory(new File(this.indexDirectoryPath),
                                         new SimpleFSLockFactory(this.indexDirectoryPath));
 
                 } catch (IOException e) {

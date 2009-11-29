@@ -29,7 +29,7 @@ import org.apache.lucene.search.highlight.Highlighter;
 import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 import org.apache.lucene.search.highlight.NullFragmenter;
 import org.apache.lucene.search.highlight.SimpleFragmenter;
-import org.apache.lucene.search.highlight.SpanScorer;
+import org.apache.lucene.search.highlight.QueryScorer;
 import org.apache.tuscany.sca.domain.search.Result;
 
 /**
@@ -83,8 +83,11 @@ final public class HighlightingUtil {
             CachingTokenFilter tokenStream =
                 new CachingTokenFilter(new DomainSearchAnalyzer().tokenStream(field, new StringReader(text)));
 
+			QueryScorer scorer = new QueryScorer(query, field, "");
+			scorer.init(tokenStream);
+			
             Highlighter highlighter =
-                new Highlighter(new DomainSearchFormatter(), new SpanScorer(query, field, tokenStream, ""));
+                new Highlighter(new DomainSearchFormatter(), scorer);
             highlighter.setTextFragmenter(fragmenter);
             tokenStream.reset();
 
