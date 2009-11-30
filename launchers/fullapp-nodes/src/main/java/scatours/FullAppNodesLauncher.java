@@ -58,6 +58,7 @@ public class FullAppNodesLauncher {
         SCANode nodeUI = SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/ui");
         nodeUI.start();
 
+        System.out.println("Point your browser at - http://localhost:8080/scatours/ ");
         System.out.println("Nodes started - Press enter to shutdown.");
 
         try {

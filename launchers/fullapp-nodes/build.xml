@@ -17,7 +17,7 @@
  * under the License.
 -->
 
-<project name="scatours-launcher-fullapp-nodes" default="compile">
+<project name="scatours-launcher-fullapp-nodes" default="run">
     <property environment="env"/> 
 
     <target name="compile">
