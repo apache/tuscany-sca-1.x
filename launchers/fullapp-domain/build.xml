@@ -22,10 +22,11 @@
 
     <target name="run">
         <java classname="org.apache.tuscany.sca.node.launcher.DomainManagerLauncher"
-              dir="target/classes" fork="true">
+              dir="." fork="true">
             <classpath>
                 <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
+        	<arg value="./target/classes"/>
         </java>
     </target>
 
