@@ -77,13 +77,20 @@ public class DomainManagerLauncher {
         // Create a launcher
         DomainManagerLauncher launcher = newInstance();
         
+        // get the root directory as the one and only parameter
+        String rootDirectory = ".";
+        
+        if (args.length > 0){
+        	rootDirectory = args[0];
+        }
+        
         Object domainManager = null;
         ShutdownThread shutdown = null;
         try {
             while (true) {
                 
                 // Start the domain manager
-                domainManager = launcher.createDomainManager();
+                domainManager = launcher.createDomainManager(rootDirectory);
                 try {
                     domainManager.getClass().getMethod("start").invoke(domainManager);
                 } catch (Exception e) {
