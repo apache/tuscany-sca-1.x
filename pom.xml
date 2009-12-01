@@ -26,10 +26,20 @@
     </parent>
     <artifactId>tuscany-scatours</artifactId>
     <packaging>pom</packaging>
-    <version>${scatours.version}</version>
+    <version>1.0-SNAPSHOT</version>
     <name>Apache Tuscany SCA Tours Assembly Examples</name>
 
     <repositories>
+        <repository>
+            <id>maven.central</id>
+            <url>http://repo2.maven.org/maven2</url>
+            <releases>
+               <enabled>true</enabled>
+            </releases>
+            <snapshots>
+               <enabled>false</enabled>
+            </snapshots>
+        </repository>
         <repository>
             <id>java.net</id>
             <name>java.net Maven 1.x Repository</name>
@@ -45,6 +55,16 @@
             <url>http://download.java.net/maven/2</url>
             <snapshots>
                 <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>apache.snapshot</id>
+            <url>http://people.apache.org/repo/m2-snapshot-repository</url>
+            <releases>
+               <enabled>false</enabled>
+            </releases>
+            <snapshots>
+               <enabled>true</enabled>
             </snapshots>
         </repository>
     </repositories>
