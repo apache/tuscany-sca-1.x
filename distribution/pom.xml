@@ -151,7 +151,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-fullapp-frontend</artifactId>
+            <artifactId>scatours-contribution-fullapp-coordination</artifactId>
             <version>${pom.version}</version>
         </dependency>
         <dependency>
