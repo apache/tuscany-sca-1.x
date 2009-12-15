@@ -97,7 +97,9 @@ public class JSONRPCServiceServlet extends JSONRPCServlet {
                 handleServiceRequest(request, response);
                 
             } catch(RuntimeException re) {
-                if (re.getCause() instanceof javax.security.auth.login.LoginException) {
+                if (re.getCause() instanceof javax.security.auth.login.FailedLoginException) {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN);                    
+                }else if (re.getCause() instanceof javax.security.auth.login.LoginException) {
                     response.setHeader("WWW-Authenticate", "BASIC realm=\"" + "ldap-realm" + "\"");
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 }

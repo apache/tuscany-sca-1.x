@@ -24,7 +24,9 @@ import java.util.List;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
+import javax.security.auth.login.FailedLoginException;
 import javax.security.auth.login.LoginContext;
+import javax.security.auth.login.LoginException;
 import javax.security.jacc.WebRoleRefPermission;
 
 import org.apache.geronimo.security.ContextManager;
@@ -34,7 +36,6 @@ import org.apache.tuscany.sca.policy.security.http.LDAPRealmAuthenticationCallba
 import org.apache.tuscany.sca.policy.security.http.LDAPRealmAuthenticationPolicy;
 import org.apache.tuscany.sca.policy.security.http.extensibility.LDAPSecurityHandler;
 import org.apache.tuscany.sca.policy.security.http.util.HttpSecurityUtil;
-import org.osoa.sca.ServiceRuntimeException;
 
 public class GeronimoLDAPSecurityHandler implements LDAPSecurityHandler {
 
@@ -86,13 +87,19 @@ public class GeronimoLDAPSecurityHandler implements LDAPSecurityHandler {
             CallbackHandler callbackHandler = new LDAPRealmAuthenticationCallbackHandler(subject);
 
             /* Uses Geronimo to login */
-            LoginContext geronimoLoginContext = ContextManager.login(authenticationPolicy.getRealmConfigurationName(), callbackHandler);
+            try {
+                LoginContext geronimoLoginContext = ContextManager.login(authenticationPolicy.getRealmConfigurationName(), callbackHandler);
+                
+                authenticatedSubject = geronimoLoginContext.getSubject();
+                ContextManager.setCallers(authenticatedSubject, authenticatedSubject);
+                if (authenticatedSubject != null) {
+                    //TODO: add authenticated subject to the msg header ?
+                }
 
-            authenticatedSubject = geronimoLoginContext.getSubject();
-            ContextManager.setCallers(authenticatedSubject, authenticatedSubject);
-            if (authenticatedSubject != null) {
-                //TODO: add authenticated subject to the msg header ?
+            } catch(LoginException le) {
+                throw new FailedLoginException("Login failed: " + le.getMessage());
             }
+
         }
 
         AuthorizationPolicy authorizationPolicy = authorizationPolicies.get(0);
