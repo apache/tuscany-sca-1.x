@@ -67,7 +67,6 @@ public class CurrencyConverterServlet extends HttpServlet {
         }
 
         out.write("</body></html>");
-        out.write("</body></html>");
         out.flush();
         out.close();
     }
