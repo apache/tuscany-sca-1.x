@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.6-SNAPSHOT</version>
+        <version>1.7-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>tuscany-itest</artifactId>
@@ -164,13 +164,13 @@
                 <dependency>
 	    	    <groupId>org.apache.tuscany.sca</groupId>
 	    	    <artifactId>tuscany-host-webapp</artifactId>
-	    	    <version>1.6-SNAPSHOT</version>
+	    	    <version>1.7-SNAPSHOT</version>
                     <scope>runtime</scope>
 	    	</dependency>
                 <dependency>
 	    	    <groupId>org.apache.tuscany.sca</groupId>
 	    	    <artifactId>tuscany-host-webapp-junit</artifactId>
-	    	    <version>1.6-SNAPSHOT</version>
+	    	    <version>1.7-SNAPSHOT</version>
                     <scope>runtime</scope>
 	    	</dependency>
                 <dependency>
@@ -257,7 +257,7 @@
                     <plugin>
                         <groupId>org.apache.tuscany.sca</groupId>
                         <artifactId>tuscany-maven-web-junit</artifactId>
-                        <version>1.6-SNAPSHOT</version>
+                        <version>1.7-SNAPSHOT</version>
                         <executions>
                             <execution>
                                 <id>generate-web-xml</id>
@@ -348,7 +348,7 @@
                     <plugin>
                         <groupId>org.apache.tuscany.sca</groupId>
                         <artifactId>tuscany-maven-web-junit</artifactId>
-                        <version>1.6-SNAPSHOT</version>
+                        <version>1.7-SNAPSHOT</version>
                         <executions>
                             <execution>
                                 <id>generate-web-xml</id>
@@ -442,7 +442,7 @@
                     <plugin>
                         <groupId>org.apache.tuscany.sca</groupId>
                         <artifactId>tuscany-maven-web-junit</artifactId>
-                        <version>1.6-SNAPSHOT</version>
+                        <version>1.7-SNAPSHOT</version>
                         <executions>
                             <execution>
                                 <id>generate-web-xml</id>
@@ -535,7 +535,7 @@
                     <plugin>
                         <groupId>org.apache.tuscany.sca</groupId>
                         <artifactId>tuscany-maven-web-junit</artifactId>
-                        <version>1.6-SNAPSHOT</version>
+                        <version>1.7-SNAPSHOT</version>
                         <executions>
                             <execution>
                                 <id>generate-web-xml</id>
@@ -632,7 +632,7 @@
                     <plugin>
                         <groupId>org.apache.tuscany.sca</groupId>
                         <artifactId>tuscany-maven-web-junit</artifactId>
-                        <version>1.6-SNAPSHOT</version>
+                        <version>1.7-SNAPSHOT</version>
                         <executions>
                             <execution>
                                 <id>generate-web-xml</id>
