@@ -17,9 +17,15 @@
  * under the License.
 -->
 
-<project name="scatours-contribution-introducing-client" default="compile">
+<project name="scatours-contribution-creditcard-payment-sdo" default="compile">
     <import file="../../antdefs.xml"/>
-    <path id="compile-path">
-        <pathelement path="../introducing-tours/target/scatours-contribution-introducing-tours.jar"/>
-    </path>
+
+    <target name="wsdljava">
+        <antcall target="sdojavagen">
+            <param name="wsdlfile" value="CreditCardPayment.wsdl"/>
+            <param name="javaclass" value="com/tuscanyscatours/payment/creditcard/CreditCardDetailsType.class"/>
+            <param name="package" value="com.tuscanyscatours.payment.creditcard"/>
+            <param name="prefix" value="CreditCardPayment"/>
+        </antcall>
+    </target>
 </project>

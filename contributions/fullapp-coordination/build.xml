@@ -17,9 +17,6 @@
  * under the License.
 -->
 
-<project name="scatours-contribution-introducing-client" default="compile">
+<project name="scatours-contribution-fullapp-coordination" default="compile">
     <import file="../../antdefs.xml"/>
-    <path id="compile-path">
-        <pathelement path="../introducing-tours/target/scatours-contribution-introducing-tours.jar"/>
-    </path>
 </project>

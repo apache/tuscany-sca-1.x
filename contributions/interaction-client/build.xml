@@ -18,28 +18,11 @@
 -->
 
 <project name="scatours-contribution-interaction-client" default="compile">
-    <property environment="env"/> 
-
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
-            <classpath>
-                <pathelement location="../common/target/scatours-contribution-common.jar"/>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </javac>
-        <copy todir="target/classes">
-            <fileset dir="src/main/resources"/>
-        </copy>
-        <jar destfile="target/scatours-contribution-interaction-client.jar"
-             basedir="target/classes"/>
-    </target>
-
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
-    </target>
-
+    <import file="../../antdefs.xml"/>
+    <path id="compile-path">
+        <pathelement path="../calendar/target/scatours-contribution-calendar.jar"/>
+        <pathelement path="../common/target/scatours-contribution-common.jar"/>
+        <pathelement path="../currency/target/scatours-contribution-currency.jar"/>
+        <pathelement path="../shoppingcart/target/scatours-contribution-shoppingcart.jar"/>
+    </path>
 </project>

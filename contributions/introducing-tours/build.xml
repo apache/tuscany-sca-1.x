@@ -17,28 +17,6 @@
  * under the License.
 -->
 
-<project name="scatours-chapter-02-tuscanyscatours-contribution" default="compile">
-    <property environment="env"/> 
-
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
-            <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </javac>
-        <copy todir="target/classes">
-            <fileset dir="src/main/resources"/>
-        </copy>
-        <jar destfile="target/scatours-chapter-02-tuscanyscatours-contribution.jar"
-             basedir="target/classes"/>
-    </target>
-
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
-    </target>
-
+<project name="scatours-contribution-introducing-tours" default="compile">
+    <import file="../../antdefs.xml"/>
 </project>

@@ -18,20 +18,5 @@
 -->
 
 <project name="scatours-contribution-interaction-service-remote" default="compile">
-
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <copy todir="target/classes">
-            <fileset dir="src/main/resources"/>
-        </copy>
-        <jar destfile="target/scatours-contribution-interaction-service-remote.jar"
-             basedir="target/classes"/>
-    </target>
-
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
-    </target>
-
+    <import file="../../antdefs.xml"/>
 </project>
