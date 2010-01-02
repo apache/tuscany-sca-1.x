@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package scatours.smsgateway;
+package com.tuscanyscatours.smsgateway;
 
 import javax.ejb.Stateless;
 

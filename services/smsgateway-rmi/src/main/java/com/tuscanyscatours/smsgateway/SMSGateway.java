@@ -17,7 +17,7 @@
  * under the License.    
  */
 
-package scatours.smsgateway;
+package com.tuscanyscatours.smsgateway;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

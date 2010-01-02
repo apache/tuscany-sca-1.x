@@ -1,4 +1,4 @@
-/*
+<!--
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -15,25 +15,35 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- */
-package scatours.smsgateway;
+-->
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
+<project name="scatours" default="compile">
 
-public class SMSGatewayImpl extends UnicastRemoteObject implements SMSGateway {
+    <target name="compile">
+        <antcall target="allsubdirs">
+            <param name="target" value="compile"/>
+        </antcall>
+    </target>
 
-    private static final long serialVersionUID = -2739486025442222295L;
+    <target name="test">
+        <antcall target="allsubdirs">
+            <param name="target" value="test"/>
+        </antcall>
+    </target>
 
-    protected SMSGatewayImpl() throws RemoteException {
-        super();
-    }
+    <target name="clean">
+        <antcall target="allsubdirs">
+            <param name="target" value="clean"/>
+        </antcall>
+    </target>
 
-    public boolean sendSMS(String fromNumber, String toNumber, String text) {
-        System.out.println("Sending SMS message");
-        System.out.println("From:    " + fromNumber);
-        System.out.println("To:      " + toNumber);
-        System.out.println("Message: " + text);
-        return true;
-    }
-}
+    <target name="allsubdirs">
+        <!--
+        <ant dir="clients" target="${target}"/>
+        -->
+        <ant dir="contributions" target="${target}"/>
+        <ant dir="launchers" target="${target}"/>
+        <ant dir="services" target="${target}"/>
+    </target>
+
+</project>

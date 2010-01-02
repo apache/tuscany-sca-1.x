@@ -22,7 +22,5 @@
     <path id="compile-path">
         <pathelement path="../common/target/scatours-contribution-common.jar"/>
     </path>
-    <path id="test-path">
-        <pathelement path="../common/target/scatours-contribution-common.jar"/>
-    </path>
+    <path id="test-path" refid="compile-path"/>
 </project>

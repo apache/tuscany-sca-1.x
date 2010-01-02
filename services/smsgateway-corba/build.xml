@@ -18,31 +18,27 @@
 -->
 
 <project name="scatours-service-smsgateway-corba" default="compile">
-    <property environment="env"/> 
+    <import file="../../antdefs.xml"/>
 
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
-            <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </javac>
+    <target name="idljava">
+        <antcall target="idlj">
+            <param name="idlfile" value="sms-gateway.idl"/>
+            <param name="javaclass" value="scatours/smsgateway/SMSGatewayPOA.class"/>
+        </antcall>
+    </target>
+
+    <!-- Before invoking the "run" target, the CORBA nameserver needs to be
+         started and running in a different process. -->
+    <target name="run-nameserver">
+        <exec executable="${env.JAVA_HOME}/bin/tnameserv">
+            <arg value="-ORBInitialPort"/>
+            <arg value="5080"/>
+        </exec>
     </target>
 
     <target name="run">
         <java classname="scatours.smsgateway.SMSGatewayCORBAServiceBootstrap" fork="true">
-            <classpath>
-                <pathelement location="target/classes"/>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </java>
+            <classpath location="target/${ant.project.name}.jar"/>
+       </java>
     </target>
-
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
-    </target>
-
 </project>

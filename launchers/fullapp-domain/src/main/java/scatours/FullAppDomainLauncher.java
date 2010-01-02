@@ -39,5 +39,6 @@ public class FullAppDomainLauncher {
         } catch (IOException e) {
         }
 
+        dm.getClass().getMethod("stop").invoke(dm);
     }
 }

@@ -18,31 +18,14 @@
 -->
 
 <project name="scatours-launcher-introducing-client" default="compile">
-    <property environment="env"/> 
-
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
-            <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </javac>
-    </target>
+    <import file="../../antdefs.xml"/>
 
     <target name="run">
         <java classname="scatours.IntroducingClientLauncher" fork="true">
             <classpath>
-                <pathelement location="target/classes"/>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
+                <pathelement location="target/${ant.project.name}.jar"/>
+                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
         </java>
     </target>
-
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
-    </target>
-
 </project>

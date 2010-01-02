@@ -18,31 +18,13 @@
 -->
 
 <project name="scatours-service-smsgateway-rmi" default="compile">
-    <property environment="env"/> 
+    <import file="../../antdefs.xml"/>
 
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
-            <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </javac>
-    </target>
-
+    <!-- The "run" target starts an RMI server for the SMS gateway service.
+       This server is used by the "run" target of the notification-rmi launcher. -->
     <target name="run">
-        <java classname="scatours.smsgateway.SMSGatewayRMIServiceBootstrap" fork="true">
-            <classpath>
-                <pathelement location="target/classes"/>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
+        <java classname="com.tuscanyscatours.smsgateway.SMSGatewayRMIServiceBootstrap" fork="true">
+            <classpath location="target/${ant.project.name}.jar"/>
         </java>
     </target>
-
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
-    </target>
-
 </project>

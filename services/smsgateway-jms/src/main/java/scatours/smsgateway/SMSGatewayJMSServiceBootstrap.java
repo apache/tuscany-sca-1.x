@@ -27,6 +27,7 @@ public class SMSGatewayJMSServiceBootstrap {
 
     public static void main(String[] args) throws Exception {
         System.out.println("Publishing SMS Gateway Service as a JMS service: tcp://localhost:61619");
+        System.out.println("Press Ctrl^C to terminate...");
 
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61619");
         Connection connection = connectionFactory.createConnection();

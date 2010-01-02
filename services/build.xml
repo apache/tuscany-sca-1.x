@@ -17,26 +17,33 @@
  * under the License.
 -->
 
-<project name="scatours-test-domain" default="run">
-    <property environment="env"/> 
+<project name="scatours-services" default="compile">
 
-    <target name="run">
-        <java classname="org.apache.tuscany.sca.node.launcher.DomainManagerLauncher" fork="true">
-            <classpath>
-                <fileset dir="${env.TUSCANY_HOME}/modules">
-                    <include name="tuscany-node-launcher-*.jar"/>
-                </fileset>
-            </classpath>
-        </java>
+    <target name="compile">
+        <antcall target="allsubdirs">
+            <param name="target" value="compile"/>
+        </antcall>
+    </target>
+
+    <target name="test">
+        <antcall target="allsubdirs">
+            <param name="target" value="test"/>
+        </antcall>
     </target>
 
     <target name="clean">
-        <delete dir="./.felix"/>
-        <delete dir="./cloud"/>
-        <delete dir="./target"/>
-        <delete file="./cloud.composite"/>
-        <delete file="./domain.composite"/>
-        <delete file="./workspace.xml"/>
+        <antcall target="allsubdirs">
+            <param name="target" value="clean"/>
+        </antcall>
+    </target>
+
+    <target name="allsubdirs">
+        <ant dir="creditcard-payment-jaxws" target="${target}"/>
+        <ant dir="smsgateway-corba" target="${target}"/>
+        <ant dir="smsgateway-ejb" target="${target}"/>
+        <ant dir="smsgateway-jaxws" target="${target}"/>
+        <ant dir="smsgateway-jms" target="${target}"/>
+        <ant dir="smsgateway-rmi" target="${target}"/>
     </target>
 
 </project>

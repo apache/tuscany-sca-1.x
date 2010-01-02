@@ -23,7 +23,7 @@ import javax.xml.ws.Endpoint;
 public class SMSGatewayServiceBootstrap {
 
     public static void main(String[] args) {
-        System.out.println("Publishing SMS Gateway Service as web service: http://localhost:8081/CreditCardService");
+        System.out.println("Publishing SMS Gateway Service as web service: http://localhost:8081/SMSGatewayService");
         System.out.println("Press Ctrl^C to terminate...");
 
         Endpoint.publish("http://localhost:8081/SMSGatewayService", new SMSGatewayServiceImpl());

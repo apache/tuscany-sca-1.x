@@ -1,4 +1,4 @@
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -15,19 +15,25 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
--->
+ */
+package com.tuscanyscatours.smsgateway;
 
-<project name="scatours-launcher-introducing-tours" default="run">
-    <property environment="env"/> 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
-    <target name="run">
-        <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true">
-            <arg value="http://localhost:9990/node-config/ToursNode"/>
-            <classpath>
-                <fileset dir="${env.TUSCANY_HOME}/modules">
-                    <include name="tuscany-node-launcher-*.jar"/>
-                </fileset>
-            </classpath>
-        </java>
-    </target>
-</project>
+public class SMSGatewayImpl extends UnicastRemoteObject implements SMSGateway {
+
+    private static final long serialVersionUID = -2739486025442222295L;
+
+    protected SMSGatewayImpl() throws RemoteException {
+        super();
+    }
+
+    public boolean sendSMS(String fromNumber, String toNumber, String text) {
+        System.out.println("Sending SMS message");
+        System.out.println("From:    " + fromNumber);
+        System.out.println("To:      " + toNumber);
+        System.out.println("Message: " + text);
+        return true;
+    }
+}

@@ -24,9 +24,10 @@
         <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true">
             <arg value="http://localhost:9990/node-config/TripsNode"/>
             <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
+                <fileset dir="${env.TUSCANY_HOME}/modules">
+                    <include name="tuscany-node-launcher-*.jar"/>
+                </fileset>
             </classpath>
         </java>
     </target>
-
 </project>

@@ -1,4 +1,4 @@
-<!--
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -14,18 +14,17 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.
--->
+ * under the License.    
+ */
 
-<project name="scatours-launcher-fullapp-nodes" default="compile">
-    <import file="../../antdefs.xml"/>
+package com.tuscanyscatours.smsgateway;
 
-    <target name="run">
-        <java classname="scatours.FullAppNodesLauncher" fork="true">
-            <classpath>
-                <pathelement location="target/${ant.project.name}.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </java>
-    </target>
-</project>
+import javax.ejb.Remote;
+
+/**
+ * A gateway to send SMS messages.
+ */
+@Remote
+public interface SMSGateway {
+    boolean sendSMS(String fromNumber, String toNumber, String text);
+}

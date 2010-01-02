@@ -18,19 +18,16 @@
 -->
 
 <project name="scatours-launcher-introducing-domain" default="run">
-    <property environment="env"/> 
+    <import file="../../antdefs.xml"/>
 
-    <target name="run">
+    <target name="run" depends="compile">
         <java classname="org.apache.tuscany.sca.node.launcher.DomainManagerLauncher"
               dir="target/classes" fork="true">
             <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
+                <fileset dir="${env.TUSCANY_HOME}/modules">
+                    <include name="tuscany-node-launcher-*.jar"/>
+                </fileset>
             </classpath>
         </java>
     </target>
-
-    <target name="clean">
-        <delete dir="./target"/>
-    </target>
-
 </project>

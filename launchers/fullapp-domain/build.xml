@@ -18,20 +18,37 @@
 -->
 
 <project name="scatours-launcher-fullapp-domain" default="run">
-    <property environment="env"/> 
+    <import file="../../antdefs.xml"/>
 
+    <!-- In Tuscany 1.5.1 the command-line launcher for the domain manager
+       is hard wired to use the current directory for the domain configuration,
+       so we use a custom launcher to override this setting using the domain
+       manager API.  Note that the classpath only includes the node launcher
+       jar which will bootstrap the rest of the Tuscany runtime. -->
     <target name="run">
-        <java classname="org.apache.tuscany.sca.node.launcher.DomainManagerLauncher"
-              dir="." fork="true">
+        <java classname="scatours.FullAppDomainLauncher" fork="true">
             <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
+                <pathelement location="target/${ant.project.name}.jar"/>
+                <fileset dir="${env.TUSCANY_HOME}/modules">
+                    <include name="tuscany-node-launcher-*.jar"/>
+                </fileset>
             </classpath>
-        	<arg value="./target/classes"/>
         </java>
     </target>
 
-    <target name="clean">
-        <delete dir="./target"/>
+    <!-- The "run-command" target runs the DomainManagerLauncher class
+       directly (as if it had been invoked from a command line) and passes
+       in the domain configuration directory as a command-line argument.
+       This only works for Tuscany versions greater than 1.5.1. -->
+    <target name="run-command">
+        <java classname="org.apache.tuscany.sca.node.launcher.DomainManagerLauncher"
+              dir="." fork="true">
+            <classpath>
+                <fileset dir="${env.TUSCANY_HOME}/modules">
+                    <include name="tuscany-node-launcher-*.jar"/>
+                </fileset>
+            </classpath>
+        	<arg value=".\target\classes"/>
+        </java>
     </target>
-
 </project>

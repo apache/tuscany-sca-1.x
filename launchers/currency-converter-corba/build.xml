@@ -18,33 +18,27 @@
 -->
 
 <project name="scatours-launcher-currency-converter-corba" default="compile">
-    <property environment="env"/> 
+    <import file="../../antdefs.xml"/>
+    <path id="compile-path">
+        <pathelement path="../common/target/scatours-launcher-common.jar"/>
+    </path>
+    <path id="package-path" refid="compile-path"/>
 
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
-            <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </javac>
-    </target>
-
+    <!-- When running this sample, the tuscany-host-corba-jse and
+       tuscany-host-corba-jse-tns jars need to be present on the classpath.
+       These aren't included in tuscany-sca-manifest so they need to be
+       added to the classpath explicitly.  For some reason these jars aren't
+       part of the Tuscany binary distribution so you'll need to download
+       them from the maven repository http://repo1.maven.org/maven2 and set
+       the TUSCANY_HOST_CORBA environment variable to the name of your local
+       download directory. -->
     <target name="run">
         <java classname="scatours.CurrencyConverterCORBALauncher" fork="true">
             <classpath>
-                <pathelement location="target/classes"/>
-                <pathelement location="${env.TUSCANY_HOST_CORBA}/tuscany-host-corba-jse-tns.jar"/>
-                <pathelement location="${env.TUSCANY_HOST_CORBA}/tuscany-host-corba-jse.jar"/>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
+                <pathelement location="target/${ant.project.name}.jar"/>
+                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <fileset dir="${env.TUSCANY_HOST_CORBA}"/>
             </classpath>
         </java>
     </target>
-
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
-    </target>
-
 </project>

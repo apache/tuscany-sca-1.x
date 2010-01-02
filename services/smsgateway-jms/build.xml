@@ -18,31 +18,30 @@
 -->
 
 <project name="scatours-service-smsgateway-jms" default="compile">
-    <property environment="env"/> 
+    <import file="../../antdefs.xml"/>
 
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
+    <!-- Before invoking the "run" target, the JMS broker needs to be
+         started and running in a different process. -->
+    <target name="run-broker">
+        <java classname="scatours.JMSBrokerLauncher" fork="true">
             <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </javac>
-    </target>
-
-    <target name="run">
-        <java classname="scatours.smsgateway.SMSGatewayJMSServiceBootstrap" fork="true">
-            <classpath>
-                <pathelement location="target/classes"/>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
+                <pathelement location="target/${ant.project.name}.jar"/>
+                <!-- The following is used to bring in the ActiveMQ runtime. -->
+                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
         </java>
     </target>
 
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
+    <!-- The "run" target creates JMS request and response queues for the
+       SMS gateway service.  These queues are used by the "run" target of
+       the notification-jms launcher. -->
+    <target name="run">
+        <java classname="scatours.smsgateway.SMSGatewayJMSServiceBootstrap" fork="true">
+            <classpath>
+                <pathelement location="target/${ant.project.name}.jar"/>
+                <!-- The following is used to bring in the ActiveMQ runtime. -->
+                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+            </classpath>
+        </java>
     </target>
-
 </project>

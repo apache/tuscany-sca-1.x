@@ -18,31 +18,24 @@
 -->
 
 <project name="scatours-launcher-notification-rmi" default="compile">
-    <property environment="env"/> 
+    <import file="../../antdefs.xml"/>
+    <path id="compile-path">
+        <pathelement path="../common/target/scatours-launcher-common.jar"/>
+    </path>
+    <path id="package-path" refid="compile-path"/>
 
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
-            <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </javac>
+    <!-- Before invoking the "run" target, the RMI server for the SMS Gateway
+       remote object needs to be started and running in a different process. -->
+    <target name="run-smsgateway">
+        <ant dir="../../services/smsgateway-rmi" target="run"/>
     </target>
 
     <target name="run">
         <java classname="scatours.NotificationRMILauncher" fork="true">
             <classpath>
-                <pathelement location="target/classes"/>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
+                <pathelement location="target/${ant.project.name}.jar"/>
+                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
         </java>
     </target>
-
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
-    </target>
-
 </project>

@@ -17,14 +17,14 @@
  * under the License.    
  */
 
-package scatours.smsgateway;
+package com.tuscanyscatours.smsgateway;
 
-import javax.ejb.Remote;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  * A gateway to send SMS messages.
  */
-@Remote
-public interface SMSGateway {
-    boolean sendSMS(String fromNumber, String toNumber, String text);
+public interface SMSGateway extends Remote {
+    boolean sendSMS(String fromNumber, String toNumber, String text) throws RemoteException;
 }
