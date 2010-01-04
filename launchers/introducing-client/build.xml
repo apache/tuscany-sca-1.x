@@ -20,6 +20,19 @@
 <project name="scatours-launcher-introducing-client" default="compile">
     <import file="../../antdefs.xml"/>
 
+    <!-- Before invoking the "run" target, the domain manager and the
+       introducing-trips and introducing-tours nodes need to be started
+       and running in different processes. -->
+    <target name="run-domain">
+        <ant dir="../introducing-domain" target="run"/>
+    </target>
+    <target name="run-trips">
+        <ant dir="../introducing-trips" target="run"/>
+    </target>
+    <target name="run-tours">
+        <ant dir="../introducing-tours" target="run"/>
+    </target>
+
     <target name="run">
         <java classname="scatours.IntroducingClientLauncher" fork="true">
             <classpath>

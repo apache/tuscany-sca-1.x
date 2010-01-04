@@ -18,35 +18,27 @@
 -->
 
 <project name="scatours-client-currency-converter-ws-jaxws" default="compile">
-    <property environment="env"/> 
+    <import file="../../antdefs.xml"/>
 
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
-            <!--
-            <classpath>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-            -->
-        </javac>
+    <target name="wsdljava">
+        <antcall target="wsimport">
+            <param name="wsdlfile" value="wsdl/CurrencyConverter.wsdl"/>
+            <param name="javaclass" value="scatours/currencyconverter/client/CurrencyConverter.class"/>
+            <param name="package" value="scatours.currencyconverter.client"/>
+        </antcall>
+    </target>
+
+    <!-- Before invoking the "run" target, the Web Services implementation of
+       the currency converter service needs to be started in its own process. -->
+    <target name="run-service">
+        <ant dir="../../launchers/currency-converter-ws" target="run"/>
     </target>
 
     <target name="run">
         <java classname="scatours.CurrencyConverterWSClient" fork="true">
             <classpath>
-                <pathelement location="target/classes"/>
-                <!--
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
-                -->
+                <pathelement location="target/${ant.project.name}.jar"/>
             </classpath>
         </java>
     </target>
-
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
-    </target>
-
 </project>

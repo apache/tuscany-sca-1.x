@@ -17,26 +17,31 @@
  * under the License.
 -->
 
-<project name="scatours-client-currency-converter-corba" default="compile">
-    <import file="../../antdefs.xml"/>
+<project name="scatours-clients" default="compile">
 
-    <target name="idljava">
-        <antcall target="idlj">
-            <param name="idljopts" value="-fclient"/>
-            <param name="idlfile" value="currency-converter.idl"/>
-            <param name="javaclass" value="com/tuscanyscatours/currencyconverter/CurrencyConverter.class"/>
+    <target name="compile">
+        <antcall target="allsubdirs">
+            <param name="target" value="compile"/>
         </antcall>
     </target>
 
-    <!-- Before invoking the "run" target, the CORBA implementation of the
-       currency converter service needs to be started in its own process. -->
-    <target name="run-service">
-        <ant dir="../../launchers/currency-converter-corba" target="run"/>
+    <target name="test">
+        <antcall target="allsubdirs">
+            <param name="target" value="test"/>
+        </antcall>
     </target>
 
-    <target name="run">
-        <java classname="scatours.CurrencyConverterCORBAClient" fork="true">
-            <classpath location="target/${ant.project.name}.jar"/>
-        </java>
+    <target name="clean">
+        <antcall target="allsubdirs">
+            <param name="target" value="clean"/>
+        </antcall>
     </target>
+
+    <target name="allsubdirs">
+        <ant dir="currency-converter-corba" target="${target}"/>
+        <ant dir="currency-converter-jms" target="${target}"/>
+        <ant dir="currency-converter-rmi" target="${target}"/>
+        <ant dir="currency-converter-ws-jaxws" target="${target}"/>
+    </target>
+
 </project>

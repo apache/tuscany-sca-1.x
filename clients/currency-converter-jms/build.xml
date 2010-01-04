@@ -18,28 +18,25 @@
 -->
 
 <project name="scatours-client-currency-converter-jms" default="compile">
-    <property environment="env"/> 
+    <import file="../../antdefs.xml"/>
 
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
-        </javac>
+    <!-- Before invoking the "run" target, both the JMS broker and the
+       JMS implementation of the currency converter service need to be
+       started, each in its own process. -->
+    <target name="run-broker">
+        <ant dir="../../launchers/currency-converter-jms" target="run-broker"/>
+    </target>
+    <target name="run-service">
+        <ant dir="../../launchers/currency-converter-jms" target="run"/>
     </target>
 
     <target name="run">
         <java classname="scatours.CurrencyConverterJMSClient" fork="true">
             <classpath>
-                <pathelement location="target/classes"/>
-                <pathelement location="${env.TUSCANY}/lib/tuscany-sca-manifest.jar"/>
+                <pathelement location="target/${ant.project.name}.jar"/>
+                <!-- The following is used to bring in the ActiveMQ runtime. -->
+                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
         </java>
     </target>
-
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
-    </target>
-
 </project>

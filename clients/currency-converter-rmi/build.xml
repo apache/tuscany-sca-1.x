@@ -18,27 +18,19 @@
 -->
 
 <project name="scatours-client-currency-converter-rmi" default="compile">
-    <property environment="env"/> 
+    <import file="../../antdefs.xml"/>
 
-    <target name="compile">
-        <mkdir dir="target/classes"/>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-            <src path="src/main/java"/>
-        </javac>
+    <!-- Before invoking the "run" target, the RMI implementation of the
+       currency converter service needs to be started in its own process. -->
+    <target name="run-service">
+        <ant dir="../../launchers/currency-converter-rmi" target="run"/>
     </target>
 
     <target name="run">
         <java classname="scatours.CurrencyConverterRMIClient" fork="true">
             <classpath>
-                <pathelement location="target/classes"/>
+                <pathelement location="target/${ant.project.name}.jar"/>
             </classpath>
         </java>
     </target>
-
-    <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
-    </target>
-
 </project>

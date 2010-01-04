@@ -79,7 +79,7 @@
                         </goals>
                         <configuration>
                             <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
-                            <packageName>scatours.curencyconverter.client</packageName>
+                            <packageName>scatours.currencyconverter.client</packageName>
                         </configuration>
                     </execution>
                 </executions>

@@ -20,6 +20,12 @@
 <project name="scatours-launcher-fullapp-nodes" default="compile">
     <import file="../../antdefs.xml"/>
 
+    <!-- Before invoking the "run" target, the domain manager needs
+       to be started and running in a different process. -->
+    <target name="run-domain">
+        <ant dir="../fullapp-domain" target="run"/>
+    </target>
+
     <target name="run">
         <java classname="scatours.FullAppNodesLauncher" fork="true">
             <classpath>

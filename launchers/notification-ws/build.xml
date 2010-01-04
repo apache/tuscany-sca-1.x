@@ -24,6 +24,12 @@
     </path>
     <path id="package-path" refid="compile-path"/>
 
+    <!-- Before invoking the "run" target, the JAX-WS server for the SMS Gateway
+       remote object needs to be started and running in a different process. -->
+    <target name="run-smsgateway">
+        <ant dir="../../services/smsgateway-jaxws" target="run"/>
+    </target>
+
     <target name="run">
         <java classname="scatours.NotificationWSLauncher" fork="true">
             <classpath>

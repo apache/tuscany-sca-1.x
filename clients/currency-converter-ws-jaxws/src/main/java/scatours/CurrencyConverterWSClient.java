@@ -18,8 +18,8 @@
  */
 package scatours;
 
-import scatours.curencyconverter.client.CurrencyConverter;
-import scatours.curencyconverter.client.CurrencyConverterService;
+import scatours.currencyconverter.client.CurrencyConverter;
+import scatours.currencyconverter.client.CurrencyConverterService;
 
 public class CurrencyConverterWSClient {
 

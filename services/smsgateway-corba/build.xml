@@ -22,6 +22,7 @@
 
     <target name="idljava">
         <antcall target="idlj">
+            <param name="idljopts" value="-fall"/>
             <param name="idlfile" value="sms-gateway.idl"/>
             <param name="javaclass" value="scatours/smsgateway/SMSGatewayPOA.class"/>
         </antcall>
