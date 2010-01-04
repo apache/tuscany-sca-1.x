@@ -549,7 +549,15 @@ public class Interface2WSDLGenerator {
                     defaultNamespaceSchema = xsDef;
                 } 
             }
-        }     
+        }    
+        
+        // useful for debugging DOM issues
+        //System.out.println("======================= Schema DOM Pre Merge=======================" );
+        //for (XSDefinition xsDef : wsdlDefinition.getXmlSchemas()) {
+        //    if (xsDef.getDocument() != null) {
+        //        printDOM(xsDef.getDocument());
+        //    }
+        //}          
         
         // TUSCANY-3283 merge the no namespace schema into the default namespace schema
         if (noNamespaceSchema != null && defaultNamespaceSchema != null){
@@ -558,11 +566,19 @@ public class Interface2WSDLGenerator {
             // merge the schema with no namespace into the schema with the default namspace for this WSDL
             mergeSchema(noNamespaceSchema, defaultNamespaceSchema, wsdlDefinition.getXmlSchemas());
             
+            // useful for debugging DOM issues
+            //System.out.println("======================= Schema DOM Post Merge=======================" );
+            //for (XSDefinition xsDef : wsdlDefinition.getXmlSchemas()) {
+            //    if (xsDef.getDocument() != null) {
+            //        printDOM(xsDef.getDocument());
+            //    }
+            //}            
+            
             schemaCollection = new XmlSchemaCollection();
             defaultNamespaceSchema.setSchema(null);
             defaultNamespaceSchema.setSchemaCollection(null);
             loadXSD(schemaCollection, defaultNamespaceSchema);
-        }        
+        }         
         
         // push the schema into the WSDL 
         for (XSDefinition xsDef: wsdlDefinition.getXmlSchemas()){
@@ -570,7 +586,7 @@ public class Interface2WSDLGenerator {
         }
         
         // useful for debugging DOM issues
-        //System.out.println("======================= Schema DOM =======================" );
+        //System.out.println("======================= Schema DOM Process End =======================" );
         //for (XSDefinition xsDef : wsdlDefinition.getXmlSchemas()) {
         //    if (xsDef.getDocument() != null) {
         //        printDOM(xsDef.getDocument());
@@ -720,6 +736,14 @@ public class Interface2WSDLGenerator {
 	                    if (type != null &&
 	                        type.getNodeValue().equals(typeName)){
 	                        if (xsDef.getNamespace().equals(defaultNamespace)){
+	                            // double check that there is a "tns" namespace shortname specified
+	                            String tnsNamespace = refSchema.getDocumentElement().getAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:tns");
+	                            
+	                            if (tnsNamespace == null || 
+	                                tnsNamespace.isEmpty()){
+	                                refSchema.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:tns", defaultNamespace);
+	                            }
+	                            
 	                            // just add "tns" in front of the type name as
 	                            // we have merged the type into this schema
 	                            type.setNodeValue("tns:" + type.getNodeValue());
