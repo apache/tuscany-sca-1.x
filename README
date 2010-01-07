@@ -76,7 +76,7 @@ Launchers: common
 2) Introducing - Simplified introduction to the travel application
 
 Directory: launchers/introducing
-Command: ant run
+Command: ant run 
 Contributions: introducing-client, introducing-tours, introducing-trips
 Launchers: common
 
@@ -133,7 +133,7 @@ Launchers: common
 
 Directory: launchers/feed-logger
 Command: ant run
-Contributions: blog-feed
+Contributions: feed-logger
 Launchers: common
 
 10) Help pages
