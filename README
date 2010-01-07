@@ -211,7 +211,7 @@ Services: smsgateway-ejb
 
 13c) SMS gateway JMS service
 
-Directory: launchers/notification-corba
+Directory: launchers/notification-jms
 Commands: ant run-broker, ant run-smsgateway, ant run 
 Contributions: notification, notification-jms
 Launchers: common
