@@ -22,7 +22,6 @@
     <path id="compile-path">
         <pathelement path="../common/target/scatours-launcher-common.jar"/>
     </path>
-    <path id="package-path" refid="compile-path"/>
 
     <!-- Before invoking the "run" target, the EJB server for the SMS Gateway EJB
        needs to be started and running in a different process. -->
@@ -34,6 +33,7 @@
         <java classname="scatours.NotificationEJBLauncher" fork="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
+                <path refid="compile-path"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
                 <fileset dir="${env.OPENEJB_HOME}/lib"/>
             </classpath>

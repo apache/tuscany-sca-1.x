@@ -22,7 +22,6 @@
     <path id="compile-path">
         <pathelement path="../common/target/scatours-launcher-common.jar"/>
     </path>
-    <path id="package-path" refid="compile-path"/>
 
     <!-- When running this sample, the tuscany-host-corba-jse and
        tuscany-host-corba-jse-tns jars need to be present on the classpath.
@@ -36,6 +35,7 @@
         <java classname="scatours.CurrencyConverterCORBALauncher" fork="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
+                <path refid="compile-path"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
                 <fileset dir="${env.TUSCANY_HOST_CORBA}"/>
             </classpath>

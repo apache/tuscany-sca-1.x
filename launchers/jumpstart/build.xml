@@ -22,12 +22,12 @@
     <path id="compile-path">
         <pathelement path="../common/target/scatours-launcher-common.jar"/>
     </path>
-    <path id="package-path" refid="compile-path"/>
 
     <target name="run">
         <java classname="scatours.JumpstartLauncher" fork="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
+                <path refid="compile-path"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
         </java>
