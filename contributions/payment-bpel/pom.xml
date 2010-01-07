@@ -72,20 +72,6 @@
         </dependency>
         
         <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-emailgateway</artifactId>
-            <version>${pom.version}</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-creditcard-payment-jaxb</artifactId>
-            <version>${pom.version}</version>
-            <scope>test</scope>
-        </dependency>        
-        
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.5</version>
@@ -128,17 +114,52 @@
                     </goals>
                     <configuration>
                         <packageName>com.tuscanyscatours.payment</packageName>
-                        <wsdlDirectory>${basedir}/src/main/resources
-                        </wsdlDirectory>
+                        <wsdlDirectory>${basedir}/src/main/resources</wsdlDirectory>
                         <wsdlFiles>
                             <wsdlFile>Payment.wsdl</wsdlFile>
                         </wsdlFiles>
-                        <sourceDestDir>${project.build.directory}/jaxws-source
-                        </sourceDestDir>
+                        <sourceDestDir>${project.build.directory}/jaxws-source</sourceDestDir>
+                        <staleFile>${project.build.directory}/jaxws-source/stale/payment.stale</staleFile>
                         <verbose>false</verbose>
                         <xnocompile>true</xnocompile>
                     </configuration>
                 </execution>
+                <execution>
+                    <id>payment.creditcard</id>
+                    <phase>process-sources</phase>
+                    <goals>
+                        <goal>wsimport</goal>
+                    </goals>
+                    <configuration>
+                        <packageName>com.tuscanyscatours.payment.creditcard</packageName>
+                        <wsdlDirectory>${basedir}/src/main/resources</wsdlDirectory>
+                        <wsdlFiles>
+                            <wsdlFile>CreditCardPayment.wsdl</wsdlFile>
+                        </wsdlFiles>
+                        <sourceDestDir>${project.build.directory}/jaxws-source</sourceDestDir>
+                        <staleFile>${project.build.directory}/jaxws-source/stale/creditcard.stale</staleFile>
+                        <verbose>false</verbose>
+                        <xnocompile>true</xnocompile>
+                    </configuration>
+                </execution> 
+                <execution>
+                    <id>emailgateway</id>
+                    <phase>process-sources</phase>
+                    <goals>
+                        <goal>wsimport</goal>
+                    </goals>
+                    <configuration>
+                        <packageName>com.tuscanyscatours.emailgateway</packageName>
+                        <wsdlDirectory>${basedir}/src/main/resources</wsdlDirectory>
+                        <wsdlFiles>
+                            <wsdlFile>EmailGateway.wsdl</wsdlFile>
+                        </wsdlFiles>
+                        <sourceDestDir>${project.build.directory}/jaxws-source</sourceDestDir>
+                        <staleFile>${project.build.directory}/jaxws-source/stale/emailgateway.stale</staleFile>
+                        <verbose>false</verbose>
+                        <xnocompile>true</xnocompile>
+                    </configuration>
+                </execution> 
             </executions>
         </plugin>
         <plugin>
