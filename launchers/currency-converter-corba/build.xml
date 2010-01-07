@@ -23,6 +23,13 @@
         <pathelement path="../common/target/scatours-launcher-common.jar"/>
     </path>
 
+    <!-- After starting the SCA CORBA service by invoking the "run" target below,
+       the CORBA Java implementation of the currency converter client should be
+       run in another process using the "run-client" target. -->
+    <target name="run-client">
+        <ant dir="../../clients/currency-converter-corba" target="run"/>
+    </target>
+
     <!-- When running this sample, the tuscany-host-corba-jse and
        tuscany-host-corba-jse-tns jars need to be present on the classpath.
        These aren't included in tuscany-sca-manifest so they need to be

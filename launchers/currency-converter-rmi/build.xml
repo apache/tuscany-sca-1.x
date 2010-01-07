@@ -23,6 +23,13 @@
         <pathelement path="../common/target/scatours-launcher-common.jar"/>
     </path>
 
+    <!-- After starting the SCA RMI service by invoking the "run" target below,
+       the RMI Java implementation of the currency converter client should be
+       run in another process using the "run-client" target. -->
+    <target name="run-client">
+        <ant dir="../../clients/currency-converter-rmi" target="run"/>
+    </target>
+
     <target name="run">
         <java classname="scatours.CurrencyConverterRMILauncher" fork="true">
             <classpath>

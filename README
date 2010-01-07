@@ -141,31 +141,35 @@ Launchers: common
 
 12b) CORBA client
 
-Directory: clients/currency-converter-corba
-Command: ant run-service, ant run
+Directory: launchers/currency-converter-corba
+Commands: ant run, ant run-client
 Contributions: currency, currency-corba
-Launchers: common, currency-converter-corba
+Launchers: common
+Clients: currency-converter-corba
 
 12c) JMS client
 
-Directory: clients/currency-converter-jms
-Commands: ant run-broker, ant run-service, ant run
+Directory: launchers/currency-converter-jms
+Commands: ant run-broker, ant run, ant run-client
 Contributions: currency, currency-jms
-Launchers: common, currency-converter-jms
+Launchers: common
+Clients: currency-converter-jms
 
 12d) RMI client
 
-Directory: clients/currency-converter-rmi
-Command: ant run-service, ant run
+Directory: launchers/currency-converter-rmi
+Commands: ant run, ant run-client
 Contributions: currency, currency-rmi
-Launchers: common, currency-converter-rmi
+Launchers: common
+Clients: currency-converter-rmi
 
 12e) JAX-WS client
 
-Directory: clients/currency-converter-ws-jaxws
-Command: ant run-service, ant run
+Directory: launchers/currency-converter-ws
+Commands: ant run, ant run-client
 Contributions: currency, currency-ws
-Launchers: common, currency-converter-ws
+Launchers: common
+Clients: currency-converter-ws-jaxws
 
 13) SCA notification service interoperating with non-SCA SMS gateway service
 
