@@ -277,6 +277,7 @@
         }
         var itemsHTML = '';
         var totalPrice  = 0.0;
+        var currency = '?';
 
         for (var x=0; x<trips.length; x++){
             itemsHTML += '<h3>Trip - ' + trips[x].id + '</h3>';
@@ -294,6 +295,9 @@
                 itemsHTML += '<td>' +  trips[x].fromDate + ' - ' + trips[x].toDate +'</td>';
                 itemsHTML += '<td>' +  trips[x].price + ' ' + trips[x].currency + '</td>';
                 itemsHTML += '</tr>';
+                if (totalPrice == 0.0) {
+                    currency = trips[x].currency;
+                }
                 totalPrice = totalPrice + trips[x].price;
 
             } else {
@@ -308,6 +312,9 @@
                     itemsHTML += '<td>' +  tripItems[i].fromDate + ' - ' + tripItems[i].toDate +'</td>';
                     itemsHTML += '<td>' +  tripItems[i].price + ' ' + tripItems[i].currency + '</td>';
                     itemsHTML += '</tr>';
+                    if (totalPrice == 0.0) {
+                        currency = tripItems[i].currency;
+                    }
                     totalPrice = totalPrice + tripItems[i].price;
                 }
             }
@@ -316,7 +323,7 @@
         }
 
         document.getElementById('cartItems').innerHTML = itemsHTML;
-        document.getElementById('cartPrice').innerHTML = totalPrice + ' ' + trips[0].currency;
+        document.getElementById('cartPrice').innerHTML = totalPrice + ' ' + currency;
     }
 
     function checkout() {
