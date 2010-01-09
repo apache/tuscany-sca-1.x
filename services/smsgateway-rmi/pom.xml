@@ -49,7 +49,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>../lib/</classpathPrefix>
-                            <mainClass>scatours.smsgateway.SMSGatewayRMIServiceBootstrap</mainClass>
+                            <mainClass>com.tuscanyscatours.smsgateway.SMSGatewayRMIServiceBootstrap</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
