@@ -92,6 +92,12 @@
 
 <project name="antdefs">
     <property environment="env"/> 
+    <fail unless="env.TUSCANY_HOME">
+        Error: Please set the TUSCANY_HOME environment variable.
+    </fail>
+    <fail unless="env.JUNIT_JAR">
+        Error: Please set the JUNIT_JAR environment variable.
+    </fail>
 
     <!-- check whether there are any WSDL files in or under the resource directory -->
     <target name="#find-wsdlfiles">
