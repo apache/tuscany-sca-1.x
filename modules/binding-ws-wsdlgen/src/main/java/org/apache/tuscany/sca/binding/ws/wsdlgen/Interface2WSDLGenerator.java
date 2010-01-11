@@ -739,8 +739,7 @@ public class Interface2WSDLGenerator {
 	                            // double check that there is a "tns" namespace shortname specified
 	                            String tnsNamespace = refSchema.getDocumentElement().getAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:tns");
 	                            
-	                            if (tnsNamespace == null || 
-	                                tnsNamespace.isEmpty()){
+	                            if (tnsNamespace == null || tnsNamespace.length() == 0){
 	                                refSchema.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:tns", defaultNamespace);
 	                            }
 	                            
