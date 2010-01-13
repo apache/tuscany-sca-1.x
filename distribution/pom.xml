@@ -301,11 +301,6 @@
             <artifactId>scatours-contribution-tripbooking</artifactId>
             <version>${pom.version}</version>
         </dependency>
-       <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-launcher-common</artifactId>
-            <version>${pom.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-launcher-blog-feed</artifactId>
@@ -449,6 +444,11 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-service-smsgateway-rmi</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-util-launcher-common</artifactId>
             <version>${pom.version}</version>
         </dependency>
 

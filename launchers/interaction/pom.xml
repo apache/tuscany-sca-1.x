@@ -32,8 +32,9 @@
     
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-launcher-common</artifactId>
+            <artifactId>scatours-util-launcher-common</artifactId>
             <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
             
         <dependency>
@@ -87,6 +88,9 @@
                 <version>2.2</version>
                 <configuration>
                     <archive>
+                        <manifestEntries>
+                            <Class-Path>../util/scatours-util-launcher-common.jar</Class-Path>
+                        </manifestEntries>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>../lib/</classpathPrefix>

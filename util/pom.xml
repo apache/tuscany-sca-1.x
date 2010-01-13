@@ -26,9 +26,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <version>1.0-SNAPSHOT</version>
-    <artifactId>scatours-launchers</artifactId>
+    <artifactId>scatours-util</artifactId>
     <packaging>pom</packaging>
-    <name>Apache Tuscany SCA Tours Launchers</name>
+    <name>Apache Tuscany SCA Tours Utilities</name>
 
     <profiles>
         <profile>
@@ -37,32 +37,9 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>blog-feed</module>
-                <module>currency-converter</module>
-                <module>currency-converter-corba</module>
-                <module>currency-converter-jms</module>
-                <module>currency-converter-rmi</module>
-                <module>currency-converter-ws</module>
-                <module>databinding</module>
-                <module>feed-logger</module>
-                <module>interaction</module>
-                <module>introducing</module>
-                <module>introducing-client</module>
-                <module>introducing-domain</module>
-                <module>jumpstart</module>
-                <module>fullapp</module>
-                <module>fullapp-domain</module>
-                <module>fullapp-nodes</module>
-                <module>help-pages</module>
-                <module>notification-ws</module>
-                <module>notification-corba</module>
-                <module>notification-ejb</module>
-                <module>notification-jms</module>
-                <module>notification-rmi</module>
-                <module>policy</module>
+                <module>launcher-common</module>
             </modules>
         </profile>
-
     </profiles>
 
 </project>

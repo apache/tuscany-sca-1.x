@@ -17,19 +17,6 @@
  * under the License.
 -->
 
-<project name="scatours-launcher-jumpstart" default="compile">
+<project name="scatours-util-launcher-common" default="compile">
     <import file="../../antdefs.xml"/>
-    <path id="compile-path">
-        <pathelement path="../../util/launcher-common/target/scatours-util-launcher-common.jar"/>
-    </path>
-
-    <target name="run">
-        <java classname="scatours.JumpstartLauncher" fork="true">
-            <classpath>
-                <pathelement location="target/${ant.project.name}.jar"/>
-                <path refid="compile-path"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </java>
-    </target>
 </project>

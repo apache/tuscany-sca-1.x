@@ -17,6 +17,28 @@
  * under the License.
 -->
 
-<project name="scatours-launcher-common" default="compile">
-    <import file="../../antdefs.xml"/>
+<project name="scatours-util" default="compile">
+
+    <target name="compile">
+        <antcall target="allsubdirs">
+            <param name="target" value="compile"/>
+        </antcall>
+    </target>
+
+    <target name="test">
+        <antcall target="allsubdirs">
+            <param name="target" value="test"/>
+        </antcall>
+    </target>
+
+    <target name="clean">
+        <antcall target="allsubdirs">
+            <param name="target" value="clean"/>
+        </antcall>
+    </target>
+
+    <target name="allsubdirs">
+        <ant dir="launcher-common" target="${target}"/>
+    </target>
+
 </project>

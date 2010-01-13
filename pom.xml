@@ -91,6 +91,7 @@
                 <tuscany.version>1.6-SNAPSHOT</tuscany.version>
             </properties>
             <modules>
+                <module>util</module>
                 <module>contributions</module>
                 <module>launchers</module>
                 <module>services</module>

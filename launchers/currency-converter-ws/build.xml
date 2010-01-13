@@ -20,7 +20,7 @@
 <project name="scatours-launcher-currency-converter-ws" default="compile">
     <import file="../../antdefs.xml"/>
     <path id="compile-path">
-        <pathelement path="../common/target/scatours-launcher-common.jar"/>
+        <pathelement path="../../util/launcher-common/target/scatours-util-launcher-common.jar"/>
     </path>
 
     <!-- After starting the SCA Web service by invoking the "run" target below,

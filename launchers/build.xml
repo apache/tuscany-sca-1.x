@@ -38,7 +38,6 @@
     </target>
 
     <target name="allsubdirs">
-        <ant dir="common" target="${target}"/> <!--needed by blog-feed-->
         <ant dir="blog-feed" target="${target}"/>
         <ant dir="currency-converter" target="${target}"/>
         <ant dir="currency-converter-corba" target="${target}"/>

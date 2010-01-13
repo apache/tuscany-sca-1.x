@@ -20,7 +20,7 @@
 <project name="scatours-launcher-interaction" default="compile">
     <import file="../../antdefs.xml"/>
     <path id="compile-path">
-        <pathelement path="../common/target/scatours-launcher-common.jar"/>
+        <pathelement path="../../util/launcher-common/target/scatours-util-launcher-common.jar"/>
     </path>
 
     <target name="run">

@@ -45,14 +45,14 @@
         </dependencySet>
 
         <dependencySet>
-            <outputDirectory>lib</outputDirectory>
+            <outputDirectory>util</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <unpack>false</unpack>
             <includes>
-                <include>org.apache.tuscany.sca:scatours-launcher-common</include>
+                <include>org.apache.tuscany.sca:scatours-util-*</include>
             </includes>
             <scope>runtime</scope>
         </dependencySet>
-
         <dependencySet>
             <outputDirectory>contributions</outputDirectory>
             <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
@@ -69,9 +69,6 @@
             <includes>
                 <include>org.apache.tuscany.sca:scatours-launcher-*</include>
             </includes>
-            <excludes>
-                <exclude>org.apache.tuscany.sca:scatours-launcher-common</exclude>
-            </excludes>
             <scope>runtime</scope>
         </dependencySet>
         <dependencySet>
