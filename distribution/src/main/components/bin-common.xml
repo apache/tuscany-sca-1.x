@@ -21,7 +21,7 @@
 
         <!-- Add the text files to the top-level directroy -->
         <fileSet>
-            <directory>../..</directory>
+            <directory>..</directory>
             <outputDirectory></outputDirectory>
             <includes>
                 <include>CHANGES</include>
