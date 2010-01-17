@@ -19,19 +19,14 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
            xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
-           xmlns:c="http://creditcard" 
-           targetNamespace="http://creditcard" 
-           name="emailgateway">
+           xmlns:e="http://emailgateway-test" 
+           targetNamespace="http://emailgateway-test" 
+           name="emailgateway-test">
     <component name="EmailGatewayClient">
         <implementation.java class="scatours.emailgateway.client.impl.EmailGatewayClientImpl" />
         <reference name="emailGateway">
             <binding.ws uri="http://localhost:8088/EmailGateway" />
         </reference>
     </component>
-    <component name="EmailGateway">
-        <implementation.java class="com.tuscanyscatours.emailgateway.impl.EmailGatewayImpl" />
-        <service name="EmailGateway">
-            <binding.ws uri="http://localhost:8088/EmailGateway" />
-        </service>
-    </component>
+
 </composite>

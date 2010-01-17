@@ -44,7 +44,7 @@ public class EmailGatewayTestCase {
     public static void setUpBeforeClass() throws Exception {
         SCANodeFactory factory = SCANodeFactory.newInstance();
         node =
-            factory.createSCANode("emailgateway.composite",
+            factory.createSCANode(null,
                                   new SCAContribution("emailgateway", "./target/classes"),
                                   new SCAContribution("emailgateway-test", "./target/test-classes"));
         node.start();
