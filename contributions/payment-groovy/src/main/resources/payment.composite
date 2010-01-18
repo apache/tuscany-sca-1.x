@@ -23,7 +23,7 @@
            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
            name="payment">
               
-    <component name="PaymentComponent">
+    <component name="Payment">
         <t:implementation.script script="payment/PaymentImpl.groovy"/>
         <service name="Payment">
             <interface.java interface="com.tuscanyscatours.payment.Payment" />
