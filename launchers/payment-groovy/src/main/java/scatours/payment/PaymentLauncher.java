@@ -39,7 +39,7 @@ public class PaymentLauncher {
         SCAClient client = (SCAClient)node;
         Payment payment = client.getService(Payment.class, "Payment");
 
-        System.out.println("Payment Script test");
+        System.out.println("Payment Groovy test");
         System.out.println("\nSuccessful Payment - Status = \n\n" + payment.makePaymentMember("c-0", 100.00f));
         
         node.stop();

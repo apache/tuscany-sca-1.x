@@ -39,7 +39,7 @@ public class PaymentLauncher {
         SCAClient client = (SCAClient)node;
         Payment payment = client.getService(Payment.class, "Payment/paymentPartnerLink");
 
-        System.out.println("Payment Java test");
+        System.out.println("Payment BPEL test");
         System.out.println("\nSuccessful Payment - Status = \n\n" + payment.makePaymentMember("c-0", 100.00f));
         System.out.println("\n\nFailed Payment - Status = \n\n" + payment.makePaymentMember("c-1", 100.00f));
         
