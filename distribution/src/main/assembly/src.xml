@@ -79,6 +79,7 @@
 				<exclude>**/cobertura.ser</exclude>
 				<exclude>**/log/*.dat</exclude>
 				<exclude>**/orbtrc.*.txt</exclude>
+				<exclude>**/velocity.log.*</exclude>                                
 				<exclude>bin</exclude>
 				<exclude>bin/*</exclude>
 				<exclude>**/var/journal</exclude>
@@ -207,7 +208,6 @@
 				<exclude>demos/secure-bigbank/secure-bigbank-account/src/main/resources/web/dojo</exclude>
 				<exclude>demos/secure-bigbank/secure-bigbank-account/src/main/resources/web/dojo/**/*</exclude>
 				<exclude>*/**/derby.log</exclude>
-				<exclude>*/**/velocity.log*</exclude>                
 				<exclude>*/**/*.svg</exclude>
 				<exclude>*/**/*.ruleset</exclude>
 				<exclude>*/**/*.pmd</exclude>
