@@ -109,7 +109,6 @@
                 <module>store-dojo</module>
                 <module>store-webapp</module>
                 <module>store-secure</module>
-                <module>store-distributed</module>
                 <module>supplychain</module>
                 <module>web-resource</module>
                 <!--module>zipcode-jaxws</module-->
