@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.6-SNAPSHOT</version>
+        <version>1.6</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>sample-helloworld-servlet</artifactId>
@@ -34,21 +34,21 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-sca-api</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.6</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-web-runtime</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.6</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-host-webapp</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.6</version>
             <scope>runtime</scope>
         </dependency>
 
