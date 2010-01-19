@@ -50,8 +50,6 @@
                 <module>binding-ejb-runtime</module>
                 <module>binding-erlang</module>
                 <module>binding-erlang-runtime</module>
-                <!-- obsolete -->
-                <module>binding-feed</module>
                 <!-- new bindings -->
                 <module>binding-atom</module>
                 <module>binding-atom-js</module>
@@ -119,7 +117,6 @@
                 <module>extensibility-osgi</module>
                 <module>extensibility-equinox</module>
                 <module>extension-helper</module>
-                <module>host-android</module>
                 <module>host-corba</module>
                 <module>host-corba-jee</module>
                 <module>host-corba-jse</module>
