@@ -109,6 +109,11 @@
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-jms-policy</artifactId>
+            <version>${pom.version}</version>
+        </dependency>        
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-jsonrpc-js</artifactId>
             <version>${pom.version}</version>
         </dependency>
@@ -157,6 +162,11 @@
             <artifactId>tuscany-binding-sca-axis2</artifactId>
             <version>${pom.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-sca-jms</artifactId>
+            <version>${pom.version}</version>
+        </dependency>                
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-sca-xml</artifactId>
@@ -504,6 +514,11 @@
             <artifactId>tuscany-policy-security-jsr250</artifactId>
             <version>${pom.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-policy-security-geronimo</artifactId>
+            <version>${pom.version}</version>
+        </dependency>        
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-policy-xml</artifactId>

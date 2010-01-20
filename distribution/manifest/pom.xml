@@ -96,6 +96,11 @@
             <version>${pom.version}</version>
         </dependency>
         <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-jms-policy</artifactId>
+            <version>${pom.version}</version>
+        </dependency>                
+        <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>
             <version>5.2.0</version>
@@ -250,6 +255,11 @@
             <artifactId>tuscany-binding-sca-axis2</artifactId>
             <version>${pom.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-sca-jms</artifactId>
+            <version>${pom.version}</version>
+        </dependency>        
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-sca-xml</artifactId>
@@ -537,6 +547,11 @@
             <artifactId>tuscany-policy-security</artifactId>
             <version>${pom.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-policy-security-geronimo</artifactId>
+            <version>${pom.version}</version>
+        </dependency>        
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-policy-xml</artifactId>
