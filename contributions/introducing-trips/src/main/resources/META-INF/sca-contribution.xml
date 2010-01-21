@@ -19,5 +19,6 @@
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
               xmlns:gvt="http://goodvaluetrips.com/">
+    <export namespace="http://goodvaluetrips.com/" />
     <deployable composite="gvt:Trips" />
 </contribution>
