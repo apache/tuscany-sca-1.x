@@ -28,8 +28,10 @@ import com.tuscanyscatours.Updates;
 public class ShoppingCartImpl implements Checkout, Updates {
     private static List<String> bookedTrips = new ArrayList<String>();
 
+    protected String currency = "USD";
+
     public void makePayment(BigDecimal amount, String cardInfo) {
-        System.out.print("Charged $" + amount
+        System.out.print("Charged " + currency + " " + amount
             + " to card "
             + cardInfo
             + " for "
