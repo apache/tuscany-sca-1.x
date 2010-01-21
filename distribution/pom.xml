@@ -39,6 +39,16 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-contribution-buildingblocks</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-contribution-buildingblocks-client</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-calendar</artifactId>
             <version>${pom.version}</version>
         </dependency>
@@ -304,6 +314,11 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-launcher-blog-feed</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-launcher-buildingblocks</artifactId>
             <version>${pom.version}</version>
         </dependency>
         <dependency>

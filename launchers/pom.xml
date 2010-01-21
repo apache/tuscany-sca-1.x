@@ -38,6 +38,7 @@
             </activation>
             <modules>
                 <module>blog-feed</module>
+                <module>buildingblocks</module>
                 <module>currency-converter</module>
                 <module>currency-converter-corba</module>
                 <module>currency-converter-jms</module>

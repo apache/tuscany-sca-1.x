@@ -39,6 +39,7 @@
 
     <target name="allsubdirs">
         <ant dir="blog-feed" target="${target}"/>
+        <ant dir="buildingblocks" target="${target}"/>
         <ant dir="currency-converter" target="${target}"/>
         <ant dir="currency-converter-corba" target="${target}"/>
         <ant dir="currency-converter-jms" target="${target}"/>

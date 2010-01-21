@@ -39,6 +39,9 @@
 
     <target name="allsubdirs">
         <ant dir="blog-feed" target="${target}"/>
+        <ant dir="introducing-trips" target="${target}"/> <!--needed by buildingblocks-->
+        <ant dir="buildingblocks" target="${target}"/>
+        <ant dir="buildingblocks-client" target="${target}"/>
         <ant dir="calendar" target="${target}"/>
         <ant dir="common" target="${target}"/> <!--needed by car-->
         <ant dir="car" target="${target}"/>
@@ -71,7 +74,6 @@
         <ant dir="interaction-service-remote" target="${target}"/>
         <ant dir="introducing-tours" target="${target}"/> <!--needed by introducing-client-->
         <ant dir="introducing-client" target="${target}"/>
-        <ant dir="introducing-trips" target="${target}"/>
         <ant dir="notification" target="${target}"/>
         <ant dir="notification-corba" target="${target}"/>
         <ant dir="notification-ejb" target="${target}"/>
