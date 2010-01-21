@@ -195,6 +195,10 @@
                 <exclude>customer-dojo-webapp/**/*</exclude>
                 <exclude>helloworld-distributed</exclude>
                 <exclude>helloworld-distributed/**/*</exclude>
+                <exclude>helloworld-erlang-reference</exclude>
+                <exclude>helloworld-erlang-reference/**/*</exclude>
+                <exclude>helloworld-erlang-service</exclude>
+                <exclude>helloworld-erlang-service/**/*</exclude>                
                 <exclude>helloworld-jsp</exclude>
                 <exclude>helloworld-jsp/**/*</exclude>
                 <exclude>helloworld-servlet</exclude>
