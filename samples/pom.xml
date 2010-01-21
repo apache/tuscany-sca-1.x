@@ -73,11 +73,11 @@
                 <module>feed-aggregator-webapp</module>
                 <module>helloworld-bpel</module>
                 <module>helloworld-dojo-webapp</module>
+                <module>helloworld-erlang-reference</module>
+                <module>helloworld-erlang-service</module>
                 <module>helloworld-jms-webapp</module>
                 <module>helloworld-jsonrpc-webapp</module>
-                <module>helloworld-reference-erlang</module>
                 <module>helloworld-reference-jms</module>
-                <module>helloworld-service-erlang</module>
                 <module>helloworld-service-jms</module>
                 <module>helloworld-ws-service</module>
                 <module>helloworld-ws-service-jms</module>
