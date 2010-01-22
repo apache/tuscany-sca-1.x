@@ -17,17 +17,6 @@
  * under the License.
 -->
 
-<project name="scatours-launcher-introducing-tours" default="run">
+<project name="scatours-domainconfig-fullapp" default="compile">
     <import file="../../antdefs.xml"/>
-
-    <target name="run">
-        <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true">
-            <arg value="http://localhost:9990/node-config/ToursNode"/>
-            <classpath>
-                <fileset dir="${env.TUSCANY_HOME}/modules">
-                    <include name="tuscany-node-launcher-*.jar"/>
-                </fileset>
-            </classpath>
-        </java>
-    </target>
 </project>

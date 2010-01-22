@@ -26,7 +26,7 @@
        manager API.  Note that the classpath only includes the node launcher
        jar which will bootstrap the rest of the Tuscany runtime. -->
     <target name="run">
-        <java classname="scatours.FullAppDomainLauncher" fork="true">
+        <java classname="scatours.FullAppDomainAPILauncher" fork="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
                 <fileset dir="${env.TUSCANY_HOME}/modules">
@@ -48,7 +48,7 @@
                     <include name="tuscany-node-launcher-*.jar"/>
                 </fileset>
             </classpath>
-        	<arg value=".\target\classes"/>
+        	<arg value="./target/classes"/>
         </java>
     </target>
 </project>

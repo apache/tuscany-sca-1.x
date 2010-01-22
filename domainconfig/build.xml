@@ -17,17 +17,29 @@
  * under the License.
 -->
 
-<project name="scatours-launcher-introducing-tours" default="run">
-    <import file="../../antdefs.xml"/>
+<project name="scatours-domainconfig" default="compile">
 
-    <target name="run">
-        <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true">
-            <arg value="http://localhost:9990/node-config/ToursNode"/>
-            <classpath>
-                <fileset dir="${env.TUSCANY_HOME}/modules">
-                    <include name="tuscany-node-launcher-*.jar"/>
-                </fileset>
-            </classpath>
-        </java>
+    <target name="compile">
+        <antcall target="allsubdirs">
+            <param name="target" value="compile"/>
+        </antcall>
     </target>
+
+    <target name="test">
+        <antcall target="allsubdirs">
+            <param name="target" value="test"/>
+        </antcall>
+    </target>
+
+    <target name="clean">
+        <antcall target="allsubdirs">
+            <param name="target" value="clean"/>
+        </antcall>
+    </target>
+
+    <target name="allsubdirs">
+        <ant dir="fullapp" target="${target}"/>
+        <ant dir="introducing" target="${target}"/>
+    </target>
+
 </project>

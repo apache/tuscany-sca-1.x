@@ -18,7 +18,7 @@
 -->
 
 <project name="scatours-launcher-introducing-trips" default="run">
-    <property environment="env"/> 
+    <import file="../../antdefs.xml"/>
 
     <target name="run">
         <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true">

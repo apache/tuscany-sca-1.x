@@ -398,6 +398,16 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-launcher-introducing-tours</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-launcher-introducing-trips</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-launcher-jumpstart</artifactId>
             <version>${pom.version}</version>
         </dependency>
@@ -466,7 +476,16 @@
             <artifactId>scatours-util-launcher-common</artifactId>
             <version>${pom.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-domainconfig-fullapp</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-domainconfig-introducing</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
         <dependency>
            <groupId>org.apache.geronimo.specs</groupId>
            <artifactId>geronimo-jms_1.1_spec</artifactId>
@@ -510,6 +529,23 @@
                             <appendAssemblyId>true</appendAssemblyId>
                             <ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <tasks>
+                                <delete dir="target/apache-tuscany-scatours-${version}/tuscany-scatours-${version}/domainconfig/META-INF"
+                                        includeemptydirs="true"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

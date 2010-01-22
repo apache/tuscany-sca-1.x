@@ -55,6 +55,8 @@
         <ant dir="introducing" target="${target}"/>
         <ant dir="introducing-client" target="${target}"/>
         <ant dir="introducing-domain" target="${target}"/>
+        <ant dir="introducing-tours" target="${target}"/>
+        <ant dir="introducing-trips" target="${target}"/>
         <ant dir="jumpstart" target="${target}"/>
         <ant dir="notification-corba" target="${target}"/>
         <ant dir="notification-ejb" target="${target}"/>

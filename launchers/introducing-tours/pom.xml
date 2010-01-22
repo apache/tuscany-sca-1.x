@@ -25,41 +25,20 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent><version>1.0-SNAPSHOT</version>
-    <artifactId>scatours-launcher-introducing-domain</artifactId>
-    <name>Apache Tuscany SCA Tours Introducing Domain Launcher</name>
-    
+    <artifactId>scatours-launcher-introducing-tours</artifactId>
+    <name>Apache Tuscany SCA Tours Introducing Tours Launcher</name>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-node-launcher</artifactId>
             <version>${tuscany.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-introducing-tours</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-introducing-trips</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-introducing-client</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
     </dependencies>
-
+    
     <build>
-        <finalName>${artifactId}</finalName>
-        <plugins>
+       <finalName>${artifactId}</finalName>
+       <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -69,12 +48,11 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>../lib/</classpathPrefix>
-                            <mainClass>scatours.IntroducingDomainLauncher</mainClass>
+                            <mainClass>scatours.IntroducingToursLauncher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
-            </plugin>
-        </plugins>                      
+            </plugin>  
+        </plugins>            
     </build>
-
 </project>

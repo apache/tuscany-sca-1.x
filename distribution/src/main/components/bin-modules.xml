@@ -89,6 +89,14 @@
             </includes>
             <scope>runtime</scope>
         </dependencySet>
+        <dependencySet>
+            <outputDirectory>domainconfig</outputDirectory>
+            <unpack>true</unpack>
+            <includes>
+                <include>org.apache.tuscany.sca:scatours-domainconfig-*</include>
+            </includes>
+            <scope>runtime</scope>
+        </dependencySet>
 
     </dependencySets>
 

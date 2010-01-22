@@ -93,6 +93,7 @@
             <modules>
                 <module>util</module>
                 <module>contributions</module>
+                <module>domainconfig</module>
                 <module>launchers</module>
                 <module>services</module>
                 <module>clients</module>

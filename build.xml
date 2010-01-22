@@ -40,6 +40,7 @@
     <target name="allsubdirs">
         <ant dir="util" target="${target}"/> <!--needed by launchers-->
         <ant dir="contributions" target="${target}"/> <!--needed by launchers-->
+        <ant dir="domainconfig" target="${target}"/> <!--needed by launchers-->
         <ant dir="services" target="${target}"/> <!--needed by launchers-->
         <ant dir="launchers" target="${target}"/> <!--needed by clients-->
         <ant dir="clients" target="${target}"/>

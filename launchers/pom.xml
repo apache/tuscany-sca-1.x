@@ -50,6 +50,8 @@
                 <module>introducing</module>
                 <module>introducing-client</module>
                 <module>introducing-domain</module>
+                <module>introducing-tours</module>
+                <module>introducing-trips</module>
                 <module>jumpstart</module>
                 <module>fullapp</module>
                 <module>fullapp-domain</module>
