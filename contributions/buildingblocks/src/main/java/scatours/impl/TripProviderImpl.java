@@ -16,13 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.goodvaluetrips.impl;
+package scatours.impl;
 
 import com.goodvaluetrips.Trips;
 
 public class TripProviderImpl implements Trips {
     public String checkAvailability(String trip, int people) {
-        // call non-SCA code to reserve trip and return booking code
-        return "6R98Y";
+        // scaffolded test code to return an arbitrary booking code
+        return "7S09Z";
     }
 }

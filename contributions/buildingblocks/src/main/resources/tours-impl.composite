@@ -29,7 +29,6 @@
     </component>
 
     <component name="TripProvider">
-        <implementation.java class="com.goodvaluetrips.impl.TripProviderImpl" />
-        <service name="Trips" />
+        <implementation.java class="scatours.impl.TripProviderImpl" />
     </component>
 </composite>
