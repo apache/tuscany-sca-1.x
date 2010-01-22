@@ -37,7 +37,7 @@ public class JumpstartLauncher {
 
         Trips tripProvider = ((SCAClient)node).getService(Trips.class, "TripProvider/Trips");
 
-        System.out.println("Trip boooking code = " + tripProvider.checkAvailability("FS1APR4", 2));
+        System.out.println("Trip boooking code = " + tripProvider.checkAvailability("FS1APR4", 1));
 
         node.stop();
     }
