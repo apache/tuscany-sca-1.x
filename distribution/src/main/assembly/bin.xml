@@ -177,10 +177,6 @@
                 <!-- Modules excluded from distribution as work is in progress... -->
                 <exclude>calculator2</exclude>
                 <exclude>calculator2/**/*</exclude>
-                <exclude>calculator-corba-reference</exclude>
-                <exclude>calculator-corba-reference/**/*</exclude>
-                <exclude>calculator-corba-service</exclude>
-                <exclude>calculator-corba-service/**/*</exclude>
                 <exclude>calculator-lean</exclude>
                 <exclude>calculator-lean/**/*</exclude>
                 <exclude>calculator-osgi</exclude>
