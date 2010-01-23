@@ -72,6 +72,16 @@
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-corba</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-corba-runtime</artifactId>
+            <version>${pom.version}</version>
+        </dependency>        
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-rss</artifactId>
             <version>${pom.version}</version>
         </dependency>
@@ -355,6 +365,11 @@
             <artifactId>tuscany-databinding-sdo-axiom</artifactId>
             <version>${pom.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-host-corba-jse-tns</artifactId>
+            <version>${pom.version}</version>
+        </dependency>        
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-host-embedded</artifactId>

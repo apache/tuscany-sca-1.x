@@ -35,37 +35,37 @@
        </repository>
     </repositories>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-embedded</artifactId>
-            <version>1.6-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-java-runtime</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-corba-runtime</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-	<dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-corba-jse-tns</artifactId>
-            <version>1.6-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.5</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.tuscany.sca</groupId>
+			<artifactId>tuscany-host-embedded</artifactId>
+			<version>1.6-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tuscany.sca</groupId>
+			<artifactId>tuscany-implementation-java-runtime</artifactId>
+			<version>1.6-SNAPSHOT</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tuscany.sca</groupId>
+			<artifactId>tuscany-binding-corba-runtime</artifactId>
+			<version>1.6-SNAPSHOT</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tuscany.sca</groupId>
+			<artifactId>tuscany-host-corba-jse-tns</artifactId>
+			<version>1.6-SNAPSHOT</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.5</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
     <build>
        <finalName>${artifactId}</finalName>

@@ -309,6 +309,11 @@
             <version>${pom.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-host-corba-jse-tns</artifactId>
+            <version>${pom.version}</version>
+        </dependency>        
+        <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-host-embedded</artifactId>
             <version>${pom.version}</version>
