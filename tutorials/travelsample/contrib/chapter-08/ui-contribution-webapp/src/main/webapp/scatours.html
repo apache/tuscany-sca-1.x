@@ -1,0 +1,143 @@
+<!--
+    * Licensed to the Apache Software Foundation (ASF) under one
+    * or more contributor license agreements.  See the NOTICE file
+    * distributed with this work for additional information
+    * regarding copyright ownership.  The ASF licenses this file
+    * to you under the Apache License, Version 2.0 (the
+    * "License"); you may not use this file except in compliance
+    * with the License.  You may obtain a copy of the License at
+    * 
+    *   http://www.apache.org/licenses/LICENSE-2.0
+    * 
+    * Unless required by applicable law or agreed to in writing,
+    * software distributed under the License is distributed on an
+    * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    * KIND, either express or implied.  See the License for the
+    * specific language governing permissions and limitations
+    * under the License.    
+-->
+<html>
+<head>
+<title>SCA Tours</title>
+
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<script type="text/javascript" src="org.apache.tuscany.sca.componentContext.js"></script>
+
+<script language="JavaScript">
+
+    var hotel = componentContext.getService("hotel");
+	
+    var trip = componentContext.getService("trip");
+    
+    //local state
+    var hotels;
+    var flights;
+    var cars;
+    
+    //the constructor for trip leg beans
+    function TripLegType(id,
+                         fromLocation,
+                         toLocation,
+                         fromDate,
+                         toDate,
+                         noOfPeople) {
+          this.id           = id;
+          this.fromLocation = fromLocation;
+          this.toLocation   = toLocation;
+          this.fromDate     = fromDate;
+          this.toDate       = toDate;
+          this.noOfPeople   = noOfPeople;
+    }
+    
+    function getTripLeg(){
+        return new TripLegType("X",
+                               document.searchForm.fromLocation.value,
+                               document.searchForm.toLocation.value,
+                               document.searchForm.fromDate.value,
+                               document.searchForm.toDate.value,
+                               document.searchForm.noOfPeople.value);
+    }
+		
+    function init() {
+	   try {
+
+	   }
+	   catch(e) {
+	       alert(e);
+	   }
+    }
+    
+    function searchHotels() {       
+        hotel.searchSynch(getTripLeg(), search_response);
+    }
+    
+    function searchTrip() {        
+        trip.search(getTripLeg(), search_response);
+    }
+        
+    function search_response(items, exception) {
+        if(exception){
+            alert(exception.javaStack);
+            return;
+        }
+        var hotelsHTML = "";
+        for (var i=0; i<items.length; i++) {
+            var item = items[i].name + ' - ' + items[i].description;
+            hotelsHTML += '<input name="items" type="checkbox" value="' + 
+                        item + '">' + item + ' <br>';
+        }
+        document.getElementById('searchResponse').innerHTML = hotelsHTML;
+        hotels = items;
+    }  
+	
+</script>
+
+</head>
+
+<body onload="init()" background="">
+	<img src="scatours.png" border="0" />
+	<div id="scatours">
+        <br>
+        <form name="searchForm">   
+            <table border="0">
+                <tr>
+                    <td>From Location:</td>
+                    <td><input type="text" name="fromLocation" value="LGW"></td>
+                    <td>To Location:</td>
+                    <td><input type="text" name="toLocation" value="ANU"></td>
+                </tr>
+                <tr>
+                    <td>Start Date:</td>
+                    <td><input type="text" name="fromDate" value="06/12/08"></td>
+                    <td>End Date:</td>
+                    <td><input type="text" name="toDate" value="06/12/08"></td>
+                </tr>
+                <tr>
+                    <td>Number of people:</td>
+                    <td><select name="noOfPeople">
+                        <option>1
+                        <option selected>2
+                        <option>3
+                        <option>4
+                    </select></td>
+                    <td/>
+                    <td/>
+                </tr>
+            </table>
+            <input type="button" onClick="searchHotels()" value="SearchHotels"> 
+            <input type="button" onClick="searchTrip()" value="SearchTrip"> 
+        </form>
+        <div id="searchResponse"></div>
+        <br>
+        <form name="tripForm">   
+            <input type="button" onClick="bookTrip()" value="BookTrip"> 
+        </form> 
+        <br> 
+        <div id="trip"></div>
+        <br>
+        <div id="total"></div>
+	</div>
+  
+</body>
+</html>
