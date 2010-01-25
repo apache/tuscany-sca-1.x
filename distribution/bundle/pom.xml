@@ -162,11 +162,14 @@
             <artifactId>tuscany-binding-sca-axis2</artifactId>
             <version>${pom.version}</version>
         </dependency>
+        <!-- JMS version of Binding SCA is causing side effects to samples -->
+        <!--
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-sca-jms</artifactId>
             <version>${pom.version}</version>
-        </dependency>                
+        </dependency>        
+        -->
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-sca-xml</artifactId>
