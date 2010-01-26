@@ -209,7 +209,7 @@
                 <exclude>helloworld-ws-reference-lean/**/*</exclude>
                 <exclude>spi-implementation-pojo</exclude>
                 <exclude>spi-implementation-pojo/**/*</exclude>
-		    <exclude>helloworld-jms-webapp</exclude>
+		        <exclude>helloworld-jms-webapp</exclude>
                 <exclude>helloworld-jms-webapp/**/*</exclude>
                 <exclude>helloworld-jms-webapp/work</exclude>
                 <exclude>domain-webapp</exclude>
@@ -223,6 +223,8 @@
                 <exclude>helloworld-ws-deep-webapp/work/**/*</exclude>
                 <exclude>helloworld-ws-service-webapp</exclude>
                 <exclude>helloworld-ws-service-webapp/**/*</exclude>
+                <exclude>zipcode-jaxws/</exclude>
+                <exclude>zipcode-jaxws/**/*</exclude>
             </excludes>
         </fileSet>
         <!-- Add all the demos to the demos directory -->
