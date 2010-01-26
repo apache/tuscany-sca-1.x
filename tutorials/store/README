@@ -20,12 +20,12 @@ Running The Tutorial Application
 Start the SCA Domain Manager on linux:
 
    cd domain
-   java -jar ../../../modules/tuscany-node-launcher-1.5.1.jar domain
+   java -jar ../../../modules/tuscany-node-launcher-1.6.jar domain
 
 Start the SCA Domain Manager on windows:
 
    cd domain
-   java -jar ..\..\..\modules\tuscany-node-launcher-1.5.1.jar domain
+   java -jar ..\..\..\modules\tuscany-node-launcher-1.6.jar domain
 
 Access the SCA Domain Manager application by pointing your Web browser at:
 
@@ -65,7 +65,7 @@ a look at the service description that Tuscany created automatically
 for the store catalog service which is exposed over a JSONRPC binding 
 Point your browser at:
   
-    http://l3localhost:8100/StoreCatalog?smd
+    http://localhost:8100/StoreCatalog?smd
   
 The service is configured in the SCA composite file in the following way:
 
@@ -100,7 +100,7 @@ that was introduced during the merger is contacted using web services.
 If you want to see the WSDL for the vegetable catalog point your browser
 at
 
-http://l3aw203:8200/VegetablesCatalogWebService?wsdl
+http://localhost:8200/VegetablesCatalogWebService?wsdl
 
 The vegetable catalog service is configured in an SCA composite file
 in the following way:
@@ -121,7 +121,7 @@ Start
 
 The store itself can be found at 
 
-   http://l3aw203:8102/ui/
+   http://localhost:8102/ui/
 
 This looks the same as the scenario 2 store but this time a database is used
 for storing items put into the shopping cart. When you add items you 
@@ -149,7 +149,7 @@ shopping cart and catalog serivces have been given additional remote bindings so
 the services can be accessed by others. For example, take a look at the WSDL
 description of the shopping cart service that is now available at:
 
-   http://l3aw203:8333/ShoppinCartTotalWebService?wsdl
+   http://localhost:8333/ShoppinCartTotalWebService?wsdl
 
 This WSDL is available as the shopping cart total service is now configured with a web services
 binding in the following way:
@@ -221,7 +221,7 @@ the warehouse component running outside the domain and listening on JMS.
 In this case we have implemented the warehouse application using SCA and it
 has it's own UI. The UI can be found at
 
-http://l3aw203:8088/ui/
+http://localhost:8088/ui/
 
 You should see the orders accumulating. YOu can't do anything with the
 orders but it is just a demo.
