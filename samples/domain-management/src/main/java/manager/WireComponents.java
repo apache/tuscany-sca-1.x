@@ -157,17 +157,17 @@ public class WireComponents {
         Workspace workspace = workspaceFactory.createWorkspace();
         workspace.setModelResolver(new ExtensibleModelResolver(workspace, extensionPoints));
 
-        // Read the sample store contribution
-        URI storeURI = URI.create("store");
-        URL storeURL = new File("./target/sample-domain-management-store.jar").toURI().toURL();
-        Contribution storeContribution = contributionProcessor.read(null, storeURI, storeURL);
-        workspace.getContributions().add(storeContribution);
-
         // Read the sample assets contribution
         URI assetsURI = URI.create("assets");
         URL assetsURL = new File("./target/sample-domain-management-assets.jar").toURI().toURL();
         Contribution assetsContribution = contributionProcessor.read(null, assetsURI, assetsURL);
         workspace.getContributions().add(assetsContribution);
+
+        // Read the sample store contribution
+        URI storeURI = URI.create("store");
+        URL storeURL = new File("./target/sample-domain-management-store.jar").toURI().toURL();
+        Contribution storeContribution = contributionProcessor.read(null, storeURI, storeURL);
+        workspace.getContributions().add(storeContribution);
 
         // Read the sample client contribution
         URI clientURI = URI.create("client");
