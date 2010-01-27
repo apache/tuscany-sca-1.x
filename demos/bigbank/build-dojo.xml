@@ -36,6 +36,16 @@
             <available file="${unpack.location}"/>
         </condition>
     </target>
+    
+    <target name="install-dojo-nomaven" depends="check-dojo-installed" unless="already.installed">
+        <mkdir dir="${basedir}/target/dojo-download/"/>
+        <get src="http://download.dojotoolkit.org/release-${dojo.version}/dojo-release-${dojo.version}.zip"
+            dest="${basedir}/target/dojo-download/dojo-release-${dojo.version}.zip"
+            verbose="true"
+            usetimestamp="true"/>
+        <copy file="${basedir}/target/dojo-download/dojo-release-${dojo.version}.zip" 
+              tofile="${localRepository}/dojo/dojo/${dojo.version}/dojo-${dojo.version}.zip"/>
+    </target>    
 
     <target name="unpack-dojo-files" depends="check-dojo-installed, check-dojo-unpacked" unless="already.unpacked">
         <fail message="dojo zip file not installed in local repository: ${localRepository}" unless="already.installed"/>
