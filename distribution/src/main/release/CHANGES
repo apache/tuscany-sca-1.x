@@ -1,6 +1,150 @@
 Changes With Apache Tuscany SCA 1.6 January 2010 
 ==================================================
+
 Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
+
+TUSCANY-3448 - SCA Property and Reference annotation processing in web application results in incorrect computed names
+TUSCANY-3438 - Add calculator-corba samples to 1.6 release
+TUSCANY-3435 - store-secure is missing build.xml
+TUSCANY-3434 - Simple-bigbank-spring fails with ContributionReadException: Error reading manifest null
+TUSCANY-3430 - Domain-management sample fails when trying to add deployables to a domain composite and wire them
+TUSCANY-3429 - Databinding sample fails with AxisFault: The system cannot infer the transport information from the /ComponentA URL.
+TUSCANY-3428 - Callbacks-jms fails with NPE
+TUSCANY-3427 - Calculator distributed fails when starting domain manager
+TUSCANY-3418 - <wireFormat.jmsText> is broken in some use cases
+TUSCANY-3408 - Fix reference to missing namespace hortname in generated WSDL
+TUSCANY-3394 - PropertyAnnotationtestCase vtest failing
+TUSCANY-3389 - Tuscany Policies is returning an error code of 401 instead of 403 when an authenticated user requests a service which is not authorized for their role
+TUSCANY-3382 - 1.x seems to have a dependency on a SNAPSHOT release of Lucene somewhere?
+TUSCANY-3379 - useParentHandlers in JDKLoggingPolicy cannot be set
+TUSCANY-3348 - PERF: handleCallback is not optimized
+TUSCANY-3347 - composites that repesent implementation.jee component type are registered in the composite model resolver under a single name
+TUSCANY-3312 - Potential memory leak in Java interface handling
+TUSCANY-3309 - Invoker recieves a Message with no header data for a request that contained a SOAP header
+TUSCANY-3303 - Concurrent access issue during wsdlgen
+TUSCANY-3288 - Can't use non-Item type with atom Collection
+TUSCANY-3283 - Generated WSDL not WS-I compliant in some cases
+TUSCANY-3275 - alert-aggregator-webapp failes to start
+TUSCANY-3272 - holder-ws-service falure
+TUSCANY-3269 - Server name incorrect in WSDL when using separate web server
+TUSCANY-3267 - <binding.ws> doesn't work when <interface.java> is used
+TUSCANY-3266 -  Run As Tuscany fails with NPE
+TUSCANY-3265 - JMS itest PropertiesTestCase failure
+TUSCANY-3264 - tutorial/store-test failure
+TUSCANY-3260 - CORBA Extension test to ensure ORB is stopped fails in recent SUN JDK 6_014
+TUSCANY-3259 - wireFormat.jsonrpc removed from binding
+TUSCANY-3256 - PolicyConfigurationException raised incorrectly when using operation level policy
+TUSCANY-3255 - Consolidate JMS session management in JMSResourceFactory
+TUSCANY-3250 - Implement multiple application context support using MANIFEST header
+TUSCANY-3247 - Cannot get WidgetImplementationFactory (NoSuchMethodException)
+TUSCANY-3240 - SpringXMLComponentTypeLoader leaves open a file handle to the application-context.xml
+TUSCANY-3238 - Use of WS binding results in exception when returning data
+TUSCANY-3237 - Use of collections for implicit SCA reference/property injection in constructors
+TUSCANY-3235 - Exception thrown in JAXBContentCache.getPackages() when running applications with Java 2 security enabled
+TUSCANY-3232 - Remove non-ASCII character from host-webapp LICENSE file
+TUSCANY-3213 - ProblemImpl resides in assembly and means that other module have to access an impl packed to create a problem
+TUSCANY-3202 - Bean name as service names for implicit services
+TUSCANY-3200 - Correct a small inconsistency between the NOTICE file in web-javascript-dojo and the binary distro NOTICE file
+TUSCANY-3199 - WebImplementationProcessor should prefix web.componentType URI with WEB-INF
+TUSCANY-3198 - impl.jee : Generated EJBImplementation type has wrong information when more than one bean is present in a EJB module
+TUSCANY-3195 - Inherently-provided intents do not work at operation level
+TUSCANY-3185 - Warning message of duplicates during multiple application context processing
+TUSCANY-3178 - The runtime doesn't read the validation schema extension point from the extension point registry and hence doesn't pick up any schemas that are added programatiically.
+TUSCANY-3177 - The extension registry is no created until after runtime start and hence it's not available for updating in a way that will be taken note of at start time
+TUSCANY-3174 - Allow extension points to be updated and exercised programmatically
+TUSCANY-3173 - Restarting webapp leads to OutOfMemory: Permgen space in JSONRPC binding
+TUSCANY-3167 - Look to cache JAXBPropertyDescriptor in XMLRootElementUtil
+TUSCANY-3166 - Atom fails to set wrapper handler in top down case
+TUSCANY-3165 - Failures in itest/contribution-jee
+TUSCANY-3163 - Non-ascii characters in Corba binding code cause compile error
+TUSCANY-3162 - problem building JAXBContext when package has mixed JAXBs, non-JAXBs
+TUSCANY-3156 - Provide itest for the no-manifest scenarios in spring implementation module
+TUSCANY-3153 - imported XSDefinition should be set with XmlSchema as well
+TUSCANY-3149 - Restarting webapp leads to OutOfMemory: Permgen space
+TUSCANY-3148 - Remove explicit version dependence from JEE zip based itests.
+TUSCANY-3141 - Generated WSDL for void unwrapped operations has a return part for the response message
+TUSCANY-3140 - Implementation.jee: The interface bound to the Runtimewire is not loaded with the class loader from implementation
+TUSCANY-3128 - Spring app context classloader doesn't find contribution artifacts if the contribution isn't also on the application classpath
+TUSCANY-3127 - NPE in JMS binding when it appear in same service a JSONRPC binding and $self$ reference is obtained
+TUSCANY-3125 - policySets & intents not resolved on binding.http
+TUSCANY-3124 - Check for wireFormat/OperationSelector before "get" operation
+TUSCANY-3121 - binding.atom should leverage introspection when setting up call to mediator
+TUSCANY-3120 - JMSBindingProcessor does not preserve file contents
+TUSCANY-3116 - operationProperties attribute gets discarded
+TUSCANY-3114 - There are no unit tests for the RSS binding
+TUSCANY-3113 - RSS Binding is failing to detect whether the Java component implementation supports RSS feeds
+TUSCANY-3112 - Links for the feed items are missing for an RSS feed created by the RSS binding on a Java component implentation that uses the Tuscany Dayta APIs
+TUSCANY-3110 - Extend the Atom binding so that the description of the feed can be set
+TUSCANY-3310 - JCA_10050/51 has incorectly named composite file
+TUSCANY-3109 - NullPointerException thrown when using Atom binding on a Java component implementation class that does not have a get() method
+TUSCANY-3104 - Using "FileSystemXmlApplicationContext" to load multiple application context files has problems with relative path identification
+TUSCANY-3099 - NumberFormatException occurs when parsing a JMSPriority attribute with string value
+TUSCANY-3098 - NPE in JMSBindingProcessor writing out property with no name
+TUSCANY-3097 - External ear contribution processes all composite files in a Java EE Application and its modules.
+TUSCANY-3096 - Switch off SCA Annotation support for Implementation.Spring
+TUSCANY-3095 - DefaultBeanModelProcessor contror expects Class<implementation> but bindings need to use this processor also
+TUSCANY-3086 - DefaultContributionFactory does not directly implement ContributionFactory interface
+TUSCANY-3080 - NPE thrown while checking for Spring Version
+TUSCANY-3078 - substitutionGroup is missing in ATOM binding, HTTP binding, and Widget impl
+TUSCANY-3077 - SCA node cannot be stopped as ConversationManagerImpl holds a thread pool using ScheduledExecutorService
+TUSCANY-3076 - Dealock in binding.ws for 2 concurrent callbacks
+TUSCANY-3075 - The composite processor shouldn't write out references and services generated to handle callbacks.
+TUSCANY-3070 - ModuleActivators being picked up twice from the classpath
+TUSCANY-3069 - Implementation.spring cannot resolve the location or bean classes if the contribution is not on the TCCL
+TUSCANY-3068 - Validate wire format and operation selection SCDL elements
+TUSCANY-3065 - Double use exposure in JAXBDataSource
+TUSCANY-3063 - Handle special characters when generating JSON-RPC SMD
+TUSCANY-3059 - OperationProperties JMSDeliveryMode set in headers JMSDeliveryMode
+TUSCANY-3058 - JMSBindingProcessor write methods write out 'JMSCorrelationId' instead of 'JMSCorrelationID'
+TUSCANY-3052 - Component and Services not recognized from application composite of EAR used in impl.jee
+TUSCANY-3057 - binding.jms fails to lookup ConnectionFactory
+TUSCANY-3056 - Webapp samples are failing in Geronimo (issues caused by inverse-classloading)
+TUSCANY-3054 - Introduce JavaInterfaceFactory impl employing caching of JavaInterface(s) based on Class
+TUSCANY-3053 - Spring Jar Location testcase failing because of the URI issue
+TUSCANY-3052 - Component and Services not recognized from application composite of EAR used in impl.jee
+TUSCANY-3043 - Move the testcases available in implementation-spring-old module into itest/spring module.
+TUSCANY-3042 - Fail to generate Widget JS when using binding http with json-rpc wire format/operation selector
+TUSCANY-3041 - policySets & intents not resolved on implementation.jee
+TUSCANY-3032 - ejb-linkType should be string
+TUSCANY-3031 - Ensure that JMS jmsObject wore format works if the service interface is specified as WSDL
+TUSCANY-3030 - itest\exceptions ExceptionsTestCase testRemote fails
+TUSCANY-3018 - EarContributionProcessor's URL.setURLStreamHandlerFactory() fails with factory already defined error
+TUSCANY-3017 - Validate Spring Binary Version used
+TUSCANY-3011 - JMS binding schema contains a required headers element under OperationProperties
+TUSCANY-3008 - Contribution-jee/testContributeEAR_Enhanced16 failing in maven but not in eclipse
+TUSCANY-3005 - null one arg methods and void returns fail jmsdefault WF
+TUSCANY-3002 - writeStartElement calls in JMSBindingProcessor do not pass namespace URI
+TUSCANY-3000 - Turn databinding Mediator into a utility registered with UtilityExtensionPoint
+TUSCANY-2999 - Property injection not working in implementation.widget js client
+TUSCANY-2998 - Items added to store Shopping Cart not showing properly when using dojo based javaScript proxy
+TUSCANY-2997 - Dojo based javascript for Atom Binding has unecessary dojo.require for XHR
+TUSCANY-2996 - binding.jms/wireFormat.object - allow single parameters to be passed wrapped or unwrapped depending on user configuration
+TUSCANY-2995 - BPEL error handling causes tests to block
+TUSCANY-2993 - store-dojo sample doesn't work in IE
+TUSCANY-2987 - Sort out jms operation selector mapping to service operations
+TUSCANY-2986 - Separate callback processing from operation selector processing
+TUSCANY-2984 - Potential IndexOutOfBounds in DojoModuleActivator
+TUSCANY-2978 - sample apps for jee contribution processing tests
+TUSCANY-2977 - determine implementation.jee component type from application composite if one is available
+TUSCANY-2976 - Remove default "ConnectionFactory" in JMSBinding model
+TUSCANY-2972 - Fix contribution classloader so that artifacts inside JEE archives can be found
+TUSCANY-2968 - Provide support for binding.http based on OASIS draft specification
+TUSCANY-2967 - For binding.jms, consider a more natural exception handling strategy for non-XML, non-Object wireFormats
+TUSCANY-2966 - Adjust binding.jms code since JMS BytesMessage bytes payload can only be read once
+TUSCANY-2965 - For JMS binding, add a jmsBytesXML wireFormat analogous to jmsTextXML
+TUSCANY-2964 - Fix JMS operationSelector schema element name to operationSelector.jmsdefault to match OASIS
+TUSCANY-2962 - Throw an exception if multiple same-name operations are detected by WSDL intf introspector
+TUSCANY-2953 - Fix sca.tld in branches-1.x
+TUSCANY-2937 - AtomAgreggator test cases failures
+TUSCANY-2930 - Add wireFormat.jmsDefault for the JMS binding
+TUSCANY-2906 - WSDL/XSD imports should use location/schemaLocation as hints and not fail due to locations that don't map to actual locations
+TUSCANY-2900 - WSDL Generation does not respect all binding.ws entries
+TUSCANY-2878 - Consider upgrade to dojo 1.3
+TUSCANY-2868 - Vtest code for Java SCA assembly component of 2009_02_24
+TUSCANY-2757 - Top down round trip problem where wrapper elements are marked as nillable by JAXB during WSDL generation
+TUSCANY-2640 - Should use package(s) when possible in creating JAXBContext, not set of Classes
+TUSCANY-2626 - Investigate why endpoint reference and wsdlLocation are not in the sca-binding-webservice.xsd schema file
+TUSCANY-2552 - Implement a search function for the domain manager home page
 
 Changes With Apache Tuscany SCA 1.5.1 October 2009 
 ==================================================
