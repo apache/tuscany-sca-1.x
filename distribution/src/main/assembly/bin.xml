@@ -243,6 +243,10 @@
                 <exclude>*/.settings/**/*</exclude>
                 <exclude>*/work</exclude>
                 <exclude>*/work/**/*</exclude>
+                <exclude>**/resources/dojo</exclude>
+                <exclude>**/resources/dojo/**/*</exclude>
+                <exclude>**/webapp/dojo</exclude>
+                <exclude>**/webapp/dojo/**/*</exclude>
                 <exclude>*/target/classes</exclude>
                 <exclude>*/target/classes/**/*</exclude>
                 <exclude>*/target/test-classes</exclude>
