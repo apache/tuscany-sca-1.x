@@ -78,8 +78,6 @@ public class PropertyProcessor extends BaseJavaClassVisitor {
             if (name.startsWith("set")) {
                 name = JavaIntrospectionHelper.toPropertyName(method.getName());
             }
-            // When the name is not specified, prefix the computed name with the class name
-            name = method.getDeclaringClass().getName()+"_"+name;
         }
 
         Map<String, JavaElementImpl> properties = type.getPropertyMembers();
@@ -113,8 +111,6 @@ public class PropertyProcessor extends BaseJavaClassVisitor {
         }
         if ("".equals(name) || name.equals(field.getType().getName())) {
             name = field.getName();
-            // When the name is not specified, prefix the computed name with the class name
-            name = field.getDeclaringClass().getName()+"_"+name;
         }
 
         Map<String, JavaElementImpl> properties = type.getPropertyMembers();
