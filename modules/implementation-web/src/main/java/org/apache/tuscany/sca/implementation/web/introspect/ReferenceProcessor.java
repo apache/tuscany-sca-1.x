@@ -69,8 +69,6 @@ public class ReferenceProcessor extends BaseJavaClassVisitor {
         String name = annotation.name();
         if ("".equals(name)) {
             name = JavaIntrospectionHelper.toPropertyName(method.getName());
-            // When the name is not specified, prefix the computed name with the class name
-            name = method.getDeclaringClass().getName()+"_"+name;
         }
         JavaElementImpl ref = type.getReferenceMembers().get(name);
         // Setter override field
@@ -108,8 +106,6 @@ public class ReferenceProcessor extends BaseJavaClassVisitor {
         String name = annotation.name();
         if ("".equals(name)) {
             name = field.getName();
-            // When the name is not specified, prefix the computed name with the class name
-            name = field.getDeclaringClass().getName()+"_"+name;
         }
         JavaElementImpl ref = type.getReferenceMembers().get(name);
         if (ref != null && ref.getElementType() == ElementType.FIELD) {
