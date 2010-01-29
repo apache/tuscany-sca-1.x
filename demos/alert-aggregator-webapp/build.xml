@@ -121,7 +121,7 @@
           <property name="localRepository" value="${settings.localRepository}"/>
         </ant>
         
-        <ant antfile="./build-dojo.xml" target="unpack-dojo-files">
+        <ant antfile="./build-dojo.xml" target="unpack-dojo-files-nomaven">
           <property name="localRepository" value="${settings.localRepository}"/>
           <property name="artifactId" value="${artifactId}"/>
         </ant>   
