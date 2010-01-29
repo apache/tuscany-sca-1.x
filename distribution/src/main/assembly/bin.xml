@@ -71,6 +71,10 @@
                 <exclude>*/.settings/**/*</exclude>
                 <exclude>*/.externalToolBuilders</exclude>
                 <exclude>*/.externalToolBuilders/**/*</exclude>
+                <exclude>**/resources/dojo</exclude>
+                <exclude>**/resources/dojo/**/*</exclude>
+                <exclude>**/webapp/dojo</exclude>
+                <exclude>**/webapp/dojo/**/*</exclude>                
                 <exclude>*/work</exclude>
                 <exclude>*/work/**/*</exclude>
                 <exclude>**/activemq-test.log</exclude>
