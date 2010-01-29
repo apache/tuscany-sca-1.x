@@ -75,6 +75,10 @@
                 <exclude>*/work/**/*</exclude>
                 <exclude>**/activemq-test.log</exclude>
                 <exclude>**/derby.log</exclude>
+                <exclude>**/resources/dojo</exclude>
+                <exclude>**/resources/dojo/**/*</exclude>
+                <exclude>**/webapp/dojo</exclude>
+                <exclude>**/webapp/dojo/**/*</exclude>
                 <exclude>**/target/war/**</exclude>
                 <exclude>*/target/mvn-eclipse-cache.properties</exclude>
                 <exclude>*/target/classes</exclude>
@@ -239,6 +243,10 @@
                 <exclude>**/pom.transformed.xml</exclude>
                 <exclude>*/.settings</exclude>
                 <exclude>*/.settings/**/*</exclude>
+                <exclude>**/resources/dojo</exclude>
+                <exclude>**/resources/dojo/**/*</exclude>
+                <exclude>**/webapp/dojo</exclude>
+                <exclude>**/webapp/dojo/**/*</exclude>                
                 <exclude>*/work</exclude>
                 <exclude>*/work/**/*</exclude>
                 <exclude>*/target/classes</exclude>
