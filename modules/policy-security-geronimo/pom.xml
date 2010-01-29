@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-modules</artifactId>
-        <version>1.6-SNAPSHOT</version>
+        <version>1.6</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>tuscany-policy-security-geronimo</artifactId>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-policy-security-http</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.6</version>
         </dependency>
 
        <dependency>
