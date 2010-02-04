@@ -23,18 +23,6 @@
         <pathelement path="../../util/launcher-common/target/scatours-util-launcher-common.jar"/>
     </path>
 
-    <!-- Before invoking the "run" target, the JMS broker needs to be
-         started and running in a different process. -->
-    <target name="run-broker">
-        <java classname="scatours.JMSBrokerLauncher" fork="true">
-            <classpath>
-                <pathelement location="target/${ant.project.name}.jar"/>
-                <!-- The following is used to bring in the ActiveMQ runtime. -->
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </java>
-    </target>
-
     <!-- After starting the SCA JMS service by invoking the "run" target below,
        the ActiveMQ JMS implementation of the currency converter client should be
        run in another process using the "run-client" target. -->

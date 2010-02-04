@@ -22,10 +22,17 @@ import javax.jms.Connection;
 import javax.jms.Session;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.broker.BrokerService;
 
 public class SMSGatewayJMSServiceBootstrap {
 
     public static void main(String[] args) throws Exception {
+        final BrokerService jmsBroker = new BrokerService();
+        jmsBroker.setPersistent(false);
+        jmsBroker.setUseJmx(false);
+        jmsBroker.addConnector("tcp://localhost:61619");
+        jmsBroker.start();
+
         System.out.println("Publishing SMS Gateway Service as a JMS service: tcp://localhost:61619");
         System.out.println("Press Ctrl^C to terminate...");
 
