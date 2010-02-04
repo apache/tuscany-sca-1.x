@@ -23,12 +23,8 @@
         <pathelement path="../../util/launcher-common/target/scatours-util-launcher-common.jar"/>
     </path>
 
-    <!-- Before invoking the "run" target, both the CORBA nameserver and
-       the CORBA SMS Gateway service need to be started and running in
-       different processes. -->
-    <target name="run-nameserver">
-        <ant dir="../../services/smsgateway-corba" target="run-nameserver"/>
-    </target>
+    <!-- Before invoking the "run" target, the CORBA SMS Gateway service
+       needs to be started and running in a different process. -->
     <target name="run-smsgateway">
         <ant dir="../../services/smsgateway-corba" target="run"/>
     </target>

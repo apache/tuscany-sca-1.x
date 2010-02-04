@@ -20,12 +20,8 @@
 <project name="scatours-client-currency-converter-jms" default="compile">
     <import file="../../antdefs.xml"/>
 
-    <!-- Before invoking the "run" target, both the JMS broker and the
-       JMS implementation of the currency converter service need to be
-       started, each in its own process. -->
-    <target name="run-broker">
-        <ant dir="../../launchers/currency-converter-jms" target="run-broker"/>
-    </target>
+    <!-- Before invoking the "run" target, the JMS implementation of the
+       currency converter service needs to be started in its own process. -->
     <target name="run-service">
         <ant dir="../../launchers/currency-converter-jms" target="run"/>
     </target>

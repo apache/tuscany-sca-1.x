@@ -20,18 +20,6 @@
 <project name="scatours-service-smsgateway-jms" default="compile">
     <import file="../../antdefs.xml"/>
 
-    <!-- Before invoking the "run" target, the JMS broker needs to be
-         started and running in a different process. -->
-    <target name="run-broker">
-        <java classname="scatours.JMSBrokerLauncher" fork="true">
-            <classpath>
-                <pathelement location="target/${ant.project.name}.jar"/>
-                <!-- The following is used to bring in the ActiveMQ runtime. -->
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
-        </java>
-    </target>
-
     <!-- The "run" target creates JMS request and response queues for the
        SMS gateway service.  These queues are used by the "run" target of
        the notification-jms launcher. -->

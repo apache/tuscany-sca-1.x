@@ -28,15 +28,6 @@
         </antcall>
     </target>
 
-    <!-- Before invoking the "run" target, the CORBA nameserver needs to be
-         started and running in a different process. -->
-    <target name="run-nameserver">
-        <exec executable="${env.JAVA_HOME}/bin/tnameserv">
-            <arg value="-ORBInitialPort"/>
-            <arg value="5080"/>
-        </exec>
-    </target>
-
     <target name="run">
         <java classname="scatours.smsgateway.SMSGatewayCORBAServiceBootstrap" fork="true">
             <classpath location="target/${ant.project.name}.jar"/>

@@ -21,6 +21,7 @@ package scatours;
 
 import static scatours.launcher.LauncherUtil.locate;
 
+import org.apache.activemq.broker.BrokerService;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
@@ -28,6 +29,12 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 public class CurrencyConverterJMSLauncher {
 
     public static void main(String[] args) throws Exception {
+        final BrokerService jmsBroker = new BrokerService();
+        jmsBroker.setPersistent(false);
+        jmsBroker.setUseJmx(false);
+        jmsBroker.addConnector("tcp://localhost:61619");
+        jmsBroker.start();
+
         SCAContribution currencyJMSContribution = locate("currency-jms");
         SCAContribution currencyContribution = locate("currency");
 
@@ -41,5 +48,6 @@ public class CurrencyConverterJMSLauncher {
         System.in.read();
 
         node.stop();
+        jmsBroker.stop();
     }
 }
