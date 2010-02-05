@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.6-SNAPSHOT</version>
+        <version>1.6</version>
     </parent>
     <artifactId>scatours</artifactId>
     <packaging>pom</packaging>
@@ -88,7 +88,7 @@
             </activation>
             <properties>
                 <scatours.version>1.0-SNAPSHOT</scatours.version>
-                <tuscany.version>1.6-SNAPSHOT</tuscany.version>
+                <tuscany.version>1.6</tuscany.version>
             </properties>
             <modules>
                 <module>util</module>
