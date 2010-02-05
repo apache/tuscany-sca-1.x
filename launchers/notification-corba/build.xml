@@ -29,20 +29,12 @@
         <ant dir="../../services/smsgateway-corba" target="run"/>
     </target>
 
-    <!-- When running this sample, the tuscany-host-corba-jse jar needs to be
-       present on the classpath.  This isn't included in tuscany-sca-manifest
-       so it needs to be added to the classpath  explicitly.  For some reason
-       this jar isn't part of the Tuscany binary distribution so you'll need
-       to download it from the maven repository http://repo1.maven.org/maven2
-       and set the TUSCANY_HOST_CORBA environment variable to the name of
-       your local download directory. -->
     <target name="run">
         <java classname="scatours.NotificationCORBALauncher" fork="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
                 <path refid="compile-path"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-                <fileset dir="${env.TUSCANY_HOST_CORBA}"/>
             </classpath>
         </java>
     </target>

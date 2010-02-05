@@ -2,24 +2,20 @@
 Building the travel sample using ant
 ------------------------------------
 
-1. Download and unzip JDK 1.6.0_07 or later and set the JAVA_HOME environment
-   variable to the JDK base directory.
+1. Download and unzip JDK 1.6.0_07 (or later) and set the JAVA_HOME
+   environment variable to the JDK base directory.
 2. Install svn and ant.
 3. Create a local directory to hold the travel sample code.  With this as
    your current directory, check out the complete travel sample from svn
    using the following command:
-     svn co http://svn.apache.org/repos/asf/tuscany/sandbox/travelsample
-4. Download and unzip the Tuscany 1.5.1 (or later) binary distribution
+     svn co http://svn.apache.org/repos/asf/tuscany/sca-java-1.x/trunk/tutorials/travelsample
+4. Download and unzip the Tuscany SCA Java 1.6 (or later) binary distribution
    and set the TUSCANY_HOME environment variable to the base directory
    containing the unzipped binary distribution.
-5. Download the tuscany-host-corba-jse and tuscany-host-corba-jse-tns
-   jars from the maven repository http://repo1.maven.org/maven2 and set the
-   TUSCANY_HOST_CORBA environment variable to the local directory in which
-   these files are located.
-6. Download and unzip the OpenEJB 3.0 or later binary distribution and set
+5. Download and unzip the OpenEJB 3.0 (or later) binary distribution and set
    the OPENEJB_HOME environment variable to the base directory containing
    the unzipped binary distribution.
-7. With the travelsample directory as your current directory, enter the
+6. With the travelsample directory as your current directory, enter the
    command "ant compile".
 
 
@@ -29,16 +25,17 @@ Building the travel sample using maven
 Most of the steps are similar to the above.  For completeness, a full list
 of the steps needed is given here.
 
-1. Download and unzip JDK 1.6.0_07 or later and set the JAVA_HOME environment
-   variable to the JDK base directory.
+1. Download and unzip JDK 1.6.0_07 (or later) and set the JAVA_HOME
+   environment variable to the JDK base directory.
 2. Install svn and maven.
 3. Create a local directory to hold the travel sample code.  With this as
    your current directory, check out the complete travel sample from svn
    using the following command:
-     svn co http://svn.apache.org/repos/asf/tuscany/sandbox/travelsample
+     svn co http://svn.apache.org/repos/asf/tuscany/sca-java-1.x/trunk/tutorials/travelsample
 4. Check the setting of the <tuscany.version> property in the
    travelsample/pom.xml file.  If you want to build the travel sample using
-   a different Tuscany version, change this property as necessary.
+   a different Tuscany version, change this property as necessary.  The
+   travel sample has been tested and runs correctly with Tuscany SCA Java 1.6. 
 5. With the travelsample directory as your current directory, enter the
    command "mvn".  You will need a live internet connection so that maven
    can download any required files to your local repository.
@@ -62,23 +59,21 @@ For each scenario, the following are given:
  Directory: the current directory for the command prompt window or windows
  Command(s): the command or commands for running the scenario
  Contributions: SCA contributions used in this scenario
- Launchers: other launcher directories needed by this scenario, if any
+ Launchers: other launcher directories used in this scenario, if any
  Services: non-SCA services used in this scenario, if any
- Clients: non-SCA services used in this scenario, if any
+ Clients: non-SCA clients used in this scenario, if any
 
 1) Jumpstart - First simple example of using Tuscany
 
 Directory: launchers/jumpstart
 Command: ant run
 Contributions: introducing-trips
-Launchers: common
 
 2) Introducing - Simplified introduction to the travel application
 
 Directory: launchers/introducing
 Command: ant run 
 Contributions: introducing-client, introducing-tours, introducing-trips
-Launchers: common
 
 3) Introducing (distributed) - Distributed services with a domain manager
 
@@ -93,7 +88,6 @@ Directory: launchers/interaction
 Command: ant run
 Contributions: calendar, common, currency, flight, hotel, interaction-client, 
    interaction-service-remote, shoppingcart
-Launchers: common
 
 5) Full application - The full interactive travel application
 
@@ -103,15 +97,14 @@ Contributions: car, common, creditcard-payment-jaxb-policy, currency, flight,
    fullapp-bespoketrip, fullapp-coordination, fullapp-currency, fullapp-packagedtrip,
    fullapp-shoppingcart, fullapp-ui, hotel, payment-java-policy, scatours,
    shoppingcart, travelcatalog, trip, tripbooking
-Launchers: common
 
 6) Full application (distributed) - Distributed services with a domain manager
 
 Directory: launchers/fullapp-nodes
 Commands: ant run-domain, ant run
-Contributions: car, common, creditcard-payment-jaxb-policy, currency, flight,
+Contributions: car, common, creditcard-payment-jaxb, currency, flight,
    fullapp-bespoketrip, fullapp-coordination, fullapp-currency, fullapp-packagedtrip,
-   fullapp-shoppingcart, fullapp-ui, hotel, payment-java-policy, scatours,
+   fullapp-shoppingcart, fullapp-ui, hotel, payment-java, scatours,
    shoppingcart, travelcatalog, trip, tripbooking
 Launchers: fullapp-domain
 
@@ -120,35 +113,30 @@ Launchers: fullapp-domain
 Directory: launchers/blog-feed
 Command: ant run
 Contributions: blog-feed
-Launchers: common
 
 8) Data binding
 
 Directory: launchers/databinding
 Command: ant run
 Contributions: creditcard-payment-sdo, databinding-client, payment-java
-Launchers: common
 
 9) Feed logger
 
 Directory: launchers/feed-logger
 Command: ant run
 Contributions: feed-logger
-Launchers: common
 
 10) Help pages
 
 Directory: launchers/help-pages
 Command: ant run
 Contributions: help-pages
-Launchers: common
 
 11) Policy
 
 Directory: launchers/policy
 Command: ant run
 Contributions: creditcard-payment-jaxb-policy, policy-client, payment-java-policy
-Launchers: common
 
 12) SCA currency converter service interoperating with SCA or non-SCA client
 
@@ -157,22 +145,19 @@ Launchers: common
 Directory: launchers/currency-converter
 Command: ant run
 Contributions: currency
-Launchers: common
 
 12b) CORBA client
 
 Directory: launchers/currency-converter-corba
 Commands: ant run, ant run-client
 Contributions: currency, currency-corba
-Launchers: common
 Clients: currency-converter-corba
 
 12c) JMS client
 
 Directory: launchers/currency-converter-jms
-Commands: ant run-broker, ant run, ant run-client
+Commands: ant run, ant run-client
 Contributions: currency, currency-jms
-Launchers: common
 Clients: currency-converter-jms
 
 12d) RMI client
@@ -180,7 +165,6 @@ Clients: currency-converter-jms
 Directory: launchers/currency-converter-rmi
 Commands: ant run, ant run-client
 Contributions: currency, currency-rmi
-Launchers: common
 Clients: currency-converter-rmi
 
 12e) JAX-WS client
@@ -188,7 +172,6 @@ Clients: currency-converter-rmi
 Directory: launchers/currency-converter-ws
 Commands: ant run, ant run-client
 Contributions: currency, currency-ws
-Launchers: common
 Clients: currency-converter-ws-jaxws
 
 13) SCA notification service interoperating with non-SCA SMS gateway service
@@ -196,9 +179,8 @@ Clients: currency-converter-ws-jaxws
 13a) SMS gateway CORBA service
 
 Directory: launchers/notification-corba
-Commands: ant run-nameserver, ant run-smsgateway, ant run 
+Commands: ant run-smsgateway, ant run 
 Contributions: notification, notification-corba
-Launchers: common
 Services: smsgateway-corba
 
 13b) SMS gateway EJB service
@@ -206,15 +188,13 @@ Services: smsgateway-corba
 Directory: launchers/notification-ejb
 Commands: ant run-smsgateway, ant run 
 Contributions: notification, notification-ejb
-Launchers: common
 Services: smsgateway-ejb
 
 13c) SMS gateway JMS service
 
 Directory: launchers/notification-jms
-Commands: ant run-broker, ant run-smsgateway, ant run 
+Commands: ant run-smsgateway, ant run 
 Contributions: notification, notification-jms
-Launchers: common
 Services: smsgateway-jms
 
 13d) SMS gateway RMI service
@@ -222,7 +202,6 @@ Services: smsgateway-jms
 Directory: launchers/notification-rmi
 Commands: ant run-smsgateway, ant run 
 Contributions: notification, notification-rmi
-Launchers: common
 Services: smsgateway-rmi
 
 13e) SMS gateway JAX-WS service
@@ -230,7 +209,6 @@ Services: smsgateway-rmi
 Directory: launchers/notification-ws
 Commands: ant run-smsgateway, ant run 
 Contributions: notification, notification-ws
-Launchers: common
 Services: smsgateway-jaxws
 
 
@@ -240,16 +218,101 @@ Running the travel sample from the distribution directories
 If the travel sample was built using maven, a binary distribution
 directory will be created containing all the built jar files together with
 a "lib" directory containing a complete set of runtime dependencies for
-these jar files.  The jar files in the "launchers" directory in the
-distribution output can be run using the command
+these jar files.  You can run each of the scenarios from the binary
+distribution by running one or more jar files using the "java -jar" command.
 
- java -jar <distribution-jar>
+The jar files that you need to run for each scenario are listed below.
+If multiple jar files are listed for a scenario, they must be run in
+separate processes in the order listed.  The current directory for
+the "java -jar" command must be set as follows:
+ launchers/scatours-launcher-*.jar are run from the launchers directory 
+ clients/scatours-client-*.jar are run from the clients directory 
+ services/scatours-service-*.jar are run from the services directory 
 
-where <distrbution-jar> is the name of the jar file in the distrbution
-directory tree.  For example, to run the "jumpstart" scenario, you
-would use the command
+For example, to run the "jumpstart" scenario, you would set your
+current directory to the distribution "launchers" directory and run
+the command
+ java -jar scatours-launcher-jumpstart.jar
 
- java -jar <your-path>/scatours-launcher-jumpstart.jar
+Here is a complete list of the launcher commands needed to run the
+scenarios described above.
 
-It isn't possible currently to run scenarios 3 and 6 (distributed execution
-with a domain manager) from the distribution directory in this way.
+ 1) Jumpstart - First simple example of using Tuscany
+   java -jar scatours-launcher-jumpstart.jar
+
+ 2) Introducing - Simplified introduction to the travel application
+   java -jar scatours-launcher-introducing.jar
+
+ 3) Introducing (distributed) - Distributed services with a domain manager
+   java -jar scatours-launcher-introducing-domain.jar
+   java -jar scatours-launcher-introducing-trips.jar
+   java -jar scatours-launcher-introducing-tours.jar
+   java -jar scatours-launcher-introducing-client.jar
+
+ 4) Interaction - Different SCA interaction styles 
+   java -jar scatours-launcher-interaction.jar
+
+ 5) Full application - The full interactive travel application
+   java -jar scatours-launcher-fullapp.jar
+
+ 6) Full application (distributed) - Distributed services with a domain manager
+   java -jar scatours-launcher-fullapp-domain.jar
+   java -jar scatours-launcher-fullapp-nodes.jar
+
+ 7) Blog feed
+   java -jar scatours-launcher-blog-feed.jar
+
+ 8) Data binding
+   java -jar scatours-launcher-databinding.jar
+
+ 9) Feed logger
+   java -jar scatours-launcher-feed-logger.jar
+
+10) Help pages
+   java -jar scatours-launcher-help-pages.jar
+
+11) Policy
+   java -jar scatours-launcher-policy.jar
+
+12) SCA currency converter service interoperating with SCA or non-SCA client
+
+12a) SCA client
+   java -jar scatours-launcher-currency-converter.jar
+
+12b) CORBA client
+   java -jar scatours-launcher-currency-converter-corba.jar
+   java -jar scatours-client-currency-converter-corba.jar
+
+12c) JMS client
+   java -jar scatours-launcher-currency-converter-jms.jar
+   java -jar scatours-client-currency-converter-jms.jar
+
+12d) RMI client
+   java -jar scatours-launcher-currency-converter-rmi.jar
+   java -jar scatours-client-currency-converter-rmi.jar
+
+12e) JAX-WS client
+   java -jar scatours-launcher-currency-converter-ws.jar
+   java -jar scatours-client-currency-converter-ws-jaxws.jar
+
+13) SCA notification service interoperating with non-SCA SMS gateway service
+
+13a) SMS gateway CORBA service
+   java -jar scatours-service-smsgateway-corba.jar
+   java -jar scatours-launcher-notification-corba.jar
+
+13b) SMS gateway EJB service
+   java -jar scatours-service-smsgateway-ejb.jar
+   java -jar scatours-launcher-notification-ejb.jar
+
+13c) SMS gateway JMS service
+   java -jar scatours-service-smsgateway-jms.jar
+   java -jar scatours-launcher-notification-jms.jar
+
+13d) SMS gateway RMI service
+   java -jar scatours-service-smsgateway-rmi.jar
+   java -jar scatours-launcher-notification-rmi.jar
+
+13e) SMS gateway JAX-WS service
+   java -jar scatours-service-smsgateway-jaxws.jar
+   java -jar scatours-launcher-notification-ws.jar

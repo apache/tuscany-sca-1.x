@@ -30,21 +30,12 @@
         <ant dir="../../clients/currency-converter-corba" target="run"/>
     </target>
 
-    <!-- When running this sample, the tuscany-host-corba-jse and
-       tuscany-host-corba-jse-tns jars need to be present on the classpath.
-       These aren't included in tuscany-sca-manifest so they need to be
-       added to the classpath explicitly.  For some reason these jars aren't
-       part of the Tuscany binary distribution so you'll need to download
-       them from the maven repository http://repo1.maven.org/maven2 and set
-       the TUSCANY_HOST_CORBA environment variable to the name of your local
-       download directory. -->
     <target name="run">
         <java classname="scatours.CurrencyConverterCORBALauncher" fork="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
                 <path refid="compile-path"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-                <fileset dir="${env.TUSCANY_HOST_CORBA}"/>
             </classpath>
         </java>
     </target>
