@@ -108,7 +108,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>../lib/</classpathPrefix>
-                            <mainClass>scatours.PaymentLauncher</mainClass>
+                            <mainClass>scatours.payment.PaymentLauncher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
