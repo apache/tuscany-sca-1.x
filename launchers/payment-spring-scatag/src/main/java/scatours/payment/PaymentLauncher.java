@@ -31,7 +31,7 @@ public class PaymentLauncher {
 
     public static void main(String[] args) throws Exception {
         SCANode node = SCANodeFactory.newInstance().createSCANode(null, 
-        		                                                  locate("payment-script"),
+        		                                                  locate("payment-spring-scatag"),
         		                                                  locate("creditcard-payment-jaxb"));
         node.start();
         
