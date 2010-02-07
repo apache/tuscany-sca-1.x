@@ -24,7 +24,8 @@
        SMS gateway service.  This endpoint is used by the "run" target
        of the notification-ejb launcher. -->
     <target name="run">
-        <java classname="com.tuscanyscatours.smsgateway.SMSGatewayEJBServiceBootstrap" fork="true">
+        <java classname="com.tuscanyscatours.smsgateway.SMSGatewayEJBServiceBootstrap"
+              fork="true" failonerror="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
                 <fileset dir="${env.OPENEJB_HOME}/lib"/>

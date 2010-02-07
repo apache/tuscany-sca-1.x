@@ -26,7 +26,7 @@
        only works with Tuscany SCA Java version 1.6 and above. -->
     <target name="run">
         <java classname="org.apache.tuscany.sca.node.launcher.DomainManagerLauncher"
-              dir="." fork="true">
+              dir="." fork="true" failonerror="true">
             <classpath>
                 <fileset dir="${env.TUSCANY_HOME}/modules">
                     <include name="tuscany-node-launcher-*.jar"/>

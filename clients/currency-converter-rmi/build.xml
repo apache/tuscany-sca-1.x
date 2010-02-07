@@ -27,7 +27,7 @@
     </target>
 
     <target name="run">
-        <java classname="scatours.CurrencyConverterRMIClient" fork="true">
+        <java classname="scatours.CurrencyConverterRMIClient" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
             </classpath>

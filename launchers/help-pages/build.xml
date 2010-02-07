@@ -24,7 +24,7 @@
     </path>
 
     <target name="run">
-        <java classname="scatours.HelpPagesLauncher" fork="true">
+        <java classname="scatours.HelpPagesLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
                 <path refid="compile-path"/>

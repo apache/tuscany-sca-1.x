@@ -21,7 +21,8 @@
     <import file="../../antdefs.xml"/>
 
     <target name="run">
-        <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true">
+        <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher"
+              fork="true" failonerror="true">
             <arg value="http://localhost:9990/node-config/TripsNode"/>
             <classpath>
                 <fileset dir="${env.TUSCANY_HOME}/modules">
