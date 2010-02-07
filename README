@@ -108,103 +108,147 @@ Contributions: car, common, creditcard-payment-jaxb, currency, flight,
    shoppingcart, travelcatalog, trip, tripbooking
 Launchers: fullapp-domain
 
-7) Blog feed
+7) Building blocks - Using SCA composites as application building blocks
+
+Directory: launchers/buildingblocks
+Commands: ant run
+Contributions: buildingblocks, buildingblocks-client, introducing-trips
+
+8) Blog feed
 
 Directory: launchers/blog-feed
 Command: ant run
 Contributions: blog-feed
 
-8) Data binding
+9) Data binding
 
 Directory: launchers/databinding
 Command: ant run
 Contributions: creditcard-payment-sdo, databinding-client, payment-java
 
-9) Feed logger
+10) Feed logger
 
 Directory: launchers/feed-logger
 Command: ant run
 Contributions: feed-logger
 
-10) Help pages
+11) Help pages
 
 Directory: launchers/help-pages
 Command: ant run
 Contributions: help-pages
 
-11) Policy
+12) Policy
 
 Directory: launchers/policy
 Command: ant run
 Contributions: creditcard-payment-jaxb-policy, policy-client, payment-java-policy
 
-12) SCA currency converter service interoperating with SCA or non-SCA client
+13) Payment service with different implementation types
 
-12a) SCA client
+13a) implementation.bpel
+
+Directory: launchers/payment-bpel
+Command: ant run
+Contributions: payment-bpel, creditcard-payment-jaxb, emailgateway
+
+13b) implementation.script written in Groovy
+
+Directory: launchers/payment-groovy
+Command: ant run
+Contributions: payment-groovy, creditcard-payment-jaxb, emailgateway
+
+13c) implementation.java
+
+Directory: launchers/payment-java
+Command: ant run
+Contributions: payment-java, creditcard-payment-jaxb
+
+13d) implementation.java with policy
+
+Directory: launchers/payment-java-policy
+Command: ant run
+Contributions: payment-java-policy, creditcard-payment-jaxb-policy
+
+13e) implementation.spring
+
+Directory: launchers/payment-spring
+Command: ant run
+Contributions: payment-spring, creditcard-payment-jaxb
+
+13f) implementation.spring with SCA tags
+
+Directory: launchers/payment-spring-scatag
+Command: ant run
+Contributions: payment-spring-scatag, creditcard-payment-jaxb
+
+14) SCA currency converter service interoperating with SCA or non-SCA client
+
+14a) SCA client
 
 Directory: launchers/currency-converter
 Command: ant run
 Contributions: currency
 
-12b) CORBA client
+14b) CORBA client
 
 Directory: launchers/currency-converter-corba
 Commands: ant run, ant run-client
 Contributions: currency, currency-corba
 Clients: currency-converter-corba
 
-12c) JMS client
+14c) JMS client
 
 Directory: launchers/currency-converter-jms
 Commands: ant run, ant run-client
 Contributions: currency, currency-jms
 Clients: currency-converter-jms
 
-12d) RMI client
+14d) RMI client
 
 Directory: launchers/currency-converter-rmi
 Commands: ant run, ant run-client
 Contributions: currency, currency-rmi
 Clients: currency-converter-rmi
 
-12e) JAX-WS client
+14e) JAX-WS client
 
 Directory: launchers/currency-converter-ws
 Commands: ant run, ant run-client
 Contributions: currency, currency-ws
 Clients: currency-converter-ws-jaxws
 
-13) SCA notification service interoperating with non-SCA SMS gateway service
+15) SCA notification service interoperating with non-SCA SMS gateway service
 
-13a) SMS gateway CORBA service
+15a) SMS gateway CORBA service
 
 Directory: launchers/notification-corba
 Commands: ant run-smsgateway, ant run 
 Contributions: notification, notification-corba
 Services: smsgateway-corba
 
-13b) SMS gateway EJB service
+15b) SMS gateway EJB service
 
 Directory: launchers/notification-ejb
 Commands: ant run-smsgateway, ant run 
 Contributions: notification, notification-ejb
 Services: smsgateway-ejb
 
-13c) SMS gateway JMS service
+15c) SMS gateway JMS service
 
 Directory: launchers/notification-jms
 Commands: ant run-smsgateway, ant run 
 Contributions: notification, notification-jms
 Services: smsgateway-jms
 
-13d) SMS gateway RMI service
+15d) SMS gateway RMI service
 
 Directory: launchers/notification-rmi
 Commands: ant run-smsgateway, ant run 
 Contributions: notification, notification-rmi
 Services: smsgateway-rmi
 
-13e) SMS gateway JAX-WS service
+15e) SMS gateway JAX-WS service
 
 Directory: launchers/notification-ws
 Commands: ant run-smsgateway, ant run 
@@ -259,60 +303,142 @@ scenarios described above.
    java -jar scatours-launcher-fullapp-domain.jar
    java -jar scatours-launcher-fullapp-nodes.jar
 
- 7) Blog feed
+ 7) Building blocks - Using SCA composites as application building blocks
+   java -jar scatours-launcher-buildingblocks.jar
+
+ 8) Blog feed
    java -jar scatours-launcher-blog-feed.jar
 
- 8) Data binding
+ 9) Data binding
    java -jar scatours-launcher-databinding.jar
 
- 9) Feed logger
+10) Feed logger
    java -jar scatours-launcher-feed-logger.jar
 
-10) Help pages
+11) Help pages
    java -jar scatours-launcher-help-pages.jar
 
-11) Policy
+12) Policy
    java -jar scatours-launcher-policy.jar
 
-12) SCA currency converter service interoperating with SCA or non-SCA client
+13) Payment service with different implementation types
 
-12a) SCA client
+13a) implementation.bpel
+   java -jar scatours-launcher-payment-bpel.jar
+
+13b) implementation.script written in Groovy
+   java -jar scatours-launcher-payment-groovy.jar
+
+13c) implementation.java
+   java -jar scatours-launcher-payment-java.jar
+
+13d) implementation.java with policy
+   java -jar scatours-launcher-payment-java-policy.jar
+
+13e) implementation.spring
+   java -jar scatours-launcher-payment-spring.jar
+
+13f) implementation.spring with SCA tags
+   java -jar scatours-launcher-payment-spring-scatag.jar
+
+14) SCA currency converter service interoperating with SCA or non-SCA client
+
+14a) SCA client
    java -jar scatours-launcher-currency-converter.jar
 
-12b) CORBA client
+14b) CORBA client
    java -jar scatours-launcher-currency-converter-corba.jar
    java -jar scatours-client-currency-converter-corba.jar
 
-12c) JMS client
+14c) JMS client
    java -jar scatours-launcher-currency-converter-jms.jar
    java -jar scatours-client-currency-converter-jms.jar
 
-12d) RMI client
+14d) RMI client
    java -jar scatours-launcher-currency-converter-rmi.jar
    java -jar scatours-client-currency-converter-rmi.jar
 
-12e) JAX-WS client
+14e) JAX-WS client
    java -jar scatours-launcher-currency-converter-ws.jar
    java -jar scatours-client-currency-converter-ws-jaxws.jar
 
-13) SCA notification service interoperating with non-SCA SMS gateway service
+15) SCA notification service interoperating with non-SCA SMS gateway service
 
-13a) SMS gateway CORBA service
+15a) SMS gateway CORBA service
    java -jar scatours-service-smsgateway-corba.jar
    java -jar scatours-launcher-notification-corba.jar
 
-13b) SMS gateway EJB service
+15b) SMS gateway EJB service
    java -jar scatours-service-smsgateway-ejb.jar
    java -jar scatours-launcher-notification-ejb.jar
 
-13c) SMS gateway JMS service
+15c) SMS gateway JMS service
    java -jar scatours-service-smsgateway-jms.jar
    java -jar scatours-launcher-notification-jms.jar
 
-13d) SMS gateway RMI service
+15d) SMS gateway RMI service
    java -jar scatours-service-smsgateway-rmi.jar
    java -jar scatours-launcher-notification-rmi.jar
 
-13e) SMS gateway JAX-WS service
+15e) SMS gateway JAX-WS service
    java -jar scatours-service-smsgateway-jaxws.jar
    java -jar scatours-launcher-notification-ws.jar
+
+
+Cross-reference of contributions to scenarios
+---------------------------------------------
+
+The following table shows which contributions are used in which scenarios.
+
+contributions/blog-feed  8
+contributions/buildingblocks  7
+contributions/buildingblocks-client  7
+contributions/calendar  4
+contributions/car  5, 6
+contributions/common  4, 5, 6
+contributions/creditcard-payment-jaxb 6, 13a, 13b, 13c, 13e, 13f
+contributions/creditcard-payment-jaxb-policy  5, 12, 13d
+contributions/creditcard-payment-sdo  9
+contributions/creditcard-payment-webapp  **not used**
+contributions/currency  4, 5, 6, 14a, 14b, 14c, 14d
+contributions/currency-corba  14b
+contributions/currency-jms  14c
+contributions/currency-jsp  **not used**
+contributions/currency-rmi  14d
+contributions/currency-servlet  **not used**
+contributions/currency-ws  14e
+contributions/databinding-client  9
+contributions/emailgateway  13a, 13b
+contributions/feed-logger  10
+contributions/flight  4, 5, 6
+contributions/fullapp-bespoketrip  5, 6
+contributions/fullapp-coordination  5, 6
+contributions/fullapp-currency  5, 6
+contributions/fullapp-packagedtrip  5, 6 
+contributions/fullapp-shoppingcart  5, 6
+contributions/fullapp-ui  5, 6
+contributions/help-pages  11
+contributions/hotel  5, 6
+contributions/interaction-client  4
+contributions/interaction-service-remote  4
+contributions/introducing-client  2, 3
+contributions/introducing-tours  2, 3
+contributions/introducing-trips  1, 2, 3, 7
+contributions/notification  15a, 15b, 15c, 15d
+contributions/notification-corba  15a
+contributions/notification-ejb  15b
+contributions/notification-jms  15c
+contributions/notification-rmi  15d
+contributions/payment-bpel  13a
+contributions/payment-groovy  13b
+contributions/payment-java  6, 9, 13c
+contributions/payment-java-policy  5, 12, 13d
+contributions/payment-spring  13e
+contributions/payment-spring-policy  **not used**
+contributions/payment-spring-scatag  13f
+contributions/policy-client  12
+contributions/scatours  5, 6
+contributions/shoppingcart  4, 5, 6
+contributions/travelcatalog  5, 6
+contributions/trip  5, 6
+contributions/tripbooking  5, 6
