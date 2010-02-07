@@ -29,7 +29,8 @@
     </target>
 
     <target name="run">
-        <java classname="scatours.smsgateway.SMSGatewayCORBAServiceBootstrap" fork="true">
+        <java classname="scatours.smsgateway.SMSGatewayCORBAServiceBootstrap"
+              fork="true" failonerror="true">
             <classpath location="target/${ant.project.name}.jar"/>
        </java>
     </target>

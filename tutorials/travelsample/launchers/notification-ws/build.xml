@@ -30,7 +30,7 @@
     </target>
 
     <target name="run">
-        <java classname="scatours.NotificationWSLauncher" fork="true">
+        <java classname="scatours.NotificationWSLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
                 <path refid="compile-path"/>

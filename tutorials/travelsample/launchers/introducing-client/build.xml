@@ -34,7 +34,7 @@
     </target>
 
     <target name="run">
-        <java classname="scatours.IntroducingClientLauncher" fork="true">
+        <java classname="scatours.IntroducingClientLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>

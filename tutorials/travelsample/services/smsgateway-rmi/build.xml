@@ -23,7 +23,8 @@
     <!-- The "run" target starts an RMI server for the SMS gateway service.
        This server is used by the "run" target of the notification-rmi launcher. -->
     <target name="run">
-        <java classname="com.tuscanyscatours.smsgateway.SMSGatewayRMIServiceBootstrap" fork="true">
+        <java classname="com.tuscanyscatours.smsgateway.SMSGatewayRMIServiceBootstrap"
+              fork="true" failonerror="true">
             <classpath location="target/${ant.project.name}.jar"/>
         </java>
     </target>

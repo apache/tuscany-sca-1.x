@@ -35,7 +35,7 @@
     </target>
 
     <target name="run">
-        <java classname="scatours.CurrencyConverterCORBAClient" fork="true">
+        <java classname="scatours.CurrencyConverterCORBAClient" fork="true" failonerror="true">
             <classpath location="target/${ant.project.name}.jar"/>
         </java>
     </target>

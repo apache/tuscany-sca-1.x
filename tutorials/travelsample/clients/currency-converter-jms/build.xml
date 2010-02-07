@@ -27,7 +27,7 @@
     </target>
 
     <target name="run">
-        <java classname="scatours.CurrencyConverterJMSClient" fork="true">
+        <java classname="scatours.CurrencyConverterJMSClient" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
                 <!-- The following is used to bring in the ActiveMQ runtime. -->
