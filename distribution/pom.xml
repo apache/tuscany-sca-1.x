@@ -438,6 +438,26 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-launcher-payment-java</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-launcher-payment-java-policy</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-launcher-payment-spring</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-launcher-payment-spring-scatag</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-launcher-policy</artifactId>
             <version>${pom.version}</version>
         </dependency>
