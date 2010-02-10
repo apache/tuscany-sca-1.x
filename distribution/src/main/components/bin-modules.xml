@@ -27,6 +27,14 @@
             </includes>
         </fileSet>
 
+        <fileSet>
+            <directory>../util/openejb-runtime/target</directory>
+            <outputDirectory>util</outputDirectory>
+            <includes>
+                <include>scatours-util-openejb-runtime.jar</include>
+            </includes>
+        </fileSet>
+
     </fileSets>
 
     <dependencySets>

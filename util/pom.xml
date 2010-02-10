@@ -38,6 +38,7 @@
             </activation>
             <modules>
                 <module>launcher-common</module>
+                <module>openejb-runtime</module>
             </modules>
         </profile>
     </profiles>

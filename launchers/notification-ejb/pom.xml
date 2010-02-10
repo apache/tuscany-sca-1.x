@@ -72,9 +72,10 @@
         </dependency> 
 
         <dependency>
-            <groupId>org.apache.openejb</groupId>
-            <artifactId>openejb-ejbd</artifactId>
-            <version>3.1.1</version>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-util-openejb-runtime</artifactId>
+            <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -95,7 +96,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Class-Path>../util/scatours-util-launcher-common.jar</Class-Path>
+                            <Class-Path>../util/scatours-util-launcher-common.jar ../util/scatours-util-openejb-runtime.jar</Class-Path>
                         </manifestEntries>
                         <manifest>
                             <addClasspath>true</addClasspath>

@@ -63,6 +63,23 @@
             <version>${tuscany.version}</version>
             <scope>runtime</scope>
         </dependency>        
+
+        <!-- Replace commons-logging-1.0.4 brought in by tuscany-implementation-bpel-ode --> 
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>avalon-framework</groupId>
+                    <artifactId>avalon-framework</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>

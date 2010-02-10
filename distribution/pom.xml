@@ -436,6 +436,11 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-launcher-payment-bpel</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-launcher-payment-groovy</artifactId>
             <version>${pom.version}</version>
         </dependency>
