@@ -37,6 +37,24 @@
 
     </fileSets>
 
+    <files>
+        <file>
+            <source>src/main/resources/build-clients.xml</source>
+            <outputDirectory>clients</outputDirectory>
+            <destName>build.xml</destName>
+        </file>
+        <file>
+            <source>src/main/resources/build-launchers.xml</source>
+            <outputDirectory>launchers</outputDirectory>
+            <destName>build.xml</destName>
+        </file>
+        <file>
+            <source>src/main/resources/build-services.xml</source>
+            <outputDirectory>services</outputDirectory>
+            <destName>build.xml</destName>
+        </file>
+    </files>
+
     <dependencySets>
         <!-- Add all the Tuscany modules to the modules directory -->
         <dependencySet>
