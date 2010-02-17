@@ -20,18 +20,10 @@
     <fileSets>
 
         <fileSet>
-            <directory>target</directory>
+            <directory>bundle/target</directory>
             <outputDirectory>lib</outputDirectory>
             <includes>
                 <include>tuscany-sca-manifest.jar</include>
-            </includes>
-        </fileSet>
-
-        <fileSet>
-            <directory>../util/openejb-runtime/target</directory>
-            <outputDirectory>util</outputDirectory>
-            <includes>
-                <include>scatours-util-openejb-runtime.jar</include>
             </includes>
         </fileSet>
 
@@ -39,17 +31,17 @@
 
     <files>
         <file>
-            <source>src/main/resources/build-clients.xml</source>
+            <source>../src/main/resources/build-clients.xml</source>
             <outputDirectory>clients</outputDirectory>
             <destName>build.xml</destName>
         </file>
         <file>
-            <source>src/main/resources/build-launchers.xml</source>
+            <source>../src/main/resources/build-launchers.xml</source>
             <outputDirectory>launchers</outputDirectory>
             <destName>build.xml</destName>
         </file>
         <file>
-            <source>src/main/resources/build-services.xml</source>
+            <source>../src/main/resources/build-services.xml</source>
             <outputDirectory>services</outputDirectory>
             <destName>build.xml</destName>
         </file>
@@ -71,6 +63,7 @@
         </dependencySet>
 
         <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>util</outputDirectory>
             <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <unpack>false</unpack>
@@ -80,6 +73,7 @@
             <scope>runtime</scope>
         </dependencySet>
         <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>contributions</outputDirectory>
             <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <unpack>false</unpack>
@@ -89,6 +83,7 @@
             <scope>runtime</scope>
         </dependencySet>
         <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>launchers</outputDirectory>
             <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <unpack>false</unpack>
@@ -98,6 +93,7 @@
             <scope>runtime</scope>
         </dependencySet>
         <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>services</outputDirectory>
             <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <unpack>false</unpack>
@@ -107,6 +103,7 @@
             <scope>runtime</scope>
         </dependencySet>
         <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
             <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <outputDirectory>clients</outputDirectory>
             <unpack>false</unpack>
@@ -116,6 +113,7 @@
             <scope>runtime</scope>
         </dependencySet>
         <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>domainconfig</outputDirectory>
             <unpack>true</unpack>
             <includes>
