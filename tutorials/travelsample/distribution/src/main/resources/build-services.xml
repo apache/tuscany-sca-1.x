@@ -30,7 +30,18 @@
         <java classname="com.tuscanyscatours.smsgateway.SMSGatewayEJBServiceBootstrap" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-service-smsgateway-ejb.jar"/>
-                <fileset dir="${env.OPENEJB_HOME}/lib"/>
+                <!-- The following is used to bring in additional dependencies of the OpenEJB runtime. -->
+                <fileset dir="${env.TUSCANY_HOME}/lib">
+                    <!-- exclude some jars to prevent them being loaded by OpenEJB -->
+                    <exclude name="tuscany-sca-manifest.jar"/>
+                    <exclude name="ode-*.jar"/>
+                    <exclude name="jaxb-xjc-*.jar"/>
+                    <exclude name="jython-*.jar"/>
+                    <exclude name="activemq-all-*.jar"/>
+                    <exclude name="js-*.jar"/>
+                    <exclude name="org.apache.felix.main-*.jar"/>
+                    <exclude name="saxon-*.jar"/>
+                </fileset>
             </classpath>
         </java>
     </target>

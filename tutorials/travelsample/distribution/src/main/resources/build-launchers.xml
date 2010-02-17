@@ -214,7 +214,6 @@
             <classpath>
                 <pathelement location="scatours-launcher-notification-ejb.jar"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-                <fileset dir="${env.OPENEJB_HOME}/lib"/>
             </classpath>
         </java>
     </target>

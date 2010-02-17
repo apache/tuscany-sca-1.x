@@ -31,7 +31,7 @@
     </formats>
 
     <componentDescriptors>
-        <componentDescriptor>src/main/components/bin-common.xml</componentDescriptor>
-        <componentDescriptor>src/main/components/bin-modules.xml</componentDescriptor>
+        <componentDescriptor>../src/main/components/bin-common.xml</componentDescriptor>
+        <componentDescriptor>../src/main/components/bin-modules.xml</componentDescriptor>
     </componentDescriptors>
 </assembly>
