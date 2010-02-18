@@ -35,7 +35,13 @@
             <artifactId>tuscany-node-api</artifactId>
             <version>${tuscany.version}</version>
         </dependency>
-
+        
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-interface-java-jaxws</artifactId>
+            <version>${tuscany.version}</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-node-impl</artifactId>
