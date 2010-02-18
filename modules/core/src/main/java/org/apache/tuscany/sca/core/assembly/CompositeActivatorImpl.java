@@ -21,6 +21,7 @@ package org.apache.tuscany.sca.core.assembly;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -575,84 +576,140 @@ public class CompositeActivatorImpl implements CompositeActivator {
             logger.fine("Starting component: " + component.getURI());
         }
         RuntimeComponent runtimeComponent = ((RuntimeComponent)component);
-        if(runtimeComponent.isStarted()) {
-        	return;
+        if (runtimeComponent.isStarted()) {
+            return;
         }
-        
+
         configureComponentContext(runtimeComponent);
 
-        for (ComponentReference reference : component.getReferences()) {
-            if (logger.isLoggable(Level.FINE)) {
-                logger.fine("Starting component reference: " + component.getURI() + "#" + reference.getName());
-            }
-            RuntimeComponentReference runtimeRef = ((RuntimeComponentReference)reference);
-            runtimeRef.setComponent(runtimeComponent);
-            
-            for (Endpoint endpoint : reference.getEndpoints()) {
-                final EndpointResolver endpointResolver = runtimeRef.getEndpointResolver(endpoint);
-                if (endpointResolver != null) {
-                    // Allow endpoint resolvers to do any startup reference manipulation
-                    AccessController.doPrivileged(new PrivilegedAction<Object>() {
-                        public Object run() {
-                            endpointResolver.start();
-                            return null;
-                          }
-                    });                       
+        // TUSCANY-3466: We need to track all the providers that are started for the component
+        final List<Object> providers = new ArrayList<Object>();
+        try {
+
+            for (ComponentReference reference : component.getReferences()) {
+                if (logger.isLoggable(Level.FINE)) {
+                    logger.fine("Starting component reference: " + component.getURI() + "#" + reference.getName());
+                }
+                RuntimeComponentReference runtimeRef = ((RuntimeComponentReference)reference);
+                runtimeRef.setComponent(runtimeComponent);
+
+                for (Endpoint endpoint : reference.getEndpoints()) {
+                    final EndpointResolver endpointResolver = runtimeRef.getEndpointResolver(endpoint);
+                    if (endpointResolver != null) {
+                        // Allow endpoint resolvers to do any startup reference manipulation
+                        AccessController.doPrivileged(new PrivilegedAction<Object>() {
+                            public Object run() {
+                                endpointResolver.start();
+                                providers.add(endpointResolver);
+                                return null;
+                            }
+                        });
+                    }
+                }
+
+                for (Binding binding : reference.getBindings()) {
+                    final ReferenceBindingProvider bindingProvider = runtimeRef.getBindingProvider(binding);
+                    if (bindingProvider != null) {
+                        // Allow bindings to add shutdown hooks. Requires RuntimePermission shutdownHooks in policy. 
+                        AccessController.doPrivileged(new PrivilegedAction<Object>() {
+                            public Object run() {
+                                bindingProvider.start();
+                                providers.add(bindingProvider);
+                                return null;
+                            }
+                        });
+                    }
                 }
             }
-            
-            for (Binding binding : reference.getBindings()) {
-                final ReferenceBindingProvider bindingProvider = runtimeRef.getBindingProvider(binding);
-                if (bindingProvider != null) {
-                    // Allow bindings to add shutdown hooks. Requires RuntimePermission shutdownHooks in policy. 
-                    AccessController.doPrivileged(new PrivilegedAction<Object>() {
-                        public Object run() {
-                            bindingProvider.start();
-                            return null;
-                          }
-                    });                       
+
+            for (ComponentService service : component.getServices()) {
+                if (logger.isLoggable(Level.FINE)) {
+                    logger.fine("Starting component service: " + component.getURI() + "#" + service.getName());
+                }
+                RuntimeComponentService runtimeService = (RuntimeComponentService)service;
+                for (Binding binding : service.getBindings()) {
+                    final ServiceBindingProvider bindingProvider = runtimeService.getBindingProvider(binding);
+                    if (bindingProvider != null) {
+                        // bindingProvider.start();
+                        // Allow bindings to add shutdown hooks. Requires RuntimePermission shutdownHooks in policy. 
+                        AccessController.doPrivileged(new PrivilegedAction<Object>() {
+                            public Object run() {
+                                bindingProvider.start();
+                                providers.add(bindingProvider);
+                                return null;
+                            }
+                        });
+                    }
                 }
             }
-        }
 
-        for (ComponentService service : component.getServices()) {
-            if (logger.isLoggable(Level.FINE)) {
-                logger.fine("Starting component service: " + component.getURI() + "#" + service.getName());
-            }
-            RuntimeComponentService runtimeService = (RuntimeComponentService)service;
-            for (Binding binding : service.getBindings()) {
-                final ServiceBindingProvider bindingProvider = runtimeService.getBindingProvider(binding);
-                if (bindingProvider != null) {
-                    // bindingProvider.start();
-                    // Allow bindings to add shutdown hooks. Requires RuntimePermission shutdownHooks in policy. 
-                    AccessController.doPrivileged(new PrivilegedAction<Object>() {
-                        public Object run() {
-                            bindingProvider.start();
-                            return null;
-                          }
-                    });                       
+            Implementation implementation = component.getImplementation();
+            if (implementation instanceof Composite) {
+                try {
+                    start((Composite)implementation);
+                } catch (Throwable e) {
+                    // Stop the started components within the composite
+                    try {
+                        stop((Composite)implementation);
+                    } catch (Throwable e1) {
+                        logger.log(Level.SEVERE, e1.getMessage(), e1);
+                    }
+                    rethrow(e);
+                }
+            } else {
+                ImplementationProvider implementationProvider = runtimeComponent.getImplementationProvider();
+                if (implementationProvider != null) {
+                    implementationProvider.start();
+                    providers.add(implementationProvider);
                 }
             }
-        }
 
-        Implementation implementation = component.getImplementation();
-        if (implementation instanceof Composite) {
-            start((Composite)implementation);
-        } else {
-            ImplementationProvider implementationProvider = runtimeComponent.getImplementationProvider();
-            if (implementationProvider != null) {
-                implementationProvider.start();
+            if (component instanceof ScopedRuntimeComponent) {
+                ScopedRuntimeComponent scopedRuntimeComponent = (ScopedRuntimeComponent)component;
+                ScopeContainer<?> scopeContainer = scopedRuntimeComponent.getScopeContainer();
+                if (scopeContainer != null) {
+                    scopeContainer.start();
+                    providers.add(scopeContainer);
+                }
             }
-        }
-
-        if (component instanceof ScopedRuntimeComponent) {
-            ScopedRuntimeComponent scopedRuntimeComponent = (ScopedRuntimeComponent)component;
-            if (scopedRuntimeComponent.getScopeContainer() != null) {
-                scopedRuntimeComponent.getScopeContainer().start();
-            }
+        } catch (Throwable e) {
+            // Stop all the providers that are already started so far
+            stopProviders(providers);
+            rethrow(e);
+        } finally {
+            providers.clear();
         }
 
         runtimeComponent.setStarted(true);
+    }
+
+    private void rethrow(Throwable e) throws Error {
+        if (e instanceof RuntimeException) {
+            throw (RuntimeException)e;
+        } else if (e instanceof Error) {
+            throw (Error)e;
+        }
+    }
+
+    private void stopProviders(final List<Object> providers) {
+        for (int i = providers.size() - 1; i >= 0; i--) {
+            Object provider = providers.get(i);
+            try {
+                if (provider instanceof ImplementationProvider) {
+                    ((ImplementationProvider)provider).stop();
+                } else if (provider instanceof ReferenceBindingProvider) {
+                    ((ReferenceBindingProvider)provider).stop();
+                } else if (provider instanceof ServiceBindingProvider) {
+                    ((ServiceBindingProvider)provider).stop();
+                } else if (provider instanceof EndpointResolver) {
+                    ((EndpointResolver)provider).stop();
+                } else if (provider instanceof ScopeContainer) {
+                    ((ScopeContainer)provider).stop();
+                }
+            } catch (Throwable e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
+            }
+        }
     }
 
     /**
