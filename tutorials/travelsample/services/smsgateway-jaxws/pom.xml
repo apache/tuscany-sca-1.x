@@ -47,7 +47,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <addClasspath>true</addClasspath>
+                            <addClasspath>${scatours.selfContained}</addClasspath>
                             <classpathPrefix>../lib/</classpathPrefix>
                             <mainClass>com.tuscanyscatours.smsgateway.SMSGatewayServiceBootstrap</mainClass>
                         </manifest>

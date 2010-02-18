@@ -78,7 +78,7 @@
                             <Class-Path>../util/scatours-util-launcher-common.jar</Class-Path>
                         </manifestEntries>
                         <manifest>
-                            <addClasspath>true</addClasspath>
+                            <addClasspath>${scatours.selfContained}</addClasspath>
                             <classpathPrefix>../lib/</classpathPrefix>
                             <mainClass>scatours.JumpstartLauncher</mainClass>
                         </manifest>

@@ -18,7 +18,7 @@
 -->
 
 <project name="scatours-distribution-clients">
-    <property environment="env"/> 
+    <import file="../util/build-defs.xml"/>
 
     <target name="run-currency-converter-corba">
         <java classname="scatours.CurrencyConverterCORBAClient" fork="true" failonerror="true">
@@ -31,7 +31,7 @@
             <classpath>
                 <pathelement location="scatours-client-currency-converter-jms.jar"/>
                 <!-- The following is used to bring in the ActiveMQ runtime. -->
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
