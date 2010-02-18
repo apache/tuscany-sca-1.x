@@ -40,7 +40,6 @@
     </dependencies>
 
     <build>
-        <outputDirectory>../target</outputDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -53,6 +52,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
+                            <outputDirectory>../target</outputDirectory>
                             <descriptors>
                                 <descriptor>../src/main/assembly/bin-openejb.xml</descriptor>
                             </descriptors>

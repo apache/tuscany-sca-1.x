@@ -31,26 +31,12 @@
 
     <profiles>
         <profile>
-            <!-- The default profile produces a self-contained distribution with all
-               library dependencies included. -->
+            <!-- The default profile produces a subset distribution which excludes
+               libraries that are present in the Tuscany SCA binary distro. -->
             <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.openejb</groupId>
-                    <artifactId>openejb-ejbd</artifactId>
-                    <version>3.1.2</version>
-                    <scope>runtime</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-
-        <profile>
-            <!-- Use mvn -Psubsetdist to produce a subset distribution that excludes
-               OpenEJB libraries that are present in the Tuscany SCA binary distro. -->
-            <id>subsetdist</id>
             <dependencies>
                 <dependency>
                     <groupId>org.apache.openejb</groupId>
@@ -152,6 +138,20 @@
                             <artifactId>xbean-naming</artifactId>
                         </exclusion>
                     </exclusions>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <!-- Use mvn -Pselfcontained to produce a self-contained distribution
+               with all library dependencies included. -->
+            <id>selfcontained</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.openejb</groupId>
+                    <artifactId>openejb-ejbd</artifactId>
+                    <version>3.1.2</version>
+                    <scope>runtime</scope>
                 </dependency>
             </dependencies>
         </profile>

@@ -82,23 +82,23 @@
 
     <profiles>
         <profile>
-            <!-- The default profile produces a self-contained distribution with all
-               library dependencies included. -->
+            <!-- The default profile produces a subset distribution which excludes
+               libraries that are present in the Tuscany SCA binary distro. -->
             <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <scatours.selfContained>true</scatours.selfContained>
+                <scatours.selfContained>false</scatours.selfContained>
             </properties>
         </profile>
 
         <profile>
-            <!-- Use mvn -Psubsetdist to produce a subset distribution that excludes
-               OpenEJB libraries that are present in the Tuscany SCA binary distro. -->
-            <id>subsetdist</id>
+            <!-- Use mvn -Pselfcontained to produce a self-contained distribution
+               with all library dependencies included. -->
+            <id>selfcontained</id>
             <properties>
-                <scatours.selfContained>false</scatours.selfContained>
+                <scatours.selfContained>true</scatours.selfContained>
             </properties>
         </profile>
     </profiles>

@@ -18,13 +18,13 @@
 -->
 
 <project name="scatours-distribution-launchers">
-    <property environment="env"/> 
+    <import file="../util/build-defs.xml"/>
 
     <target name="run-blog-feed">
         <java classname="scatours.BlogFeedLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-blog-feed.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -33,7 +33,7 @@
         <java classname="scatours.BuildingBlocksLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-buildingblocks.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -42,7 +42,7 @@
         <java classname="scatours.CurrencyConverterLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-currency-converter.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -51,7 +51,7 @@
         <java classname="scatours.CurrencyConverterCORBALauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-currency-converter-corba.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -60,7 +60,7 @@
         <java classname="scatours.CurrencyConverterJMSLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-currency-converter-jms.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -69,7 +69,7 @@
         <java classname="scatours.CurrencyConverterRMILauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-currency-converter-rmi.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -78,7 +78,7 @@
         <java classname="scatours.CurrencyConverterWSLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-currency-converter-ws.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -87,7 +87,7 @@
         <java classname="scatours.DatabindingLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-databinding.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -96,7 +96,7 @@
         <java classname="scatours.FeedLoggerLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-feed-logger.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -105,7 +105,7 @@
         <java classname="scatours.FullAppLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-fullapp.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -114,7 +114,7 @@
         <java classname="org.apache.tuscany.sca.node.launcher.DomainManagerLauncher" fork="true" failonerror="true">
             <arg value="../domainconfig/fullapp"/>
             <classpath>
-                <fileset dir="${env.TUSCANY_HOME}/modules" includes="tuscany-node-launcher-*.jar"/>
+                <path refid="scatours.tuscany-node-launcher"/>
             </classpath>
         </java>
     </target>
@@ -123,7 +123,7 @@
         <java classname="scatours.FullAppNodesLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-fullapp-nodes.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -132,7 +132,7 @@
         <java classname="scatours.HelpPagesLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-help-pages.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -141,7 +141,7 @@
         <java classname="scatours.InteractionLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-interaction.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -150,7 +150,7 @@
         <java classname="scatours.IntroducingLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-introducing.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -159,7 +159,7 @@
         <java classname="scatours.IntroducingClientLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-introducing-client.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -168,7 +168,7 @@
         <java classname="org.apache.tuscany.sca.node.launcher.DomainManagerLauncher" fork="true" failonerror="true">
             <arg value="../domainconfig/introducing"/>
             <classpath>
-                <fileset dir="${env.TUSCANY_HOME}/modules" includes="tuscany-node-launcher-*.jar"/>
+                <path refid="scatours.tuscany-node-launcher"/>
             </classpath>
         </java>
     </target>
@@ -177,7 +177,7 @@
         <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true" failonerror="true">
             <arg value="http://localhost:9990/node-config/ToursNode"/>
             <classpath>
-                <fileset dir="${env.TUSCANY_HOME}/modules" includes="tuscany-node-launcher-*.jar"/>
+                <path refid="scatours.tuscany-node-launcher"/>
             </classpath>
         </java>
     </target>
@@ -186,7 +186,7 @@
         <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true" failonerror="true">
             <arg value="http://localhost:9990/node-config/TripsNode"/>
             <classpath>
-                <fileset dir="${env.TUSCANY_HOME}/modules" includes="tuscany-node-launcher-*.jar"/>
+                <path refid="scatours.tuscany-node-launcher"/>
             </classpath>
         </java>
     </target>
@@ -195,7 +195,7 @@
         <java classname="scatours.JumpstartLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-jumpstart.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -204,7 +204,7 @@
         <java classname="scatours.NotificationCORBALauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-notification-corba.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -213,7 +213,7 @@
         <java classname="scatours.NotificationEJBLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-notification-ejb.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -222,7 +222,7 @@
         <java classname="scatours.NotificationJMSLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-notification-jms.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -231,7 +231,7 @@
         <java classname="scatours.NotificationRMILauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-notification-rmi.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -240,7 +240,7 @@
         <java classname="scatours.NotificationWSLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-notification-ws.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -249,7 +249,7 @@
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-payment-bpel.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -258,7 +258,7 @@
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-payment-groovy.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -267,7 +267,7 @@
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-payment-java.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -276,7 +276,7 @@
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-java-policy.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -285,7 +285,7 @@
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-payment-spring.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -294,7 +294,7 @@
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-spring-scatag.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -303,7 +303,7 @@
         <java classname="scatours.PolicyLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-policy.jar"/>
-                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>

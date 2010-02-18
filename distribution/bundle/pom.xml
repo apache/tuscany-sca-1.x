@@ -29,6 +29,7 @@
 
     <artifactId>scatours-distribution-bundle</artifactId>
     <name>Apache Tuscany SCA Tours Distribution Bundle</name>
+    <packaging>pom</packaging>
 
     <dependencies>
         <dependency>
@@ -541,46 +542,7 @@
     </dependencies>
 
     <build>
-        <finalName>tuscany-sca-manifest</finalName>
-        <outputDirectory>../target</outputDirectory>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>distribution-package</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>../src/main/assembly/bin.xml</descriptor>
-                                <descriptor>../src/main/assembly/src.xml</descriptor>
-                            </descriptors>
-                            <tarLongFileMode>gnu</tarLongFileMode>
-                            <archiveBaseDirectory>..</archiveBaseDirectory>
-                            <outputDirectory>../target</outputDirectory>
-                            <finalName>apache-tuscany-scatours-${version}</finalName>
-                            <appendAssemblyId>true</appendAssemblyId>
-                            <ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
@@ -600,4 +562,83 @@
             </plugin>
         </plugins>
     </build>
+
+
+    <profiles>
+        <profile>
+            <!-- The default profile produces a subset distribution which excludes
+               libraries that are present in the Tuscany SCA binary distro. -->
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>distribution-package</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>../target</outputDirectory>
+                                    <descriptors>
+                                        <descriptor>../src/main/assembly/bin.xml</descriptor>
+                                        <descriptor>../src/main/assembly/src.xml</descriptor>
+                                    </descriptors>
+                                    <tarLongFileMode>gnu</tarLongFileMode>
+                                    <archiveBaseDirectory>..</archiveBaseDirectory>
+                                    <outputDirectory>../target</outputDirectory>
+                                    <finalName>apache-tuscany-scatours-${version}</finalName>
+                                    <appendAssemblyId>true</appendAssemblyId>
+                                    <ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- Use mvn -Pselfcontained to produce a self-contained distribution
+               with all library dependencies included. -->
+            <id>selfcontained</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>distribution-package</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>../target</outputDirectory>
+                                    <descriptors>
+                                        <descriptor>../src/main/assembly/bin-selfcontained.xml</descriptor>
+                                        <descriptor>../src/main/assembly/src.xml</descriptor>
+                                    </descriptors>
+                                    <tarLongFileMode>gnu</tarLongFileMode>
+                                    <archiveBaseDirectory>..</archiveBaseDirectory>
+                                    <outputDirectory>../target</outputDirectory>
+                                    <finalName>apache-tuscany-scatours-${version}</finalName>
+                                    <appendAssemblyId>true</appendAssemblyId>
+                                    <ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
