@@ -24,11 +24,17 @@
    default targets.  The build.xml file can also define any additional
    targets that are needed by the project.
 
+   This build file has been tested with JDK 5 update 22 and JDK 6 update 7.
+
    When invoking a build.xml file that imports this file, the following
    environment variables must be set:
-     TUSCANY_HOME A directory containing the Tuscany binary distribution.
-     JUNIT_JAR The location of the JUnit jar file.  The JUnit version used
-       for testing these build files was JUnit 4.5.
+     TUSCANY_HOME A directory containing the Tuscany SCA binary distribution.
+       This build file has been tested with Tuscany SCA version 1.6.
+     JUNIT_JAR The location of the JUnit jar file.  This build file has
+       been tested with JUnit version 4.5.
+     JAXWS_HOME (only if using JDK 5) A directory containing the JAX-WS
+       reference implementation.  This build file has been tested with
+       JAX-WS version 2.1.7.
 
    This file defines the following targets that can be used on the
    ant command that invokes the build.xml file:
@@ -127,17 +133,49 @@
 
     <!-- run the JDK wsimport command if required -->
     <target name="wsimport" depends="#wsdlcheck" unless="#wsdl-uptodate">
+        <antcall target="#wsimport-jdk"/>
+        <antcall target="#wsimport-jaxws"/>
+	</target>
+
+    <!-- check whether the JDK wsimport command is available -->
+    <target name="#jdk-wsimport">
+        <condition property="#bin-wsimport">
+            <or>
+                <available file="${java.home}/../bin/wsimport" type="file"/>
+                <available file="${java.home}/../bin/wsimport.exe" type="file"/>
+            </or>
+        </condition>
+    </target>
+
+    <!-- run the JDK wsimport command if available -->
+    <target name="#wsimport-jdk" depends="#jdk-wsimport" if="#bin-wsimport">
         <mkdir dir="target/jaxws-source"/>
-        <exec executable="${java.home}/../bin/wsimport">
+        <exec executable="${java.home}/../bin/wsimport" dir="." failonerror="true">
             <arg line="-keep -s ./target/jaxws-source -p ${package} 
                        -d ./target/classes src/main/resources/${wsdlfile}"/>
         </exec>
-	</target>
+    </target>
+
+    <!-- run the com.sun.tools.ws.WsImport class in jaxws-tools.jar if available -->
+    <target name="#wsimport-jaxws" depends="#jdk-wsimport" unless="#bin-wsimport">
+        <condition property="#jaxws-tools">
+            <available file="${env.JAXWS_HOME}/lib/jaxws-tools.jar" type="file"/>
+        </condition>
+        <fail unless="#jaxws-tools">
+            Error: Could not find wsimport executable or jaxws-tools.jar.
+        </fail>
+        <mkdir dir="target/jaxws-source"/>
+        <java classname="com.sun.tools.ws.WsImport" fork="true" dir="." failonerror="true">
+            <arg line="-keep -s ./target/jaxws-source -p ${package} 
+                       -d ./target/classes src/main/resources/${wsdlfile}"/>
+            <classpath location="${env.JAXWS_HOME}/lib/jaxws-tools.jar"/>
+        </java>
+    </target>
 
     <!-- run the SDO XSD2JavaGenerator if required, then compile the generated Java source -->
     <target name="sdojavagen" depends="#wsdlcheck" unless="#wsdl-uptodate">
         <mkdir dir="target/sdo-source"/>
-        <java classname="org.apache.tuscany.sdo.generate.XSD2JavaGenerator" fork="yes" dir=".">
+        <java classname="org.apache.tuscany.sdo.generate.XSD2JavaGenerator" fork="true" dir="." failonerror="true">
             <arg value="-javaPackage"/>
             <arg value="${package}"/>
             <arg value="-prefix"/>
@@ -148,15 +186,11 @@
             <arg value="-targetDirectory"/>
             <arg value="target/sdo-source"/>
             <arg value="src/main/resources/${wsdlfile}"/>
-            <classpath>
-                <pathelement path="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
+            <classpath location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
         </java>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
+        <javac destdir="target/classes" debug="true" source="1.5" target="1.5">
             <src path="target/sdo-source"/>
-            <classpath>
-                <pathelement path="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-            </classpath>
+            <classpath location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
         </javac>
     </target>
 
@@ -189,13 +223,13 @@
     <!-- run the JDK idlj command if required, then compile the generated Java source -->
     <target name="idlj" depends="#idlcheck" unless="#idl-uptodate">
         <mkdir dir="target/idlj-source"/>
-        <exec executable="${java.home}/../bin/idlj">
+        <exec executable="${java.home}/../bin/idlj" dir="." failonerror="true">
             <arg value="${idljopts}"/>
             <arg value="-td"/>
             <arg value="target/idlj-source"/>
             <arg value="src/main/resources/${idlfile}"/>
         </exec>
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
+        <javac destdir="target/classes" debug="true" source="1.5" target="1.5">
             <src path="target/idlj-source"/>
         </javac>
     </target>
@@ -234,7 +268,7 @@
 
     <!-- compile the Java source files -->
     <target name="#compile-src" depends="#find-javafiles, #set-classpath, #default-classpath" if="#javafiles">
-        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
+        <javac destdir="target/classes" debug="true" source="1.5" target="1.5">
             <src path="src/main/java"/>
             <classpath>
                 <path refid="#javac-classpath"/>
@@ -323,8 +357,7 @@
 
     <!-- run the junit task -->
     <target name="#run-junit" depends="#set-test-classpath, #default-test-classpath, #set-classpath, #default-classpath">
-        <junit printsummary="no" haltonfailure="yes" dir="."
-               fork="yes" forkmode="once">
+        <junit printsummary="no" dir="." fork="true" forkmode="once" haltonfailure="true">
             <classpath>
                 <pathelement location="target/test-classes"/>
                 <path refid="#test-classpath"/>
@@ -417,7 +450,7 @@
     <target name="test" depends="#find-testjava, #set-test-classpath, #default-test-classpath" if="#testjava">
         <echo message="Testing project ${ant.project.name}"/>
         <mkdir dir="target/test-classes"/>
-        <javac destdir="target/test-classes" debug="on" source="1.5" target="1.5">
+        <javac destdir="target/test-classes" debug="true" source="1.5" target="1.5">
             <src path="src/test/java"/>
             <classpath>
                 <pathelement location="target/classes"/>
