@@ -58,11 +58,10 @@
                 <version>2.2</version>
                 <configuration>
                     <archive>
-                        <manifest>
-                            <addClasspath>${scatours.selfContained}</addClasspath>
-                            <classpathPrefix>../lib/</classpathPrefix>
-                            <mainClass>scatours.creditcard.CreditCardServiceBootstrap</mainClass>
-                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>../util/scatours-util-jaxws-runtime.jar</Class-Path>
+                            <Main-Class>scatours.creditcard.CreditCardServiceBootstrap</Main-Class>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>

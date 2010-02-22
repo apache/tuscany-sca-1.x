@@ -33,6 +33,7 @@
 
     <modules>
         <module>bundle</module>
+        <module>jaxws</module>
         <module>openejb</module>
     </modules>
 </project>

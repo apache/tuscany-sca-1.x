@@ -58,11 +58,10 @@
                 <version>2.2</version>
                 <configuration>
                     <archive>
-                        <manifest>
-                            <addClasspath>${scatours.selfContained}</addClasspath>
-                            <classpathPrefix>../lib/</classpathPrefix>
-                            <mainClass>com.tuscanyscatours.smsgateway.SMSGatewayServiceBootstrap</mainClass>
-                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>../util/scatours-util-jaxws-runtime.jar</Class-Path>
+                            <Main-Class>com.tuscanyscatours.smsgateway.SMSGatewayServiceBootstrap</Main-Class>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
