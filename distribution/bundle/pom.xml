@@ -541,7 +541,7 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <configuration>
                             <tasks>
                                 <delete dir="../target/apache-tuscany-scatours-${version}/tuscany-scatours-${version}/domainconfig/META-INF"
