@@ -44,7 +44,11 @@
 
     <target name="run-currency-converter-ws-jaxws">
         <java classname="scatours.CurrencyConverterWSClient" fork="true" failonerror="true">
-            <classpath location="scatours-client-currency-converter-ws-jaxws.jar"/>
+            <classpath>
+                <pathelement location="scatours-client-currency-converter-ws-jaxws.jar"/>
+                <!-- The following is used to bring in additional dependencies of the JAX-WS runtime. -->
+                <path refid="scatours.tuscany-manifest"/>
+            </classpath>
         </java>
     </target>
 </project>

@@ -23,9 +23,31 @@
     <!-- The "run" target starts a JAX-WS service endpoint for the
        SMS gateway service.  This endpoint is used by the "run" target
        of the notification-ws launcher. -->
-    <target name="run">
+    <target name="run" depends="is-jdk6, jaxws-jdk6, jaxws-jdk5">
         <java classname="com.tuscanyscatours.smsgateway.SMSGatewayServiceBootstrap" fork="true">
-            <classpath location="target/${ant.project.name}.jar"/>
+            <classpath>
+                <pathelement location="target/${ant.project.name}.jar"/>
+                <path refid="jaxws-path"/>
+            </classpath>
         </java>
+    </target>
+
+    <!-- check to see if we are running on JDK 6 -->
+    <target name="is-jdk6">
+        <condition property="jdk6">
+            <available classname="javax.xml.ws.Endpoint"/>
+        </condition>
+    </target>
+
+    <!-- JDK 6 contains JAX-WS so we don't need it on the classpath -->
+    <target name="jaxws-jdk6" if="jdk6">
+        <path id="jaxws-path"/>
+    </target>
+
+    <!-- on JDK 5 we need to add the JAX-WS runtime to the classpath -->
+    <target name="jaxws-jdk5" unless="jdk6">
+        <path id="jaxws-path">
+            <fileset dir="${env.JAXWS_HOME}/lib"/>
+        </path>
     </target>
 </project>

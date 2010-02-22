@@ -34,11 +34,31 @@
         <ant dir="../../launchers/currency-converter-ws" target="run"/>
     </target>
 
-    <target name="run">
+    <target name="run" depends="is-jdk6, jaxws-jdk6, jaxws-jdk5">
         <java classname="scatours.CurrencyConverterWSClient" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
+                <path refid="jaxws-path"/>
             </classpath>
         </java>
+    </target>
+
+    <!-- check to see if we are running on JDK 6 -->
+    <target name="is-jdk6">
+        <condition property="jdk6">
+            <available classname="javax.xml.ws.Service"/>
+        </condition>
+    </target>
+
+    <!-- JDK 6 contains JAX-WS so we don't need it on the classpath -->
+    <target name="jaxws-jdk6" if="jdk6">
+        <path id="jaxws-path"/>
+    </target>
+
+    <!-- on JDK 5 we need to add the JAX-WS runtime to the classpath -->
+    <target name="jaxws-jdk5" unless="jdk6">
+        <path id="jaxws-path">
+            <fileset dir="${env.JAXWS_HOME}/lib"/>
+        </path>
     </target>
 </project>

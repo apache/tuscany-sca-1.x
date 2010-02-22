@@ -37,6 +37,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>jaxws-runtime</module>
                 <module>launcher-common</module>
                 <module>openejb-runtime</module>
             </modules>
