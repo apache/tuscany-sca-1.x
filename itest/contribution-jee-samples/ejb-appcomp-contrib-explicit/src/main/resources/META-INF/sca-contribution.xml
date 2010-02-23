@@ -18,5 +18,5 @@
     * under the License.    
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0" xmlns:sample="http://sample">
-    <deployable composite="sample:Calculator" />
+    <deployable composite="sample:itest-contribution-jee-samples-11" />
 </contribution>
