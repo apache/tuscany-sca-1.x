@@ -58,6 +58,8 @@ public class PaymentTestCase {
         paymentNode =
             SCANodeFactory.newInstance()
                 .createSCANode(null,
+                               new SCAContribution("payment-bpel-process",
+                                                   "../payment-bpel-process/target/classes"),
                                new SCAContribution("payment-bpel", "./target/classes"),
                                new SCAContribution("payment-bpel-test", "./target/test-classes"));
 

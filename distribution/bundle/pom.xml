@@ -265,6 +265,11 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-contribution-payment-bpel-process</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-payment-groovy</artifactId>
             <version>${pom.version}</version>
         </dependency>

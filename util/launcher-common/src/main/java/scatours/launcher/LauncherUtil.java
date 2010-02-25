@@ -46,7 +46,11 @@ public class LauncherUtil {
                 // Try to use the contribution jar under the contributions folder of the distribution
                 file = new File("../contributions/scatours-contribution-" + name + ".jar");
                 if (!file.exists()) {
-                    throw new IllegalArgumentException("Contribution " + name + " cannot be located.");
+                    // Try to use the contribution subfolder under the contributions folder of the distribution
+                    file = new File("../contributions/scatours-contribution-" + name);
+                    if (!file.exists()) {
+                        throw new IllegalArgumentException("Contribution " + name + " cannot be located.");
+                    }
                 }
             }
         }

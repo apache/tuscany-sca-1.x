@@ -56,6 +56,19 @@
             <includes>
                 <include>org.apache.tuscany.sca:scatours-contribution-*</include>
             </includes>
+            <excludes>
+                <exclude>org.apache.tuscany.sca:scatours-contribution-payment-bpel-process</exclude>
+            </excludes>
+           <scope>runtime</scope>
+        </dependencySet>
+
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>contributions/scatours-contribution-payment-bpel-process</outputDirectory>
+            <unpack>true</unpack>
+            <includes>
+                <include>org.apache.tuscany.sca:scatours-contribution-payment-bpel-process</include>
+            </includes>
             <scope>runtime</scope>
         </dependencySet>
 
