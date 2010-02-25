@@ -87,6 +87,7 @@
                 <module>payment-spring</module>
                 <module>payment-spring-policy</module>
                 <module>payment-spring-scatag</module>
+                <module>payment-bpel-process</module>
                 <module>payment-bpel</module>
                 <module>payment-groovy</module>
                 <module>policy-client</module>

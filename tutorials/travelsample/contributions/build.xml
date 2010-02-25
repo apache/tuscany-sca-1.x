@@ -81,6 +81,7 @@
         <ant dir="notification-rmi" target="${target}"/>
         <ant dir="notification-ws" target="${target}"/>
         <ant dir="payment-java-policy" target="${target}"/>
+        <ant dir="payment-bpel-process" target="${target}"/> <!--needed by payment-bpel-->
         <ant dir="payment-bpel" target="${target}"/>
         <ant dir="payment-groovy" target="${target}"/>
         <ant dir="payment-spring" target="${target}"/>
