@@ -24,9 +24,15 @@
     </path>
 
     <target name="run">
+        <unzip dest="target/ode">
+            <fileset dir="${env.TUSCANY_HOME}/lib">
+                <include name="ode-dao-jpa-ojpa-derby-*.zip"/>
+            </fileset>
+        </unzip>
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
+                <pathelement location="target/ode"/>
                 <path refid="compile-path"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
             </classpath>
