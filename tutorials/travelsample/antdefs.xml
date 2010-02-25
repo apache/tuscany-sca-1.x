@@ -416,7 +416,8 @@
             <include name="tuscany-sca-api-*.jar"/>
             <exclude name="tuscany-sca-api-extension-*.jar"/>
         </fileset>
-        <war destfile="target/${ant.project.name}.war" webxml="src/main/webapp/WEB-INF/web.xml">
+        <war destfile="target/${ant.project.name}.war" webxml="src/main/webapp/WEB-INF/web.xml"
+             excludes="**/*.cbp">
             <fileset dir="src/main/webapp"/>
             <lib refid="#tuscanyjars"/>
             <classes dir="target/classes"/>
@@ -444,7 +445,8 @@
         <pathconvert property="#package-classpath" refid="package-path" pathsep=" " dirsep="/">
             <map from="${#parentdir}" to="../.."/>
         </pathconvert>
-        <jar destfile="target/${ant.project.name}.jar" basedir="target/classes">
+        <jar destfile="target/${ant.project.name}.jar" basedir="target/classes"
+             excludes="**/*.cbp">
             <manifest>
                 <attribute name="Class-Path" value="${#package-classpath}"/>
             </manifest>
@@ -453,7 +455,8 @@
 
     <!-- create a jar file without a Class-Path attribute -->
     <target name="#create-jar-nopath" unless="#package-path">
-        <jar destfile="target/${ant.project.name}.jar" basedir="target/classes"/>
+        <jar destfile="target/${ant.project.name}.jar" basedir="target/classes"
+             excludes="**/*.cbp"/>
     </target>
 
     <!-- create a jar file with or without a Class-Path attribute -->
