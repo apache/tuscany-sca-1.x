@@ -27,8 +27,8 @@
   <contribution location="file:../../contributions/trip/target/scatours-contribution-trip.jar"  uri="trip"/>
   <contribution location="file:../../contributions/tripbooking/target/scatours-contribution-tripbooking.jar"  uri="tripbooking"/>
   <contribution location="file:../../contributions/travelcatalog/target/scatours-contribution-travelcatalog.jar"  uri="travelcatalog"/>
-  <contribution location="file:../../contributions/payment-java/target/scatours-contribution-payment-java.jar"  uri="fullapp-payment"/>
-  <contribution location="file:../../contributions/creditcard-payment-jaxb/target/scatours-contribution-creditcard-payment-jaxb.jar"  uri="fullapp-creditcard"/>
+  <contribution location="file:../../contributions/payment-java/target/scatours-contribution-payment-spring-policy.jar"  uri="fullapp-payment"/>
+  <contribution location="file:../../contributions/creditcard-payment-jaxb/target/scatours-contribution-creditcard-payment-jaxb-policy.jar"  uri="fullapp-creditcard"/>
   <contribution location="file:../../contributions/shoppingcart/target/scatours-contribution-shoppingcart.jar"  uri="shoppingcart"/>
   <contribution location="file:../../contributions/scatours/target/scatours-contribution-scatours.jar"  uri="scatours"/>
   <contribution location="file:../../contributions/fullapp-ui/target/scatours-contribution-fullapp-ui.jar"  uri="fullapp-ui"/>

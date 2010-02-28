@@ -106,16 +106,16 @@ Directory: launchers/fullapp
 Command: ant run
 Contributions: car, common, creditcard-payment-jaxb-policy, currency, flight,
    fullapp-bespoketrip, fullapp-coordination, fullapp-currency, fullapp-packagedtrip,
-   fullapp-shoppingcart, fullapp-ui, hotel, payment-java-policy, scatours,
+   fullapp-shoppingcart, fullapp-ui, hotel, payment-spring-policy, scatours,
    shoppingcart, travelcatalog, trip, tripbooking
 
 6) Full application (distributed) - Distributed services with a domain manager
 
 Directory: launchers/fullapp-nodes
 Commands: ant run-domain, ant run
-Contributions: car, common, creditcard-payment-jaxb, currency, flight,
+Contributions: car, common, creditcard-payment-jaxb-policy, currency, flight,
    fullapp-bespoketrip, fullapp-coordination, fullapp-currency, fullapp-packagedtrip,
-   fullapp-shoppingcart, fullapp-ui, hotel, payment-java, scatours,
+   fullapp-shoppingcart, fullapp-ui, hotel, payment-spring-policy, scatours,
    shoppingcart, travelcatalog, trip, tripbooking
 Launchers: fullapp-domain
 
@@ -437,8 +437,8 @@ contributions/buildingblocks-client  7
 contributions/calendar  4
 contributions/car  5, 6
 contributions/common  4, 5, 6
-contributions/creditcard-payment-jaxb 6, 13a, 13b, 13c, 13e, 13f
-contributions/creditcard-payment-jaxb-policy  5, 12, 13d
+contributions/creditcard-payment-jaxb  13a, 13b, 13c, 13e, 13f
+contributions/creditcard-payment-jaxb-policy  5, 6, 12, 13d
 contributions/creditcard-payment-sdo  9
 contributions/creditcard-payment-webapp  **not used**
 contributions/currency  4, 5, 6, 14a, 14b, 14c, 14d
@@ -472,10 +472,10 @@ contributions/notification-jms  15c
 contributions/notification-rmi  15d
 contributions/payment-bpel  13a
 contributions/payment-groovy  13b
-contributions/payment-java  6, 9, 13c
-contributions/payment-java-policy  5, 12, 13d
+contributions/payment-java  9, 13c
+contributions/payment-java-policy  12, 13d
 contributions/payment-spring  13e
-contributions/payment-spring-policy  **not used**
+contributions/payment-spring-policy  5, 6
 contributions/payment-spring-scatag  13f
 contributions/policy-client  12
 contributions/scatours  5, 6
