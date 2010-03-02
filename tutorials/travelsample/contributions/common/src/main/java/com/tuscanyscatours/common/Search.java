@@ -25,7 +25,6 @@ import org.osoa.sca.annotations.OneWay;
 import org.osoa.sca.annotations.Remotable;
 
 @Remotable
-@Conversational
 @Callback(SearchCallback.class)
 public interface Search {
     TripItem[] searchSynch(TripLeg tripLeg);

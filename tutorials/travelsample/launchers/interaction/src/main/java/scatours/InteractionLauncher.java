@@ -64,10 +64,6 @@ public class InteractionLauncher {
             ((SCAClient)node1).getService(Runnable.class, "InteractionConversationClient/Runnable");
         conversationalInteraction.run();
 
-        Runnable statefulCallbackInteraction =
-            ((SCAClient)node1).getService(Runnable.class, "InteractionStatefulCallbackClient/Runnable");
-        statefulCallbackInteraction.run();
-
         node1.stop();
         node2.stop();
     }

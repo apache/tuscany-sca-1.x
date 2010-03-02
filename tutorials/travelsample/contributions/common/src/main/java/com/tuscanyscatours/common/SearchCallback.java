@@ -19,15 +19,10 @@
 
 package com.tuscanyscatours.common;
 
-import org.osoa.sca.annotations.Conversational;
-import org.osoa.sca.annotations.EndsConversation;
 import org.osoa.sca.annotations.Remotable;
 
 @Remotable
-@Conversational
 public interface SearchCallback {
-    @EndsConversation
     void searchResults(TripItem[] items);
-
     void setPercentComplete(String searchComponent, int percentComplete);
 }
