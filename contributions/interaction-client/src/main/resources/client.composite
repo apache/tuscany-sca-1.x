@@ -72,19 +72,6 @@
     <component name="CartStore">
         <implementation.java class="com.tuscanyscatours.shoppingcart.impl.CartStoreImpl"/>
         <service name="CartStore"/>
-    </component> 
-    
-    <!-- Stateful callback interaction -->
-    <component name="InteractionStatefulCallbackClient">
-        <implementation.java class="scatours.client.impl.InteractionStatefulCallbackClientImpl" />
-        <reference name="flightSearchStatefulCallback">
-            <interface.java interface="com.tuscanyscatours.common.Search" 
-                    callbackInterface="com.tuscanyscatours.common.SearchCallback"/>
-            <binding.ws uri="http://localhost:8081/Hotel/SearchConversational"/>
-            <callback>
-                <binding.ws name="callback" uri="http://localhost:8080/Client/SearchCallbackConversational"/>
-            </callback>
-        </reference>
-     </component>    
+    </component>   
 
 </composite>
