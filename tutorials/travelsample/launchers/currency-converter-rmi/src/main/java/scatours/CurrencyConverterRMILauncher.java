@@ -48,5 +48,9 @@ public class CurrencyConverterRMILauncher {
         System.out.println("Node started - Press enter to shutdown.");
         System.in.read();
         node.stop();
+
+        // The following line is a workaround for TUSCANY-3277 when running
+        // on Tuscany SCA 1.6 (the JVM hangs when exiting).
+        System.exit(0);
     }
 }
