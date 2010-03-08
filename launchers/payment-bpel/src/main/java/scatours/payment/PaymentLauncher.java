@@ -45,5 +45,9 @@ public class PaymentLauncher {
         System.out.println("\n\nFailed Payment - Status = \n\n" + payment.makePaymentMember("c-1", 100.00f));
         
         node.stop();
+
+        // The following line is a workaround for TUSCANY-3475 when running
+        // on Tuscany SCA 1.6 (the JVM waits for 60 seconds before exiting).
+        System.exit(0);
     }
 }
