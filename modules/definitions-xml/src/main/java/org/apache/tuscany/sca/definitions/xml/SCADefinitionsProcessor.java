@@ -97,7 +97,7 @@ public class SCADefinitionsProcessor extends BaseStAXArtifactProcessor implement
                     name = reader.getName();
                     if ( SCA_DEFINITIONS_QNAME.equals(name)) {
                         definitions = new SCADefinitionsImpl();
-                        targetNamespace = reader.getAttributeValue(null, TARGET_NAMESPACE);
+                        targetNamespace = getURIString(reader, TARGET_NAMESPACE);
                         definitions.setTargetNamespace(targetNamespace);
                     } else {
                         Object extension = extensionProcessor.read(reader);

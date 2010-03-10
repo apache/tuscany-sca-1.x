@@ -180,7 +180,7 @@ public class CompositeProcessor extends BaseAssemblyProcessor implements StAXArt
                             // Read a <composite>
                             composite = assemblyFactory.createComposite();
                             
-                            composite.setName(new QName(getString(reader, TARGET_NAMESPACE), getString(reader, NAME)));
+                            composite.setName(new QName(getURIString(reader, TARGET_NAMESPACE), getString(reader, NAME)));
     
                             if(!isSet(reader, TARGET_NAMESPACE)){
                                 // spec says that a composite must have a namespace
@@ -227,7 +227,7 @@ public class CompositeProcessor extends BaseAssemblyProcessor implements StAXArt
                                 contract = compositeService;
                                 compositeService.setName(getString(reader, NAME));
     
-                                String promoted = getString(reader, PROMOTE);
+                                String promoted = getURIString(reader, PROMOTE);
                                 if (promoted != null) {
                                     String promotedComponentName;
                                     String promotedServiceName;
@@ -283,7 +283,7 @@ public class CompositeProcessor extends BaseAssemblyProcessor implements StAXArt
                                 compositeReference.setName(getString(reader, NAME));
                                 readMultiplicity(compositeReference, reader);
                                 readTargets(compositeReference, reader);
-                                String promote = reader.getAttributeValue(null, Constants.PROMOTE);
+                                String promote = getString(reader, Constants.PROMOTE);
                                 if (promote != null) {
                                     for (StringTokenizer tokens = new StringTokenizer(promote); tokens.hasMoreTokens();) {
                                         ComponentReference promotedReference =
@@ -337,7 +337,7 @@ public class CompositeProcessor extends BaseAssemblyProcessor implements StAXArt
                                         //throw ce;
                                     }
                                 }
-                                componentProperty.setFile(getString(reader, FILE));
+                                componentProperty.setFile(getURIString(reader, FILE));
                                 
                                 //handle extension attributes
                                 this.readExtendedAttributes(reader, componentProperty);
@@ -380,7 +380,7 @@ public class CompositeProcessor extends BaseAssemblyProcessor implements StAXArt
                                 component.setAutowire(getBoolean(reader, AUTOWIRE));
                             }
                             if (isSet(reader, URI)) {
-                                component.setURI(getString(reader, URI));
+                                component.setURI(getURIString(reader, URI));
                             }
                             
                             //handle extension attributes
@@ -396,12 +396,12 @@ public class CompositeProcessor extends BaseAssemblyProcessor implements StAXArt
                             wire = assemblyFactory.createWire();
                             ComponentReference source = assemblyFactory.createComponentReference();
                             source.setUnresolved(true);
-                            source.setName(getString(reader, SOURCE));
+                            source.setName(getURIString(reader, SOURCE));
                             wire.setSource(source);
     
                             ComponentService target = assemblyFactory.createComponentService();
                             target.setUnresolved(true);
-                            target.setName(getString(reader, TARGET));
+                            target.setName(getURIString(reader, TARGET));
                             wire.setTarget(target);
     
                             //handle extension attributes

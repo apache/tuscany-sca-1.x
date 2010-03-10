@@ -32,6 +32,7 @@ import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.contribution.Artifact;
 import org.apache.tuscany.sca.contribution.ContributionFactory;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
@@ -50,7 +51,7 @@ import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
  *
  * @version $Rev$ $Date$
  */
-public class ResourceImplementationProcessor implements StAXArtifactProcessor<ResourceImplementation> {
+public class ResourceImplementationProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<ResourceImplementation> {
     private static final QName IMPLEMENTATION_RESOURCE = new QName(Constants.SCA10_TUSCANY_NS, "implementation.resource");
     
     private ContributionFactory contributionFactory;
@@ -109,7 +110,7 @@ public class ResourceImplementationProcessor implements StAXArtifactProcessor<Re
         ResourceImplementation implementation = null;
 
         // Read the location attribute specifying the location of the resources
-        String location = reader.getAttributeValue(null, "location");
+        String location = getURIString(reader, "location");
         if (location != null) {
             implementation = implementationFactory.createResourceImplementation();
             implementation.setLocation(location);

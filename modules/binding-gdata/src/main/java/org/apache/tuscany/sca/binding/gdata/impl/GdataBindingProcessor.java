@@ -26,6 +26,7 @@ import javax.xml.stream.XMLStreamWriter;
 import org.apache.tuscany.sca.binding.gdata.GdataBinding;
 import org.apache.tuscany.sca.binding.gdata.GdataBindingFactory;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
@@ -37,7 +38,7 @@ import org.apache.tuscany.sca.contribution.service.ContributionWriteException;
  * 
  * @version $Rev$ $Date$
  */
-public class GdataBindingProcessor implements StAXArtifactProcessor<GdataBinding> {
+public class GdataBindingProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<GdataBinding> {
 
     private QName BINDING_GDATA = new QName("http://tuscany.apache.org/xmlns/sca/1.0", "binding.gdata");
     
@@ -64,7 +65,7 @@ public class GdataBindingProcessor implements StAXArtifactProcessor<GdataBinding
     		gdataBinding.setName(name);
     	}
 
-    	String uri = reader.getAttributeValue(null, "uri");
+    	String uri = getURIString(reader, "uri");
     	if (uri != null) {
     		gdataBinding.setURI(uri);
     	}

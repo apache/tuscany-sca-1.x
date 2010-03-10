@@ -47,6 +47,7 @@ import org.apache.tuscany.sca.binding.ws.DefaultWebServiceBindingFactory;
 import org.apache.tuscany.sca.binding.ws.WebServiceBinding;
 import org.apache.tuscany.sca.binding.ws.WebServiceBindingFactory;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.ExtensibleStAXAttributeProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXAttributeProcessor;
@@ -77,7 +78,7 @@ import com.ibm.wsdl.OperationImpl;
  *
  * @version $Rev$ $Date$
  */
-public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServiceBinding>, WebServiceConstants {
+public class WebServiceBindingProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<WebServiceBinding>, WebServiceConstants {
 
     private ExtensionPointRegistry extensionPoints;
     private WSDLFactory wsdlFactory;
@@ -172,7 +173,7 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
         }
 
         // Read URI
-        String uri = reader.getAttributeValue(null, URI);
+        String uri = getURIString(reader, URI);
         if (uri != null) {
             wsBinding.setURI(uri);
         }
@@ -180,7 +181,7 @@ public class WebServiceBindingProcessor implements StAXArtifactProcessor<WebServ
         // Read a qname in the form:
         // namespace#wsdl.???(name)
         Boolean wsdlElementIsBinding = null;
-        String wsdlElement = reader.getAttributeValue(null, WSDL_ELEMENT);
+        String wsdlElement = getURIString(reader, WSDL_ELEMENT);
         if (wsdlElement != null) {
             int index = wsdlElement.indexOf('#');
             if (index == -1) {
