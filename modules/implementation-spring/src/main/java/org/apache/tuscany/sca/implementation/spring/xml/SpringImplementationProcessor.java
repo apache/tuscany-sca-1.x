@@ -32,6 +32,7 @@ import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.core.ExtensionPointRegistry;
+import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
@@ -54,7 +55,7 @@ import org.apache.tuscany.sca.policy.PolicyFactory;
  *
  * @version $Rev: 511195 $ $Date: 2007-02-24 02:29:46 +0000 (Sat, 24 Feb 2007) $
  */
-public class SpringImplementationProcessor implements StAXArtifactProcessor<SpringImplementation> {
+public class SpringImplementationProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<SpringImplementation> {
 
     private static final String LOCATION = "location";
     private static final String IMPLEMENTATION_SPRING = "implementation.spring";
@@ -139,7 +140,7 @@ public class SpringImplementationProcessor implements StAXArtifactProcessor<Spri
         SpringImplementation springImplementation = null;
 
         // Read the location attribute for the spring implementation
-        String springLocation = reader.getAttributeValue(null, LOCATION);
+        String springLocation = getURIString(reader, LOCATION);
         if (springLocation != null) {
         	springImplementation = new SpringImplementation();
         	springImplementation.setLocation(springLocation);

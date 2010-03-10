@@ -219,13 +219,13 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
         }
 
         // Read initial context factory
-        String initialContextFactory = reader.getAttributeValue(null, "initialContextFactory");
+        String initialContextFactory = getURIString(reader, "initialContextFactory");
         if (initialContextFactory != null && initialContextFactory.length() > 0) {
             jmsBinding.setInitialContextFactoryName(initialContextFactory);
         }
 
         // Read JNDI URL
-        String jndiURL = reader.getAttributeValue(null, "jndiURL");
+        String jndiURL = getURIString(reader, "jndiURL");
         if (jndiURL != null && jndiURL.length() > 0) {
             jmsBinding.setJndiURL(jndiURL);
         }
@@ -407,7 +407,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
     }
 
     private void parseDestination(XMLStreamReader reader, JMSBinding jmsBinding) throws XMLStreamException {
-        String name = reader.getAttributeValue(null, "name");
+        String name = getURIString(reader, "name");
         if (name != null && name.length() > 0) {
             jmsBinding.setDestinationName(name);
         }
@@ -433,7 +433,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
     }
 
     private void parseConnectionFactory(XMLStreamReader reader, JMSBinding jmsBinding) throws XMLStreamException {
-        String name = reader.getAttributeValue(null, "name");
+        String name = getURIString(reader, "name");
         if (name != null && name.length() > 0) {
             jmsBinding.setConnectionFactoryName(name);
         } else {
@@ -443,7 +443,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
     }
 
     private void parseActivationSpec(XMLStreamReader reader, JMSBinding jmsBinding) throws XMLStreamException {
-        String name = reader.getAttributeValue(null, "name");        
+        String name = getURIString(reader, "name");        
         if (name != null && name.length() > 0) {
             jmsBinding.setActivationSpecName(name);            
         } else {
@@ -453,7 +453,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
     }
 
     private void parseResponseDestination(XMLStreamReader reader, JMSBinding jmsBinding) throws XMLStreamException {
-        String name = reader.getAttributeValue(null, "name");
+        String name = getURIString(reader, "name");
         if (name != null && name.length() > 0) {
             jmsBinding.setResponseDestinationName(name);
         }
@@ -479,7 +479,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
     }
 
     private void parseResponseConnectionFactory(XMLStreamReader reader, JMSBinding jmsBinding) throws XMLStreamException {
-        String name = reader.getAttributeValue(null, "name");
+        String name = getURIString(reader, "name");
         if (name != null && name.length() > 0) {
             jmsBinding.setResponseConnectionFactoryName(name);            
         } else {
@@ -489,7 +489,7 @@ public class JMSBindingProcessor extends BaseStAXArtifactProcessor implements St
     }
 
     private void parseResponseActivationSpec(XMLStreamReader reader, JMSBinding jmsBinding) throws XMLStreamException {
-        String name = reader.getAttributeValue(null, "name");
+        String name = getURIString(reader, "name");
         if (name != null && name.length() > 0) {
             jmsBinding.setResponseActivationSpecName(name);            
         } else {

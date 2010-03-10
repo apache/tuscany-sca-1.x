@@ -30,6 +30,7 @@ import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.contribution.Artifact;
 import org.apache.tuscany.sca.contribution.ContributionFactory;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
@@ -47,7 +48,7 @@ import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
  * Processor for the XQuery implementation type artifact
  * @version $Rev$ $Date$
  */
-public class XQueryImplementationProcessor implements StAXArtifactProcessor<XQueryImplementation> {
+public class XQueryImplementationProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<XQueryImplementation> {
 
     private static final String LOCATION = "location";
     private static final String IMPLEMENTATION_XQUERY = "implementation.xquery";
@@ -94,7 +95,7 @@ public class XQueryImplementationProcessor implements StAXArtifactProcessor<XQue
         XQueryImplementation xqueryImplementation = null;
 
         /* Read the location attribute for the XQuery implementation  */
-        String xqueryLocation = reader.getAttributeValue(null, LOCATION);
+        String xqueryLocation = getURIString(reader, LOCATION);
         if (xqueryLocation != null) {
         	xqueryImplementation = XQueryImplementationFactory.INSTANCE.createXQueryImplementation();
             xqueryImplementation.setLocation(xqueryLocation);

@@ -28,6 +28,7 @@ import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
 import org.apache.tuscany.sca.binding.corba.CorbaBinding;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
@@ -38,7 +39,7 @@ import org.apache.tuscany.sca.policy.PolicyFactory;
 /**
  * @version $Rev$ $Date$
  */
-public class CorbaBindingProcessor implements StAXArtifactProcessor<CorbaBinding> {
+public class CorbaBindingProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<CorbaBinding> {
     private PolicyFactory policyFactory;
     private PolicyAttachPointProcessor policyProcessor;
 
@@ -76,7 +77,7 @@ public class CorbaBindingProcessor implements StAXArtifactProcessor<CorbaBinding
         }
 
         // Read binding URI
-        String uri = reader.getAttributeValue(null, "uri");
+        String uri = getURIString(reader, "uri");
         if (uri != null) {
             binding.setURI(uri);
         }

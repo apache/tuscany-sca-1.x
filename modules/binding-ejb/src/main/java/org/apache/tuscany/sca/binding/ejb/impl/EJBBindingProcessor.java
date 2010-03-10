@@ -31,6 +31,7 @@ import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
 import org.apache.tuscany.sca.binding.ejb.EJBBinding;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.ExtensibleStAXAttributeProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXAttributeProcessor;
@@ -68,7 +69,7 @@ import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
  *
  * @version $Rev$ $Date$
  */
-public class EJBBindingProcessor implements StAXArtifactProcessor<EJBBindingImpl> {
+public class EJBBindingProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<EJBBindingImpl> {
     private PolicyFactory policyFactory;
     private ExtensionFactory extensionFactory;
     private PolicyAttachPointProcessor policyProcessor;
@@ -132,7 +133,7 @@ public class EJBBindingProcessor implements StAXArtifactProcessor<EJBBindingImpl
         }
 
         // Read binding URI
-        String uri = reader.getAttributeValue(null, EJBBinding.URI);
+        String uri = getURIString(reader, EJBBinding.URI);
         if (uri != null) {
             ejbBinding.setURI(uri);
         }

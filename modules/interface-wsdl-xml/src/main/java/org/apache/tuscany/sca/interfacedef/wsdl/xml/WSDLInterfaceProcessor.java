@@ -32,6 +32,7 @@ import org.apache.tuscany.sca.assembly.Extension;
 import org.apache.tuscany.sca.assembly.ExtensionFactory;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXAttributeProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
@@ -57,7 +58,7 @@ import com.ibm.wsdl.OperationImpl;
  *
  * @version $Rev$ $Date$
  */
-public class WSDLInterfaceProcessor implements StAXArtifactProcessor<WSDLInterfaceContract>, WSDLConstants {
+public class WSDLInterfaceProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<WSDLInterfaceContract>, WSDLConstants {
 
     private WSDLFactory wsdlFactory;
     private ExtensionFactory extensionFactory;
@@ -152,14 +153,14 @@ public class WSDLInterfaceProcessor implements StAXArtifactProcessor<WSDLInterfa
         String location = reader.getAttributeValue(WSDLI_NS, WSDL_LOCATION);
         wsdlInterfaceContract.setLocation(location);
         
-        String uri = reader.getAttributeValue(null, INTERFACE);
+        String uri = getURIString(reader, INTERFACE);
         if (uri != null) {
             WSDLInterface wsdlInterface = createWSDLInterface(uri);
             if (wsdlInterface != null)
                 wsdlInterfaceContract.setInterface(wsdlInterface);
         }
         
-        uri = reader.getAttributeValue(null, CALLBACK_INTERFACE);
+        uri = getURIString(reader, CALLBACK_INTERFACE);
         if (uri != null) {
             WSDLInterface wsdlCallbackInterface = createWSDLInterface(uri);
             if (wsdlCallbackInterface != null)
