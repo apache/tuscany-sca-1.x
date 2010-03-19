@@ -39,10 +39,11 @@
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-introducing-tours</artifactId>
             <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <build>
-       <finalName>${artifactId}</finalName>
+        <finalName>${artifactId}</finalName>
     </build>
 </project>

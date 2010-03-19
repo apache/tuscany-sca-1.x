@@ -57,6 +57,7 @@
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-creditcard-payment-jaxb</artifactId>
             <version>${pom.version}</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 

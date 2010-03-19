@@ -39,34 +39,39 @@
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-common</artifactId>
             <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-calendar</artifactId>
             <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-hotel</artifactId>
             <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-currency</artifactId>
             <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-shoppingcart</artifactId>
             <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>        
     </dependencies>
 
     <build>
-       <finalName>${artifactId}</finalName>
+        <finalName>${artifactId}</finalName>
     </build>
 </project>
