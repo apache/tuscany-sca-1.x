@@ -31,26 +31,7 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-node-impl</artifactId>
-            <version>${tuscany.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-tomcat</artifactId>
-            <version>${tuscany.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-java-runtime</artifactId>
-            <version>${tuscany.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-binding-atom</artifactId>
+            <artifactId>tuscany-data-api</artifactId>
             <version>${tuscany.version}</version>
         </dependency>
 
@@ -64,6 +45,13 @@
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-rss-rome</artifactId>
             <version>${tuscany.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-implementation-java-runtime</artifactId>
+            <version>${tuscany.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>

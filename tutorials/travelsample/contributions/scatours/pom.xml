@@ -37,32 +37,30 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-data-api</artifactId>
-            <version>${tuscany.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-common</artifactId>
             <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-travelcatalog</artifactId>
             <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-tripbooking</artifactId>
             <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-shoppingcart</artifactId>
             <version>${pom.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
