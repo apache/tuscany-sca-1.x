@@ -27,6 +27,7 @@
   <contribution location="file:../../contributions/trip/target/scatours-contribution-trip.jar"  uri="trip"/>
   <contribution location="file:../../contributions/tripbooking/target/scatours-contribution-tripbooking.jar"  uri="tripbooking"/>
   <contribution location="file:../../contributions/travelcatalog/target/scatours-contribution-travelcatalog.jar"  uri="travelcatalog"/>
+  <!-- the following line should be payment-spring-policy but this doesn't work when using the domain manager (TUSCANY-3476) -->
   <contribution location="file:../../contributions/payment-java-policy/target/scatours-contribution-payment-java-policy.jar"  uri="fullapp-payment"/>
   <contribution location="file:../../contributions/creditcard-payment-jaxb-policy/target/scatours-contribution-creditcard-payment-jaxb-policy.jar"  uri="fullapp-creditcard"/>
   <contribution location="file:../../contributions/shoppingcart/target/scatours-contribution-shoppingcart.jar"  uri="shoppingcart"/>
