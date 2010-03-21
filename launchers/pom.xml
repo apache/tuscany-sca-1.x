@@ -63,6 +63,7 @@
                 <module>notification-jms</module>
                 <module>notification-rmi</module>
                 <module>payment-java</module>
+                <module>payment-java-callback</module>
                 <module>payment-java-policy</module>
                 <module>payment-spring</module>
                 <module>payment-spring-scatag</module>

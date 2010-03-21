@@ -83,6 +83,7 @@
                 <module>trip</module>
                 <module>scatours</module>
                 <module>payment-java</module>
+                <module>payment-java-callback</module>
                 <module>payment-java-policy</module>
                 <module>payment-spring</module>
                 <module>payment-spring-policy</module>
