@@ -24,10 +24,8 @@
     <baseDirectory>tuscany-scatours-${version}</baseDirectory>
     <formats>
         <format>dir</format>
-<!--
         <format>tar.gz</format>
         <format>zip</format>
--->
     </formats>
 
     <componentDescriptors>
