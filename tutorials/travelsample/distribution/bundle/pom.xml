@@ -425,11 +425,6 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-launcher-jumpstart</artifactId>
-            <version>${pom.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-launcher-notification-corba</artifactId>
             <version>${pom.version}</version>
         </dependency>

@@ -191,15 +191,6 @@
         </java>
     </target>
 
-    <target name="run-jumpstart">
-        <java classname="scatours.JumpstartLauncher" fork="true" failonerror="true">
-            <classpath>
-                <pathelement location="scatours-launcher-jumpstart.jar"/>
-                <path refid="scatours.tuscany-manifest"/>
-            </classpath>
-        </java>
-    </target>
-
     <target name="run-notification-corba">
         <java classname="scatours.NotificationCORBALauncher" fork="true" failonerror="true">
             <classpath>

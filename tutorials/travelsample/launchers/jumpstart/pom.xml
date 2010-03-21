@@ -29,14 +29,6 @@
     <name>Apache Tuscany SCA Tours Jump Start Launcher</name>
 
     <dependencies>
-    
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-util-launcher-common</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>
-            
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-node-api</artifactId>
@@ -74,9 +66,6 @@
                 <version>2.2</version>
                 <configuration>
                     <archive>
-                        <manifestEntries>
-                            <Class-Path>../util/scatours-util-launcher-common.jar</Class-Path>
-                        </manifestEntries>
                         <manifest>
                             <addClasspath>${scatours.selfContained}</addClasspath>
                             <classpathPrefix>../lib/</classpathPrefix>
