@@ -17,7 +17,7 @@
  * under the License.
 -->
 
-<project name="scatours-contribution-payment-java-callback" default="compile">
+<project name="scatours-contribution-payment-java-reference-pass" default="compile">
     <import file="../../antdefs.xml"/>
 
     <target name="wsdljava">
