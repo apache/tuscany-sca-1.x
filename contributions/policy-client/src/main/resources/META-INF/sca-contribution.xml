@@ -20,5 +20,6 @@
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
               xmlns:client="http://client.scatours/">
     <import.java package="payment" />
+    <import.java package="com.tuscanyscatours.common"/>
     <deployable composite="client:Client" />
 </contribution>

@@ -19,20 +19,42 @@
 
 package scatours.client;
 
+
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
 import com.tuscanyscatours.payment.Payment;
 
+import com.tuscanyscatours.common.Book;
+import com.tuscanyscatours.common.TripItem;
+
+/**
+ * A client for calling payment and trip components directly. The components in this
+ * case are expected to have policy configuration associated with the in the 
+ * composite files that define them
+ *
+ */
 @Service(Runnable.class)
 public class TestClient {
     @Reference
     protected Payment payment;
+    
+    @Reference
+    protected Book tripBooking;
 
     public TestClient() {
     }
 
     public void run() {
+    	System.out.println("===============================================");
+    	System.out.println("Test the loggin policy by calling the trip component");
+        TripItem tripItem =
+            new TripItem("1234", "5678", TripItem.TRIP, "FS1DEC06", "Florence and Siena pre-packaged tour", "FLR",
+                         "06/12/09", "13/12/09", 450, "EUR", "http://localhost:8085/tbd");
+        System.out.println("Result = " + tripBooking.book(tripItem));
+        System.out.println("===============================================");
+    	System.out.println("Test the basic authentication policy by calling the payment component");
         System.out.println("TestClient - Successful Payment - Status = " + payment.makePaymentMember("c-0", 100.00f));
+        System.out.println("===============================================");
     }
 }

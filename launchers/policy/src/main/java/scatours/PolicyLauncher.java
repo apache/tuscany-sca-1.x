@@ -30,8 +30,10 @@ public class PolicyLauncher {
     public static void main(String[] args) throws Exception {
         SCANode node1 =
             SCANodeFactory.newInstance().createSCANode(null, 
+            		                                   locate("common"),
                                                        locate("policy-client"), 
-                                                       locate("payment-java-policy"));
+                                                       locate("payment-java-policy"),
+                                                       locate("trip-policy"));
 
         node1.start();
 
