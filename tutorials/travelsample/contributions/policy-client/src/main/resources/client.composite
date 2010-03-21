@@ -24,5 +24,6 @@
     <component name="TestClient">
         <implementation.java class="scatours.client.TestClient" />
         <reference name="payment" target="Payment/Payment" />
+        <reference name="tripBooking" target="Trip/Book" />
      </component>
 </composite>
