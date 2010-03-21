@@ -85,6 +85,7 @@
                 <module>payment-java</module>
                 <module>payment-java-callback</module>
                 <module>payment-java-policy</module>
+                <module>payment-java-reference-pass</module>
                 <module>payment-spring</module>
                 <module>payment-spring-policy</module>
                 <module>payment-spring-scatag</module>
