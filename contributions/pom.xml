@@ -93,6 +93,7 @@
                 <module>payment-bpel</module>
                 <module>payment-groovy</module>
                 <module>policy-client</module>
+                <module>trip-policy</module>
             </modules>
         </profile>
 
