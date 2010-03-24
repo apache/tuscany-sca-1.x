@@ -18,7 +18,10 @@ Building the travel sample using ant
 6. If you are using JDK 5, download and unzip the JAX-WS reference implementation
    version 2.1.7 and set the JAXWS_HOME environment variable to the base directory
    containing the unzipped download.
-7. With the travelsample directory as your current directory, enter the
+7. Download and unzip JUnit 4.5 (or later) and set the JUNIT_JAR environment variable
+   to the full path to the junit-x.y.z.jar in the unzipped binary distribution taking 
+   care to replace x.y.z with the JUnit version number.
+8. With the travelsample directory as your current directory, enter the
    command "ant compile".
 
 
