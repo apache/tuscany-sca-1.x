@@ -92,6 +92,7 @@
                 <module>payment-bpel-process</module>
                 <module>payment-bpel</module>
                 <module>payment-groovy</module>
+                <module>payment-python</module>
                 <module>policy-client</module>
                 <module>trip-policy</module>
             </modules>
