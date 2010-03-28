@@ -19,7 +19,6 @@
 
 package scatours;
 
-import org.apache.activemq.broker.BrokerService;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
@@ -64,11 +63,6 @@ public class BuildingBlocksLauncher {
     }
 
     private static void runAppl() throws Exception {
-        final BrokerService jmsBroker = new BrokerService();
-        jmsBroker.setPersistent(false);
-        jmsBroker.setUseJmx(false);
-        jmsBroker.addConnector("tcp://localhost:61619");
-
         SCANode node1 =
             SCANodeFactory.newInstance().createSCANode("tours-appl.composite",
                                                        locate("introducing-trips"),
@@ -78,7 +72,6 @@ public class BuildingBlocksLauncher {
             SCANodeFactory.newInstance().createSCANode("tours-appl-client.composite",
                                                        locate("buildingblocks-client"));
 
-        jmsBroker.start();
         node1.start();
         node2.start();
 
@@ -87,6 +80,5 @@ public class BuildingBlocksLauncher {
 
         node2.stop();
         node1.stop();
-        jmsBroker.stop();
     }
 }
