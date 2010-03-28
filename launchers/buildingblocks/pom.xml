@@ -53,6 +53,7 @@
                     <artifactId>activemq-web-demo</artifactId>
                 </exclusion>
             </exclusions>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
