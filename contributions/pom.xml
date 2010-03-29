@@ -95,6 +95,7 @@
                 <module>payment-python</module>
                 <module>policy-client</module>
                 <module>trip-policy</module>
+                <module>using</module>
             </modules>
         </profile>
 
