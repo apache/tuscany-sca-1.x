@@ -254,7 +254,25 @@
         </java>
     </target>
 
+    <target name="run-payment-python">
+        <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
+            <classpath>
+                <pathelement location="scatours-launcher-payment-groovy.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
+            </classpath>
+        </java>
+    </target>
+
     <target name="run-payment-java">
+        <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
+            <classpath>
+                <pathelement location="scatours-launcher-payment-java.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="run-payment-java-callback">
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-payment-java.jar"/>
@@ -267,6 +285,15 @@
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-java-policy.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="run-payment-java-reference-pass">
+        <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
+            <classpath>
+                <pathelement location="scatours-launcher-payment-java.jar"/>
                 <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>

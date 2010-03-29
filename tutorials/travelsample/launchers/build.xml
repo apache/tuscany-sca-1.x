@@ -63,6 +63,15 @@
         <ant dir="notification-jms" target="${target}"/>
         <ant dir="notification-rmi" target="${target}"/>
         <ant dir="notification-ws" target="${target}"/>
+        <ant dir="payment-java" target="${target}"/>
+        <ant dir="payment-java-callback" target="${target}"/>
+        <ant dir="payment-java-policy" target="${target}"/>
+        <ant dir="payment-java-reference-pass" target="${target}"/>
+        <ant dir="payment-spring" target="${target}"/>
+        <ant dir="payment-spring-scatag" target="${target}"/>
+        <ant dir="payment-bpel" target="${target}"/>
+        <ant dir="payment-groovy" target="${target}"/>
+        <ant dir="payment-python" target="${target}"/>
         <ant dir="policy" target="${target}"/>
         <ant dir="using" target="${target}"/>
     </target>
