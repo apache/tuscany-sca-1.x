@@ -18,28 +18,30 @@
  */
 package com.tuscanyscatours.using.impl;
 
-import java.math.BigDecimal;
 import org.osoa.sca.annotations.Property;
-import com.tuscanyscatours.CurrencyConverter;
+import com.tuscanyscatours.Address;
+import com.tuscanyscatours.BillingAddress;
+import com.tuscanyscatours.CustomerInfo;
 
-public class CurrencyConverterImpl implements CurrencyConverter {
+public class CustomerImpl implements CustomerInfo {
 
     @Property
-    protected String fromCurrency;
+    protected BillingAddress billingAddress;
 
     @Property
-    protected String toCurrency;
+    protected Address deliveryAddress;
 
-    public BigDecimal convert(BigDecimal amount) {
-        return amount.multiply(getRate(toCurrency))
-                     .divide(getRate(fromCurrency), 2, 0);
+    public String getBillingAddress() {
+        return billingAddress.getStreet() + ", " +
+               billingAddress.getCity() + ", " +
+               billingAddress.getState() + " " +
+               billingAddress.getZip();
     }
 
-    private BigDecimal getRate(String currency) {
-        int rate = 0; 
-        for (int i = 0; i < currency.length(); i++) {
-            rate += currency.codePointAt(i);
-        }
-        return new BigDecimal(rate).divide(new BigDecimal(100));
+    public String getDeliveryAddress() {
+        return deliveryAddress.getStreet() + ", " +
+               deliveryAddress.getCity() + ", " +
+               deliveryAddress.getState() + " " +
+               deliveryAddress.getZip();
     }
 }

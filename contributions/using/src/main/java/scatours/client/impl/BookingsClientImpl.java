@@ -16,30 +16,21 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.tuscanyscatours.using.impl;
+package scatours.client.impl;
 
-import java.math.BigDecimal;
-import org.osoa.sca.annotations.Property;
-import com.tuscanyscatours.CurrencyConverter;
+import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Service;
 
-public class CurrencyConverterImpl implements CurrencyConverter {
+import com.tuscanyscatours.Bookings;
 
-    @Property
-    protected String fromCurrency;
+@Service(Runnable.class)
+public class BookingsClientImpl {
 
-    @Property
-    protected String toCurrency;
+    @Reference
+    protected Bookings bookings;
 
-    public BigDecimal convert(BigDecimal amount) {
-        return amount.multiply(getRate(toCurrency))
-                     .divide(getRate(fromCurrency), 2, 0);
-    }
-
-    private BigDecimal getRate(String currency) {
-        int rate = 0; 
-        for (int i = 0; i < currency.length(); i++) {
-            rate += currency.codePointAt(i);
-        }
-        return new BigDecimal(rate).divide(new BigDecimal(100));
+    public void run() {
+        String bookingCode = bookings.newBooking("VR3MAY9", 2);
+        System.out.println("Booking code is " + bookingCode);
     }
 }

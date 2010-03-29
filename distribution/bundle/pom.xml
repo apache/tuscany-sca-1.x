@@ -330,6 +330,11 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-contribution-using</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-launcher-blog-feed</artifactId>
             <version>${pom.version}</version>
         </dependency>
@@ -481,6 +486,11 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-launcher-policy</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>scatours-launcher-using</artifactId>
             <version>${pom.version}</version>
         </dependency>
         <dependency>

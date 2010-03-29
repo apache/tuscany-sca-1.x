@@ -29,7 +29,7 @@ public class CarPartnerImpl implements Cars {
 
     @Reference(required=false)
     protected Cars[] luxuryCars;
-
+    
     public String bookCar(Date pickup, int days, String carClass) {
         return cars[0].bookCar(pickup, days, carClass);
     }

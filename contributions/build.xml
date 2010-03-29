@@ -92,6 +92,7 @@
         <ant dir="tripbooking" target="${target}"/> <!--needed by scatours-->
         <ant dir="scatours" target="${target}"/>
         <ant dir="trip" target="${target}"/>
+        <ant dir="using" target="${target}"/>
     </target>
 
 </project>

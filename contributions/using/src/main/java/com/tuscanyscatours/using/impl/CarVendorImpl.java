@@ -23,6 +23,8 @@ import com.tuscanyscatours.Cars;
 
 public class CarVendorImpl implements Cars {
 
+    protected int minAge; // implicitly defines an SCA property
+
     public String bookCar(Date pickup, int days, String carClass) {
         System.out.println("Booking confirmed for pickup date " + pickup +
                            " duration " + days + " days in a " + carClass +

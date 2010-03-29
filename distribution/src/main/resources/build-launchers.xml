@@ -290,10 +290,10 @@
         </java>
     </target>
 
-    <target name="run-policy">
-        <java classname="scatours.PolicyLauncher" fork="true" failonerror="true">
+    <target name="run-using">
+        <java classname="scatours.UsingLauncher" fork="true" failonerror="true">
             <classpath>
-                <pathelement location="scatours-launcher-policy.jar"/>
+                <pathelement location="scatours-launcher-using.jar"/>
                 <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>

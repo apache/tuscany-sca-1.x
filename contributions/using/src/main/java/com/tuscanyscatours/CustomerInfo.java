@@ -16,30 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.tuscanyscatours.using.impl;
+package com.tuscanyscatours;
 
-import java.math.BigDecimal;
-import org.osoa.sca.annotations.Property;
-import com.tuscanyscatours.CurrencyConverter;
+import org.osoa.sca.annotations.Remotable;
 
-public class CurrencyConverterImpl implements CurrencyConverter {
-
-    @Property
-    protected String fromCurrency;
-
-    @Property
-    protected String toCurrency;
-
-    public BigDecimal convert(BigDecimal amount) {
-        return amount.multiply(getRate(toCurrency))
-                     .divide(getRate(fromCurrency), 2, 0);
-    }
-
-    private BigDecimal getRate(String currency) {
-        int rate = 0; 
-        for (int i = 0; i < currency.length(); i++) {
-            rate += currency.codePointAt(i);
-        }
-        return new BigDecimal(rate).divide(new BigDecimal(100));
-    }
+@Remotable
+public interface CustomerInfo {
+    String getBillingAddress();
+    String getDeliveryAddress();
 }

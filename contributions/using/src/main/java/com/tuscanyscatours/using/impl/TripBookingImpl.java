@@ -29,7 +29,7 @@ import com.tuscanyscatours.Hotels;
 
 public class TripBookingImpl implements Bookings {
 
-    TripBookingImpl(@Reference(name="cars") Cars cars) {
+    public TripBookingImpl(@Reference(name="cars") Cars cars) {
         this.cars = cars;
     }
     
@@ -46,16 +46,28 @@ public class TripBookingImpl implements Bookings {
     }
 
     public String newBooking(String trip, int people) {
-        Date startDate = null;
+        /* In a real implementation this method would look up the trip code
+           in the travel catalog to get details of the car, flight and hotel
+           bookings needed.  Instead these details are hard-wired here for
+           test purposes. */   
+        Date startDate = new Date(); //TEMP - need to fix
+        /*
         try {
-            startDate = DateFormat.getInstance().parse("07/07/2012");
+            startDate = DateFormat.getInstance().parse("7 Jul, 2012");
         } catch (Exception e) {
+            e.printStackTrace();
         }
+        */
 
-        cars.bookCar(startDate, 7, "B");
-        flights.bookFlight("AA123", startDate, people, "Y");
-        hotels.bookHotel("DBH", startDate, 7, "SUP");
+        if (people > 0) {
+            cars.bookCar(startDate, 7, "B");
+            flights.bookFlight("AA123", startDate, people, "Y");
+            hotels.bookHotel("DBH", startDate, 7, "SUP");
 
-        return "HW3546";
+            return "HW3546";
+
+        } else {
+            return "NONE";
+        }
     }
 }
