@@ -25,15 +25,43 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent><version>1.0-SNAPSHOT</version>
-    <artifactId>scatours-contribution-using</artifactId>
-    <name>Apache Tuscany SCA Tours Using Components Contribution</name>
+    <artifactId>scatours-launcher-using</artifactId>
+    <name>Apache Tuscany SCA Tours Using Launcher</name>
 
     <dependencies>
+    
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-sca-api</artifactId>
+            <artifactId>scatours-util-launcher-common</artifactId>
+            <version>${pom.version}</version>
+            <scope>provided</scope>
+        </dependency>
+            
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-node-api</artifactId>
             <version>${tuscany.version}</version>
-        </dependency>        
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>5.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.activemq</groupId>
+                    <artifactId>activemq-web-demo</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-node-impl</artifactId>
+            <version>${tuscany.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
@@ -51,7 +79,21 @@
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-host-jetty</artifactId>
+            <version>${tuscany.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-jms-runtime</artifactId>
+            <version>${tuscany.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-host-jms-asf</artifactId>
             <version>${tuscany.version}</version>
             <scope>runtime</scope>
         </dependency>
@@ -64,55 +106,33 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-node-api</artifactId>
-            <version>${tuscany.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-node-impl</artifactId>
-            <version>${tuscany.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-jms-asf</artifactId>
-            <version>${tuscany.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-all</artifactId>
-            <version>5.2.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.activemq</groupId>
-                    <artifactId>activemq-web-demo</artifactId>
-                </exclusion>
-            </exclusions>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-host-jetty</artifactId>
-            <version>${tuscany.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.5</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    
     <build>
-        <finalName>${artifactId}</finalName>
+       <finalName>${artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Class-Path>../util/scatours-util-launcher-common.jar</Class-Path>
+                        </manifestEntries>
+                        <manifest>
+                            <addClasspath>${scatours.selfContained}</addClasspath>
+                            <classpathPrefix>../lib/</classpathPrefix>
+                            <mainClass>scatours.BuildingBlocksLauncher</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>  
+        </plugins>            
     </build>
 </project>

@@ -16,30 +16,28 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.tuscanyscatours.using.impl;
+package scatours.client.impl;
 
 import java.math.BigDecimal;
-import org.osoa.sca.annotations.Property;
+
+import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Service;
+
 import com.tuscanyscatours.CurrencyConverter;
 
-public class CurrencyConverterImpl implements CurrencyConverter {
+@Service(Runnable.class)
+public class ConverterClientImpl {
 
-    @Property
-    protected String fromCurrency;
+    @Reference
+    protected CurrencyConverter eur2jpy;
 
-    @Property
-    protected String toCurrency;
+    @Reference
+    protected CurrencyConverter usd2gbp;
 
-    public BigDecimal convert(BigDecimal amount) {
-        return amount.multiply(getRate(toCurrency))
-                     .divide(getRate(fromCurrency), 2, 0);
-    }
-
-    private BigDecimal getRate(String currency) {
-        int rate = 0; 
-        for (int i = 0; i < currency.length(); i++) {
-            rate += currency.codePointAt(i);
-        }
-        return new BigDecimal(rate).divide(new BigDecimal(100));
+    public void run() {
+        BigDecimal jpy = eur2jpy.convert(new BigDecimal("1000.00"));
+        System.out.println("Converted EUR 1000.00 to JPY " + jpy);
+        BigDecimal gbp = usd2gbp.convert(new BigDecimal("1000.00"));
+        System.out.println("Converted USD 1000.00 to GBP " + gbp);
     }
 }

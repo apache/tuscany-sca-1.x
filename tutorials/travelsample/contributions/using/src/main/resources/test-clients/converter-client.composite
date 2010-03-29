@@ -1,4 +1,5 @@
-/*
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -15,31 +16,19 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.    
- */
-package com.tuscanyscatours.using.impl;
+-->
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
+           targetNamespace="http://tuscanyscatours.com/"
+           xmlns:t="http://tuscanyscatours.com/"
+           name="converter-client">
 
-import java.math.BigDecimal;
-import org.osoa.sca.annotations.Property;
-import com.tuscanyscatours.CurrencyConverter;
+    <!-- a test client for converter.composite -->
+    <component name="ConverterClient">
+        <implementation.java class="scatours.client.impl.ConverterClientImpl" />
+        <reference name="eur2jpy" target="EURJPYConverter" />
+        <reference name="usd2gbp" target="USDGBPConverter" />
+    </component>
 
-public class CurrencyConverterImpl implements CurrencyConverter {
-
-    @Property
-    protected String fromCurrency;
-
-    @Property
-    protected String toCurrency;
-
-    public BigDecimal convert(BigDecimal amount) {
-        return amount.multiply(getRate(toCurrency))
-                     .divide(getRate(fromCurrency), 2, 0);
-    }
-
-    private BigDecimal getRate(String currency) {
-        int rate = 0; 
-        for (int i = 0; i < currency.length(); i++) {
-            rate += currency.codePointAt(i);
-        }
-        return new BigDecimal(rate).divide(new BigDecimal(100));
-    }
-}
+    <!-- run converter.composite in the same SCA node -->
+    <include name="t:converter" />
+</composite>

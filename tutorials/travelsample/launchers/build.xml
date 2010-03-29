@@ -64,6 +64,7 @@
         <ant dir="notification-rmi" target="${target}"/>
         <ant dir="notification-ws" target="${target}"/>
         <ant dir="policy" target="${target}"/>
+        <ant dir="using" target="${target}"/>
     </target>
 
 </project>

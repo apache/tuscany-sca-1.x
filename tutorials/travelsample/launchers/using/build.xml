@@ -1,4 +1,4 @@
-/*
+<!--
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -14,15 +14,22 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.    
- */
-package com.tuscanyscatours;
+ * under the License.
+-->
 
-public class AirportCodes {
-    public String getAirport(String code) {
-        if ("AAA".equals(code)) return "Anaa";
-        else if ("AAB".equals(code)) return "Arrabury";
-        // other airport codes and cities would follow here
-        else return null;
-    }
-}
+<project name="scatours-launcher-using" default="compile">
+    <import file="../../antdefs.xml"/>
+    <path id="compile-path">
+        <pathelement path="../../util/launcher-common/target/scatours-util-launcher-common.jar"/>
+    </path>
+
+    <target name="run">
+        <java classname="scatours.UsingLauncher" fork="true" failonerror="true">
+            <classpath>
+                <pathelement location="target/${ant.project.name}.jar"/>
+                <path refid="compile-path"/>
+                <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+            </classpath>
+        </java>
+    </target>
+</project>
