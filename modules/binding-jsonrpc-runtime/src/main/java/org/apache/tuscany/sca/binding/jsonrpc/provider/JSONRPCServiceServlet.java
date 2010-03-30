@@ -24,6 +24,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.net.URLDecoder;
+import java.security.MessageDigest;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletConfig;
@@ -45,6 +49,8 @@ import org.osoa.sca.ServiceRuntimeException;
 import com.metaparadigm.jsonrpc.JSONRPCBridge;
 import com.metaparadigm.jsonrpc.JSONRPCResult;
 import com.metaparadigm.jsonrpc.JSONRPCServlet;
+
+import com.sun.xml.internal.messaging.saaj.util.Base64;
 
 /**
  * Servlet that handles JSON-RPC requests invoking SCA services.
@@ -115,14 +121,6 @@ public class JSONRPCServiceServlet extends JSONRPCServlet {
     }
 
     private void handleServiceRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Encode using UTF-8, although We are actually ASCII clean as
-        // all unicode data is JSON escaped using backslash u. This is
-        // less data efficient for foreign character sets but it is
-        // needed to support naughty browsers such as Konqueror and Safari
-        // which do not honour the charset set in the response
-        response.setContentType("text/plain;charset=utf-8");
-        OutputStream out = response.getOutputStream();
-
         // Decode using the charset in the request if it exists otherwise
         // use UTF-8 as this is what all browser implementations use.
         // The JSON-RPC-Java JavaScript client is ASCII clean so it
@@ -132,15 +130,42 @@ public class JSONRPCServiceServlet extends JSONRPCServlet {
         if (charset == null) {
             charset = "UTF-8";
         }
-        BufferedReader in = new BufferedReader(new InputStreamReader(request.getInputStream(), charset));
-
-        // Read the request
+        
         CharArrayWriter data = new CharArrayWriter();
-        char[] buf = new char[4096];
-        int ret;
-        while ((ret = in.read(buf, 0, 4096)) != -1) {
-            data.write(buf, 0, ret);
+        if (request.getMethod().equals("GET")) {
+            // if using GET Support (see http://groups.google.com/group/json-rpc/web/json-rpc-over-http)
+
+            //parse the GET QueryString
+            try {
+                String params = Base64.base64Decode(URLDecoder.decode(request.getParameter("params"),charset));
+                
+                StringBuffer sb = new StringBuffer();
+                sb.append("{");
+                sb.append("\"method\": \"" + request.getParameter("method") + "\",");
+                sb.append("\"params\": " + params + ",");
+                sb.append("\"id\":" + request.getParameter("id"));
+                sb.append("}");
+
+                data.write(sb.toString().toCharArray(), 0, sb.length());
+            } catch (Exception e) {
+                //FIXME Exceptions are not handled correctly here
+                // They should be reported to the client JavaScript as proper
+                // JavaScript exceptions.
+                throw new RuntimeException("Unable to parse request", e);
+            }
+            
+        } else {
+            // default POST style
+            BufferedReader in = new BufferedReader(new InputStreamReader(request.getInputStream(), charset));
+
+            // Read the request
+            char[] buf = new char[4096];
+            int ret;
+            while ((ret = in.read(buf, 0, 4096)) != -1) {
+                data.write(buf, 0, ret);
+            }
         }
+        
 
         JSONObject jsonReq = null;
         String method = null;
@@ -163,6 +188,42 @@ public class JSONRPCServiceServlet extends JSONRPCServlet {
         } else {
             bout = handleJSONRPCMethodInvocation(request, response, jsonReq);
         }
+        
+        // Encode using UTF-8, although We are actually ASCII clean as
+        // all unicode data is JSON escaped using backslash u. This is
+        // less data efficient for foreign character sets but it is
+        // needed to support naughty browsers such as Konqueror and Safari
+        // which do not honour the charset set in the response
+        response.setContentType("text/plain;charset=utf-8");
+        
+        //set Cache-Control to no-cache to avoid intermediary
+        //proxy/reverse-proxy caches and always hit the server
+        //that would identify if the value was current or not
+        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Expires", new Date(0).toGMTString());
+        
+        //handle etag if using GET
+        if( request.getMethod().equals("GET")) {
+            String eTag = calculateETag(bout);
+            
+            // Test request for predicates.
+            String predicate = request.getHeader( "If-Match" );
+            if (( predicate != null ) && ( !predicate.equals(eTag) )) {
+                // No match, should short circuit
+                response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
+                return;
+            }
+            predicate = request.getHeader( "If-None-Match" );
+            if (( predicate != null ) && ( predicate.equals(eTag) )) {
+                // Match, should short circuit
+                response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
+                return;
+            }
+            
+            response.addHeader("ETag", eTag);
+        }
+        
+        OutputStream out = response.getOutputStream();
 
         // Send response to client
         out.write(bout);
@@ -314,5 +375,22 @@ public class JSONRPCServiceServlet extends JSONRPCServlet {
         }
 
         return result;
+    }
+    
+
+    private String calculateETag(byte[] content) {
+        String eTag = "invalid";
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            byte[] digest = messageDigest.digest(content);
+            BigInteger number = new BigInteger(1, digest);
+            StringBuffer sb = new StringBuffer('0');
+            sb.append(number.toString(16));
+            eTag = sb.toString();
+        } catch(Exception e) {
+            //ignore, we will return random etag
+            eTag =  Integer.toString((new java.util.Random()).nextInt(Integer.MAX_VALUE));
+        }
+        return eTag;
     }    
 }
