@@ -37,7 +37,6 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>creditcard-payment-jaxws</module>
                 <module>smsgateway-jaxws</module>
                 <module>smsgateway-corba</module>
                 <module>smsgateway-ejb</module>
