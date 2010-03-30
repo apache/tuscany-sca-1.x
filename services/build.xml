@@ -38,7 +38,6 @@
     </target>
 
     <target name="allsubdirs">
-        <ant dir="creditcard-payment-jaxws" target="${target}"/>
         <ant dir="smsgateway-corba" target="${target}"/>
         <ant dir="smsgateway-ejb" target="${target}"/>
         <ant dir="smsgateway-jaxws" target="${target}"/>

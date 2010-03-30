@@ -530,11 +530,6 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-service-creditcard-payment-jaxws</artifactId>
-            <version>${pom.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-service-smsgateway-corba</artifactId>
             <version>${pom.version}</version>
         </dependency>
