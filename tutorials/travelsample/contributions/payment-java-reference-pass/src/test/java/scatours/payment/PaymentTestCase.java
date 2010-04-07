@@ -48,7 +48,11 @@ public class PaymentTestCase {
         Payment payment = client.getService(Payment.class, "Payment");
 
         System.out.println("===================================================");
-        System.out.println("\n\nPayment - Status = \n\n" + payment.makePaymentMember("c-0", 100.00f));
+        String result = payment.makePaymentMember("c-0", 100.00f);
+        System.out.println("\n\nPayment - Status = \n\n" + result);
+        if (!"OK".equals(result)) {
+            throw new RuntimeException(result);
+        }
         System.out.println("===================================================");
         
     }
