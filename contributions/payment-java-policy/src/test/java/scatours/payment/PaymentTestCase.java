@@ -54,7 +54,11 @@ public class PaymentTestCase {
         SCAClient client = (SCAClient)node1;
         Payment payment = client.getService(Payment.class, "Payment");
 
-        System.out.println("\n\nSuccessful Payment - Status = \n\n" + payment.makePaymentMember("c-0", 100.00f));
+        String result = payment.makePaymentMember("c-0", 100.00f);
+        System.out.println("\n\nSuccessful Payment - Status = \n\n" + result);
+        if (!"OK".equals(result)) {
+            throw new RuntimeException(result);
+        }
         System.out.println("\n\nFailed Payment - Status = \n\n" + payment.makePaymentMember("c-1", 100.00f));
     }
 

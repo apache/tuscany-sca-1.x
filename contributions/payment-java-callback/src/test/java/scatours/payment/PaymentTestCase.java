@@ -73,9 +73,17 @@ public class PaymentTestCase {
         }
         
         System.out.println("===================================================");        
-        System.out.println("\n\nPaymentCallbackID  - Status = \n\n" + paymentCallbackID.makePaymentMember("c-0", 20000.00f));
+        String result = paymentCallbackID.makePaymentMember("c-0", 20000.00f);
+        System.out.println("\n\nPaymentCallbackID  - Status = \n\n" + result);
+        if (!"OK".equals(result)) {
+            throw new RuntimeException(result);
+        }
         System.out.println("===================================================");
-        System.out.println("\n\nPaymentCallbackRedirect  - Status = \n\n" + paymentCallbackRedirect.makePaymentMember("c-0", 20000.00f));
+        result = paymentCallbackRedirect.makePaymentMember("c-0", 20000.00f);
+        System.out.println("\n\nPaymentCallbackRedirect  - Status = \n\n" + result);
+        if (!"OK".equals(result)) {
+            throw new RuntimeException(result);
+        }
         System.out.println("===================================================");
 
         
