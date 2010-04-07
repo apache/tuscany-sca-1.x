@@ -20,7 +20,6 @@
     targetNamespace="http://www.tuscanyscatours.com/Payment"
     xmlns="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
     xmlns:bpws="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
-    xmlns:tns="http://tuscany.apache.org/Payment"    
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:pp="http://www.tuscanyscatours.com/Payment/"
@@ -141,12 +140,10 @@
        
        <!-- set up the response -->
        <assign name="assign3">
-          <copy>
+          <copy keepSrcElementName="yes">
               <from>
                   <literal> 
-                  <makePaymentMemberResponse xmlns="http://www.tuscanyscatours.com/Payment">
                     <Status xmlns="">OK</Status>
-                  </makePaymentMemberResponse>
                   </literal>
               </from>
               <to>$makePaymentMemberResponseMessage.parameters</to>
