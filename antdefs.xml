@@ -62,8 +62,6 @@
      "package" Creates a jar file containing the compiled Java class
         files (excluding unit test code) and any files in or under the
         resource directory, unless the jar file is already up to date.
-        If the build.xml file defines a path with id "package-path", this
-        path is used for the Class-Path manifest entry.
      "clean" Deletes all the files produced by the build.
 
    This file also defines the following targets for invocation by <antcall>
@@ -548,41 +546,12 @@
 
     <!-- build a jar file if there are no files in the webapp directory -->
     <target name="#package-jar" unless="#webapp">
-        <antcall target="#create-jar"/>
-    </target>
-
-    <!-- build a packaged jar file or war file -->
-    <target name="#build-package" depends="#check-webapp, #package-war, #package-jar"/>
-
-    <!-- check whether a dependency path for the package target was specified -->
-    <target name="#check-package-path">
-        <condition property="#package-path">
-            <isreference refid="package-path"/>
-        </condition>
-    </target>
-
-    <!-- create a jar file with a Class-Path attribute -->
-    <target name="#create-jar-path" if="#package-path">
-        <property name="#parentdir" location=".."/>
-        <pathconvert property="#package-classpath" refid="package-path" pathsep=" " dirsep="/">
-            <map from="${#parentdir}" to="../.."/>
-        </pathconvert>
-        <jar destfile="target/${ant.project.name}.jar" basedir="target/classes"
-             excludes="**/*.cbp">
-            <manifest>
-                <attribute name="Class-Path" value="${#package-classpath}"/>
-            </manifest>
-        </jar>
-    </target>
-
-    <!-- create a jar file without a Class-Path attribute -->
-    <target name="#create-jar-nopath" unless="#package-path">
         <jar destfile="target/${ant.project.name}.jar" basedir="target/classes"
              excludes="**/*.cbp"/>
     </target>
 
-    <!-- create a jar file with or without a Class-Path attribute -->
-    <target name="#create-jar" depends="#check-package-path, #create-jar-path, #create-jar-nopath"/>
+    <!-- build a packaged jar file or war file -->
+    <target name="#build-package" depends="#check-webapp, #package-war, #package-jar"/>
 
     <!-- for external use on the ant command line -->
     <target name="compile">
