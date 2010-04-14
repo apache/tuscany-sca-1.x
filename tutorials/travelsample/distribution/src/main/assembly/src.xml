@@ -23,7 +23,7 @@
     <includeBaseDirectory>true</includeBaseDirectory>
     <baseDirectory>tuscany-scatours-${version}</baseDirectory>
     <formats>
-<!-- nash 
+<!-- 
         <format>dir</format>
 -->
         <format>tar.gz</format>
