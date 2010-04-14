@@ -31,10 +31,32 @@
     <name>Apache Tuscany SCA Tours Distribution</name>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>bundle</module>
-        <module>jaxws</module>
-        <module>ode</module>
-        <module>openejb</module>
-    </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>distribution-package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/src.xml</descriptor>
+                            </descriptors>
+                            <tarLongFileMode>gnu</tarLongFileMode>
+                            <archiveBaseDirectory>.</archiveBaseDirectory>
+                            <outputDirectory>target</outputDirectory>
+                            <finalName>apache-tuscany-scatours-${version}</finalName>
+                            <appendAssemblyId>true</appendAssemblyId>
+                            <ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
