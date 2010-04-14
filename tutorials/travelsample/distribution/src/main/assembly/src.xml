@@ -19,15 +19,15 @@
 -->
 <assembly>
     <!-- id typically identifies the "type" (src vs bin etc) of the assembly -->
-    <id>src</id>
+    <id></id>
     <includeBaseDirectory>true</includeBaseDirectory>
-    <baseDirectory>tuscany-scatours-${version}-src</baseDirectory>
+    <baseDirectory>tuscany-scatours-${version}</baseDirectory>
     <formats>
+<!-- nash 
         <format>dir</format>
-<!-- 
+-->
         <format>tar.gz</format>
         <format>zip</format>
--->
     </formats>
 
     <fileSets>
