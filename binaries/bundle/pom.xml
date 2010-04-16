@@ -97,13 +97,12 @@
             <artifactId>scatours-contribution-creditcard-payment-sdo</artifactId>
             <version>${pom.version}</version>
         </dependency>
-<!--
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-creditcard-payment-webapp</artifactId>
+            <type>war</type>
             <version>${pom.version}</version>
         </dependency>
--->
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-currency</artifactId>
@@ -119,25 +118,23 @@
             <artifactId>scatours-contribution-currency-jms</artifactId>
             <version>${pom.version}</version>
         </dependency>
-<!--
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-currency-jsp</artifactId>
+            <type>war</type>
             <version>${pom.version}</version>
         </dependency>
--->
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-currency-rmi</artifactId>
             <version>${pom.version}</version>
         </dependency>
-<!--
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-currency-servlet</artifactId>
+            <type>war</type>
             <version>${pom.version}</version>
         </dependency>
--->
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>scatours-contribution-currency-ws</artifactId>

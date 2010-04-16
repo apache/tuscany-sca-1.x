@@ -57,6 +57,9 @@
                 <include>org.apache.tuscany.sca:scatours-contribution-*</include>
             </includes>
             <excludes>
+                <exclude>org.apache.tuscany.sca:scatours-contribution-creditcard-payment-webapp</exclude>
+                <exclude>org.apache.tuscany.sca:scatours-contribution-currency-jsp</exclude>
+                <exclude>org.apache.tuscany.sca:scatours-contribution-currency-servlet</exclude>
                 <exclude>org.apache.tuscany.sca:scatours-contribution-payment-bpel-process</exclude>
             </excludes>
            <scope>runtime</scope>
@@ -101,6 +104,19 @@
             <unpack>false</unpack>
             <includes>
                 <include>org.apache.tuscany.sca:scatours-client-*</include>
+            </includes>
+            <scope>runtime</scope>
+        </dependencySet>
+
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>webapps</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+            <unpack>false</unpack>
+            <includes>
+                <include>org.apache.tuscany.sca:scatours-contribution-creditcard-payment-webapp</include>
+                <include>org.apache.tuscany.sca:scatours-contribution-currency-jsp</include>
+                <include>org.apache.tuscany.sca:scatours-contribution-currency-servlet</include>
             </includes>
             <scope>runtime</scope>
         </dependencySet>
