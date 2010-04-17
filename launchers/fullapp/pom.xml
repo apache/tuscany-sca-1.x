@@ -40,24 +40,6 @@
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-assembly</artifactId>
-            <version>${tuscany.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-core</artifactId>
-            <version>${tuscany.version}</version>
-        </dependency>        
-            
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-assembly-xml</artifactId>
-            <version>${tuscany.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-node-api</artifactId>
             <version>${tuscany.version}</version>
         </dependency>
@@ -68,13 +50,6 @@
             <version>${tuscany.version}</version>
             <scope>runtime</scope>
         </dependency>
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-implementation-java</artifactId>
-            <version>${tuscany.version}</version>
-            <scope>runtime</scope>
-        </dependency>        
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>

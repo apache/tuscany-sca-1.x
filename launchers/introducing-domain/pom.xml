@@ -34,27 +34,6 @@
             <artifactId>tuscany-node-launcher</artifactId>
             <version>${tuscany.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-introducing-tours</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-introducing-trips</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-introducing-client</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
     </dependencies>
 
     <build>

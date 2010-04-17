@@ -34,62 +34,6 @@
             <artifactId>tuscany-node-launcher</artifactId>
             <version>${tuscany.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-fullapp-bespoketrip</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-creditcard-payment-jaxb</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-fullapp-currency</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-fullapp-coordination</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-fullapp-packagedtrip</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-payment-java</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-fullapp-shoppingcart</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-fullapp-ui</artifactId>
-            <version>${pom.version}</version>
-            <scope>provided</scope>
-        </dependency>        
     </dependencies>
 
     <build>
