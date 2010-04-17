@@ -28,15 +28,6 @@
     <artifactId>scatours-service-smsgateway-corba</artifactId>
     <name>Apache Tuscany SCA Tours SMS Gateway CORBA Service</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.5</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-    
     <build>
         <finalName>${artifactId}</finalName>
         <plugins>
