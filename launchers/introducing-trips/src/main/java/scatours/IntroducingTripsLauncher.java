@@ -19,12 +19,33 @@
 
 package scatours;
 
-import org.apache.tuscany.sca.node.launcher.NodeLauncher;
+import java.io.IOException;
 
+import org.apache.tuscany.sca.node.SCANode;
+import org.apache.tuscany.sca.node.SCANodeFactory;
+
+/**
+ * This launcher is only used when running from the binaries directory.
+ * If the binaries directory was built using the mvn -Pselfcontained command,
+ * it's important to ensure that no dependencies other than those explicitly
+ * specified by the launcher jar manifest and its transitive dependencies
+ * are used.  This launcher class must therefore avoid using the Tuscany
+ * NodeLauncher class, because NodeLauncher builds a runtime classpath from
+ * (among other things) the TUSCANY_HOME environment variable.
+ */
 public class IntroducingTripsLauncher {
 
     public static void main(String[] args) throws Exception {
-        String[] dmArgs = {"http://localhost:9990/node-config/TripsNode"};
-    	NodeLauncher.main(dmArgs);
+        SCANode node =
+            SCANodeFactory.newInstance().createSCANodeFromURL("http://localhost:9990/node-config/TripsNode");
+        node.start();
+
+        System.out.println("Node started - Press enter to shutdown.");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+        }
+
+        node.stop();
     }
 }
