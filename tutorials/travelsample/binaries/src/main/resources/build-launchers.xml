@@ -111,10 +111,10 @@
     </target>
 
     <target name="run-fullapp-domain">
-        <java classname="org.apache.tuscany.sca.node.launcher.DomainManagerLauncher" fork="true" failonerror="true">
-            <arg value="../domainconfig/fullapp"/>
+        <java classname="scatours.FullAppDomainLauncher" fork="true" failonerror="true">
             <classpath>
-                <path refid="scatours.tuscany-node-launcher"/>
+                <pathelement location="scatours-launcher-fullapp-domain.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
@@ -165,28 +165,28 @@
     </target>
 
     <target name="run-introducing-domain">
-        <java classname="org.apache.tuscany.sca.node.launcher.DomainManagerLauncher" fork="true" failonerror="true">
-            <arg value="../domainconfig/introducing"/>
+        <java classname="scatours.IntroducingDomainLauncher" fork="true" failonerror="true">
             <classpath>
-                <path refid="scatours.tuscany-node-launcher"/>
+                <pathelement location="scatours-launcher-introducing-domain.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
 
     <target name="run-introducing-tours">
-        <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true" failonerror="true">
-            <arg value="http://localhost:9990/node-config/ToursNode"/>
+        <java classname="scatours.IntroducingToursLauncher" fork="true" failonerror="true">
             <classpath>
-                <path refid="scatours.tuscany-node-launcher"/>
+                <pathelement location="scatours-launcher-introducing-tours.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>
 
     <target name="run-introducing-trips">
-        <java classname="org.apache.tuscany.sca.node.launcher.NodeLauncher" fork="true" failonerror="true">
-            <arg value="http://localhost:9990/node-config/TripsNode"/>
+        <java classname="scatours.IntroducingTripsLauncher" fork="true" failonerror="true">
             <classpath>
-                <path refid="scatours.tuscany-node-launcher"/>
+                <pathelement location="scatours-launcher-introducing-trips.jar"/>
+                <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
     </target>

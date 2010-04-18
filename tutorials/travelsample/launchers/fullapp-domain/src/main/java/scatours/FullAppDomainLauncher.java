@@ -19,12 +19,35 @@
 
 package scatours;
 
-import org.apache.tuscany.sca.node.launcher.DomainManagerLauncher;
+import java.io.IOException;
 
+import org.apache.tuscany.sca.domain.manager.launcher.DomainManagerLauncherBootstrap;
+import org.apache.tuscany.sca.node.SCANode;
+
+/**
+ * This launcher is only used when running from the binaries directory.
+ * If the binaries directory was built using the mvn -Pselfcontained command,
+ * it's important to ensure that no dependencies other than those explicitly
+ * specified by the launcher jar manifest and its transitive dependencies
+ * are used.  This launcher class must therefore avoid using the Tuscany
+ * DomainManagerLauncher class, because DomainManagerLauncher builds a
+ * runtime classpath from (among other things) the TUSCANY_HOME environment
+ * variable.
+ */
 public class FullAppDomainLauncher {
 
     public static void main(String[] args) throws Exception {
-        String[] dmArgs = {"../domainconfig/fullapp"};
-        DomainManagerLauncher.main(dmArgs);
+        String rootDir = "../domainconfig/fullapp";
+        DomainManagerLauncherBootstrap bootstrap = new DomainManagerLauncherBootstrap(rootDir);
+        SCANode node = bootstrap.getNode();
+        node.start();
+
+        System.out.println("Domain manager started - Press enter to shutdown.");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+        }
+
+        node.stop();
     }
 }
