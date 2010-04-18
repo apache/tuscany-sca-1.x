@@ -18,9 +18,10 @@ Building the travel sample using ant
 6. If you are using JDK 5, download and unzip the JAX-WS reference implementation
    version 2.1.7 and set the JAXWS_HOME environment variable to the base directory
    containing the unzipped download.
-7. Download and unzip JUnit 4.5 (or later) and set the JUNIT_JAR environment variable
-   to the full path to the junit-x.y.z.jar in the unzipped binary distribution taking 
-   care to replace x.y.z with the JUnit version number.
+7. Download and unzip the JUnit 4.5 (or later) binary distribution and set the
+   JUNIT_JAR environment variable to the full path to the junit-x.y.z.jar in
+   the unzipped binary distribution taking care to replace x.y.z with the JUnit
+   version number.
 8. With the travelsample directory as your current directory, enter the
    command "ant compile".
 
@@ -45,15 +46,15 @@ of the steps needed is given here.
 5. With the travelsample directory as your current directory, enter the
    command "mvn".  You will need a live internet connection so that maven
    can download any required files to your local repository.
-6. By default the maven build produces a binary distribution that is an
-   add-on delta to the Tuscany SCA Java 1.6 binary distribution.  If you
-   want to produce a fully self-contained binary distribution for the
-   travel sample, you can use the command "mvn -Pselfcontained" instead
-   of "mvn" to do this.
+6. By default the maven build produces a binaries/target directory which
+   contains an add-on delta to the Tuscany SCA Java 1.6 binary distribution.
+   If you want to produce a fully self-contained binary package in the
+   binaries/target directory, you can use the command "mvn -Pselfcontained"
+   instead of "mvn" to do this.
 
 
-Running the travel sample from the build directories
-----------------------------------------------------
+Running the travel sample from the source directories
+-----------------------------------------------------
 
 The travel sample consists of a number of related scenarios.  These scenarios
 are listed below, together with instructions for running them.  The instructions
@@ -308,21 +309,24 @@ Contributions: notification, notification-ws
 Services: smsgateway-jaxws
 
 
-Running the travel sample from the distribution directories
------------------------------------------------------------
+Running the travel sample from the "binaries" directory
+-------------------------------------------------------
 
-If the travel sample was built using maven, a binary distribution
-directory will be created containing all the built jar files, together with
-some directories containing runtime dependencies for these jar files.
+If the travel sample was built using maven, a binaries/target directory
+will be created with subdirectories containing all the built jar and war
+files and runtime dependencies for the jar files.
 
-The following directories contain the jar files for the travel sample:
+The following subdirectories of binaries/target contain jar and war files
+for the travel sample:
   clients - non-SCA clients using various communication technologies
   contributions - SCA contributions for the travel sample
   launchers - executable launchers for the travel sample
   services - non-SCA services using various communication technologies
   util - jar files needed by other jars in the travel sample
+  webapps - war files for the travel sample
 
-The following directories contain runtime dependencies of the above jar files:
+The following subdirectories of binaries/target contain runtime dependencies
+for the above jar files:
   domainconfig - domain configuration files
   jaxws - JAX-WS runtime jars neeed when running the travel sample on JDK 5
   lib - Tuscany runtime jars and their dependencies needed by the travel sample
@@ -330,39 +334,40 @@ The following directories contain runtime dependencies of the above jar files:
   ode - JPA Derby database needed by the ODE runtime
   openejb - OpenEJB 3.1.2 runtime jars needed by the travel sample
 
-You can run each of the scenarios from the binary distribution by running one
-or more jar files using ant scripts that are included in the binary distribution.
+You can run each of the scenarios from the appropriate subdirectory of the
+binaries/target directory using ant scripts that are included in these
+subdirectories.
 
 The ant commands that you need to use for running each scenario are listed below.
 If multiple ant commands are listed for a scenario, they must be run in
 separate processes in the order listed.  The current directory when invoking
-the ant command must be set as follows:
+the ant command must be set to the appropriate subdirectory of binaries/target
+as follows:
  launchers/scatours-launcher-*.jar are run from the launchers directory 
  clients/scatours-client-*.jar are run from the clients directory 
  services/scatours-service-*.jar are run from the services directory
  
-To run a jar, you need to used the command "ant run-jarsuffix" where
+To run a jar, you need to use the command "ant run-jarsuffix" where
 "jarsuffix" is the last part of the jar file name omitting the standard prefix
 "scatours-client", "scatours-launcher" or "scatours-service".  For example,
 to run the "jumpstart" scenario, you would set your current directory to the
-binary distribution "launchers" directory and run the command
+binaries/target/launchers directory and run the command
   ant run-jumpstart
 This runs the travel sample jar file scatours-launcher-jumpstart.jar using a
 classpath with the required runtime dependencies from the Tuscany SCA binary
 distribution.  The location of the Tuscany SCA binary distribution is specified
 by the TUSCANY_HOME environment variable).
 
-If the travel sample binary distribution was built using the "mvn -Pselfcontained"
-command, you can use the "java -jar" command to run the travel sample executable
-jars directly as an alternative to using ant scripts.  For example, instead of
-using the command
+If the travel sample was built using the "mvn -Pselfcontained" command, you can
+use the "java -jar" command to run the travel sample executable jars directly as
+n alternative to using ant scripts.  For example, instead of using the command
   ant run-jumpstart
 you can use the command
   java -jar scatours-launcher-jumpstart.jar
 
 Here is a complete list of the ant commands to run the scenarios described above
-from the travel sample binary distribution.  These are run from the "launchers"
-directory unlesss otherwise indicated.
+from the binaries/target subdirectories.  These are run from the "launchers"
+subdirectory unlesss otherwise indicated.
 
  1) Jumpstart - First simple example of using Tuscany
    ant run-jumpstart
@@ -425,7 +430,7 @@ directory unlesss otherwise indicated.
    ant run-payment-spring-scatag
 
 14) SCA service packaged in a web application
-   not available in binary distribution
+   deploy webapps/scatours-contribution-creditcard-payment-webapp.war to Tomcat
 
 15) SCA currency converter service interoperating with SCA or non-SCA client
 
@@ -449,10 +454,10 @@ directory unlesss otherwise indicated.
    ant run-currency-converter-ws-jaxws (from "clients" directory)
 
 15f) Web application JSP client
-   not available in binary distribution
+   deploy webapps/scatours-contribution-currency-jsp.war to Tomcat
 
 15g) Web application servlet client
-   not available in binary distribution
+   deploy webapps/scatours-contribution-currency-servlet.war to Tomcat
 
 16) SCA notification service interoperating with non-SCA SMS gateway service
 
