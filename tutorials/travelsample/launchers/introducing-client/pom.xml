@@ -55,6 +55,17 @@
             <version>${tuscany.version}</version>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- The folowing dependency has been added as a workaround for issue
+           TUSCANY-3540 so that the travel sample can run on Tuscany SCA 1.6.
+           When a Tuscany SCA release with a fix for TUSCANY-3540 is available,
+           this unnecessary dependency can be removed. -->
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-host-jetty</artifactId>
+            <version>${tuscany.version}</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
     
     <build>
