@@ -1,0 +1,111 @@
+Building the Apache Tuscany SCA Travel Sample 1.0 April 2010 release distribution
+=================================================================================
+
+Initial Setup
+-------------
+
+1) Install Java SE JDK 5 or JDK 6, which can be downloaded from 
+   http://java.sun.com/javase/downloads/index.jsp. For JDK 5 use update 22
+   and for JDK 6 use update 7 (or later).
+
+2) Make sure that your JAVA_HOME environment variable is set to the newly installed 
+   JDK location, and that your PATH includes %JAVA_HOME%\bin (windows) or 
+   $JAVA_HOME/bin (unix).
+
+3) Install Apache Maven 2.0.7 or later, which can be downloaded from 
+   http://maven.apache.org/download.html. Make sure that your M2_HOME
+   environment variable is set to the installation base directory, and that
+   your PATH includes %M2_HOME%\bin (windows) or $M2_HOME/bin (unix). 
+
+4) Install Apache Ant 1.7.1 or later, which can be downloaded from 
+   http://ant.apache.org/bindownload.cgi. Make sure that your ANT_HOME
+   environment variable is set to the installation base directory, and that
+   your PATH includes %ANT_HOME%\bin (windows) or $ANT_HOME/bin (unix). 
+
+5) Download the Apache Tuscany SCA Java 1.6 (or later) binary distribution
+   from http://tuscany.apache.org/sca-java-1x-releases.html and unpack it
+   into a local directory. Set your TUSCANY_HOME environment variable to
+   the base directory containing the unpacked binary distribution.
+
+6) Download the Apache Tuscany SCA Java Travel Sample 1.0 (or later) distribution
+   from http://tuscany.apache.org/sca-java-travel-sample-1x-releases.html and
+   unpack it into a local directory.
+
+The following steps are only needed if you will be using Maven to build the
+travel sample: 
+
+ 7) Check the setting of the <tuscany.version> property in the
+    travelsample/pom.xml file.  If you want to build the travel sample using
+    a different Tuscany version, change this property as necessary.  The
+    travel sample has been tested and runs correctly with Tuscany SCA Java 1.6. 
+
+The following steps are only needed if you will be using Ant to build the
+travel sample: 
+
+ 8) Download the Apache OpenEJB 3.1.2 (or later) binary distribution from
+    http://openejb.apache.org/download.html and unpack it into a local
+    directory. Set your OPENEJB_HOME environment variable to the base directory
+    containing the unpacked binary distribution.
+
+ 9) If you are using JDK 5, download the JAX-WS reference implementation
+    version 2.1.7 from https://jax-ws.dev.java.net/2.1.7/ and unpack it into
+    a local directory. Set your JAXWS_HOME environment variable to the base
+    directory containing the unpacked download.
+
+10) Download the JUnit 4.5 (or later) binary distribution from
+    http://github.com/KentBeck/junit/downloads and unpack it into a local
+    directory. Set your the JUNIT_JAR environment variable to the full path
+    to the junit-x.y.z.jar in the unpacked binary distribution taking care
+    to replace x.y.z with the JUnit version number.
+
+
+Building using Ant
+------------------
+
+1) Change to the "travelsample" directory of the Apache Tuscany SCA Travel Sample
+   distribution which you unpacked in step 6) above.
+
+2) Run the command "ant". This will compile the complete travel sample and
+   run all of the travel sample unit tests.
+
+
+Building using Maven
+--------------------
+
+1) Change to the "travelsample" directory of the Apache Tuscany SCA Travel Sample
+   distribution which you unpacked in step 6) above.
+
+2) Run the command "mvn". You will need a live internet connection so that
+   Maven can download any required files to your local repository. This will
+   compile the complete travel sample and run all of the travel sample unit tests.
+
+   Depending on the load of remote Maven 2.0 repositories, you may have 
+   to run "mvn" several times until the required dependencies are 
+   all located in your local maven repository. It usually takes some time for 
+   maven to download required dependencies in the first build. Once all the 
+   dependencies have been downloaded you may use the -o option to run maven
+   in offline mode, for example, 'mvn clean install -o'.
+
+   When building with Maven, an executable binary package for the travel
+   sample is created in the travelsample/binaries/target directory. By default
+   this binary package is an add-on delta to the Tuscany SCA Java 1.6 binary
+   distribution. If you want to produce a fully self-contained binary package
+   in the travelsample/binaries/target directory (with no external dependencies),
+   you can use the command "mvn -Pselfcontained" instead of "mvn" when
+   building from the "travelsample" directory.
+
+
+Building the Distribution
+-------------------------
+
+1) Change to the travelsample/distribution directory.
+
+2) Run the command "mvn". This will build the distribution package
+   with .zip and .tar.gz formats in the distribution/target directory.
+
+
+Running the Travel Sample
+-------------------------
+
+Full details of how to run the travel sample can be found in the README
+file in the "travelsample" directory of the unpacked distribution.
