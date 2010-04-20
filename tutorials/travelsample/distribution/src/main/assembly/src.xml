@@ -33,7 +33,7 @@
     <fileSets>
         <fileSet>
             <directory>..</directory>
-            <outputDirectory></outputDirectory>
+            <outputDirectory>travelsample</outputDirectory>
             <excludes>
                 <exclude>**/.*</exclude>
                 <exclude>**/.*/**</exclude>
