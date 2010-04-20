@@ -1,0 +1,63 @@
+Apache Tuscany SCA Travel Sample 1.0 April 2010 Release Notes
+=============================================================
+
+The Apache Tuscany SCA Travel Sample shows how Apache Tuscany SCA
+can be used in a business application.
+
+Overview
+--------
+
+The travel sample consists of a number of scenarios which demonstrate
+various aspects of SCA and Apache Tuscany in the context of a travel
+booking application. Details of these scenarios can be found in the
+travel sample README file.
+
+Unlike other Apache Tuscany SCA samples that are included in the
+Apache Tuscany SCA distribution, the travel sample is released as a
+separate package. This matches how user applications are developed
+and makes it easier for Apache Tuscany users to use the travel sample
+as a template for developing and packaging their own applications.
+
+The travel sample distribution contains source code and build files.
+It doesn't contain binaries because one of the major purposes of this
+sample is to show users how to build and run an Apache Tuscany
+application from source code. The travel sample BUILDING file gives
+details of the steps needed to do this.
+
+See the travel sample CHANGES file for a detailed list of new features
+and bug fixes in this release.
+
+Support
+-------
+
+For more information on Apache Tuscany visit the website at:
+
+    http://tuscany.apache.org/
+ 
+Any issues with this release can be reported to Apache Tuscany
+using the mailing lists or in the JIRA issue tracker.
+
+    Mailing list archives:
+
+       http://mail-archives.apache.org/mod_mbox/tuscany-user
+       http://mail-archives.apache.org/mod_mbox/tuscany-dev/
+
+    JIRA:
+
+       http://issues.apache.org/jira/browse/TUSCANY
+
+To join the project's mailing lists follow the instructions at:
+
+    http://tuscany.apache.org/mailing-lists.html
+
+To find out more about OASIS Open CSA go to: 
+
+    http://www.oasis-opencsa.org.
+
+Apache Tuscany welcomes your help. Any contribution, including code,
+testing, improving the documentation, or bug reporting is always
+appreciated. 
+
+Thank you for using Apache Tuscany!
+
+- The Tuscany Team.
