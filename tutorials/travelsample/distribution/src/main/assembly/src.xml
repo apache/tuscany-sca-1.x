@@ -53,9 +53,7 @@
                 <include>CHANGES</include>
                 <include>LICENSE</include>
                 <include>NOTICE</include>
-                <!--
                 <include>README</include>
-                -->
                 <include>RELEASE_NOTES</include>
             </includes>
         </fileSet>
