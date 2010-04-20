@@ -43,6 +43,22 @@
                 <exclude>**/maven-eclipse.xml</exclude>
             </excludes>
         </fileSet>
+
+        <!-- Add the text files to the top-level directroy -->
+        <fileSet>
+            <directory>src/main/release</directory>
+            <outputDirectory>travelsample</outputDirectory>
+            <includes>
+                <include>BUILDING</include>
+                <include>CHANGES</include>
+                <include>LICENSE</include>
+                <include>NOTICE</include>
+                <!--
+                <include>README</include>
+                -->
+                <include>RELEASE_NOTES</include>
+            </includes>
+        </fileSet>
     </fileSets>
 
 </assembly>
