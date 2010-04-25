@@ -27,9 +27,12 @@
    This build file has been tested with JDK 5 update 22 and JDK 6 update 7.
 
    When invoking a build.xml file that imports this file, the following
-   environment variables must be set:
+   environment variable must be set:
      TUSCANY_HOME A directory containing the Tuscany SCA binary distribution.
        This build file has been tested with Tuscany SCA version 1.6.
+
+   When building from a svn checkout (but not when building from a downloaded
+   distribution), the following environment variables must be set:
      JUNIT_JAR The location of the JUnit jar file.  This build file has
        been tested with JUnit version 4.5.
      JAXWS_HOME (only if using JDK 5) A directory containing the JAX-WS
@@ -88,6 +91,15 @@
      "add-implementation-web" Adds implementation.web support to the
        installed Tuscany SCA binary distribution if not already there.
 
+   This file also defines the following targets for use with the "depends"
+   attribute on targets in the build.xml file:
+     "locate-openejb" Locates the OpenEJB dependencies needed by some
+       modules and sets the "openejb-dir" property to a directory
+       containing these dependencies.
+     "locate-jaxws" Locates the JAX-WS dependencies needed by some modules
+       when running on JDK 5, and creates a path with id "jaxws-path"
+       to bring in these dependencies.
+
    All other targets defined by this file (with names starting with "#")
    are for internal use within this file and should not be used externally.
 -->
@@ -96,9 +108,6 @@
     <property environment="env"/> 
     <fail unless="env.TUSCANY_HOME">
         Error: Please set the TUSCANY_HOME environment variable.
-    </fail>
-    <fail unless="env.JUNIT_JAR">
-        Error: Please set the JUNIT_JAR environment variable.
     </fail>
 
     <!-- check whether there are any WSDL files in or under the resource directory -->
@@ -144,6 +153,7 @@
 
     <!-- run the JDK wsimport command if available -->
     <target name="#wsimport-jdk" if="#jdk-wsimport">
+        <property name="#jaxws-tools-dir" value=""/>
         <mkdir dir="target/jaxws-source"/>
         <exec executable="${java.home}/../bin/wsimport" dir="." failonerror="true">
             <arg line="-keep -s ./target/jaxws-source -p ${package} 
@@ -151,24 +161,48 @@
         </exec>
     </target>
 
+    <!-- If building a downloaded distribution, the JAX-WS jars are in lib/jaxws -->
+    <target name="#lib-jaxws-tools-1" unless="#jdk-wsimport">
+        <condition property="#jaxws-tools-dir" value="../../../lib/jaxws">
+            <available file="../../../lib/jaxws" type="dir"/>
+        </condition>
+    </target>
+
+    <!-- If using JAX-WS jars from lib/jaxws, add dependencies from TUSCANY_HOME -->
+    <target name="#lib-jaxws-tools-2" if="#jaxws-tools-dir">
+        <property name="#jaxws-tools-deps" value="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+    </target>
+
+    <!-- If building a svn checkout, try the JAXWS_HOME environment variable -->
+    <target name="#env-jaxws-tools-1" unless="#jaxws-tools-dir">
+        <condition property="#jaxws-tools-dir" value="${env.JAXWS_HOME}/lib">
+            <available file="${env.JAXWS_HOME}/lib" type="dir"/>
+        </condition>
+    </target>
+
+    <!-- If using JAX-WS jars from JAXWS_HOME, don't need to add dependencies -->
+    <target name="#env-jaxws-tools-2" unless="#jaxws-tools-deps">
+        <property name="#jaxws-tools-deps" value=""/>
+    </target>
+
     <!-- run the com.sun.tools.ws.WsImport class in jaxws-tools.jar if available -->
     <target name="#wsimport-jaxws" unless="#jdk-wsimport">
-        <condition property="#jaxws-tools">
-            <available file="${env.JAXWS_HOME}/lib/jaxws-tools.jar" type="file"/>
-        </condition>
-        <fail unless="#jaxws-tools">
+        <fail unless="#jaxws-tools-dir">
             Error: Could not find wsimport executable or jaxws-tools.jar.
         </fail>
         <mkdir dir="target/jaxws-source"/>
         <java classname="com.sun.tools.ws.WsImport" fork="true" dir="." failonerror="true">
             <arg line="-keep -s ./target/jaxws-source -p ${package} 
                        -d ./target/classes src/main/resources/${wsdlfile}"/>
-            <classpath location="${env.JAXWS_HOME}/lib/jaxws-tools.jar"/>
+            <classpath>
+                <fileset dir="${jaxws-tools-dir}"/>
+                <pathelement location="${#jaxws-tools-deps}"/>
+            </classpath>
         </java>
     </target>
 
     <!-- run the wsimport command in JDK 6 or use jaxws-tools.jar on JDK 5 -->
-    <target name="#wsimport" depends="#is-jdk-wsimport, #wsimport-jdk, #wsimport-jaxws"/>
+    <target name="#wsimport" depends="#is-jdk-wsimport, #wsimport-jdk, #lib-jaxws-tools-1, #lib-jaxws-tools-2, #env-jaxws-tools-1, #env-jaxws-tools-2, #wsimport-jaxws"/>
 
     <!-- run the SDO XSD2JavaGenerator if required, then compile the generated Java source -->
     <target name="sdojavagen" depends="#wsdlcheck" unless="#wsdl-uptodate">
@@ -364,21 +398,51 @@
     <!-- set the Java compiler test classpath -->
     <target name="#set-test-classpath" depends="#check-test-path, #set-test-path, #default-test-path"/>
 
+    <!-- If building a downloaded distribution, the JUnit jar is in lib/junit -->
+    <target name="#lib-junit">
+        <condition property="#junit-dir" value="../../../lib/junit">
+            <available file="../../../lib/junit" type="dir"/>
+        </condition>
+    </target>
+
+    <!-- If building a svn checkout, try the JUNIT_JAR environment variable -->
+    <target name="#env-junit" unless="#junit-dir">
+        <condition property="#junit-file" value="${env.JUNIT_JAR}">
+            <available file="${env.JUNIT_JAR}" type="file"/>
+        </condition>
+        <fail unless="#junit-file">
+            Error: Couldn't find JUnit jar file.
+        </fail>
+    </target>
+
+    <!-- Define JUnit fileset using a directory -->
+    <target name="#dir-junit" if="#junit-dir">
+        <fileset id="#junit-fileset" dir="${#junit-dir}"/>
+    </target>
+
+    <!-- Define JUnit fileset using a file -->
+    <target name="#file-junit" if="#junit-file">
+        <fileset id="#junit-fileset" file="${#junit-file}"/>
+    </target>
+
+    <!-- Locate the JUnit jar file -->
+    <target name="#locate-junit" depends="#lib-junit, #env-junit, #dir-junit, #file-junit"/>
+
     <!-- compile the test classes -->
-    <target name="#test-compile" depends="#set-test-classpath">
+    <target name="#test-compile" depends="#set-test-classpath, #locate-junit">
         <javac destdir="target/test-classes" debug="true" source="1.5" target="1.5">
             <src path="src/test/java"/>
             <classpath>
                 <pathelement location="target/classes"/>
                 <path refid="#test-classpath"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-                <pathelement location="${env.JUNIT_JAR}"/>
+                <fileset refid="#junit-fileset"/>
             </classpath>
         </javac>
     </target>
 
     <!-- run the junit task -->
-    <target name="#run-junit" depends="#set-test-classpath, #set-javac-classpath">
+    <target name="#run-junit" depends="#set-test-classpath, #set-javac-classpath, #locate-junit">
         <junit printsummary="no" dir="." fork="true" forkmode="once" haltonfailure="true">
             <classpath>
                 <pathelement location="target/test-classes"/>
@@ -386,7 +450,7 @@
                 <pathelement location="target/classes"/>
                 <path refid="#javac-classpath"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-                <pathelement location="${env.JUNIT_JAR}"/>
+                <fileset refid="#junit-fileset"/>
             </classpath>
             <formatter type="plain" usefile="false"/>
             <batchtest>
@@ -552,6 +616,81 @@
 
     <!-- build a packaged jar file or war file -->
     <target name="#build-package" depends="#check-webapp, #package-war, #package-jar"/>
+
+    <!-- If running from a downloaded distribution, the OpenEJB jars are in lib/openejb -->
+    <target name="#lib-openejb">
+        <condition property="openejb-dir" value="../../../lib/openejb">
+            <available file="../../../lib/openejb" type="dir"/>
+        </condition>
+    </target>
+
+    <!-- If running from a maven build, the OpenEJB jars are in binaries/target/openejb -->
+    <target name="#binaries-openejb" unless="openejb-dir">
+        <condition property="openejb-dir" value="../../binaries/target/openejb">
+            <available file="../../binaries/target/openejb" type="dir"/>
+        </condition>
+    </target>
+
+    <!-- Could be running from an ant build of a svn checkout, so try the OPENEJB_HOME environment variable -->
+    <target name="#env-openejb" unless="openejb-dir">
+        <condition property="openejb-dir" value="${env.OPENEJB_HOME}/lib">
+            <available file="${env.OPENEJB_HOME}/lib" type="dir"/>
+        </condition>
+    </target>
+
+    <!-- For use as a dependency of "run" targets that need OpenEJB -->
+    <target name="locate-openejb" depends="#lib-openejb, #binaries-openejb, #env-openejb">
+        <fail unless="openejb-dir">
+            Error: Couldn't find OpenEJB dependencies.
+        </fail>
+    </target>
+
+    <!-- check to see if we are running on JDK 6 -->
+    <target name="#is-jdk6">
+        <condition property="#jdk6">
+            <available classname="javax.xml.ws.Endpoint"/>
+        </condition>
+    </target>
+
+    <!-- JDK 6 contains JAX-WS so we don't need it on the classpath -->
+    <target name="#jaxws-jdk6" if="#jdk6">
+        <path id="jaxws-path"/>
+        <property name="#jaxws-dir" value=""/>
+    </target>
+
+    <!-- If running from a downloaded distribution, the JAX-WS jars are in lib/jaxws -->
+    <target name="#lib-jaxws" unless="#jaxws-dir">
+        <condition property="#jaxws-dir" value="../../../lib/jaxws">
+            <available file="../../../lib/jaxws" type="dir"/>
+        </condition>
+    </target>
+
+    <!-- If running from a maven build, the JAX-WS jars are in binaries/target/jaxws -->
+    <target name="#binaries-jaxws" unless="#jaxws-dir">
+        <condition property="#jaxws-dir" value="../../binaries/target/jaxws">
+            <available file="../../binaries/target/jaxws" type="dir"/>
+        </condition>
+    </target>
+
+    <!-- Could be running from an ant build of a svn checkout, so try the JAXWS_HOME environment variable -->
+    <target name="#env-jaxws" unless="#jaxws-dir">
+        <condition property="#jaxws-dir" value="${env.JAXWS_HOME}/lib">
+            <available file="${env.JAXWS_HOME}/lib" type="dir"/>
+        </condition>
+    </target>
+
+    <!-- on JDK 5 we need to add the JAX-WS runtime to the classpath -->
+    <target name="#jaxws-jdk5" unless="#jdk6">
+        <fail unless="#jaxws-dir">
+            Error: Couldn't find JAX-WS dependencies.
+        </fail>
+        <path id="jaxws-path">
+            <fileset dir="${#jaxws-dir}"/>
+        </path>
+    </target>
+
+    <!-- For use as a dependency of "run" targets that need JAX-WS -->
+    <target name="locate-jaxws" depends="#is-jdk6, #jaxws-jdk6, #lib-jaxws, #binaries-jaxws, #env-jaxws, #jaxws-jdk5"/>
 
     <!-- for external use on the ant command line -->
     <target name="compile">

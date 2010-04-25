@@ -29,13 +29,13 @@
         <ant dir="../../services/smsgateway-ejb" target="run"/>
     </target>
 
-    <target name="run">
+    <target name="run" depends="locate-openejb">
         <java classname="scatours.NotificationEJBLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
                 <path refid="compile-path"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-                <fileset dir="${env.OPENEJB_HOME}/lib"/>
+                <fileset dir="${openejb-dir}"/>
             </classpath>
         </java>
     </target>
