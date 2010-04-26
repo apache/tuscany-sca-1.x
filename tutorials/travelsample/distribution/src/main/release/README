@@ -21,13 +21,13 @@ travelsample     top-level directory for the travel sample
   testdomain     scratch directory for trying out the domain manager
   util           utility code used by other parts of the travel sample
 
-Note1: The travel sample depends on the Apache Tuscany SCA Java 1.x binary
+Note 1: The travel sample depends on the Apache Tuscany SCA Java 1.x binary
 distribution, which is downloaded separately from the travel sample.
 To avoid needless duplication, the "lib" directory of the travel sample
 only contains dependencies that aren't provided in the current release
 of the Tuscany SCA Java 1.x binary distribution.
 
-Note2: Before attempting to build or run the travel sample, you will need to
+Note 2: Before attempting to build or run the travel sample, you will need to
 download the Apache Tuscany SCA Java 1.6 (or later) binary distribution and
 set your TUSCANY_HOME environment variable to a local directory containing
 the unpacked binary distribution. 
@@ -36,7 +36,7 @@ the unpacked binary distribution.
 Overview of the travel sample
 -----------------------------
 
-The travel sample consists of a number of related scenarios.  For each
+The travel sample consists of a number of related scenarios. For each
 scenario, this section lists the following:
  Description: A description of the scenario.
  Contributions: SCA contributions used in the scenario. Each contribution
@@ -45,7 +45,7 @@ scenario, this section lists the following:
    of the travelsample/launchers directory.
  Services: Non-SCA services used in the scenario, if any. Each non-SCA 
    service is a subdirectory of the travelsample/services directory.
- Clients: Non-SCA clients used in the scenario, if any.  Each non-SCA
+ Clients: Non-SCA clients used in the scenario, if any. Each non-SCA
    client is a subdirectory of the travelsample/clients directory.
  Webapp: Web application (.war) file used to run the scenario, for those
    scenarios that use contributions packaged as web applications and
@@ -150,45 +150,11 @@ Description: *** to be added ***
 Contributions: creditcard-payment-jaxb-policy, payment-java-policy, policy-client
 Launchers: policy
 
-13) Payment service with different implementation types
+13) Using - Using SCA Components
 
 Description: *** to be added ***
-
-13a) implementation.bpel
-
-Description: *** to be added ***
-Contributions: creditcard-payment-jaxb, emailgateway, payment-bpel, payment-bpel-process 
-Launchers: payment-bpel
-
-13b) implementation.script written in Groovy
-
-Description: *** to be added ***
-Contributions: creditcard-payment-jaxb, emailgateway, payment-groovy
-Launchers: payment-groovy
-
-13c) implementation.java
-
-Description: *** to be added ***
-Contributions: creditcard-payment-jaxb, payment-java 
-Launchers: payment-java
-
-13d) implementation.java with policy
-
-Description: *** to be added ***
-Contributions: creditcard-payment-jaxb-policy, payment-java-policy 
-Launchers: payment-java-policy
-
-13e) implementation.spring
-
-Description: *** to be added ***
-Contributions: creditcard-payment-jaxb, payment-spring
-Launchers: payment-spring
-
-13f) implementation.spring with SCA tags
-
-Description: *** to be added ***
-Contributions: creditcard-payment-jaxb, payment-spring-scatag
-Launchers: payment-spring-scatag
+Contributions: using
+Launchers: using
 
 14) SCA credit card payment service packaged as a web application
 
@@ -196,89 +162,147 @@ Description: *** to be added ***
 Contributions: creditcard-payment-jaxb, creditcard-payment-webapp
 Webapp: creditcard-payment-webapp
 
-15) SCA currency converter service interoperating with SCA or non-SCA client
+15) Payment service with different implementation types
 
 Description: *** to be added ***
 
-15a) SCA client
+15a) implementation.bpel
+
+Description: *** to be added ***
+Contributions: creditcard-payment-jaxb, emailgateway, payment-bpel, payment-bpel-process 
+Launchers: payment-bpel
+
+15b) implementation.script written in Groovy
+
+Description: *** to be added ***
+Contributions: creditcard-payment-jaxb, emailgateway, payment-groovy
+Launchers: payment-groovy
+
+15c) implementation.java
+
+Description: *** to be added ***
+Contributions: creditcard-payment-jaxb, payment-java 
+Launchers: payment-java
+
+15d) implementation.java with callback
+
+Description: *** to be added ***
+Contributions: payment-java-callback 
+Launchers: payment-java-callback
+
+15e) implementation.java with policy
+
+Description: *** to be added ***
+Contributions: creditcard-payment-jaxb-policy, payment-java-policy 
+Launchers: payment-java-policy
+
+15f) implementation.java with reference passing
+
+Description: *** to be added ***
+Contributions: payment-java-reference-pass 
+Launchers: payment-java-reference-pass
+
+15g) implementation.script written in Python
+
+Description: *** to be added ***
+Contributions: creditcard-payment-jaxb, emailgateway, payment-python
+Launchers: payment-python
+
+15h) implementation.spring
+
+Description: *** to be added ***
+Contributions: creditcard-payment-jaxb, payment-spring
+Launchers: payment-spring
+
+15i) implementation.spring with SCA tags
+
+Description: *** to be added ***
+Contributions: creditcard-payment-jaxb, payment-spring-scatag
+Launchers: payment-spring-scatag
+
+16) SCA currency converter service interoperating with SCA or non-SCA client
+
+Description: *** to be added ***
+
+16a) SCA client
 
 Description: *** to be added ***
 Contributions: currency
 Launchers: currency-converter
 
-15b) CORBA client
+16b) CORBA client
 
 Description: *** to be added ***
 Contributions: currency, currency-corba
 Launchers: currency-converter-corba
 Clients: currency-converter-corba
 
-15c) JMS client
+16c) JMS client
 
 Description: *** to be added ***
 Contributions: currency, currency-jms
 Launchers: currency-converter-jms
 Clients: currency-converter-jms
 
-15d) RMI client
+16d) RMI client
 
 Description: *** to be added ***
 Contributions: currency, currency-rmi
 Launchers: currency-converter-rmi
 Clients: currency-converter-rmi
 
-15e) JAX-WS client
+16e) JAX-WS client
 
 Description: *** to be added ***
 Contributions: currency, currency-ws
 Launchers: currency-converter-ws
 Clients: currency-converter-ws-jaxws
 
-15f) Web application JSP client
+16f) Web application JSP client
 
 Description: *** to be added ***
 Contributions: currency, currency-jsp
 Webapp: scatours-contribution-currency-jsp.war
 
-15g) Web application servlet client
+16g) Web application servlet client
 
 Description: *** to be added ***
 Contributions: currency, currency-servlet
 Webapp: scatours-contribution-currency-servlet.war
 
-16) SCA notification service interoperating with non-SCA SMS gateway service
+17) SCA notification service interoperating with non-SCA SMS gateway service
 
 Description: *** to be added ***
 
-16a) SMS gateway CORBA service
+17a) SMS gateway CORBA service
 
 Description: *** to be added ***
 Contributions: notification, notification-corba
 Services: smsgateway-corba
 Launchers: notification-corba
 
-16b) SMS gateway EJB service
+17b) SMS gateway EJB service
 
 Description: *** to be added ***
 Contributions: notification, notification-ejb
 Services: smsgateway-ejb
 Launchers: notification-ejb
 
-16c) SMS gateway JMS service
+17c) SMS gateway JMS service
 
 Description: *** to be added ***
 Contributions: notification, notification-jms
 Services: smsgateway-jms
 Launchers: notification-jms
 
-16d) SMS gateway RMI service
+17d) SMS gateway RMI service
 
 Description: *** to be added ***
 Contributions: notification, notification-rmi
 Services: smsgateway-rmi
 Launchers: notification-rmi
 
-16e) SMS gateway JAX-WS service
+17e) SMS gateway JAX-WS service
 
 Description: *** to be added ***
 Contributions: notification, notification-ws
@@ -298,7 +322,7 @@ Running travel sample scenarios from launcher source directories
 
 After building the travel sample using either Maven or Ant, you can run
 all the scenarios that have launchers by using ant scripts in the
-subdirectories of the travelsample/launchers directory.  For scenarios
+subdirectories of the travelsample/launchers directory. For scenarios
 that are packaged as web applications and don't have launchers, the next
 section describes how you can run these.
 
@@ -307,19 +331,19 @@ You can run the launcher ant scripts as follows:
  2. Change directory to travelsample/launchers/<launcher-dir> where
     <launcher-dir> is the launcher directory for the scenario that you
     want to run.
- 3. Enter the command shown in Table 1 below.  This command is usually
-    "ant run".  This runs an ant script that sets the necessary
+ 3. Enter the command shown in Table 1 below. This command is usually
+    "ant run". This runs an ant script that sets the necessary
     classpath and invokes the launcher class.
  4. Some scenarios require the above steps to be repeated multiple times
-    with different commands.  These cases are indicated by entries in
-    Table 1 with more than one command listed.  For these scenarios, all
+    with different commands. These cases are indicated by entries in
+    Table 1 with more than one command listed. For these scenarios, all
     the listed commands should be entered in separate command prompts
     from the same current directory and in the same order as shown.
  5. Some scenarios have a browser-based user interface which is started
     by entering the URL shown in Table 1 in a browser after running the
-    launcher or launchers for the scenario.  The recommended browser is
+    launcher or launchers for the scenario. The recommended browser is
     Firefox as some scenarios don't work with Internet Explorer.
-    
+
 Table 1. Running scenarios packaged as launchers and contributions
 -----------------------------------------------------------------------------------------------------
 |    Scenario           Launcher directory   Commands         URLs                                  |
@@ -355,57 +379,66 @@ Table 1. Running scenarios packaged as launchers and contributions
 -----------------------------------------------------------------------------------------------------
 | 12) Policy          | policy             | ant run        |                                       |
 -----------------------------------------------------------------------------------------------------
-| 13) Payment service implementation types                                                          |
+| 13) Using           | using              | ant run        |                                       |
+-----------------------------------------------------------------------------------------------------
+| 15) Payment service implementation types                                                          |
 |                                                                                                   |
-|      Impl type         Launcher directory      Commands     URLs                                  |
+|      Impl type          Launcher directory            Commands  URLs                              |
 -----------------------------------------------------------------------------------------------------
-| 13a) BPEL            | payment-bpel          | ant run    |                                       |
+| 15a) BPEL             | payment-bpel                | ant run |                                   |
 -----------------------------------------------------------------------------------------------------
-| 13b) Groovy          | payment-groovy        | ant run    |                                       |
+| 15b) Groovy           | payment-groovy              | ant run |                                   |
 -----------------------------------------------------------------------------------------------------
-| 13c) Java            | payment-java          | ant run    |                                       |
+| 15c) Java             | payment-java                | ant run |                                   |
 -----------------------------------------------------------------------------------------------------
-| 13d) Java + policy   | payment-java-policy   | ant run    |                                       |
+| 15d) Java + callback  | payment-java-callback       | ant run |                                   |
 -----------------------------------------------------------------------------------------------------
-| 13e) Spring          | payment-spring        | ant run    |                                       |
+| 15e) Java + policy    | payment-java-policy         | ant run |                                   |
 -----------------------------------------------------------------------------------------------------
-| 13f) Spring SCA tags | payment-spring-scatag | ant run    |                                       |
+| 15f) Java + reference | payment-java-reference-pass | ant run |                                   |
+|      passing          |                             |         |                                   |
 -----------------------------------------------------------------------------------------------------
-| 15) Currency converter service binding types                                                      |
+| 15g) Python           | payment-python              | ant run |                                   |
+-----------------------------------------------------------------------------------------------------
+| 15h) Spring           | payment-spring              | ant run |                                   |
+-----------------------------------------------------------------------------------------------------
+| 15i) Spring SCA tags  | payment-spring-scatag       | ant run |                                   |
+-----------------------------------------------------------------------------------------------------
+| 16) Currency converter service binding types                                                      |
 |                                                                                                   |
 |      Binding type  Launcher directory         Commands         URLs                               |
 -----------------------------------------------------------------------------------------------------
-| 15a) SCA         | currency-converter       | ant run        |                                    |
+| 16a) SCA         | currency-converter       | ant run        |                                    |
 -----------------------------------------------------------------------------------------------------
-| 15b) CORBA       | currency-converter-corba | ant run        |                                    |
+| 16b) CORBA       | currency-converter-corba | ant run        |                                    |
 |                  |                          | ant run-client |                                    |
 -----------------------------------------------------------------------------------------------------
-| 15c) JMS         | currency-converter-jms   | ant run        |                                    |
+| 16c) JMS         | currency-converter-jms   | ant run        |                                    |
 |                  |                          | ant run-client |                                    |
 -----------------------------------------------------------------------------------------------------
-| 15d) RMI         | currency-converter-rmi   | ant run        |                                    |
+| 16d) RMI         | currency-converter-rmi   | ant run        |                                    |
 |                  |                          | ant run-client |                                    |
 -----------------------------------------------------------------------------------------------------
-| 15e) WS          | currency-converter-ws    | ant run        |                                    |
+| 16e) WS          | currency-converter-ws    | ant run        |                                    |
 |                  |                          | ant run-client |                                    |
 -----------------------------------------------------------------------------------------------------
-| 16) Notification reference binding types                                                          |
+| 17) Notification reference binding types                                                          |
 |                                                                                                   |
 |      Binding type  Launcher directory     Commands             URLs                               |
 -----------------------------------------------------------------------------------------------------
-| 16a) CORBA       | notification-corba   | ant run-smsgateway |                                    |
+| 17a) CORBA       | notification-corba   | ant run-smsgateway |                                    |
 |                  |                      | ant run            |                                    |
 -----------------------------------------------------------------------------------------------------
-| 16b) EJB         | notification-ejb     | ant run-smsgateway |                                    |
+| 17b) EJB         | notification-ejb     | ant run-smsgateway |                                    |
 |                  |                      | ant run            |                                    |
 -----------------------------------------------------------------------------------------------------
-| 16c) JMS         | notification-jms     | ant run-smsgateway |                                    |
+| 17c) JMS         | notification-jms     | ant run-smsgateway |                                    |
 |                  |                      | ant run            |                                    |
 -----------------------------------------------------------------------------------------------------
-| 16d) RMI         | notification-rmi     | ant run-smsgateway |                                    |
+| 17d) RMI         | notification-rmi     | ant run-smsgateway |                                    |
 |                  |                      | ant run            |                                    |
 -----------------------------------------------------------------------------------------------------
-| 16e) WS          | notification-ws      | ant run-smsgateway |                                    |
+| 17e) WS          | notification-ws      | ant run-smsgateway |                                    |
 |                  |                      | ant run            |                                    |
 -----------------------------------------------------------------------------------------------------
 
@@ -414,20 +447,22 @@ Running travel sample scenarios in a Web application server
 -----------------------------------------------------------
 
 Some scenarios are packaged as web applications (.war files) and don't
-have launchers.  After building the travel sample using either Maven or Ant,
+have launchers. After building the travel sample using either Maven or Ant,
 you can use a Web application server to run these scenarios.
 
 You can run these web applications as follows:
  1. Deploy the web application (.war) file to a Web application server
-    such as Tomcat.  The .war file can be found in the directory
+    such as Tomcat. The .war file can be found in the directory
     travelsample/contributions/<contrib-dir>/target where <contrib-dir>
-    is the contribution directory listed in Table 2 below.  The name of
+    is the contribution directory listed in Table 2 below. The name of
     the .war file is scatours-contribution-<contrib-dir>.war.
  2. Start the browser-based user interface for the scenario by entering
-    its URL in a browser.  The URL for each scenario is shown in Table 2.
-    The recommended browser is Firefox because some scenarios don't work
-    with Internet Explorer.
-    
+    its URL in a browser. The URL for each scenario is shown in Table 2.
+    The host and port in the URL may need to be changed depending on the
+    configuration of the Web application server in which the web application
+    is deployed. The recommended browser is Firefox because some scenarios
+    don't work with Internet Explorer.
+
 Table 2. Running scenarios packaged as web applications
 --------------------------------------------------------------------------------------------------------------------------
 |    Scenario        | Contribution directory    | URL                                                                   |
@@ -435,17 +470,41 @@ Table 2. Running scenarios packaged as web applications
 | 14) Credit card    | creditcard-payment-webapp | http://localhost:8080/scatours-contribution-creditcard-payment-webapp |
 |     webapp service |                           |                                                                       |                                     |
 --------------------------------------------------------------------------------------------------------------------------
-| 15f) Currency      | currency-jsp              | http://localhost:8080/scatours-contribution-currency-jsp              |                        |
+| 16f) Currency      | currency-jsp              | http://localhost:8080/scatours-contribution-currency-jsp              |                        |
 |      converter JSP |                           |                                                                       |
 --------------------------------------------------------------------------------------------------------------------------
-| 15g) Currency      | currency-servlet          | http://localhost:8080/scatours-contribution-currency-servlet          |                        |
+| 16g) Currency      | currency-servlet          | http://localhost:8080/scatours-contribution-currency-servlet          |                        |
 |      converter     |                           |                                                                       |
 |      servlet       |                           |                                                                       |
 --------------------------------------------------------------------------------------------------------------------------
 
-Note: The host name and port number in the above URLs may differ depending
-on the configuration of the Web application server in which the web application
-was deployed.
+
+Running the domain manager
+--------------------------
+
+The travelsample/testdomain directory is provided for the purpose
+of running the domain manager and creating your own configuration.
+You can do this as follows:
+
+1) Open a command prompt and make travelsample/testdomain your
+   current directory.
+
+2) Enter "ant run" to start the domain manager.
+
+3) In a browser, start the domain manager GUI by entering the URL
+   "http://localhost:9990/ui/home". The recommended browser is Firefox
+   because the domain manager GUI doesn't work with Internet Explorer.
+
+4) In the browser window, create or update your domain manager
+   configuration using the domain manager GUI.
+
+5) To exit the domain manager, enter "q" in the command prompt window.
+   The domain configuration is saved automatically and will be
+   restored the next time you start the domain manager.
+
+6) If you want to remove your saved configuration and start again from
+   a clean slate, enter either "ant clean" or "mvn clean" from the
+   command prompt window.
 
 
 Running travel sample scenarios from the "binaries" directory
@@ -453,7 +512,7 @@ Running travel sample scenarios from the "binaries" directory
 
 If the travel sample was built using Maven, a binaries/target directory
 will be created with subdirectories containing all the built jar and war
-files and runtime dependencies for these files.  This enables you to see
+files and runtime dependencies for these files. This enables you to see
 how a Tuscany application can be packaged in binary form by an application
 developer for distribution to users of the application.
 
@@ -471,7 +530,7 @@ for the above files:
   domainconfig - domain configuration files
   jaxws - JAX-WS runtime jars neeed when running the travel sample on JDK 5
   lib - Tuscany runtime jars and their dependencies needed by the travel sample
-     (only present if the travel sample was  built using "mvn -Pselfcontained")
+     (only present if the travel sample was built using "mvn -Pselfcontained")
   ode - JPA Derby database needed by the ODE runtime
   openejb - OpenEJB 3.1.2 runtime jars needed by the travel sample
 
@@ -480,16 +539,16 @@ the following:
  1. Open a command prompt. 
  2. Change directory to travelsample/binaries/target/<runtime-dir> where
     <runtime-dir> is the directory for the scenario shown in Table 3 below.
- 3. Enter the command for the scenario shown in Table 3.  This runs an
+ 3. Enter the command for the scenario shown in Table 3. This runs an
     ant script that sets the necessary classpath and invokes the launcher class.
  4. Some scenarios require the above steps to be repeated multiple times
-    with different commands.  These cases are indicated by entries in
-    Table 3 with more than one directory and command listed.  For these
+    with different commands. These cases are indicated by entries in
+    Table 3 with more than one directory and command listed. For these
     scenarios, all the listed commands should be entered in separate command
     prompts from the listed current directories in the same order as shown.
  5. Some scenarios have a browser-based user interface which is started
     by entering the URL shown in Table 3 in a browser after running the
-    launcher or launchers for the scenario.  The recommended browser is
+    launcher or launchers for the scenario. The recommended browser is
     Firefox as some scenarios don't work with Internet Explorer.
 
 Table 3. Running scenarios with launchers from the binaries directory
@@ -527,71 +586,82 @@ Table 3. Running scenarios with launchers from the binaries directory
 --------------------------------------------------------------------------------------------------------
 | 12) Policy          | launchers | ant run-policy             |                                       |
 --------------------------------------------------------------------------------------------------------
-| 13) Payment service implementation types                                                             |
+| 13) Using           | launchers | ant run-using              |                                       |
+--------------------------------------------------------------------------------------------------------
+| 15) Payment service implementation types                                                             |
 |                                                                                                      |
-|      Impl type         Directory   Commands                        URLs                              |
+|      Impl type          Directory   Commands                              URLs                       |
 --------------------------------------------------------------------------------------------------------
-| 13a) BPEL            | launchers | ant run-payment-bpel          |                                   |
+| 15a) BPEL             | launchers | ant run-payment-bpel                |                            |
 --------------------------------------------------------------------------------------------------------
-| 13b) Groovy          | launchers | ant run-payment-groovy        |                                   |
+| 15b) Groovy           | launchers | ant run-payment-groovy              |                            |
 --------------------------------------------------------------------------------------------------------
-| 13c) Java            | launchers | ant run-payment-java          |                                   |
+| 15c) Java             | launchers | ant run-payment-java                |                            |
 --------------------------------------------------------------------------------------------------------
-| 13d) Java + policy   | launchers | ant run-payment-java-policy   |                                   |
+| 15d) Java + callback  | launchers | ant run-payment-java-callback       |                            |
 --------------------------------------------------------------------------------------------------------
-| 13e) Spring          | launchers | ant run-payment-spring        |                                   |
+| 15e) Java + policy    | launchers | ant run-payment-java-policy         |                            |
 --------------------------------------------------------------------------------------------------------
-| 13f) Spring SCA tags | launchers | ant run-payment-spring-scatag |                                   |
+| 15f) Java + reference | launchers | ant run-payment-java-reference-pass |                            |
+|      passing          |           |                                     |                            |
 --------------------------------------------------------------------------------------------------------
-| 15) Currency converter service binding types                                                         |
+| 15g) Python           | launchers | ant run-payment-python              |                            |
+--------------------------------------------------------------------------------------------------------
+| 15h) Spring           | launchers | ant run-payment-spring              |                            |
+--------------------------------------------------------------------------------------------------------
+| 15i) Spring SCA tags  | launchers | ant run-payment-spring-scatag       |                            |
+--------------------------------------------------------------------------------------------------------
+| 16) Currency converter service binding types                                                         |
 |                                                                                                      |
 |      Binding type  Directories  Commands                              URLs                           |
 --------------------------------------------------------------------------------------------------------
-| 15a) SCA         | launchers  | ant run-currency-converter          |                                |
+| 16a) SCA         | launchers  | ant run-currency-converter          |                                |
 --------------------------------------------------------------------------------------------------------
-| 15b) CORBA       | launchers  | ant run-currency-converter-corba    |                                |
+| 16b) CORBA       | launchers  | ant run-currency-converter-corba    |                                |
 |                  | clients    | ant run-currency-converter-corba    |                                |
 --------------------------------------------------------------------------------------------------------
-| 15c) JMS         | launchers  | ant run-currency-converter-jms      |                                |
+| 16c) JMS         | launchers  | ant run-currency-converter-jms      |                                |
 |                  | clients    | ant run-currency-converter-jms      |                                |
 --------------------------------------------------------------------------------------------------------
-| 15d) RMI         | launchers  | ant run-currency-converter-rmi      |                                |
+| 16d) RMI         | launchers  | ant run-currency-converter-rmi      |                                |
 |                  | clients    | ant run-currency-converter-rmi      |                                |
 --------------------------------------------------------------------------------------------------------
-| 15e) WS          | launchers  | ant run-currency-converter-ws       |                                |
+| 16e) WS          | launchers  | ant run-currency-converter-ws       |                                |
 |                  | clients    | ant run-currency-converter-ws-jaxws |                                |
 --------------------------------------------------------------------------------------------------------
-| 16) Notification reference binding types                                                             |
+| 17) Notification reference binding types                                                             |
 |                                                                                                      |
 |      Binding type  Directories  Commands                     URLs                                    |
 --------------------------------------------------------------------------------------------------------
-| 16a) CORBA       | services   | ant run-smsgateway-corba   |                                         |
+| 17a) CORBA       | services   | ant run-smsgateway-corba   |                                         |
 |                  | launchers  | ant run-notification-corba |                                         |
 --------------------------------------------------------------------------------------------------------
-| 16b) EJB         | services   | ant run-smsgateway-ejb     |                                         |
+| 17b) EJB         | services   | ant run-smsgateway-ejb     |                                         |
 |                  | launchers  | ant run-notification-ejb   |                                         |
 --------------------------------------------------------------------------------------------------------
-| 16c) JMS         | services   | ant run-smsgateway-jms     |                                         |
+| 17c) JMS         | services   | ant run-smsgateway-jms     |                                         |
 |                  | launchers  | ant run-notification-jms   |                                         |
 --------------------------------------------------------------------------------------------------------
-| 16d) RMI         | services   | ant run-smsgateway-rmi     |                                         |
+| 17d) RMI         | services   | ant run-smsgateway-rmi     |                                         |
 |                  | launchers  | ant run-notification-rmi   |                                         |
 --------------------------------------------------------------------------------------------------------
-| 16e) WS          | services   | ant run-smsgateway-jaxws   |                                         |
+| 17e) WS          | services   | ant run-smsgateway-jaxws   |                                         |
 |                  | launchers  | ant run-notification-ws    |                                         |
 --------------------------------------------------------------------------------------------------------
 
 The scenarios packaged as web applications can be run using .war files
 from the binaries/target/webapps directory as follows:
  1. Deploy the web application (.war) file to a Web application server
-    such as Tomcat.  The .war file can be found in the directory
+    such as Tomcat. The .war file can be found in the directory
     travelsample/binaries/target/webapps and has the name listed in
     Table 4 below.
  2. Start the browser-based user interface for the scenario by entering
-    its URL in a browser.  The URL for each scenario is shown in Table 4.
-    The recommended browser is Firefox because some scenarios don't work
-    with Internet Explorer.
-    
+    its URL in a browser. The URL for each scenario is shown in Table 4.
+    The host and port in the URL may need to be changed depending on the
+    configuration of the Web application server in which the web application
+    is deployed. The recommended browser is Firefox because some scenarios
+    don't work with Internet Explorer.
+
 Table 4. Running scenarios packaged as web applications
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 |    Scenario        | Web application file                                | URL                                                                   |
@@ -599,30 +669,26 @@ Table 4. Running scenarios packaged as web applications
 | 14) Credit card    | scatours-contribution-creditcard-payment-webapp.war | http://localhost:8080/scatours-contribution-creditcard-payment-webapp |
 |     webapp service |                                                     |                                                                       |                                     |
 ----------------------------------------------------------------------------------------------------------------------------------------------------
-| 15f) Currency      | scatours-contribution-currency-jsp.war              | http://localhost:8080/scatours-contribution-currency-jsp              |                        |
+| 16f) Currency      | scatours-contribution-currency-jsp.war              | http://localhost:8080/scatours-contribution-currency-jsp              |                        |
 |      converter JSP |                                                     |                                                                       |
 ----------------------------------------------------------------------------------------------------------------------------------------------------
-| 15g) Currency      | scatours-contribution-currency-servlet.war          | http://localhost:8080/scatours-contribution-currency-servlet          |                        |
+| 16g) Currency      | scatours-contribution-currency-servlet.war          | http://localhost:8080/scatours-contribution-currency-servlet          |                        |
 |      converter     |                                                     |                                                                       |
 |      servlet       |                                                     |                                                                       |
 ----------------------------------------------------------------------------------------------------------------------------------------------------
-
-Note: The host name and port number in the above URLs may differ depending
-on the configuration of the Web application server in which the web application
-was deployed.
 
 
 Building and running the self-contained travel sample
 -----------------------------------------------------
 
-The travel sample can be built using the "mvn -Pselfcontained" command.  This
+The travel sample can be built using the "mvn -Pselfcontained" command. This
 puts all of its runtime dependencies under the binaries/target directory and
 doesn't use any files from the Tuscany SCA Java binary distribution.
 
 If the travel sample has been built in this way, you can run it as described
-in the previous section using the same ant scripts.  Alternatively you can
+in the previous section using the same ant scripts. Alternatively you can
 use the "java -jar" command to run the travel sample executable jars directly
-using the manifest dependencies in the jar files.  For example, the commands
+using the manifest dependencies in the jar files. For example, the commands
   ant run-currency-converter-ws
   ant run-currency-converter-ws-jaxws
   ant run-smsgateway-corba
@@ -630,7 +696,7 @@ could be replaced by the commands
   java -jar scatours-launcher-currency-converter-ws.jar
   java -jar scatours-client-currency-converter-ws-jaxws.jar
   java -jar scatours-service-smsgateway-corba.jar
-    
+
 
 Cross-reference of contributions to scenarios
 ---------------------------------------------
@@ -642,20 +708,20 @@ contributions/buildingblocks  7
 contributions/buildingblocks-client  7
 contributions/calendar  4
 contributions/car  5, 6
-contributions/common  4, 5, 6
-contributions/creditcard-payment-jaxb  13a, 13b, 13c, 13e, 13f, 14
-contributions/creditcard-payment-jaxb-policy  5, 6, 12, 13d
+contributions/common  4, 5, 6, 12
+contributions/creditcard-payment-jaxb  15a, 15b, 15c, 15g, 15h, 15i, 14
+contributions/creditcard-payment-jaxb-policy  5, 6, 12, 15e
 contributions/creditcard-payment-sdo  9
 contributions/creditcard-payment-webapp  14
-contributions/currency  4, 5, 6, 15a, 15b, 15c, 15d, 15e, 15f, 15g
-contributions/currency-corba  15b
-contributions/currency-jms  15c
-contributions/currency-jsp  15f
-contributions/currency-rmi  15d
-contributions/currency-servlet  15g
-contributions/currency-ws  15e
+contributions/currency  4, 5, 6, 16a, 16b, 16c, 16d, 16e, 16f, 16g
+contributions/currency-corba  16b
+contributions/currency-jms  16c
+contributions/currency-jsp  16f
+contributions/currency-rmi  16d
+contributions/currency-servlet  16g
+contributions/currency-ws  16e
 contributions/databinding-client  9
-contributions/emailgateway  13a, 13b
+contributions/emailgateway  15a, 15b, 15g
 contributions/feed-logger  10
 contributions/flight  4, 5, 6
 contributions/fullapp-bespoketrip  5, 6
@@ -671,22 +737,28 @@ contributions/interaction-service-remote  4
 contributions/introducing-client  2, 3
 contributions/introducing-tours  2, 3
 contributions/introducing-trips  1, 2, 3, 7
-contributions/notification  16a, 16b, 16c, 16d
-contributions/notification-corba  16a
-contributions/notification-ejb  16b
-contributions/notification-jms  16c
-contributions/notification-rmi  16d
-contributions/payment-bpel  13a
-contributions/payment-bpel-process  13a
-contributions/payment-groovy  13b
-contributions/payment-java  9, 13c
-contributions/payment-java-policy  12, 13d
-contributions/payment-spring  13e
+contributions/notification  17a, 17b, 17c, 17d, 17e
+contributions/notification-corba  17a
+contributions/notification-ejb  17b
+contributions/notification-jms  17c
+contributions/notification-rmi  17d
+contributions/notification-ws  17e
+contributions/payment-bpel  15a
+contributions/payment-bpel-process  15a
+contributions/payment-groovy  15b
+contributions/payment-java  9, 15c
+contributions/payment-java-callback  15d
+contributions/payment-java-policy  12, 15e
+contributions/payment-java-reference-pass  15f
+contributions/payment-python  15g
+contributions/payment-spring  15h
 contributions/payment-spring-policy  5, 6
-contributions/payment-spring-scatag  13f
+contributions/payment-spring-scatag  15i
 contributions/policy-client  12
 contributions/scatours  5, 6
 contributions/shoppingcart  4, 5, 6
 contributions/travelcatalog  5, 6
 contributions/trip  5, 6
 contributions/tripbooking  5, 6
+contributions/trip-policy  12
+contributions/using  13

@@ -31,33 +31,6 @@ Initial Setup
    from http://tuscany.apache.org/sca-java-travel-sample-1x-releases.html and
    unpack it into a local directory.
 
-The following steps are only needed if you will be using Maven to build the
-travel sample: 
-
- 7) Check the setting of the <tuscany.version> property in the
-    travelsample/pom.xml file.  If you want to build the travel sample using
-    a different Tuscany version, change this property as necessary.  The
-    travel sample has been tested and runs correctly with Tuscany SCA Java 1.6. 
-
-The following steps are only needed if you will be using Ant to build the
-travel sample: 
-
- 8) Download the Apache OpenEJB 3.1.2 (or later) binary distribution from
-    http://openejb.apache.org/download.html and unpack it into a local
-    directory. Set your OPENEJB_HOME environment variable to the base directory
-    containing the unpacked binary distribution.
-
- 9) If you are using JDK 5, download the JAX-WS reference implementation
-    version 2.1.7 from https://jax-ws.dev.java.net/2.1.7/ and unpack it into
-    a local directory. Set your JAXWS_HOME environment variable to the base
-    directory containing the unpacked download.
-
-10) Download the JUnit 4.5 (or later) binary distribution from
-    http://github.com/KentBeck/junit/downloads and unpack it into a local
-    directory. Set your the JUNIT_JAR environment variable to the full path
-    to the junit-x.y.z.jar in the unpacked binary distribution taking care
-    to replace x.y.z with the JUnit version number.
-
 
 Building using Ant
 ------------------
@@ -109,3 +82,58 @@ Running the Travel Sample
 
 Full details of how to run the travel sample can be found in the README
 file in the "travelsample" directory of the unpacked distribution.
+
+
+Changing the Tuscany SCA Java version used for the build
+--------------------------------------------------------
+
+If you are using Maven to build the travel sample, the maven build files
+are set up to use the 1.6 version of Tuscany SCA Java. You can build
+the travel sample using some other version of Tuscany SCA Java (for example,
+a development snapshot) by changing the <tuscany.version> property in the
+travelsample/pom.xml file.
+
+If you are using Ant to build the travel sample, you can change the
+version of Tuscany SCA Java used by the build by changing the setting of
+the TUSCANY_HOME environment variable before running the build.
+
+
+Building a development snaphost of the travel sample code
+---------------------------------------------------------
+   
+You can build the latest development snapshot of the travel sample by
+following these steps:
+
+1) Install Apache Subversion 1.4.0 or later, which can be downloaded from 
+http://subversion.apache.org/packages.html. Make sure that your PATH
+includes the "bin" subdirectory of the installation base directory. 
+
+2) Check out the travel sample code from svn using the following command:
+svn co http://svn.apache.org/repos/asf/tuscany/sca-java-1.x/trunk/tutorials/travelsample   
+
+3) Change to the travelsample directory of your local travel sample checkout
+and run the command "mvn". This will use Maven to compile the complete
+travel sample and run all of the travel sample unit tests.
+
+4) If you want to build the travel sample using Ant instead of Maven,
+you need to peform the following additional steps:
+
+  4a) Download the JUnit 4.5 (or later) binary distribution from
+  http://github.com/KentBeck/junit/downloads and unpack it into a local
+  directory. Set your the JUNIT_JAR environment variable to the full path
+  to the junit-x.y.z.jar in the unpacked binary distribution taking care
+  to replace x.y.z with the JUnit version number.
+
+  4b) Download the Apache OpenEJB 3.1.2 (or later) binary distribution
+  from http://openejb.apache.org/download.html and unpack it into a local
+  directory. Set your OPENEJB_HOME environment variable to the base directory
+  containing the unpacked binary distribution.
+
+  4c) If you are using JDK 5, download the JAX-WS reference implementation
+  version 2.1.7 from https://jax-ws.dev.java.net/2.1.7/ and unpack it into
+  a local directory. Set your JAXWS_HOME environment variable to the base
+  directory containing the unpacked download.
+
+  4d) Change to the travelsample directory of your local travel sample
+  checkout and run the command "ant". This will use Ant to compile the
+  complete travel sample and run all of the travel sample unit tests.
