@@ -50,7 +50,7 @@ import com.metaparadigm.jsonrpc.JSONRPCBridge;
 import com.metaparadigm.jsonrpc.JSONRPCResult;
 import com.metaparadigm.jsonrpc.JSONRPCServlet;
 
-import com.sun.xml.internal.messaging.saaj.util.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * Servlet that handles JSON-RPC requests invoking SCA services.
@@ -137,7 +137,8 @@ public class JSONRPCServiceServlet extends JSONRPCServlet {
 
             //parse the GET QueryString
             try {
-                String params = Base64.base64Decode(URLDecoder.decode(request.getParameter("params"),charset));
+                String reqParams = URLDecoder.decode(request.getParameter("params"),charset);
+                String params = new String(Base64.decodeBase64(reqParams.getBytes()));
                 
                 StringBuffer sb = new StringBuffer();
                 sb.append("{");
