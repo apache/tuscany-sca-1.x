@@ -20,6 +20,8 @@ package supplychain.customer;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import supplychain.OSGiBundleImpl;
 import supplychain.retailer.Retailer;
@@ -30,7 +32,7 @@ import supplychain.retailer.RetailerQuery;
  */
 public class OSGiCustomerWithQueryImpl extends OSGiBundleImpl implements Customer {
     
-    private static ArrayList<String> outstandingOrders = new ArrayList<String>();
+    private static List<String> outstandingOrders = Collections.synchronizedList(new ArrayList<String>());
     
     private Retailer retailer;
     private RetailerQuery retailerQuery;
