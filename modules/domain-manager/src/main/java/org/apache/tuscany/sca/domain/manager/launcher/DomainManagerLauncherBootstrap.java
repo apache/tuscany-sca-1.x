@@ -48,7 +48,6 @@ public class DomainManagerLauncherBootstrap {
         
         public void start() {
             threadContextClassLoader = Thread.currentThread().getContextClassLoader();
-            boolean started = false;
             try {
                 Thread.currentThread().setContextClassLoader(runtimeClassLoader);
                 SCANodeFactory factory = SCANodeFactory.newInstance();
@@ -58,12 +57,8 @@ public class DomainManagerLauncherBootstrap {
                 // Set the domain manager's root directory
                 DomainManagerConfiguration domainManagerConfiguration = ((SCAClient) node).getService(DomainManagerConfiguration.class, "DomainManagerConfigurationComponent");
                 domainManagerConfiguration.setRootDirectory(rootDirectory);
-                
-                started = true;
             } finally {
-                if (!started) {
-                    Thread.currentThread().setContextClassLoader(threadContextClassLoader);
-                }
+                Thread.currentThread().setContextClassLoader(threadContextClassLoader);
             }
         }
         
