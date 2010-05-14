@@ -96,7 +96,7 @@
         <ant dir="scatours" target="${target}"/>
         <ant dir="trip" target="${target}"/>
         <ant dir="trip-policy" target="${target}"/>
-        <ant dir="using" target="${target}"/>
+        <ant dir="usingsca" target="${target}"/>
     </target>
 
 </project>

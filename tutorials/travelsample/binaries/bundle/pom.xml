@@ -347,7 +347,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-contribution-using</artifactId>
+            <artifactId>scatours-contribution-usingsca</artifactId>
             <version>${pom.version}</version>
         </dependency>
         <dependency>
@@ -522,7 +522,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>scatours-launcher-using</artifactId>
+            <artifactId>scatours-launcher-usingsca</artifactId>
             <version>${pom.version}</version>
         </dependency>
         <dependency>

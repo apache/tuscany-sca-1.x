@@ -317,10 +317,10 @@
         </java>
     </target>
 
-    <target name="run-using">
+    <target name="run-usingsca">
         <java classname="scatours.UsingLauncher" fork="true" failonerror="true">
             <classpath>
-                <pathelement location="scatours-launcher-using.jar"/>
+                <pathelement location="scatours-launcher-usingsca.jar"/>
                 <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>

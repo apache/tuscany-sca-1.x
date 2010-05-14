@@ -73,7 +73,7 @@
         <ant dir="payment-groovy" target="${target}"/>
         <ant dir="payment-python" target="${target}"/>
         <ant dir="policy" target="${target}"/>
-        <ant dir="using" target="${target}"/>
+        <ant dir="usingsca" target="${target}"/>
     </target>
 
 </project>
