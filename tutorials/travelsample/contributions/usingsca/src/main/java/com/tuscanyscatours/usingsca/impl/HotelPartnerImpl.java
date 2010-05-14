@@ -16,21 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.tuscanyscatours.using.impl;
+package com.tuscanyscatours.usingsca.impl;
 
 import java.util.Date;
-import org.osoa.sca.annotations.Reference;
-import com.tuscanyscatours.Cars;
+import com.tuscanyscatours.Hotels;
 
-public class CarPartnerImpl implements Cars {
+public class HotelPartnerImpl implements Hotels {
 
-    @Reference
-    protected Cars[] cars;
-
-    @Reference(required=false)
-    protected Cars[] luxuryCars;
-    
-    public String bookCar(Date pickup, int days, String carClass) {
-        return cars[0].bookCar(pickup, days, carClass);
+    public String bookHotel(String hotelCode, Date date, int days, String roomType) {
+        System.out.println("Booking confirmed for hotel " + hotelCode + " arriving on " +
+                           date + " for " + days + " days in a " + roomType + " room"); 
+        return "HP456";
     }
 }

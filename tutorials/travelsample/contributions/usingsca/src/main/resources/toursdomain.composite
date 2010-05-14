@@ -22,7 +22,7 @@
            name="toursdomain">
     <component name="TripBooking">
         <implementation.java
-              class="com.tuscanyscatours.using.impl.TripBookingImpl" />
+              class="com.tuscanyscatours.usingsca.impl.TripBookingImpl" />
         <reference name="flights">
             <binding.ws
                 uri="http://flightbookingservice.com:8084/Flights" />
@@ -34,6 +34,6 @@
     </component>
     <component name="CarPartner">
         <implementation.java
-              class="com.tuscanyscatours.using.impl.CarVendorImpl" />
+              class="com.tuscanyscatours.usingsca.impl.CarVendorImpl" />
     </component>
 </composite>

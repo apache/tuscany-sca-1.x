@@ -16,30 +16,19 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.tuscanyscatours.using.impl;
+package com.tuscanyscatours.usingsca.impl;
 
-import java.math.BigDecimal;
-import org.osoa.sca.annotations.Property;
-import com.tuscanyscatours.CurrencyConverter;
+import java.util.Date;
+import com.tuscanyscatours.Cars;
 
-public class CurrencyConverterImpl implements CurrencyConverter {
+public class CarVendorImpl implements Cars {
 
-    @Property
-    protected String fromCurrency;
+    protected int minAge; // implicitly defines an SCA property
 
-    @Property
-    protected String toCurrency;
-
-    public BigDecimal convert(BigDecimal amount) {
-        return amount.multiply(getRate(toCurrency))
-                     .divide(getRate(fromCurrency), 2, 0);
-    }
-
-    private BigDecimal getRate(String currency) {
-        int rate = 0; 
-        for (int i = 0; i < currency.length(); i++) {
-            rate += currency.codePointAt(i);
-        }
-        return new BigDecimal(rate).divide(new BigDecimal(100));
+    public String bookCar(Date pickup, int days, String carClass) {
+        System.out.println("Booking confirmed for pickup date " + pickup +
+                           " duration " + days + " days in a " + carClass +
+                           " class car"); 
+        return "CV234";
     }
 }

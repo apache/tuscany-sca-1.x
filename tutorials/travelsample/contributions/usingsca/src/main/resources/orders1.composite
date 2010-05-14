@@ -24,7 +24,7 @@
 
     <component name="Customer">
         <implementation.java
-              class="com.tuscanyscatours.using.impl.CustomerImpl" />
+              class="com.tuscanyscatours.usingsca.impl.CustomerImpl" />
         <property name="billingAddress" element="t:billingAddress">
             <t:billingAddress xmlns="">
                 <street>123 Main Street</street>

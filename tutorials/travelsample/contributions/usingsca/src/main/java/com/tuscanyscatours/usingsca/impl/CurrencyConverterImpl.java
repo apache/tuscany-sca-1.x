@@ -16,16 +16,30 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.tuscanyscatours.using.impl;
+package com.tuscanyscatours.usingsca.impl;
 
-import java.util.Date;
-import com.tuscanyscatours.Hotels;
+import java.math.BigDecimal;
+import org.osoa.sca.annotations.Property;
+import com.tuscanyscatours.CurrencyConverter;
 
-public class HotelPartnerImpl implements Hotels {
+public class CurrencyConverterImpl implements CurrencyConverter {
 
-    public String bookHotel(String hotelCode, Date date, int days, String roomType) {
-        System.out.println("Booking confirmed for hotel " + hotelCode + " arriving on " +
-                           date + " for " + days + " days in a " + roomType + " room"); 
-        return "HP456";
+    @Property
+    protected String fromCurrency;
+
+    @Property
+    protected String toCurrency;
+
+    public BigDecimal convert(BigDecimal amount) {
+        return amount.multiply(getRate(toCurrency))
+                     .divide(getRate(fromCurrency), 2, 0);
+    }
+
+    private BigDecimal getRate(String currency) {
+        int rate = 0; 
+        for (int i = 0; i < currency.length(); i++) {
+            rate += currency.codePointAt(i);
+        }
+        return new BigDecimal(rate).divide(new BigDecimal(100));
     }
 }

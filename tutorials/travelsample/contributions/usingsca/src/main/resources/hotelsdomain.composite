@@ -22,7 +22,7 @@
            name="hotelsdomain">
     <component name="HotelPartner">
         <implementation.java class=
-           "com.tuscanyscatours.using.impl.HotelPartnerImpl" />
+           "com.tuscanyscatours.usingsca.impl.HotelPartnerImpl" />
         <service name="Hotels">
             <binding.ws uri=
                 "http://tuscanyscahotels.com:8083/Hotels" />

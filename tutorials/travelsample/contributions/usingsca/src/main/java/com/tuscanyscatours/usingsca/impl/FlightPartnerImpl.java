@@ -16,19 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.tuscanyscatours.using.impl;
+package com.tuscanyscatours.usingsca.impl;
 
 import java.util.Date;
-import com.tuscanyscatours.Cars;
+import com.tuscanyscatours.Flights;
 
-public class CarVendorImpl implements Cars {
+public class FlightPartnerImpl implements Flights {
 
-    protected int minAge; // implicitly defines an SCA property
-
-    public String bookCar(Date pickup, int days, String carClass) {
-        System.out.println("Booking confirmed for pickup date " + pickup +
-                           " duration " + days + " days in a " + carClass +
-                           " class car"); 
-        return "CV234";
+    public String bookFlight(String flightNumber, Date date, int seats, String flightClass) {
+        System.out.println("Booking confirmed for flight " + flightNumber + " on date " +
+                           date + " with " + seats + " seats in " + flightClass + " class"); 
+        return "FP345";
     }
 }

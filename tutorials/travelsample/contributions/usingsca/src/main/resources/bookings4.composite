@@ -22,7 +22,7 @@
            name="bookings4">
     <component name="TripBooking">
         <implementation.java
-              class="com.tuscanyscatours.using.impl.TripBookingImpl" />
+              class="com.tuscanyscatours.usingsca.impl.TripBookingImpl" />
         <service name="Bookings">
             <binding.ws uri="http://tuscanyscatours.com:8085/Bookings" />
             <binding.jms uri="jms:Bookings" />
@@ -37,6 +37,6 @@
     </component>
     <component name="HotelPartner">
         <implementation.java
-            class="com.tuscanyscatours.using.impl.HotelPartnerImpl" />
+            class="com.tuscanyscatours.usingsca.impl.HotelPartnerImpl" />
     </component>
 </composite>

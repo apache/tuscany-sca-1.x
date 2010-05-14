@@ -22,15 +22,15 @@
            name="carbookings1">
     <component name="CarPartner">
         <implementation.java
-            class="com.tuscanyscatours.using.impl.CarPartnerImpl" />
+            class="com.tuscanyscatours.usingsca.impl.CarPartnerImpl" />
         <reference name="cars" target="JoesCars KensCars" />
     </component>
     <component name="JoesCars">
         <implementation.java
-            class="com.tuscanyscatours.using.impl.CarVendorImpl" />
+            class="com.tuscanyscatours.usingsca.impl.CarVendorImpl" />
     </component>
     <component name="KensCars">
         <implementation.java
-            class="com.tuscanyscatours.using.impl.CarVendorImpl" />
+            class="com.tuscanyscatours.usingsca.impl.CarVendorImpl" />
     </component>
 </composite>
