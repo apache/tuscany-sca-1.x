@@ -1,0 +1,139 @@
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+-->
+
+<project name="scatours-binaries" default="compile">
+    <property environment="env"/> 
+    <fail unless="env.TUSCANY_HOME">
+        Error: Please set the TUSCANY_HOME environment variable.
+    </fail>
+
+    <target name="check-lib-dir">
+        <!-- check whether there is a lib directory (it only exists when building the distribution) -->
+        <condition property="lib-dir">
+            <available file="../../lib" type="dir"/>
+        </condition>
+    </target>
+
+    <target name="no-lib-dir" unless="lib-dir">
+        <echo>The ant build for "binaries" only produces output when building from the distribution.</echo>
+    </target>
+
+    <target name="compile" depends="check-lib-dir, no-lib-dir" if="lib-dir">
+
+        <!-- copy jars and build.xml to target/clients --> 
+        <mkdir dir="target/clients"/>
+        <copy todir="target/clients" flatten="true">
+            <fileset dir="../clients">
+                <include name="**/scatours-client-*.jar"/>
+            </fileset>
+        </copy>
+        <copy file="src/main/resources/build-clients.xml" tofile="target/clients/build.xml"/>
+
+        <!-- copy jars and files to target/contributions --> 
+        <mkdir dir="target/contributions"/>
+        <copy todir="target/contributions" flatten="true">
+            <fileset dir="../contributions">
+                <include name="**/target/scatours-contribution-*.jar"/>
+                <exclude name="**/target/scatours-contribution-payment-bpel-process.jar"/>
+            </fileset>
+        </copy>
+        <mkdir dir="target/contributions/scatours-contribution-payment-bpel-process"/>
+        <unzip dest="target/contributions/scatours-contribution-payment-bpel-process">
+            <fileset dir="../contributions">
+                <include name="**/target/scatours-contribution-payment-bpel-process.jar"/>
+            </fileset>
+        </unzip>
+
+        <!-- copy files to target/domainconfig --> 
+        <mkdir dir="target/domainconfig"/>
+        <unzip dest="target/domainconfig">
+            <fileset dir="../domainconfig">
+                <include name="**/scatours-domainconfig-*.jar"/>
+            </fileset>
+            <patternset>
+                <exclude name="META-INF"/>
+                <exclude name="META-INF/**/*"/>
+            </patternset>
+        </unzip>
+
+        <!-- copy jars to target/jaxws --> 
+        <mkdir dir="target/jaxws"/>
+        <copy todir="target/jaxws">
+            <fileset dir="../../lib/jaxws">
+                <exclude name="jaxws-tools*.jar"/>
+            </fileset>
+        </copy>
+
+        <!-- copy jars and build.xml to target/launchers --> 
+        <mkdir dir="target/launchers"/>
+        <copy todir="target/launchers" flatten="true">
+            <fileset dir="../launchers">
+                <include name="**/scatours-launcher-*.jar"/>
+                <exclude name="**/scatours-launcher-jumpstart.jar"/>
+            </fileset>
+        </copy>
+        <copy file="src/main/resources/build-launchers.xml" tofile="target/launchers/build.xml"/>
+
+        <!-- copy files to target/ode --> 
+        <mkdir dir="target/ode"/>
+        <unzip dest="target/ode">
+            <fileset dir="${env.TUSCANY_HOME}/lib">
+                <include name="ode-dao-jpa-ojpa-derby*.zip"/>
+            </fileset>
+        </unzip>
+
+        <!-- copy jars to target/openejb --> 
+        <mkdir dir="target/openejb"/>
+        <copy todir="target/openejb">
+            <fileset dir="../../lib/openejb"/>
+        </copy>
+
+        <!-- copy jars and build.xml to target/services --> 
+        <mkdir dir="target/services"/>
+        <copy todir="target/services" flatten="true">
+            <fileset dir="../services">
+                <include name="**/scatours-service-*.jar"/>
+            </fileset>
+        </copy>
+        <copy file="src/main/resources/build-services.xml" tofile="target/services/build.xml"/>
+
+        <!-- copy jars and build-defs.xml to target/util --> 
+        <mkdir dir="target/util"/>
+        <copy todir="target/util" flatten="true">
+            <fileset dir="../util">
+                <include name="**/scatours-util-*.jar"/>
+            </fileset>
+            <fileset file="src/main/resources/build-defs.xml"/>
+        </copy>
+
+        <!-- copy jars to target/webapps -->
+        <mkdir dir="target/webapps"/>
+        <copy todir="target/webapps" flatten="true">
+            <fileset dir="../contributions">
+                <include name="**/scatours-contribution-*.war"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+    <target name="clean">
+        <delete dir="target" includeemptydirs="true"/>
+    </target>
+
+</project>

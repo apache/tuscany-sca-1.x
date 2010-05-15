@@ -608,11 +608,12 @@ You can do this as follows:
 Running travel sample scenarios from the "binaries" directory
 -------------------------------------------------------------
 
-If the travel sample was built using Maven, a binaries/target directory
-will be created with subdirectories containing all the built jar and war
-files and runtime dependencies for these files. This enables you to see
-how a Tuscany application can be packaged in binary form by an application
-developer for distribution to users of the application.
+If the travel sample was built from the distribution using Ant or Maven,
+a binary package for the travel sample will be created in the binaries/target
+directory and its subdirectories. This binary package contains all the built
+jar and war files and runtime dependencies for these files. By looking at the
+contents of the binaries/target directory tree you can see how to package a
+Yuscany application in binary form for distribution to users of the application.
 
 The following subdirectories of binaries/target contain jar and war files
 for the travel sample:
@@ -632,8 +633,8 @@ for the above files:
   ode - JPA Derby database needed by the ODE runtime
   openejb - OpenEJB 3.1.2 runtime jars needed by the travel sample
 
-You can run the travel sample scenarios that have launchers by doing
-the following:
+To use the binary package to run the travel sample scenarios packaged with
+launchers, you can do the following:
  1. Open a command prompt. 
  2. Change directory to travelsample/binaries/target/<runtime-dir> where
     <runtime-dir> is the directory for the scenario shown in Table 3 below.
@@ -649,7 +650,7 @@ the following:
     launcher or launchers for the scenario. The recommended browser is
     Firefox as some scenarios don't work with Internet Explorer.
 
-Table 3. Running scenarios with launchers from the binaries directory
+Table 3. Running scenarios with launchers from the binaries/target directory
 -------------------------------------------------------------------------------------------------------------------
 |    Scenario            Directory    Commands                              URLs                                  |
 -------------------------------------------------------------------------------------------------------------------
@@ -747,8 +748,9 @@ Table 3. Running scenarios with launchers from the binaries directory
 |                      | launchers  | ant run-notification-ws             |                                       |
 -------------------------------------------------------------------------------------------------------------------
 
-The scenarios packaged as web applications can be run using .war files
-from the binaries/target/webapps directory as follows:
+Some scenarios are packaged as web applications and don't have launchers.
+You can run these using .war files from the binaries/target/webapps
+directory as follows:
  1. Deploy the web application (.war) file to a Web application server
     such as Tomcat. The .war file can be found in the directory
     travelsample/binaries/target/webapps and has the name listed in
