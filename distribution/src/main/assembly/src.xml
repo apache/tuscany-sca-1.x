@@ -47,7 +47,7 @@
         <!-- Add the text files to the top-level directroy -->
         <fileSet>
             <directory>src/main/release</directory>
-            <outputDirectory>travelsample</outputDirectory>
+            <outputDirectory></outputDirectory>
             <includes>
                 <include>BUILDING</include>
                 <include>CHANGES</include>
