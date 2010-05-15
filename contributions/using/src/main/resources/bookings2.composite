@@ -25,7 +25,6 @@
             class="com.tuscanyscatours.using.impl.TripBookingImpl" />
         <reference name="cars" target="CarPartner/Cars" />
         <reference name="flights" target="FlightPartner/Flights" />
-        <reference name="hotels" />
     </component>
     <wire source="TripBooking/hotels" target="HotelPartner" />
     <component name="CarPartner">

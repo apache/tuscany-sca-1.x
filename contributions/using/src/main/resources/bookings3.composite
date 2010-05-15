@@ -23,9 +23,6 @@
     <component name="TripBooking" autowire="true">
         <implementation.java
             class="com.tuscanyscatours.using.impl.TripBookingImpl" />
-        <reference name="cars" />
-        <reference name="flights" />
-        <reference name="hotels" />
     </component>
     <component name="CarPartner">
         <implementation.java

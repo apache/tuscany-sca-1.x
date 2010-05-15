@@ -24,7 +24,6 @@
         <implementation.java
             class="com.tuscanyscatours.using.impl.CarPartnerImpl" />
         <reference name="cars" target="JoesCars KensCars" />
-        <reference name="luxuryCars" />
     </component>
     <component name="JoesCars">
         <implementation.java
