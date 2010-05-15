@@ -72,7 +72,7 @@
                 <module>payment-groovy</module>
                 <module>payment-python</module>
                 <module>policy</module>
-                <module>using</module>
+                <module>usingsca</module>
             </modules>
         </profile>
 
