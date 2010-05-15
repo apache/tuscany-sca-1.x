@@ -1,5 +1,5 @@
-README for the Apache Tuscany SCA Travel Sample 1.0 April 2010
-==============================================================
+README for the Apache Tuscany SCA Travel Sample 1.0 May 2010
+============================================================
 
 Structure of the travel sample
 ------------------------------
@@ -188,26 +188,41 @@ Launchers: help-pages
 
 12) Blog feed
 
-Description: *** to be added ***
+Description: An SCA component implementation of a blog is exposed as a
+ feed via the Atom protocol using binding.atom and via the RSS protocol
+ using binding.rss.  For each protocol there are example implementations
+ using two different approaches: the getAll() method and the Collection API.
 Contributions: blog-feed
 Launchers: blog-feed
 
 13) Feed logger
 
-Description: *** to be added ***
+Description: An SCA component implementation is connected to an Atom feed
+ using binding.atom and an RSS feed using binding.rss.  The SCA component
+ receives and logs entries from both feeds.
 Contributions: feed-logger
 Launchers: feed-logger
 
 14) Data binding
 
-Description: *** to be added ***
+Description: A Payment component that uses JAXB as its data representation
+ invokes a CreditCardPayment component that uses SDO to represent its data.
+ The Tuscany data binding framework converts automatically between these
+ different data representations.
 Contributions: creditcard-payment-sdo, databinding-client, payment-java
 Launchers: databinding
 
 15) Policy
 
-Description: *** to be added ***
-Contributions: creditcard-payment-jaxb-policy, payment-java-policy, policy-client
+Description: The implementation of the Trip component has the tuscany:logging
+ implementation policy applied to it which means that all invocations of all
+ its services go through the JDKLoggingPolicyInterceptor class.  In addition
+ the CreditCardPayment service has the "authentication" interaction policy
+ intent which requires invocations of this service from the Payment component
+ to use a policy set that satisifies this intent by providing authentication
+ of the invoking client.
+Contributions: creditcard-payment-jaxb-policy, payment-java-policy,
+ policy-client, trip-policy
 Launchers: policy
 
 16) SCA credit card payment service packaged as a web application
@@ -284,87 +299,110 @@ Description: In SCA a service can be configured with a variety of bindings
 
 18a) SCA client
 
-Description: The CurrencyConverter service uses the default binding and is
- invoked by an SCA client running in the same process.
+Description: The CurrencyConverter service uses the default SCA binding and
+ is invoked by an SCA client running in the same process.
 Contributions: currency
 Launchers: currency-converter
 
 18b) CORBA client
 
-Description: The CurrencyConverter service is exposed using binding.corba and is
- invoked by a CORBA Java client running in a different process.
+Description: The CurrencyConverter service is exposed as a CORBA service
+ using binding.corba and is invoked by a Java CORBA client running in a
+ different process.
 Contributions: currency, currency-corba
 Launchers: currency-converter-corba
 Clients: currency-converter-corba
 
 18c) JMS client
 
-Description: *** to be added ***
+Description: The CurrencyConverter service is exposed as a JMS service
+ using binding.jms and is invoked by an ActiveMQ JMS client running in
+ a different process.
 Contributions: currency, currency-jms
 Launchers: currency-converter-jms
 Clients: currency-converter-jms
 
 18d) RMI client
 
-Description: *** to be added ***
+Description: The CurrencyConverter service is exposed as an RMI service
+ using binding.rmi and is invoked by a Java RMI client running in a
+ different process.
 Contributions: currency, currency-rmi
 Launchers: currency-converter-rmi
 Clients: currency-converter-rmi
 
 18e) JAX-WS client
 
-Description: *** to be added ***
+Description: The CurrencyConverter service is exposed as a web service
+ using binding.ws and is invoked over SOAP/HTTP by a JAX-WS client
+ running in a different process.
 Contributions: currency, currency-ws
 Launchers: currency-converter-ws
 Clients: currency-converter-ws-jaxws
 
 18f) Web application JSP client
 
-Description: *** to be added ***
+Description:  The CurrencyConverter service is deployed as a web
+ application using the default SCA binding and is invoked from the
+ same process by a JSP client that's deployed as part of the same
+ web application.
 Contributions: currency, currency-jsp
 Webapp: scatours-contribution-currency-jsp.war
 
 18g) Web application servlet client
 
-Description: *** to be added ***
+Description:  The CurrencyConverter service is deployed as a web
+ application using the default SCA binding and is invoked from the
+ same process using a servlet in the same web application which
+ generates HTML to display a client page.
 Contributions: currency, currency-servlet
 Webapp: scatours-contribution-currency-servlet.war
 
 19) SCA notification service interoperating with non-SCA SMS gateway service
 
-Description: *** to be added ***
+Description: SCA references can invoke non-SCA services using a range
+ of different communication protocols which are selected by choosing
+ a suitable binding to configure the reference.  This scenario contains
+ a number of examples showing an SCA Notification service using an
+ SCA reference configured with different bindings to invoke a non-SCA
+ SMSGateway service over various different protocols.
 
 19a) SMS gateway CORBA service
 
-Description: *** to be added ***
+Description: The SCA reference uses binding.corba to invoke an SMSGateway
+ Java CORBA service running in a different process.
 Contributions: notification, notification-corba
 Services: smsgateway-corba
 Launchers: notification-corba
 
 19b) SMS gateway EJB service
 
-Description: *** to be added ***
+Description: The SCA reference uses binding.ejb to invoke an SMSGateway
+ EJB session bean running on OpenEJB in a different process.
 Contributions: notification, notification-ejb
 Services: smsgateway-ejb
 Launchers: notification-ejb
 
 19c) SMS gateway JMS service
 
-Description: *** to be added ***
+Description: The SCA reference uses binding.jms to invoke an SMSGateway
+ JMS service running on ActiveMQ in a different process.
 Contributions: notification, notification-jms
 Services: smsgateway-jms
 Launchers: notification-jms
 
 19d) SMS gateway RMI service
 
-Description: *** to be added ***
+Description: The SCA reference uses binding.rmi to invoke an SMSGateway
+ RMI service running in a different process.
 Contributions: notification, notification-rmi
 Services: smsgateway-rmi
 Launchers: notification-rmi
 
 19e) SMS gateway JAX-WS service
 
-Description: *** to be added ***
+Description: The SCA reference uses binding.ws to invoke an SMSGateway
+ JAX-WS web service running in a different process.
 Contributions: notification, notification-ws
 Services: smsgateway-jaxws
 Launchers: notification-ws
