@@ -18,11 +18,13 @@ separate package. This matches how user applications are developed
 and makes it easier for Apache Tuscany users to use the travel sample
 as a template for developing and packaging their own applications.
 
-The travel sample distribution contains source code and build files.
-It doesn't contain binaries because one of the major purposes of this
-sample is to show users how to build and run an Apache Tuscany
-application from source code. The travel sample BUILDING file gives
-details of the steps needed to do this.
+The travel sample distribution contains source code and build files for
+the travel sample, together with binary dependencies of the travel sample
+that aren't included in the Apache Tuscany SCA Java binary distribution.
+The distribution doesn't include binaries for the travel sample because
+one of the major purposes of this sample is to show users how to build
+and run an Apache Tuscany application from source code. See the BUILDING
+and README files for details of the steps needed to do this.
 
 See the travel sample CHANGES file for a detailed list of new features
 and bug fixes in this release.
