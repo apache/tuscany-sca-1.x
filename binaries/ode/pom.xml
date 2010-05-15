@@ -25,12 +25,11 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <version>1.0-SNAPSHOT</version>
-
-    <!-- This module brings in the database needed by the ODE runtime. -->
     <artifactId>scatours-binaries-ode</artifactId>
     <name>Apache Tuscany SCA Tours Binaries ODE Database</name>
     <packaging>pom</packaging>
+
+    <!-- This module brings in the database needed by the ODE runtime. -->
 
     <dependencies>
         <dependency>

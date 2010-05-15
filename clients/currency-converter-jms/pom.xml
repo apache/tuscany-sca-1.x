@@ -25,7 +25,6 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <version>1.0-SNAPSHOT</version>
     <artifactId>scatours-client-currency-converter-jms</artifactId>
     <name>Apache Tuscany SCA Tours Currency Converter JMS Client</name>
 
