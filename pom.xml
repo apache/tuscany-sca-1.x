@@ -19,14 +19,18 @@
 -->
 <project>
     <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <scatours.version>1.0-SNAPSHOT</scatours.version>
+        <tuscany.version>1.6</tuscany.version>
+    </properties>
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.6</version>
+        <version>${tuscany.version}</version>
     </parent>
     <artifactId>scatours</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>${scatours.version}</version>
     <name>Apache Tuscany SCA Tours Travel Sample</name>
 
     <repositories>
@@ -92,11 +96,6 @@
             </properties>
         </profile>
     </profiles>
-
-    <properties>
-        <scatours.version>1.0-SNAPSHOT</scatours.version>
-        <tuscany.version>1.6</tuscany.version>
-    </properties>
 
     <modules>
         <module>util</module>
