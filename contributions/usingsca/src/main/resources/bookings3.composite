@@ -22,18 +22,18 @@
            name="bookings3">
     <component name="TripBooking" autowire="true">
         <implementation.java
-            class="com.tuscanyscatours.using.impl.TripBookingImpl" />
+            class="com.tuscanyscatours.usingsca.impl.TripBookingImpl" />
     </component>
     <component name="CarPartner">
         <implementation.java
-            class="com.tuscanyscatours.using.impl.CarVendorImpl" />
+            class="com.tuscanyscatours.usingsca.impl.CarVendorImpl" />
     </component>
     <component name="FlightPartner">
         <implementation.java
-            class="com.tuscanyscatours.using.impl.FlightPartnerImpl" />
+            class="com.tuscanyscatours.usingsca.impl.FlightPartnerImpl" />
     </component>
     <component name="HotelPartner">
         <implementation.java
-            class="com.tuscanyscatours.using.impl.HotelPartnerImpl" />
+            class="com.tuscanyscatours.usingsca.impl.HotelPartnerImpl" />
     </component>
 </composite>

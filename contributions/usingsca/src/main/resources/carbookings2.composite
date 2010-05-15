@@ -22,16 +22,16 @@
            name="carbookings2">
     <component name="CarPartner">
         <implementation.java
-            class="com.tuscanyscatours.using.impl.CarPartnerImpl" />
+            class="com.tuscanyscatours.usingsca.impl.CarPartnerImpl" />
     </component>
     <wire source="CarPartner/cars" target="JoesCars" />
     <wire source="CarPartner/cars" target="KensCars" />
     <component name="JoesCars">
         <implementation.java
-            class="com.tuscanyscatours.using.impl.CarVendorImpl" />
+            class="com.tuscanyscatours.usingsca.impl.CarVendorImpl" />
     </component>
     <component name="KensCars">
         <implementation.java
-            class="com.tuscanyscatours.using.impl.CarVendorImpl" />
+            class="com.tuscanyscatours.usingsca.impl.CarVendorImpl" />
     </component>
 </composite>

@@ -21,14 +21,14 @@
            targetNamespace="http://tuscanyscatours.com/"
            name="converter">
     <component name="EURJPYConverter">
-        <implementation.java
-            class="com.tuscanyscatours.using.impl.CurrencyConverterImpl" />
+        <implementation.java class=
+            "com.tuscanyscatours.usingsca.impl.CurrencyConverterImpl" />
         <property name="fromCurrency">EUR</property>
         <property name="toCurrency">JPY</property>
     </component>
     <component name="USDGBPConverter">
-        <implementation.java
-            class="com.tuscanyscatours.using.impl.CurrencyConverterImpl" />
+        <implementation.java class=
+            "com.tuscanyscatours.usingsca.impl.CurrencyConverterImpl" />
         <property name="fromCurrency">USD</property>
         <property name="toCurrency">GBP</property>
     </component>

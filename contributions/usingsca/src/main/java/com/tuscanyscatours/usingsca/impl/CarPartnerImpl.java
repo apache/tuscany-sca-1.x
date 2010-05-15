@@ -16,16 +16,21 @@
  * specific language governing permissions and limitations
  * under the License.    
  */
-package com.tuscanyscatours.using.impl;
+package com.tuscanyscatours.usingsca.impl;
 
 import java.util.Date;
-import com.tuscanyscatours.Flights;
+import org.osoa.sca.annotations.Reference;
+import com.tuscanyscatours.Cars;
 
-public class FlightPartnerImpl implements Flights {
+public class CarPartnerImpl implements Cars {
 
-    public String bookFlight(String flightNumber, Date date, int seats, String flightClass) {
-        System.out.println("Booking confirmed for flight " + flightNumber + " on date " +
-                           date + " with " + seats + " seats in " + flightClass + " class"); 
-        return "FP345";
+    @Reference
+    protected Cars[] cars;
+
+    @Reference(required=false)
+    protected Cars[] luxuryCars;
+    
+    public String bookCar(Date pickup, int days, String carClass) {
+        return cars[0].bookCar(pickup, days, carClass);
     }
 }
