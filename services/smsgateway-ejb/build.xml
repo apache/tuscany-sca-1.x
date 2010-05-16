@@ -28,7 +28,7 @@
               fork="true" failonerror="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
-                <fileset dir="${openejb-dir}"/>
+                <files refid="openejb-files"/>
             </classpath>
         </java>
     </target>

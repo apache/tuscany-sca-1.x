@@ -94,8 +94,8 @@
    This file also defines the following targets for use with the "depends"
    attribute on targets in the build.xml file:
      "locate-openejb" Locates the OpenEJB dependencies needed by some
-       modules and sets the "openejb-dir" property to a directory
-       containing these dependencies.
+       modules and sets the "openejb-files" files resource to bring in
+       these dependencies.
      "locate-jaxws" Locates the JAX-WS dependencies needed by some modules
        when running on JDK 5, and creates a path with id "jaxws-path"
        to bring in these dependencies.
@@ -619,30 +619,41 @@
 
     <!-- If running from a downloaded distribution, the OpenEJB jars are in lib/openejb -->
     <target name="#lib-openejb">
-        <condition property="openejb-dir" value="../../../lib/openejb">
+        <condition property="#openejb-reldir" value="../../../lib/openejb">
             <available file="../../../lib/openejb" type="dir"/>
         </condition>
     </target>
 
     <!-- If running from a maven build, the OpenEJB jars are in binaries/target/openejb -->
-    <target name="#binaries-openejb" unless="openejb-dir">
-        <condition property="openejb-dir" value="../../binaries/target/openejb">
+    <target name="#binaries-openejb" unless="#openejb-reldir">
+        <condition property="#openejb-reldir" value="../../binaries/target/openejb">
             <available file="../../binaries/target/openejb" type="dir"/>
         </condition>
     </target>
 
+    <!-- Add the Tuscany runtime to the OpenEJB directory -->
+    <target name="#tuscany-openejb" if="#openejb-reldir">
+        <property name="#openejb-tuscany" value=""/>
+        <dirname property="#ejbdir" file="${#openejb-reldir}"/>
+        <property name="#openejb-dir" value="${#ejbdir}/openejb"/>
+    </target>
+
     <!-- Could be running from an ant build of a svn checkout, so try the OPENEJB_HOME environment variable -->
-    <target name="#env-openejb" unless="openejb-dir">
-        <condition property="openejb-dir" value="${env.OPENEJB_HOME}/lib">
+    <target name="#env-openejb" unless="#openejb-dir">
+        <condition property="#openejb-dir" value="${env.OPENEJB_HOME}/lib">
             <available file="${env.OPENEJB_HOME}/lib" type="dir"/>
         </condition>
     </target>
 
     <!-- For use as a dependency of "run" targets that need OpenEJB -->
-    <target name="locate-openejb" depends="#lib-openejb, #binaries-openejb, #env-openejb">
-        <fail unless="openejb-dir">
+    <target name="locate-openejb" depends="#lib-openejb, #binaries-openejb, #tuscany-openejb, #env-openejb">
+        <fail unless="#openejb-dir">
             Error: Couldn't find OpenEJB dependencies.
         </fail>
+        <files id="openejb-files">
+            <include if="#openejb-dir" name="${#openejb-dir}/*"/>
+            <include if="#openejb-tuscany" name="${env.TUSCANY_HOME}/lib/*"/>
+        </files>
     </target>
 
     <!-- check to see if we are running on JDK 6 -->
