@@ -29,7 +29,10 @@
         <fileset dir="${env.TUSCANY_HOME}/modules" includes="tuscany-node-launcher-*.jar"/>
     </path>
 
-    <path id="scatours.tuscany-openejb">
+    <path id="scatours.openejb-runtime">
+        <!-- We need the following if the jars were built using ant and have no manifest classpath -->
+        <fileset dir="../openejb"/>
+        <!-- The openejb directory doesn't include all dependencies, so bring these in from Tuscany -->
         <fileset dir="${env.TUSCANY_HOME}/lib">
             <!-- exclude some jars to prevent them being loaded by OpenEJB -->
             <exclude name="tuscany-sca-manifest.jar"/>
@@ -41,6 +44,13 @@
             <exclude name="org.apache.felix.main-*.jar"/>
             <exclude name="saxon-*.jar"/>
         </fileset>
+    </path>
+
+    <path id="scatours.jaxws-runtime">
+        <!-- We need the following if the jars were built using ant and have no manifest classpath -->
+        <fileset dir="../jaxws"/>
+        <!-- The jaxws directory doesn't include all dependencies, so bring these in from Tuscany -->
+        <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
     </path>
 
 </project>
