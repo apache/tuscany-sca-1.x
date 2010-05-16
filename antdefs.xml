@@ -151,14 +151,17 @@
         </condition>
     </target>
 
-    <!-- run the JDK wsimport command if available -->
+    <!-- run the JDK wsimport command if available, then compile the generated Java source -->
     <target name="#wsimport-jdk" if="#jdk-wsimport">
         <property name="#jaxws-tools-dir" value=""/>
         <mkdir dir="target/jaxws-source"/>
         <exec executable="${java.home}/../bin/wsimport" dir="." failonerror="true">
             <arg line="-keep -s ./target/jaxws-source -p ${package} 
-                       -d ./target/classes src/main/resources/${wsdlfile}"/>
+                       -Xnocompile src/main/resources/${wsdlfile}"/>
         </exec>
+        <javac destdir="target/classes" debug="true" source="1.5" target="1.5">
+            <src path="target/jaxws-source"/>
+        </javac>
     </target>
 
     <!-- If building a downloaded distribution, the JAX-WS jars are in lib/jaxws -->
