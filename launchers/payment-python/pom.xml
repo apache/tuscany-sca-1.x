@@ -98,8 +98,52 @@
     </dependencies>
     
     <build>
-       <finalName>${artifactId}</finalName>
+        <finalName>${artifactId}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/jaxws-source</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>1.12</version>
+                <executions>
+                    <execution>
+                        <id>wsimport</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>com.tuscanyscatours.payment</packageName>
+                            <wsdlDirectory>${basedir}/src/main/resources</wsdlDirectory>
+                            <wsdlFiles>
+                                <wsdlFile>Payment.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <sourceDestDir>${project.build.directory}/jaxws-source</sourceDestDir>
+                            <staleFile>${project.build.directory}/jaxws-source/stale/payment.stale</staleFile>
+                            <verbose>false</verbose>
+                            <xnocompile>true</xnocompile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
