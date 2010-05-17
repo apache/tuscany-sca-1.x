@@ -22,11 +22,6 @@
 
     <target name="wsdljava">
         <antcall target="wsimport">
-            <param name="wsdlfile" value="CreditCardPayment.wsdl"/>
-            <param name="javaclass" value="com/tuscanyscatours/payment/creditcard/CreditCardPayment.class"/>
-            <param name="package" value="com.tuscanyscatours.payment.creditcard"/>
-        </antcall>
-        <antcall target="wsimport">
             <param name="wsdlfile" value="EmailGateway.wsdl"/>
             <param name="javaclass" value="com/tuscanyscatours/emailgateway/EmailGateway.class"/>
             <param name="package" value="com.tuscanyscatours.emailgateway"/>
