@@ -32,7 +32,6 @@ public class PaymentLauncher {
     public static void main(String[] args) throws Exception {
         SCANode node = SCANodeFactory.newInstance().createSCANode(null, 
         		                                                  locate("payment-groovy"),
-        		                                                  locate("creditcard-payment-jaxb"),
         		                                                  locate("emailgateway"));
         node.start();
         
