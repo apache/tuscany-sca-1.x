@@ -22,9 +22,7 @@
     <path id="compile-path">
         <pathelement path="../../util/launcher-common/target/scatours-util-launcher-common.jar"/>
     </path>
-    <path id="package-path">
-        <pathelement path="../util/scatours-util-launcher-common.jar"/>
-    </path>
+    <property name="package-path" value="../util/scatours-util-launcher-common.jar ../ode/"/>
 
     <target name="wsdljava">
         <antcall target="wsimport">
