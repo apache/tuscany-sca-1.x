@@ -138,7 +138,6 @@
         <include name="rampart-core-1.4.jar"/>
         <include name="rampart-policy-1.4.jar"/>
         <include name="rampart-trust-1.4.jar"/>
-        <include name="servlet-api-2.5.jar"/>
         <include name="stax-api-1.0-2.jar"/>
         <include name="woden-api-1.0M8.jar"/>
         <include name="woden-impl-dom-1.0M8.jar"/>

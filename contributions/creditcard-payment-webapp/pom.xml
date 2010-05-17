@@ -57,6 +57,12 @@
             <artifactId>scatours-contribution-creditcard-payment-jaxb</artifactId>
             <version>${pom.version}</version>
             <scope>runtime</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
