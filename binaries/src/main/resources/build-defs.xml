@@ -29,6 +29,13 @@
         <fileset dir="${env.TUSCANY_HOME}/modules" includes="tuscany-node-launcher-*.jar"/>
     </path>
 
+    <path id="scatours.tuscany-openejb">
+        <!-- We need the following if the jars were built using ant and have no manifest classpath -->
+        <fileset dir="../openejb"/>
+        <!-- The openejb directory doesn't include all dependencies, so bring these in from Tuscany -->
+        <fileset dir="${env.TUSCANY_HOME}/lib"/>
+    </path>
+
     <path id="scatours.openejb-runtime">
         <!-- We need the following if the jars were built using ant and have no manifest classpath -->
         <fileset dir="../openejb"/>
