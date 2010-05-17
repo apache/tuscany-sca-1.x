@@ -227,10 +227,13 @@ Launchers: policy
 
 16) SCA credit card payment service packaged as a web application
 
-Description: The CreditCardPayment service is packaged as a web application
- (.war file) including all its Tuscany runtime dependencies, so that it
- can be deployed to a Web application server such as Apache Tomcat. The web
- application also includes a JSP that invokes the CreditCardPayment service.
+Description: The CreditCardPayment service is packaged in a web application
+ (.war file) including all its Tuscany runtime dependencies and suitable
+ for deployment to a Web application server such as Apache Tomcat. The
+ service is configured with a <binding.ws> endpoint which is exposed by
+ Apache Tomcat and will display its WSDL in response to a ?wsdl request.
+ The web application also includes a JSP which provides a user interface
+ for invoking the CreditCardPayment service.
 Contributions: creditcard-payment-jaxb, creditcard-payment-webapp
 Webapp: creditcard-payment-webapp
 
@@ -437,8 +440,8 @@ You can run the launcher ant scripts as follows:
     Table 1 with more than one command listed. For these scenarios, all
     the listed commands should be entered in separate command prompts
     from the same current directory and in the same order as shown.
- 5. Some scenarios have a browser-based user interface which is started
-    by entering the URL shown in Table 1 in a browser after running the
+ 5. Some scenarios have a browser-based user interface which is displayed
+    by entering the URLs shown in Table 1 in a browser after running the
     launcher or launchers for the scenario. The recommended browser is
     Firefox as some scenarios don't work with Internet Explorer.
 
@@ -554,27 +557,26 @@ You can run these web applications as follows:
     travelsample/contributions/<contrib-dir>/target where <contrib-dir>
     is the contribution directory listed in Table 2 below. The name of
     the .war file is scatours-contribution-<contrib-dir>.war.
- 2. Start the browser-based user interface for the scenario by entering
-    its URL in a browser. The URL for each scenario is shown in Table 2.
-    The host and port in the URL may need to be changed depending on the
+ 2. Display the browser-based user interface for the scenario by entering
+    its URLs in a browser. The URLs for each scenario are shown in Table 2.
+    The host and port in these URLs may need to be changed depending on the
     configuration of the Web application server in which the web application
-    is deployed. The recommended browser is Firefox because some scenarios
-    don't work with Internet Explorer.
+    is deployed. These scenarios work in both Firefox and Internet Explorer.
 
 Table 2. Running scenarios packaged as web applications
---------------------------------------------------------------------------------------------------------------------------
-|    Scenario        | Contribution directory    | URL                                                                   |
---------------------------------------------------------------------------------------------------------------------------
-| 16) Credit card    | creditcard-payment-webapp | http://localhost:8080/scatours-contribution-creditcard-payment-webapp |
-|     webapp service |                           |                                                                       |                                     |
---------------------------------------------------------------------------------------------------------------------------
-| 18f) Currency      | currency-jsp              | http://localhost:8080/scatours-contribution-currency-jsp              |                        |
-|      converter JSP |                           |                                                                       |
---------------------------------------------------------------------------------------------------------------------------
-| 18g) Currency      | currency-servlet          | http://localhost:8080/scatours-contribution-currency-servlet          |                        |
-|      converter     |                           |                                                                       |
-|      servlet       |                           |                                                                       |
---------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------
+|    Scenario        | Contribution directory    | URLs                                                                                         |
+-------------------------------------------------------------------------------------------------------------------------------------------------
+| 16) Credit card    | creditcard-payment-webapp | http://localhost:8080/scatours-contribution-creditcard-payment-webapp                        |
+|     webapp service |                           | http://localhost:8080/scatours-contribution-creditcard-payment-webapp/CreditCardPayment?wsdl |
+-------------------------------------------------------------------------------------------------------------------------------------------------
+| 18f) Currency      | currency-jsp              | http://localhost:8080/scatours-contribution-currency-jsp                                     |
+|      converter JSP |                           |                                                                                              |
+-------------------------------------------------------------------------------------------------------------------------------------------------
+| 18g) Currency      | currency-servlet          | http://localhost:8080/scatours-contribution-currency-servlet                                 |
+|      converter     |                           |                                                                                              |
+|      servlet       |                           |                                                                                              |
+-------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 Running the domain manager
@@ -755,27 +757,26 @@ directory as follows:
     such as Tomcat. The .war file can be found in the directory
     travelsample/binaries/target/webapps and has the name listed in
     Table 4 below.
- 2. Start the browser-based user interface for the scenario by entering
-    its URL in a browser. The URL for each scenario is shown in Table 4.
-    The host and port in the URL may need to be changed depending on the
+ 2. Display the browser-based user interface for the scenario by entering
+    its URLs in a browser. The URLs for each scenario are shown in Table 4.
+    The host and port in these URLs may need to be changed depending on the
     configuration of the Web application server in which the web application
-    is deployed. The recommended browser is Firefox because some scenarios
-    don't work with Internet Explorer.
+    is deployed. These scenarios work in both Firefox and Internet Explorer.
 
 Table 4. Running scenarios packaged as web applications
-----------------------------------------------------------------------------------------------------------------------------------------------------
-|    Scenario        | Web application file                                | URL                                                                   |
-----------------------------------------------------------------------------------------------------------------------------------------------------
-| 16) Credit card    | scatours-contribution-creditcard-payment-webapp.war | http://localhost:8080/scatours-contribution-creditcard-payment-webapp |
-|     webapp service |                                                     |                                                                       |                                     |
-----------------------------------------------------------------------------------------------------------------------------------------------------
-| 18f) Currency      | scatours-contribution-currency-jsp.war              | http://localhost:8080/scatours-contribution-currency-jsp              |                        |
-|      converter JSP |                                                     |                                                                       |
-----------------------------------------------------------------------------------------------------------------------------------------------------
-| 18g) Currency      | scatours-contribution-currency-servlet.war          | http://localhost:8080/scatours-contribution-currency-servlet          |                        |
-|      converter     |                                                     |                                                                       |
-|      servlet       |                                                     |                                                                       |
-----------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|    Scenario        | Web application file                                | URLs                                                                                         |
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| 16) Credit card    | scatours-contribution-creditcard-payment-webapp.war | http://localhost:8080/scatours-contribution-creditcard-payment-webapp                        |
+|     webapp service |                                                     | http://localhost:8080/scatours-contribution-creditcard-payment-webapp/CreditCardPayment?wsdl |
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| 18f) Currency      | scatours-contribution-currency-jsp.war              | http://localhost:8080/scatours-contribution-currency-jsp                                     |
+|      converter JSP |                                                     |                                                                                              |
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| 18g) Currency      | scatours-contribution-currency-servlet.war          | http://localhost:8080/scatours-contribution-currency-servlet                                 |
+|      converter     |                                                     |                                                                                              |
+|      servlet       |                                                     |                                                                                              |
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 Building and running the self-contained travel sample
