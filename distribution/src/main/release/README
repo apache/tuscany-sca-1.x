@@ -251,7 +251,7 @@ Launchers: payment-bpel
 17b) implementation.script written in Groovy
 
 Description: The Payment service is implemented using a Groovy script.
-Contributions: creditcard-payment-jaxb, emailgateway, payment-groovy
+Contributions: emailgateway, payment-groovy
 Launchers: payment-groovy
 
 17c) implementation.java
@@ -271,7 +271,7 @@ Launchers: payment-java-policy
 17e) implementation.script written in Python
 
 Description: The Payment service is implemented using a Python script.
-Contributions: creditcard-payment-jaxb, emailgateway, payment-python
+Contributions: emailgateway, payment-python
 Launchers: payment-python
 
 17f) implementation.spring
@@ -809,7 +809,7 @@ contributions/buildingblocks-client  5
 contributions/calendar  6
 contributions/car  7, 8
 contributions/common  6, 7, 8, 15
-contributions/creditcard-payment-jaxb  17a, 17b, 17c, 17e, 17f, 17g, 16
+contributions/creditcard-payment-jaxb  17a, 17c, 17f, 17g, 16
 contributions/creditcard-payment-jaxb-policy  7, 8, 15, 17d
 contributions/creditcard-payment-sdo  14
 contributions/creditcard-payment-webapp  16
