@@ -25,6 +25,12 @@
     <property name="package-path" value="../util/scatours-util-launcher-common.jar"/>
 
     <target name="wsdljava">
+        <!-- Include the Java classes for EmailGateway in this jar file as a workaround for TUSCANY-3557. -->
+        <antcall target="wsimport">
+            <param name="wsdlfile" value="EmailGateway.wsdl"/>
+            <param name="javaclass" value="com/tuscanyscatours/emailgateway/EmailGateway.class"/>
+            <param name="package" value="com.tuscanyscatours.emailgateway"/>
+        </antcall>
         <antcall target="wsimport">
             <param name="wsdlfile" value="Payment.wsdl"/>
             <param name="javaclass" value="com/tuscanyscatours/payment/Payment.class"/>
