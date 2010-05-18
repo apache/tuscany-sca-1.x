@@ -19,6 +19,5 @@
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
               xmlns:scatours="http://tuscanyscatours.com/">
-    <export.java package="com.tuscanyscatours.payment.creditcard" />
     <deployable composite="scatours:creditcard" />
 </contribution>
