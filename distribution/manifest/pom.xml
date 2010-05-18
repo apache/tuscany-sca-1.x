@@ -537,6 +537,16 @@
         </dependency-->        
         <dependency>
             <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-implementation-web</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-implementation-web-runtime</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-node-api</artifactId>
             <version>${pom.version}</version>
         </dependency>
