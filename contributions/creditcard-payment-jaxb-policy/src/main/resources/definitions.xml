@@ -18,11 +18,9 @@
     * under the License.    
 -->
 <definitions xmlns="http://www.osoa.org/xmlns/sca/1.0" 
-             targetNamespace="http://itest/policy"
+             targetNamespace="http://www.osoa.org/xmlns/sca/1.0"
     		 xmlns:sca="http://www.osoa.org/xmlns/sca/1.0" 
-    		 xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
-             xmlns:ip="http://itest/policy" >
-
+    		 xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0">
 
     <policySet name="BasicAuthenticationPolicySet"
                provides="authentication"
