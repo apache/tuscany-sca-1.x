@@ -19,5 +19,6 @@
 -->
 <contribution xmlns="http://www.osoa.org/xmlns/sca/1.0"
               xmlns:tours="http://tuscanyscatours.com/" >
+    <import.java package="com.tuscanyscatours.payment"/>
     <deployable composite="tours:paymentClient" />
 </contribution>
