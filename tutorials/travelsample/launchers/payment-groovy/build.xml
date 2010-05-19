@@ -23,6 +23,14 @@
         <pathelement path="../../util/launcher-common/target/scatours-util-launcher-common.jar"/>
     </path>
 
+    <target name="wsdljava">
+        <antcall target="wsimport">
+            <param name="wsdlfile" value="Payment.wsdl"/>
+            <param name="javaclass" value="com/tuscanyscatours/payment/Payment.class"/>
+            <param name="package" value="com.tuscanyscatours.payment"/>
+        </antcall>
+    </target>
+
     <target name="run">
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
