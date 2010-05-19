@@ -38,6 +38,8 @@
      JAXWS_HOME (only if using JDK 5) A directory containing the JAX-WS
        reference implementation.  This build file has been tested with
        the JAX-WS RI version 2.1.7.
+     OPENEJB_HOME A directory containing the OpenEJB binary distribution.
+       This build file has been tested with OpenEJB 3.1.2.
 
    This file defines the following targets that can be used on the
    ant command that invokes the build.xml file:
@@ -60,7 +62,7 @@
        the contents of this path are used for compiling and running the
        unit tests.  In addition, the "compile-path" setting (if specified)
        is used for running unit tests.  If the build.xml file defines the
-       "test-setup" property, the "testsetup" target in the build.xml
+       "run-test-setup" property, the "test-setup" target in the build.xml
        file is invoked after copying the test resources.
      "package" Creates a jar file containing the compiled Java class
         files (excluding unit test code) and any files in or under the
@@ -377,8 +379,8 @@
     </target>
 
     <!-- perform additional test setup if required -->
-    <target name="#test-setup" if="test-setup">
-        <antcall target="testsetup"/>
+    <target name="#run-test-setup" if="run-test-setup">
+        <antcall target="test-setup"/>
     </target>
 
     <!-- check whether a dependency path for the unit tests was specified -->
@@ -728,13 +730,14 @@
         <mkdir dir="target/test-classes"/>
         <antcall target="#test-compile"/>
         <antcall target="#copy-testresources"/>
-        <antcall target="#test-setup"/>
+        <antcall target="#run-test-setup"/>
         <antcall target="#run-junit"/>
     </target>
 
     <!-- for external use on the ant command line -->
     <target name="package">
         <echo message="Packaging project ${ant.project.name}"/>
+        <antcall target="#pre-package"/>
         <antcall target="#build-package"/>
     </target>
 
