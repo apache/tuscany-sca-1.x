@@ -508,27 +508,10 @@
         </condition>
     </target>
 
-    <!-- check whether the Tuscany SCA version is 1.7-SNAPSHOT -->
-    <target name="#find-tuscany-1.7-SNAPSHOT" unless="#tuscany-version">
-        <fileset id="#tuscany-assembly-1.7-SNAPSHOT" dir="${env.TUSCANY_HOME}/modules">
-            <include name="tuscany-assembly-1.7-SNAPSHOT.jar"/>
-        </fileset>
-        <condition property="#tuscany-version" value="1.7-SNAPSHOT">
-            <resourcecount refid="#tuscany-assembly-1.7-SNAPSHOT" when="greater" count="0"/>
-        </condition>
-        <condition property="#tuscany-baseversion" value="1.7">
-            <resourcecount refid="#tuscany-assembly-1.7-SNAPSHOT" when="greater" count="0"/>
-        </condition>
-        <condition property="#tuscany-repo" value="m2-snapshot-repository">
-            <resourcecount refid="#tuscany-assembly-1.7-SNAPSHOT" when="greater" count="0"/>
-        </condition>
-    </target>
-
-    <!-- find the Tuscany SCA version that matches the JAVA_HOME environment variable -->
-    <target name="#find-tuscany-version" depends="#find-tuscany-1.5.1, #find-tuscany-1.6-SNAPSHOT,
-                                                  #find-tuscany-1.6, #find-tuscany-1.7-SNAPSHOT">
+    <!-- find the Tuscany SCA version that matches the TUSCANY_HOME environment variable -->
+    <target name="#find-tuscany-version" depends="#find-tuscany-1.5.1, #find-tuscany-1.6-SNAPSHOT, #find-tuscany-1.6">
         <fail unless="#tuscany-version">
-            Error: Unknown Tuscany version for JAVA_HOME environment variable.
+            Error: Unable to copy implementation.web jars for this Tuscany version.
         </fail>
     </target>
 
