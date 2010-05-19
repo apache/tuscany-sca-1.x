@@ -204,7 +204,7 @@
         <java classname="scatours.NotificationEJBLauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-launcher-notification-ejb.jar"/>
-                <path refid="scatours.tuscany-manifest"/>
+                <path refid="scatours.tuscany-openejb"/>
             </classpath>
         </java>
     </target>
@@ -275,7 +275,7 @@
     <target name="run-payment-java-callback">
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
-                <pathelement location="scatours-launcher-payment-java.jar"/>
+                <pathelement location="scatours-launcher-payment-java-callback.jar"/>
                 <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
@@ -284,7 +284,7 @@
     <target name="run-payment-java-policy">
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
-                <pathelement location="scatours-launcher-java-policy.jar"/>
+                <pathelement location="scatours-launcher-payment-java-policy.jar"/>
                 <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
@@ -293,7 +293,7 @@
     <target name="run-payment-java-reference-pass">
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
-                <pathelement location="scatours-launcher-payment-java.jar"/>
+                <pathelement location="scatours-launcher-payment-java-reference-pass.jar"/>
                 <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
@@ -311,7 +311,7 @@
     <target name="run-payment-spring-scatag">
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
-                <pathelement location="scatours-launcher-spring-scatag.jar"/>
+                <pathelement location="scatours-launcher-payment-spring-scatag.jar"/>
                 <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>

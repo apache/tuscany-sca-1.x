@@ -25,6 +25,8 @@
 
     <path id="scatours.tuscany-node-launcher"/>
 
+    <path id="scatours.tuscany-openejb"/>
+
     <path id="scatours.openejb-runtime"/>
 
     <path id="scatours.jaxws-runtime"/>
