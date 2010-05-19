@@ -23,8 +23,10 @@
            xmlns:ns1="http://www.osoa.org/xmlns/sca/1.0"
            xmlns:ns2="http://tuscanyscatours.com/">
        
+  <include name="ns2:payment" uri="fullapp-payment" />
+  <!-- The include for ns2:creditcard was moved after the include for ns2:payment as a
+     workaround for TUSCANY-3561. See the comments in TUSCANY-3562 for more details. -->
   <include name="ns2:creditcard" uri="fullapp-creditcard" />         
-  <include name="ns2:payment" uri="fullapp-payment" />    
   <include name="ns2:fullapp-shoppingcart" uri="fullapp-shoppingcart" />
   <include name="ns2:fullapp-currency" uri="fullapp-currency" />
   <include name="ns2:fullapp-packagedtrip" uri="fullapp-packagedtrip" /> 
