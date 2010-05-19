@@ -22,6 +22,9 @@
     <path id="compile-path">
         <pathelement path="../../util/launcher-common/target/scatours-util-launcher-common.jar"/>
     </path>
+    <path id="package-path">
+        <pathelement path="../util/scatours-util-launcher-common.jar"/>
+    </path>
 
     <!-- Before invoking the "run" target, the JAX-WS server for the SMS Gateway
        remote object needs to be started and running in a different process. -->
