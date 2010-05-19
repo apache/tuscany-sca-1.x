@@ -142,6 +142,25 @@
                             <xnocompile>true</xnocompile>
                         </configuration>
                     </execution>
+                    <!-- Include the Java classes for EmailGateway in this jar file as a workaround for TUSCANY-3556. -->
+                    <execution>
+                        <id>emailgateway</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>com.tuscanyscatours.emailgateway</packageName>
+                            <wsdlDirectory>${basedir}/src/main/resources</wsdlDirectory>
+                            <wsdlFiles>
+                                <wsdlFile>EmailGateway.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <sourceDestDir>${project.build.directory}/jaxws-source</sourceDestDir>
+                            <staleFile>${project.build.directory}/jaxws-source/stale/emailgateway.stale</staleFile>
+                            <verbose>false</verbose>
+                            <xnocompile>true</xnocompile>
+                        </configuration>
+                    </execution> 
                 </executions>
             </plugin>
             <plugin>
