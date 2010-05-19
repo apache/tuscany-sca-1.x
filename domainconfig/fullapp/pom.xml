@@ -26,7 +26,7 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>scatours-domainconfig-fullapp</artifactId>
-    <name>Apache Tuscany SCA Tours Full App Domain Configuration</name>
+    <name>Apache Tuscany SCA Tours Full Application Domain Configuration</name>
 
     <build>
         <finalName>${artifactId}</finalName>
