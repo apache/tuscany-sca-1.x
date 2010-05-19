@@ -67,8 +67,14 @@
      "package" Creates a jar file containing the compiled Java class
         files (excluding unit test code) and any files in or under the
         resource directory, unless the jar file is already up to date.
-        If the build.xml file defines a property named "package-path", this
-        path is used for the Class-Path manifest entry.
+        If the build.xml file defines the "run-package-setup" property,
+        the "package-setup" target in the build.xml file is invoked before
+        creating the jar file.  The contents of the jar file are taken from
+        the target/classes directory unless the target/jar-classes directory
+        exists, in which case this directory is used in preference to
+        target/classes.  If the build.xml file defines a property named
+        "package-path", a Class-Path manifest entry is created using the
+        value of this property.  
      "clean" Deletes all the files produced by the build.
 
    This file also defines the following targets for invocation by <antcall>
@@ -575,6 +581,23 @@
         </fail>
     </target>
 
+    <!-- perform additional packaging setup if required -->
+    <target name="#run-package-setup" if="run-package-setup">
+        <antcall target="package-setup"/>
+    </target>
+
+    <!-- check whether the target/jar-classes directory exists -->
+    <target name="#check-jar-classes">
+        <condition property="#jar-classes" value="target/jar-classes">
+            <available file="target/jar-classes" type="dir"/>
+        </condition>
+        <condition property="#jar-classes" value="target/classes">
+            <not>
+                <available file="target/jar-classes" type="dir"/>
+            </not>
+        </condition>
+    </target>
+
     <!-- check whether there are any files in the webapp directory -->
     <target name="#check-webapp">
         <fileset id="#webappfiles" dir="src/main/webapp"/>
@@ -594,13 +617,13 @@
              excludes="**/*.cbp">
             <fileset dir="src/main/webapp"/>
             <lib dir="target/lib"/>
-            <classes dir="target/classes"/>
+            <classes dir="${#jar-classes}"/>
         </war>
     </target>
 
     <!-- create a jar file with a Class-Path attribute -->
     <target name="#package-jar-path" unless="#webapp" if="package-path">
-        <jar destfile="target/${ant.project.name}.jar" basedir="target/classes"
+        <jar destfile="target/${ant.project.name}.jar" basedir="${#jar-classes}"
              excludes="**/*.cbp">
             <manifest>
                 <attribute name="Class-Path" value="${package-path}"/>
@@ -614,12 +637,13 @@
 
     <!-- create a jar file without a Class-Path attribute -->
     <target name="#package-jar-nopath" unless="#webapp" if="#no-package-path">
-        <jar destfile="target/${ant.project.name}.jar" basedir="target/classes"
+        <jar destfile="target/${ant.project.name}.jar" basedir="${#jar-classes}"
              excludes="**/*.cbp"/>
     </target>
 
     <!-- build a packaged jar file or war file -->
-    <target name="#build-package" depends="#check-webapp, #package-war, #package-jar-path, #not-package-path, #package-jar-nopath"/>
+    <target name="#build-package" depends="#check-jar-classes, #check-webapp, #package-war,
+            #package-jar-path, #not-package-path, #package-jar-nopath"/>
 
     <!-- If running from a downloaded distribution, the OpenEJB jars are in lib/openejb -->
     <target name="#lib-openejb">
@@ -737,7 +761,7 @@
     <!-- for external use on the ant command line -->
     <target name="package">
         <echo message="Packaging project ${ant.project.name}"/>
-        <antcall target="#pre-package"/>
+        <antcall target="#run-package-setup"/>
         <antcall target="#build-package"/>
     </target>
 

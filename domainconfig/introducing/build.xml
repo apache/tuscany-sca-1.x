@@ -19,4 +19,20 @@
 
 <project name="scatours-domainconfig-introducing" default="compile">
     <import file="../../antdefs.xml"/>
+
+    <property name="run-package-setup" value="true"/>
+    <target name="package-setup">
+        <mkdir dir="target/jar-classes/introducing"/>
+        <copy todir="target/jar-classes/introducing">
+            <fileset dir="src/main/resources">
+                <exclude name="workspace*.xml"/>
+            </fileset>
+        </copy>
+        <copy todir="target/jar-classes/introducing">
+            <fileset dir="src/main/resources">
+                <include name="workspace-distribution.xml"/>
+            </fileset>
+            <globmapper from="workspace-distribution.xml" to="workspace.xml"/>
+        </copy>
+    </target>
 </project>
