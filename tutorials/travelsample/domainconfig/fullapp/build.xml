@@ -30,9 +30,9 @@
         </copy>
         <copy todir="target/jar-classes/fullapp">
             <fileset dir="src/main/resources">
-                <include name="workspace-distribution.xml"/>
+                <include name="workspace-binaries.xml"/>
             </fileset>
-            <globmapper from="workspace-distribution.xml" to="workspace.xml"/>
+            <globmapper from="workspace-binaries.xml" to="workspace.xml"/>
         </copy>
     </target>
 </project>
