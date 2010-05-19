@@ -35,18 +35,10 @@ import com.tuscanyscatours.payment.Payment;
 public class PaymentTestCase {
 
     private static SCANode paymentNode;
-    private static SCANode creditCardNode;
     private static SCANode emailGatewayNode;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        creditCardNode =
-            SCANodeFactory.newInstance()
-                .createSCANode("creditcard.composite",
-                               new SCAContribution("creditcard", "../creditcard-payment-jaxb/target/classes"));
-
-        creditCardNode.start();
-
         emailGatewayNode =
             SCANodeFactory.newInstance().createSCANode("emailgateway.composite",
                                                        new SCAContribution("emailgateway",
@@ -79,7 +71,6 @@ public class PaymentTestCase {
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
         paymentNode.stop();
-        creditCardNode.stop();
         emailGatewayNode.stop();
     }
 
