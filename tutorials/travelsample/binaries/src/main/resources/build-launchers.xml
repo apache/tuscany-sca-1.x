@@ -257,7 +257,7 @@
     <target name="run-payment-python">
         <java classname="scatours.payment.PaymentLauncher" fork="true" failonerror="true">
             <classpath>
-                <pathelement location="scatours-launcher-payment-groovy.jar"/>
+                <pathelement location="scatours-launcher-payment-python.jar"/>
                 <path refid="scatours.tuscany-manifest"/>
             </classpath>
         </java>
