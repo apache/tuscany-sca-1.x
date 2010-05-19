@@ -20,8 +20,9 @@
 <project name="scatours-domainconfig-fullapp" default="compile">
     <import file="../../antdefs.xml"/>
 
-    <property name="run-package-setup" value="true"/>
-    <target name="package-setup">
+    <property name="run-update-resources" value="true"/>
+    <target name="update-resources">
+        <delete file="target/classes/workspace-binaries.xml"/>
         <mkdir dir="target/jar-classes/fullapp"/>
         <copy todir="target/jar-classes/fullapp">
             <fileset dir="src/main/resources">
