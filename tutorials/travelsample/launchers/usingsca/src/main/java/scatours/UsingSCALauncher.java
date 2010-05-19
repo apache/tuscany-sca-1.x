@@ -26,7 +26,7 @@ import org.apache.tuscany.sca.node.SCANodeFactory;
 
 import static scatours.launcher.LauncherUtil.locate;
 
-public class UsingLauncher {
+public class UsingSCALauncher {
 
     public static void main(String[] args) throws Exception {
         runAirportCodes();

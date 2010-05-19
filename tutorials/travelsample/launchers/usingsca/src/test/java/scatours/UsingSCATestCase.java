@@ -25,7 +25,7 @@ import org.junit.Test;
 /**
  * Tests the launcher
  */
-public class UsingTestCase {
+public class UsingSCATestCase {
 
     @Before
     public void startServer() throws Exception {
@@ -33,7 +33,7 @@ public class UsingTestCase {
 
     @Test
     public void testLauncher() throws Exception {
-        UsingLauncher.main(null);
+        UsingSCALauncher.main(null);
     }
 
     @After
