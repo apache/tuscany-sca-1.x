@@ -25,7 +25,6 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <version>1.0-SNAPSHOT</version>
     <artifactId>scatours-launcher-feed-logger</artifactId>
     <name>Apache Tuscany SCA Tours Feed Logger Launcher</name>
 

@@ -25,7 +25,6 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <version>1.0-SNAPSHOT</version>
     <artifactId>scatours-launcher-fullapp</artifactId>
     <name>Apache Tuscany SCA Tours Full Application Launcher</name>
 

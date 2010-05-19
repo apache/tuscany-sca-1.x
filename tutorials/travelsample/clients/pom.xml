@@ -25,7 +25,6 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <version>1.0-SNAPSHOT</version>
     <artifactId>scatours-clients</artifactId>
     <packaging>pom</packaging>
     <name>Apache Tuscany SCA Tours non-SCA Clients</name>

@@ -24,7 +24,7 @@
         <artifactId>scatours</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
-    </parent><version>1.0-SNAPSHOT</version>
+    </parent>
     <artifactId>scatours-service-smsgateway-jaxws</artifactId>
     <name>Apache Tuscany SCA Tours SMS Gateway JAX-WS Service</name>
 
