@@ -32,7 +32,7 @@
                     <include name="tuscany-node-launcher-*.jar"/>
                 </fileset>
             </classpath>
-            <arg value="../../domainconfig/introducing/target/classes/introducing"/>
+            <arg value="../../domainconfig/introducing/target/classes"/>
         </java>
     </target>
 </project>

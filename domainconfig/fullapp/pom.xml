@@ -48,12 +48,12 @@
                             <tasks>
                                 <mkdir dir="target/jar-classes/fullapp"/>
                                 <copy todir="target/jar-classes/fullapp">
-                                    <fileset dir="src/main/resources/fullapp">
+                                    <fileset dir="src/main/resources">
                                         <exclude name="workspace*.xml"/>
                                     </fileset>
                                 </copy>
                                 <copy todir="target/jar-classes/fullapp">
-                                    <fileset dir="src/main/resources/fullapp">
+                                    <fileset dir="src/main/resources">
                                         <include name="workspace-distribution.xml"/>
                                     </fileset>
                                     <globmapper from="workspace-distribution.xml" to="workspace.xml"/>
