@@ -38,8 +38,8 @@
         </antcall>
     </target>
 
-    <property name="test-setup" value="yes"/>
-    <target name="testsetup">
+    <property name="run-test-setup" value="true"/>
+    <target name="test-setup">
         <unzip dest="target/test-classes">
             <fileset dir="${env.TUSCANY_HOME}/lib">
                 <include name="ode-dao-jpa-ojpa-derby-*.zip"/>
