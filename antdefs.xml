@@ -44,10 +44,10 @@
    This file defines the following targets that can be used on the
    ant command that invokes the build.xml file:
      "compile" Compiles any Java source files that don't have an up-to-date
-       class file, and copies any files in or under the resource directory.
-       If the build.xml file contains a <path> element with the id
-       "compile-path", the contents of this path are added to the compiler's
-       classpath.  Also invokes the following targets:
+       class file, and copies any files in or under the src/main/resources
+       directory.  If the build.xml file contains a <path> element with the
+       id "compile-path", the contents of this path are added to the
+       compiler's classpath.  Also invokes the following targets:
        . "wsdljava" (defined in the build.xml file) if there are any
            .wsdl files in or under the resource directory
        . "idljava" (defined in the build.xml file) if there are any
@@ -55,26 +55,26 @@
        . "test" if there are any files in or under the src/test/java
            directory
        . "package" if all previous steps completed successfully
+       If the build.xml file defines the "run-update-resources" property,
+       the "update-resources" target in the build.xml file is invoked after
+       copying resources.
      "test" Compiles any Java unit test files that don't have an
        up-to-date class file, copies any test resources in or under the
        src/test/resources directory, and runs the unit tests.  If the
        build.xml file contains a <path> element with the id "test-path",
-       the contents of this path are used for compiling and running the
+       the contents of this path are used for compiling and running
        unit tests.  In addition, the "compile-path" setting (if specified)
        is used for running unit tests.  If the build.xml file defines the
-       "run-test-setup" property, the "test-setup" target in the build.xml
-       file is invoked after copying the test resources.
+       "run-update-test-resources" property, the "update-test-resources"
+       target in the build.xml file is invoked after copying test resources.
      "package" Creates a jar file containing the compiled Java class
-        files (excluding unit test code) and any files in or under the
-        resource directory, unless the jar file is already up to date.
-        If the build.xml file defines the "run-package-setup" property,
-        the "package-setup" target in the build.xml file is invoked before
-        creating the jar file.  The contents of the jar file are taken from
-        the target/classes directory unless the target/jar-classes directory
-        exists, in which case this directory is used in preference to
-        target/classes.  If the build.xml file defines a property named
-        "package-path", a Class-Path manifest entry is created using the
-        value of this property.  
+       files (excluding unit test code) and any files in or under the
+       resource directory, unless the jar file is already up to date.
+       The contents of the jar file are taken from the target/classes
+       directory unless the target/jar-classes directory exists, in which
+       case this directory is used in preference to target/classes.  If the
+       build.xml file defines a property named "package-path", a Class-Path
+       manifest entry is created and set to the value of this property.  
      "clean" Deletes all the files produced by the build.
 
    This file also defines the following targets for invocation by <antcall>
@@ -348,6 +348,11 @@
         </copy>
     </target>
 
+    <!-- update copied resources if required -->
+    <target name="#update-resources" if="run-update-resources">
+        <antcall target="update-resources"/>
+    </target>
+
     <!-- check whether there are any Java files in or under the test directory -->
     <target name="#find-testjava">
         <fileset id="#alltestjava" dir="src/test/java">
@@ -361,13 +366,8 @@
         </condition>
     </target>
 
-    <!-- call the test target if required -->
-    <target name="#call-test" depends="#find-testjava" if="#testjava">
-        <antcall target="test"/>
-    </target>
-
     <!-- check whether there are any test resources to copy -->
-    <target name="#find-testresources">
+    <target name="#find-test-resources">
         <fileset id="#alltestresources" dir="src/test/resources"/>
         <condition property="#testresources">
             <and>
@@ -378,15 +378,15 @@
     </target>
 
     <!-- copy the test resources -->
-    <target name="#copy-testresources" depends="#find-testresources" if="#testresources">
+    <target name="#copy-test-resources" depends="#find-test-resources" if="#testresources">
         <copy todir="target/test-classes">
             <fileset dir="src/test/resources"/>
         </copy>
     </target>
 
-    <!-- perform additional test setup if required -->
-    <target name="#run-test-setup" if="run-test-setup">
-        <antcall target="test-setup"/>
+    <!-- update copied test resources if required -->
+    <target name="#update-test-resources" if="run-update-test-resources">
+        <antcall target="update-test-resources"/>
     </target>
 
     <!-- check whether a dependency path for the unit tests was specified -->
@@ -581,11 +581,6 @@
         </fail>
     </target>
 
-    <!-- perform additional packaging setup if required -->
-    <target name="#run-package-setup" if="run-package-setup">
-        <antcall target="package-setup"/>
-    </target>
-
     <!-- check whether the target/jar-classes directory exists -->
     <target name="#check-jar-classes">
         <condition property="#jar-classes" value="target/jar-classes">
@@ -744,7 +739,8 @@
         <antcall target="#call-idljava"/>
         <antcall target="#src-compile"/>
         <antcall target="#copy-resources"/>
-        <antcall target="#call-test"/>
+        <antcall target="#update-resources"/>
+        <antcall target="test"/>
         <antcall target="package"/>
     </target>
 
@@ -753,15 +749,14 @@
         <echo message="Testing project ${ant.project.name}"/>
         <mkdir dir="target/test-classes"/>
         <antcall target="#test-compile"/>
-        <antcall target="#copy-testresources"/>
-        <antcall target="#run-test-setup"/>
+        <antcall target="#copy-test-resources"/>
+        <antcall target="#update-test-resources"/>
         <antcall target="#run-junit"/>
     </target>
 
     <!-- for external use on the ant command line -->
     <target name="package">
         <echo message="Packaging project ${ant.project.name}"/>
-        <antcall target="#run-package-setup"/>
         <antcall target="#build-package"/>
     </target>
 
