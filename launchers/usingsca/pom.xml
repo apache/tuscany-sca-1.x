@@ -128,7 +128,7 @@
                         <manifest>
                             <addClasspath>${scatours.selfContained}</addClasspath>
                             <classpathPrefix>../lib/</classpathPrefix>
-                            <mainClass>scatours.BuildingBlocksLauncher</mainClass>
+                            <mainClass>scatours.UsingSCALauncher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

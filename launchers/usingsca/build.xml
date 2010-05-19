@@ -25,7 +25,7 @@
     <property name="package-path" value="../util/scatours-util-launcher-common.jar"/>
 
     <target name="run">
-        <java classname="scatours.UsingLauncher" fork="true" failonerror="true">
+        <java classname="scatours.UsingSCALauncher" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="target/${ant.project.name}.jar"/>
                 <path refid="compile-path"/>
