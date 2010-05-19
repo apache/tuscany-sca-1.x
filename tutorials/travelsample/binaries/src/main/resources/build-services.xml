@@ -30,8 +30,8 @@
         <java classname="com.tuscanyscatours.smsgateway.SMSGatewayEJBServiceBootstrap" fork="true" failonerror="true">
             <classpath>
                 <pathelement location="scatours-service-smsgateway-ejb.jar"/>
-                <!-- The following is used to bring in additional dependencies of the OpenEJB runtime. -->
-                <path refid="scatours.tuscany-openejb"/>
+                <!-- The following is used to bring in the OpenEJB runtime and its dependencies. -->
+                <path refid="scatours.openejb-runtime"/>
             </classpath>
         </java>
     </target>
@@ -40,8 +40,8 @@
         <java classname="com.tuscanyscatours.smsgateway.SMSGatewayServiceBootstrap" fork="true">
             <classpath>
                 <pathelement location="scatours-service-smsgateway-jaxws.jar"/>
-                <!-- The following is used to bring in additional dependencies of the JAX-WS runtime. -->
-                <path refid="scatours.tuscany-manifest"/>
+                <!-- The following is used to bring in the JAX-WS runtime and its dependencies. -->
+                <path refid="scatours.jaxws-runtime"/>
             </classpath>
         </java>
     </target>
