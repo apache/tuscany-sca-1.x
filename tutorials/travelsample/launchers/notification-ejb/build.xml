@@ -38,7 +38,7 @@
                 <pathelement location="target/${ant.project.name}.jar"/>
                 <path refid="compile-path"/>
                 <pathelement location="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
-                <fileset dir="${openejb-dir}"/>
+                <path refid="openejb-path"/>
             </classpath>
         </java>
     </target>

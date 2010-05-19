@@ -653,41 +653,46 @@
 
     <!-- If running from a downloaded distribution, the OpenEJB jars are in lib/openejb -->
     <target name="#lib-openejb">
-        <condition property="#openejb-reldir" value="../../../lib/openejb">
+        <condition property="#openejb-dir" value="../../../lib/openejb">
             <available file="../../../lib/openejb" type="dir"/>
         </condition>
     </target>
 
     <!-- If running from a maven build, the OpenEJB jars are in binaries/target/openejb -->
-    <target name="#binaries-openejb" unless="#openejb-reldir">
+    <target name="#binaries-openejb" unless="#openejb-dir">
         <condition property="#openejb-reldir" value="../../binaries/target/openejb">
             <available file="../../binaries/target/openejb" type="dir"/>
         </condition>
     </target>
 
-    <!-- Add the Tuscany runtime to the OpenEJB directory -->
-    <target name="#tuscany-openejb" if="#openejb-reldir">
-        <property name="#openejb-tuscany" value=""/>
-        <dirname property="#ejbdir" file="${#openejb-reldir}"/>
-        <property name="#openejb-dir" value="${#ejbdir}/openejb"/>
+    <!-- Set the path as the OpenEJB directory and the Tuscany runtime -->
+    <target name="#tuscany-openejb" if="#openejb-dir">
+        <path id="openejb-path">
+            <fileset dir="${#openejb-dir}"/>
+            <fileset dir="${env.TUSCANY_HOME}/lib"/>
+        </path>
     </target>
 
     <!-- Could be running from an ant build of a svn checkout, so try the OPENEJB_HOME environment variable -->
     <target name="#env-openejb" unless="#openejb-dir">
-        <condition property="#openejb-dir" value="${env.OPENEJB_HOME}/lib">
+        <condition property="#openejb-home" value="${env.OPENEJB_HOME}/lib">
             <available file="${env.OPENEJB_HOME}/lib" type="dir"/>
         </condition>
     </target>
 
+    <!-- Set the path as the OPENEJB_HOME directory -->
+    <target name="#home-openejb" if="#openejb-home">
+        <path id="openejb-path">
+            <fileset dir="${#openejb-home}"/>
+        </path>
+        <property name="#openejb-dir" value="${#openejb-home}"/>
+    </target>
+
     <!-- For use as a dependency of "run" targets that need OpenEJB -->
-    <target name="locate-openejb" depends="#lib-openejb, #binaries-openejb, #tuscany-openejb, #env-openejb">
+    <target name="locate-openejb" depends="#lib-openejb, #binaries-openejb, #tuscany-openejb, #env-openejb, #home-openejb">
         <fail unless="#openejb-dir">
             Error: Couldn't find OpenEJB dependencies.
         </fail>
-        <files id="openejb-files">
-            <include if="#openejb-dir" name="${#openejb-dir}/*"/>
-            <include if="#openejb-tuscany" name="${env.TUSCANY_HOME}/lib/*"/>
-        </files>
     </target>
 
     <!-- check to see if we are running on JDK 6 -->
