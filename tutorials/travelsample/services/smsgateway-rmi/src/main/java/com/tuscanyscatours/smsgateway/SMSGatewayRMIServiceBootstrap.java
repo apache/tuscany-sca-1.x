@@ -35,6 +35,6 @@ public class SMSGatewayRMIServiceBootstrap {
         System.out.println("Press enter to shutdown.");
         System.in.read();
         rmiRegistry.unbind(serviceName);
-        System.exit(-1);
+        System.exit(0);
     }
 }
