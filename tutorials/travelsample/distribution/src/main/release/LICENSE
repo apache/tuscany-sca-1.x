@@ -203,44 +203,46 @@
 
 ===============================================================================
 
-APACHE TUSCANY SCA TRAVEL SAMPLE SUBCOMPONENTS: 
+APACHE TUSCANY SCA TRAVEL SAMPLE REDISTRIBUTED FILES: 
 
 The Apache Tuscany SCA Travel Sample distribution includes a number of
-subcomponents with separate copyright notices and license terms. Your use
-of the code for the these subcomponents is subject to the terms and
-conditions of the following licenses.                             
+redistributed files with separate copyright notices and license terms.
+Your use of these redistributed files is subject to the terms and conditions
+of the following licenses.                             
 
 ===============================================================================
 
-The following components come under Apache Software License 2.0
-
-commons-cli-1.1.jar
-commons-dbcp-all-1.3-r699049.jar
-ejb31-api-experimental-3.1.2.jar
-geronimo-transaction-2.1.jar
-javaee-api-5.0-2.jar
-openejb-api-3.1.2.jar
-openejb-client-3.1.2.jar
-openejb-core-3.1.2.jar
-openejb-ejbd-3.1.2.jar
-openejb-javaagent-3.1.2.jar
-openejb-jee-3.1.2.jar
-openejb-loader-3.1.2.jar
-openejb-server-3.1.2.jar
-xbean-asm-shaded-3.6.jar
-xbean-finder-shaded-3.6.jar
-xbean-reflect-3.6.jar
+The following files come under Apache Software License 2.0:
+ commons-cli-1.1.jar
+ commons-dbcp-all-1.3-r699049.jar
+ ejb31-api-experimental-3.1.2.jar
+ geronimo-transaction-2.1.jar
+ javaee-api-5.0-2.jar
+ openejb-api-3.1.2.jar
+ openejb-client-3.1.2.jar
+ openejb-core-3.1.2.jar
+ openejb-ejbd-3.1.2.jar
+ openejb-javaagent-3.1.2.jar
+ openejb-jee-3.1.2.jar
+ openejb-loader-3.1.2.jar
+ openejb-server-3.1.2.jar
+ xbean-asm-shaded-3.6.jar
+ xbean-finder-shaded-3.6.jar
+ xbean-reflect-3.6.jar
 
 ===============================================================================
 
-The jars; 
-http-20070405.jar, 
-jaxws-rt-2.1.7.jar, 
-jaxws-tools-2.1.7.jar, 
-saaj-api-1.3.jar, 
-saaj-impl-1.3.3.jar, 
-stax-ex-1.2.jar,
-streambuffer-0.9.jar
+The files: 
+ http-20070405.jar, 
+ jaxws-rt-2.1.7.jar, 
+ jaxws-tools-2.1.7.jar, 
+ saaj-api-1.3.jar, 
+ saaj-impl-1.3.3.jar, 
+ stax-ex-1.2.jar,
+ streambuffer-0.9.jar
+are redistributed in executable form, with source code available at
+ https://jax-ws-sources.dev.java.net/source/browse/jax-ws-sources/
+and are licensed under the following terms:
 
 COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
 
@@ -629,7 +631,11 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
 
 ===============================================================================
 
-JUnit (junit-4.5.jar):
+The file: 
+ junit-4.5.jar
+is redistributed in object code form, with source code available at
+ http://sourceforge.net/projects/junit/files/
+and is licensed under the following terms:
 
 Common Public License - v 1.0
 
