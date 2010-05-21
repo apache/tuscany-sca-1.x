@@ -89,7 +89,7 @@ Launchers: introducing-client, introducing-domain, introducing-tours,
 4) Using SCA - Defining and using SCA Components
 
 Description: The examples in this scenario show how to define SCA components
- and how to use SCA components in a business application.  This "guided tour"
+ and how to use SCA components in a business application. This "guided tour"
  consists of code samples illustrating the major features of SCA components
  including implementations, services, interfaces, references, wires, properties,
  bindings and domains.
@@ -172,7 +172,7 @@ Launchers: payment-java-callback
 Description: We use another variation on the Payment service to show how
  SCA service references can be passed as parameters when invoking a service.
  The Payment service creates a service reference for the EmailGateway service
- and passes this service reference to the CreditCardPayment service.  When the
+ and passes this service reference to the CreditCardPayment service. When the
  CreditCardPayment service has finished doing the credit card authorization,
  it invokes the EmailGateway service using the service reference that was
  passed in.
@@ -190,7 +190,7 @@ Launchers: help-pages
 
 Description: An SCA component implementation of a blog is exposed as a
  feed via the Atom protocol using binding.atom and via the RSS protocol
- using binding.rss.  For each protocol there are example implementations
+ using binding.rss. For each protocol there are example implementations
  using two different approaches: the getAll() method and the Collection API.
 Contributions: blog-feed
 Launchers: blog-feed
@@ -198,7 +198,7 @@ Launchers: blog-feed
 13) Feed logger
 
 Description: An SCA component implementation is connected to an Atom feed
- using binding.atom and an RSS feed using binding.rss.  The SCA component
+ using binding.atom and an RSS feed using binding.rss. The SCA component
  receives and logs entries from both feeds.
 Contributions: feed-logger
 Launchers: feed-logger
@@ -216,7 +216,7 @@ Launchers: databinding
 
 Description: The implementation of the Trip component has the tuscany:logging
  implementation policy applied to it which means that all invocations of all
- its services go through the JDKLoggingPolicyInterceptor class.  In addition
+ its services go through the JDKLoggingPolicyInterceptor class. In addition
  the CreditCardPayment service has the "authentication" interaction policy
  intent which requires invocations of this service from the Payment component
  to use a policy set that satisifies this intent by providing authentication
@@ -345,7 +345,7 @@ Clients: currency-converter-ws-jaxws
 
 18f) Web application JSP client
 
-Description:  The CurrencyConverter service is deployed as a web
+Description: The CurrencyConverter service is deployed as a web
  application using the default SCA binding and is invoked from the
  same process by a JSP client that's deployed as part of the same
  web application.
@@ -354,7 +354,7 @@ Webapp: scatours-contribution-currency-jsp.war
 
 18g) Web application servlet client
 
-Description:  The CurrencyConverter service is deployed as a web
+Description: The CurrencyConverter service is deployed as a web
  application using the default SCA binding and is invoked from the
  same process using a servlet in the same web application which
  generates HTML to display a client page.
@@ -365,7 +365,7 @@ Webapp: scatours-contribution-currency-servlet.war
 
 Description: SCA references can invoke non-SCA services using a range
  of different communication protocols which are selected by choosing
- a suitable binding to configure the reference.  This scenario contains
+ a suitable binding to configure the reference. This scenario contains
  a number of examples showing an SCA Notification service using an
  SCA reference configured with different bindings to invoke a non-SCA
  SMSGateway service over various different protocols.
@@ -656,7 +656,7 @@ Table 3. Running scenarios with launchers from the binaries/target directory
 -------------------------------------------------------------------------------------------------------------------
 |    Scenario            Directory    Commands                              URLs                                  |
 -------------------------------------------------------------------------------------------------------------------
-| 1) Jumpstart         | launchers  | ant run-jumpstart                   |                                       |
+| 1) Jumpstart         | not available when running from binaries/target                                          |
 -------------------------------------------------------------------------------------------------------------------
 | 2) Introducing       | launchers  | ant run-introducing                 |                                       |
 -------------------------------------------------------------------------------------------------------------------
