@@ -1,0 +1,12 @@
+This webapp contains the SCA calcualtor application and exposes the
+Add service over the web service binding. The web.xml file is configured
+to enable basic authentication for this application in Tomcat. It ensures
+that all incomming requests are associated with the "tuscany" role
+
+The intention is that you install this application into tomcat and defined
+the "tuscany" role in the conf/tomcat-users.xml file. An example tomcat-users.xml 
+file is provided that shows you how to do this. 
+
+Once started you can use the calculator-ws-basicauth-reference sample to call this 
+service. Its Calcualtor component add reference is configured for basic authentication
+and the samples definitions.xml file contains the correct username and password. 
