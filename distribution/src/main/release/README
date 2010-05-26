@@ -23,14 +23,18 @@ travelsample     top-level directory for the travel sample
 
 Note 1: The travel sample depends on the Apache Tuscany SCA Java 1.x binary
 distribution, which is downloaded separately from the travel sample.
-To avoid needless duplication, the "lib" directory of the travel sample
-only contains dependencies that aren't provided in the current release
-of the Tuscany SCA Java 1.x binary distribution.
+To avoid needless duplication, the "lib" directory of the travel sample only
+contains dependencies that aren't provided in the Apache Tuscany SCA Java 1.x
+binary distribution.  The 1.0 release of the travel sample has been tested
+with Apache Tuscany SCA Java 1.6.
 
-Note 2: Before attempting to build or run the travel sample, you will need to
-download the Apache Tuscany SCA Java 1.6 (or later) binary distribution and
-set your TUSCANY_HOME environment variable to a local directory containing
-the unpacked binary distribution. 
+Note 2: The 1.0 release of the travel sample is not compatible with
+Apache Tuscany SCA Java 2.x.
+
+Note 3: Before attempting to build or run the travel sample, you will need
+to download the Apache Tuscany SCA Java 1.6 (or later 1.x release) binary
+distribution and set your TUSCANY_HOME environment variable to a local
+directory containing the unpacked binary distribution.
 
 
 Overview of the travel sample
@@ -467,12 +471,12 @@ Table 1. Running scenarios packaged as launchers and contributions
 | 7) Full application  | fullapp                     | ant run        | http://localhost:8080/scatours        |
 ---------------------------------------------------------------------------------------------------------------
 | 8) Full application  | fullapp-nodes               | ant run-domain |                                       |
-|    (distributed)     |                             | ant run        |                                       |
+|    (distributed)     |                             | ant run        | http://localhost:8080/scatours        |
 ---------------------------------------------------------------------------------------------------------------
 | 9) Callback          | payment-java-callback       | ant run        |                                       |
 ---------------------------------------------------------------------------------------------------------------
 | 10) Reference        | payment-java-reference-pass | ant run        |                                       |
-|     passing          |                             | ant run        |                                       |
+|     passing          |                             |                |                                       |
 ---------------------------------------------------------------------------------------------------------------
 | 11) Help pages       | help-pages                  | ant run        | http://localhost:8085/help/index.html |
 ---------------------------------------------------------------------------------------------------------------
@@ -615,7 +619,7 @@ a binary package for the travel sample will be created in the binaries/target
 directory and its subdirectories. This binary package contains all the built
 jar and war files and runtime dependencies for these files. By looking at the
 contents of the binaries/target directory tree you can see how to package a
-Yuscany application in binary form for distribution to users of the application.
+Tuscany application in binary form for distribution to users of the application.
 
 The following subdirectories of binaries/target contain jar and war files
 for the travel sample:
@@ -674,7 +678,7 @@ Table 3. Running scenarios with launchers from the binaries/target directory
 | 7) Full application  | launchers  | ant run-fullapp                     | http://localhost:8080/scatours        |
 -------------------------------------------------------------------------------------------------------------------
 | 8) Full application  | launchers  | ant run-fullapp-domain              |                                       |
-|    (distributed)     | launchers  | ant run-fullapp-nodes               |                                       |
+|    (distributed)     | launchers  | ant run-fullapp-nodes               | http://localhost:8080/scatours        |
 -------------------------------------------------------------------------------------------------------------------
 | 9) Callback          | launchers  | ant run-payment-java-callback       |                                       |
 -------------------------------------------------------------------------------------------------------------------
