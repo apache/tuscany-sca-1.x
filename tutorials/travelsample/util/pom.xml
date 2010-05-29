@@ -29,18 +29,10 @@
     <packaging>pom</packaging>
     <name>Apache Tuscany SCA Tours Utilities</name>
 
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>jaxws-runtime</module>
-                <module>launcher-common</module>
-                <module>openejb-runtime</module>
-            </modules>
-        </profile>
-    </profiles>
+    <modules>
+        <module>jaxws-runtime</module>
+        <module>launcher-common</module>
+        <module>openejb-runtime</module>
+    </modules>
 
 </project>
