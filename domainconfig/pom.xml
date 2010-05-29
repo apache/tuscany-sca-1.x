@@ -29,18 +29,9 @@
     <packaging>pom</packaging>
     <name>Apache Tuscany SCA Tours Domain Configurations</name>
 
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>fullapp</module>
-                <module>introducing</module>
-            </modules>
-        </profile>
-
-    </profiles>
+    <modules>
+        <module>fullapp</module>
+        <module>introducing</module>
+    </modules>
 
 </project>

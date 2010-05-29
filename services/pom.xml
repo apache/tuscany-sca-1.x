@@ -29,21 +29,12 @@
     <packaging>pom</packaging>
     <name>Apache Tuscany SCA Tours non-SCA Services</name>
 
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>smsgateway-jaxws</module>
-                <module>smsgateway-corba</module>
-                <module>smsgateway-ejb</module>
-                <module>smsgateway-jms</module>
-                <module>smsgateway-rmi</module>
-            </modules>
-        </profile>
-
-    </profiles>
+    <modules>
+        <module>smsgateway-jaxws</module>
+        <module>smsgateway-corba</module>
+        <module>smsgateway-ejb</module>
+        <module>smsgateway-jms</module>
+        <module>smsgateway-rmi</module>
+    </modules>
 
 </project>

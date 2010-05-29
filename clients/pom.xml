@@ -29,20 +29,11 @@
     <packaging>pom</packaging>
     <name>Apache Tuscany SCA Tours non-SCA Clients</name>
 
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>currency-converter-corba</module>
-                <module>currency-converter-jms</module>
-                <module>currency-converter-rmi</module>
-                <module>currency-converter-ws-jaxws</module>
-            </modules>
-        </profile>
-
-    </profiles>
+    <modules>
+        <module>currency-converter-corba</module>
+        <module>currency-converter-jms</module>
+        <module>currency-converter-rmi</module>
+        <module>currency-converter-ws-jaxws</module>
+    </modules>
 
 </project>
