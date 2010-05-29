@@ -175,27 +175,33 @@
     </target>
 
     <!-- If building a downloaded distribution, the JAX-WS jars are in lib/jaxws -->
-    <target name="#lib-jaxws-tools-1" unless="#jdk-wsimport">
+    <target name="#lib-jaxws-tools" unless="#jdk-wsimport">
         <condition property="#jaxws-tools-dir" value="../../../lib/jaxws">
             <available file="../../../lib/jaxws" type="dir"/>
         </condition>
     </target>
 
-    <!-- If using JAX-WS jars from lib/jaxws, add dependencies from TUSCANY_HOME -->
-    <target name="#lib-jaxws-tools-2" if="#jaxws-tools-dir">
-        <property name="#jaxws-tools-deps" value="${env.TUSCANY_HOME}/lib/tuscany-sca-manifest.jar"/>
+    <!-- Set the path as the JAX-WS directory and the Tuscany runtime -->
+    <target name="#tuscany-jaxws-tools" if="#jaxws-tools-dir">
+        <path id="#jaxws-tools-path">
+            <fileset dir="${#jaxws-tools-dir}"/>
+            <fileset dir="${env.TUSCANY_HOME}/lib"/>
+        </path>
     </target>
 
-    <!-- If building a svn checkout, try the JAXWS_HOME environment variable -->
-    <target name="#env-jaxws-tools-1" unless="#jaxws-tools-dir">
-        <condition property="#jaxws-tools-dir" value="${env.JAXWS_HOME}/lib">
+    <!-- If JAX-WS jars not found in lib, try the JAXWS_HOME environment variable -->
+    <target name="#env-jaxws-tools" unless="#jaxws-tools-dir">
+        <condition property="#jaxws-tools-home" value="${env.JAXWS_HOME}/lib">
             <available file="${env.JAXWS_HOME}/lib" type="dir"/>
         </condition>
     </target>
 
-    <!-- If using JAX-WS jars from JAXWS_HOME, don't need to add dependencies -->
-    <target name="#env-jaxws-tools-2" unless="#jaxws-tools-deps">
-        <property name="#jaxws-tools-deps" value=""/>
+    <!-- Set the path as the JAXWS_HOME directory -->
+    <target name="#home-jaxws-tools" if="#jaxws-tools-home">
+        <path id="#jaxws-tools-path">
+            <fileset dir="${#jaxws-tools-home}"/>
+        </path>
+        <property name="#jaxws-tools-dir" value="${#jaxws-tools-home}"/>
     </target>
 
     <!-- run the com.sun.tools.ws.WsImport class in jaxws-tools.jar if available -->
@@ -208,14 +214,13 @@
             <arg line="-keep -s ./target/jaxws-source -p ${package} 
                        -d ./target/classes src/main/resources/${wsdlfile}"/>
             <classpath>
-                <fileset dir="${#jaxws-tools-dir}"/>
-                <pathelement location="${#jaxws-tools-deps}"/>
+                <path refid="#jaxws-tools-path"/>
             </classpath>
         </java>
     </target>
 
     <!-- run the wsimport command in JDK 6 or use jaxws-tools.jar on JDK 5 -->
-    <target name="#wsimport" depends="#is-jdk-wsimport, #wsimport-jdk, #lib-jaxws-tools-1, #lib-jaxws-tools-2, #env-jaxws-tools-1, #env-jaxws-tools-2, #wsimport-jaxws"/>
+    <target name="#wsimport" depends="#is-jdk-wsimport, #wsimport-jdk, #lib-jaxws-tools, #tuscany-jaxws-tools, #env-jaxws-tools, #home-jaxws-tools, #wsimport-jaxws"/>
 
     <!-- run the SDO XSD2JavaGenerator if required, then compile the generated Java source -->
     <target name="sdojavagen" depends="#wsdlcheck" unless="#wsdl-uptodate">
@@ -704,32 +709,42 @@
         </condition>
     </target>
 
-    <!-- If running from a maven build, the JAX-WS jars are in binaries/target/jaxws -->
+    <!-- If running from a complete build, the JAX-WS jars are in binaries/target/jaxws -->
     <target name="#binaries-jaxws" unless="#jaxws-dir">
         <condition property="#jaxws-dir" value="../../binaries/target/jaxws">
             <available file="../../binaries/target/jaxws" type="dir"/>
         </condition>
     </target>
 
-    <!-- Could be running from an ant build of a svn checkout, so try the JAXWS_HOME environment variable -->
+    <!-- Set the path as the JAX-WS directory and the Tuscany runtime -->
+    <target name="#tuscany-jaxws" if="#jaxws-dir">
+        <path id="jaxws-path">
+            <fileset dir="${#jaxws-dir}"/>
+            <fileset dir="${env.TUSCANY_HOME}/lib"/>
+        </path>
+    </target>
+
+    <!-- If JAX-WS jars not found in lib or binaries, try the JAXWS_HOME environment variable -->
     <target name="#env-jaxws" unless="#jaxws-dir">
-        <condition property="#jaxws-dir" value="${env.JAXWS_HOME}/lib">
+        <condition property="#jaxws-home" value="${env.JAXWS_HOME}/lib">
             <available file="${env.JAXWS_HOME}/lib" type="dir"/>
         </condition>
     </target>
 
-    <!-- on JDK 5 we need to add the JAX-WS runtime to the classpath -->
-    <target name="#jaxws-jdk5" unless="#jdk6">
-        <fail unless="#jaxws-dir">
-            Error: Couldn't find JAX-WS dependencies.
-        </fail>
+    <!-- Set the path as the JAXWS_HOME directory -->
+    <target name="#home-jaxws" if="#jaxws-home">
         <path id="jaxws-path">
-            <fileset dir="${#jaxws-dir}"/>
+            <fileset dir="${#jaxws-home}"/>
         </path>
+        <property name="#jaxws-dir" value="${#jaxws-home}"/>
     </target>
 
     <!-- For use as a dependency of "run" targets that need JAX-WS -->
-    <target name="locate-jaxws" depends="#is-jdk6, #jaxws-jdk6, #lib-jaxws, #binaries-jaxws, #env-jaxws, #jaxws-jdk5"/>
+    <target name="locate-jaxws" depends="#is-jdk6, #jaxws-jdk6, #lib-jaxws, #binaries-jaxws, #tuscany-jaxws, #env-jaxws, #home-jaxws">
+        <fail unless="#jaxws-dir">
+            Error: Couldn't find JAX-WS dependencies.
+        </fail>
+    </target>
 
     <!-- for external use on the ant command line -->
     <target name="compile">
