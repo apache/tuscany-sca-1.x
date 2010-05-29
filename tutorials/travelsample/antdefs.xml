@@ -208,7 +208,7 @@
             <arg line="-keep -s ./target/jaxws-source -p ${package} 
                        -d ./target/classes src/main/resources/${wsdlfile}"/>
             <classpath>
-                <fileset dir="${jaxws-tools-dir}"/>
+                <fileset dir="${#jaxws-tools-dir}"/>
                 <pathelement location="${#jaxws-tools-deps}"/>
             </classpath>
         </java>
