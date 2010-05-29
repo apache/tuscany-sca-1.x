@@ -104,7 +104,7 @@
    This file also defines the following targets for use with the "depends"
    attribute on targets in the build.xml file:
      "locate-openejb" Locates the OpenEJB dependencies needed by some
-       modules and sets the "openejb-files" files resource to bring in
+       modules and creates a path with id "openejb-path" to bring in
        these dependencies.
      "locate-jaxws" Locates the JAX-WS dependencies needed by some modules
        when running on JDK 5, and creates a path with id "jaxws-path"
@@ -652,9 +652,9 @@
         </condition>
     </target>
 
-    <!-- If running from a maven build, the OpenEJB jars are in binaries/target/openejb -->
+    <!-- If running from a complete build, the OpenEJB jars are in binaries/target/openejb -->
     <target name="#binaries-openejb" unless="#openejb-dir">
-        <condition property="#openejb-reldir" value="../../binaries/target/openejb">
+        <condition property="#openejb-dir" value="../../binaries/target/openejb">
             <available file="../../binaries/target/openejb" type="dir"/>
         </condition>
     </target>
@@ -663,11 +663,22 @@
     <target name="#tuscany-openejb" if="#openejb-dir">
         <path id="openejb-path">
             <fileset dir="${#openejb-dir}"/>
-            <fileset dir="${env.TUSCANY_HOME}/lib"/>
+            <!-- The openejb directory doesn't include all dependencies, so bring these in from Tuscany -->
+            <fileset dir="${env.TUSCANY_HOME}/lib">
+                <!-- exclude some jars to prevent them being loaded by OpenEJB -->
+                <exclude name="tuscany-sca-manifest.jar"/>
+                <exclude name="ode-*.jar"/>
+                <exclude name="jaxb-xjc-*.jar"/>
+                <exclude name="jython-*.jar"/>
+                <exclude name="activemq-all-*.jar"/>
+                <exclude name="js-*.jar"/>
+                <exclude name="org.apache.felix.main-*.jar"/>
+                <exclude name="saxon-*.jar"/>
+            </fileset>
         </path>
     </target>
 
-    <!-- Could be running from an ant build of a svn checkout, so try the OPENEJB_HOME environment variable -->
+    <!-- If OpenEJB jars not found in lib or binaries, try the OPENEJB_HOME environment variable -->
     <target name="#env-openejb" unless="#openejb-dir">
         <condition property="#openejb-home" value="${env.OPENEJB_HOME}/lib">
             <available file="${env.OPENEJB_HOME}/lib" type="dir"/>
