@@ -26,7 +26,7 @@
     </parent>
     <artifactId>scatours</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>Apache Tuscany SCA Tours Travel Sample</name>
 
     <repositories>
