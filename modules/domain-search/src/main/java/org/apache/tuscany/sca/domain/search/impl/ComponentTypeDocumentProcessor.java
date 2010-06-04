@@ -128,11 +128,13 @@ public class ComponentTypeDocumentProcessor implements DocumentProcessor {
 
                         }
 
-                        for (Operation operation : interfaceContract.getCallbackInterface().getOperations()) {
+                        if (interfaceContract.getCallbackInterface() != null) {
+                            for (Operation operation : interfaceContract.getCallbackInterface().getOperations()) {
 
-                            referenceDoc.add(new Field(SearchFields.REFERENCE_INTERFACE_CALLBACK_FIELD, operation
-                                .getName(), Field.Store.YES, Field.Index.ANALYZED));
+                                referenceDoc.add(new Field(SearchFields.REFERENCE_INTERFACE_CALLBACK_FIELD, operation
+                                    .getName(), Field.Store.YES, Field.Index.ANALYZED));
 
+                            }
                         }
 
                     }

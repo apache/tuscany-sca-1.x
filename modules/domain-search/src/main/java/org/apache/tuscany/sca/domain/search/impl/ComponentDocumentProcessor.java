@@ -85,11 +85,13 @@ public class ComponentDocumentProcessor implements DocumentProcessor {
 
                         }
 
-                        for (Operation operation : interfaceContract.getCallbackInterface().getOperations()) {
+                        if (interfaceContract.getCallbackInterface() != null) {
+                            for (Operation operation : interfaceContract.getCallbackInterface().getOperations()) {
 
-                            serviceDoc.add(new Field(SearchFields.SERVICE_INTERFACE_CALLBACK_FIELD,
-                                                     operation.getName(), Field.Store.YES, Field.Index.ANALYZED));
+                                serviceDoc.add(new Field(SearchFields.SERVICE_INTERFACE_CALLBACK_FIELD,
+                                                         operation.getName(), Field.Store.YES, Field.Index.ANALYZED));
 
+                            }
                         }
 
                     }
@@ -115,12 +117,14 @@ public class ComponentDocumentProcessor implements DocumentProcessor {
 
                         }
 
-                        for (Operation operation : interfaceContract.getCallbackInterface().getOperations()) {
+                        if (interfaceContract.getCallbackInterface() != null) {
+                            for (Operation operation : interfaceContract.getCallbackInterface().getOperations()) {
 
-                            referenceDoc.add(new Field(SearchFields.REFERENCE_INTERFACE_CALLBACK_FIELD, operation
-                                .getName(), Field.Store.YES, Field.Index.ANALYZED));
+                                referenceDoc.add(new Field(SearchFields.REFERENCE_INTERFACE_CALLBACK_FIELD, operation
+                                    .getName(), Field.Store.YES, Field.Index.ANALYZED));
 
-                        }
+                            }
+                        } 
 
                     }
 
