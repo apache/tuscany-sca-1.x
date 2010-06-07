@@ -140,7 +140,7 @@ public class NodeImpl implements SCANode, SCAClient {
             configuration.getComposite().setURI(compositeURL.toString());
 
             // Configure the node
-            configureNode(configuration);
+            configureNode(configuration, null);
 
         } catch (ServiceRuntimeException e) {
             throw e;
@@ -162,7 +162,7 @@ public class NodeImpl implements SCANode, SCAClient {
             initRuntime();
 
             ConfiguredNodeImplementation config = findNodeConfiguration(null, null);
-            configureNode(config);
+            configureNode(config, null);
         } catch (ServiceRuntimeException e) {
             throw e;
         } catch (Throwable e) {
@@ -197,7 +197,7 @@ public class NodeImpl implements SCANode, SCAClient {
             initRuntime();
 
             ConfiguredNodeImplementation config = findNodeConfiguration(compositeURI, classLoader);
-            configureNode(config);
+            configureNode(config, null);
         } catch (ServiceRuntimeException e) {
             throw e;
         } catch (Throwable e) {
@@ -378,7 +378,7 @@ public class NodeImpl implements SCANode, SCAClient {
             }
 
             // Configure the node
-            configureNode(configuration);
+            configureNode(configuration, null);
 
         } catch (ServiceRuntimeException e) {
             throw e;
@@ -420,20 +420,7 @@ public class NodeImpl implements SCANode, SCAClient {
                     modelFactories.getFactory(NodeImplementationFactory.class);
                 configuration = nodeImplementationFactory.createConfiguredNodeImplementation();
 
-                // Read the composite model
-                StAXArtifactProcessor<Composite> compositeProcessor = artifactProcessors.getProcessor(Composite.class);
-                // URL compositeURL = new URL(compositeURI);
-                logger.log(Level.INFO, "Loading composite: " + compositeURI);
-
-                CompositeDocumentProcessor compositeDocProcessor =
-                    (CompositeDocumentProcessor)documentProcessors.getProcessor(Composite.class);
-                composite =
-                    compositeDocProcessor.read(URI.create(compositeURI), new ByteArrayInputStream(compositeContent
-                        .getBytes("UTF-8")));
-
-                analyzeProblems();
-
-                configuration.setComposite(composite);
+                // Defer reading the composite content until the contributions have been loaded (TUSCANY-3569)
 
                 // Create contribution models
                 ContributionFactory contributionFactory = modelFactories.getFactory(ContributionFactory.class);
@@ -444,7 +431,7 @@ public class NodeImpl implements SCANode, SCAClient {
             }
 
             // Configure the node
-            configureNode(configuration);
+            configureNode(configuration, compositeContent);
 
         } catch (ServiceRuntimeException e) {
             throw e;
@@ -503,7 +490,7 @@ public class NodeImpl implements SCANode, SCAClient {
         return URI.create(uri);
     }
 
-    private void configureNode(ConfiguredNodeImplementation configuration) throws Exception {
+    private void configureNode(ConfiguredNodeImplementation configuration, String compositeContent) throws Exception {
 
         // Find if any contribution JARs already available locally on the classpath
         Map<String, URL> localContributions = localContributions();
@@ -539,7 +526,20 @@ public class NodeImpl implements SCANode, SCAClient {
         }
 
         composite = configuration.getComposite();
-        
+
+        // Read the composite content after the contributions have been loaded, so that the
+        // policySet definitions provided by the contributions are available (TUSCANY-3569)
+        if (composite == null && compositeContent != null) {
+            logger.log(Level.INFO, "Loading composite: " + configurationName);
+            CompositeDocumentProcessor compositeDocProcessor =
+                (CompositeDocumentProcessor)documentProcessors.getProcessor(Composite.class);
+            composite =
+                compositeDocProcessor.read(URI.create(configurationName), new ByteArrayInputStream(compositeContent
+                    .getBytes("UTF-8")));
+            analyzeProblems();
+            configuration.setComposite(composite);
+        }
+
         if(composite != null && composite.isUnresolved()) {
             ContributionFactory contributionFactory = modelFactories.getFactory(ContributionFactory.class);
             Artifact compositeFile = contributionFactory.createArtifact();
