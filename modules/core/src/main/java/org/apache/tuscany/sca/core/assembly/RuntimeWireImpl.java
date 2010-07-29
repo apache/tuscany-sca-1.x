@@ -131,6 +131,12 @@ public class RuntimeWireImpl implements RuntimeWire {
                 initServiceBindingInvocationChains();
             }
         }
+        
+        // Init the operation invocation chains now. We know they will 
+        // be needed as well as the binding invocation chain and this
+        // makes the wire processors run
+        getInvocationChains();
+        
         return bindingInvocationChain;
     }
 
