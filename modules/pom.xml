@@ -66,7 +66,7 @@
                 <module>binding-jms</module>
                 <module>binding-jms-runtime</module>
                 <module>binding-jms-policy</module>
-<!-- Port of JSONP to 1.x, Looking to Fabiano to test
+<!-- Port of JSONP to from 2.x to 1.x, Looking to Fabiano to test
                 <module>binding-jsonp</module>
                 <module>binding-jsonp-runtime</module>
 -->
@@ -110,6 +110,9 @@
                 <module>databinding-sdo</module>
                 <module>databinding-sdo-axiom</module>
                 <module>databinding-json</module>
+<!-- Port of JSON databinding from 2.x to 1.x, Looking to Fabiano to test
+                <module>databinding-json-2-x</module>
+-->
                 <module>databinding-saxon</module>
                 <module>databinding-xmlbeans</module>
                 <module>databinding-fastinfoset</module>
