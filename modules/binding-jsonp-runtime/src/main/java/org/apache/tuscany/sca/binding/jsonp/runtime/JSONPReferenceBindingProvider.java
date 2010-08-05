@@ -44,7 +44,7 @@ public class JSONPReferenceBindingProvider implements ReferenceBindingProvider {
         } catch (Exception ex){
             // we know this supports clone
         }
-        contract.getInterface().resetDataBinding("JSON");
+        contract.getInterface().resetDataBinding("JSON2x");
     }
     public Invoker createInvoker(Operation operation) {
         return new JSONPInvoker(operation, binding);

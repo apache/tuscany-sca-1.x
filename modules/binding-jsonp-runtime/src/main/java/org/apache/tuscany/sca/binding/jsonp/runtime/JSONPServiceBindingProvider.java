@@ -52,7 +52,7 @@ public class JSONPServiceBindingProvider implements ServiceBindingProvider {
         } catch (Exception ex){
             // we know this supports clone
         }
-        contract.getInterface().resetDataBinding("JSON");
+        contract.getInterface().resetDataBinding("JSON2x");
     }
 
     public void start() {
