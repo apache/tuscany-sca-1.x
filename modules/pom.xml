@@ -66,6 +66,8 @@
                 <module>binding-jms</module>
                 <module>binding-jms-runtime</module>
                 <module>binding-jms-policy</module>
+                <module>binding-jsonp</module>
+                <module>binding-jsonp-runtime</module>
                 <module>binding-jsonrpc</module>
                 <module>binding-jsonrpc-js</module>
                 <module>binding-jsonrpc-js-dojo</module>

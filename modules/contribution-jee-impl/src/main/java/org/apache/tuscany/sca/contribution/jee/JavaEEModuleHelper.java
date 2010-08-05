@@ -46,7 +46,7 @@ public class JavaEEModuleHelper {
 
         // Set the Thread context class loader as the module's class loader and all the Web and EJB modules
         // inside. Otherwise, SCA annotations could not be processed
-        // TODO: Eliminate the use of reflection for setting the class loader
+        // TODO: Eliminate the use of reflection for setting the class loader       
         java.lang.reflect.Field field = null;
         try {
             field = appModule.getClass().getDeclaredField("classLoader");
@@ -100,7 +100,7 @@ public class JavaEEModuleHelper {
             } catch (IllegalAccessException e) {
                 throw new ContributionReadException(e);
             }
-        }
+        }       
 
         // Process deployment descriptor files
         ReadDescriptors readDescriptors = new ReadDescriptors();
