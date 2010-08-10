@@ -18,6 +18,8 @@
  */
 package scatours.calendar;
 
+import junit.framework.Assert;
+
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -47,7 +49,9 @@ public class CalendarTestCase {
     @Test
     public void testCalendar() throws Exception {
         Calendar calendar = ((SCAClient)node).getService(Calendar.class, "Calendar");
-        System.out.println(calendar.getEndDate("07/10/96 04:05", 3));
+        String result = calendar.getEndDate("07/10/96 04:05", 3);
+        Assert.assertEquals("10/10/96 04:05", result);
+        System.out.println(result);
     }
 
     @After
