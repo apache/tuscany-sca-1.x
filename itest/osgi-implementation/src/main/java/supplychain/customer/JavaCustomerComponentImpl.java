@@ -19,6 +19,8 @@
 package supplychain.customer;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
@@ -39,7 +41,7 @@ public class JavaCustomerComponentImpl implements Customer {
     
     private Retailer retailer3;
     
-    private static ArrayList<String> outstandingOrders = new ArrayList<String>();
+    private static List<String> outstandingOrders = Collections.synchronizedList(new ArrayList<String>());
     
     @Reference
     public void setRetailer1(Retailer retailer1) {

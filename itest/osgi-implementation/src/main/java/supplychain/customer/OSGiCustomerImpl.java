@@ -20,6 +20,8 @@ package supplychain.customer;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.osoa.sca.annotations.AllowsPassByReference;
 
@@ -32,7 +34,7 @@ import supplychain.retailer.Retailer;
 @AllowsPassByReference
 public class OSGiCustomerImpl extends OSGiBundleImpl implements Customer {
     
-    private ArrayList<String> outstandingOrders = new ArrayList<String>();
+    private List<String> outstandingOrders = Collections.synchronizedList(new ArrayList<String>());
     
     private Retailer retailer1;
     private Retailer retailer2;

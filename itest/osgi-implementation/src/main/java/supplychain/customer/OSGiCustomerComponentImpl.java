@@ -20,6 +20,8 @@ package supplychain.customer;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.osgi.service.component.ComponentContext;
 
@@ -36,7 +38,7 @@ public class OSGiCustomerComponentImpl implements Customer {
     private Retailer retailer2;
     private Retailer retailer3;
     
-    private static ArrayList<String> outstandingOrders = new ArrayList<String>();
+    private static List<String> outstandingOrders = Collections.synchronizedList(new ArrayList<String>());
     
     public OSGiCustomerComponentImpl() {
         System.out.println("Created OSGiCustomerComponentImpl " + this);
