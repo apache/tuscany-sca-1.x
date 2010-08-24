@@ -171,6 +171,8 @@
    		</service>
         <reference name="deployableCollection" target="DeployableCompositeCollectionComponent/LocalItemCollection"/>
    		<reference name="domainManagerConfiguration" target="DomainManagerConfigurationComponent"/>
+        <reference name="domainSearch" target="DomainSearchComponent"/>
+        <reference name="contributionReader" target="DeployableCompositeCollectionComponent/ContributionsReader"/>
     </component>
 
     <component name="DeployableCompositeServiceComponent">
