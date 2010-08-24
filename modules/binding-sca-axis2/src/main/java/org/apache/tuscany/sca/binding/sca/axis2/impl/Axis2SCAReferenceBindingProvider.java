@@ -72,8 +72,6 @@ public class Axis2SCAReferenceBindingProvider implements ReferenceBindingProvide
                                             ExtensionPointRegistry extensionPoints,
                                             List<PolicyHandlerTuple> policyHandlerClassnames) {
 
-        ServletHostExtensionPoint servletHosts = extensionPoints.getExtensionPoint(ServletHostExtensionPoint.class);
-        ServletHost servletHost = servletHosts.getServletHosts().get(0);
         ModelFactoryExtensionPoint modelFactories = extensionPoints.getExtensionPoint(ModelFactoryExtensionPoint.class);
         DataBindingExtensionPoint dataBindings = extensionPoints.getExtensionPoint(DataBindingExtensionPoint.class);
 
