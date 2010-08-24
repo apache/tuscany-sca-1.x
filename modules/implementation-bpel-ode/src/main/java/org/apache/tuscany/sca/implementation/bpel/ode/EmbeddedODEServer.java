@@ -26,6 +26,7 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import javax.transaction.TransactionManager;
 import javax.xml.namespace.QName;
@@ -147,9 +148,18 @@ public class EmbeddedODEServer {
         if (__log.isDebugEnabled()) {
             __log.debug("ODE initializing");
         }
+        ThreadFactory threadFactory = new ThreadFactory() {
+            int threadNumber = 0;
+            public Thread newThread(Runnable r) {
+                threadNumber += 1;
+                Thread t = new Thread(r, "EmbeddedODEServer-"+threadNumber);
+                t.setDaemon(true);
+                return t;
+            }
+        };
         
         //FIXME: externalize the configuration for ThreadPoolMaxSize
-        _executorService = Executors.newCachedThreadPool();
+        _executorService = Executors.newCachedThreadPool(threadFactory);
        
         _bpelServer = new BpelServerImpl();
         _scheduler = createScheduler();
@@ -222,6 +232,7 @@ public class EmbeddedODEServer {
 
     protected Scheduler createScheduler() {
         SimpleScheduler scheduler = new SimpleScheduler(new GUID().toString(),new JdbcDelegate(_db.getDataSource()));
+        scheduler.setExecutorService(_executorService);
         scheduler.setTransactionManager(_txMgr);
 
         return scheduler;
