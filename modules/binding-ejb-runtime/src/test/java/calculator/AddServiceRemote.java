@@ -20,7 +20,13 @@ package calculator;
 
 import javax.ejb.Remote;
 
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+
 @Remote
+@WebService
 public interface AddServiceRemote {
+    @WebMethod(operationName = "Add")
     double add(double n1, double n2);
 }
+
