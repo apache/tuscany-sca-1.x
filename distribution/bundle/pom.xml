@@ -385,6 +385,13 @@
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-implementation-bpel-ode</artifactId>
             <version>${pom.version}</version>
+            <exclusions>
+                <exclusion>
+                    <!-- this uses commons-lang 2.1, but we need 2.3 for domain-manager -->
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
