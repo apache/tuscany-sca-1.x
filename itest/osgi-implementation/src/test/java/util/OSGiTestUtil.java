@@ -18,6 +18,9 @@
  */
 package util;
 
+import java.io.File;
+import org.apache.commons.io.FileUtils;
+
 import org.apache.tuscany.sca.osgi.runtime.OSGiRuntime;
 
 
@@ -37,6 +40,12 @@ public  class OSGiTestUtil  {
         String felixConfigFileName = "file:target/test-classes/osgi/felix/felix.config.properties";
         
         System.setProperty("felix.config.properties", felixConfigFileName);
+
+		// delete any cached OSGI bundles left over from previous test executions
+		File felixCache = new File("target/.felix");
+		if (felixCache.exists()) {
+		    FileUtils.cleanDirectory(felixCache);
+		}
         
         try {
             
