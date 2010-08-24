@@ -115,6 +115,7 @@ public class TransportServiceInterceptor implements Interceptor {
     }
     
     public Message invokeResponse(Message msg) { 
+        JMSBindingContext context = msg.getBindingContext();
         try {
 
             //if operation is oneway, return back.
@@ -123,7 +124,6 @@ public class TransportServiceInterceptor implements Interceptor {
                 return msg;
             }
 
-            JMSBindingContext context = msg.getBindingContext();
             Session session = context.getJmsResponseSession();
             javax.jms.Message requestJMSMsg = context.getJmsMsg();
             javax.jms.Message responseJMSMsg = msg.getBody();
@@ -168,12 +168,13 @@ public class TransportServiceInterceptor implements Interceptor {
             producer.send((javax.jms.Message)msg.getBody());
     
             producer.close();
-            context.closeJmsResponseSession();
             
             return msg;
     
         } catch (JMSException e) {
             throw new JMSBindingException(e);
+        } finally {
+            context.closeJmsResponseSession();
         }
     }    
     
