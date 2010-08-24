@@ -44,16 +44,12 @@ public class NodeImplementationDaemonBootstrap {
         
         public void start() {
             threadContextClassLoader = Thread.currentThread().getContextClassLoader();
-            boolean started = false;
             try {
                 Thread.currentThread().setContextClassLoader(runtimeClassLoader);
                 SCANodeFactory factory = SCANodeFactory.newInstance();
                 daemon = factory.createSCANodeFromClassLoader("NodeDaemon.composite", threadContextClassLoader);
-                started = true;
             } finally {
-                if (!started) {
-                    Thread.currentThread().setContextClassLoader(threadContextClassLoader);
-                }
+                Thread.currentThread().setContextClassLoader(threadContextClassLoader);
             }
         }
         
