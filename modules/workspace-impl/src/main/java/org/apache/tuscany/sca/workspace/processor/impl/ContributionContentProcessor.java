@@ -21,6 +21,7 @@ package org.apache.tuscany.sca.workspace.processor.impl;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.stream.XMLInputFactory;
@@ -77,6 +78,8 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
     private Monitor monitor = null;
     private ModelResolver policyDefinitionsResolver = null;
     private List<SCADefinitions> policyDefinitions = null;
+
+    private static final String COMPOSITE_FILE_EXTN = ".composite";
 
     public ContributionContentProcessor(ExtensionPointRegistry extensionPoints, Monitor monitor) {
         this.extensionPoints = extensionPoints;
@@ -149,8 +152,51 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
         // Scan the contribution and list the artifacts contained in it
         List<Artifact> artifacts = contribution.getArtifacts();
         boolean contributionMetadata = false;
+        List<String> compositeURIs = new ArrayList<String>();
         List<String> artifactURIs = scanner.getArtifacts(contributionURL);
         for (String artifactURI: artifactURIs) {
+            if (artifactURI.endsWith(COMPOSITE_FILE_EXTN)) {
+			    // TUSCANY-3561: need to process the composites last
+                compositeURIs.add(artifactURI);
+            } else {
+                URL artifactURL = scanner.getArtifactURL(contributionURL, artifactURI);
+
+                // Add the deployed artifact model to the contribution
+                Artifact artifact = this.contributionFactory.createArtifact();
+                artifact.setURI(artifactURI);
+                artifact.setLocation(artifactURL.toString());
+                artifacts.add(artifact);
+                modelResolver.addModel(artifact);
+
+                // Read each artifact
+                Object model = artifactProcessor.read(contributionURL, URI.create(artifactURI), artifactURL);
+                if (model != null) {
+                    artifact.setModel(model);
+
+                    // Add the loaded model to the model resolver
+                    modelResolver.addModel(model);
+
+                    // Add policy definitions to the list of policy definitions
+                    if (policyDefinitionsResolver != null) {
+                        addPolicyDefinitions(model);
+                    }
+
+                    // Merge contribution metadata into the contribution model
+                    if (model instanceof ContributionMetadata) {
+                        contributionMetadata = true;
+                        ContributionMetadata c = (ContributionMetadata)model;
+                        contribution.getImports().addAll(c.getImports());
+                        contribution.getExports().addAll(c.getExports());
+                        contribution.getDeployables().addAll(c.getDeployables());
+                        contribution.getExtensions().addAll(c.getExtensions());
+                        contribution.getAttributeExtensions().addAll(c.getAttributeExtensions());
+                    }
+                }
+            }
+        }
+
+        // TUSCANY-3561: process the composites last
+        for (String artifactURI : compositeURIs) {
             URL artifactURL = scanner.getArtifactURL(contributionURL, artifactURI);
 
             // Add the deployed artifact model to the contribution
@@ -167,24 +213,8 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
 
                 // Add the loaded model to the model resolver
                 modelResolver.addModel(model);
-
-                // Add policy definitions to the list of policy definitions
-                if (policyDefinitionsResolver != null) {
-                    addPolicyDefinitions(model);
-                }
-
-                // Merge contribution metadata into the contribution model
-                if (model instanceof ContributionMetadata) {
-                    contributionMetadata = true;
-                    ContributionMetadata c = (ContributionMetadata)model;
-                    contribution.getImports().addAll(c.getImports());
-                    contribution.getExports().addAll(c.getExports());
-                    contribution.getDeployables().addAll(c.getDeployables());
-                    contribution.getExtensions().addAll(c.getExtensions());
-                    contribution.getAttributeExtensions().addAll(c.getAttributeExtensions());
-                }
             }
-        }
+		}
 
         // If no sca-contribution.xml file was provided then just consider
         // all composites in the contribution as deployables
@@ -229,7 +259,27 @@ public class ContributionContentProcessor implements URLArtifactProcessor<Contri
         }
 
         // Resolve all artifact models
+        List<Artifact> composites = new ArrayList<Artifact>();
         for (Artifact artifact : contribution.getArtifacts()) {
+			// TUSCANY-3561: need to process the composites last
+            if (artifact.getURI().endsWith(COMPOSITE_FILE_EXTN)) {
+                composites.add(artifact);
+            } else {
+                Object model = artifact.getModel();
+                if (model != null) {
+                    try {
+                       artifactProcessor.resolve(model, contributionResolver);
+                    } catch (ContributionResolveException e) {
+                        throw e;
+                    } catch (Exception e) {
+                        throw new ContributionResolveException(e);
+                    }
+                }
+			}
+        }
+
+        // TUSCANY-3561: process the composites last
+        for (Artifact artifact : composites) {
             Object model = artifact.getModel();
             if (model != null) {
                 try {
