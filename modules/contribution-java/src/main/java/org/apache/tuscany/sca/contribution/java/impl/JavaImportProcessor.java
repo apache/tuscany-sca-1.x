@@ -30,6 +30,7 @@ import javax.xml.stream.XMLStreamWriter;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
 import org.apache.tuscany.sca.contribution.java.JavaImport;
 import org.apache.tuscany.sca.contribution.java.JavaImportExportFactory;
+import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.contribution.service.ContributionReadException;
@@ -45,7 +46,7 @@ import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
  * 
  * @version $Rev$ $Date$
  */
-public class JavaImportProcessor  implements StAXArtifactProcessor<JavaImport> {
+public class JavaImportProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<JavaImport> {
     private static final String SCA10_NS = "http://www.osoa.org/xmlns/sca/1.0";
     
     private static final QName IMPORT_JAVA = new QName(SCA10_NS, "import.java");
@@ -121,7 +122,7 @@ public class JavaImportProcessor  implements StAXArtifactProcessor<JavaImport> {
                             } else
                             	javaImport.setPackage(packageName);
                             
-                            String location = reader.getAttributeValue(null, LOCATION);                        
+                            String location = getURIString(reader, LOCATION);                        
                             javaImport.setLocation(location);
                         }
                         break;

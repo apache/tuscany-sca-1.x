@@ -33,6 +33,7 @@ import org.apache.tuscany.sca.assembly.SCABindingFactory;
 import org.apache.tuscany.sca.assembly.xml.Constants;
 import org.apache.tuscany.sca.assembly.xml.PolicyAttachPointProcessor;
 import org.apache.tuscany.sca.contribution.ModelFactoryExtensionPoint;
+import org.apache.tuscany.sca.contribution.processor.BaseStAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXAttributeProcessor;
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
@@ -51,7 +52,7 @@ import org.apache.tuscany.sca.policy.PolicySetAttachPoint;
  * @version $Rev$ $Date$
  */
 
-public class SCABindingProcessor implements StAXArtifactProcessor<SCABinding>, Constants{
+public class SCABindingProcessor extends BaseStAXArtifactProcessor implements StAXArtifactProcessor<SCABinding>, Constants{
 
     private SCABindingFactory scaBindingFactory;
     private ExtensionFactory extensionFactory;
@@ -106,7 +107,7 @@ public class SCABindingProcessor implements StAXArtifactProcessor<SCABinding>, C
         }
 
         // Read binding URI
-        String uri = reader.getAttributeValue(null, URI);
+        String uri = getURIString(reader, URI);
         if (uri != null) {
             scaBinding.setURI(uri);
         }
