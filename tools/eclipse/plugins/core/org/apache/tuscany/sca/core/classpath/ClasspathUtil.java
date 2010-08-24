@@ -47,7 +47,7 @@ public class ClasspathUtil {
     private static final String TUSCANY_RUNTIME_LIBRARIES = "org.apache.tuscany.sca.core.runtimeLibraries";
 
     private static final String TUSCANY_FEATURE = "org.apache.tuscany.sca.feature.core";
-    private static final String TUSCANY_VERSION = "1.6";
+    private static final String TUSCANY_VERSION = "1.6.1-SNAPSHOT";
     
     /**
      * Return the installed runtime classpath entries.
