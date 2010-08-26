@@ -23,6 +23,8 @@
 
     <component name="CurrencyConverter">
         <implementation.java class="com.tuscanyscatours.currencyconverter.impl.CurrencyConverterImpl" />
-        <service name="CurrencyConverter"/>
+        <service name="CurrencyConverter">
+            <interface.java interface= "com.tuscanyscatours.currencyconverter.CurrencyConverter" />
+        </service>
     </component>
 </composite>
