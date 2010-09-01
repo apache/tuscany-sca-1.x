@@ -24,7 +24,6 @@
     <component name="CurrencyConverter">
         <implementation.java class="com.tuscanyscatours.currencyconverter.impl.CurrencyConverterImpl" />
         <service name="CurrencyConverter">
-            <interface.java interface="com.tuscanyscatours.currencyconverter.CurrencyConverter" />
             <binding.ws />
         </service>
     </component>
