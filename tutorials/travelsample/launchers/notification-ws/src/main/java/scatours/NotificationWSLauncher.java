@@ -25,6 +25,7 @@ import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
+import org.osoa.sca.ServiceRuntimeException;
 
 import scatours.notification.Notification;
 
@@ -45,7 +46,15 @@ public class NotificationWSLauncher {
         String accountID = "1234";
         String subject = "Holiday payment taken";
         String message = "Payment of £102.37 accepted...";
-        notification.notify(accountID, subject, message);
+        try {
+            notification.notify(accountID, subject, message);
+        } catch (ServiceRuntimeException ex) {
+            System.out.println("========================= Error =========================");
+            System.out.println("Failed to call notification service.");
+            System.out.println("Did you remember to start it using the launcher in the services/smsgateway-jaxws project?");
+            System.out.println("========================= Error =========================");
+            System.exit(-1);
+        }
 
         System.out.println("Node started - Press enter to shutdown.");
         System.in.read();
