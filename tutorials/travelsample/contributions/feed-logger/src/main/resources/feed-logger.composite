@@ -33,8 +33,5 @@
         <reference name="scaToursBlogRSS">
             <tuscany:binding.rss uri="http://scatours.wordpress.com/?feed=rss"/>
         </reference>
-        <reference name="bbcNews">
-            <tuscany:binding.rss uri="http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/world/rss.xml"/>
-        </reference>
     </component>
 </composite>

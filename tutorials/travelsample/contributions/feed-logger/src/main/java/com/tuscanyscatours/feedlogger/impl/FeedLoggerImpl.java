@@ -44,12 +44,6 @@ public class FeedLoggerImpl implements FeedLogger {
     public org.apache.tuscany.sca.binding.rss.collection.Collection scaToursBlogRSS;
 
     /**
-     * Reference to the BBC News RSS feed.
-     */
-    @Reference
-    public org.apache.tuscany.sca.binding.rss.collection.Collection bbcNews;
-
-    /**
      * {@inheritDoc}
      */
     public void logFeeds(int maxEntriesPerFeed) {
@@ -58,9 +52,6 @@ public class FeedLoggerImpl implements FeedLogger {
 
         System.out.println("Logging SCA Tours Blog RSS feed:");
         logRSSFeed(scaToursBlogRSS, maxEntriesPerFeed);
-
-        System.out.println("Logging BBC News feed:");
-        logRSSFeed(bbcNews, maxEntriesPerFeed);
     }
 
     /**
