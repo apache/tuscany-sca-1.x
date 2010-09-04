@@ -30,7 +30,6 @@ import com.tuscanyscatours.emailgateway.EmailGateway;
 import com.tuscanyscatours.payment.Payment;
 import com.tuscanyscatours.payment.creditcard.AuthorizeFault_Exception;
 import com.tuscanyscatours.payment.creditcard.CreditCardConfirm;
-import com.tuscanyscatours.payment.creditcard.CreditCardPayment;
 import com.tuscanyscatours.payment.creditcard.CreditCardPaymentConfirm;
 
 /**
