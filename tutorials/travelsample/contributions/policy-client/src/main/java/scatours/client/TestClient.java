@@ -47,7 +47,7 @@ public class TestClient {
 
     public void run() {
     	System.out.println("===============================================");
-    	System.out.println("Test the loggin policy by calling the trip component");
+    	System.out.println("Test the logging policy by calling the trip component");
         TripItem tripItem =
             new TripItem("1234", "5678", TripItem.TRIP, "FS1DEC06", "Florence and Siena pre-packaged tour", "FLR",
                          "06/12/09", "13/12/09", 450, "EUR", "http://localhost:8085/tbd");
