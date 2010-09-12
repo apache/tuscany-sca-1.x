@@ -1,6 +1,35 @@
+Changes With Apache Tuscany SCA 1.6.1 September 2010 
+====================================================
+
+Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
+TUSCANY-3639 Wire interceptors not created until binding interceptors have executed in Service wire
+TUSCANY-3634 JMS Session is not closed when replyDest is null, then OutOfMemoroy
+TUSCANY-3625 Issue converting case on methodName for WSDL-derived operation used with binding.ejb reference
+TUSCANY-3615 itest/implementation-osgi produces bundle cache errors
+TUSCANY-3589 Domain manager produces "get - Error getting data" message when doing a search
+TUSCANY-3588 NullPointerException when adding composite in Domain Manager GUI
+TUSCANY-3587 Domain manager produces "post - Error getting data" message when adding a composite
+TUSCANY-3569 PolicyConfigurationException: The are unfulfilled intents for binding in reference
+TUSCANY-3561 Domain manager throws policy exception if definitions.xml file is read after .composite file
+TUSCANY-3551 ClassCastException in SCA Store Tutorial Integration Test
+TUSCANY-3550 Build failure in itest/osgi-implementation DSInterfacesTestCase
+TUSCANY-3540 Axis2SCAReferenceBindingProvider throws exception if servlet host not present
+TUSCANY-3490 Tuscany SCA binary distribution doesn't include implementation.web support
+TUSCANY-3475 Travel sample launcher for payment-bpel hangs before returning
+TUSCANY-3466 Cannot stop component or its services and references if one of them fails to start
+TUSCANY-3193 Domain Manager GUI does not put <binding.sca> entries in generated node confiig files
+TUSCANY-242  SCDL loader should trim the whitespaces when the element text is parsed
+
+Other commits:
+r959912: Add java.net2 repository (needed for mimepull-1.2.jar)
+r959536: Add build-dependency.xml to svn:ignore list
+r959529: Fix incorrect name for tutorial-assets.jar
+r942469: Exclude junit 3.8 dependency brought in by wss4j and use junit 4.5 instead
+r921260: add ignores
+r915259: Correct the composite name
+
 Changes With Apache Tuscany SCA 1.6 January 2010 
 ==================================================
-
 Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
 
 TUSCANY-3448 - SCA Property and Reference annotation processing in web application results in incorrect computed names
@@ -145,6 +174,7 @@ TUSCANY-2757 - Top down round trip problem where wrapper elements are marked as 
 TUSCANY-2640 - Should use package(s) when possible in creating JAXBContext, not set of Classes
 TUSCANY-2626 - Investigate why endpoint reference and wsdlLocation are not in the sca-binding-webservice.xsd schema file
 TUSCANY-2552 - Implement a search function for the domain manager home page
+
 
 Changes With Apache Tuscany SCA 1.5.1 October 2009 
 ==================================================

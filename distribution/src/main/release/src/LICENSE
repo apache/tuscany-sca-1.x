@@ -204,18 +204,21 @@
 
 ===============================================================================================================
 
-Apache Tuscany SCA for Java Subcomponents
-=========================================: 
+APACHE TUSCANY SCA SUBCOMPONENTS:
 
-The Tuscany SCA for Java release includes a number of subcomponents with
-separate copyright notices and license terms. Your use of the source
-code for the these subcomponents is subject to the terms and
-conditions of the following licenses.
+Apache Tuscany SCA for Java includes a number of subcomponents with
+separate copyright notices and license terms. Your use of these subcomponents
+is subject to the terms and conditions of the following licenses.
 
 ===============================================================================================================
 
 The module itest/databindings/common includes the test schema; datagraph.xsd, sdoJava.xsd, and sdoModel.xsd
 under the following license:
+
+(c) Copyright BEA Systems, Inc., International Business Machines Corporation, 
+Oracle Corporation, Primeton Technologies Ltd., Rogue Wave Software, SAP AG., 
+Software AG., Sun Microsystems, Sybase Inc., Xcalia, Zend Technologies, 
+2005, 2006. All rights reserved.
 
 License for the Service Data Objects JavaDoc, Interface Definition files
 and XSD files.
@@ -299,6 +302,8 @@ The module implementation-script temporarily includes one file under the followi
 
 The module assembly-xsd includes XSD files under the following SCA Collaboration license:
 
+(c) Copyright SCA Collaboration 2006, 2007
+
 License for the Service Component Architecture JavaDoc, Interface 
 Definition files and XSD files.
 
@@ -341,31 +346,34 @@ No other rights are granted by implication, estoppel or otherwise.
 Revision level 1.1, last updated on 2007/11/19
 
 =================================================================================================================
-The modules 
 
-binding-ws-xml
-databinding
-databinding-axiom
-databinding-jaxb
-databinding-json
-databinding-sdo
-databinding-sdo-axiom
-databinding-xmlbeans
-interface-wsdl-xml
-
-Include the ipo.xsd and address.xsd information from the XML Schema Primer 
+The modules:
+ binding-ws-xml
+ databinding
+ databinding-axiom
+ databinding-jaxb
+ databinding-json
+ databinding-sdo
+ databinding-sdo-axiom
+ databinding-xmlbeans
+ interface-wsdl-xml
+include the ipo.xsd and address.xsd information from the XML Schema Primer 
 (http://www.w3.org/TR/2004/PER-xmlschema-0-20040318/) combined into the 
 file ipo.xsd and extended with UK postcode structures.
 
-The module 
-
-tuscany-assembly-xsd 
-
-Includes file wsdli.xsd
-
-From http://www.w3.org/2004/08/wsdl-instance
+The module: 
+ tuscany-assembly-xsd 
+includes the file wsdli.xsd from http://www.w3.org/2004/08/wsdl-instance
 
 The ipo.xsd and wsdli.xsd files are included under the following license:
+
+Copyright (c) 2008 World Wide Web Consortium, (Massachusetts Institute of Technology, 
+European Research Consortium for Informatics and Mathematics, Keio University). 
+All Rights Reserved. This work is distributed under the W3C(c) Software License [1] in 
+the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied 
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+[1] http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
 
 W3C(c) SOFTWARE NOTICE AND LICENSE
 http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
@@ -406,7 +414,22 @@ times remain with copyright holders.
 
 =================================================================================================================
 
-The modules host-webapp and sca-api include files under the following license:
+The modules:
+ host-webapp
+ sca-api
+include files under the following copyrights and license:
+
+Copyright Notices
+
+(C) Copyright BEA Systems, Inc., Cape Clear Software, International Business Machines Corp, Interface21, IONA Technologies,
+Oracle, Primeton Technologies, Progress Software, Red Hat, Rogue Wave Software, SAP AG., Siemens AG., Software AG., Sybase
+Inc., TIBCO Software Inc., 2005, 2007. All rights reserved.
+
+(C) Copyright BEA Systems, Inc., Cape Clear Software, International Business Machines Corp, Interface21, IONA
+Technologies, Oracle, Primeton Technologies, Progress Software, Red Hat, Rogue Wave Software, SAP AG., Siemens
+AG., Software AG., Sun Microsystems, Inc., Sybase Inc., TIBCO Software Inc., 2005, 2008. All rights reserved.
+
+License
 
 Permission to copy, display and distribute the Service Component Architecture Specification and/or
 portions thereof, without modification, in any medium without fee or royalty is hereby granted, provided
@@ -422,13 +445,58 @@ BEA, Cape Clear, IBM, Interface21, IONA, Oracle, Primeton, Progress Software, Re
 SAP, Siemens, Software AG., Sun, Sybase, TIBCO (collectively, the "Authors") agree to grant you a
 royalty-free license, under reasonable, non-discriminatory terms and conditions to patents that they deem
 necessary to implement the Service Component Architecture Specification.
+
 THE Service Component Architecture SPECIFICATION IS PROVIDED "AS IS," AND THE
 AUTHORS MAKE NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED,
 REGARDING THIS SPECIFICATION AND THE IMPLEMENTATION OF ITS CONTENTS,
 INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
 PARTICULAR PURPOSE, NON-INFRINGEMENT OR TITLE.
+
 THE AUTHORS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL
 OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR RELATING TO ANY USE OR
 DISTRIBUTION OF THE Service Components Architecture SPECIFICATION.
+
 The name and trademarks of the Authors may NOT be used in any manner, including advertising or
 publicity pertaining to the Service Component Architecture Specification or its contents without specific,
+written prior permission. Title to copyright in the Service Component Architecture Specification
+will at all times remain with the Authors.
+
+No other rights are granted by implication, estoppel or otherwise.
+
+=================================================================================================================
+
+The modules:
+ binding-jsonrpc-runtime
+ implementation-web-runtime
+include the file jsonrpc.js under the following license:
+
+/*
+ * JSON-RPC JavaScript client
+ *
+ * $Id: jsonrpc.js,v 1.36.2.3 2006/03/08 15:09:37 mclark Exp $
+ *
+ * Copyright (c) 2003-2004 Jan-Klaas Kollhof
+ * Copyright (c) 2005 Michael Clark, Metaparadigm Pte Ltd
+ *
+ * This code is based on Jan-Klaas' JavaScript o lait library (jsolait).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+/*
+ * Modifications for Apache Tuscany:
+ * - JSONRpcClient_createMethod changed so callback is last arg
+ */
+
+=================================================================================================================
