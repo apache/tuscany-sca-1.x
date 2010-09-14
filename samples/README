@@ -138,9 +138,9 @@ Getting Ready To Build
 ----------------------
 You will need to install the following software before you start. 
 
-J2SE Development Kit (JDK) 5.0
-Apache Ant 1.7.0                - if you are going to use Ant 
-Apache Maven 2.0.6              - if you are going to use Maven
+J2SE Development Kit (JDK) 5.0 or higher
+Apache Ant 1.7.1 or higher      - if you are going to use Ant 
+Apache Maven 2.0.10 or higher   - if you are going to use Maven
 
 Java and Ant and/or Maven binary directories must be present in your PATH so 
 that their executable programs are available in your environment. You may 
@@ -148,15 +148,15 @@ find it useful to use a script to set up your environment, for example;
 
 For UNIX:
   JAVA_HOME=/<installation_directory>
-  ANT_HOME=/<installation_directory>/apache-ant-1.7.0
-  MAVEN_HOME=/<installation_directory>/maven-2.0.6
-  export PATH=$JAVA_HOME/bin:$ANT_HOME/bin:$MAVEN_HOME/bin:$PATH
+  ANT_HOME=/<installation_directory>/apache-ant-1.7.1
+  M2_HOME=/<installation_directory>/maven-2.0.10
+  export PATH=$JAVA_HOME/bin:$ANT_HOME/bin:$M2_HOME/bin:$PATH
 
 For Windows:
   set JAVA_HOME=C:\<installation_directory>
-  set ANT_HOME=C:\<installation_directory>\apache-ant-1.7.0
-  set MAVEN_HOME=C:\<installation_directory>\maven-2.0.6
-  set PATH=%JAVA_HOME%\bin;%ANT_HOME%\bin;%MAVEN_HOME%\bin;%PATH%
+  set ANT_HOME=C:\<installation_directory>\apache-ant-1.7.1
+  set M2_HOME=C:\<installation_directory>\maven-2.0.10
+  set PATH=%JAVA_HOME%\bin;%ANT_HOME%\bin;%M2_HOME%\bin;%PATH%
 
 
 Building And Running The SCA Samples Using Ant
