@@ -207,6 +207,8 @@
 				<exclude>demos/bigbank-account/src/main/resources/web/dojo/**/*</exclude>
 				<exclude>demos/secure-bigbank/secure-bigbank-account/src/main/resources/web/dojo</exclude>
 				<exclude>demos/secure-bigbank/secure-bigbank-account/src/main/resources/web/dojo/**/*</exclude>
+                <exclude>tutorials/travelsample</exclude>
+                <exclude>tutorials/travelsample/**/*</exclude>
 				<exclude>*/**/derby.log</exclude>
 				<exclude>*/**/*.svg</exclude>
 				<exclude>*/**/*.ruleset</exclude>
