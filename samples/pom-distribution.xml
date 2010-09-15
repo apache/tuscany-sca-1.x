@@ -19,12 +19,12 @@
 -->
 <project>
     <!--
-       This pom-distribution.xml file is a modified version of the
-       pom.xml file in the samples directory of the svn source tree.
-       This file is used as the pom.xml for the samples directory of the
-       binary distribution.  Any updates to the samples pom.xml in the
-       svn source tree must be applied to this pom-distribution.xml file
-       to keep the two files in sync (except where marked).
+       This file is a modified version of the samples/pom.xml file in
+       the svn source tree. This file is used as the pom.xml for the
+       samples directory in the binary distribution.  Any updates to
+       samples/pom.xml in the svn source tree must also be applied to
+       samples/pom-distribution.xml to keep these two files in sync
+       (except where marked).
        
        The samples directory of the binary distribution needs to contain
        a pom.xml so that users can run "mvn eclipse:eclipse" to generate
