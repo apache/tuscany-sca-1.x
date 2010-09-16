@@ -1,41 +1,45 @@
-Building the Apache Tuscany SCA 1.6 October 2009 Release source distribution
+Building the Apache Tuscany SCA 1.6.1 September 2010 Release source distribution
 ================================================================================
 
 Initial Setup
 -------------
 
-1) Install J2SE 5.0 SDK, which can be downloaded from 
-   http://java.sun.com/j2se/1.5.0/download.jsp. Use version of 1.5.0_06 JDK or higher.
+1) Install either of the following:
+   a) Java SE 5.0 SDK (version 1.5.0_22 or higher), which can be downloaded from
+      http://java.sun.com/j2se/1.5.0/download.jsp
+   b) Java SE 6.0 SDK (version 1.6.0_07 or higher), which can be downloaded from
+      http://java.sun.com/javase/downloads
 
-2) Make sure that your JAVA_HOME environment variable is set to the newly installed 
+2) Make sure that your JAVA_HOME environment variable is set to the installed 
    JDK location, and that your PATH includes %JAVA_HOME%\bin (windows) or 
    $JAVA_HOME$/bin (unix).
 
-3) Install Maven 2.0.7 or higher, which can be downloaded from 
+3) Install Maven 2.0.10 or higher, which can be downloaded from 
    http://maven.apache.org/download.html. Make sure that your PATH includes 
-   the MVN_HOME/bin directory. 
+   the $M2_HOME$/bin directory. 
 
-4) Make sure that your MAVEN_OPTS environment variable has -Xmx128M (or more),
-   you can manually do this by executing the following in your prompt :
+4) Make sure that your MAVEN_OPTS environment variable has -Xmx128m (or more)
+   and -XX:MaxPermSize=256m (or more). You can do this manually by executing
+   the following in your prompt:
    Windows users:
-      set MAVEN_OPTS=-Xmx128M
+     set MAVEN_OPTS=-Xmx128m -XX:MaxPermSize=256m
    Unix users:
-      export MAVEN_OPTS=-Xmx128M
+     export MAVEN_OPTS=-Xmx128m -XX:MaxPermSize=256m
 
 
 Building
 --------
 
-1) Change to the top level directory of Apache Tuscany source distribution.
+1) Change to the top level directory of the Apache Tuscany SCA source distribution.
 2) Run
 
 	$> mvn
 
-   This will compile Apache Tuscany and run all of the tests in the source
+   This will compile Apache Tuscany SCA and run all of the tests in the source
    distribution. 
 
    Depending on the load of remote Maven 2.0 repositories, you may have 
-   to run "mvn" several times utill the required dependencies are 
+   to run 'mvn' several times utill the required dependencies are 
    all located in your local maven repository. It usually takes some time for 
    maven to download required dependencies in the first build. Once all the 
    dependencies have been downloaded you may use the -o option to run maven
@@ -50,6 +54,6 @@ Building the distributions
 
 	$> mvn
 
-   This will build the binary and source distribution with .zip and .gz 
+   This will build the binary and source distributions with .zip and .gz 
    formats in the distribution/target directory.
 

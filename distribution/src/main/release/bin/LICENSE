@@ -202,24 +202,240 @@
    limitations under the License.
 
 
+===============================================================================================================
+
+APACHE TUSCANY SCA SUBCOMPONENTS:
+
+Apache Tuscany SCA for Java includes a number of subcomponents with
+separate copyright notices and license terms. Your use of these subcomponents
+is subject to the terms and conditions of the following licenses.
+
+================================================================================
+
+The tuscany-implementation-script jar temporarily includes one file under the following BSD license:
+
+ Copyright (c) 2006, Sun Microsystems, Inc.
+ All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without 
+ modification, are permitted provided that the following conditions are met:
+ 
+  - Redistributions of source code must retain the above copyright notice, this 
+    list of conditions and the following disclaimer.
+ 
+  - Redistributions in binary form must reproduce the above copyright notice, 
+    this list of conditions and the following disclaimer in the documentation 
+    and/or other materials provided with the distribution.
+ 
+  - Neither the name of the Sun Microsystems, Inc. nor the names of 
+    contributors may be used to endorse or promote products derived from this 
+    software without specific prior written permission.
+ 
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+ CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED 
+ WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
+ PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+ COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY 
+ DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
+ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
+ DAMAGE. 
+
+================================================================================
+
+The tuscany-assembly-xsd jar includes XSD files under the following SCA Collaboration license:
+
+(c) Copyright SCA Collaboration 2006, 2007
+
+License for the Service Component Architecture JavaDoc, Interface 
+Definition files and XSD files.
+
+The Service Component Architecture JavaDoc, Interface Definition files, 
+and XSD files are being provided by the copyright holders under the 
+following license. By using and/or copying this work, you agree that 
+you have read, understood and will comply with the following terms and 
+conditions:
+
+Permission to copy, display, make derivative works of, and distribute 
+the Service Component Architecture JavaDoc, Interface Definition Files 
+and XSD files (the "Artifacts") in any medium without fee or royalty is 
+hereby granted, provided that you include the following on ALL copies 
+of the Artifacts, or portions thereof, that you make: 
+
+1. A link or URL to the Artifacts at this location:
+http://www.osoa.org/display/Main/Service+Component+Architecture+Specifications 
+
+2. The full text of this copyright notice as shown in the Artifacts.
+
+THE ARTIFACTS ARE PROVIDED "AS IS," AND THE AUTHORS MAKE NO 
+REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, REGARDING THE 
+ARTIFACTS AND THE IMPLEMENTATION OF THEIR CONTENTS, INCLUDING, BUT NOT 
+LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
+PURPOSE, NON-INFRINGEMENT OR TITLE.  
+
+THE AUTHORS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, 
+INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR RELATING TO ANY 
+USE OR DISTRIBUTION OF THE ARTIFACTS.
+
+The name and trademarks of the Authors may NOT be used in any manner, 
+including advertising or publicity pertaining to the Service Component 
+Architecture Specification or its contents without specific, written 
+prior permission. Title to copyright in the Service Component 
+Architecture Specification and the JavaDoc, Interface Definition Files 
+and XSD Files will at all times remain with the Authors.
+
+No other rights are granted by implication, estoppel or otherwise.
+
+Revision level 1.1, last updated on 2007/11/19
+
+================================================================================
+
+The tuscany-assembly-xsd jar includes files under the following copyright and license:
+
+Copyright (c) 2004 World Wide Web Consortium (Massachusetts Institute of Technology, 
+European Research Consortium for Informatics and Mathematics, Keio University). 
+All Rights Reserved. This work is distributed under the W3C(r) Software License [1] 
+in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied 
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+    [1] http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+
+W3C® SOFTWARE NOTICE AND LICENSE
+http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+
+This work (and included software, documentation such as READMEs, or other related items) 
+is being provided by the copyright holders under the following license. By obtaining, 
+using and/or copying this work, you (the licensee) agree that you have read, understood, 
+and will comply with the following terms and conditions.
+
+Permission to copy, modify, and distribute this software and its documentation, with or 
+without modification, for any purpose and without fee or royalty is hereby granted, provided 
+that you include the following on ALL copies of the software and documentation or portions 
+thereof, including modifications:
+
+   1. The full text of this NOTICE in a location viewable to users of the redistributed or 
+      derivative work.
+   2. Any pre-existing intellectual property disclaimers, notices, or terms and conditions. 
+      If none exist, the W3C Software Short Notice should be included (hypertext is preferred,
+      text is permitted) within the body of any redistributed or derivative code.
+   3. Notice of any changes or modifications to the files, including the date changes were 
+      made. (We recommend you provide URIs to the location from which the code is derived.)
+
+THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO 
+REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO, WARRANTIES 
+OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF THE SOFTWARE OR 
+DOCUMENTATION WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER 
+RIGHTS.
+
+COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL 
+DAMAGES ARISING OUT OF ANY USE OF THE SOFTWARE OR DOCUMENTATION.
+
+The name and trademarks of copyright holders may NOT be used in advertising or publicity 
+pertaining to the software without specific, written prior permission. Title to copyright 
+in this software and any associated documentation will at all times remain with copyright 
+holders.
+
+================================================================================
+
+The tuscany-host-webapp and tuscany-sca-api jars include files under the following
+copyrights and license:
+
+Copyright Notices
+
+(C) Copyright BEA Systems, Inc., Cape Clear Software, International Business Machines Corp, Interface21, IONA Technologies,
+Oracle, Primeton Technologies, Progress Software, Red Hat, Rogue Wave Software, SAP AG., Siemens AG., Software AG., Sybase
+Inc., TIBCO Software Inc., 2005, 2007. All rights reserved.
+
+(C) Copyright BEA Systems, Inc., Cape Clear Software, International Business Machines Corp, Interface21, IONA
+Technologies, Oracle, Primeton Technologies, Progress Software, Red Hat, Rogue Wave Software, SAP AG., Siemens
+AG., Software AG., Sun Microsystems, Inc., Sybase Inc., TIBCO Software Inc., 2005, 2008. All rights reserved.
+
+License
+
+Permission to copy, display and distribute the Service Component Architecture Specification and/or
+portions thereof, without modification, in any medium without fee or royalty is hereby granted, provided
+that you include the following on ALL copies of the Service Component Architecture Specification, or
+portions thereof, that you make:
+
+1. A link or URL to the Service Component Architecture Specification at this location:
+· http://www.osoa.org/display/Main/Service+Component+Architecture+Specifications
+
+2. The full text of the copyright notice as shown in the Service Component Architecture Specification.
+
+BEA, Cape Clear, IBM, Interface21, IONA, Oracle, Primeton, Progress Software, Red Hat, Rogue Wave,
+SAP, Siemens, Software AG., Sun, Sybase, TIBCO (collectively, the "Authors") agree to grant you a
+royalty-free license, under reasonable, non-discriminatory terms and conditions to patents that they deem
+necessary to implement the Service Component Architecture Specification.
+
+THE Service Component Architecture SPECIFICATION IS PROVIDED "AS IS," AND THE
+AUTHORS MAKE NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED,
+REGARDING THIS SPECIFICATION AND THE IMPLEMENTATION OF ITS CONTENTS,
+INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE, NON-INFRINGEMENT OR TITLE.
+
+THE AUTHORS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL
+OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR RELATING TO ANY USE OR
+DISTRIBUTION OF THE Service Components Architecture SPECIFICATION.
+
+The name and trademarks of the Authors may NOT be used in any manner, including advertising or
+publicity pertaining to the Service Component Architecture Specification or its contents without specific,
+written prior permission. Title to copyright in the Service Component Architecture Specification
+will at all times remain with the Authors.
+
+No other rights are granted by implication, estoppel or otherwise.
+
 ===============================================================================
 
-APACHE TUSCANY SUBCOMPONENTS: 
+The tuscany-binding-jsonrpc-runtime and tuscany-implementation-web-runtime jars
+include the file jsonrpc.js which is under the following copyright and license:
 
-The Apache Tuscany binary distribution includes a number of subcomponents
-with separate copyright notices and license terms. Your use of the
-code for the these subcomponents is subject to the terms and
-conditions of the following licenses.                             
+/*
+ * JSON-RPC JavaScript client
+ *
+ * $Id: jsonrpc.js,v 1.36.2.3 2006/03/08 15:09:37 mclark Exp $
+ *
+ * Copyright (c) 2003-2004 Jan-Klaas Kollhof
+ * Copyright (c) 2005 Michael Clark, Metaparadigm Pte Ltd
+ *
+ * This code is based on Jan-Klaas' JavaScript o lait library (jsolait).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+/*
+ * Modifications for Apache Tuscany:
+ * - JSONRpcClient_createMethod changed so callback is last arg
+ */
 
 ===============================================================================
 
-The following components come under Apache Software License 1.1
+APACHE TUSCANY SCA REDISTRIBUTED FILES: 
 
- commons-discovery-0.2.jar
- commons-primitives-1.0.jar
+The Apache Tuscany SCA binary distribution includes a number of
+redistributed files with separate copyright notices and license terms.
+Your use of these redistributed files is subject to the terms and conditions
+of the following licenses.                             
 
-The following components come under Apache Software License 2.0
+===============================================================================
 
+The following files are redistributed in executable form under Apache Software License 2.0:
  abdera-client-0.4.0-incubating.jar
  abdera-core-0.4.0-incubating.jar
  abdera-extensions-html-0.4.0-incubating.jar
@@ -340,9 +556,83 @@ The following components come under Apache Software License 2.0
  xml-resolver-1.1.jar
  xmlsec-1.4.2.jar
  XmlSchema-1.4.2.jar
+and are subject to the following copyrights:
+ XmlSchema-1.4.2.jar
+  - Portions Copyright 2006 International Business Machines Corp.
+ ode-bpel-api-1.1.1.jar
+  - Copyright 1999-2006 Intalio - This product includes software developed by Intalio (http://www.intalio.com)
+  - Copyright 2006 Sybase - This product includes software developed by Sybase.(http://www.sybase.com)
 
 ===============================================================================
-axion-1.0-M3-dev.jar 
+
+The files:
+ commons-discovery-0.2.jar
+ commons-primitives-1.0.jar
+are redistributed in executable form and are licensed under the following terms:
+
+/* ====================================================================
+ * The Apache Software License, Version 1.1
+ *
+ * Copyright (c) 2000 The Apache Software Foundation.  All rights
+ * reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. The end-user documentation included with the redistribution,
+ *    if any, must include the following acknowledgment:
+ *       "This product includes software developed by the
+ *        Apache Software Foundation (http://www.apache.org/)."
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
+ *
+ * 4. The names "Apache" and "Apache Software Foundation" must
+ *    not be used to endorse or promote products derived from this
+ *    software without prior written permission. For written
+ *    permission, please contact apache@apache.org.
+ *
+ * 5. Products derived from this software may not be called "Apache",
+ *    nor may "Apache" appear in their name, without prior written
+ *    permission of the Apache Software Foundation.
+ *
+ * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+ * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This software consists of voluntary contributions made by many
+ * individuals on behalf of the Apache Software Foundation.  For more
+ * information on the Apache Software Foundation, please see
+ * <http://www.apache.org/>.
+ *
+ * Portions of this software are based upon public domain software
+ * originally written at the National Center for Supercomputing Applications,
+ * University of Illinois, Urbana-Champaign.
+ */
+
+===============================================================================
+
+The file: 
+ axion-1.0-M3-dev.jar 
+is redistributed in executable form and is licensed under the following terms:
 
 Copyright (c) 2002-2003 Axion Development Team. All rights reserved.
  
@@ -398,7 +688,10 @@ License changes are to be determined by a simple majority vote of the
 Axion Development Team.
 
 ===============================================================================
-dom4j-1.6.1.jar
+
+The file: 
+ dom4j-1.6.1.jar
+is redistributed in executable form and is licensed under the following terms:
 
 Copyright 2001-2005 (C) MetaStuff, Ltd. All Rights Reserved.
 
@@ -443,17 +736,21 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ===============================================================================
 
-The EMF jars; 
-   codegen-2.2.3.jar 
-   codegen-ecore-2.2.3.jar
-   common-2.2.3.jar
-   ecore-2.2.3.jar
-   ecore-change-2.2.3.jar
-   ecore-xmi-2.2.3.jar
-   xsd-2.2.3.jar
-And AspectJ jars:
-   aspectjlib-1.6.2.jar
-   aspectjrt-1.6.2.jar
+The EMF files: 
+ codegen-2.2.3.jar 
+ codegen-ecore-2.2.3.jar
+ common-2.2.3.jar
+ ecore-2.2.3.jar
+ ecore-change-2.2.3.jar
+ ecore-xmi-2.2.3.jar
+ xsd-2.2.3.jar
+and AspectJ files:
+ aspectjlib-1.6.2.jar
+ aspectjrt-1.6.2.jar
+are redistributed in executable form, with source code available at
+ http://www.eclipse.org/modeling/emf/downloads/
+ http://www.eclipse.org/aspectj/downloads.php
+and are licensed under the following terms:
 
 Eclipse Public License - v 1.0
 
@@ -684,10 +981,12 @@ more than one year after the cause of action arose. Each party waives
 its rights to a jury trial in any resulting litigation.
 
 ===============================================================================
-For Saxon including 
-   saxon-8.7.jar
-   saxon-dom-8.7.jar
-   saxon-xpath-8.7.jar
+
+The Saxon files: 
+ saxon-8.7.jar
+ saxon-dom-8.7.jar
+ saxon-xpath-8.7.jar
+are redistributed in executable form and are licensed under the following terms:
 
  MOZILLA PUBLIC LICENSE
 Version 1.0
@@ -823,7 +1122,9 @@ EXHIBIT A.
 
 ===============================================================================
 
-For the Rhino JavaScript engine js-1.6R7.jar:
+The Rhino JavaScript engine file:
+ js-1.6R7.jar
+is redistributed in executable form and is licensed under the following terms:
 
                           MOZILLA PUBLIC LICENSE
                                 Version 1.1
@@ -1297,7 +1598,10 @@ EXHIBIT A -Mozilla Public License.
 
 
 ===============================================================================
-Groovy (groovy-all-minimal-1.5.4.jar):
+
+The Groovy file:
+ groovy-all-minimal-1.5.4.jar
+is redistributed in executable form and is licensed under the following terms:
 
 /*
  $Id: LICENSE.txt 156 2003-09-26 17:36:37Z jstrachan $
@@ -1347,7 +1651,9 @@ Groovy (groovy-all-minimal-1.5.4.jar):
 
 ===============================================================================
 
-Jython (jython-2.2.jar):
+The Jython file:
+ jython-2.2.jar
+is redistributed in executable form and is licensed under the following terms:
 
 A. HISTORY OF THE SOFTWARE
 =======================
@@ -1494,16 +1800,22 @@ JPython version 1.1.x
 
 ===============================================================================
 
-The jars; 
-activation-1.1.jar, 
-jaxb-api-2.1.jar, 
-jaxb-impl-2.1.7.jar, 
-jaxb-xjc-2.1.7.jar, 
-jsr181-api-1.0-MR1.jar, 
-jsr250-api-1.0.jar, 
-jaxws-api-2.1.jar, 
-servlet-api-2.5.jar, 
-stax-api-1.0-2.jar
+The files: 
+ activation-1.1.jar, 
+ jaxb-api-2.1.jar, 
+ jaxb-impl-2.1.7.jar, 
+ jaxb-xjc-2.1.7.jar, 
+ jsr181-api-1.0-MR1.jar, 
+ jsr250-api-1.0.jar, 
+ jaxws-api-2.1.jar, 
+ servlet-api-2.5.jar, 
+ stax-api-1.0-2.jar
+are redistributed in executable form, with source code available at
+ https://jax-ws-sources.dev.java.net/source/browse/jax-ws-sources/
+ https://jaxb2-sources.dev.java.net/
+and are subject to the following copyright and license:
+
+    Copyright (c) 2006, Sun Microsystems, Inc.
 
 COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
 
@@ -1892,7 +2204,14 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
 
 ===============================================================================
 
-JRuby (jruby-complete-1.1.3.jar), wsdl4j (wsdl4j-1.6.2.jar):
+The JRuby file:
+ jruby-complete-1.1.3.jar
+and wsdl4j file:
+ wsdl4j-1.6.2.jar
+are redistributed in executable form, with source code available at
+ http://jruby.org/
+ http://sourceforge.net/projects/wsdl4j/
+and are licensed under the following terms:
 
 Common Public License - v 1.0
 
@@ -1983,7 +2302,9 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
 ===============================================================================
 
-backport-util-concurrent-3.1.jar:
+The file:
+ backport-util-concurrent-3.1.jar
+is redistributed in executable form and is licensed under the following terms:
 
 The software comprising backport-util-concurrent is based in large
 part on the code from JSR166, and the package dl.util.concurrent.
@@ -2033,7 +2354,10 @@ subject to the following license terms.
     facility."
 
 ===============================================================================
-rome-0.9.jar
+
+The file:
+ rome-0.9.jar
+is redistributed in executable form under the Apache 2.0 license with the following copyright:
 
 Copyright 2004 Sun Microsystems, Inc.
 
@@ -2050,7 +2374,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ===============================================================================
-jdom-1.0.jar :
+
+The file:
+ jdom-1.0.jar
+is redistributed in executable form and is licensed under the following terms:
 
 $Id: LICENSE.txt,v 1.11 2004/02/06 09:32:57 jhunter Exp $
 
@@ -2106,7 +2433,9 @@ $Id: LICENSE.txt,v 1.11 2004/02/06 09:32:57 jhunter Exp $
 
 ========================================================================
 
-dwr-2.0.3.jar :
+The file:
+ dwr-2.0.3.jar
+is redistributed in executable form and is licensed under the following terms:
 
 /*
 * Copyright 2005 Joe Walker
@@ -2126,7 +2455,9 @@ dwr-2.0.3.jar :
 
 ==========================================================================
 
-dojotoolkit V1.3.0:
+The file:
+ dojotoolkit V1.3.0
+is redistributed in executable form and is licensed under the following terms:
 
 The "New" BSD License:
 **********************
@@ -2159,47 +2490,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ================================================================================
 
-The module tuscany-implementation-script-1.6.jar temporarily includes    
-one file under the below BSD license with the following copyright:
-
- Copyright (c) 2006, Sun Microsystems, Inc.
- All rights reserved.
- 
-BSD license:
-
- Redistribution and use in source and binary forms, with or without 
- modification, are permitted provided that the following conditions are met:
- 
-  - Redistributions of source code must retain the above copyright notice, this 
-    list of conditions and the following disclaimer.
- 
-  - Redistributions in binary form must reproduce the above copyright notice, 
-    this list of conditions and the following disclaimer in the documentation 
-    and/or other materials provided with the distribution.
- 
-  - Neither the name of the Sun Microsystems, Inc. nor the names of 
-    contributors may be used to endorse or promote products derived from this 
-    software without specific prior written permission.
- 
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
- CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED 
- WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
- WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
- PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
- COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY 
- DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
- PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
- USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
- OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
- DAMAGE. 
-
-================================================================================
-
-The serp-1.12.0.jar is distributed under the BSD license with the following copyright:
+The file:
+ serp-1.12.0.jar
+is redistributed in executable form under the BSD license with the following copyright:
 
  Copyright (c) 2002, A. Abram White
  All rights reserved.
@@ -2237,7 +2530,12 @@ BSD license:
  DAMAGE. 
 
 ================================================================================
-The javacc-3.2.jar, and howl-1.0.1-1.jar are distributed under the BSD license:
+
+The file:
+ javacc-3.2.jar
+is redistributed in executable form under the following copyright and BSD license:
+
+Copyright (c) 2003 Sun Microsystems, Inc. All  Rights Reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -2264,50 +2562,46 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ================================================================================
 
-The tuscany-assembly-xsd jar includes XSD files under the following SCA Collaboration license:
+The file:
+ howl-1.0.1-1.jar
+is redistributed in executable form under the following copyright and BSD license:
 
-License for the Service Component Architecture JavaDoc, Interface 
-Definition files and XSD files.
+Copyright (c) 2004, Bull S.A.
 
-The Service Component Architecture JavaDoc, Interface Definition files, 
-and XSD files are being provided by the copyright holders under the 
-following license. By using and/or copying this work, you agree that 
-you have read, understood and will comply with the following terms and 
-conditions:
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
 
-Permission to copy, display, make derivative works of, and distribute 
-the Service Component Architecture JavaDoc, Interface Definition Files 
-and XSD files (the "Artifacts") in any medium without fee or royalty is 
-hereby granted, provided that you include the following on ALL copies 
-of the Artifacts, or portions thereof, that you make: 
-
-1. A link or URL to the Artifacts at this location:
-http://www.osoa.org/display/Main/Service+Component+Architecture+Specifications 
-
-2. The full text of this copyright notice as shown in the Artifacts.
-
-THE ARTIFACTS ARE PROVIDED "AS IS," AND THE AUTHORS MAKE NO 
-REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, REGARDING THE 
-ARTIFACTS AND THE IMPLEMENTATION OF THEIR CONTENTS, INCLUDING, BUT NOT 
-LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
-PURPOSE, NON-INFRINGEMENT OR TITLE.  
-
-THE AUTHORS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, 
-INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR RELATING TO ANY 
-USE OR DISTRIBUTION OF THE ARTIFACTS.
-
-The name and trademarks of the Authors may NOT be used in any manner, 
-including advertising or publicity pertaining to the Service Component 
-Architecture Specification or its contents without specific, written 
-prior permission. Title to copyright in the Service Component 
-Architecture Specification and the JavaDoc, Interface Definition Files 
-and XSD Files will at all times remain with the Authors.
-
-No other rights are granted by implication, estoppel or otherwise.
-
-Revision level 1.1, last updated on 2007/11/19
+  * Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+    
+  * Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+    
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ================================================================================
+
+The file:
+ tuscany-sdo-api-r2.1-1.1.1.jar
+is redistributed in executable form and is licensed under the following terms:
+
+(c) Copyright BEA Systems, Inc., International Business Machines Corporation, 
+Oracle Corporation, Primeton Technologies Ltd., Rogue Wave Software, SAP AG., 
+Software AG., Sun Microsystems, Sybase Inc., Xcalia, Zend Technologies, 
+2005, 2006. All rights reserved.
+
 License for the Service Data Objects JavaDoc and Interface Definition files. (tuscany-sdo-api-r2.1-1.1.1.jar)
 
 These files being ...
@@ -2371,9 +2665,12 @@ permission. Title to copyright in the Service Data Objects Specification will at
 Authors.
 
 No other rights are granted by implication, estoppel or otherwise.
+
 ================================================================================
 
-The asm-all-3.1.jar:
+The file:
+ asm-3.1.jar
+is redistributed in executable form and is licensed under the following terms:
 
 Copyright (c) 2000-2005 INRIA, France Telecom
 All rights reserved.
@@ -2407,7 +2704,9 @@ THE POSSIBILITY OF SUCH DAMAGE.
 
 ================================================================================
 
-The jaxen-1.1.1.jar:
+The file:
+ jaxen-1.1.1.jar
+is redistributed in executable form and is licensed under the following terms:
 
  $Id: LICENSE.txt,v 1.5 2006/02/05 21:49:04 elharo Exp $
 
@@ -2440,77 +2739,11 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-================================================================================
-
-The tuscany-host-webapp and tuscany-sca-api jars include files under the following license:
-
-Permission to copy, display and distribute the Service Component Architecture Specification and/or
-portions thereof, without modification, in any medium without fee or royalty is hereby granted, provided
-that you include the following on ALL copies of the Service Component Architecture Specification, or
-portions thereof, that you make:
-
-1. A link or URL to the Service Component Architecture Specification at this location:
-· http://www.osoa.org/display/Main/Service+Component+Architecture+Specifications
-
-2. The full text of the copyright notice as shown in the Service Component Architecture Specification.
-
-BEA, Cape Clear, IBM, Interface21, IONA, Oracle, Primeton, Progress Software, Red Hat, Rogue Wave,
-SAP, Siemens, Software AG., Sun, Sybase, TIBCO (collectively, the "Authors") agree to grant you a
-royalty-free license, under reasonable, non-discriminatory terms and conditions to patents that they deem
-necessary to implement the Service Component Architecture Specification.
-THE Service Component Architecture SPECIFICATION IS PROVIDED "AS IS," AND THE
-AUTHORS MAKE NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED,
-REGARDING THIS SPECIFICATION AND THE IMPLEMENTATION OF ITS CONTENTS,
-INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-PARTICULAR PURPOSE, NON-INFRINGEMENT OR TITLE.
-THE AUTHORS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL
-OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR RELATING TO ANY USE OR
-DISTRIBUTION OF THE Service Components Architecture SPECIFICATION.
-The name and trademarks of the Authors may NOT be used in any manner, including advertising or
-publicity pertaining to the Service Component Architecture Specification or its contents without specific,
-
-================================================================================
-
-The tuscany-assembly-xsd jar includes files under the following license:
-
-W3C® SOFTWARE NOTICE AND LICENSE
-http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
-
-This work (and included software, documentation such as READMEs, or other related items) 
-is being provided by the copyright holders under the following license. By obtaining, 
-using and/or copying this work, you (the licensee) agree that you have read, understood, 
-and will comply with the following terms and conditions.
-
-Permission to copy, modify, and distribute this software and its documentation, with or 
-without modification, for any purpose and without fee or royalty is hereby granted, provided 
-that you include the following on ALL copies of the software and documentation or portions 
-thereof, including modifications:
-
-   1. The full text of this NOTICE in a location viewable to users of the redistributed or 
-      derivative work.
-   2. Any pre-existing intellectual property disclaimers, notices, or terms and conditions. 
-      If none exist, the W3C Software Short Notice should be included (hypertext is preferred,
-      text is permitted) within the body of any redistributed or derivative code.
-   3. Notice of any changes or modifications to the files, including the date changes were 
-      made. (We recommend you provide URIs to the location from which the code is derived.)
-
-THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO 
-REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO, WARRANTIES 
-OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF THE SOFTWARE OR 
-DOCUMENTATION WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER 
-RIGHTS.
-
-COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL 
-DAMAGES ARISING OUT OF ANY USE OF THE SOFTWARE OR DOCUMENTATION.
-
-The name and trademarks of copyright holders may NOT be used in advertising or publicity 
-pertaining to the software without specific, written prior permission. Title to copyright 
-in this software and any associated documentation will at all times remain with copyright 
-holders.
-
 ==========================================================================================
 
-The htmlparser-1.0.5.jar includes files under the following licenses:
+The file:
+ htmlparser-1.0.5.jar
+is redistributed in executable form and includes files under the following licenses:
 
 This is for the HTML parser as a whole except the rewindable input stream,
 and the Live DOM Viewer. 
@@ -2599,4 +2832,3 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ==========================================================================================
-
