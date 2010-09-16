@@ -75,7 +75,7 @@ Apache Tuscany SCA source code.
 
 If you are an Eclipse user do the following
 
-mvn -Dnotice.dir=src/main/resources eclipse:eclipse
+mvn eclipse:eclipse
 mvn -Declipse.workspace=<path-to-eclipse-workspace> eclipse:add-maven-repo
 
 If you are an IDEA user do the following 
