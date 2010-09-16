@@ -349,6 +349,8 @@
                 <exclude>store/store-eu/target/cart-eu-db/**/*</exclude>
                 <exclude>store/store-supplier/target/cart-db/</exclude>
                 <exclude>store/store-supplier/target/cart-db/**/*</exclude>
+                <exclude>travelsample</exclude>
+                <exclude>travelsample/**/*</exclude>
             </excludes>
         </fileSet>
         <!-- Add the generated tuscany manifest classpath jar to the lib directory -->
