@@ -57,3 +57,35 @@ Building the distributions
    This will build the binary and source distributions with .zip and .gz 
    formats in the distribution/target directory.
 
+
+Using an IDE
+------------
+
+The easiest way to work with Apache Tuscany SCA in an IDE is to use Maven to
+generate all of the IDE project files for you automatically. This works best
+if you generate IDE projects for all of the Apache Tuscany modules. You can
+then include the ones you are interested in working with in your IDE. 
+
+To build IDE project files for all of the modules in Apache Tuscany SCA;
+
+cd <sca-dir>
+
+where <sca-dir> is the top-level directory containing the all the
+Apache Tuscany SCA source code.  
+
+If you are an Eclipse user do the following
+
+mvn eclipse:eclipse
+mvn -Declipse.workspace=<path-to-eclipse-workspace> eclipse:add-maven-repo
+
+If you are an IDEA user do the following 
+
+mvn idea:idea
+
+These commands generate project files for each module in Apache Tuscany SCA. 
+The modules you are interested in can now be included in your IDE.
+
+For example, in Eclipse, if you create a new Java project and use the option
+to "create a new project from existing source" you can specify an SCA module
+directory, which includes the generated project files, and Eclipse will treat
+it like any other Java project. 

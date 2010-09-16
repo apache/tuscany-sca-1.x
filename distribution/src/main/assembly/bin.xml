@@ -101,6 +101,7 @@
                 <exclude>*/**/*.svg</exclude>
                 <!-- Sample specific work file/folders to exclude -->
                 <exclude>pom.xml</exclude>
+                <exclude>pom-distribution.xml</exclude>
                 <exclude>calculator-distributed/work</exclude>
                 <exclude>calculator-distributed/work/**/*</exclude>
                 <exclude>calculator-webapp/target/sample-calculator-webapp</exclude>
@@ -123,8 +124,6 @@
                 <exclude>feed-aggregator-webapp/target/sample-feed-aggregator-webapp</exclude>
                 <exclude>feed-aggregator-webapp/target/sample-feed-aggregator-webapp/**/*</exclude>
                 <exclude>feed-aggregator-webapp/target/war</exclude>
-                <exclude>store-dojo</exclude>
-                <exclude>store-dojo/**/*</exclude>
                 <exclude>store-webapp/target</exclude>
                 <exclude>store-webapp/target/**/*</exclude>
                 <exclude>helloworld-dojo-webapp/src/main/webapp/dojo</exclude>
@@ -227,6 +226,10 @@
                 <exclude>helloworld-ws-deep-webapp/work/**/*</exclude>
                 <exclude>helloworld-ws-service-webapp</exclude>
                 <exclude>helloworld-ws-service-webapp/**/*</exclude>
+                <exclude>store-dojo</exclude>
+                <exclude>store-dojo/**/*</exclude>
+                <exclude>zipcode-jaxws/</exclude>
+                <exclude>zipcode-jaxws/**/*</exclude>
             </excludes>
         </fileSet>
         <!-- Add all the demos to the demos directory -->
@@ -374,6 +377,15 @@
             </includes>
         </fileSet-->
     </fileSets>
+
+    <files>
+        <!-- Add the subsetted distribution pom.xml to the samples directory -->
+        <file>
+            <source>../samples/pom-distribution.xml</source>
+            <outputDirectory>tuscany-sca-${tuscany.version}/samples</outputDirectory>
+            <destName>pom.xml</destName>
+        </file>
+    </files>
 
     <dependencySets>
         <!-- Add all the Tuscany modules to the modules directory -->
