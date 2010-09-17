@@ -183,6 +183,7 @@
 
     <build>
        <finalName>${artifactId}</finalName>
+       <sourceDirectory>${basedir}/client</sourceDirectory>
        <testSourceDirectory>${basedir}</testSourceDirectory>
        <resources>
           <resource>
