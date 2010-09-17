@@ -1,0 +1,94 @@
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+-->
+
+<project name="tuscany-samples" default="compile">
+
+    <target name="compile">
+        <antcall target="allsubdirs">
+            <param name="target" value="compile"/>
+        </antcall>
+    </target>
+
+    <target name="clean">
+        <antcall target="allsubdirs">
+            <param name="target" value="clean"/>
+        </antcall>
+    </target>
+
+    <target name="allsubdirs">
+        <ant dir="binding-echo" target="${target}"/>
+        <ant dir="binding-echo-extension" target="${target}"/>
+        <ant dir="binding-notification-broker" target="${target}"/>
+        <ant dir="binding-notification-consumer" target="${target}"/>
+        <ant dir="binding-notification-producer" target="${target}"/>
+        <ant dir="calculator" target="${target}"/>
+        <ant dir="calculator-corba-reference" target="${target}"/>
+        <ant dir="calculator-corba-service" target="${target}"/>
+        <ant dir="calculator-distributed" target="${target}"/>
+        <ant dir="calculator-implementation-policies" target="${target}"/>
+        <ant dir="calculator-rmi-reference" target="${target}"/>
+        <ant dir="calculator-rmi-service" target="${target}"/>
+        <ant dir="calculator-script" target="${target}"/>
+        <ant dir="calculator-webapp" target="${target}"/>
+        <ant dir="calculator-ws-webapp" target="${target}"/>
+        <ant dir="callback-ws-client" target="${target}"/>
+        <ant dir="callback-ws-service" target="${target}"/>
+        <ant dir="callbacks-jms" target="${target}"/>
+        <ant dir="chat-webapp" target="${target}"/>
+        <ant dir="databinding-echo" target="${target}"/>
+        <ant dir="domain-management" target="${target}"/>
+        <ant dir="feed-aggregator" target="${target}"/>
+        <ant dir="feed-aggregator-webapp" target="${target}"/>
+        <ant dir="helloworld-bpel" target="${target}"/>
+        <ant dir="helloworld-dojo-webapp" target="${target}"/>
+        <ant dir="helloworld-jsonrpc-webapp" target="${target}"/>
+        <ant dir="helloworld-reference-jms" target="${target}"/>
+        <ant dir="helloworld-service-jms" target="${target}"/>
+        <ant dir="helloworld-ws-service" target="${target}"/>
+        <ant dir="helloworld-ws-service-jms" target="${target}"/>
+        <ant dir="helloworld-ws-service-secure" target="${target}"/>
+        <ant dir="helloworld-ws-reference" target="${target}"/>
+        <ant dir="helloworld-ws-reference-jms" target="${target}"/>
+        <ant dir="helloworld-ws-reference-secure" target="${target}"/>
+        <ant dir="helloworld-ws-sdo" target="${target}"/>
+        <ant dir="helloworld-ws-sdo-webapp" target="${target}"/>
+        <ant dir="holder-ws-service" target="${target}"/>
+        <ant dir="implementation-composite" target="${target}"/>
+        <ant dir="implementation-crud" target="${target}"/>
+        <ant dir="implementation-crud-extension" target="${target}"/>
+        <ant dir="implementation-notification" target="${target}"/>
+        <ant dir="implementation-pojo-extension" target="${target}"/>
+        <ant dir="osgi-supplychain" target="${target}"/>
+        <ant dir="photo-gallery" target="${target}"/>
+        <ant dir="quote-xquery" target="${target}"/>
+        <ant dir="simple-bigbank" target="${target}"/>
+        <ant dir="simple-bigbank-spring" target="${target}"/>
+        <ant dir="simple-callback" target="${target}"/>
+        <ant dir="simple-callback-ws" target="${target}"/>
+        <ant dir="spring-bigbank-calculator" target="${target}"/>
+        <ant dir="spring-bigbank-checkaccount" target="${target}"/>
+        <ant dir="spring-bigbank-stockquote" target="${target}"/>
+        <ant dir="store" target="${target}"/>
+        <ant dir="store-secure" target="${target}"/>
+        <ant dir="store-webapp" target="${target}"/>
+        <ant dir="supplychain" target="${target}"/>
+        <ant dir="web-resource" target="${target}"/>
+    </target>
+
+</project>
