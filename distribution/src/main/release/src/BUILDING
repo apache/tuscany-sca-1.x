@@ -18,13 +18,13 @@ Initial Setup
    http://maven.apache.org/download.html. Make sure that your PATH includes 
    the $M2_HOME$/bin directory. 
 
-4) Make sure that your MAVEN_OPTS environment variable has -Xmx128m (or more)
+4) Make sure that your MAVEN_OPTS environment variable has -Xmx256m (or more)
    and -XX:MaxPermSize=256m (or more). You can do this manually by executing
    the following in your prompt:
    Windows users:
-     set MAVEN_OPTS=-Xmx128m -XX:MaxPermSize=256m
+     set MAVEN_OPTS=-Xmx256m -XX:MaxPermSize=256m
    Unix users:
-     export MAVEN_OPTS=-Xmx128m -XX:MaxPermSize=256m
+     export MAVEN_OPTS=-Xmx256m -XX:MaxPermSize=256m
 
 
 Building
