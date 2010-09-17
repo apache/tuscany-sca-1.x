@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<project name="spring-bigbank-calculator" default="run">
+<project name="spring-bigbank-calculator" default="compile">
     <property name="test.class" value="bigbank.calculator.server.CalculatorServer" />
     <property name="test.jar"   value="sample-spring-bigbank-calculator.jar" />
 	
