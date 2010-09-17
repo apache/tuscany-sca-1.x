@@ -110,9 +110,6 @@
                 <version>1.6.1-SNAPSHOT</version>
                 <executions>
                     <execution>
-                        <configuration>
-                            <buildDependencyFileOnly>true</buildDependencyFileOnly>
-                        </configuration>                    
                         <goals>
                             <goal>generate</goal>
                         </goals>
