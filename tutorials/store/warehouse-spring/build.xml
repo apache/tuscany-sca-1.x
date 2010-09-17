@@ -44,9 +44,7 @@
     <target name="package" depends="compile"/>
 
     <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="." includes="target/**"/>
-        </delete>
+        <delete dir="target" includeemptydirs="true"/>
     </target>
 
     <fileset id="tutorial-assets-jar" dir="../assets/target">
