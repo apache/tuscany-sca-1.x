@@ -33,8 +33,8 @@
 
     <target name="allsubdirs">
         <ant dir="alert-aggregator-webapp" target="${target}"/>
-        <ant dir="bigbank" target="${target}"/>
         <ant dir="bigbank-account" target="${target}"/>
+        <ant dir="bigbank" target="${target}"/>
         <ant dir="bigbank-calculator" target="${target}"/>
         <ant dir="bigbank-stockquote" target="${target}"/>
         <ant dir="mortgage-creditcheck" target="${target}"/>
