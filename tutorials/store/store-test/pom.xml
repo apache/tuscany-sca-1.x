@@ -182,22 +182,13 @@
     </dependencies>
 
     <build>
-       <finalName>${artifactId}</finalName>
-       <sourceDirectory>${basedir}/client</sourceDirectory>
-       <testSourceDirectory>${basedir}</testSourceDirectory>
-       <resources>
-          <resource>
-              <directory>${basedir}</directory>
-              <excludes>
-                  <exclude>**/.*/**</exclude>
-                  <exclude>**/*.java</exclude>
-                  <exclude>pom.xml</exclude>
-                  <exclude>build.xml</exclude>
-                  <exclude>target/**</exclude>
-              </excludes>
-          </resource>
-       </resources>
-       <plugins>
+        <finalName>${artifactId}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
             <plugin>
                 <groupId>org.apache.tuscany.sca</groupId>
                 <artifactId>tuscany-maven-ant-generator</artifactId>
@@ -213,7 +204,7 @@
                     </execution>
                 </executions>
             </plugin>
-       </plugins>
+        </plugins>
     </build>
 
 </project>
