@@ -87,7 +87,9 @@ public class DataTransformationInterceptor implements Interceptor, DataExchangeS
         } else {
             assert !(result instanceof Throwable) : "Expected messages that are not throwable " + result;
             Object newResult = mediator.mediateOutput(result, sourceOperation, targetOperation, metadata);
-            resultMsg.setBody(newResult);
+            if (newResult != result) {
+                resultMsg.setBody(newResult);
+            }
         }
 
         return resultMsg;
