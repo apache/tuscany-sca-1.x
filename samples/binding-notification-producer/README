@@ -1,5 +1,5 @@
 Notification Producer Binding Sample
-===============================
+====================================
 
 This sample illustrates the use of <binding.notification/> with a
 remote producer.
@@ -29,19 +29,37 @@ via <binding.notification/> to be transported as literal xml over http.
 Sample Usage
 ------------
 
-This sample is run using the tuscany binary distribution. To run it, navigate to this sample's directory and 
+These instructions assume that you will start the notification samples in the
+following order:
+ binding-notification-consumer
+ binding-notification-broker
+ binding-notification-producer
 
-on Wondows, use following command:
+For a clean shutdown without exceptions, you should end the notification samples
+in the following order:
+ binding-notification-producer
+ binding-notification-broker
+ binding-notification-consumer
 
-java -Dnotification.httpPort=8083 -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-binding-notification-producer.jar notification.producer.TrafficAdvisoryServer
+This sample is run using the tuscany binary distribution. To see what it does,
+first start the consumer and broker samples. When these are running, open a
+command prompt, navigate to this sample's directory and do 
 
-on *nix, use following command:
+ant run
 
-java -Dnotification.httpPort=8083 -cp ../../lib/tuscany-sca-manifest.jar:target/sample-binding-notification-producer.jar notification.producer.TrafficAdvisoryServer
+OR if you don't have ant,
+
+on Windows, use the following command:
+
+java -Dnotification.httpPort=8081 -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-binding-notification-producer.jar notification.producer.TrafficAdvisoryServer
+
+on *nix, use the following command:
+
+java -Dnotification.httpPort=8081 -cp ../../lib/tuscany-sca-manifest.jar:target/sample-binding-notification-producer.jar notification.producer.TrafficAdvisoryServer
 
 this should bring up the following prompt:
 
-Send a report value, ^C or <end> to end
+Send a report value, ^C or 'end' to end
 
 at this point you should be able to type a message to send, for instance:
 
@@ -51,9 +69,9 @@ Notice that before you try to send any message, you should bring up the
 consumer sample or the broker sample. When you have finished using this
 sample, type 'end' or ^C to end.
 
-Also notice that '-Dnotification.httpPort=8083' is used in the java command.
+Also notice that '-Dnotification.httpPort=8081' is used in the java command.
 This indicates the port the sample should use. This also says that this server
-is going to play the role of ntm, given our previous assumption. It is important
+is not going to play the role of ntm, given our previous assumption. It is important
 that the first one of the producer, consumer or broker sample that is run be the
 one that uses '-Dnotification.httpPort=8083', otherwise there is no ntm to talk
 to and an exception will be thrown.
@@ -89,7 +107,7 @@ binding-notification-producer/
         TrafficAdvisoryNotification.composite      - the main composite including producer and
                                                      notification components, and composite reference
   binding-notification-producer.png                - a pictorial representation of the sample .composite file
-  build.xml                       		   - the Ant build file
+  build.xml                       		           - the Ant build file
   pom.xml                                          - the Maven build file        
 
 Building And Running The Sample Using Ant
@@ -105,9 +123,7 @@ You should see the following output from the run target.
 
 run:
      [java] Sep 14, 2007 10:31:45 AM org.apache.tuscany.sca.http.jetty.JettyServer addServletMapping
-     [java] INFO: Added Servlet mapping: http://localhost:8083/ntm/trafficAdvisory
-     [java] Sep 14, 2007 10:31:45 AM org.apache.tuscany.sca.http.jetty.JettyServer addServletMapping
-     [java] INFO: Added Servlet mapping: http://localhost:8083/producer/trafficAdvisory
+     [java] INFO: Added Servlet mapping: http://localhost:8081/producer/trafficAdvisory
      
 Building And Running The Sample Using Maven 
 -------------------------------------------
@@ -131,4 +147,3 @@ Results :
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 This shows that the Junit test cases have run successfully. 
-
