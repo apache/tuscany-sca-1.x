@@ -40,7 +40,7 @@ public class TrafficAdvisoryServer {
                     break;
                 }
                 try {
-                    System.out.println("Send a report value, ^C or <end> to end");
+                    System.out.println("Send a report value, ^C or 'end' to end");
                     value = reader.readLine();
                 } catch (IOException e) {
                     e.printStackTrace();
