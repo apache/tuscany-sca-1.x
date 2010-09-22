@@ -59,9 +59,7 @@ public class DefaultRMIHost implements RMIHost {
                 }
                 rmiRegistries.put(Integer.toString(port), registry);
             }
-            registry.bind(serviceName, serviceObject);
-        } catch (AlreadyBoundException e) {
-            throw new RMIHostException(e);
+            registry.rebind(serviceName, serviceObject);
         } catch (RemoteException e) {
             RMIHostRuntimeException rmiExec = new RMIHostRuntimeException(e.getMessage());
             rmiExec.setStackTrace(e.getStackTrace());
