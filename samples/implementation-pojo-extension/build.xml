@@ -17,10 +17,10 @@
  * under the License.    
 -->
 <project name="implementation-pojo-extension" default="compile">
-	<property name="test.jar"   value="sample-implementation-pojo-extension.jar" />
 	
     <target name="init">
         <mkdir dir="target/classes"/>
+        <mkdir dir="target/test-classes"/>
     </target>
 	
     <target name="compile" depends="init">
@@ -36,16 +36,38 @@
         <copy todir="target/classes">
             <fileset dir="src/main/resources"/>
         </copy>
-        <jar destfile="target/${test.jar}" basedir="target/classes">
-            <manifest>
-                <attribute name="Main-Class" value="${test.class}" /> 
-            </manifest>
-        </jar>    	
+        <javac srcdir="src/test/java"
+               destdir="target/test-classes"
+               excludes="**/*TestCase.java"
+               debug="on"
+               source="1.5"
+               target="1.5">
+            <classpath>
+                <pathelement location="target/classes"/>
+                <pathelement location="../../lib/tuscany-sca-manifest.jar"/>
+            </classpath>
+        </javac> 
+        <copy todir="target/test-classes">
+            <fileset dir="src/test/resources"/>
+        </copy>
+        <jar destfile="target/sample-implementation-pojo-extension.jar" basedir="target/classes"/>
     </target>	
+
+    <target name="package" depends="compile"/>
+
+    <target name="run">
+        <java classname="helloworld.HelloWorldTestClient" fork="true">
+            <classpath>
+                <pathelement location="target/test-classes"/>
+                <pathelement location="target/sample-implementation-pojo-extension.jar"/>
+                <pathelement location="../../lib/tuscany-sca-manifest.jar"/>
+            </classpath>
+            <jvmarg value="-ea"/>
+        </java>
+    </target>
 		
     <target name="clean">
-        <delete quiet="true" includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
+        <delete dir="target" includeemptydirs="true"/>
     </target>
+
 </project>
