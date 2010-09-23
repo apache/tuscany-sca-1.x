@@ -45,6 +45,10 @@ public class CalculatorServer {
 
         node.stop();
         System.out.println("Bye");
+
+        // The following line is a workaround for TUSCANY-3277 when running
+        // on Tuscany SCA 1.6.1 (the JVM hangs when exiting).
+        System.exit(0);
     }
 
 }
