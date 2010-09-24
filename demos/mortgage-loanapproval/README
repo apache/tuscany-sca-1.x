@@ -1,28 +1,27 @@
 Mortgage Loan Approval Demo
 ===========================
 
-This demo was used as an example in the java developer journal article:  http://jdj.sys-con.com/read/325183.htm.
+This demo was used as an example in the Java Developer Journal article:  http://jdj.sys-con.com/read/325183.htm.
 
 The demo consists of two modules:
 
 mortgage-loanapproval: provides the business logic for loan approval.  
 mortgage-creditcheck: handles credit check requests. This is a java component exposed as a webservice running on the embedded Tomcat.
 
-Please check mortgage_assembly.png file that is located in this directory for a high level view of the demo.
+Please check the mortgage_assembly.png file that is located in this directory for a high level view of the demo.
 
-Here is what happens when you run the demo. A loan approval request for customer with id 111-222-3333 
-gets initiated when mortgage-loanapproval application is run. Depending on what the 'imaginary' credit
- status of this person is, the loan gets approved or diapproved. 
+When you run the mortgage-loanapproval application, a loan approval request for a customer with id 111-222-3333 
+is initiated. This invokes the mortgage-creditcheck application to determine the credit status of the customer.
+Depending on what the credit status of this person is, the loan is approved or diapproved. 
 
-You would need two command windows to run mortgage loan approval composite. The order in which the
-applications are run is important. Run mortgage-creditcheck first since mortgage-loanapproval is dependent on 
-it's service.
+You need two command windows to run this demo. The order in which the applications are run is important.
+Run mortgage-creditcheck first since mortgage-loanapproval is dependent on it.
 
 In the first command window 
 ---------------------------
-1) go to mortgage-creditcheck directory 
-2) ant compile
-3) ant run
+cd mortgage-creditcheck 
+ant run
+
 You should see the following displayed:
 Buildfile: build.xml
 
@@ -36,9 +35,8 @@ omponent
 
 In the second command window
 ----------------------------
-1) go to mortgage-loanapproval directory 
-2) ant compile
-3) ant run
+cd mortgage-loanapproval
+ant run
 
 If the loan is approved, you will see the following displayed in the command screen where
 mortgage-loanapproval is run:
@@ -58,3 +56,25 @@ run:
      [java] Debt/Income ratio 0.2528272093971861 is too high.
      [java] Rejected: John Smith[111-22-3333]
 
+
+Building the Demo Using Ant
+---------------------------
+With the binary distribution the demo can be built using Ant as follows:
+
+cd mortgage-creditcheck
+ant compile
+
+cd mortgage-loanapproval
+ant compile
+
+
+Building the Demo Using Maven 
+-----------------------------
+With either the binary or source distribution the demo can be built using
+Maven as follows:
+
+cd mortgage-creditcheck
+mvn
+
+cd mortgage-loanapproval
+mvn
