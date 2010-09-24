@@ -22,7 +22,7 @@
 
     <property name="dojo.version" value="1.3.0"/>
 	<property name="dojo.zip" value="${localRepository}/org/dojotoolkit/dojo/${dojo.version}/dojo-${dojo.version}.zip"/>
-    <property name="unpack.location" value="${basedir}/src/main/resources/dojo"/>
+    <property name="unpack.location" value="${basedir}/src/main/resources/web/dojo"/>
 	
 
     <target name="check-dojo-installed">
@@ -57,7 +57,7 @@
             <patternset>
                 <include name="dojo-release-${dojo.version}/dojo/**"/>
                 <exclude name="dojo-release-${dojo.version}/dojo/tests/**"/>
-                <exclude name="dojo-release-${dojo.version}/dijit/**"/>
+                <include name="dojo-release-${dojo.version}/dijit/**"/>
                 <exclude name="dojo-release-${dojo.version}/dojox/**"/>
                 <exclude name="dojo-release-${dojo.version}/util/**"/>
             </patternset>
@@ -78,7 +78,7 @@
             <patternset>
                 <include name="dojo-${dojo.version}/dojo/**"/>
                 <exclude name="dojo-${dojo.version}/dojo/tests/**"/>
-                <exclude name="dojo-${dojo.version}/dijit/**"/>
+                <include name="dojo-${dojo.version}/dijit/**"/>
                 <exclude name="dojo-${dojo.version}/dojox/**"/>
                 <exclude name="dojo-${dojo.version}/util/**"/>
             </patternset>
