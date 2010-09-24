@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<project name="bigbank-stockquote" default="run">
+<project name="bigbank-stockquote" default="compile">
     <property name="test.class" value="stockquote.demo.StockQuoteServer" />
 	
     <path id="test.classpath">
@@ -48,7 +48,7 @@
         </jar>    	
     </target>		
 	
-    <target name="run" depends="compile">
+    <target name="run">
         <java classname="${test.class}"
               fork="true">
             <classpath>
