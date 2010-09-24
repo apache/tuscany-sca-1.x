@@ -1,8 +1,8 @@
-Store Sample
-======================================
+Store Web Application Sample
+============================
 
-This is a sample store scenario that is used as a getting started guide
-for Tuscany SCA. For detailed information, please see:
+This sample demonstrates how the sample store scenario that is used as a getting started guide for Tuscany SCA
+can be packaged and deployed as a web application. For detailed information on this scenario, please see:
 
 http://tuscany.apache.org/getting-started-with-tuscany.html
 
@@ -11,18 +11,31 @@ or
 http://tuscany.apache.org/getting-started-with-tuscany-using-tuscany-eclipse-plugin.html
 
 
-Building And Running The Sample Using Ant
------------------------------------------
+Running The Sample
+------------------
+As this sample provides a web application there is a manual step where the WAR file
+that contains the sample is is built and copied to your web application container. 
+See the sections below for instructions on building the WAR file.
+
+Once the web application is deployed use your browser to visit the following URL;
+
+   http://localhost:8080/sample-store-webapp
+
+The port and hostname will of course vary depending on your local installation.
+
+
+Building The Sample Using Ant
+-----------------------------
 With the binary distribution the sample can be built using Ant as follows:
 
-cd store
-ant compile
+cd store-webapp
+ant package
 
-and then, to run:
 
-ant run
+Building The Sample Using Maven
+-------------------------------
+With the source and binary distributions the sample can be built using Maven
+as follows:
 
-Once the store application is running use your browser to visit the following
-URL:
-
-http://localhost:8080/store/
+cd store-webapp
+mvn
