@@ -4,105 +4,134 @@ BigBank Demo
 This application is made of 3 modules that represent the different aspects 
 of a fictitious banking application. Please see bigbank.png for a diagram of this demo.
 
-To run the bigbank demo you need to first run bigbank-calculator and bigbank-stockquote composites. This will bring up Tuscany runtime and load the two applications and make them available as services. Bigbank-account is dependent on these services.
+To run the bigbank demo you need to first run the bigbank-calculator and bigbank-stockquote demos. This will start these
+applications on separate copies of the Tuscany runtime and make them available as services. The bigbank demo is dependent
+on these services.
 
-To run this demo you need to use ant to compile and run the application. 
 
-Start Bigbank-calculator composite
-----------------------------------
+Start bigbank-calculator demo
+-----------------------------
+The bigbank-calculator demo is a calculator application which handles add, subtract, multiply and divide operations.
+Each of these operations is implemented in a different language, including JavaScript, Groovy, Ruby and Python.
 
-Bigbank-calculator is a calculator application which handles add, subtract, multiply and divide operations. Each of these operations is implemented in a different language, including JavaScript, groovy, Ruby and Python.
-
-To run the bigbank-calculator composite and make it available as a service for this demo do the following:
+To run the bigbank-calculator demo and make it available as a service for this demo do the following:
 
 cd bigbank-calculator
 ant run
 
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\demo-bigbank-calculator.jar calculator.demo.CalculatorServer
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/demo-bigbank-calculator.jar calculator.demo.CalculatorServer
+
 .. Leave the server running
 
 
-Start Bigbank-stockquote
-------------------------
-
-A very simple web services based stock quote application which returns random 
-stock quotes on request. Please note that the stockquote service is not live and is implemented instead to allow for this application to always run without dependency on the availability of a webservice.
+Start bigbank-stockquote demo
+-----------------------------
+This is a very simple web services based stock quote application which returns random stock quotes on request. Please note that the stockquote service
+is not live and is implemented instead to allow for this application to always run without depending on the availability of a web service.
 
 cd bigbank-stockquote
 ant run
 
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\demo-bigbank-stockquote.jar stockquote.demo.StockQuoteServer
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/demo-bigbank-stockquote.jar stockquote.demo.StockQuoteServer
+
 .. Leave the server running
 
 
-Start Bigbank
--------------
-The BigBank comprises of two subsystems that are built from two distinct contributions coming from ...
+Start bigbank demo
+------------------
+The main bigbank demo comprises two subsystems that are built from two distinct contributions coming from the
+following demo modules ...
+
 1) bigbank
-	This contains all artifacts that make up the bigbank application.  This is the application that the 
-	end user interacts with
+	This contains all artifacts that make up the main bigbank application.  This is the application that the 
+	end user interacts with.
 	
 2) bigbank-account
-	This contains all artifacts that deal with the account management within the bigbank.  The services 
-	offered by the bigbank-account module are used by the bigbank.  The end user never gets to directly 
-	interact with bigbank account
+	This contains all artifacts that deal with account management within the bigbank demo.  The services 
+	offered by the bigbank-account module are used by the bigbank module.  The end user doesn't directly 
+	interact with the bigbank-account module.
 	
-Besides the bigbank-account the bigbank composite application calls into bigbank-stockquote and 
-bigbank-calculator services. 
+Besides using bigbank-account the bigbank composite application invokes services in bigbank-stockquote and 
+bigbank-calculator. 
 
-Start bigbank application in the following way:
+Start the bigbank application in the following way:
 
 cd bigbank
 ant run
 
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\demo-bigbank.jar bigbank.demo.BigBankServer
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/demo-bigbank.jar bigbank.demo.BigBankServer
+
 .. Leave the server running
 
-Bigbank and the SCA Policies
-----------------------------
-The Bigbank demo uses the Tuscany PolicyFramework to enforce security in the following ways:
+
+Bigbank and SCA Policies
+------------------------
+The Bigbank demo uses the Tuscany Policy Framework to enforce security in the following ways:
 
 Authentication
 --------------
 	The bigbank-account subsystem enforces authentication as a required security characteristic for
-	all interactions with its CheckingAccountService.  Hence the 'bigbank' application which is a client
+	all interactions with its CheckingAccountService.  Hence the bigbank application which is a client
 	to this service authenticates itself for every interaction with the CheckingAccountService.  The interaction
-	between the bigbank and the CheckingAccountService is over the ws binding.
+	between the bigbank application and the CheckingAccountService is over the web service binding.
 	
 Integrity
 ---------
 	All interactions of the bigbank application with the StockQuoteService are guarded with message integrity.
-	These interactions use the ws binding.
+	These interactions use the web service binding.
 	
 Authorization
 -------------
 	Within the bigbank-account subsystem the CheckingAccountService implementation enforces authorization on
 	its operations.  This is an instance of a custom policy enforcement i.e. the CheckingAccountService 
 	component's implementation has defined its own customized way of authorizing access to its services.
+
 	
-Demonstrated features 
+Demonstrated Features 
 ---------------------
-This demo is to illustrate the following : -
+This demo illustrates the following : -
 - composition of an application using artifacts belonging to multiple contributions (here two)
-- usage of sca policies in composite definitions with specific emphasis on enabling security
+- usage of SCA policies in composite definitions with specific emphasis on enabling security
 
 	
 Run the demo
-------------- 
-The front end of this demo application is a web app which users Json/RPC to communicate with the backend for retrieving account information. 
+------------ 
+The front end of this demo application is a web app which users JSON-RPC to communicate with the back end for
+retrieving account information. 
 
-To try the app out point you browser at:
+To try the app out point your browser at:
 
 http://localhost:8085/AccountJSON.html
 
-This should display an interface with a single button that goes and retrieves 
-a single set of account details exercising services across the three running 
-SCA applications. 
+This should display an interface with a single button that retrieves a single set of account details
+exercising services across the three running SCA applications. 
 
-If you press on getAccountReport, you'll see a response posted, 
-but the detail of the data will be displayed in the console where you started bigbank. Among other
-things you will note messages that confirm the enforecement of AUTHENTICATION, AUTHORIZATION and
+If you press the getAccountReport button, you'll see a summary response posted in the browser and 
+the detailed data will be displayed in the console where you started bigbank. Among other things
+you will note messages that confirm the enforcement of AUTHENTICATION, AUTHORIZATION and
 SIGNING of messages exchaged.
 
-On the console where you have started the StockQuote Service you should again be able to see messages
+On the console where you have started the StockQuote Service you should also be able to see messages
 that confirm the signing of messages exchanged.
+
 
 Stop the demo
 -------------
@@ -110,3 +139,36 @@ Go to each of the corresponding command line screens and hit 'enter'.
 This will stop each of the applications.
  
 
+Building the Demo Using Ant
+---------------------------
+With the binary distribution the demo can be built using Ant as follows:
+
+cd bigbank-calculator
+ant compile
+
+cd bigbank-stockquote
+ant compile
+
+cd bigbank-account
+ant compile
+
+cd bigbank
+ant compile
+
+
+Building the Demo Using Maven 
+-----------------------------
+With either the binary or source distribution the demo can be built using
+Maven as follows:
+
+cd bigbank-calculator
+mvn
+
+cd bigbank-stockquote
+mvn
+
+cd bigbank-account
+mvn
+
+cd bigbank
+mvn
