@@ -17,6 +17,11 @@ Once the web app is deployed use your browser to visit the following URL;
 
 The port and hostname will of course vary depending on your local installation.
 
+The sample is configured to use a service on port 8080. If your servlet container
+is using a port other than 8080 then you will need to edit the helloworld.wsdl file
+and change the location attribute of the <wsdlsoap:address> element in the
+HelloWorldSoapPort definition to use the correct port.
+
 The resulting web page displayed should show:
 
    Hello John Smith, Jane Doe!
