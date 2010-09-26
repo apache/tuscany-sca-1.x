@@ -65,7 +65,19 @@ public class ExchangeRateImpl {
     public double getExchangeRate(String currency) {
         try {
             System.out.println("Retrieving exchange rate...");
-            SyndFeed feed = exchangeRate.getRates();
+
+            // first try to get a live exchange rate quote from the RSS feed
+            SyndFeed feed = null;
+            try {
+                feed = exchangeRate.getRates();
+
+            // if the RSS feed isn't responding, continue with the demo using historical data 
+            } catch (Exception e) {
+                System.out.println("Exchange rate live quote not available, using historical data");
+                return 0.74107;
+            }
+
+            // extract the exchange rate from the feed data
             SyndEntry entry = (SyndEntry)feed.getEntries().get(0);
             String rateTable = entry.getDescription().getValue();
 

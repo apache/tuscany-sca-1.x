@@ -3,7 +3,8 @@ XML BigBank Demo
 
 This demo showcases the integration with XML technolgies in the service assembly.
 
-Note: The live stock quote web service is not always running. Sometimes empty response is returned and the stock value is 0.
+Note: The live currency exchange rate RSS feed and the live stock quote web service are not always running.
+When this happens, the demo code uses historical data instead of live data.
 
 To run the demo, type "ant run" and it will produce the following output.
 

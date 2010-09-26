@@ -1,23 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.    
--->
-<wsdl:definitions targetNamespace="http://www.webserviceX.NET/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-    <wsdl:import namespace="http://www.webserviceX.NET/"
-        location="http://www.webservicex.com/stockquote.asmx?WSDL" />
+<?xml version="1.0" encoding="UTF-8" ?> 
+<wsdl:definitions name="StockQuoteService" targetNamespace="http://bigbank/" xmlns:tns="http://bigbank/"
+      xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:wsx="http://www.webserviceX.NET/" xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified"
+        targetNamespace="http://www.webserviceX.NET/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="GetQuoteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" /> 
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetQuote">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetQuoteResult" nillable="true" type="xs:string" /> 
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetQuoteResponse">
+    <wsdl:part name="GetQuoteResponse" element="wsx:GetQuoteResponse" /> 
+  </wsdl:message>
+  <wsdl:message name="GetQuote">
+    <wsdl:part name="GetQuote" element="wsx:GetQuote" /> 
+  </wsdl:message>
+  <wsdl:portType name="StockQuote">
+    <wsdl:operation name="GetQuote">
+      <wsdl:input message="tns:GetQuote" /> 
+      <wsdl:output message="tns:GetQuoteResponse" /> 
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="StockQuoteBinding" type="tns:StockQuote">
+    <SOAP:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" /> 
+    <wsdl:operation name="GetQuote">
+      <SOAP:operation soapAction="http://www.webserviceX.NET/GetQuote" /> 
+      <wsdl:input>
+        <SOAP:body use="literal" /> 
+      </wsdl:input>
+      <wsdl:output>
+        <SOAP:body use="literal" /> 
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StockQuoteService">
+    <wsdl:port name="StockQuotePort" binding="tns:StockQuoteBinding">
+      <SOAP:address location="http://www.webservicex.net/stockquote.asmx" /> 
+    </wsdl:port>
+  </wsdl:service>
 </wsdl:definitions>
