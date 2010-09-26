@@ -34,7 +34,7 @@ declare function stock:calculate($quoteDoc, $accountDoc) as xs:double {
     sum(
         for $a in $accountDoc/c:customer/c:accounts/c:saving
         return $a/@balance
-    ), "Saving Blance")
+    ), "Saving Balance")
     
     let $value :=
     trace( 
