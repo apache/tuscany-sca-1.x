@@ -111,7 +111,6 @@
                     <execution>
                         <configuration>
                             <mainClass>bigbank.BigBankClient</mainClass>
-                            <buildDependencyFileOnly>true</buildDependencyFileOnly>
                         </configuration>
                         <goals>
                             <goal>generate</goal>
