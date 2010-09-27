@@ -78,7 +78,17 @@ public class AccountServiceImpl implements AccountService {
             try {
                 OMElement quotes = stockQuote.GetQuote(request);
                 xml = quotes.getText();
+                if (!xml.startsWith("<")) {
+                    System.out.println("Server responded: " + xml);
+                    throw new IllegalStateException("Unexpected response from server");
+                }
             } catch (Exception e) {
+                if (e.getMessage().contains("Transport error: 503")) {
+                    // server is down, use local historical data
+                } else {
+                    // report any other errors
+                    throw e;
+                }
             
             // restore the previous logging setting
             } finally {
@@ -87,8 +97,8 @@ public class AccountServiceImpl implements AccountService {
 
             // if the web service invocation was successful, process the response
             XMLStreamReader qts = null;
-            if (xml != null && xml.startsWith("<")) {
-                System.out.println(xml);
+            if (xml != null) {
+                System.out.println("Server responded: " + xml);
                 qts = factory.createXMLStreamReader(new StringReader(xml));
 
             // if the web service isn't responding, continue with the demo using historical data 

@@ -1,31 +1,66 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<wsdl:definitions name="StockQuoteService" targetNamespace="http://bigbank/" xmlns:tns="http://bigbank/"
-      xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-      xmlns:wsx="http://www.webserviceX.NET/" xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/">
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.    
+-->
+
+<!--
+   Ideally we would obtain the WSDL from the remote server using <wsdl:import location="..."/>, but this
+   causes major problems if the server is down because the unresolved import causes the contribution load
+   to fail.  A simple workaround is to use a local WSDL definition that matches the service we are attempting
+   to invoke.  This ensures that the contribution can always be loaded.  If the service invocation fails at
+   runtime because the server is down, there is code in the demo to catch the exception and use local
+   historical data instead.
+  -->
+
+<!-- If you're feeling brave, uncomment the following and comment out the local definition below 
+<wsdl:definitions targetNamespace="http://www.webserviceX.NET/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:import namespace="http://www.webserviceX.NET/"
+        location="http://www.webservicex.net/stockquote.asmx?wsdl" />
+</wsdl:definitions>
+--> 
+
+<!-- This is the local definition for the remote web service --> 
+<wsdl:definitions targetNamespace="http://www.webserviceX.NET/" xmlns:tns="http://www.webserviceX.NET/"
+      xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
-    <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified"
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified"
         targetNamespace="http://www.webserviceX.NET/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="GetQuoteResponse">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" /> 
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="GetQuote">
         <xs:complexType>
           <xs:sequence>
             <xs:element minOccurs="0" name="GetQuoteResult" nillable="true" type="xs:string" /> 
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="GetQuote">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="symbol" nillable="true" type="xs:string" /> 
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:schema>
   </wsdl:types>
   <wsdl:message name="GetQuoteResponse">
-    <wsdl:part name="GetQuoteResponse" element="wsx:GetQuoteResponse" /> 
+    <wsdl:part name="GetQuoteResponse" element="tns:GetQuoteResponse" /> 
   </wsdl:message>
   <wsdl:message name="GetQuote">
-    <wsdl:part name="GetQuote" element="wsx:GetQuote" /> 
+    <wsdl:part name="GetQuote" element="tns:GetQuote" /> 
   </wsdl:message>
   <wsdl:portType name="StockQuote">
     <wsdl:operation name="GetQuote">
@@ -45,8 +80,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="StockQuoteService">
-    <wsdl:port name="StockQuotePort" binding="tns:StockQuoteBinding">
+  <wsdl:service name="StockQuote">
+    <wsdl:port name="StockQuoteSoap" binding="tns:StockQuoteBinding">
       <SOAP:address location="http://www.webservicex.net/stockquote.asmx" /> 
     </wsdl:port>
   </wsdl:service>
