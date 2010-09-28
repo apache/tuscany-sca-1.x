@@ -212,7 +212,7 @@
                   <exclude>**/*.java</exclude>
                   <exclude>**/.*/**</exclude>
                   <exclude>pom.xml</exclude>
-                  <exclude>build.xml</exclude>
+                  <exclude>build*.xml</exclude>
                   <exclude>target/**</exclude>
               </excludes>
           </resource>
@@ -227,6 +227,17 @@
                         <configuration>
                             <mainClass>launch.LaunchTutorialDomainManager</mainClass>
                             <pathToRootDir>../../..</pathToRootDir>
+                            <runTargets>
+                                <runCatalogs>launch.LaunchCatalogsNode</runCatalogs>
+                                <runCurrency>launch.LaunchCurrencyNode</runCurrency>
+                                <runStore>launch.LaunchStoreNode</runStore>
+                                <runStoreDB>launch.LaunchStoreDBNode</runStoreDB>
+                                <runStoreEnterprise>launch.LaunchStoreEnterpriseNode</runStoreEnterprise>
+                                <runStoreEU>launch.LaunchStoreEUNode</runStoreEU>
+                                <runStoreMerger>launch.LaunchStoreMergerNode</runStoreMerger>
+                                <runStoreSupplier>launch.LaunchStoreSupplierNode</runStoreSupplier>
+                                <runWarehouseSpring>launch.LaunchWarehouseSpring</runWarehouseSpring>
+                            </runTargets>
                         </configuration>
                         <goals>
                             <goal>generate</goal>
