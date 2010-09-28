@@ -24,7 +24,7 @@
         <copy todir="target/classes">
             <fileset dir="." excludes="**/*.java, **/.*/**, pom.xml, build*.xml, target/**, derby.log"/>
         </copy>
-        <jar destfile="target/tutorial-store-db.jar" basedir="target/classes">
+        <jar destfile="target/tutorial-store-eu.jar" basedir="target/classes">
             <manifest>
             </manifest>
         </jar>
