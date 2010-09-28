@@ -35,14 +35,6 @@
        </repository>
     </repositories>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-sca-api</artifactId>
-            <version>1.6.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
-    
     <build>
        <finalName>${artifactId}</finalName>
        <sourceDirectory>${basedir}</sourceDirectory>
@@ -53,27 +45,12 @@
                   <exclude>**/*.java</exclude>
                   <exclude>**/.*/**</exclude>
                   <exclude>pom.xml</exclude>
-                  <exclude>build.xml</exclude>
+                  <exclude>build*.xml</exclude>
                   <exclude>target/**</exclude>
               </excludes>
           </resource>
        </resources>
        <plugins>
-            <plugin>
-                <groupId>org.apache.tuscany.sca</groupId>
-                <artifactId>tuscany-maven-ant-generator</artifactId>
-                <version>1.6.1-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <pathToRootDir>../../..</pathToRootDir>
-                        </configuration>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sql-maven-plugin</artifactId>
@@ -108,6 +85,7 @@
                     </execution>
                     
                     <!-- Shutdown DB in order to be able to run unit tests -->
+                    <!-- commented out because the unit tests don't use this database
                     <execution>
                     	<id>shutdown-database-sothat-test-can-run</id>
                     	<phase>process-test-resources</phase>
@@ -120,6 +98,7 @@
                     		<skipOnConnectionError>true</skipOnConnectionError>
                     	</configuration>
                     </execution>
+                    -->
                 </executions>
             </plugin>	
         </plugins>	   
