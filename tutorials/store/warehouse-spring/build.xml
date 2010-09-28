@@ -33,7 +33,7 @@
             </classpath>
         </javac>
         <copy todir="target/classes">
-            <fileset dir="." excludes="**/*.java, pom.xml, build.xml, build-dependency.xml, target/**"/>
+            <fileset dir="." excludes="**/*.java, **/.*/**, pom.xml, build*.xml, target/**"/>
         </copy>
         <jar destfile="target/tutorial-warehouse-spring.jar" basedir="target/classes">
             <manifest>

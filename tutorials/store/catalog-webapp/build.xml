@@ -25,7 +25,7 @@
     <target name="compile">
         <mkdir dir="target/classes"/>
         <copy todir="target/classes">
-            <fileset dir="." excludes="pom.xml, build.xml, build-dependency.xml, webapp/**, target/**"/>
+            <fileset dir="." excludes="**/*.java, pom.xml, **/.*/**, build*.xml, target/**, webapp/**"/>
         </copy>
         <war destfile="target/tutorial-catalog-webapp.war" webxml="webapp/WEB-INF/web.xml">
             <fileset dir="webapp"/>

@@ -35,14 +35,6 @@
        </repository>
     </repositories>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.tuscany.sca</groupId>
-            <artifactId>tuscany-sca-api</artifactId>
-            <version>1.6.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
-    
     <build>
        <finalName>${artifactId}</finalName>
        <sourceDirectory>${basedir}</sourceDirectory>
@@ -53,7 +45,7 @@
                   <exclude>**/*.java</exclude>
                   <exclude>**/.*/**</exclude>
                   <exclude>pom.xml</exclude>
-                  <exclude>build.xml</exclude>
+                  <exclude>build*.xml</exclude>
                   <exclude>target/**</exclude>
               </excludes>
           </resource>
