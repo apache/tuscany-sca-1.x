@@ -22,7 +22,7 @@
     <target name="compile">
         <mkdir dir="target/classes"/>
         <copy todir="target/classes">
-            <fileset dir="." excludes="**/*.java, pom.xml, build.xml, derby.log, target/**"/>
+            <fileset dir="." excludes="**/*.java, **/.*/**, pom.xml, build*.xml, target/**, derby.log"/>
         </copy>
         <jar destfile="target/tutorial-store-supplier.jar" basedir="target/classes">
             <manifest>
@@ -34,13 +34,13 @@
            in ../store-test.
         -->
         <sql driver="org.apache.derby.jdbc.EmbeddedDriver"
-             url="jdbc:derby:target/cart-db;create=true"
+             url="jdbc:derby:${basedir}/target/cart-db;create=true"
              userid=""
              password=""
              autocommit="true"
              onerror="continue"
-             src="../assets/services/db/cart.sql"
-             classpath="../../../lib/derby-10.3.1.4.jar"/>
+             src="${basedir}/../assets/services/db/cart.sql"
+             classpath="${basedir}/../../../lib/derby-10.3.1.4.jar"/>
         
         <!--
            Shutdown the example database.  This is commented out for now because
@@ -52,11 +52,11 @@
            and this test would have problems if the database isn't shut down first.
 
         <sql driver="org.apache.derby.jdbc.EmbeddedDriver"
-             url="jdbc:derby:target/cart-db;shutdown=true"
+             url="jdbc:derby:${basedir}/target/cart-db;shutdown=true"
              userid=""
              password=""
              failOnConnectionError="true"
-             classpath="../../../lib/derby-10.3.1.4.jar">
+             classpath="${basedir}/../../../lib/derby-10.3.1.4.jar">
             NONE
         </sql>
         -->
