@@ -95,8 +95,8 @@
                                     <property name="jar.file.name" value="Customer.jar" />
                                     <property name="manifest.file.name" value="osgi/Customer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/customer/Customer.class
+                                                    supplychain/OSGiBundleImpl.class
                                                     supplychain/customer/OSGiCustomerImpl.class" />
 
                                 </ant>
@@ -106,8 +106,8 @@
                                     <property name="jar.file.name" value="Retailer.jar" />
                                     <property name="manifest.file.name" value="osgi/Retailer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/retailer/Retailer.class
+                                                    supplychain/OSGiBundleImpl.class
                                                     supplychain/retailer/OSGiRetailerImpl.class" />
 
                                 </ant>
@@ -117,8 +117,8 @@
                                     <property name="jar.file.name" value="Shipper.jar" />
                                     <property name="manifest.file.name" value="osgi/Shipper.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/shipper/Shipper.class
+                                                    supplychain/OSGiBundleImpl.class
                                                     supplychain/shipper/OSGiShipperImpl.class" />
 
                                 </ant>
@@ -128,8 +128,8 @@
                                     <property name="jar.file.name" value="Warehouse.jar" />
                                     <property name="manifest.file.name" value="osgi/Warehouse.mf" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/Warehouse.class \
-                                                    supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/warehouse/Warehouse.class
+                                                    supplychain/OSGiBundleImpl.class
                                                     supplychain/warehouse/OSGiWarehouseImpl.class" />
 
                                 </ant>
@@ -139,8 +139,8 @@
                                     <property name="jar.file.name" value="DSCustomer.jar" />
                                     <property name="manifest.file.name" value="osgi/ds/Customer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    osgi/ds/Customer.xml \
+                                        value="supplychain/customer/Customer.class
+                                                    osgi/ds/Customer.xml
                                                     supplychain/customer/OSGiCustomerComponentImpl.class" />
 
                                 </ant>
@@ -150,8 +150,8 @@
                                     <property name="jar.file.name" value="DSRetailer.jar" />
                                     <property name="manifest.file.name" value="osgi/ds/Retailer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    osgi/ds/Retailer.xml \
+                                        value="supplychain/retailer/Retailer.class
+                                                    osgi/ds/Retailer.xml
                                                     supplychain/retailer/OSGiRetailerComponentImpl.class" />
 
                                 </ant>
@@ -161,8 +161,8 @@
                                     <property name="jar.file.name" value="DSShipper.jar" />
                                     <property name="manifest.file.name" value="osgi/ds/Shipper.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    osgi/ds/Shipper.xml \
+                                        value="supplychain/shipper/Shipper.class
+                                                    osgi/ds/Shipper.xml
                                                     supplychain/shipper/OSGiShipperComponentImpl.class" />
 
                                 </ant>
@@ -172,8 +172,8 @@
                                     <property name="jar.file.name" value="DSWarehouse.jar" />
                                     <property name="manifest.file.name" value="osgi/ds/Warehouse.mf" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/Warehouse.class \
-                                                    osgi/ds/Warehouse.xml \
+                                        value="supplychain/warehouse/Warehouse.class
+                                                    osgi/ds/Warehouse.xml
                                                     supplychain/warehouse/OSGiWarehouseComponentImpl.class" />
 
                                 </ant>

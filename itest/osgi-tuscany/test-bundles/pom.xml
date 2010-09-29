@@ -81,11 +81,11 @@
                                     <property name="jar.file.name" value="SupplyChain.jar" />
                                     <property name="manifest.file.name" value="META-INF/SupplyChain.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/* \
-                                               supplychain/retailer/* \
-                                               supplychain/warehouse/* \
-                                               supplychain/shipper/* \
-                                               supplychain/supplychain.composite \
+                                        value="supplychain/customer/*
+                                               supplychain/retailer/*
+                                               supplychain/warehouse/*
+                                               supplychain/shipper/*
+                                               supplychain/supplychain.composite
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -103,12 +103,12 @@
                                     <property name="jar.file.name" value="SupplyChainWS.jar" />
                                     <property name="manifest.file.name" value="META-INF/SupplyChain.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/* \
-                                               supplychain/retailer/* \
-                                               supplychain/warehouse/* \
-                                               supplychain/shipper/* \
-                                               supplychain/ws/supplychain.composite \
-                                               supplychain/ws/Customer.wsdl \
+                                        value="supplychain/customer/*
+                                               supplychain/retailer/*
+                                               supplychain/warehouse/*
+                                               supplychain/shipper/*
+                                               supplychain/ws/supplychain.composite
+                                               supplychain/ws/Customer.wsdl
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>

@@ -110,13 +110,13 @@
                                     <property name="manifest.file.name" value="osgi/Customer.mf" />
                                     <property name="sca.contribution" value="customer-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/customer/* \
-                                               supplychain/OSGiBundleImpl.class \
-                                               supplychain.composite \
-                                               CustomerV2.componentType \
-                                               RetailerV2.componentType \
-                                               WarehouseV2.componentType \
-                                               ShipperV2.componentType \
+                                        value="supplychain/customer/*
+                                               supplychain/OSGiBundleImpl.class
+                                               supplychain.composite
+                                               CustomerV2.componentType
+                                               RetailerV2.componentType
+                                               WarehouseV2.componentType
+                                               ShipperV2.componentType
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -127,13 +127,13 @@
                                     <property name="manifest.file.name" value="osgi/Customer2.mf" />
                                     <property name="sca.contribution" value="customer-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/customer/* \
-                                               supplychain/OSGiBundleImpl.class \
-                                               supplychain.composite \
-                                               Customer2V2.componentType \
-                                               RetailerV2.componentType \
-                                               WarehouseV2.componentType \
-                                               ShipperV2.componentType \
+                                        value="supplychain/customer/*
+                                               supplychain/OSGiBundleImpl.class
+                                               supplychain.composite
+                                               Customer2V2.componentType
+                                               RetailerV2.componentType
+                                               WarehouseV2.componentType
+                                               ShipperV2.componentType
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -144,8 +144,8 @@
                                     <property name="manifest.file.name" value="osgi/Retailer.mf" />
                                     <property name="sca.contribution" value="retailer-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/* \
-                                               supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/retailer/*
+                                               supplychain/OSGiBundleImpl.class
                                                META-INF/sca-contribution.xml" />
                                 </ant>
                                 <ant antfile="./build-bundles.xml" target="create-bundles">
@@ -155,8 +155,8 @@
                                     <property name="manifest.file.name" value="osgi/RetailerJar.mf" />
                                     <property name="sca.contribution" value="retailer-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/* \
-                                               supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/retailer/*
+                                               supplychain/OSGiBundleImpl.class
                                                META-INF/sca-contribution.xml" />
                                 </ant>
                                 <ant antfile="./build-bundles.xml" target="create-bundles">
@@ -166,8 +166,8 @@
                                     <property name="manifest.file.name" value="osgi/Shipper.mf" />
                                     <property name="sca.contribution" value="shipper-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/* \
-                                               supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/shipper/*
+                                               supplychain/OSGiBundleImpl.class
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -178,8 +178,8 @@
                                     <property name="manifest.file.name" value="osgi/Warehouse.mf" />
                                     <property name="sca.contribution" value="warehouse-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/* \
-                                               supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/warehouse/*
+                                               supplychain/OSGiBundleImpl.class
                                                META-INF/sca-contribution.xml" />
                                 </ant>
                                 <ant antfile="./build-bundles.xml" target="create-bundles">
@@ -189,16 +189,16 @@
                                     <property name="manifest.file.name" value="osgi/SupplyChain.mf" />
                                     <property name="sca.contribution" value="supplychain-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/** \
-                                               supplychain.composite \
-                                               CustomerV2.componentType \
-                                               RetailerV2.componentType \
-                                               WarehouseV2.componentType \
-                                               ShipperV2.componentType \
-                                               CustomerV2.jar \
-                                               RetailerV2.jar \
-                                               WarehouseV2.jar \
-                                               ShipperV2.jar \
+                                        value="supplychain/**
+                                               supplychain.composite
+                                               CustomerV2.componentType
+                                               RetailerV2.componentType
+                                               WarehouseV2.componentType
+                                               ShipperV2.componentType
+                                               CustomerV2.jar
+                                               RetailerV2.jar
+                                               WarehouseV2.jar
+                                               ShipperV2.jar
                                                META-INF/sca-contribution.xml" />
                                 </ant>
                             </tasks>
