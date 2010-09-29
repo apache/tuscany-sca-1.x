@@ -49,5 +49,9 @@ public class HelloWorldClient implements HelloWorldService {
     
     public String[] sayHello6(BeanA[] beans, String[] names, String anotherName){
     	return ref.sayHello6(beans, names, anotherName);
-    }     
+    }    
+    
+    public void sayHello7() {
+    	ref.sayHello7();
+    }    
 }

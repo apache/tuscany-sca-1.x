@@ -60,15 +60,18 @@ public class JSONPServiceBindingProvider implements ServiceBindingProvider {
         // force array types to map to JSON also
         for (Operation operation : contract.getInterface().getOperations()){
         	DataType<List<DataType>> inputTypes = operation.getInputType();
-        	for (DataType inputType : inputTypes.getLogical()){
-        		if ("java:array".equals(inputType.getDataBinding())){
-        			inputType.setDataBinding("JSON2x");
-        		}
-        	}
+            for (DataType inputType : inputTypes.getLogical()){
+                if ("java:array".equals(inputType.getDataBinding())){
+                    inputType.setDataBinding("JSON2x");
+                }
+            }
+            
         	DataType outputType = operation.getOutputType();
-    		if ("java:array".equals(outputType.getDataBinding())){
-    			outputType.setDataBinding("JSON2x");
-    		}
+        	if (outputType != null){
+	    		if ("java:array".equals(outputType.getDataBinding())){
+	    			outputType.setDataBinding("JSON2x");
+	    		}
+            }
         }        
     }
 

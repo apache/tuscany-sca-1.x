@@ -142,6 +142,10 @@ public class JSONPInvoker implements Invoker {
     }
     
     protected String[] objectsToJSONStrings(Object[] msgArgs) throws JsonGenerationException, JsonMappingException, IOException {
+    	if (msgArgs == null){
+    		return new String[0];
+    	}
+    	
         String[] jsonArgs = new String[msgArgs.length];
         for (int i=0; i<msgArgs.length; i++) {
             jsonArgs[i] = msgArgs[i].toString();

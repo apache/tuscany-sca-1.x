@@ -64,4 +64,8 @@ public class HelloWorldImpl implements HelloWorldService {
     	String [] response = {returnString};
         return response;
     }  
+   
+    public void sayHello7() {
+    	System.out.println("Hello void Fred");
+    }
 }

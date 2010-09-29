@@ -106,7 +106,7 @@ public class BindingTestCase {
         BeanA[] response = client.sayHello5(beans);
 
         Assert.assertEquals("Hello Fred", response[0].getS());
-    }  
+    }       
     
     /* HTTP Request for testMixedArray
         GET /HelloWorldComponent/HelloWorldService/sayHello6?arg0=%5B%7B%22b%22%3Atrue%2C%22s%22%3A%22Fred%22%2C%22y%22%3Anull%2C%22x%22%3A5%7D%5D&arg1=%5B%22Fred%22%2C%22Bloggs%22%5D&arg2=%22Bloggs%22 HTTP/1.1
@@ -138,7 +138,14 @@ public class BindingTestCase {
         String[] response = client.sayHello6(beans, names, "Bloggs");
 
         Assert.assertEquals("Hello Fred Fred Bloggs Bloggs", response[0]);
-    }    
+    }  
+    
+    @Test
+    public void testVoid() throws MalformedURLException, IOException {
+        HelloWorldService client = ((SCAClient)node).getService(HelloWorldService.class, "HelloWorldClient");
+
+        client.sayHello7();
+    }     
     
     @Test
     @Ignore

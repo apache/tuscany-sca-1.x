@@ -58,10 +58,12 @@ public class JSONPReferenceBindingProvider implements ReferenceBindingProvider {
         			inputType.setDataBinding("JSON2x");
         		}
         	}
-        	DataType outputType = operation.getOutputType();
-    		if ("java:array".equals(outputType.getDataBinding())){
-    			outputType.setDataBinding("JSON2x");
-    		}
+            DataType outputType = operation.getOutputType();
+            if (outputType != null){
+                if ("java:array".equals(outputType.getDataBinding())){
+                    outputType.setDataBinding("JSON2x");
+                }
+            }
         }
     }
     public Invoker createInvoker(Operation operation) {
