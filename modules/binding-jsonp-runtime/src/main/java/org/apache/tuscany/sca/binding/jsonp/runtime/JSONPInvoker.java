@@ -66,12 +66,10 @@ public class JSONPInvoker implements Invoker {
 
     public Message doInvoke(Message msg) throws JsonGenerationException, JsonMappingException, IOException, EncoderException {
         String uri = binding.getURI() + "/" + operation.getName();
-        //String[] jsonArgs = objectsToJSON((Object[])msg.getBody());
         String[] jsonArgs = objectsToJSONStrings((Object[])msg.getBody());
 
         String responseJSON = invokeHTTPRequest(uri, jsonArgs);
 
-        //Object response = jsonToObjects(responseJSON)[0];
         msg.setBody(responseJSON);
 
         return msg;
@@ -142,18 +140,6 @@ public class JSONPInvoker implements Invoker {
          
          return responseJSON.toString();
     }
-
-/* Not required now JSON conversion is delegated to databinding   
-    protected String[] objectsToJSON(Object[] msgArgs) throws JsonGenerationException, JsonMappingException, IOException {
-        String[] jsonArgs = new String[msgArgs.length];
-        for (int i=0; i<msgArgs.length; i++) {
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            mapper.writeValue(os , msgArgs[i]);
-            jsonArgs[i] = os.toString();
-        }
-        return jsonArgs;
-    }
-*/
     
     protected String[] objectsToJSONStrings(Object[] msgArgs) throws JsonGenerationException, JsonMappingException, IOException {
         String[] jsonArgs = new String[msgArgs.length];
@@ -162,13 +148,5 @@ public class JSONPInvoker implements Invoker {
         }
         return jsonArgs;
     }    
-
-/* Not required now JSON conversion is delegated to databinding    
-    protected Object[] jsonToObjects(String jsonRequest) throws JsonParseException, JsonMappingException, IOException {
-        Class<?> c = new Object[0].getClass();
-        Object[] args = (Object[])mapper.readValue("[" + jsonRequest +"]", c);
-        return args;
-    }
-*/
     
 }
