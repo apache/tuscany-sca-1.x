@@ -34,4 +34,34 @@ public class HelloWorldImpl implements HelloWorldService {
         return bean;
     }
     
+    public String[] sayHello4(String[] name) {
+    	String returnString = "Hello";
+    	
+    	for (int i=0 ; i < name.length; i++){
+    		returnString += " " + name[i];
+    	}
+    	
+    	String [] response = {returnString};
+        return response;
+    }
+    
+    public BeanA[] sayHello5(BeanA[] beans){
+    	beans[0].setS("Hello " + beans[0].getS());
+    	return beans;
+    }
+    
+    public String[] sayHello6(BeanA[] beans, String[] names, String anotherName){
+    	String returnString = "Hello";
+    	
+    	returnString += " " + beans[0].getS();
+    	
+    	for (int i=0 ; i < names.length; i++){
+    		returnString += " " + names[i];
+    	}
+    	
+    	returnString += " " + anotherName;
+    	
+    	String [] response = {returnString};
+        return response;
+    }  
 }

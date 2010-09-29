@@ -30,15 +30,12 @@ import java.net.URL;
 import junit.framework.Assert;
 
 import org.apache.tuscany.sca.node.SCAClient;
-import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.apache.tuscany.sca.node.SCANode;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import sun.tools.tree.ThisExpression;
 
 public class BindingTestCase {
 
@@ -73,8 +70,7 @@ public class BindingTestCase {
     
     @Test
     //@Ignore("TUSCANY-3635")
-    public void testComplexParams() throws MalformedURLException, IOException {
-        
+    public void testComplexParams() throws MalformedURLException, IOException {      
         HelloWorldService client = ((SCAClient)node).getService(HelloWorldService.class, "HelloWorldClient");
 
         BeanA bean = new BeanA();
@@ -85,6 +81,64 @@ public class BindingTestCase {
 
         Assert.assertEquals("XYZ", client.sayHello3(bean).getS());
     }  
+    
+    @Test
+    public void testStringArray() throws MalformedURLException, IOException {
+        HelloWorldService client = ((SCAClient)node).getService(HelloWorldService.class, "HelloWorldClient");
+
+        String[] names = {"Fred", "Bloggs"};
+        String[] response = client.sayHello4(names);
+
+        Assert.assertEquals("Hello Fred Bloggs", response[0]);
+    }   
+    
+    @Test
+    public void testBeanArray() throws MalformedURLException, IOException {
+        HelloWorldService client = ((SCAClient)node).getService(HelloWorldService.class, "HelloWorldClient");
+
+        BeanA bean = new BeanA();
+        bean.setB(true);
+        bean.setS("Fred");
+        bean.setX(2);
+        bean.setX(5);
+        
+        BeanA[] beans = {bean};
+        BeanA[] response = client.sayHello5(beans);
+
+        Assert.assertEquals("Hello Fred", response[0].getS());
+    }  
+    
+    /* HTTP Request for testMixedArray
+        GET /HelloWorldComponent/HelloWorldService/sayHello6?arg0=%5B%7B%22b%22%3Atrue%2C%22s%22%3A%22Fred%22%2C%22y%22%3Anull%2C%22x%22%3A5%7D%5D&arg1=%5B%22Fred%22%2C%22Bloggs%22%5D&arg2=%22Bloggs%22 HTTP/1.1
+        Host: localhost:8085
+        Connection: Keep-Alive
+        User-Agent: Apache-HttpClient/4.0 (java 1.5)
+     */
+    /* FYI Converted URL =
+        /HelloWorldComponent/HelloWorldService/sayHello6?arg0=[{"b":true,"s":"Fred","y":null,"x":5}]&arg1=["Fred":"Bloggs"]&arg2="Bloggs" HTTP/1.1
+     */
+    /* HTTP Response for testMixedArray
+        HTTP/1.1 200 OK
+        Content-Length: 35
+        ["Hello Fred Fred Bloggs Bloggs"]
+     */
+    @Test
+    public void testMixedArray() throws MalformedURLException, IOException {
+        HelloWorldService client = ((SCAClient)node).getService(HelloWorldService.class, "HelloWorldClient");
+
+        BeanA bean = new BeanA();
+        bean.setB(true);
+        bean.setS("Fred");
+        bean.setX(2);
+        bean.setX(5);
+        
+        BeanA[] beans = {bean};
+        String[] names = {"Fred", "Bloggs"};
+        
+        String[] response = client.sayHello6(beans, names, "Bloggs");
+
+        Assert.assertEquals("Hello Fred Fred Bloggs Bloggs", response[0]);
+    }    
     
     @Test
     @Ignore

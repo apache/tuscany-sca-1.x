@@ -29,5 +29,10 @@ public interface HelloWorldService {
     String sayHello2(String firstName, String lastName);
     
     BeanA sayHello3(BeanA bean);
-
+    
+    String[] sayHello4(String[] name);
+    
+    BeanA[] sayHello5(BeanA[] beans);
+    
+    String[] sayHello6(BeanA[] beans, String[] names, String anotherName);
 }

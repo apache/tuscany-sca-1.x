@@ -19,7 +19,10 @@
 
 package org.apache.tuscany.sca.binding.jsonp.runtime;
 
+import java.util.List;
+
 import org.apache.tuscany.sca.binding.jsonp.JSONPBinding;
+import org.apache.tuscany.sca.interfacedef.DataType;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
 import org.apache.tuscany.sca.interfacedef.Operation;
 import org.apache.tuscany.sca.invocation.Invoker;
@@ -44,7 +47,22 @@ public class JSONPReferenceBindingProvider implements ReferenceBindingProvider {
         } catch (Exception ex){
             // we know this supports clone
         }
+        
         contract.getInterface().resetDataBinding("JSON2x");
+        
+        // force array types to map to JSON also
+        for (Operation operation : contract.getInterface().getOperations()){
+        	DataType<List<DataType>> inputTypes = operation.getInputType();
+        	for (DataType inputType : inputTypes.getLogical()){
+        		if ("java:array".equals(inputType.getDataBinding())){
+        			inputType.setDataBinding("JSON2x");
+        		}
+        	}
+        	DataType outputType = operation.getOutputType();
+    		if ("java:array".equals(outputType.getDataBinding())){
+    			outputType.setDataBinding("JSON2x");
+    		}
+        }
     }
     public Invoker createInvoker(Operation operation) {
         return new JSONPInvoker(operation, binding);
