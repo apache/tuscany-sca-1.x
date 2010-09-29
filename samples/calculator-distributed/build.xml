@@ -92,10 +92,6 @@
     </target>	
 	
     <target name="clean">
-        <delete quiet="true" includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
+        <delete dir="target" includeemptydirs="true"/>
     </target>	
-	
-	
 </project>

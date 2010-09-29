@@ -101,9 +101,7 @@
     </target>	
 	
     <target name="clean">
-        <delete quiet="true" includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
+        <delete dir="target" includeemptydirs="true"/>
     </target>	
 	
 	<!-- If you want to test without building the distribution jars set the       -->
