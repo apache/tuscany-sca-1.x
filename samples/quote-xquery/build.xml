@@ -27,12 +27,6 @@
 
     <property name="tuscany.sca.manifest.location" value="../../lib/tuscany-sca-manifest.jar" />
 
-    <path id="project.classpath">
-        <pathelement path="target/classes" />
-        <pathelement path="target/sdo-source" />
-        <pathelement location="${tuscany.sca.manifest.location}" />
-    </path>
-
     <target name="generate-sdo" depends="init">
         <java classname="org.apache.tuscany.sdo.generate.XSD2JavaGenerator" fork="true">
             <arg value="-targetDirectory" />
@@ -42,7 +36,7 @@
             properly transformed to Node as some properties are treated as unset -->
             <arg value="src/main/resources/wsdl/quotejoin.wsdl" />
 
-            <classpath refid="project.classpath" />
+            <classpath location="${tuscany.sca.manifest.location}" />
         </java>
         <java classname="org.apache.tuscany.sdo.generate.XSD2JavaGenerator" fork="true">
             <arg value="-targetDirectory" />
@@ -52,7 +46,7 @@
             properly transformed to Node as some properties are treated as unset -->
             <arg value="src/main/resources/wsdl/Quote.xsd" />
 
-            <classpath refid="project.classpath" />
+            <classpath location="${tuscany.sca.manifest.location}" />
         </java>
         <java classname="org.apache.tuscany.sdo.generate.XSD2JavaGenerator" fork="true">
             <arg value="-targetDirectory" />
@@ -62,7 +56,7 @@
             properly transformed to Node as some properties are treated as unset -->
             <arg value="src/main/resources/wsdl/AvailQuote.xsd" />
 
-            <classpath refid="project.classpath" />
+            <classpath location="${tuscany.sca.manifest.location}" />
         </java>
         <java classname="org.apache.tuscany.sdo.generate.XSD2JavaGenerator" fork="true">
             <arg value="-targetDirectory" />
@@ -72,7 +66,7 @@
             properly transformed to Node as some properties are treated as unset -->
             <arg value="src/main/resources/wsdl/PriceQuote.xsd" />
 
-            <classpath refid="project.classpath" />
+            <classpath location="${tuscany.sca.manifest.location}" />
         </java>
 
     </target>
@@ -82,7 +76,7 @@
         <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
             <src path="target/sdo-source"/>
             <src path="src/main/java"/>
-            <classpath refid="project.classpath" />
+            <classpath location="${tuscany.sca.manifest.location}" />
         </javac>
         <copy todir="target/classes">
             <fileset dir="src/main/resources" />
@@ -99,8 +93,8 @@
         <java classname="${test.class}" fork="true">
             <classpath>
                 <pathelement path="target/classes" />
+                <pathelement location="${tuscany.sca.manifest.location}" />
             </classpath>
-            <classpath refid="project.classpath" />
         </java>
     </target>
 
@@ -108,8 +102,8 @@
         <java classname="${test.class}" fork="true">
             <classpath>
                 <pathelement path="target/${test.jar}" />
+                <pathelement location="${tuscany.sca.manifest.location}" />
             </classpath>
-            <classpath refid="project.classpath" />
         </java>
     </target>
 
@@ -117,8 +111,8 @@
         <java classname="${test.server.class}" fork="true">
             <classpath>
                 <pathelement path="target/${test.jar}" />
+                <pathelement location="${tuscany.sca.manifest.location}" />
             </classpath>
-            <classpath refid="project.classpath" />
         </java>
     </target>
 

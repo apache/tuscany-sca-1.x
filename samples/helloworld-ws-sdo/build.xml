@@ -31,12 +31,6 @@
         <mkdir dir="target/sdo-source"/>
     </target>
         
-    <path id="project.classpath">
-        <pathelement path="target/classes"/>
-        <pathelement path="target/sdo-source"/>
-        <pathelement location="${tuscany.sca.manifest.location}"/>
-    </path>
-        
     <target name="generate-sdo" depends="init">
         <java classname="org.apache.tuscany.sdo.generate.XSD2JavaGenerator" fork="true">
             <arg value="-targetDirectory"/>
@@ -50,7 +44,7 @@
             <arg value="-noUnsettable"/>
             <arg value="src/main/resources/wsdl/helloworld.wsdl"/>
 
-            <classpath refid="project.classpath"/>
+            <classpath location="${tuscany.sca.manifest.location}"/>
         </java>
         <java classname="org.apache.tuscany.sdo.generate.XSD2JavaGenerator" fork="true">
             <arg value="-targetDirectory"/>
@@ -64,7 +58,7 @@
             <arg value="-noUnsettable"/>
             <arg value="src/main/resources/test.xsd"/>
 
-            <classpath refid="project.classpath"/>
+            <classpath location="${tuscany.sca.manifest.location}"/>
         </java>
     </target>
 
@@ -75,35 +69,42 @@
                target="1.5">
             <src location="src/main/java"/>
             <src location="target/sdo-source"/>
-            <classpath refid="project.classpath"/>
+            <classpath location="${tuscany.sca.manifest.location}"/>
         </javac> 
         <copy todir="target/classes">
             <fileset dir="src/main/resources"/>
-            <fileset dir="target/sdo-source"/>
         </copy>
         <jar destfile="target/${test.jar}" basedir="target/classes">
             <manifest>
-                <attribute name="Main-Class" value="${test.class}" /> 
+                <attribute name="Main-Class" value="${client.class}" /> 
             </manifest>
         </jar>    	
     </target>	
 	
     <target name="run-classes">
         <java classname="${client.class}" fork="true">
-        <classpath refid="project.classpath"/>        </java>
+=            <classpath>
+                <pathelement path="target/classes"/>
+                <pathelement location="${tuscany.sca.manifest.location}"/>
+            </classpath>        
+        </java>
     </target>
 
     <target name="run-server">
         <java classname="${server.class}" fork="true">
-            <classpath path="target/${test.jar}"/>
-            <classpath refid="project.classpath"/>
+            <classpath>
+                <pathelement path="target/${test.jar}"/>
+                <pathelement location="${tuscany.sca.manifest.location}"/>
+            </classpath>        
         </java>    	
     </target>
 
     <target name="run">
         <java classname="${client.class}" fork="true">
-            <classpath path="target/${test.jar}"/>
-            <classpath refid="project.classpath"/>
+            <classpath>
+                <pathelement path="target/${test.jar}"/>
+                <pathelement location="${tuscany.sca.manifest.location}"/>
+            </classpath>        
         </java>    	
     </target>
 		
