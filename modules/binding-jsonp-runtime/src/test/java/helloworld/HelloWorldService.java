@@ -37,5 +37,7 @@ public interface HelloWorldService {
     String[] sayHello6(BeanA[] beans, String[] names, String anotherName);
     
     void sayHello7();
+    
+    void sayHello8(String name);
  
 }

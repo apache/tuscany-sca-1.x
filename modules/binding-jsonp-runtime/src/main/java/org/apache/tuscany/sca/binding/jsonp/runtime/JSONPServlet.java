@@ -70,9 +70,12 @@ public class JSONPServlet extends GenericServlet {
     @Override
     public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
         Object[] args = getJSONRequestStringArray(servletRequest);
-        Object response = invokeService(args);        
-        String jsonResponse = getJSONResponseAsString(servletRequest, response);
-        servletResponse.getOutputStream().println(jsonResponse);
+        Object response = invokeService(args);   
+        
+        if (response != null){
+	        String jsonResponse = getJSONResponseAsString(servletRequest, response);
+	        servletResponse.getOutputStream().println(jsonResponse);
+        }
     }
    
     /**

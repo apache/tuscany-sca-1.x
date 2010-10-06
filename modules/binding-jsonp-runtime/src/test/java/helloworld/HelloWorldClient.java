@@ -53,5 +53,9 @@ public class HelloWorldClient implements HelloWorldService {
     
     public void sayHello7() {
     	ref.sayHello7();
-    }    
+    }   
+    
+    public void sayHello8(String name) {
+    	ref.sayHello8(name);
+    }
 }

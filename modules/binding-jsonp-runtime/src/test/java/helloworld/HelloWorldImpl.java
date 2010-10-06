@@ -68,4 +68,8 @@ public class HelloWorldImpl implements HelloWorldService {
     public void sayHello7() {
     	System.out.println("Hello void Fred");
     }
+    
+    public void sayHello8(String name) {
+    	System.out.println("Hello void " + name);
+    }
 }

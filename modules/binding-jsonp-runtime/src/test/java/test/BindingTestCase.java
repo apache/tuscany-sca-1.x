@@ -144,8 +144,23 @@ public class BindingTestCase {
     public void testVoid() throws MalformedURLException, IOException {
         HelloWorldService client = ((SCAClient)node).getService(HelloWorldService.class, "HelloWorldClient");
 
-        client.sayHello7();
-    }     
+        try {
+        	client.sayHello7();
+	    } catch (Exception ex){
+	        Assert.fail();
+	    }
+    }   
+    
+    @Test
+    public void testVoidOut() throws MalformedURLException, IOException {
+        HelloWorldService client = ((SCAClient)node).getService(HelloWorldService.class, "HelloWorldClient");
+
+	    try {
+	        client.sayHello8("Fred");
+	    } catch (Exception ex){
+	        Assert.fail();
+	    }
+    }  
     
     @Test
     @Ignore
