@@ -19,7 +19,7 @@
 package org.apache.tuscany.sca.binding.jms;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
@@ -96,7 +96,7 @@ public class ExceptionsTestCase {
             service.throwUnChecked();
             fail();
         } catch (Exception e) {
-            assertEquals("java.lang.RuntimeException: bla", e.getCause().getMessage());
+            assertTrue(e.getCause().getMessage().startsWith("Message = java.lang.RuntimeException: bla"));
         }
     }
 
