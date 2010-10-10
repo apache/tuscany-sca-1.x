@@ -19,6 +19,7 @@
 
 package org.apache.tuscany.sca.binding.gdata;
 
+import java.net.Socket;
 import java.net.URL;
 
 import junit.framework.Assert;
@@ -43,17 +44,25 @@ public class GoogleBloggerServiceTestCase {
     @BeforeClass
     public static void setUp() throws Exception {
         //Initialize the GData client service (Reference Binding test)
-        scaDomainConsumer = SCADomain.newInstance("org/apache/tuscany/sca/binding/gdata/ConsumerGoogleBlogger.composite");
-        testService = scaDomainConsumer.getService(CustomerClient.class, "CustomerClient");  
+        if (internetConnected()) {
+            scaDomainConsumer = SCADomain.newInstance("org/apache/tuscany/sca/binding/gdata/ConsumerGoogleBlogger.composite");
+            testService = scaDomainConsumer.getService(CustomerClient.class, "CustomerClient");  
+        }
     }
 
     @AfterClass
     public static void tearDown(){
-        scaDomainConsumer.close();
+        if (scaDomainConsumer != null) {
+            scaDomainConsumer.close();
+        }
     }        
     
     @Test
     public void testClientGetFeed() throws Exception {
+        if (testService == null) {
+            // no internet connection
+            return;
+        }
         Feed feed = testService.clientGetFeed();
         //System.out.println("feed title: " + feed.getTitle().getPlainText());        
         Assert.assertEquals("gdata binding tuscany test", feed.getTitle().getPlainText());
@@ -62,6 +71,10 @@ public class GoogleBloggerServiceTestCase {
     
     @Test
     public void testClientGetEntry() throws Exception {
+        if (testService == null) {
+            // no internet connection
+            return;
+        }
         String entryID = "8308734583601887890";
         Entry blogEntry = testService.clientGetEntry(entryID);
         //System.out.println("Entry ID: " + blogEntry.getId());
@@ -72,6 +85,10 @@ public class GoogleBloggerServiceTestCase {
     
     @Test
     public void testClientPut() throws Exception {  
+        if (testService == null) {
+            // no internet connection
+            return;
+        }
         String entryID = "2889832689497686762";          
         String newBlogEntryTitle = "updatedTitleByTestCase2";
         testService.clientPut(entryID, newBlogEntryTitle);      //update the title
@@ -84,6 +101,10 @@ public class GoogleBloggerServiceTestCase {
 
     @Test
     public void testClientPost() throws Exception {
+        if (testService == null) {
+            // no internet connection
+            return;
+        }
         String blogEntryTitle = "titleByBloogerTestcase000";
         Entry newEntry = new Entry();
         newEntry.setTitle(new PlainTextConstruct(blogEntryTitle));
@@ -95,6 +116,10 @@ public class GoogleBloggerServiceTestCase {
     
     @Test
     public void testClientDelete() throws Exception {
+        if (testService == null) {
+            // no internet connection
+            return;
+        }
         
         //This test case might fail
         //because Google blogger service has limitation on new posts allowed everyday/every hour?
@@ -127,6 +152,10 @@ public class GoogleBloggerServiceTestCase {
     
     @Test
     public void testClientQuery() throws Exception {
+        if (testService == null) {
+            // no internet connection
+            return;
+        }
         Query myQuery = new Query(new URL("http://haibotuscany.blogspot.com/feeds/posts/default"));
         myQuery.setMaxResults(100);
         //myQuery.setUpdatedMin(startTime);
@@ -137,5 +166,20 @@ public class GoogleBloggerServiceTestCase {
         //assertEquals("gdata binding tuscany test", resultFeed.getTitle().getPlainText());
      }
 
+    private static boolean internetConnected() {
+        try {
+            // see whether an internet connection is available 
+            Socket testInternet = new Socket("tuscany.apache.org", 80);
+            testInternet.close();
+
+            // internet connection available
+            return true;
+
+        } catch (Exception e) {
+            // no internet connection
+            System.out.println("Unable to run test because no internet connection available");
+            return false;
+        }
+    }
 
 }

@@ -20,6 +20,7 @@ package feed;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,6 +68,10 @@ public class FeedAggregatorTestCase {
 
     @BeforeClass
     public static void init() throws Exception {
+        if (!internetConnected()) {
+            // no internet connection
+            return;
+        }
         try {
             System.out.println(">>>FeedAggregatorTest.init");
             scaProviderDomain = SCADomain.newInstance("FeedAggregator.composite");
@@ -82,17 +87,27 @@ public class FeedAggregatorTestCase {
     @AfterClass
     public static void destroy() throws Exception {
         System.out.println(">>>FeedAggregatorTest.destroy");
-        scaProviderDomain.close();
+        if (scaProviderDomain != null) {
+            scaProviderDomain.close();
+        }
     }
 
     @Test
     public void testPrelim() throws Exception {
+        if (scaProviderDomain == null) {
+            // no internet connection
+            return;
+        }
         Assert.assertNotNull(scaProviderDomain);
         Assert.assertNotNull(client);
     }
 
     @Test
     public void testFeedBasics() throws Exception {
+        if (scaProviderDomain == null) {
+            // no internet connection
+            return;
+        }
         System.out.println(">>>FeedAggregatorTest.testFeedBasics");
         RequestOptions opts = new RequestOptions();
         // Normal feed request
@@ -143,6 +158,10 @@ public class FeedAggregatorTestCase {
 
     @Test
     public void testUnmodifiedGetIfModified() throws Exception {
+        if (scaProviderDomain == null) {
+            // no internet connection
+            return;
+        }
         System.out.println(">>>FeedAggregatorTest.testFeedUnmodifiedGetIfModified");
         // Feed request with predicates
         RequestOptions opts = new RequestOptions();
@@ -180,6 +199,10 @@ public class FeedAggregatorTestCase {
 
     @Test
     public void testUnmodifiedGetIfUnModified() throws Exception {
+        if (scaProviderDomain == null) {
+            // no internet connection
+            return;
+        }
         System.out.println(">>>FeedAggregatorTest.testFeedUnmodifiedGetIfUnModified");
         // Feed request with predicates
         RequestOptions opts = new RequestOptions();
@@ -354,5 +377,21 @@ public class FeedAggregatorTestCase {
         Date median = updates.get(size / 2);
         // System.out.println( "getUpdatedMedian entry max median=" + median );
         return median;
+    }
+
+    private static boolean internetConnected() {
+        try {
+            // see whether an internet connection is available 
+            Socket testInternet = new Socket("tuscany.apache.org", 80);
+            testInternet.close();
+
+            // internet connection available
+            return true;
+
+        } catch (Exception e) {
+            // no internet connection
+            System.out.println("Unable to run test because no internet connection available");
+            return false;
+        }
     }
 }
