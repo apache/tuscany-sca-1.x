@@ -19,6 +19,7 @@
 -->
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
            xmlns:wsdli="http://www.w3.org/2006/01/wsdl-instance"
+           xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
            name="StandardTypesService">
            
     <!-- Clients to test the service -->
@@ -61,6 +62,14 @@
         <service name="StandardTypesLocalService">
             <interface.java interface="org.apache.tuscany.sca.itest.databindings.jaxb.StandardTypesLocalService"/>
             <binding.sca/>
+        </service>
+    </component>
+
+    <!-- Local cache of Tuscany home page -->
+    <component name="myWeb">
+        <tuscany:implementation.resource location="myContent"/>
+        <service name="Resource">
+            <tuscany:binding.http/>
         </service>
     </component>
 </composite>

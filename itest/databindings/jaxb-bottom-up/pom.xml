@@ -136,6 +136,21 @@
             <scope>provided</scope>
         </dependency>
         <!-- End of addition   -->
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-implementation-resource-runtime</artifactId>
+            <version>1.6.1-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tuscany.sca</groupId>
+            <artifactId>tuscany-binding-http-runtime</artifactId>
+            <version>1.6.1-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
