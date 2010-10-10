@@ -99,12 +99,23 @@
             </exclusions>
         </dependency>
         
-      	<dependency>
-        	<groupId>com.sun.xml.ws</groupId>
-        	<artifactId>jaxws-rt</artifactId>
-        	<version>2.1.4</version>
-      	</dependency>        
+        <!-- Add javax.xml.ws.soap.Addressing in case the build is using
+             the bad version of jaxws-api with this class missing
+        -->
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jaxws_2.1_spec</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>2.1.4</version>
+            <scope>test</scope>
+        </dependency>
+       
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
