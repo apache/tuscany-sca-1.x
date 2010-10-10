@@ -161,6 +161,29 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
                 <version>1.12</version>
+                <!-- Explicitly add the transitive dependencies for jaxws-api
+                     http://jira.codehaus.org/browse/MEV-498
+                -->
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.jws</groupId>
+                        <artifactId>jsr181-api</artifactId>
+                        <version>1.0-MR1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>javax.annotation</groupId>
+                        <artifactId>jsr250-api</artifactId>
+                        <version>1.0</version>
+                    </dependency>
+                    <!-- Add javax.xml.ws.soap.Addressing in case the build is using
+                         the bad version of jaxws-api with this class missing
+                    -->
+                    <dependency>
+                        <groupId>org.apache.geronimo.specs</groupId>
+                        <artifactId>geronimo-jaxws_2.1_spec</artifactId>
+                        <version>1.0</version>
+                    </dependency>
+                </dependencies>
                 <executions>
                     <execution>
                         <id>payment</id>

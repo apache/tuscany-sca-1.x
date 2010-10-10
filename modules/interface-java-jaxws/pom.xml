@@ -197,6 +197,14 @@
                         <artifactId>jsr250-api</artifactId>
                         <version>1.0</version>
                     </dependency>
+                    <!-- Add javax.xml.ws.soap.Addressing in case the build is using
+                         the bad version of jaxws-api with this class missing
+                    -->
+                    <dependency>
+                        <groupId>org.apache.geronimo.specs</groupId>
+                        <artifactId>geronimo-jaxws_2.1_spec</artifactId>
+                        <version>1.0</version>
+                    </dependency>
                 </dependencies>
                 <executions>
                     <execution>
