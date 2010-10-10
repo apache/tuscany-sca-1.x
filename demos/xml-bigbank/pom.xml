@@ -60,7 +60,6 @@
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-ws-axis2</artifactId>
             <version>1.6.1-SNAPSHOT</version>
-            <scope>runtime</scope>
         </dependency>
 
         <dependency>
