@@ -163,6 +163,17 @@ public class BindingTestCase {
     }  
     
     @Test
+    public void testIntOut() throws MalformedURLException, IOException {
+        HelloWorldService client = ((SCAClient)node).getService(HelloWorldService.class, "HelloWorldClient");
+
+	    try {
+	        Assert.assertEquals(28, client.sayHello9(28));
+	    } catch (Exception ex){
+	        Assert.fail();
+	    }
+    }      
+    
+    @Test
     @Ignore
     public void waitForInput(){
         System.out.println("Press a key");

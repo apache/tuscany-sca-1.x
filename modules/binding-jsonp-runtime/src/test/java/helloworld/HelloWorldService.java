@@ -39,5 +39,7 @@ public interface HelloWorldService {
     void sayHello7();
     
     void sayHello8(String name);
+    
+    int sayHello9(int name);
  
 }

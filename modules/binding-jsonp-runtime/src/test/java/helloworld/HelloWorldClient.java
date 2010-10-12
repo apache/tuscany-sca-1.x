@@ -58,4 +58,8 @@ public class HelloWorldClient implements HelloWorldService {
     public void sayHello8(String name) {
     	ref.sayHello8(name);
     }
+    
+    public int sayHello9(int name) {
+    	return ref.sayHello9(name);
+    }    
 }
