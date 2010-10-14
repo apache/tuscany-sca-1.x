@@ -186,8 +186,6 @@
                 <exclude>helloworld-ws-deep-webapp/**/*</exclude>
                 <exclude>helloworld-ws-service-webapp</exclude>
                 <exclude>helloworld-ws-service-webapp/**/*</exclude>
-                <exclude>store-dojo</exclude>
-                <exclude>store-dojo/**/*</exclude>
                 <exclude>zipcode-jaxws/</exclude>
                 <exclude>zipcode-jaxws/**/*</exclude>
             </excludes>

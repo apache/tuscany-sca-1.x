@@ -129,7 +129,6 @@
                 <module>simple-callback</module>
                 <module>simple-callback-ws</module>
                 <module>store</module>
-                <!-- the following is excluded from pom-distribution.xml -->
                 <module>store-dojo</module>
                 <module>store-webapp</module>
                 <module>store-secure</module>
