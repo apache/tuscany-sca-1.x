@@ -57,6 +57,8 @@
         <ant dir="feed-aggregator-webapp" target="${target}"/>
         <ant dir="helloworld-bpel" target="${target}"/>
         <ant dir="helloworld-dojo-webapp" target="${target}"/>
+        <ant dir="helloworld-erlang-reference" target="${target}"/>
+        <ant dir="helloworld-erlang-service" target="${target}"/>
         <ant dir="helloworld-jsonrpc-webapp" target="${target}"/>
         <ant dir="helloworld-reference-jms" target="${target}"/>
         <ant dir="helloworld-service-jms" target="${target}"/>

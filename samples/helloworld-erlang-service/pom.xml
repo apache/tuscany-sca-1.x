@@ -25,8 +25,8 @@
         <version>1.6.1-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>sample-helloworld-service-erlang</artifactId>
-    <name>Apache Tuscany SCA Sample HelloWorld Service Erlang</name>
+    <artifactId>sample-helloworld-erlang-service</artifactId>
+    <name>Apache Tuscany SCA Sample HelloWorld Erlang Service</name>
 
     <repositories>
        <repository>
@@ -67,6 +67,23 @@
     
     <build>
        <finalName>${artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tuscany.sca</groupId>
+                <artifactId>tuscany-maven-ant-generator</artifactId>
+                <version>1.6.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>helloworld.HelloWorldServer</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
 </project>

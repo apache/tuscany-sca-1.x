@@ -1,5 +1,5 @@
 Hello World Erlang Service Sample
-==============================
+=================================
 This sample demonstrates an SCA service that uses a Erlang binding 
 
 The README in the samples directory (the directory above this) provides 
@@ -16,13 +16,13 @@ ant run
 
 OR if you don't have ant, on Windows do
 
-java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-helloworld-service-erlang.jar helloworld.HelloWorldServer
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-helloworld-erlang-service.jar helloworld.HelloWorldServer
 
 and on *nix do
 
-java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-helloworld-service-erlang.jar helloworld.HelloWorldServer
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-helloworld-erlang-service.jar helloworld.HelloWorldServer
 
-Now the server is started you can use the helloworld-reference-erlang sample to 
+Now the server is started you can use the helloworld-erlang-reference sample to 
 exercise it. 
 
 Sample Overview
@@ -30,7 +30,7 @@ Sample Overview
 The sample provides a single component that is wired to a service with a 
 Erlang binding.
 
-helloworld-service-erlang/
+helloworld-erlang-service/
   src/
     main/
       java/
@@ -61,7 +61,7 @@ Building And Running The Sample Using Ant
 With the binary distribution the sample can be built and run using Ant using the 
 following commands
 
-cd helloworld-service-erlang
+cd helloworld-erlang-service
 ant compile
 ant run
 
@@ -82,10 +82,10 @@ As this point the SCA service is exposed as a Erlang module via Erlang RPC which
 started automatically by the SCA runtime. To stop the server just press 
 enter.
 
-To exercise the service run up the helloworld-reference-erlang sample. Take a look at 
+To exercise the service run up the helloworld-erlang-reference sample. Take a look at 
 the README in that sample and you will see you need the following commands
 
-cd helloworld-reference-erlang
+cd helloworld-erlang-reference
 ant run
 
 Building Sample Using Maven 
@@ -93,7 +93,7 @@ Building Sample Using Maven
 With either the binary or source distributions the sample can be built 
 using Maven as follows. 
 
-cd helloworld-service-erlang
+cd helloworld-erlang-service
 mvn
 
 You should see the following output 

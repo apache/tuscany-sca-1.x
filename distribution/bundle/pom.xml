@@ -88,6 +88,16 @@
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-erlang</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-erlang-runtime</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-gdata</artifactId>
             <version>${pom.version}</version>
         </dependency>
