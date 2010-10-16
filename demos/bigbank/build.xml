@@ -23,9 +23,9 @@
     <property name="test.class" value="bigbank.demo.BigBankServer" />
 	
     <path id="test.classpath">
-    	<pathelement location="target/classes"/>
+        <pathelement location="target/demo-bigbank.jar"/>        
+        <pathelement location="../bigbank-account/target/demo-bigbank-account.jar"/>        
     	<pathelement location="../../lib/tuscany-sca-manifest.jar"/>    	
-        <pathelement location="../bigbank-account/target/demo-bigbank-account.jar"/>    	
     </path>
 	
     <target name="init">
