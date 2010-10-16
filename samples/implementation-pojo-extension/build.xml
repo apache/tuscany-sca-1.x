@@ -51,6 +51,7 @@
             <fileset dir="src/test/resources"/>
         </copy>
         <jar destfile="target/sample-implementation-pojo-extension.jar" basedir="target/classes"/>
+        <jar destfile="target/sample-implementation-pojo-extension-test.jar" basedir="target/test-classes"/>
     </target>	
 
     <target name="package" depends="compile"/>
@@ -58,7 +59,7 @@
     <target name="run">
         <java classname="helloworld.HelloWorldTestClient" fork="true">
             <classpath>
-                <pathelement location="target/test-classes"/>
+                <pathelement location="target/sample-implementation-pojo-extension-test.jar"/>
                 <pathelement location="target/sample-implementation-pojo-extension.jar"/>
                 <pathelement location="../../lib/tuscany-sca-manifest.jar"/>
             </classpath>
