@@ -102,92 +102,30 @@
                 <exclude>*/target/wsdl2java-source/**/*</exclude>
                 <exclude>*/**/*.svg</exclude>
                 <!-- Sample specific work file/folders to exclude -->
-                <exclude>pom.xml</exclude>
-                <exclude>pom-distribution.xml</exclude>
                 <exclude>calculator-webapp/target/sample-calculator-webapp</exclude>
                 <exclude>calculator-webapp/target/sample-calculator-webapp/**/*</exclude>
                 <exclude>calculator-ws-webapp/target/sample-calculator-ws-webapp</exclude>
                 <exclude>calculator-ws-webapp/target/sample-calculator-ws-webapp/**/*</exclude>
-                <exclude>calculator-ws-secure-webapp/target/sample-calculator-ws-secure-webapp</exclude>
-                <exclude>calculator-ws-secure-webapp/target/sample-calculator-ws-secure-webapp/**/*</exclude>
                 <exclude>chat-webapp/target/sample-chat-webapp</exclude>
                 <exclude>chat-webapp/target/sample-chat-webapp/**/*</exclude>
-                <exclude>domain-webapp/target/sample-domain-webapp</exclude>
-                <exclude>domain-webapp/target/sample-domain-webapp/**/*</exclude>
                 <exclude>feed-aggregator-webapp/target/sample-feed-aggregator-webapp</exclude>
                 <exclude>feed-aggregator-webapp/target/sample-feed-aggregator-webapp/**/*</exclude>
                 <exclude>helloworld-dojo-webapp/target/sample-helloworld-dojo-webapp</exclude>
                 <exclude>helloworld-dojo-webapp/target/sample-helloworld-dojo-webapp/**/*</exclude>
-                <exclude>helloworld-jms-webapp/target/sample-helloworld-jms-webapp</exclude>
-                <exclude>helloworld-jms-webapp/target/sample-helloworld-jms-webapp/**/*</exclude>
                 <exclude>helloworld-jsonrpc-webapp/target/sample-helloworld-jsonrpc-webapp</exclude>
                 <exclude>helloworld-jsonrpc-webapp/target/sample-helloworld-jsonrpc-webapp/**/*</exclude>
-                <exclude>helloworld-ws-deep-webapp/target/sample-helloworld-ws-deep-webapp</exclude>
-                <exclude>helloworld-ws-deep-webapp/target/sample-helloworld-ws-deep-webapp/**/*</exclude>
-                <exclude>helloworld-ws-service-webapp/target/sample-helloworld-ws-service-webapp</exclude>
-                <exclude>helloworld-ws-service-webapp/target/sample-helloworld-ws-service-webapp/**/*</exclude>
                 <exclude>helloworld-ws-sdo-webapp/target/sample-helloworld-ws-sdo-webapp</exclude>
                 <exclude>helloworld-ws-sdo-webapp/target/sample-helloworld-ws-sdo-webapp/**/*</exclude>
                 <exclude>store-webapp/target/sample-store-webapp</exclude>
                 <exclude>store-webapp/target/sample-store-webapp/**/*</exclude>
-                <exclude>zipcode-jaxws/target/endorsed</exclude>
-                <exclude>zipcode-jaxws/target/endorsed/**/*</exclude>
                 <!-- Sample war files to exclude -->
-                <exclude>calculator-ws-secure-webapp/target/sample-calculator-ws-secure-webapp.war</exclude>
                 <exclude>calculator-ws-webapp/target/sample-calculator-ws-webapp.war</exclude>
                 <exclude>chat-webapp/target/sample-chat-webapp.war</exclude>
-                <exclude>domain-webapp/target/sample-domain-webapp.war</exclude>
                 <exclude>feed-aggregator-webapp/target/sample-feed-aggregator-webapp.war</exclude>
                 <exclude>helloworld-dojo-webapp/target/sample-helloworld-dojo-webapp.war</exclude>
-                <exclude>helloworld-jms-webapp/target/sample-helloworld-jms-webapp.war</exclude>
                 <exclude>helloworld-jsonrpc-webapp/target/sample-helloworld-jsonrpc-webapp.war</exclude>
-                <exclude>helloworld-ws-deep-webapp/target/sample-helloworld-ws-deep-webapp.war</exclude>
                 <exclude>helloworld-ws-sdo-webapp/target/sample-helloworld-ws-sdo-webapp.war</exclude>
-                <exclude>helloworld-ws-service-webapp/target/sample-helloworld-ws-service-webapp.war</exclude>
                 <exclude>store-webapp/target/sample-helloworld-store-webapp.war</exclude>
-                <!-- Modules excluded from distribution as work is in progress... -->
-                <exclude>calculator2</exclude>
-                <exclude>calculator2/**/*</exclude>
-                <exclude>calculator-lean</exclude>
-                <exclude>calculator-lean/**/*</exclude>
-                <exclude>calculator-osgi</exclude>
-                <exclude>calculator-osgi/**/*</exclude>
-                <exclude>calculator-rcp</exclude>
-                <exclude>calculator-rcp/**/*</exclude>
-                <exclude>chat2-webapp</exclude>
-                <exclude>chat2-webapp/**/*</exclude>
-                <exclude>customer-dojo</exclude>
-                <exclude>customer-dojo/**/*</exclude>
-                <exclude>customer-dojo-webapp</exclude>
-                <exclude>customer-dojo-webapp/**/*</exclude>
-                <exclude>helloworld-distributed</exclude>
-                <exclude>helloworld-distributed/**/*</exclude>
-                <exclude>helloworld-jsp</exclude>
-                <exclude>helloworld-jsp/**/*</exclude>
-                <exclude>helloworld-servlet</exclude>
-                <exclude>helloworld-servlet/**/*</exclude>
-                <exclude>helloworld-web</exclude>
-                <exclude>helloworld-web/**/*</exclude>
-                <exclude>helloworld-web-callback</exclude>
-                <exclude>helloworld-web-callback/**/*</exclude>
-                <exclude>loanapplication</exclude>
-                <exclude>loanapplication/**/*</exclude>
-                <exclude>helloworld-ws-reference-lean</exclude>
-                <exclude>helloworld-ws-reference-lean/**/*</exclude>
-                <exclude>spi-implementation-pojo</exclude>
-                <exclude>spi-implementation-pojo/**/*</exclude>
-		        <exclude>helloworld-jms-webapp</exclude>
-                <exclude>helloworld-jms-webapp/**/*</exclude>
-                <exclude>domain-webapp</exclude>
-                <exclude>domain-webapp/**/*</exclude>
-                <exclude>calculator-ws-secure-webapp</exclude>
-                <exclude>calculator-ws-secure-webapp/**/*</exclude>
-                <exclude>helloworld-ws-deep-webapp</exclude>
-                <exclude>helloworld-ws-deep-webapp/**/*</exclude>
-                <exclude>helloworld-ws-service-webapp</exclude>
-                <exclude>helloworld-ws-service-webapp/**/*</exclude>
-                <exclude>zipcode-jaxws/</exclude>
-                <exclude>zipcode-jaxws/**/*</exclude>
             </excludes>
         </fileSet>
         <!-- Add all the demos to the demos directory -->
@@ -274,14 +212,6 @@
                 <include>tuscany-sca-manifest.jar</include>
             </includes>
         </fileSet>
-        <!-- Add the node launcher webapp to the modules directory -->
-        <fileSet>
-            <directory>../modules/node2-launcher-webapp/target</directory>
-            <outputDirectory>tuscany-sca-${tuscany.version}/modules</outputDirectory>
-            <includes>
-                <include>*.war</include>
-            </includes>
-        </fileSet>
 
         <!-- temporary fix since maven dependencies of rampart seems to refere to SNAPSHOT versions of the parent pom --> 
         <!--fileSet>
@@ -292,15 +222,6 @@
             </includes>
         </fileSet-->
     </fileSets>
-
-    <files>
-        <!-- Add the subsetted distribution pom.xml to the samples directory -->
-        <file>
-            <source>../samples/pom-distribution.xml</source>
-            <outputDirectory>tuscany-sca-${tuscany.version}/samples</outputDirectory>
-            <destName>pom.xml</destName>
-        </file>
-    </files>
 
     <dependencySets>
         <!-- Add all the Tuscany modules to the modules directory -->

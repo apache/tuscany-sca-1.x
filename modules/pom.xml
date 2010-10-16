@@ -50,7 +50,6 @@
                 <module>binding-ejb-runtime</module>
                 <module>binding-erlang</module>
                 <module>binding-erlang-runtime</module>
-                <!-- new bindings -->
                 <module>binding-atom</module>
                 <module>binding-atom-js</module>
                 <module>binding-atom-js-dojo</module>
@@ -76,7 +75,6 @@
                 <module>binding-sca</module>
                 <module>binding-sca-axis2</module>
                 <module>binding-sca-corba</module>
-                <module>binding-sca-jms</module>
                 <module>binding-sca-xml</module>
                 <module>binding-ws</module>
                 <module>binding-ws-axis2</module>
@@ -92,7 +90,6 @@
                 <module>contribution-resource</module>
                 <module>contribution-xml</module>
                 <module>contribution-jee</module>
-                <module>contribution-jee-impl</module>
                 <module>core</module>
                 <module>core-databinding</module>
                 <module>core-spi</module>
@@ -106,8 +103,6 @@
                 <module>databinding-json</module>
                 <module>databinding-saxon</module>
                 <module>databinding-xmlbeans</module>
-                <module>databinding-fastinfoset</module>
-                <module>databinding-xstream</module>
                 <module>definitions</module>
                 <module>definitions-xml</module>
                 <module>domain-manager</module>
@@ -115,19 +110,16 @@
                 <module>endpoint</module>
                 <module>extensibility</module>
                 <module>extensibility-osgi</module>
-                <module>extensibility-equinox</module>
                 <module>extension-helper</module>
                 <module>host-corba</module>
                 <module>host-corba-jee</module>
                 <module>host-corba-jse</module>
                 <module>host-corba-jse-tns</module>
-                <module>host-ejb</module>
                 <module>host-embedded</module>
                 <module>host-http</module>
                 <module>host-jetty</module>
                 <module>host-jms</module>
                 <module>host-jms-asf</module>
-                <module>host-openejb</module>
                 <module>host-rmi</module>
                 <module>host-tomcat</module>
                 <module>host-webapp</module>
@@ -152,7 +144,7 @@
                 <module>implementation-resource-runtime</module>
                 <module>implementation-script</module>
                 <module>implementation-spring</module>
-		    <module>implementation-spring-runtime</module>
+                <module>implementation-spring-runtime</module>
                 <module>implementation-web</module>
                 <module>implementation-web-runtime</module>
                 <module>implementation-widget</module>

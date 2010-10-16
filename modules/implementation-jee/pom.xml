@@ -51,14 +51,14 @@
             <artifactId>tuscany-contribution-jee</artifactId>
             <version>1.6.1-SNAPSHOT</version>
         </dependency>
- 
+<!-- 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-contribution-jee-impl</artifactId>
             <version>1.6.1-SNAPSHOT</version>
             <scope>test</scope> 
         </dependency>
-
+-->
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-host-embedded</artifactId>
