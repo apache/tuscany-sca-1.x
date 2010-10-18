@@ -28,7 +28,10 @@
             <manifest>
             </manifest>
         </jar>
+        <antcall target="create-db"/>
+    </target>
 
+    <target name="create-db">
         <!--
            Create the example database.
         -->

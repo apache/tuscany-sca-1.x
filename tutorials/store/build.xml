@@ -31,6 +31,12 @@
         </antcall>
     </target>
 
+    <target name="setup">
+        <ant dir="store-db" target="create-db"/>
+        <ant dir="store-eu" target="create-db"/>
+        <ant dir="store-supplier" target="create-db"/>
+    </target>
+
     <target name="allsubdirs">
         <ant dir="domain" target="${target}"/>
         <ant dir="assets" target="${target}"/>

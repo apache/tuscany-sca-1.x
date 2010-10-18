@@ -2,7 +2,7 @@ Store Tutorial
 ==============
 
 This tutorial that shows how to use SCA and Tuscany to build multiple
-variations of an online Store application. The variations demostrate the
+variations of an online Store application. The variations demonstrate the
 evolution of the Store as it goes through the following stages:
 
 1 - Initial online fruit store
@@ -17,7 +17,18 @@ For diagrams of the scenarios covered here, please refer to Tutorial.pdf
 Running The Tutorial Application
 --------------------------------
 
-First start the SCA Domain Manager:
+If you're running the Store tutorial application for the first time since
+downloading the Tuscany SCA Java binary distribution, you need to start by
+running a setup step from the top-level store directory:
+
+   cd store
+   ant setup
+
+You only need to do this once. It creates some database files that are used
+by the tutorial application. If you forget to do it, you'll get errors when
+running some of the scenarios.
+
+Next, start the SCA Domain Manager:
 
    cd domain
    ant run
@@ -159,6 +170,9 @@ Start
 The store itself can be found at 
 
    http://localhost:8102/ui/
+
+If you see an error at this stage, this probably means you haven't done the
+database setup mentioned in the section "Running The Tutorial Application".
 
 This looks the same as the scenario 2 store but this time a database is used
 for storing items put into the shopping cart. When you add items you 
@@ -315,8 +329,11 @@ Building the Store Tutorial Using Ant
 With the binary distribution the complete store tutorial can be built using Ant
 as follows:
 
-cd store
-ant compile
+   cd store
+   ant compile
+
+This also creates the database files that were mentioned in the section
+"Running The Tutorial Application".
 
 
 Building the Store Tutorial Using Maven 
@@ -324,5 +341,8 @@ Building the Store Tutorial Using Maven
 With either the binary or source distribution the complete store tutorial can
 be built using Maven as follows:
 
-cd store
-mvn
+   cd store
+   mvn
+
+This also creates the database files that were mentioned in the section
+"Running The Tutorial Application".
