@@ -267,6 +267,15 @@ final class NodeLauncherUtil {
                 return false;
             }
             
+            // Filter out the "-dojo" runtime jars
+            if (name.startsWith("tuscany-binding-atom-js-dojo") ||
+                name.startsWith("tuscany-binding-jsonrpc-js-dojo") ||
+                name.startsWith("tuscany-implementation-widget-runtime-dojo") ||
+                name.startsWith("tuscany-web-javascript-dojo")) {
+                //FIXME This is temporary
+                return false;
+            }
+            
             // Include JAR and MAR files
             if (name.endsWith(".jar")) {
                 return true;
