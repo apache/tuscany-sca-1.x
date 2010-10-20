@@ -279,7 +279,7 @@ public class ProviderFeedEntityTagsTestCase {
 
 	@Test
     public void testModifiedGetIfUnModified() throws Exception {		
-		System.out.println(">>>ProviderFeedEntityTagsTestCase.testFeedUnmodifiedGetIfUnModified");
+		System.out.println(">>>ProviderFeedEntityTagsTestCase.testFeedModifiedGetIfUnModified");
 		// Feed request with predicates
 		RequestOptions opts = new RequestOptions();
 		final String contentType = "application/atom+xml"; 
@@ -298,7 +298,7 @@ public class ProviderFeedEntityTagsTestCase {
 
 	@Test
     public void testModifiedGetIfModified() throws Exception {		
-		System.out.println(">>>ProviderFeedEntityTagsTestCase.testFeedUnmodifiedGetIfModified");
+		System.out.println(">>>ProviderFeedEntityTagsTestCase.testFeedModifiedGetIfModified");
 		// Feed request with predicates
 		RequestOptions opts = new RequestOptions();
 		final String contentType = "application/atom+xml"; 
