@@ -187,7 +187,7 @@ public class AggregatorImpl implements org.apache.tuscany.sca.binding.atom.colle
         syndFeed.setFeedType("atom_1.0");
         SyndFeedOutput syndOutput = new SyndFeedOutput();
         try {
-            syndOutput.output(syndFeed, new OutputStreamWriter(bos));
+            syndOutput.output(syndFeed, new OutputStreamWriter(bos, "UTF-8"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
