@@ -278,7 +278,7 @@ class AtomBindingListenerServlet extends HttpServlet {
                     if ( predicate != null ) {
                         try {
                             Date predicateDate = dateFormat.parse( predicate ); 
-                            if ( predicateDate.compareTo( feedUpdated ) < 0 ) {
+                            if ( predicateDate.compareTo( exactSeconds(feedUpdated) ) < 0 ) {
                                 // Match, should short circuit
                                 response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
                                 return;
@@ -291,7 +291,7 @@ class AtomBindingListenerServlet extends HttpServlet {
                     if ( predicate != null ) {
                         try {
                             Date predicateDate = dateFormat.parse( predicate ); 
-                            if ( predicateDate.compareTo( feedUpdated ) > 0 ) {
+                            if ( predicateDate.compareTo( exactSeconds(feedUpdated) ) >= 0 ) {
                                 // Match, should short circuit
                                 response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
                                 return;
@@ -910,5 +910,13 @@ class AtomBindingListenerServlet extends HttpServlet {
         }
     }
 
-    
+    /**
+     * Round a date down to an exact number of seconds
+     * @param date with millisecond precision
+     * @return date rounded down to nearest second
+     */
+    private Date exactSeconds(Date date) {
+        return new Date(date.getTime() / 1000 * 1000);
+    }
+
 }
