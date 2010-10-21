@@ -187,13 +187,27 @@ public class ProviderFeedEntityTagsTestCase {
 	@Test
     public void testUnmodifiedGetIfModified() throws Exception {		
 		System.out.println(">>>ProviderFeedEntityTagsTestCase.testFeedUnmodifiedGetIfModified");
+        // Feed request with predicates
+        RequestOptions opts = new RequestOptions();
+        final String contentType = "application/atom+xml"; 
+        opts.setContentType(contentType);
+        opts.setHeader( "If-Modified-Since", dateFormat.format( new Date() ));
+        
+        ClientResponse res = client.get(providerURI, opts);
+        Assert.assertNotNull(res);
+        try {
+            // Should return 304 - Feed not provided since feed is unmodified.
+            Assert.assertEquals(304, res.getStatus());
+        } finally {
+            res.release();
+        }
+
 		// Feed request with predicates
-		RequestOptions opts = new RequestOptions();
-		final String contentType = "application/atom+xml"; 
+		opts = new RequestOptions();
 		opts.setContentType(contentType);
 		opts.setHeader( "If-Modified-Since", dateFormat.format( new Date( 0 ) ));
 		
-		ClientResponse res = client.get(providerURI, opts);
+		res = client.get(providerURI, opts);
 		Assert.assertNotNull(res);
 		try {
 			// Should return 200 - Feed provided since feed is changed.
