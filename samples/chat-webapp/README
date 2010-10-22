@@ -22,6 +22,11 @@ http://localhost:8080/sample-chat-webapp
 
 The port and hostname will of course vary depending on your local installation. 
 
+Note: There can be a delay before a browser client receives a message typed into
+the chat.  Some browsers receive pending messages immediately, some browsers
+receive pending messages when a new message is sent, and some browsers receive
+pending messages after a time delay of up to one minute.
+
 Sample Overview
 ---------------
 The sample provides an SCA component which has an SCA service using the SCA DWR
