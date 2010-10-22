@@ -20,11 +20,13 @@ Once the web app is deployed use your browser to visit the following URL:
 
 http://localhost:8080/sample-feed-aggregator-webapp
 
+The port and hostname will of course vary depending on your local installation. 
+
 You will then see the following displayed in your Web browser. 
 
-http://localhost:8083/atomAggregator
-http://localhost:8083/atomAggregator/atomsvc 
-http://localhost:8083/rssAggregator
+http://{server-host}:{server-port}/sample-feed-aggregator-webapp/atomAggregator
+http://{server-host}:{server-port}/sample-feed-aggregator-webapp/atomAggregator/atomsvc 
+http://{server-host}:{server-port}/sample-feed-aggregator-webapp/rssAggregator
 
 ** Please note that if your browser is not configured correctly to receive
 feed information, you will be prompted to open each file that contains the feed
