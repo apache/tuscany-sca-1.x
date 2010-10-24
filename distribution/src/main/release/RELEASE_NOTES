@@ -39,13 +39,66 @@ Overview
         - running with embedded Jetty or Tomcat
         - running as part of a standard web application                                     
      
-    The Wepapp samples included in this release have been tried and tested on 
+    The Webapp samples included in this release have been tried and tested on 
         - Tomcat 5.5.20 and Tomcat 6.0.14
         - Jetty 6.1.3
         - Geronimo 2.0.2 Tomcat6 jee5
         - WebSphere 6.1 fix pack 9
 
 See the CHANGES file for a detailed list of the features in this release.
+
+Release packaging
+-----------------
+
+The source distribution contains the entire release contents in source form, comprising
+- Tuscany runtime modules
+- Tuscany tools
+- integration and verification tests
+- samples, tutorials and demos
+- maven build files for all the above
+
+The binary distribution contains
+- the Tuscany runtime modules in binary form
+- third-party runtime dependencies for these modules
+- samples, tutorials and demos with full source code and pre-built jar files
+- ant scripts for running and building the samples, tutorials and demos
+- maven build files for building the samples, tutorials and demos
+
+The Tuscany runtime modules and tools are available from the Maven repository
+ https://repository.apache.org/content/groups/public/
+
+The Apache Tuscany SCA Tools Core Feature for Eclipse is available at the Eclipse update site
+ http://www.apache.org/dist/tuscany/java/sca/1.6.1/tuscany-sca-1.6.1-updatesite/
+
+Notes:
+
+1. The following Tuscany runtime modules are distributed via the maven repository only and are
+   not included in the binary distribution:
+    tuscany-binding-sca-corba-1.6.1.jar   (conflicts with tuscany-binding-sca-1.6.1.jar)
+    tuscany-host-corba-jee-1.6.1.jar      (conflicts with tuscany-host-corba-jse-1.6.1.jar)
+    tuscany-node-launcher-osgi-1.6.1-jar  (needs dependencies not in binary distro lib directory)
+    tuscany-policy-transaction-1.6.1.jar  (has dependency conflicts with binary distro lib directory)
+
+2. The following Tuscany runtime modules are included in the binary distribution but are not included
+   in tuscany-sca-all-1.6.1.jar and tuscany-sca-manifest.jar:
+    tuscany-binding-atom-js-dojo-1.6.1.jar     (conflicts with tuscany-binding-atom-js-1.6.1.jar)
+    tuscany-binding-jsonrpc-js-dojo-1.6.1.jar  (conflicts with tuscany-binding-jsonrpc-js-1.6.1.jar)
+    tuscany-host-tomcat-1.6.1.jar              (conflicts with tuscany-host-jetty-1.6.1.jar)
+    tuscany-implementation-widget-runtime-dojo-1.6.1.jar  (conflicts with tuscany-implementation-widget-runtime-1.6.1.jar)
+    tuscany-web-javascript-dojo-1.6.1.jar      (conflicts with tuscany-web-javascript-1.6.1.jar)
+   If these files are needed at runtime, the classpath must be set up to include these jars explicitly
+   and exclude the jars for which conflicts are indicated above.
+
+3. The Erlang binding and samples require Erlang/OTP to be installed. This isn't included in the
+   binary distribution and must be downloaded and installed separately if required.
+
+4. For samples, demos, and tutorials packaged as web applications (.war files), the .war files
+   are omitted from the binary distribution to save space (except for the calculator sample).
+   These .war files can be created using the ant scripts provided.
+
+5. The Tuscany tools are distributed via the maven repository only, except for the following jar
+   which is also included in the binary distribution:
+    tuscany-wsdl2java-1.6.1.jar  (needed by the helloworld-bpel sample)
 
 Support
 -------
