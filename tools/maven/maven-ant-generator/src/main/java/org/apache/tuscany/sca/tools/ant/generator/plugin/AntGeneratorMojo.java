@@ -281,9 +281,7 @@ public class AntGeneratorMojo extends AbstractMojo {
         
         // Generate the clean target
         pw.println("    <target name=\"clean\">");
-        pw.println("        <delete includeemptydirs=\"true\">");
-        pw.println("            <fileset dir=\"target\"/>");
-        pw.println("        </delete>");
+        pw.println("        <delete dir=\"target\" includeemptydirs=\"true\"/>");
         pw.println("    </target>");
         pw.println();
 
