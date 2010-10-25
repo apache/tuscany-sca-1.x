@@ -77,7 +77,7 @@
                   <exclude>**/.*/**</exclude>
                   <exclude>pom.xml</exclude>
                   <exclude>build.xml</exclude>
-                  <exclude>target/**</exclude>
+                  <exclude>build-dependency.xml</exclude>
                   <exclude>webapp/**</exclude>
                   <exclude>target/**</exclude>
               </excludes>
@@ -100,7 +100,8 @@
                     <execution>
                         <configuration>
                             <pathToRootDir>../../..</pathToRootDir>
-                        </configuration>
+                            <buildDependencyFileOnly>true</buildDependencyFileOnly>
+                        </configuration>                    
                         <goals>
                             <goal>generate</goal>
                         </goals>
