@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<project name="calculator-distributed" default="runDomain">
+<project name="calculator-distributed" default="compile">
 	<property name="test.jar"   value="sample-calculator-distributed.jar" />
 	
     <target name="init">

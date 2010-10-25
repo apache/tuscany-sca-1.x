@@ -17,7 +17,7 @@
  * specific language governing permissions and limitations
  * under the License.
 -->
-<project name="spring-bigbank-checkaccount" default="run">    
+<project name="spring-bigbank-checkaccount" default="compile">    
     <property name="test.class" value="bigbank.account.checking.server.CheckingAccountServer" />
     <property name="test.jar"   value="sample-spring-bigbank-checkaccount.jar" />
 	

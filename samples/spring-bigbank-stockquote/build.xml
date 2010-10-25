@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<project name="spring-bigbank-stockquote" default="run">
+<project name="spring-bigbank-stockquote" default="compile">
     <property name="test.class" value="bigbank.stockquote.server.StockQuoteServer" />
     <property name="test.jar"   value="sample-spring-bigbank-stockquote.jar" />
 	
