@@ -18,34 +18,10 @@
  * under the License.
 -->
 <project name="bigbank-account" default="compile">
-    <property name="settings.localRepository" value="./target/repo" />
-    <property name="artifactId" value="demo-bigbank-account" />	
     
-    <!--path id="test.classpath">
-    	<pathelement location="target/classes"/>
-        <pathelement location="../../modules/tuscany-host-jetty-1.7-SNAPSHOT.jar"/>
-        <pathelement location="../../modules/tuscany-binding-jsonrpc-1.7-SNAPSHOT.jar"/>
-        <pathelement location="../../modules/tuscany-binding-rmi-1.7-SNAPSHOT.jar"/>
-    	<pathelement location="../../lib/tuscany-sca-manifest.jar"/>    	
-    	<pathelement location="target/demo-bigbank-account.jar"/>    
-    </path-->
-	
     <target name="init">
         <mkdir dir="target/classes"/>
-        <mkdir dir="target/classes/web"/>
-    	<mkdir dir="target/repo"/>
     </target>
-	
-    <!--target name="dojo" depends="init">
-        <ant antfile="./build-dojo.xml" target="install-dojo-nomaven">
-          <property name="localRepository" value="${settings.localRepository}"/>
-        </ant>
-        
-        <ant antfile="./build-dojo.xml" target="unpack-dojo-files">
-          <property name="localRepository" value="${settings.localRepository}"/>
-          <property name="artifactId" value="${artifactId}"/>
-        </ant>
-    </target-->
 	
     <target name="compile" depends="init">
         <javac srcdir="src/main/java"
@@ -60,22 +36,9 @@
         <copy todir="target/classes">
             <fileset dir="src/main/resources"/>
         </copy>
-        <jar destfile="target/demo-bigbank-account.jar" basedir="target/classes">
-            <!--manifest>
-                <attribute name="Main-Class" value="${test.class}" /> 
-            </manifest-->
-        </jar>    	
+        <jar destfile="target/demo-bigbank-account.jar" basedir="target/classes"/>
     </target>		
 	
-    <!--target name="run" depends="compile">
-        <java classname="${test.class}"
-              fork="true">
-            <classpath>
-                <path refid="test.classpath"/>
-            </classpath>
-        </java>    	
-    </target-->
-
     <target name="clean">
         <delete dir="target" includeemptydirs="true"/>
     </target>
