@@ -75,6 +75,7 @@
 				<exclude>**/.project</exclude>
 				<exclude>**/.wtpmodules</exclude>
 				<exclude>**/maven-eclipse.xml</exclude>
+                <exclude>**/.externalToolBuilders/**</exclude>
 				<exclude>**/surefire*</exclude>
 				<exclude>**/cobertura.ser</exclude>
 				<exclude>**/log/*.dat</exclude>
