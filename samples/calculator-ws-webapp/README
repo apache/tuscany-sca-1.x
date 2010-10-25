@@ -9,8 +9,12 @@ first.
 
 As this sample provides a web app there is a manual step where the WAR file
 that contains the sample is copied to your web app container. If you just want 
-to give this sample a go deploy the WAR file (target/sample-calculator-ws-webapp.war)
-to you web application server. 
+to give this sample a go, deploy the WAR file (target/sample-calculator-ws-webapp.war)
+to your web application server.
+
+To save space, the WAR file isn't included in the binary distribution. You can
+build it by following the instructions below in "Building And Running The Sample
+Using Ant" or "Building And Running The Sample Using Maven". 
   
 Once the web app is deployed use your browser to visit the following URL;
 
