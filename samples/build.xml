@@ -32,8 +32,8 @@
     </target>
 
     <target name="allsubdirs">
-        <ant dir="binding-echo" target="${target}"/>
         <ant dir="binding-echo-extension" target="${target}"/>
+        <ant dir="binding-echo" target="${target}"/>
         <ant dir="binding-notification-broker" target="${target}"/>
         <ant dir="binding-notification-consumer" target="${target}"/>
         <ant dir="binding-notification-producer" target="${target}"/>
@@ -70,8 +70,8 @@
         <ant dir="helloworld-ws-sdo-webapp" target="${target}"/>
         <ant dir="holder-ws-service" target="${target}"/>
         <ant dir="implementation-composite" target="${target}"/>
-        <ant dir="implementation-crud" target="${target}"/>
         <ant dir="implementation-crud-extension" target="${target}"/>
+        <ant dir="implementation-crud" target="${target}"/>
         <ant dir="implementation-notification" target="${target}"/>
         <ant dir="implementation-pojo-extension" target="${target}"/>
         <ant dir="osgi-supplychain" target="${target}"/>
