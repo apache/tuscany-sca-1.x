@@ -16,20 +16,24 @@
  * specific language governing permissions and limitations
  * under the License.
 -->
+<!DOCTYPE project [
+<!ENTITY buildDependency SYSTEM "build-dependency.xml">
+]>    
 
 <project name="tutorial-warehouse-spring" default="compile">
-
+    &buildDependency;
     <target name="compile">
         <mkdir dir="target/classes"/>
         <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
             <src path="."/>
             <classpath>
+                <fileset refid="tutorial-assets-jar"/>
                 <fileset refid="tuscany.jars"/>
                 <fileset refid="3rdparty.jars"/>
             </classpath>
         </javac>
         <copy todir="target/classes">
-            <fileset dir="." excludes="**/*.java, pom.xml, build.xml, target"/>
+            <fileset dir="." excludes="**/*.java, pom.xml, build.xml, build-dependency.xml, target/**"/>
         </copy>
         <jar destfile="target/tutorial-warehouse-spring.jar" basedir="target/classes">
             <manifest>
@@ -41,35 +45,12 @@
 
     <target name="clean">
         <delete includeemptydirs="true">
-            <fileset dir="target"/>
+            <fileset dir="." includes="target/**"/>
         </delete>
     </target>
 
-    <fileset id="tuscany.jars" dir="../../../modules">
-        <include name="tuscany-assembly-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-assembly-xml-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-binding-jms-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-contribution-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-contribution-java-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-contribution-namespace-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-core-spi-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-data-api-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-definitions-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-extensibility-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-implementation-java-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-interface-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-interface-java-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-monitor-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-policy-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-sca-api-1.7-SNAPSHOT.jar"/>
-        <include name="tuscany-sca-api-extension-1.7-SNAPSHOT.jar"/>
-        <include name="tutorial-assets-1.7-SNAPSHOT.jar"/>
-    </fileset>
-    <fileset id="3rdparty.jars" dir="../../../lib">
-        <include name="derby-10.3.1.4.jar"/>
-        <include name="jsr181-api-1.0-MR1.jar"/>
-        <include name="stax-api-1.0-2.jar"/>
-        <include name="wstx-asl-3.2.4.jar"/>
+    <fileset id="tutorial-assets-jar" dir="../assets/target">
+        <include name="tutorial-assets.jar"/>
     </fileset>
 
 </project>
