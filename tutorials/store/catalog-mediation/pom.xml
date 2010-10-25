@@ -67,6 +67,7 @@
                   <exclude>**/.*/**</exclude>
                   <exclude>pom.xml</exclude>
                   <exclude>build.xml</exclude>
+                  <exclude>build-dependency.xml</exclude>
                   <exclude>target/**</exclude>
               </excludes>
           </resource>
@@ -81,6 +82,7 @@
                     <execution>
                         <configuration>
                             <pathToRootDir>../../..</pathToRootDir>
+                            <buildDependencyFileOnly>true</buildDependencyFileOnly>
                         </configuration>
                         <goals>
                             <goal>generate</goal>
