@@ -1,23 +1,48 @@
 Calculator CORBA Reference Sample
-===============================
+=================================
 
-This sample illustrates the use of Tuscany CORBA Binding to call reference 
+This sample illustrates the use of the Tuscany CORBA Binding to reference 
 services that are hosted as CORBA services.  
 
 The README in the samples directory (the directory above this) provides 
 general instructions about building and running samples. Take a look there 
 first. 
 
+If you just want to run it to see what happens open a command prompt, first 
+navigate to the calculator-corba-service sample and do:
+
+ant run
+
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-corba-service.jar calculator.CalculatorCORBAServer
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-calculator-corba-service.jar calculator.CalculatorCORBAServer
+
+Now you have the server running you need to open another command prompt, navigate
+to this sample directory and do:
+
+ant run
+
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-corba-reference.jar calculator.CalculatorClient
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-calculator-corba-reference.jar calculator.CalculatorClient
 
 Sample Overview
 ---------------
 This sample extends the calculator sample by replacing the local wired 
 connections with CORBA bindings. Instead of local add, subtract, multiply and 
-divide components, an CORBA service implementation now provides the
+divide components, a CORBA service implementation now provides the
 add, subtract, multiply and divide interfaces and is hosted as an CORBA object. 
 References specified in the .composite file include a CORBA binding which targets
-this CORBA object. Name service which is used in CORBA communication is provided 
-in test case class - CalculatorCORBAReferenceTestCase.java.
+this CORBA object. The name service which is used in CORBA communication is
+provided in the test case class - CalculatorCORBAReferenceTestCase.java.
 
 This sample adds a number of classes to the basic calculator sample:
 
@@ -29,7 +54,7 @@ calculator-corba-reference/
           CalculatorService.java  - as calculator sample
           AddService.java         - as calculator sample
           SubtractService.java    - as calculator sample
-          MultipleService.java    - as calculator sample
+          MultiplyService.java    - as calculator sample
           DivideService.java      - as calculator sample
           CalculatorClient.java   - as calculator sample
           CalculatorServiceImpl.java - calls the CORBA service
@@ -43,19 +68,55 @@ calculator-corba-reference/
           CalculatorCORBAReferenceTestCase.java - JUnit test case
           CalculatorCORBAServant.java - CORBA service implementation
           idl/                        - contains files generated 
-                                        from  IDL file. Files are 
-                                        used to create  CORBA object which
-                                        will be consumed by SCA reference.
+                                        from the IDL file. Files are 
+                                        used to create a CORBA object which
+                                        will be consumed by SCA references.
             _CalculatorCORBAServiceImplBase.java
             CalculatorCORBAService.java
             CalculatorCORBAServiceOperations.java
       resources/
-        CalculatorCORBA.idl      - IDL description for CORBA object
+        CalculatorCORBA.idl       - IDL description for CORBA object
   pom.xml                         - the Maven build file   
   
 Note. As this test creates and uses local network connections you may need to 
 configure your firewall, if you are running one, to allow the test to run
 successfully.         
+
+Building And Running The Sample Using Ant
+-----------------------------------------
+With the binary distribution the sample can be built and run using Ant. 
+
+The calculator-corba-service sample provides a CORBA server that acts as a target
+for the SCA CORBA binding. Start a new console and use the following commands.
+
+cd calculator-corba-service
+ant compile
+ant run
+
+This will run up the server and display the following.
+
+run:
+     [java] Calculator CORBA server started (press enter to shutdown)
+     
+The client is very similar to the calculator sample. It starts the SCA runtime
+and calls each of the calculator operations. In doing this the CORBA binding
+makes calls out to the CORBA server you started in the previous step. Start
+a new console and use the following commands. 
+
+cd calculator-corba-reference
+ant compile
+ant run
+
+You should see the following output from the run target.
+
+run:
+     [java] 3 + 2=5.0
+     [java] 3 - 2=1.0
+     [java] 3 * 2=6.0
+     [java] 3 / 2=1.5
+     
+If you now return to the console window running the server and press enter the 
+server should stop.     
 
 Building And Running The Sample Using Maven 
 -------------------------------------------
@@ -78,6 +139,3 @@ Results :
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 This shows that the Junit test cases have run successfully.
-
-
-

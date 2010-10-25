@@ -1,24 +1,49 @@
 Calculator CORBA Service Sample
-=============================
+===============================
 
-This sample illustrates the use of Tuscany CORBA Binding to expose component 
-services as CORBA objects. It also demonstrates how a simple Java CORBA 
-Client application invokes the SCA Application's services exposed as CORBA 
-Services.
+This sample illustrates the use of the Tuscany CORBA Binding to expose
+component services as CORBA objects. It also demonstrates how a simple
+Java CORBA Client application invokes the SCA Application's services
+exposed as CORBA objects.
 
 The README in the samples directory (the directory above this) provides 
 general instructions about building and running samples. Take a look there 
 first. 
 
+If you just want to run it to see what happens open a command prompt, navigate
+to this sample directory and do:
+
+ant run
+
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-corba-service.jar calculator.CalculatorCORBAServer
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-calculator-corba-service.jar calculator.CalculatorCORBAServer
+
+Now you have the server running you need to open another command prompt, navigate
+to the calculator-corba-reference sample directory and do:
+
+ant run
+
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-corba-reference.jar calculator.CalculatorClient
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-calculator-corba-reference.jar calculator.CalculatorClient
 
 Sample Overview
 ---------------
 This sample extends the calculator sample by replacing the local service 
-binding with an CORBA binding. So a java client can call the service exposed
-by the SCA application using an CORBA client. Name service which is used in 
-CORBA communication is provided by Tuscany CORBA hosting module 
-(maven dependency: tuscany-host-corba-jse-tns) - see CORBA binding reference
-on Apache Tuscany website for details.
+binding with a CORBA binding. A Java client can use CORBA client code to
+call the service exposed by the SCA application. The name service which is
+used in CORBA communication is provided by the Tuscany CORBA hosting module 
+(maven dependency: tuscany-host-corba-jse-tns) - see the binding.corba reference
+on the Apache Tuscany website for details.
 
 This sample adds a number of classes to the basic calculator sample:
 
@@ -42,22 +67,60 @@ calculator-corba-service/
     test/
       java/
         calculator/
-          CalculatorCORBAServerTestCase.java          - JUnit test case
-          idl/                                        - contains files generated 
-                                                        from  IDL file. Files are 
-                                                        used to access SCA component.
+          CalculatorCORBAServerTestCase.java - JUnit test case
+          idl/                               - contains files generated 
+                                               from the IDL file. Files are 
+                                               used to access the SCA component.
             CalculatorCORBAServiceHelper.java
             CalculatorCORBAService.java
             _CalculatorCORBAServiceStub.java
             CalculatorCORBAServiceHolder.java
             CalculatorCORBAServiceOperations.java
       resources/
-        CalculatorCORBA.idl      - IDL description for SCA component
+        CalculatorCORBA.idl       - IDL description for SCA component
   pom.xml                         - the Maven build file   
   
 Note. As this test creates and uses local network connections you may need to 
 configure your firewall, if you are running one, to allow the test to run
 successfully.
+
+Building And Running The Sample Using Ant
+-----------------------------------------
+With the binary distribution the sample can be built and run using Ant. Two 
+build files are used to support client and server functions. 
+
+The server starts the SCA runtime and loads the SCA calculator application 
+which exposes a CORBA service. Start a new console and use the following 
+commands.
+
+cd calculator-corba-service
+ant compile
+ant run
+
+This will run up the server and display the following.
+
+run:
+     [java] Calculator CORBA server started (press enter to shutdown)
+     
+The client is very similar to the calculator sample
+
+It locates the CORBA service that the SCA runtime is exposing and calls each of 
+the calculator operations. Start a new console and use the following commands. 
+
+cd calculator-corba-reference
+ant compile
+ant run
+
+You should see the following output from the run target.
+
+run:
+     [java] 3 + 2=5.0
+     [java] 3 - 2=1.0
+     [java] 3 * 2=6.0
+     [java] 3 / 2=1.5
+     
+If you now return to the console window running the server and press enter the 
+server should stop.     
 
 Building And Running The Sample Using Maven 
 -------------------------------------------
