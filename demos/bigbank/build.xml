@@ -17,7 +17,7 @@
  * specific language governing permissions and limitations
  * under the License.
 -->
-<project name="bigbank" default="run">
+<project name="bigbank" default="compile">
     <property name="settings.localRepository" value="./target/repo" />
     <property name="artifactId" value="demo-bigbank" />	
     <property name="test.class" value="bigbank.demo.BigBankServer" />
@@ -45,7 +45,6 @@
         </ant>
     </target>
 
-
     <target name="compile" depends="dojo">
         <javac srcdir="src/main/java"
                destdir="target/classes"
@@ -65,9 +64,14 @@
                 <attribute name="Main-Class" value="${test.class}" /> 
             </manifest>
         </jar>    	
+
+        <ant antfile="./build-dojo.xml" target="clean-dojo-files">
+          <property name="localRepository" value="${settings.localRepository}"/>
+          <property name="artifactId" value="${artifactId}"/>
+        </ant> 
     </target>		
 	
-    <target name="run" depends="compile">
+    <target name="run">
         <java classname="${test.class}"
               fork="true">
             <classpath>

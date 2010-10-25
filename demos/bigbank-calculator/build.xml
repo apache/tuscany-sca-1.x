@@ -16,11 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<project name="bigbank-calculator" default="run">
+<project name="bigbank-calculator" default="compile">
     <property name="test.class" value="calculator.demo.CalculatorServer" />
 	
     <path id="test.classpath">
-        <!-- pathelement location="../../modules/tuscany-binding-rmi-1.7-SNAPSHOT.jar"/-->
         <pathelement path="target/demo-bigbank-calculator.jar"/>      
     	<pathelement location="../../lib/tuscany-sca-manifest.jar"/>    	
     </path>
@@ -49,7 +48,7 @@
         </jar>    	
     </target>	
 	
-    <target name="run" depends="compile">
+    <target name="run">
         <java classname="${test.class}"
               fork="true">
             <classpath>
@@ -63,4 +62,3 @@
     </target>
 
 </project>
-
