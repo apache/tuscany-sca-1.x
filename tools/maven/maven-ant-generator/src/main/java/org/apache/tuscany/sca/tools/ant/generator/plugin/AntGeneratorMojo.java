@@ -132,6 +132,24 @@ public class AntGeneratorMojo extends AbstractMojo {
      * @parameter expression="../.."
      */
     private String pathToRootDir; 
+
+    /**
+     * Additional run targets and corresponding class names
+     * @parameter
+     */
+    private Map<String, String> runTargets;
+
+    /**
+     * Set this to true if test source needs to be compiled
+     * @parameter
+     */
+    private boolean testSource;
+
+    /**
+     * Additional jar files to be produced
+     * @parameter
+     */
+    private List<JarFile> jarFiles;
     
     public void execute() throws MojoExecutionException {
         if ((buildDependencyFileOnly != null) &&
@@ -236,6 +254,46 @@ public class AntGeneratorMojo extends AbstractMojo {
         }
         pw.println("        </copy>");
         
+        // Compile test source using code cut and pasted from above
+        if (testSource) {
+            pw.println("        <mkdir dir=\"target/test-classes\"/>");
+            pw.println("        <javac destdir=\"target/test-classes\" debug=\"on\" source=\"1.5\" target=\"1.5\">");
+            for (String source: (List<String>)project.getTestCompileSourceRoots()) {
+                if (source.length() > base) {
+                    source = source.substring(base);
+                } else {
+                    source = ".";
+                }
+                pw.println("            <src path=\"" + source + "\"/>");
+            }
+            pw.println("            <classpath>");
+            pw.println("                <fileset dir=\"target/classes\"/>");
+            pw.println("                <fileset refid=\"tuscany.jars\"/>");
+            pw.println("                <fileset refid=\"3rdparty.jars\"/>");
+            pw.println("            </classpath>");
+            pw.println("        </javac>");
+            pw.println("        <copy todir=\"target/test-classes\">");
+            for (FileSet resource: (List<FileSet>)project.getTestResources()) {
+                String source = resource.getDirectory();
+                if (source.length() > base) {
+                    source = source.substring(base);
+                    
+                    if (source.equals(".")){
+                        pw.println("            <fileset dir=\".\" includes=\"*\" excludes=\"src, target, pom.xml, build.xml\"/>");
+                    } else {
+                        pw.println("            <fileset dir=\"" + source + "\"/>");
+                    }
+                } else {
+                    if (project.getTestResources().size() > 1) {
+                        break;
+                    }
+                    pw.println("            <fileset dir=\".\" excludes=\"**/*.java, pom.xml, build.xml, target\"/>");
+                    source = ".";
+                }
+            }
+            pw.println("        </copy>");
+        }
+        
         // Build a JAR
         if (packaging.equals("jar")) {
             pw.println("        <jar destfile=\"target/" + project.getArtifactId() + ".jar\" basedir=\"target/classes\">");
@@ -256,6 +314,21 @@ public class AntGeneratorMojo extends AbstractMojo {
             pw.println("            <classes dir=\"target/classes\"/>");
             pw.println("        </war>");
         }
+
+        // Build additional JARs
+        if (jarFiles != null) {
+            for (JarFile jarFile: jarFiles) {
+                pw.println("        <jar destfile=\"" + jarFile.getDestfile() + "\">");
+                if (jarFile.getFilesets() != null) {
+                    for (String fileset: jarFile.getFilesets()) {
+                        pw.println("            <fileset " + fileset + "/>");
+                    }
+                }
+                pw.println("        </jar>");
+            }
+        }
+
+        // Finish the compile target
         pw.println("    </target>");
         pw.println();
         
@@ -277,6 +350,22 @@ public class AntGeneratorMojo extends AbstractMojo {
             pw.println("        </java>");
             pw.println("    </target>");
             pw.println();
+        }
+
+        // Generate other run targets
+        if (runTargets != null) {
+            for (Map.Entry<String, String> element: runTargets.entrySet()) {
+                pw.println("    <target name=\"" + element.getKey() + "\">");
+                pw.println("        <java classname=\"" + element.getValue() + "\" fork=\"true\">");
+                pw.println("            <classpath>");
+                pw.println("                <pathelement location=\"target/" + project.getArtifactId() + ".jar\"/>");
+                pw.println("                <fileset refid=\"tuscany.jars\"/>");
+                pw.println("                <fileset refid=\"3rdparty.jars\"/>");
+                pw.println("            </classpath>");
+                pw.println("        </java>");
+                pw.println("    </target>");
+                pw.println();
+            }
         }
         
         // Generate the clean target
