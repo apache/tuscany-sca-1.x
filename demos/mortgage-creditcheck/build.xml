@@ -58,9 +58,7 @@
 		</java>
 	</target>
 
-	<target name="clean">
-		<delete quiet="true" includeemptydirs="true">
-			<fileset dir="target" />
-		</delete>
-	</target>
+    <target name="clean">
+        <delete dir="target" includeemptydirs="true"/>
+    </target>
 </project>
