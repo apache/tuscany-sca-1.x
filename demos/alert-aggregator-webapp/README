@@ -2,7 +2,7 @@ Apache Tuscany Alert Aggregator Demo
 ====================================
 
 The alert aggregator demo provides an application, implemented using SCA, that 
-aggregates feeds together and exposes them using the following bindings. 
+aggregates feeds together and exposes them using the following bindings: 
 
 binding.ws
 binding.jsonrpc
@@ -17,7 +17,7 @@ This will build a war file
 
 demo-alert-aggregator-webapp.war
 
-This war can be deployed to you web application container and tested (the war
+This war can be deployed to your web application container and tested (the war
 has been tested with Tomcat 6.0.10). 
 
 The Web Application
@@ -27,19 +27,18 @@ Once deployed point your browser at
 
 http://localhost:8080/demo-alert-aggregator-webapp
 
-Taking care to ensure the host name and port number match you local 
+Taking care to ensure the host name and port number match your local 
 configuration. 
 
 This launches a Javascript application in the browser that uses JSONRPC
-to contact the server and retrived a list of alert sources and alerts that
+to contact the server and retrieve a list of alert sources and alerts that
 these sources are providing.
 
-There default sources that you see are stored in a file in the following
-file
+The default sources that you see are stored in the following file:
 
 demo-alert-aggregator-webapp/WEB-INF/classes/sources.xml
 
-This files has the following contents
+This file has the following contents:
 
 <ns0:Config xmlns:ns0="http://tuscany.apache.org/sca/demos/aggregator/types">
 <ns0:Source Id="0" FeedType="rss">
@@ -57,7 +56,7 @@ This files has the following contents
 </ns0:Config>
 
 You may want to adjust the "LastChecked" values to change the number of
-alerts that are displayed in the first instance
+alerts that are displayed in the first instance.
 
 Using A Feed Reader
 -------------------
@@ -77,6 +76,21 @@ Using Web Services
 The SCA application also uses binding.ws to provide a SOAP/HTTP interface. 
 The demo client that uses this interface is not yet available. 
 
+Building The Sample Using Ant
+-----------------------------
 
+With the binary distribution the sample can be built using Ant as follows:
 
+cd alert-aggregator-webapp
+ant package
 
+Building The Sample Using Maven
+-------------------------------
+
+With the source and binary distributions the sample can be built using Maven
+as follows:
+
+cd alert-aggregator-webapp
+mvn
+
+The Maven build runs an integration test after building the war file.
