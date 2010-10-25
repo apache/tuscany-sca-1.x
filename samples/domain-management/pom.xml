@@ -124,49 +124,42 @@
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-contribution-java</artifactId>
             <version>1.7-SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-contribution-namespace</artifactId>
             <version>1.7-SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-contribution-resource</artifactId>
             <version>1.7-SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-java-xml</artifactId>
             <version>1.7-SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-interface-java-xml</artifactId>
             <version>1.7-SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-data-api</artifactId>
             <version>1.7-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.5</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
     </dependencies>
@@ -183,6 +176,36 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
+                        <configuration>
+                            <testSource>true</testSource>
+                            <jarFiles>
+                                <jarFile>
+                                    <destfile>target/sample-domain-management-assets.jar</destfile>
+                                    <filesets>
+                                        <fileset>dir="target/test-classes/assets"</fileset>
+                                        <fileset>dir="target/test-classes" includes="services/**"</fileset>
+                                    </filesets>
+                                </jarFile>
+                                <jarFile>
+                                    <destfile>target/sample-domain-management-client.jar</destfile>
+                                    <filesets>
+                                        <fileset>dir="target/test-classes/client"</fileset>
+                                    </filesets>
+                                </jarFile>
+                                <jarFile>
+                                    <destfile>target/sample-domain-management-store.jar</destfile>
+                                    <filesets>
+                                        <fileset>dir="target/test-classes/store"</fileset>
+                                    </filesets>
+                                </jarFile>
+                            </jarFiles>
+                            <runTargets>
+                                <runListDeployables>manager.ListDeployables</runListDeployables>
+                                <runListDependencies>manager.ListDependencies</runListDependencies>
+                                <runWireComponents>manager.WireComponents</runWireComponents>
+                                <runListComponents>manager.ListComponents</runListComponents>
+                            </runTargets>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
