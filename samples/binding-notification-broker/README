@@ -29,19 +29,37 @@ via <binding.notification/> to be transported as literal xml over http.
 Sample Usage
 ------------
 
-This sample is run using the tuscany binary distribution. To run it, navigate to this sample's directory and 
+These instructions assume that you will start the notification samples in the
+following order:
+ binding-notification-consumer
+ binding-notification-broker
+ binding-notification-producer
 
-on Wondows, use following command:
+For a clean shutdown without exceptions, you should end the notification samples
+in the following order:
+ binding-notification-producer
+ binding-notification-broker
+ binding-notification-consumer
 
-java -Dnotification.httpPort=8080 -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-binding-notification-broker.jar  notification.broker.TrafficAdvisoryServer
+This sample is run using the tuscany binary distribution. To see what it does,
+first start the consumer sample. When this is running, open a command prompt,
+navigate to this sample's directory and do 
 
-on *nix, use following command:
+ant run
 
-java -Dnotification.httpPort=8080 -cp ../../lib/tuscany-sca-manifest.jar:target/sample-binding-notification-broker.jar notification.broker.TrafficAdvisoryServer
+OR if you don't have ant,
+
+on Windows, use the following command:
+
+java -Dnotification.httpPort=8082 -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-binding-notification-broker.jar  notification.broker.TrafficAdvisoryServer
+
+on *nix, use the following command:
+
+java -Dnotification.httpPort=8082 -cp ../../lib/tuscany-sca-manifest.jar:target/sample-binding-notification-broker.jar notification.broker.TrafficAdvisoryServer
 
 this should bring up the following prompt:
 
-Send a report value, ^C or <end> to end
+Send a report value, ^C or 'end' to end
 
 at this point you should be able to type a message to send, for instance:
 
@@ -51,7 +69,7 @@ Notice that before you try to receive any message, you should bring up the
 consumer sample or another broker sample. When you have finished using this
 sample, type 'end' or ^C to end.
 
-Also notice that '-Dnotification.httpPort=8080' is used in the java command.
+Also notice that '-Dnotification.httpPort=8082' is used in the java command.
 This indicates the port the sample should use. This also says that this server
 is not going to play the role of ntm, given our previous assumption. It is important
 that the first one of the producer, consumer or broker sample that is run be the
@@ -80,7 +98,7 @@ binding-notification-broker/
         TrafficAdvisoryNotification.composite      - the main composite including producer, consumer and
                                                      notification components, and composite service and reference
   binding-notification-broker.png                  - a pictorial representation of the sample .composite file
-  build.xml                       		   - the Ant build file
+  build.xml                       		           - the Ant build file
   pom.xml                                          - the Maven build file 
 
 Building And Running The Sample Using Ant
@@ -96,11 +114,9 @@ You should see the following output from the run target.
 
 run:
      [java] Sep 14, 2007 11:14:24 AM org.apache.tuscany.sca.http.jetty.JettyServer addServletMapping
-     [java] INFO: Added Servlet mapping: http://localhost:8083/ntm/trafficAdvisory
+     [java] INFO: Added Servlet mapping: http://localhost:8082/consumer/trafficAdvisory
      [java] Sep 14, 2007 11:14:24 AM org.apache.tuscany.sca.http.jetty.JettyServer addServletMapping
-     [java] INFO: Added Servlet mapping: http://localhost:8083/consumer/trafficAdvisory
-     [java] Sep 14, 2007 11:14:24 AM org.apache.tuscany.sca.http.jetty.JettyServer addServletMapping
-     [java] INFO: Added Servlet mapping: http://localhost:8083/producer/trafficAdvisory
+     [java] INFO: Added Servlet mapping: http://localhost:8082/producer/trafficAdvisory
      
 Building And Running The Sample Using Maven 
 -------------------------------------------
