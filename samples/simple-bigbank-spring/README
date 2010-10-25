@@ -1,86 +1,100 @@
 Spring Bigbank Sample
-======================
-This sample is different from the simple-bigbank in that it is made of 4 separate modules that represent the different aspects of a fictitious banking application.
+=====================
+This sample is different from the simple-bigbank sample in that it is made of 4 separate modules that represent the different aspects of a fictitious banking application.
 
 simple-bigbank-spring (this module)
 spring-bigbank-calculator
 spring-bigbank-checkaccount
 spring-bigbank-stockquote
 
-To run the simple-bigbank-spring sample you need to first run spring-bigbank-calculator, spring-bigbank-checkaccount and spring-bigbank-stockquote composites. 
-This will bring up Tuscany runtime and load the three applications and make them available as services.
-Bigbank-Spring is dependent on these services.
+To run the simple-bigbank-spring sample you need to first run the spring-bigbank-calculator, spring-bigbank-checkaccount and
+spring-bigbank-stockquote samples. This will start the three applications on separate copies of the Tuscany runtime and make
+the applications available as services. The simple-bigbank-spring sample is dependent on these services.
 
-This demo uses ant. This is just one way of running this demo.
+Start spring-bigbank-calculator sample
+--------------------------------------
 
-Start Spring-Bigbank-calculator Composite
------------------------------------------
+The spring-bigbank-calculator sample runs the Calculator composite which handles add, subtract, multiply and divide operations.
+Each of these operations is implemented in a different language, including JavaScript, Groovy, Ruby and Python.
 
-Spring-Bigbank-calculator is a calculator application which handles add, subtract, multiply and divide operations. Each of these operations is implemented in a different language, including JavaScript, groovy, Ruby and Python.
-
-To run the spring-bigbank-calculator composite and make it available as a service for this demo do the following:
+To run the Calculator composite and make it available as an RMI service for this sample do the following:
 
 cd spring-bigbank-calculator
-ant compile  
 ant run
+
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-spring-bigbank-calculator.jar bigbank.calculator.server.CalculatorServer
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-spring-bigbank-calculator.jar bigbank.calculator.server.CalculatorServer
 
 .. Leave the server running
 
-Note that 'ant compile' needs to be done the first time you run this demo out of the binary distribution. No need to do 'ant compile' from there on.
+Start spring-bigbank-checkaccount sample
+----------------------------------------
 
-Start Spring-Bigbank-checkaccount Composite
--------------------------------------------
-
-This contains all artifacts that deal with the account management within the bigbank.  The services offered by the bigbank-account module are used by the bigbank.
+This contains all artifacts that deal with the account management within the bigbank.  The JMS service offered by the spring-bigbank-checkaccount sample
+is used by the simple-bigbank-spring sample.
 
 cd spring-bigbank-checkaccount
-ant compile  
 ant run
+
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-spring-bigbank-checkaccount.jar bigbank.account.checking.server.CheckingAccountServer
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-spring-bigbank-checkaccount.jar bigbank.account.checking.server.CheckingAccountServer
 
 .. Leave the server running
 
-Note that 'ant compile' needs to be done the first time you run this demo out of the binary distribution. No need to do 'ant compile' from there on.
+Start spring-bigbank-stockquote sample
+--------------------------------------
 
-Start Spring-Bigbank-stockquote Composite
------------------------------------------
-
-A very simple web services based stock quote application which returns random 
-stock quotes on request. Please note that the stockquote service is not live and is implemented instead to allow for this application to always run without dependency on the availability of a webservice.
+This is a very simple web services based stock quote application which returns random stock quotes on request. Please note that the stockquote service
+is not live and is implemented instead to allow for this application to always run without depending on the availability of a web service.
 
 cd spring-bigbank-stockquote
-ant compile  
 ant run
+
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-spring-bigbank-stockquote.jar bigbank.stockquote.server.StockQuoteServer
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-spring-bigbank-stockquote.jar bigbank.stockquote.server.StockQuoteServer
 
 .. Leave the server running
 
-Start Spring Bigbank
---------------------
-This contains all artifacts that make up the bigbank application.  This is the application that the end user interacts with
+Start simple-bigbank-spring sample
+----------------------------------
 
-Start spring-bigbank in the following way:
+This contains all artifacts that make up the bigbank application.  This is the application that the end user interacts with.
 
-i ) Compile the spring-bigbank as follows :
-    
-    cd simple-bigbank-spring                  
-    ant compile
-    
-ii) Now start the bigbank service as follows :
-    
-    cd bigbank
-    ant compile 
-    ant run
+Start simple-bigbank-spring in the following way:
 
-    .. Leave the server running
+cd simple-bigbank-spring                  
+ant run
 
-Note that 'ant compile' needs to be done the first time you run this demo out ofthe  binary distribution. 
-No need to do 'ant compile' from there on.
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-simple-bigbank-spring.jar bigbank.client.BigBankClient
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-simple-bigbank-spring.jar bigbank.client.BigBankClient
+
 
 Sample Overview
 ---------------
 This sample demonstrates a simple bank summary transaction using Spring for one of the components.
  
 A request to the AccountComponent results in a request to the AccountDataComponent to get account data
-which is based on a random stock quote price. Therefore result for this sample will vary on each run.
+which is based on a random stock quote price. Therefore results for this sample will vary on each run.
 
 
 simple-bigbank-spring/
@@ -107,10 +121,22 @@ simple-bigbank-spring/
   build.xml                       - the Ant build file
   pom.xml                         - the Maven build file        
 
+
 Building And Running The Sample Using Ant
 -----------------------------------------
-With the binary distribution the sample can be built and run using Ant as 
-follows
+With the binary distribution the sample can be built and run using Ant as follows:
+
+cd spring-bigbank-calculator
+ant compile
+ant run
+
+cd spring-bigbank-checkaccount
+ant compile
+ant run
+
+cd spring-bigbank-stockquote
+ant compile
+ant run
 
 cd simple-bigbank-spring
 ant compile
@@ -120,10 +146,14 @@ You should see the following output.
 ** Please note that balance amount will vary depending on the random stock value.
 
 run:
-     [java] Spring parent context - getBean called for name: stockQuoteService
-     [java] Getting stock quote for: IBM, value: 104.97
-     [java] Account summary: currency: USD, [ID:Foo_CHA12345, balance:1500.0, ID
-:Foo_SAA12345, balance:1500.0, ID:Foo_STA12345, symbol:IBM, quantity:100, balance:10497.0]
+     [java] Checking account: CHA_Customer_01, balance:1000.0
+     [java] Savings account: SVA_Customer_01, balance:1000.0
+     [java] Stock account: STA_Customer_01, symbol:IBM, quantity:100
+     [java] Stock price for IBM: 104.64
+     [java] Converted to EURO: 73.24799999999999
+     [java] Account summary: currency: EURO, [CHA_Customer_01, balance:1000.0, S
+VA_Customer_01, balance:1000.0, STA_Customer_01, symbol:IBM, quantity:100, STA_C
+ustomer_01, symbol:IBM, quantity:100]
 
 
 Building And Running The Sample Using Maven 
@@ -141,9 +171,6 @@ You should see the following output from the test phase.
  T E S T S
 -------------------------------------------------------
 Running bigbank.BigBankTestCase
-Getting stock quote for: IBM, value: 104.02
-Account summary: currency: USD, [ID:Foo_CHA12345, balance:1500.0, ID:Foo_SAA1234
-5, balance:1500.0, ID:Foo_STA12345, symbol:IBM, quantity:100, balance:10402.0]
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.502 sec
 
 Results :
