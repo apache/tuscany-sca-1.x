@@ -52,6 +52,20 @@
 
             <classpath refid="project.classpath"/>
         </java>
+        <java classname="org.apache.tuscany.sdo.generate.XSD2JavaGenerator" fork="true">
+            <arg value="-targetDirectory"/>
+            <arg value="target/sdo-source"/>
+            <arg value="-javaPackage"/>
+            <arg value="model.sdo"/>
+            <arg value="-prefix"/>
+            <arg value="Entity"/>
+            <arg value="-noNotification"/>
+            <arg value="-noContainment"/>
+            <arg value="-noUnsettable"/>
+            <arg value="src/main/resources/test.xsd"/>
+
+            <classpath refid="project.classpath"/>
+        </java>
     </target>
 
     <target name="compile" depends="init, generate-sdo">
