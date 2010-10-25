@@ -69,6 +69,13 @@
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-atom-abdera</artifactId>
             <version>${pom.version}</version>
+            <exclusions>
+                <exclusion>
+                    <!-- tuscany-binding-ws-axis2 brings in activation-1.1.jar -->
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-activation_1.1_spec</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
@@ -80,6 +87,16 @@
             <artifactId>tuscany-binding-corba-runtime</artifactId>
             <version>${pom.version}</version>
         </dependency>        
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-gdata</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-gdata-runtime</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-rss</artifactId>
@@ -244,6 +261,13 @@
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-notification</artifactId>
             <version>${pom.version}</version>
+            <exclusions>
+                <exclusion>
+                    <!-- tuscany-binding-ws-axis2 brings in activation-1.1.jar -->
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-activation_1.1_spec</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
@@ -287,6 +311,13 @@
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-ws-axis2</artifactId>
             <version>${pom.version}</version>
+            <exclusions>
+                <exclusion>
+                    <!-- tuscany-binding-atom-abdera brings in geronimo-javamail_1.4_spec-1.2.jar -->
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mail</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
@@ -366,6 +397,11 @@
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-databinding-sdo-axiom</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-databinding-xmlbeans</artifactId>
             <version>${pom.version}</version>
         </dependency>
         <dependency>
@@ -582,6 +618,11 @@
         </dependency>        
         <dependency>
             <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-policy-security-jsr250</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-policy-xml</artifactId>
             <version>${pom.version}</version>
         </dependency>
@@ -628,17 +669,24 @@
         </dependency>
         <dependency>
             <groupId>${pom.groupId}</groupId>
-            <artifactId>tuscany-java2wsdl</artifactId>
-            <version>${pom.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-wsdl2java</artifactId>
             <version>${pom.version}</version>
+            <exclusions>
+                <exclusion>
+                    <!-- tuscany-binding-atom-abdera brings in geronimo-javamail_1.4_spec-1.2.jar -->
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mail</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>        
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-sca-api</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-tracing-aspectj</artifactId>
             <version>${pom.version}</version>
         </dependency>
         <dependency>
@@ -655,6 +703,11 @@
                 <exclusion>
                     <groupId>backport-util-concurrent</groupId>
                     <artifactId>backport-util-concurrent</artifactId>
+                </exclusion>
+                <exclusion>
+                    <!-- exclude stax 1.0.1 because sca uses 1.0-2 (newer) -->
+                    <groupId>stax</groupId>
+                    <artifactId>stax-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
