@@ -17,15 +17,15 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://exmaple.com/customer"
-    targetNamespace="http://exmaple.com/customer" elementFormDefault="qualified">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://example.com/customer"
+    targetNamespace="http://example.com/customer" elementFormDefault="qualified">
     <element name="customer" type="tns:Customer" />
     <complexType name="Customer">
         <sequence>
             <element name="id" type="string"></element>
             <element name="firstName" type="string"></element>
             <element name="lastName" type="string"></element>
-            <element name="accounts" type="string"></element>
+            <element name="accounts" type="tns:Accounts"></element>
         </sequence>
     </complexType>
     <complexType name="Accounts">
