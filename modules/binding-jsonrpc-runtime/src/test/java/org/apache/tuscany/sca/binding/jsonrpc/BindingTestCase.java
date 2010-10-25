@@ -65,6 +65,7 @@ public class BindingTestCase {
     }    
 
     @Test
+    @Ignore("TUSCANY-3747")
     public void testOneArg() throws MalformedURLException, IOException {
         try {
 	        JSONObject jsonRequest = new JSONObject("{\"params\":[\"\\\"petra\\\"\"],\"method\":\"sayHello\",\"id\":1}");
@@ -80,6 +81,7 @@ public class BindingTestCase {
     }
 
     @Test
+    @Ignore("TUSCANY-3747")
     public void testTwoArgs() throws MalformedURLException, IOException {       
         try {
 	        JSONObject jsonRequest = new JSONObject("{\"params\":[\"\\\"petra\\\"\", \"\\\"arnold\\\"\"],\"method\":\"sayHello2\",\"id\":1}");
@@ -96,6 +98,7 @@ public class BindingTestCase {
     } 
     
     @Test
+    @Ignore("TUSCANY-3747")
     public void testComplexParams() throws MalformedURLException, IOException {         
         try {
 	        JSONObject jsonRequest = new JSONObject("{\"params\":[{\"b\":true, \"s\":\"fred\", \"x\":2, \"y\":5}],\"method\":\"sayHello3\",\"id\":1}");
