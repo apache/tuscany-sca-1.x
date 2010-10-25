@@ -7,6 +7,28 @@ The README in the samples directory (the directory above this) provides
 general instructions about building and running samples. Take a look there 
 first. 
 
+If you just want to run it to see what happens, open a command prompt,
+navigate to this sample directory, and do
+
+ant run
+
+OR if you don't have ant, on Windows do
+
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-implementation-pojo-extension.jar;target\test-classes helloworld.HelloWorldTestClient
+
+and on *nix do
+
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-implementation-pojo-extension.jar:target/test-classes helloworld.HelloWorldTestClient
+
+This looks like a long command. The three things we add to the classpath are
+
+tuscany-sca-manifest.jar                 - all of the standard Tuscany SCA 
+                                           runtime and extension classes
+sample-implementation-pojo-extension.jar - the new POJO implementation
+                                           extension 
+target.test-classes                      - application code that uses the
+                                           POJO implementation  
+
 Sample Overview
 ---------------
 This sample contains a POJO implementation type as an example of how to create
@@ -26,6 +48,7 @@ implementation-pojo-extension/
       java/
         helloworld/
           HelloWorldTestCase.java - JUnit test case
+          HelloWorldTestClient.java - Test client with no JUnit dependency
       resources/
         helloworld.composite   - the SCA assembly used during unit testing
 
@@ -34,11 +57,22 @@ implementation-pojo-extension/
   
 Building The Sample Extension Using Ant
 -----------------------------------------
-With the binary distribution the sample extension can be built using Ant as 
-follows
+With the binary distribution the sample extension can be built and run
+using Ant as follows
 
 cd implementation-pojo-extension
 ant compile
+ant run
+
+You should see the following output from the run target.
+
+run:
+     [java] Initializing POJO
+     [java] Initializing POJO
+     [java] Executing POJO sayHello
+     [java] Executing POJO sayHello
+     [java] Destroying POJO
+     [java] Destroying POJO
 
 Building The Sample Using Maven 
 -------------------------------------------
