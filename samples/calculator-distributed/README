@@ -36,9 +36,7 @@ java -cp src/main/resources:../../lib/tuscany-sca-manifest.jar:target/sample-cal
 java -cp src/main/resources:../../lib/tuscany-sca-manifest.jar:target/sample-calculator-distributed.jar node.LaunchCalculatorNodeC
 java -cp src/main/resources:../../lib/tuscany-sca-manifest.jar:target/sample-calculator-distributed.jar node.LaunchCalculatorNodeA
 
-
-The processes started on each of these command prompts can be ended by pressing 
-the <Enter> key.
+The processes started on each of these command prompts can be ended by typing 'q'.
 
 
 Sample Overview
