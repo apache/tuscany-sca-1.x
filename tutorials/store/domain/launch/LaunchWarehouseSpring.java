@@ -38,8 +38,8 @@ public class LaunchWarehouseSpring {
         
         NodeLauncher launcher = NodeLauncher.newInstance();
         SCANode node = launcher.createNode(null, 
-                                           new Contribution("assets", "../assets/target/classes"),
-                                           new Contribution("warehouse", "../warehouse-spring/target/classes"));
+                                           new Contribution("assets", "../assets/target/tutorial-assets.jar"),
+                                           new Contribution("warehouse", "../warehouse-spring/target/tutorial-warehouse-spring.jar"));
         node.start();
         
         System.out.println("Press a key to stop");
