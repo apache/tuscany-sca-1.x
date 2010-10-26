@@ -36,12 +36,12 @@ Next, start the SCA Domain Manager:
 Alternatively, on linux:
 
    cd domain
-   java -jar ../../../modules/tuscany-node-launcher-1.6.jar domain
+   java -jar ../../../modules/tuscany-node-launcher-1.6.1.jar domain
 
 and on windows:
 
    cd domain
-   java -jar ..\..\..\modules\tuscany-node-launcher-1.6.jar domain
+   java -jar ..\..\..\modules\tuscany-node-launcher-1.6.1.jar domain
 
 Access the SCA Domain Manager application by pointing your Web browser at:
 
