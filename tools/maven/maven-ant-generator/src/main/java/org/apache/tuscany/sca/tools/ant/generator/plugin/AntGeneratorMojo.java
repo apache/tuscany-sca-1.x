@@ -248,7 +248,7 @@ public class AntGeneratorMojo extends AbstractMojo {
                 if (project.getResources().size() > 1) {
                     break;
                 }
-                pw.println("            <fileset dir=\".\" excludes=\"**/*.java, pom.xml, build.xml, target\"/>");
+                pw.println("            <fileset dir=\".\" excludes=\"**/*.java, **/.*/**, pom.xml, build*.xml, target/**\"/>");
                 source = ".";
             }
         }
@@ -287,7 +287,7 @@ public class AntGeneratorMojo extends AbstractMojo {
                     if (project.getTestResources().size() > 1) {
                         break;
                     }
-                    pw.println("            <fileset dir=\".\" excludes=\"**/*.java, pom.xml, build.xml, target\"/>");
+                    pw.println("            <fileset dir=\".\" excludes=\"**/*.java, **/.*/**, pom.xml, build*.xml, target/**\"/>");
                     source = ".";
                 }
             }
