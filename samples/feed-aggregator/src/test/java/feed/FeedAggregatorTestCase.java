@@ -213,9 +213,9 @@ public class FeedAggregatorTestCase {
         ClientResponse res = client.get(providerURI, opts);
         Assert.assertNotNull(res);
         try {
-            // Should return 304 - Feed not provided since feed is modified
+            // Should return 412 - Feed not provided since feed is modified
             // since.
-            Assert.assertEquals(304, res.getStatus());
+            Assert.assertEquals(412, res.getStatus());
 
             // Entry count and body size should be equal to basic request
             long thisContentLength = getContentLength(res);
