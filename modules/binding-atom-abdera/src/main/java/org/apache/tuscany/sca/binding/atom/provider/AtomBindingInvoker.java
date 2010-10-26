@@ -96,7 +96,9 @@ class AtomBindingInvoker implements Invoker, DataExchangeSemantics {
 
             // Send an HTTP GET
             GetMethod getMethod = new GetMethod(uri + "/" + id);
-            getMethod.setRequestHeader("Authorization", authorizationHeader);
+            if (authorizationHeader != null) {
+                getMethod.setRequestHeader("Authorization", authorizationHeader);
+            }
             boolean parsing = false;
             try {
                 httpClient.executeMethod(getMethod);
@@ -173,7 +175,9 @@ class AtomBindingInvoker implements Invoker, DataExchangeSemantics {
 
             // Send an HTTP POST
             PostMethod postMethod = new PostMethod(uri);
-            postMethod.setRequestHeader("Authorization", authorizationHeader);
+            if (authorizationHeader != null) {
+                postMethod.setRequestHeader("Authorization", authorizationHeader);
+            }
             boolean parsing = false;
             try {
 
@@ -259,7 +263,9 @@ class AtomBindingInvoker implements Invoker, DataExchangeSemantics {
 
             // Send an HTTP PUT
             PutMethod putMethod = new PutMethod(uri + "/" + id);
-            putMethod.setRequestHeader("Authorization", authorizationHeader);
+            if (authorizationHeader != null) {
+                putMethod.setRequestHeader("Authorization", authorizationHeader);
+            }
 
             try {
 
@@ -310,7 +316,9 @@ class AtomBindingInvoker implements Invoker, DataExchangeSemantics {
 
             // Send an HTTP DELETE
             DeleteMethod deleteMethod = new DeleteMethod(uri + "/" + id);
-            deleteMethod.setRequestHeader("Authorization", authorizationHeader);
+            if (authorizationHeader != null) {
+                deleteMethod.setRequestHeader("Authorization", authorizationHeader);
+            }
             try {
                 httpClient.executeMethod(deleteMethod);
                 int status = deleteMethod.getStatusCode();
@@ -351,7 +359,9 @@ class AtomBindingInvoker implements Invoker, DataExchangeSemantics {
 
             // Send an HTTP GET
             GetMethod getMethod = new GetMethod(uri);
-            getMethod.setRequestHeader("Authorization", authorizationHeader);
+            if (authorizationHeader != null) {
+                getMethod.setRequestHeader("Authorization", authorizationHeader);
+            }
             boolean parsing = false;
             try {
                 httpClient.executeMethod(getMethod);
@@ -427,7 +437,9 @@ class AtomBindingInvoker implements Invoker, DataExchangeSemantics {
 
             // Send an HTTP GET
             GetMethod getMethod = new GetMethod(uri);
-            getMethod.setRequestHeader("Authorization", authorizationHeader);
+            if (authorizationHeader != null) {
+                getMethod.setRequestHeader("Authorization", authorizationHeader);
+            }
             getMethod.setQueryString(queryString);
             boolean parsing = false;
             try {
