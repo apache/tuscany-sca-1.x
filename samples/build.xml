@@ -87,6 +87,7 @@
         <ant dir="spring-bigbank-checkaccount" target="${target}"/>
         <ant dir="spring-bigbank-stockquote" target="${target}"/>
         <ant dir="store" target="${target}"/>
+        <ant dir="store-dojo" target="${target}"/>
         <ant dir="store-secure" target="${target}"/>
         <ant dir="store-webapp" target="${target}"/>
         <ant dir="supplychain" target="${target}"/>

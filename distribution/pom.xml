@@ -105,11 +105,37 @@
         <!--don't put two servlet hosts in the classpath TUSCANY-1954 -->
         <!--include tomcat here so it is shipped in modules/ but not  -->
         <!--in the all jar                                            -->
-        <!-- dependency> 
+        <dependency> 
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-host-tomcat</artifactId>
             <version>1.7-SNAPSHOT</version>
-        </dependency -->
+        </dependency>
+        <dependency> 
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-atom-js-dojo</artifactId>
+            <version>1.6.1-SNAPSHOT</version>
+        </dependency>
+        <dependency> 
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-binding-jsonrpc-js-dojo</artifactId>
+            <version>1.6.1-SNAPSHOT</version>
+        </dependency>
+        <dependency> 
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-implementation-widget-runtime-dojo</artifactId>
+            <version>1.6.1-SNAPSHOT</version>
+        </dependency>
+        <dependency> 
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>tuscany-web-javascript-dojo</artifactId>
+            <version>1.6.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.dojotoolkit</groupId>
+                    <artifactId>dojo</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sdo</groupId>
             <artifactId>tuscany-sdo-impl</artifactId>
