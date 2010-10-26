@@ -36,6 +36,20 @@
         <tuscany.version>${pom.version}</tuscany.version>
     </properties>
 
+    <repositories>
+        <!-- search this repository first because it contains the correct version
+             of jaxws-api-2.1.jar -->
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>java.net</id>
+            <name>java.net Maven 1.x Repository</name>
+            <url>http://download.java.net/maven/1</url>
+            <layout>legacy</layout>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>${pom.groupId}</groupId>
@@ -652,6 +666,29 @@
 
         <plugins>
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>check-local-repository</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-cp</argument>
+                        <argument>${basedir}/target/classes</argument>
+                        <argument>org.apache.tuscany.sca.distribution.CheckLocalRepository</argument>
+                        <argument>${settings.localRepository}</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>shade-maven-plugin</artifactId>
