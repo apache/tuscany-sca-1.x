@@ -243,8 +243,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/wiring/Customer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/customer/Customer.class
+                                                    supplychain/OSGiBundleImpl.class
                                                     supplychain/customer/OSGiCustomerImpl.class" />
 
                                 </ant>
@@ -259,9 +259,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/wiring/Retailer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/retailer/OSGiRetailerImpl.class \
+                                        value="supplychain/retailer/Retailer.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/retailer/OSGiRetailerImpl.class
                                                     supplychain/retailer/OSGiRetailerServiceImpl.class" />
 
                                 </ant>
@@ -276,9 +276,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/wiring/Shipper.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/shipper/OSGiShipperImpl.class \
+                                        value="supplychain/shipper/Shipper.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/shipper/OSGiShipperImpl.class
                                                     supplychain/shipper/OSGiShipperServiceImpl.class" />
 
                                 </ant>
@@ -293,9 +293,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/wiring/Warehouse.mf" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/Warehouse.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/warehouse/OSGiWarehouseImpl.class \
+                                        value="supplychain/warehouse/Warehouse.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/warehouse/OSGiWarehouseImpl.class
                                                     supplychain/warehouse/OSGiWarehouseServiceImpl.class" />
 
                                 </ant>
@@ -310,8 +310,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/wiring/ds/Customer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    osgi/wiring/ds/Customer.xml \
+                                        value="supplychain/customer/Customer.class
+                                                    osgi/wiring/ds/Customer.xml
                                                     supplychain/customer/OSGiCustomerComponentImpl.class" />
 
                                 </ant>
@@ -326,9 +326,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/wiring/ds/Retailer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    osgi/wiring/ds/Retailer1.xml \
-                                                    osgi/wiring/ds/Retailer2.xml \
+                                        value="supplychain/retailer/Retailer.class
+                                                    osgi/wiring/ds/Retailer1.xml
+                                                    osgi/wiring/ds/Retailer2.xml
                                                     supplychain/retailer/OSGiRetailerComponentImpl.class" />
 
                                 </ant>
@@ -343,9 +343,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/wiring/ds/Shipper.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    osgi/wiring/ds/Shipper1.xml \
-                                                    osgi/wiring/ds/Shipper2.xml \
+                                        value="supplychain/shipper/Shipper.class
+                                                    osgi/wiring/ds/Shipper1.xml
+                                                    osgi/wiring/ds/Shipper2.xml
                                                     supplychain/shipper/OSGiShipperComponentImpl.class" />
 
                                 </ant>
@@ -360,9 +360,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/wiring/ds/Warehouse.mf" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/Warehouse.class \
-                                                    osgi/wiring/ds/Warehouse1.xml \
-                                                    osgi/wiring/ds/Warehouse2.xml \
+                                        value="supplychain/warehouse/Warehouse.class
+                                                    osgi/wiring/ds/Warehouse1.xml
+                                                    osgi/wiring/ds/Warehouse2.xml
                                                     supplychain/warehouse/OSGiWarehouseComponentImpl.class" />
 
                                 </ant>
@@ -377,10 +377,10 @@
                                     <property name="manifest.file.name"
                                         value="osgi/factory/Customer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/customer/OSGiCustomerImpl.class \
-                                                    supplychain/customer/OSGiStatelessCustomerImpl.class \
+                                        value="supplychain/customer/Customer.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/customer/OSGiCustomerImpl.class
+                                                    supplychain/customer/OSGiStatelessCustomerImpl.class
                                                     supplychain/customer/OSGiCustomerFactoryImpl.class" />
 
                                 </ant>
@@ -395,9 +395,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/factory/Retailer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/retailer/OSGiRetailerImpl.class \
+                                        value="supplychain/retailer/Retailer.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/retailer/OSGiRetailerImpl.class
                                                     supplychain/retailer/OSGiRetailerServiceImpl.class" />
 
                                 </ant>
@@ -412,11 +412,11 @@
                                     <property name="manifest.file.name"
                                         value="osgi/factory/Shipper.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/shipper/OSGiShipperImpl.class \
-                                                    supplychain/shipper/OSGiShipperServiceImpl.class \
-                                                    supplychain/shipper/OSGiStatelessShipperServiceImpl.class \
+                                        value="supplychain/shipper/Shipper.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/shipper/OSGiShipperImpl.class
+                                                    supplychain/shipper/OSGiShipperServiceImpl.class
+                                                    supplychain/shipper/OSGiStatelessShipperServiceImpl.class
                                                     supplychain/shipper/OSGiShipperFactoryImpl.class" />
 
                                 </ant>
@@ -431,9 +431,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/factory/ds/Customer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    osgi/factory/ds/Customer.xml \
-                                                    supplychain/customer/OSGiStatelessCustomerComponentImpl.class \
+                                        value="supplychain/customer/Customer.class
+                                                    osgi/factory/ds/Customer.xml
+                                                    supplychain/customer/OSGiStatelessCustomerComponentImpl.class
                                                     supplychain/customer/OSGiCustomerComponentImpl.class" />
 
                                 </ant>
@@ -448,9 +448,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/factory/ds/Retailer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    osgi/factory/ds/Retailer1.xml \
-                                                    osgi/factory/ds/Retailer2.xml \
+                                        value="supplychain/retailer/Retailer.class
+                                                    osgi/factory/ds/Retailer1.xml
+                                                    osgi/factory/ds/Retailer2.xml
                                                     supplychain/retailer/OSGiRetailerComponentImpl.class" />
 
                                 </ant>
@@ -465,10 +465,10 @@
                                     <property name="manifest.file.name"
                                         value="osgi/factory/ds/Shipper.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    osgi/factory/ds/Shipper1.xml \
-                                                    osgi/factory/ds/Shipper2.xml \
-                                                    supplychain/shipper/OSGiStatelessShipperComponentImpl.class \
+                                        value="supplychain/shipper/Shipper.class
+                                                    osgi/factory/ds/Shipper1.xml
+                                                    osgi/factory/ds/Shipper2.xml
+                                                    supplychain/shipper/OSGiStatelessShipperComponentImpl.class
                                                     supplychain/shipper/OSGiShipperComponentImpl.class" />
 
                                 </ant>
@@ -483,8 +483,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/factory/ds/Warehouse.mf" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/Warehouse.class \
-                                                    osgi/factory/ds/Warehouse.xml \
+                                        value="supplychain/warehouse/Warehouse.class
+                                                    osgi/factory/ds/Warehouse.xml
                                                     supplychain/warehouse/OSGiWarehouseComponentImpl.class" />
 
                                 </ant>
@@ -499,8 +499,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/services/Customer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/customer/Customer.class
+                                                    supplychain/OSGiBundleImpl.class
                                                     supplychain/customer/OSGiCustomerImpl.class" />
 
                                 </ant>
@@ -515,9 +515,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/services/Retailer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/retailer/OSGiRetailerImpl.class \
+                                        value="supplychain/retailer/Retailer.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/retailer/OSGiRetailerImpl.class
                                                     supplychain/retailer/OSGiRetailerServiceImpl.class" />
 
                                 </ant>
@@ -532,9 +532,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/services/Shipper.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/shipper/OSGiShipperImpl.class \
+                                        value="supplychain/shipper/Shipper.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/shipper/OSGiShipperImpl.class
                                                     supplychain/shipper/OSGiShipperServiceImpl.class" />
 
                                 </ant>
@@ -549,9 +549,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/services/Warehouse.mf" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/Warehouse.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/warehouse/OSGiWarehouseImpl.class \
+                                        value="supplychain/warehouse/Warehouse.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/warehouse/OSGiWarehouseImpl.class
                                                     supplychain/warehouse/OSGiWarehouseServiceImpl.class" />
 
                                 </ant>
@@ -566,8 +566,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/services/ds/Customer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    osgi/services/ds/Customer.xml \
+                                        value="supplychain/customer/Customer.class
+                                                    osgi/services/ds/Customer.xml
                                                     supplychain/customer/OSGiCustomerComponentImpl.class" />
 
                                 </ant>
@@ -582,9 +582,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/services/ds/Retailer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    osgi/services/ds/Retailer1.xml \
-                                                    osgi/services/ds/Retailer2.xml \
+                                        value="supplychain/retailer/Retailer.class
+                                                    osgi/services/ds/Retailer1.xml
+                                                    osgi/services/ds/Retailer2.xml
                                                     supplychain/retailer/OSGiRetailerComponentImpl.class" />
 
                                 </ant>
@@ -599,9 +599,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/services/ds/Shipper.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    osgi/services/ds/Shipper1.xml \
-                                                    osgi/services/ds/Shipper2.xml \
+                                        value="supplychain/shipper/Shipper.class
+                                                    osgi/services/ds/Shipper1.xml
+                                                    osgi/services/ds/Shipper2.xml
                                                     supplychain/shipper/OSGiShipperComponentImpl.class" />
 
                                 </ant>
@@ -616,9 +616,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/services/ds/Warehouse.mf" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/Warehouse.class \
-                                                    osgi/services/ds/Warehouse1.xml \
-                                                    osgi/services/ds/Warehouse2.xml \
+                                        value="supplychain/warehouse/Warehouse.class
+                                                    osgi/services/ds/Warehouse1.xml
+                                                    osgi/services/ds/Warehouse2.xml
                                                     supplychain/warehouse/OSGiWarehouseComponentImpl.class" />
 
                                 </ant>
@@ -633,8 +633,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/interfaces/Customer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/customer/Customer.class
+                                                    supplychain/OSGiBundleImpl.class
                                                     supplychain/customer/OSGiCustomerWithQueryImpl.class" />
 
                                 </ant>
@@ -649,9 +649,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/interfaces/Retailer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    supplychain/retailer/RetailerQuery.class \
-                                                    supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/retailer/Retailer.class
+                                                    supplychain/retailer/RetailerQuery.class
+                                                    supplychain/OSGiBundleImpl.class
                                                     supplychain/retailer/OSGiRetailerWithQueryImpl.class" />
 
                                 </ant>
@@ -666,9 +666,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/interfaces/Shipper.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/shipper/OSGiShipperImpl.class \
+                                        value="supplychain/shipper/Shipper.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/shipper/OSGiShipperImpl.class
                                                     supplychain/shipper/OSGiShipperServiceImpl.class" />
 
                                 </ant>
@@ -683,8 +683,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/interfaces/ds/Customer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    osgi/interfaces/ds/Customer.xml \
+                                        value="supplychain/customer/Customer.class
+                                                    osgi/interfaces/ds/Customer.xml
                                                     supplychain/customer/OSGiCustomerWithQueryComponentImpl.class" />
 
                                 </ant>
@@ -699,9 +699,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/interfaces/ds/Retailer.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    supplychain/retailer/RetailerQuery.class \
-                                                    osgi/interfaces/ds/Retailer.xml \
+                                        value="supplychain/retailer/Retailer.class
+                                                    supplychain/retailer/RetailerQuery.class
+                                                    osgi/interfaces/ds/Retailer.xml
                                                     supplychain/retailer/OSGiRetailerWithQueryComponentImpl.class" />
 
                                 </ant>
@@ -716,8 +716,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/interfaces/ds/Shipper.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    osgi/interfaces/ds/Shipper.xml \
+                                        value="supplychain/shipper/Shipper.class
+                                                    osgi/interfaces/ds/Shipper.xml
                                                     supplychain/shipper/OSGiShipperComponentImpl.class" />
 
                                 </ant>
@@ -732,8 +732,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/Customer1.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/customer/Customer.class
+                                                    supplychain/OSGiBundleImpl.class
                                                     supplychain/customer/OSGiVersionedCustomerImpl.class" />
 
                                 </ant>
@@ -748,9 +748,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/Retailer1.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/retailer/OSGiVersionedRetailerImpl.class \
+                                        value="supplychain/retailer/Retailer.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/retailer/OSGiVersionedRetailerImpl.class
                                                     supplychain/retailer/OSGiVersionedRetailerServiceImpl.class" />
 
                                 </ant>
@@ -765,9 +765,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/Shipper1.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/shipper/OSGiVersionedShipperImpl.class \
+                                        value="supplychain/shipper/Shipper.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/shipper/OSGiVersionedShipperImpl.class
                                                     supplychain/shipper/OSGiVersionedShipperServiceImpl.class" />
 
                                 </ant>
@@ -782,9 +782,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/Warehouse1.mf" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/Warehouse.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/warehouse/OSGiWarehouseImpl.class \
+                                        value="supplychain/warehouse/Warehouse.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/warehouse/OSGiWarehouseImpl.class
                                                     supplychain/warehouse/OSGiWarehouseServiceImpl.class" />
 
                                 </ant>
@@ -799,8 +799,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/Customer2.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    supplychain/OSGiBundleImpl.class \
+                                        value="supplychain/customer/Customer.class
+                                                    supplychain/OSGiBundleImpl.class
                                                     supplychain/customer/OSGiVersionedCustomerImpl.class" />
 
                                 </ant>
@@ -815,9 +815,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/Retailer2.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/retailer/OSGiVersionedRetailerImpl.class \
+                                        value="supplychain/retailer/Retailer.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/retailer/OSGiVersionedRetailerImpl.class
                                                     supplychain/retailer/OSGiVersionedRetailerServiceImpl.class" />
 
                                 </ant>
@@ -832,9 +832,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/Shipper2.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/shipper/OSGiVersionedShipperImpl.class \
+                                        value="supplychain/shipper/Shipper.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/shipper/OSGiVersionedShipperImpl.class
                                                     supplychain/shipper/OSGiVersionedShipperServiceImpl.class" />
 
                                 </ant>
@@ -849,9 +849,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/Warehouse2.mf" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/Warehouse.class \
-                                                    supplychain/OSGiBundleImpl.class \
-                                                    supplychain/warehouse/OSGiWarehouseImpl.class \
+                                        value="supplychain/warehouse/Warehouse.class
+                                                    supplychain/OSGiBundleImpl.class
+                                                    supplychain/warehouse/OSGiWarehouseImpl.class
                                                     supplychain/warehouse/OSGiWarehouseServiceImpl.class" />
 
                                 </ant>
@@ -866,8 +866,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/ds/Customer1.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    osgi/version/ds/CustomerV1.xml \
+                                        value="supplychain/customer/Customer.class
+                                                    osgi/version/ds/CustomerV1.xml
                                                     supplychain/customer/OSGiCustomerComponentImpl.class" />
 
                                 </ant>
@@ -882,8 +882,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/ds/Customer2.mf" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
-                                                    osgi/version/ds/CustomerV2.xml \
+                                        value="supplychain/customer/Customer.class
+                                                    osgi/version/ds/CustomerV2.xml
                                                     supplychain/customer/OSGiCustomerComponentImpl.class" />
 
                                 </ant>
@@ -898,9 +898,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/ds/Retailer1.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    osgi/version/ds/Retailer1V1.xml \
-                                                    osgi/version/ds/Retailer2V1.xml \
+                                        value="supplychain/retailer/Retailer.class
+                                                    osgi/version/ds/Retailer1V1.xml
+                                                    osgi/version/ds/Retailer2V1.xml
                                                     supplychain/retailer/OSGiRetailerComponentImpl.class" />
 
                                 </ant>
@@ -915,9 +915,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/ds/Retailer2.mf" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/Retailer.class \
-                                                    osgi/version/ds/Retailer1V2.xml \
-                                                    osgi/version/ds/Retailer2V2.xml \
+                                        value="supplychain/retailer/Retailer.class
+                                                    osgi/version/ds/Retailer1V2.xml
+                                                    osgi/version/ds/Retailer2V2.xml
                                                     supplychain/retailer/OSGiRetailerComponentImpl.class" />
 
                                 </ant>
@@ -932,9 +932,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/ds/Shipper1.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    osgi/version/ds/Shipper1V1.xml \
-                                                    osgi/version/ds/Shipper2V1.xml \
+                                        value="supplychain/shipper/Shipper.class
+                                                    osgi/version/ds/Shipper1V1.xml
+                                                    osgi/version/ds/Shipper2V1.xml
                                                     supplychain/shipper/OSGiShipperComponentImpl.class" />
 
                                 </ant>
@@ -949,9 +949,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/ds/Shipper2.mf" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/Shipper.class \
-                                                    osgi/version/ds/Shipper1V2.xml \
-                                                    osgi/version/ds/Shipper2V2.xml \
+                                        value="supplychain/shipper/Shipper.class
+                                                    osgi/version/ds/Shipper1V2.xml
+                                                    osgi/version/ds/Shipper2V2.xml
                                                     supplychain/shipper/OSGiShipperComponentImpl.class" />
 
                                 </ant>
@@ -966,9 +966,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/ds/Warehouse1.mf" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/Warehouse.class \
-                                                    osgi/version/ds/Warehouse1V1.xml \
-                                                    osgi/version/ds/Warehouse2V1.xml \
+                                        value="supplychain/warehouse/Warehouse.class
+                                                    osgi/version/ds/Warehouse1V1.xml
+                                                    osgi/version/ds/Warehouse2V1.xml
                                                     supplychain/warehouse/OSGiWarehouseComponentImpl.class" />
 
                                 </ant>
@@ -983,9 +983,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/version/ds/Warehouse2.mf" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/Warehouse.class \
-                                                    osgi/version/ds/Warehouse1V2.xml \
-                                                    osgi/version/ds/Warehouse2V2.xml \
+                                        value="supplychain/warehouse/Warehouse.class
+                                                    osgi/version/ds/Warehouse1V2.xml
+                                                    osgi/version/ds/Warehouse2V2.xml
                                                     supplychain/warehouse/OSGiWarehouseComponentImpl.class" />
 
                                 </ant>
@@ -1000,7 +1000,7 @@
                                     <property name="manifest.file.name"
                                         value="osgi/ws/HelloWorld.mf" />
                                     <property name="files.list"
-                                        value="helloworld/HelloWorld.class \
+                                        value="helloworld/HelloWorld.class
                                                     helloworld/OSGiHelloWorldImpl.class" />
 
                                 </ant>
@@ -1015,7 +1015,7 @@
                                     <property name="manifest.file.name"
                                         value="osgi/passbyref/Greetings.mf" />
                                     <property name="files.list"
-                                        value="helloworld/Greetings.class \
+                                        value="helloworld/Greetings.class
                                                     helloworld/OSGiGreetingsImpl.class" />
 
                                 </ant>
@@ -1030,8 +1030,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/callback/CallbackClient.mf" />
                                     <property name="files.list"
-                                        value="callback/client/CallbackClient.class \
-                                                    callback/client/CallbackCallback.class \
+                                        value="callback/client/CallbackClient.class
+                                                    callback/client/CallbackCallback.class
                                                     callback/client/OSGiCallbackClientImpl.class" />
 
                                 </ant>
@@ -1046,7 +1046,7 @@
                                     <property name="manifest.file.name"
                                         value="osgi/callback/CallbackService.mf" />
                                     <property name="files.list"
-                                        value="callback/service/CallbackService.class \
+                                        value="callback/service/CallbackService.class
                                                     callback/service/OSGiCallbackServiceImpl.class" />
 
                                 </ant>
@@ -1061,11 +1061,11 @@
                                     <property name="manifest.file.name"
                                         value="osgi/conversation/ConversationalClient.mf" />
                                     <property name="files.list"
-                                        value="conversation/client/ConversationalClientStatefulImpl.class \
-                                                    conversation/client/ConversationalClientStatelessImpl.class \
-                                                    conversation/client/ConversationalCallback.class \
-                                                    conversation/client/ConversationalClient.class \
-                                                    conversation/client/ConversationalClientServiceFactory.class \
+                                        value="conversation/client/ConversationalClientStatefulImpl.class
+                                                    conversation/client/ConversationalClientStatelessImpl.class
+                                                    conversation/client/ConversationalCallback.class
+                                                    conversation/client/ConversationalClient.class
+                                                    conversation/client/ConversationalClientServiceFactory.class
                                                     conversation/client/ConversationalClientActivator.class" />
 
                                 </ant>
@@ -1080,8 +1080,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/conversation/ConversationalReferenceClient.mf" />
                                     <property name="files.list"
-                                        value="conversation/referenceclient/ConversationalReferenceClient.class \
-                                                    conversation/referenceclient/ConversationalReferenceClientImpl.class \
+                                        value="conversation/referenceclient/ConversationalReferenceClient.class
+                                                    conversation/referenceclient/ConversationalReferenceClientImpl.class
                                                     conversation/referenceclient/ConversationalReferenceClientActivator.class" />
 
                                 </ant>
@@ -1096,10 +1096,10 @@
                                     <property name="manifest.file.name"
                                         value="osgi/conversation/ConversationalService.mf" />
                                     <property name="files.list"
-                                        value="conversation/service/ConversationalService.class \
-                                                    conversation/service/ConversationalServiceStatefulImpl.class \
+                                        value="conversation/service/ConversationalService.class
+                                                    conversation/service/ConversationalServiceStatefulImpl.class
                                                     conversation/service/ConversationalServiceStatelessImpl.class
-                                                    conversation/service/ConversationalServiceFactory.class \
+                                                    conversation/service/ConversationalServiceFactory.class
                                                     conversation/service/ConversationalServiceActivator.class" />
 
                                 </ant>
@@ -1114,10 +1114,10 @@
                                     <property name="manifest.file.name"
                                         value="osgi/conversation/ConversationalService.mf" />
                                     <property name="files.list"
-                                        value="conversation/ConversationalService.class \
-                                                    conversation/ConversationalServiceStatefulImpl.class \
+                                        value="conversation/ConversationalService.class
+                                                    conversation/ConversationalServiceStatefulImpl.class
                                                     conversation/ConversationalServiceStatelessImpl.class
-                                                    conversation/ConversationalServiceFactory.class \
+                                                    conversation/ConversationalServiceFactory.class
                                                     conversation/OSGiConversationTestActivator.class" />
 
                                 </ant>
@@ -1132,7 +1132,7 @@
                                     <property name="manifest.file.name"
                                         value="osgi/properties/StockQuote.mf" />
                                     <property name="files.list"
-                                        value="stockquote/StockQuote.class \
+                                        value="stockquote/StockQuote.class
                                                     stockquote/OSGiStockQuoteImpl.class" />
 
                                 </ant>
@@ -1147,8 +1147,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/properties/ds/StockQuote.mf" />
                                     <property name="files.list"
-                                        value="stockquote/StockQuote.class \
-                                                    osgi/properties/ds/StockQuote.xml \
+                                        value="stockquote/StockQuote.class
+                                                    osgi/properties/ds/StockQuote.xml
                                                     stockquote/OSGiStockQuoteComponentImpl.class" />
 
                                 </ant>
@@ -1163,8 +1163,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/properties/StockQuoteFactory.mf" />
                                     <property name="files.list"
-                                        value="stockquote/StockQuote.class \
-                                                    stockquote/OSGiStockQuoteImpl.class \
+                                        value="stockquote/StockQuote.class
+                                                    stockquote/OSGiStockQuoteImpl.class
                                                     stockquote/OSGiStockQuoteFactoryImpl.class" />
 
                                 </ant>
@@ -1179,8 +1179,8 @@
                                     <property name="manifest.file.name"
                                         value="osgi/properties/ds/StockQuoteFactory.mf" />
                                     <property name="files.list"
-                                        value="stockquote/StockQuote.class \
-                                                    osgi/properties/ds/StockQuoteFactory.xml \
+                                        value="stockquote/StockQuote.class
+                                                    osgi/properties/ds/StockQuoteFactory.xml
                                                     stockquote/OSGiStockQuoteComponentImpl.class" />
 
                                 </ant>
@@ -1195,12 +1195,12 @@
                                     <property name="manifest.file.name"
                                         value="osgi/sdo/ds/HelloWorldService.mf" />
                                     <property name="files.list"
-                                        value="helloworld/sdo/HelloWorldService.class \
-                                               osgi/sdo/ds/HelloWorldService.xml \
-                                               helloworld/sdo/impl/* \
-                                               helloworld/sdo/Name.class \
-                                               helloworld/sdo/getGreetings* \
-                                               helloworld/sdo/HelloworldFactory.class \
+                                        value="helloworld/sdo/HelloWorldService.class
+                                               osgi/sdo/ds/HelloWorldService.xml
+                                               helloworld/sdo/impl/*
+                                               helloworld/sdo/Name.class
+                                               helloworld/sdo/getGreetings*
+                                               helloworld/sdo/HelloworldFactory.class
                                                helloworld/sdo/HelloWorldServiceComponent.class" />
 
                                 </ant>
@@ -1215,9 +1215,9 @@
                                     <property name="manifest.file.name"
                                         value="osgi/sdo/ds/HelloWorldClient.mf" />
                                     <property name="files.list"
-                                        value="helloworld/sdo/client/HelloWorldClient.class \
-                                               osgi/sdo/ds/HelloWorldClient.xml \
-                                               sdo/ds/helloworldsdo.composite \
+                                        value="helloworld/sdo/client/HelloWorldClient.class
+                                               osgi/sdo/ds/HelloWorldClient.xml
+                                               sdo/ds/helloworldsdo.composite
                                                helloworld/sdo/client/HelloWorldClientComponent.class" />
 
                                 </ant>
@@ -1234,8 +1234,8 @@
                                     <property name="target.dir"
                                         value="." />
                                     <property name="files.list"
-                                        value="HelloWorldClient.componentType \
-                                               HelloWorldService.componentType \
+                                        value="HelloWorldClient.componentType
+                                               HelloWorldService.componentType
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>

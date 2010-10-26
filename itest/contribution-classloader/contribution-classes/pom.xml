@@ -82,8 +82,8 @@
                                     <property name="jar.file.name" value="SupplyChain.jar" />
                                     <property name="sca.contribution" value="supplychain-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/supplychain.composite \
-                                               supplychain/warehouse/JavaWarehouseComponentImpl.componentType \
+                                        value="supplychain/supplychain.composite
+                                               supplychain/warehouse/JavaWarehouseComponentImpl.componentType
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -93,11 +93,11 @@
                                     <property name="jar.file.name" value="CompleteSupplyChain.jar" />
                                     <property name="sca.contribution" value="complete-supplychain-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/supplychain.composite \
-                                               supplychain/customer/* \
-                                               supplychain/retailer/* \
-                                               supplychain/warehouse/* \
-                                               supplychain/shipper/* \
+                                        value="supplychain/supplychain.composite
+                                               supplychain/customer/*
+                                               supplychain/retailer/*
+                                               supplychain/warehouse/*
+                                               supplychain/shipper/*
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -107,7 +107,7 @@
                                     <property name="jar.file.name" value="Customer.jar" />
                                     <property name="sca.contribution" value="customer-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/customer/* \
+                                        value="supplychain/customer/*
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -117,7 +117,7 @@
                                     <property name="jar.file.name" value="Retailer.jar" />
                                     <property name="sca.contribution" value="retailer-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/retailer/* \
+                                        value="supplychain/retailer/*
                                                META-INF/sca-contribution.xml" />
                                 </ant>
                                 <ant antfile="./build-jar.xml" target="create-jar">
@@ -126,7 +126,7 @@
                                     <property name="jar.file.name" value="Shipper.jar" />
                                     <property name="sca.contribution" value="shipper-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/shipper/* \
+                                        value="supplychain/shipper/*
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -136,7 +136,7 @@
                                     <property name="jar.file.name" value="Warehouse.jar" />
                                     <property name="sca.contribution" value="warehouse-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/warehouse/* \
+                                        value="supplychain/warehouse/*
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -146,8 +146,8 @@
                                     <property name="jar.file.name" value="IllegalSupplyChain1.jar" />
                                     <property name="sca.contribution" value="illegal1-supplychain-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/illegalsupplychain.composite \
-                                               supplychain/warehouse/JavaWarehouseComponentImpl.componentType \
+                                        value="supplychain/illegalsupplychain.composite
+                                               supplychain/warehouse/JavaWarehouseComponentImpl.componentType
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -157,8 +157,8 @@
                                     <property name="jar.file.name" value="IllegalSupplyChain2.jar" />
                                     <property name="sca.contribution" value="illegal2-supplychain-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/illegalsupplychain.composite \
-                                               supplychain/warehouse/JavaWarehouseComponentImpl.componentType \
+                                        value="supplychain/illegalsupplychain.composite
+                                               supplychain/warehouse/JavaWarehouseComponentImpl.componentType
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -168,8 +168,8 @@
                                     <property name="jar.file.name" value="IllegalCustomer.jar" />
                                     <property name="sca.contribution" value="illegal-customer-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/customer/* \
-                                               supplychain/illegal/* \
+                                        value="supplychain/customer/*
+                                               supplychain/illegal/*
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -179,7 +179,7 @@
                                     <property name="jar.file.name" value="CustomerInterface.jar" />
                                     <property name="sca.contribution" value="customer-interface-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/customer/Customer.class \
+                                        value="supplychain/customer/Customer.class
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
@@ -189,7 +189,7 @@
                                     <property name="jar.file.name" value="CustomerImpl.jar" />
                                     <property name="sca.contribution" value="customer-impl-sca-contribution.xml" />
                                     <property name="files.list"
-                                        value="supplychain/customer/JavaCustomerComponentImpl.class \
+                                        value="supplychain/customer/JavaCustomerComponentImpl.class
                                                META-INF/sca-contribution.xml" />
 
                                 </ant>
