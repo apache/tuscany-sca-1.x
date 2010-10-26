@@ -1,5 +1,5 @@
-Hello World Erlang References Sample
-=================================
+Hello World Erlang Reference Sample
+===================================
 This sample demonstrates an SCA reference that uses a Erlang binding 
 
 The README in the samples directory (the directory above this) provides 
@@ -10,18 +10,18 @@ In order to run Erlang samples you need to have Erlang/OTP distribution installe
 epmd binary is required in your system path. See http://erlang.org for downloads.
 
 If you just want to run it to see what happens you need to run the server first 
-so open a command prompt, navigate to the helloworld-service-erlang sample directory 
+so open a command prompt, navigate to the helloworld-erlang-service sample directory 
 and do 
 
 ant run
 
 OR if you don't have ant, on Windows do
 
-java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-helloworld-service-erlang.jar helloworld.HelloWorldServer
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-helloworld-erlang-service.jar helloworld.HelloWorldServer
 
 and on *nix do
 
-java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-helloworld-service-erlang.jar helloworld.HelloWorldServer
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-helloworld-erlang-service.jar helloworld.HelloWorldServer
 
 
 Once the server is running open a command prompt, navigate to this sample 
@@ -31,11 +31,11 @@ ant run
 
 OR if you don't have ant, on Windows do
 
-java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-helloworld-reference-erlang.jar helloworld.HelloWorldErlangClient
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-helloworld-erlang-reference.jar helloworld.HelloWorldErlangClient
 
 and on *nix do
 
-java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-helloworld-reference-erlang.jar helloworld.HelloWorldErlangClient
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-helloworld-erlang-reference.jar helloworld.HelloWorldErlangClient
 
 
 Sample Overview
@@ -44,7 +44,7 @@ The sample provides a component that has a reference with a Erlang binding.
 The binding refers to Erlang module and communicates with a service
 exposed by the helloworld-service-erlang sample. 
 
-helloworld-reference-erlang/
+helloworld-erlang-reference/
   src/
     main/
       java/
@@ -78,15 +78,15 @@ Building And Running The Sample Using Ant
 -----------------------------------------
 With the binary distribution the sample can be built and run using Ant. Before
 you do this start up the service that the reference will talk to. To do this
-run up the helloworld-service-erlang test. Take a look at the README in that sample
+run up the helloworld-erlang-service sample. Take a look at the README in that sample
 and you will see you need the following commands
 
-cd helloworld-service-erlang
+cd helloworld-erlang-service
 ant run
 
 Once done you can now compile and run this sample using the following commands;
 
-cd helloworld-reference-erlang
+cd helloworld-erlang-reference
 ant compile
 ant run
 
@@ -110,9 +110,9 @@ Building And Running The Sample Using Maven
 -------------------------------------------
 With either the binary or source distributions the sample can be built and run 
 using Maven as follows. When using Maven you don't need to run the helloworld-
-service-erlang sample first as the JUnit test does this for you. 
+erlang-service sample first as the JUnit test does this for you. 
 
-cd helloworld-reference-erlang
+cd helloworld-erlang-reference
 mvn
 
 You should see the following output from the test phase.

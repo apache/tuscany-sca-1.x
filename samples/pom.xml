@@ -93,9 +93,7 @@
                 <module>feed-aggregator-webapp</module>
                 <module>helloworld-bpel</module>
                 <module>helloworld-dojo-webapp</module>
-                <!-- the following is excluded from pom-distribution.xml -->
                 <module>helloworld-erlang-reference</module>
-                <!-- the following is excluded from pom-distribution.xml -->
                 <module>helloworld-erlang-service</module>
                 <!-- the following is excluded from pom-distribution.xml -->
                 <module>helloworld-jms-webapp</module>
