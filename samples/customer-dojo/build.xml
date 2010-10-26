@@ -35,7 +35,6 @@
         </javac>
         <copy todir="target/classes">
             <fileset dir="src\main\resources"/>
-            <fileset dir="src\main\resources"/>
         </copy>
     	
         <ant antfile="./build-dojo.xml" target="install-dojo-nomaven">
