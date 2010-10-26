@@ -60,10 +60,6 @@
     <target name="package" depends="compile"/>
 
     <target name="clean">
-        <delete includeemptydirs="true">
-            <fileset dir="target"/>
-        </delete>
+        <delete dir="target" includeemptydirs="true"/>
     </target>
-
-
 </project>
