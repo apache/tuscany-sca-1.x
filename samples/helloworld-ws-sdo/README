@@ -1,6 +1,6 @@
-Hello World Web Service References using SDO Sample
-===================================================
-This sample demonstrates an SCA reference that uses a web service binding which works with SDO.  
+Hello World Web Service and Reference using SDO Sample
+======================================================
+This sample demonstrates an SCA service and reference that use a web service binding which works with SDO.
 
 The README in the samples directory (the directory above this) provides 
 general instructions about building and running samples. Take a look there 
@@ -8,68 +8,37 @@ first.
 
 To run this sample
 ------------------
-This sample is dependent on helloworld-ws-service. Open a command prompt to start
-the service. If you are running ant do the following:
+This sample includes both a server and a client. First, open a command prompt to start the server.
+If you are running ant do the following:
 
-cd helloworld-ws-service
-ant run
+cd helloworld-ws-sdo
+ant run-server
 
-if you don't have ant, issue one of the following commands for windows or *nix:
+OR if you don't have ant, on Windows do
 
-java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-helloworld-ws-service.jar helloworld.HelloWorldServer
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-helloworld-ws-sdo.jar helloworld.HelloWorldServer
 
 and on *nix do
 
-java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-helloworld-ws-service.jar helloworld.HelloWorldServer
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-helloworld-ws-sdo.jar helloworld.HelloWorldServer
 
 You should see the following output:
 
 Buildfile: build.xml
 
 run-server:
-     [java] log4j:WARN No appenders could be found for logger (org.apache.axiom.
-om.util.StAXUtils).
-     [java] log4j:WARN Please initialize the log4j system properly.
-     [java] Aug 24, 2007 11:17:33 AM org.apache.catalina.core.StandardEngine sta
-rt
-     [java] INFO: Starting Servlet Engine: Apache Tomcat/6.0.10
-     [java] Aug 24, 2007 11:17:34 AM org.apache.catalina.startup.ContextConfig d
-efaultWebConfig
-     [java] INFO: No default web.xml
-     [java] Aug 24, 2007 11:17:34 AM org.apache.catalina.startup.DigesterFactory
- register
-     [java] WARNING: Could not get url for /javax/servlet/jsp/resources/jsp_2_0.
-xsd
-     [java] Aug 24, 2007 11:17:34 AM org.apache.catalina.startup.DigesterFactory
- register
-     [java] WARNING: Could not get url for /javax/servlet/jsp/resources/web-jspt
-aglibrary_1_1.dtd
-     [java] Aug 24, 2007 11:17:34 AM org.apache.catalina.startup.DigesterFactory
- register
-     [java] WARNING: Could not get url for /javax/servlet/jsp/resources/web-jspt
-aglibrary_1_2.dtd
-     [java] Aug 24, 2007 11:17:34 AM org.apache.catalina.startup.DigesterFactory
- register
-     [java] WARNING: Could not get url for /javax/servlet/jsp/resources/web-jspt
-aglibrary_2_0.xsd
-     [java] Aug 24, 2007 11:17:34 AM org.apache.catalina.startup.DigesterFactory
- register
-     [java] WARNING: Could not get url for /javax/servlet/resources/j2ee_web_ser
-vices_1_1.xsd
-     [java] Aug 24, 2007 11:17:34 AM org.apache.coyote.http11.Http11Protocol ini
-t
-     [java] INFO: Initializing Coyote HTTP/1.1 on http-8085
-     [java] Aug 24, 2007 11:17:34 AM org.apache.coyote.http11.Http11Protocol sta
-rt
-     [java] INFO: Starting Coyote HTTP/1.1 on http-8085
-     [java] Aug 24, 2007 11:17:34 AM org.apache.tuscany.sca.http.tomcat.TomcatSe
-rver addServletMapping
-     [java] INFO: Added Servlet mapping: http://localhost:8085/HelloWorldService
-
+     [java] 30-Sep-2010 14:45:13 org.apache.tuscany.sca.node.impl.NodeImpl <init>
+     [java] INFO: Creating node: helloworldws.composite
+     [java] 30-Sep-2010 14:45:13 org.apache.tuscany.sca.node.impl.NodeImpl configureNode
+     [java] INFO: Loading contribution: file:/E:/td/test161b/samples/helloworld-ws-sdo/target/sample-helloworld-ws-sdo.jar
+     [java] 30-Sep-2010 14:45:15 org.apache.tuscany.sca.node.impl.NodeImpl start
+     [java] INFO: Starting node: helloworldws.composite
+     [java] 30-Sep-2010 14:45:16 org.apache.tuscany.sca.http.jetty.JettyServer addServletMapping
+     [java] INFO: Added Servlet mapping: http://GrosMorne:8085/HelloWorldService
      [java] HelloWorld server started (press enter to shutdown)
 
-The server is now ready.
 
+The server is now ready.
 
 Now, open another command window to run the client.  
 
@@ -82,16 +51,19 @@ java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-helloworld-ws-sdo.jar 
 
 and on *nix do
 
-java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-helloworld-ws-sdo.jar helloworl.HelloWorldClient
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-helloworld-ws-sdo.jar helloworld.HelloWorldClient
 
 You should be able to see the following result:
 
 Buildfile: build.xml
 
 run:
-     [java] log4j:WARN No appenders could be found for logger (org.apache.axiom.
-om.util.StAXUtils).
-     [java] log4j:WARN Please initialize the log4j system properly.
+     [java] 30-Sep-2010 14:45:21 org.apache.tuscany.sca.node.impl.NodeImpl <init>
+     [java] INFO: Creating node: helloworldwsclient.composite
+     [java] 30-Sep-2010 14:45:21 org.apache.tuscany.sca.node.impl.NodeImpl configureNode
+     [java] INFO: Loading contribution: file:/E:/td/test161b/samples/helloworld-ws-sdo/target/sample-helloworld-ws-sdo.jar
+     [java] 30-Sep-2010 14:45:23 org.apache.tuscany.sca.node.impl.NodeImpl start
+     [java] INFO: Starting node: helloworldwsclient.composite
      [java] Injected helloWorldService
      [java] Called getGreetings
      [java] Hello David Haney
@@ -102,9 +74,9 @@ Total time: 9 seconds
 
 Sample Overview
 ---------------
-The sample provides a single component that is wired to a reference with a 
-web service binding. The binding refers to WSDL that identifies the service
-exposed by the helloworld-ws-service sample. 
+The sample provides a server component that exposes a service using a web service
+binding, and a client component with a reference that invokes the service using a 
+web service binding. The binding refers to WSDL that describes the service.
 
 helloworld-ws-sdo/
   src/
@@ -112,8 +84,14 @@ helloworld-ws-sdo/
       java/
         helloworld/
           HelloWorldService.java          - interface description for 
-                                            HelloWorldServiceComponent
-          HelloWorldServiceComponent.java - component implementation
+                                            HelloWorldServiceComponent and
+                                            HelloWorldImpl
+          HelloWorldServiceComponent.java - client component implementation
+          HelloWorldImpl.java             - server component implementation
+          HelloWorldServer.java           - starts the SCA Runtime and 
+                                            deploys the helloworldws
+                                            .composite and then waits for the
+                                            service to be called via web services
           HelloWorldClient.java           - starts the SCA Runtime and 
                                             deploys the helloworldwsclient
                                             .composite. It then calls the 
@@ -122,11 +100,14 @@ helloworld-ws-sdo/
         wsdl
           helloworld.wsdl                 - the service description that the 
                                             SCA reference uses to bind to service. 
+        helloworldws.composite            - the SCA assembly for the server
+        helloworldwsclient.composite      - the SCA assembly for the client
       
     test/
       java/
         helloworld/
           HelloWorldClientTestCase.java   - JUnit test case
+          HelloWorldTestServer.java       - server launched by the JUnit test case
         helloworld-ws-sdo.png             - a pictorial representation of the 
                                             sample .composite file
   build.xml                               - the Ant build file
@@ -134,30 +115,35 @@ helloworld-ws-sdo/
 
 Building And Running The Sample Using Ant
 -----------------------------------------
-You can build and run the sample with the binary distribution using Ant. 
-Make sure that you have started helloworld-ws-service which this sample is dependent on
-in a separate command window. You can either follow the instruction at the begining of this 
-sample file or if you want to build and run the service, follow the README under helloworld-ws-service.
-
-Now, let's build and run helloworld-ws-sdo sample:
+You can build and run the sample with the binary distribution using Ant. Enter the 
+following commands:
 
 cd helloworld-ws-sdo                                             
 ant 
-ant run 
+
+To run the sample, you need to run the server and then run the client.
+First, run the server.
+
+cd helloworld-ws-sdo                                             
+ant run-server
+
+In a separate command prompt, run the client.
+
+cd helloworld-ws-sdo                                             
+ant run
 
 You should see the following output from the run target.
 
 run:
-     [java] log4j:WARN No appenders could be found for logger (org.apache.axiom.
-om.util.StAXUtils).
-     [java] log4j:WARN Please initialize the log4j system properly.
      [java] Injected helloWorldService
      [java] Called getGreetings
-     [java] Hello World
+     [java] Hello David Haney
 
 Building And Running The Sample Using Maven 
 -------------------------------------------
-You can build and run the sample with either the binary or source distributions using Maven. Please note that you do not need to start helloworld-ws-service in this case since Maven does this for you.
+You can build and run the sample with either the binary or source distributions using Maven.
+Please note that you do not need to start the server in this case since Maven does this for you.
+Enter the following commands:
 
 cd helloworld-ws-sdo
 mvn
