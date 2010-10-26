@@ -45,8 +45,7 @@
     </component>
 
     <reference name="StockQuoteReference" promote="AccountService/stockQuote">
-        <binding.ws wsdlElement="http://bigbank/#wsdl.port(StockQuoteService/StockQuotePort)" />
-        <!--binding.ws wsdlElement="http://www.webserviceX.NET/#wsdl.port(StockQuote/StockQuoteSoap)" /-->
+        <binding.ws wsdlElement="http://www.webserviceX.NET/#wsdl.port(StockQuote/StockQuoteSoap)" />
     </reference>
 
 </composite>
