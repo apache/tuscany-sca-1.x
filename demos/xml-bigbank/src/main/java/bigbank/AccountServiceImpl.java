@@ -28,6 +28,7 @@ import org.apache.axiom.om.OMElement;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.spi.LoggerRepository;
+import org.apache.tuscany.sca.binding.ws.axis2.Axis2BindingInvoker;
 import org.osoa.sca.ServiceRuntimeException;
 import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
@@ -76,19 +77,17 @@ public class AccountServiceImpl implements AccountService {
             // first try to get a live stock quote from the web service
             String xml = null;
             try {
+                // set a small timeout value in case the server doesn't respond
+                Axis2BindingInvoker.GLOBAL_AXIS_TIMEOUT = 8000L;
+
                 OMElement quotes = stockQuote.GetQuote(request);
                 xml = quotes.getText();
                 if (!xml.startsWith("<")) {
                     System.out.println("Server responded: " + xml);
                     throw new IllegalStateException("Unexpected response from server");
                 }
-            } catch (Exception e) {
-                if (e.getMessage().contains("Transport error: 503")) {
-                    // server is down, use local historical data
-                } else {
-                    // report any other errors
-                    throw e;
-                }
+            } catch (ServiceRuntimeException e) {
+                // server isn't available, use local historical data
             
             // restore the previous logging setting
             } finally {
