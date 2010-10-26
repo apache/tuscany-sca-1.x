@@ -1,7 +1,31 @@
-Changes With Apache Tuscany SCA 1.6.1 September 2010 
-====================================================
+Changes With Apache Tuscany SCA 1.6.1 November 2010 
+===================================================
 
 Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
+TUSCANY-3743 binding.atom returns incorrect HTTP response code from If-Unmodified-Since
+TUSCANY-3742 binding.atom service problems with If-Modified-Since and If-Unmodified-Since headers
+TUSCANY-3737 feed-aggregator and feed-agggregator-webapp samples throw java.io.CharConversionException
+TUSCANY-3735 binding.atom can't connect to Apache Tuscany blog Atom feed
+TUSCANY-3734 binding.atom renders non-ASCII UTF-8 characters incorrectly
+TUSCANY-3730 Store tutorial fails to run from binary distribution because of missing database files
+TUSCANY-3729 Delete directories from 1.6.1 branch and 1.x trunk
+TUSCANY-3726 The store-dojo sample and its runtime dependencies should be included in the binary distribution
+TUSCANY-3723 binding-erlang modules and samples should be included in the binary distribution
+TUSCANY-3722 Tuscany SCA Java 1.x binary distribution could include an incorrect jaxws-api-2.1.jar
+TUSCANY-3707 itest/databindings/jaxb-bottom-up fails if not connected to internet
+TUSCANY-3706 Build failures in itests when using JDK 5
+TUSCANY-3699 samples/helloworld-ws-sdo README instructions are wrong and produce incorrect results
+TUSCANY-3698 JMS Binding erases the stack trace of RuntimeException's
+TUSCANY-3697 samples/osgi-supplychain ant script builds incorrect jar files
+TUSCANY-3693 tutorials/store/warehouse-spring doesn't work
+TUSCANY-3692 tutorials/store/store-eu doesn't work
+TUSCANY-3690 demos/xml-bigbank fails because remote services aren't available
+TUSCANY-3689 databinding-saxon corrupts XML documents when transforming from XMLStreamReader to NodeInfo
+TUSCANY-3685 build.xml file in samples/implementation-pojo-extension doesn't have a run target
+TUSCANY-3684 build.xml file in samples/domain-management doesn't work
+TUSCANY-3683 Service with RMI Binding cannot be promoted
+TUSCANY-3680 "clean" target in generated build.xml files fails with empty target directory
+TUSCANY-3678 Tuscany SCA source distribution contents don't match binary distribution
 TUSCANY-3676 Problems using Eclipse with samples in the Tuscany SCA Java binary distribution
 TUSCANY-3639 Wire interceptors not created until binding interceptors have executed in Service wire
 TUSCANY-3634 JMS Session is not closed when replyDest is null, then OutOfMemoroy
@@ -19,21 +43,117 @@ TUSCANY-3490 Tuscany SCA binary distribution doesn't include implementation.web 
 TUSCANY-3475 Travel sample launcher for payment-bpel hangs before returning
 TUSCANY-3466 Cannot stop component or its services and references if one of them fails to start
 TUSCANY-3193 Domain Manager GUI does not put <binding.sca> entries in generated node confiig files
+TUSCANY-3037 binding-notification-producer failure on message send
+TUSCANY-1794 mvn builds larger sample-calculator-webapp.war than ant package
 TUSCANY-242  SCDL loader should trim the whitespaces when the element text is parsed
 
 Other commits:
-r997853: Delete .project file from svn
-r997848: Fix svn properties to ignore generated files
-r997840: Delete .project files from svn
-r997683: Fix incorrect mvn project names
-r997651: Fix svn properties to ignore generated files
-r997254: Remove tutorials/travelsample directory from source and binary distributions
-r996380: Update release documentation files for 1.6.1
-r959912: Add java.net2 repository (needed for mimepull-1.2.jar)
-r959536: Add build-dependency.xml to svn:ignore list
-r942469: Exclude junit 3.8 dependency brought in by wss4j and use junit 4.5 instead
-r921260: add ignores
-r915259: Correct the composite name
+r1027728 Update version number of jar file in README description
+r1026272 Add note to README about possible delays receiving chat messages
+r1026251 Remove explicit host name and port number from sample files
+r1026240 Change RSS feed to Atom feed so that it works with the atomAggregator service
+r1025930 Add test to ensure If-Modified-Since returns 304 if feed is unmodified
+r1025533 Fix typos
+r1023826 Use jar file contributions so that the store tutorial works when running from the binary distribution
+r1023378 Replace target/classes by target/demo-bigbank.jar in test classpath
+r1023375 Change run target to unzip jar file into classes directory (fix problem introduced in r1003117)
+r1023240 Exclude unwanted files from source distribution
+r1022055 Replace compile-time dependency on jaxws-rt by jaxws-api
+r1006269 Replace compile-time dependency on jaxws-rt by jaxws-api
+r1006263 Add compile-time dependency on binding-ws-axis2
+r1003145 Add timeout for stock quote service invocation and improve handling of connectivity errors
+r1003122 Remove redundant classpath dependencies
+r1003119 Remove redundant saxon dependency
+r1003117 Fix run target problem with using classes directory instead of jar file, and remove redundant saxon dependency
+r1003051 Remove redundant classpath entries
+r1003026 Fix incorrect shutdown instructions
+r1002885 Remove bundle jars under target/.felix from binary distribution
+r1002862 Add instructions for building the tutorial
+r1002859 Add build.xml to tutorials directory in binary distribution
+r1002848 Replace tabs by spaces
+r1002835 Fix indentation
+r1002816 Delete duplicate lines
+r1002811 Delete duplicate line
+r1002093 Fix resource exclusion patterns so that files under the target directory aren't incorrectly treated as resources
+r1002090 Use consistent resource exclusion patterns in all build files for the Store tutorial
+r1002088 Update README instructions
+r1002086 Add main class so that a run target is generated in build.xml
+r1002085 Add explicit ${basedir} references to ensure paths are correct when running from a top-level build
+r1002083 Add run targets to launch the nodes
+r1002077 Fix cut and paste error
+r1002075 Use hand-built build.xml file containing code to create the sample database
+r1002074 Use hand-built build.xml file containing code to create the sample database
+r1001759 Fix tuscany.version property setting
+r1001737 Fix main class name
+r1001710 Fix incorrect substitution parameters in message template
+r1001709 Add missing samples to README and tidy up some text
+r1001702 Update properties for generated build.xml
+r1001694 Generate build.xml instead of build-dependency.xml
+r1001501 Fix typos
+r1001069 Describe running and building the demo separately
+r1001060 Describe running and building the demo separately
+r1001054 Decouple run target from compile target
+r1001047 Put dojo files in correct location in jar file and include dijit
+r1001042 Delete redundant files and redundant entries in pom.xml and build.xml
+r1001036 Fix typo on web page
+r1000963 Fix typos and add maven build information
+r1000905 Explain that the WAR file is intentionally omitted from the binary distribution
+r1000902 Fix problems with the README file
+r1000896 Update README instructions to cover the case of the servlet container not using port 8080
+r1000887 Include dijit in maven build as well as ant build
+r1000878 Delete temporary dojo directory after maven packaging
+r1000868 Remove unused dojo dependency
+r1000787 Improvements to the README instructions
+r1000769 Minor improvements to the README instructions
+r1000768 Fix a numbe of problems in the README instructions
+r1000642 Add code to avoid a hang on exit with Tuscany SCA 1.6.1 (workaround for TUSCANY-3277)
+r1000626 Tidy up the README instructions to not require compiling before running
+r1000619 Tidy up the README instructions to cover all options for building and running
+r1000425 Update CORBA sample READMEs to include instructions for using ant
+r1000266 Fix notification sample build.xml and README files to provide clear instructions that work
+r1000237 Fix confusing prompt message
+r1000026 Add junit test dependency
+r999922 Exclude generated eclipse project files from the binary distribution and fix other inconsistencies
+r999921 Exclude generated eclipse project files from the source distribution
+r999920 Keep the generated tuscany-sca-manifest.jar in sync with the contents of the lib directory
+r999910 Update instructions for running this sample without needing to compile it first, and document the issue described in TUSCANY-1994
+r999904 Unzip files to target/database and target/classes before running sample (see TUSCANY-1994)
+r999902 Exclude geronimo-activation_1.1_spec and junit dependencies
+r999901 Fix incorrect version number for commons-lang and exclude junit dependencies
+r999899 Change junit dependency to test scope
+r999898 Change junit dependency to test scope
+r998521 Reorganize directory structure to make import into Eclipse work
+r998370 Reorder modules to satisfy dependency relationships
+r998367 Reorder modules to satisfy dependency relationships
+r998365 Fix svn:ignore property to add build.xml
+r998341 Add build.xml to samples directory
+r998332 Fix README references to incorrect module name
+r998330 Make "compile" the default target in build.xml
+r998328 Add missing code generation to build.xml file
+r998270 Add build.xml file to demos directory
+r998259 Add build.xml file to tutorials/store directory
+r998250 Replace generated build.xml file by a handwritten one
+r998248 Correct dependency in pom so that generated build.xml file is correct
+r998247 Generate a build.xml file from the maven build
+r998238 Add source directory to make the generated build.xml file work correctly
+r998237 Add build.xml file to svn with generated dependencies
+r998155 Delete generated build.xml files from svn
+r998083 Update recommended MAVEN_OPTS setting
+r998082 Add build.xml file with generated dependencies
+r998069 Add build.xml file with generated dependencies
+r998020 Generate build.xml instead of build-dependency.xml
+r997853 Delete .project file from svn
+r997848 Fix svn properties to ignore generated files
+r997840 Delete .project files from svn
+r997683 Fix incorrect mvn project names
+r997651 Fix svn properties to ignore generated files
+r997254 Remove tutorials/travelsample directory from source and binary distributions
+r996380 Update release documentation files for 1.6.1
+r959912 Add java.net2 repository (needed for mimepull-1.2.jar)
+r959536 Add build-dependency.xml to svn:ignore list
+r942469 Exclude junit 3.8 dependency brought in by wss4j and use junit 4.5 instead
+r921260 add ignores
+r915259 Correct the composite name
 
 Changes With Apache Tuscany SCA 1.6 January 2010 
 ==================================================
