@@ -301,7 +301,7 @@
                 </plugins>       
             </build> 
         </profile>
-
+<!--
         <profile>
             <id>osgi</id>
             <activation>
@@ -332,7 +332,7 @@
                  </plugins>       
             </build> 
         </profile>  
-
+-->
         <profile>
             <id>dependencies</id>
             <modules>

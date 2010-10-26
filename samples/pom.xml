@@ -18,22 +18,6 @@
  * under the License.    
 -->
 <project>
-    <!--
-       The pom-distribution.xml file in this directory is a modified version
-       of this pom.xml file and is used as the pom.xml for the samples
-       directory of the binary distribution.  Any updates to this pom.xml
-       file must be applied to pom-distribution.xml to keep the two files
-       in sync (except where marked).
-       
-       The samples directory of the binary distribution needs to contain
-       a pom.xml so that users can run "mvn eclipse:eclipse" to generate
-       Eclipse project files for all the samples.  We can't just copy the
-       samples pom.xml from the svn source tree to the binary distribution
-       because there are 10 samples in the svn source tree (and the source
-       distribution) that aren't included in the binary distribution.  This
-       mismatch is being tracked as issue TUSCANY-3678 and it should be
-       possible to remove pom-distribution.xml when this issue is fixed.
-    -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
@@ -67,27 +51,22 @@
                 <module>calculator</module>
                 <module>calculator-corba-reference</module>
                 <module>calculator-corba-service</module>
-                <!-- the following is excluded from pom-distribution.xml -->
-                <module>calculator-lean</module>
+                <module>calculator-lean</module> <!-- not released in 1.6.1 -->
                 <module>calculator-distributed</module>
                 <module>calculator-implementation-policies</module>
                 <module>calculator-rmi-reference</module>
                 <module>calculator-rmi-service</module>
                 <module>calculator-script</module>
                 <module>calculator-webapp</module>
-                <!-- the following is excluded from pom-distribution.xml -->
-                <module>calculator-ws-secure-webapp</module>
+                <module>calculator-ws-secure-webapp</module> <!-- not released in 1.6.1 -->
                 <module>calculator-ws-webapp</module>
                 <module>callback-ws-client</module>
                 <module>callback-ws-service</module>
                 <module>callbacks-jms</module>
                 <module>chat-webapp</module>
-                <!-- the following is excluded from pom-distribution.xml -->
-                <module>customer-dojo</module>
-                <!-- the following is excluded from pom-distribution.xml -->
-                <module>customer-dojo-webapp</module>
+                <module>customer-dojo</module> <!-- not released in 1.6.1 -->
+                <module>customer-dojo-webapp</module> <!-- not released in 1.6.1 -->
                 <module>databinding-echo</module>
-                <!--module>domain-webapp</module-->
                 <module>domain-management</module>
                 <module>feed-aggregator</module>
                 <module>feed-aggregator-webapp</module>
@@ -95,8 +74,7 @@
                 <module>helloworld-dojo-webapp</module>
                 <module>helloworld-erlang-reference</module>
                 <module>helloworld-erlang-service</module>
-                <!-- the following is excluded from pom-distribution.xml -->
-                <module>helloworld-jms-webapp</module>
+                <module>helloworld-jms-webapp</module> <!-- not released in 1.6.1 -->
                 <module>helloworld-jsonrpc-webapp</module>
                 <module>helloworld-reference-jms</module>
                 <module>helloworld-service-jms</module>
@@ -104,8 +82,7 @@
                 <module>helloworld-ws-service-jms</module>
                 <module>helloworld-ws-service-secure</module>
                 <module>helloworld-ws-reference</module>
-                <!-- the following is excluded from pom-distribution.xml -->
-                <module>helloworld-ws-reference-lean</module>
+                <module>helloworld-ws-reference-lean</module> <!-- not released in 1.6.1 -->
                 <module>helloworld-ws-reference-jms</module>
                 <module>helloworld-ws-reference-secure</module>
                 <module>helloworld-ws-sdo</module>
@@ -116,8 +93,7 @@
                 <module>implementation-crud-extension</module>
                 <module>implementation-notification</module>
                 <module>implementation-pojo-extension</module>
-                <!-- the following is excluded from pom-distribution.xml -->
-                <module>loanapplication</module>
+                <module>loanapplication</module> <!-- not released in 1.6.1 -->
                 <module>osgi-supplychain</module>
                 <module>photo-gallery</module>
                 <module>quote-xquery</module>
@@ -132,10 +108,10 @@
                 <module>store-dojo</module>
                 <module>store-webapp</module>
                 <module>store-secure</module>
-                <module>store-distributed</module>
+                <module>store-distributed</module> <!-- not released in 1.6.1 -->
                 <module>supplychain</module>
                 <module>web-resource</module>
-                <module>zipcode-jaxws</module>
+                <module>zipcode-jaxws</module> <!-- not released in 1.6.1 -->
             </modules>
         </profile>
     </profiles>

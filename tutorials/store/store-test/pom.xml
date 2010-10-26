@@ -136,14 +136,14 @@
             <version>1.7-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
-
+<!--
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-contribution-jee-impl</artifactId>
             <version>1.7-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
-
+-->
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-ejb</artifactId>
