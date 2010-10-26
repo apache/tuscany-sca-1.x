@@ -3,8 +3,8 @@ The Apache Tuscany SCA Samples
 The Apache Tuscany SCA samples are built as part of the main Maven build and 
 run, using the provided JUnit test cases, as tests in the Maven build.
 
-In the binary distribution of Apache Tuscany most samples can also 
-be run using the provided Ant build.xml files. These show the samples running 
+In the binary distribution of Apache Tuscany the samples can also be built 
+and run using the provided Ant build.xml files. These show the samples running 
 from a simple main() method without the need for a JUnit test case. 
 
 In these notes text that appears in angled brackets like this <example> means 
@@ -21,7 +21,7 @@ Sample Overview
 The samples generally show off different features of the SCA runtime
 and the extensions that come packaged with it.
 
-binding-notification-broker        - A broker for notificatione
+binding-notification-broker        - A broker for notifications
 binding-notification-consumer      - A consumer of notifications
 binding-notification-producer      - A producer of notifications
 
@@ -44,7 +44,9 @@ calculator-webapp                  - Calculator running inside a web app
 calculator-ws-webapp               - Calculator running inside a web app also 
                                      showing webservices binding
 
-callbck-ws-client                  - The client for showing callbacks across web services
+callbacks-jms                      - Shows how to use callbacks with JMS
+
+callback-ws-client                 - The client for showing callbacks across web services
 callback-ws-service                - The server for showing callbacks across web serviced
 
 chat-webapp                        - A simple chat style web app demonstrating
@@ -52,7 +54,9 @@ chat-webapp                        - A simple chat style web app demonstrating
 
 databinding-echo                   - An SCA application that shows how databindings 
                                      transform data
-                    
+
+domain-management                  - Shows how to use domain management APIs
+
 feed-aggregator                    - Demonstrates using the ATOM binding
 feed-aggregator-webapp             - feed-aggregator running in webapp
 
@@ -62,13 +66,17 @@ helloworld-bpel                    - Demonstrates an SCA component invoking a BP
 helloworld-dojo-webapp             - An SCA application that exposes a service using 
                                      JSONRPC and a client using the Dojo toolkit
 helloworld-jsonrpc-webapp          - helloworld using jsonrpc binding
+helloworld-reference-jms           - The client side of a hello world sample that uses a 
+                                     JMS binding (requires helloworld-service-jms)
+helloworld-service-jms             - The server side of a hello world sample that uses a 
+                                     JMS binding
 helloworld-ws-reference            - The client side of a hello world sample that uses a 
                                      web service binding (requires helloworld-ws-service)
 helloworld-ws-service              - The server side of a hello world sample that uses a 
                                      web service binding
 helloworld-ws-reference-jms        - The client side of a hello world sample that uses a 
                                      web service binding with SOAP/JMS (requires 
-                                     helloworld-ws-service)
+                                     helloworld-ws-service-jms)
 helloworld-ws-service-jms          - The server side of a hello world sample that 
                                      uses a web service binding with SOAP/JMS
 helloworld-ws-reference-secure     - The client side of a hello world sample that 
@@ -78,25 +86,35 @@ helloworld-ws-service-secure       - The client side of a hello world sample tha
 helloworld-ws-sdo                  - helloworld using ws binding and SDO
 helloworld-ws-sdo-webapp           - helloworld using ws binding and SDO within a webapp
 
+holder-ws-service                  - Sample web service that uses a JAX-WS holder
+
 implementation-composite           - Shows how SCA composites are used 
                      
 osgi-supplychain                   - SCA asynchronous API with OSGi and Java 
                                      implementation types
 
+photo-gallery                      - A sample SCA picture gallery application
+
+quote-xquery                       - Demonstrate SCA components using XQuery
+
 simple-bigbank                     - A banking application built with java components 
                                      and local wire
+
 simple-bigbank-spring              - A banking application showing how SCA works with Spring
+spring-bigbank-calculator          - part of the simple-bigbank-spring sample
+spring-bigbank-checkaccount        - part of the simple-bigbank-spring sample
+spring-bigbank-stockquote          - part of the simple-bigbank-spring sample
 
 simple-callback                    - demonstrates the callback interface
 simple-callback-ws                 - demonstrates use of callback interface across WS binding
 
 store                              - Step by step guide for creating an online store
+store-secure                       - the Store application using security policies
+store-webapp                       - the Store application running as a webapp 
 
 supplychain                        - shows how asynchronous callbacks can be used
 
 web-resource                       - Demonstrates using an SCA Web resource component
-
-quote-xquery                       - Demonstrate SCA components using XQuery
 
 Samples for building extensions
 -------------------------------
@@ -109,12 +127,12 @@ sample.
 
 implementation-crud-extension - Shows how to build new implementation type 
                                 extensions
-implementation-crud        - A sample application that exercises the new 
-                             implementation extensions
-binding-echo-extension     - Shows how to build new binding extensions
-binding-echo               - A sample application that exercises the new 
-                             binding extension
-implementation-notifiaction- Illustrates the use of <implementation.notification/>
+implementation-crud           - A sample application that exercises the new 
+                                implementation extensions
+binding-echo-extension        - Shows how to build new binding extensions
+binding-echo                  - A sample application that exercises the new 
+                                 binding extension
+implementation-notification   - Illustrates the use of <implementation.notification/>
 implementation-pojo-extension - shows how new implementation types are constructed 
 
 Sample Layout
@@ -313,5 +331,3 @@ In a new or existing workspace
 
 The details of how to do this for other development environments will
 vary but the process will be similar. 
-
-
