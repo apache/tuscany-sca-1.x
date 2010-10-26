@@ -56,6 +56,11 @@ public class AggregatorTestCase {
     
     @Test
     public void testAggregator() throws Exception {
+        // this test needs an internet connection
+        if (!internetConnected()) {
+            return;
+        }
+
         Entry<String, Item>[] entries = aggregatorService.getAll();
         
         Assert.assertNotNull(entries);
@@ -63,6 +68,22 @@ public class AggregatorTestCase {
         
         for(int pos = 0; pos < entries.length; pos++) {
             System.out.println(">>> Entry[" + pos + "] - " + entries[pos].getData().getTitle());
+        }
+    }
+
+    private static boolean internetConnected() {
+        try {
+            // see whether an internet connection is available 
+            Socket testInternet = new Socket("tuscany.apache.org", 80);
+            testInternet.close();
+
+            // internet connection available
+            return true;
+
+        } catch (Exception e) {
+            // no internet connection
+            System.out.println("Unable to run test because no internet connection available");
+            return false;
         }
     }
 }
