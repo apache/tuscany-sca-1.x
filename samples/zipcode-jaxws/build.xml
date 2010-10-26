@@ -21,49 +21,49 @@
 ]>    
 
 <project name="zipcode-jaxws" default="compile">
-	&buildDependency;
-	
-	<property name="test.class" value="zipcode.ZipCodeClient" />
-	<property name="test.jar"   value="sample-zipcode-jaxws.jar" />
-	
+    &buildDependency;
+    
+    <property name="test.class" value="zipcode.ZipCodeClient" />
+    <property name="test.jar"   value="sample-zipcode-jaxws.jar" />
+    
     <target name="compile" depends="download-wsdl">
-		<mkdir dir="target/classes"/>
-		<javac destdir="target/classes" debug="on" source="1.5" target="1.5">
-			<src path="src/main/java"/>
-			<classpath>
-				<fileset refid="tuscany.jars"/>
-				<fileset refid="3rdparty.jars"/>
-			</classpath>
-		</javac>
-		<copy todir="target/classes">
-			<fileset dir="src/main/resources"/>
-		</copy>
-		<jar destfile="target/${test.jar}" basedir="target/classes">
-			<manifest>
-				<attribute name="Main-Class" value="${test.class}"/>
-			</manifest>
-		</jar>
-	</target>
+        <mkdir dir="target/classes"/>
+        <javac destdir="target/classes" debug="on" source="1.5" target="1.5">
+            <src path="src/main/java"/>
+            <classpath>
+                <fileset refid="tuscany.jars"/>
+                <fileset refid="3rdparty.jars"/>
+            </classpath>
+        </javac>
+        <copy todir="target/classes">
+            <fileset dir="src/main/resources"/>
+        </copy>
+        <jar destfile="target/${test.jar}" basedir="target/classes">
+            <manifest>
+                <attribute name="Main-Class" value="${test.class}"/>
+            </manifest>
+        </jar>
+    </target>
 
-	<target name="download-wsdl">
-		<mkdir dir="target/classes/wsdl/" />
-		<get src="http://www.webservicex.net/uszip.asmx?wsdl" dest="target/classes/wsdl//uszip.wsdl" verbose="true" usetimestamp="true" />
-		<get src="http://www.webservicex.net/WeatherForecast.asmx?wsdl" dest="target/classes/wsdl/WeatherForecast.wsdl" verbose="true" usetimestamp="true" />
-	</target>
-	
-	<target name="package" depends="compile" />
+    <target name="download-wsdl">
+        <mkdir dir="target/classes/wsdl/" />
+        <get src="http://www.webservicex.net/uszip.asmx?wsdl" dest="target/classes/wsdl//uszip.wsdl" verbose="true" usetimestamp="true" />
+        <get src="http://www.webservicex.net/WeatherForecast.asmx?wsdl" dest="target/classes/wsdl/WeatherForecast.wsdl" verbose="true" usetimestamp="true" />
+    </target>
+    
+    <target name="package" depends="compile" />
 
-	<target name="run">
-		<java classname="${test.class}" fork="true">
-			<classpath>
-				<pathelement location="target/${test.jar}"/>
-				<fileset refid="tuscany.jars"/>
-				<fileset refid="3rdparty.jars"/>
-			</classpath>
-		</java>
-	</target>
+    <target name="run">
+        <java classname="${test.class}" fork="true">
+            <classpath>
+                <pathelement location="target/${test.jar}"/>
+                <fileset refid="tuscany.jars"/>
+                <fileset refid="3rdparty.jars"/>
+            </classpath>
+        </java>
+    </target>
 
-	<target name="clean">
+    <target name="clean">
         <delete dir="target" includeemptydirs="true"/>
-	</target>
+    </target>
 </project>
