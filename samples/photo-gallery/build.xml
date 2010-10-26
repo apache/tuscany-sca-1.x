@@ -55,10 +55,11 @@
     </target>
 	
     <target name="run">
+        <unzip src="target/${test.jar}" dest="target/classes"/>
         <java classname="${test.class}"
               fork="true">
             <classpath>
-                <pathelement path="target/${test.jar}"/>
+                <pathelement path="target/classes"/>
             	<pathelement location="../../lib/tuscany-sca-manifest.jar"/>
             </classpath>
         </java>    	
