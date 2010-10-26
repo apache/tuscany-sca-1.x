@@ -21,7 +21,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:sca="http://www.springframework.org/schema/sca"
        xsi:schemaLocation="http://www.springframework.org/schema/beans 
-                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/sca
+                           http://www.osoa.org/xmlns/sca/1.0/spring-sca.xsd">
+
+    <sca:service name="Warehouse"
+        type="services.Warehouse" target="warehouse"/>
 
     <bean id="warehouse" class="services.WarehouseImpl">
     </bean>
