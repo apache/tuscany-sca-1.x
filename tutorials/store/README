@@ -7,25 +7,30 @@ evolution of the Store as it goes through the following stages:
 
 1 - Initial online fruit store
 2 - Fruit store merges with vegetable store to form the fruit and vegetable store
-3 - The fruit and vegetable store move to using a database for storing the cart
+3 - The fruit and vegetable store moves to using a database for storing the cart
 4 - The fruit and vegetable store acts as a supplier to other online stores
 5 - The fruit and vegetable store ships their software solution to another geography
-6 - The fruit and vegetable running in the enterprise
+6 - The fruit and vegetable store running in the enterprise
 
 For diagrams of the scenarios covered here, please refer to Tutorial.pdf
 
 Running The Tutorial Application
 --------------------------------
 
-Start the SCA Domain Manager on linux:
+First start the SCA Domain Manager:
 
    cd domain
-   java -jar ../../../modules/tuscany-node-launcher-1.5.1.jar domain
+   ant run
 
-Start the SCA Domain Manager on windows:
+Alternatively, on linux:
 
    cd domain
-   java -jar ..\..\..\modules\tuscany-node-launcher-1.5.1.jar domain
+   java -jar ../../../modules/tuscany-node-launcher-1.6.jar domain
+
+and on windows:
+
+   cd domain
+   java -jar ..\..\..\modules\tuscany-node-launcher-1.6.jar domain
 
 Access the SCA Domain Manager application by pointing your Web browser at:
 
@@ -34,23 +39,54 @@ Access the SCA Domain Manager application by pointing your Web browser at:
 This shows you all of the Tuscany nodes that are configured to run 
 in the store tutorial domain. If you are interested, the configuration
 is stored on disc in the store/domain directory but for now let's just 
-start some nodes and see what happens. 
+start some nodes and see what happens.
 
-The different nodes you see are used to start different scenarios in 
-the tutorial. Select the node you want to start (e.g StoreNode), then click the 
+Starting nodes using the Domain Manager
+---------------------------------------
+
+The different nodes you see on the Cloud page are used to start different scenarios
+in the tutorial. Select the node you want to start (e.g StoreNode), then click the 
 Start button. You may need to give the nodes a little time to start up. Check the
 console where you lauched the domain manager application and you will see the 
 following message when nodes have started.
 
 INFO: INFO: Press 'q' to quit, 'r' to restart.
 
-Remember to shut down the nodes before you exit the domain manager application. 
+Remember to shut down the nodes before you exit the domain manager application.
 
-The following describes the nodes you have to start for each scenario and some
-usful links to explore once the node has started. 
+Starting nodes from the command line
+------------------------------------
+
+When you start nodes using the Domain Manager, the nodes run in the same process
+as the Domain Manager.  In some cases (e.g., debugging a node) it may be better
+to start each node in its own separate process using the command line.  This can
+also be useful if you encounter problems with the Domain Manager becoming
+unresponsive or hanging.
+
+To start a node using the command line, open a separate command prompt for each
+node that you want to start.  At the command prompt, enter
+
+   cd domain
+   ant run<nodename>
+
+You need to replace <nodename> by the name of the node that you are starting,
+excluding the "Node" suffix.  For example, to start StoreNode you would enter
+
+   ant runStore
+
+When you start a node from the command line, the status column on the Cloud
+page of the Domain Manager doesn't update and the status column still shows
+the node as stopped even though it's running.  This doesn't affect the correct
+operation of the node.  To shut down the node, enter 'q' at the command prompt.
+
+Running the scenarios
+---------------------
+
+The following sections describe the nodes you need to start for each scenario
+and give some useful links to explore once the node has started. 
 
 1 - Initial online fruit store
-----------------------------
+------------------------------
 
 Start 
 
@@ -65,7 +101,7 @@ a look at the service description that Tuscany created automatically
 for the store catalog service which is exposed over a JSONRPC binding 
 Point your browser at:
   
-    http://l3localhost:8100/StoreCatalog?smd
+    http://localhost:8100/StoreCatalog?smd
   
 The service is configured in the SCA composite file in the following way:
 
@@ -100,7 +136,7 @@ that was introduced during the merger is contacted using web services.
 If you want to see the WSDL for the vegetable catalog point your browser
 at
 
-http://l3aw203:8200/VegetablesCatalogWebService?wsdl
+http://localhost:8200/VegetablesCatalogWebService?wsdl
 
 The vegetable catalog service is configured in an SCA composite file
 in the following way:
@@ -112,16 +148,17 @@ in the following way:
 		</service> 
 	</component>
 
-3 - The fruit and vegetable store move to using a database to storing the cart
-------------------------------------------------------------------------------
+3 - The fruit and vegetable store moves to using a database for storing the cart
+--------------------------------------------------------------------------------
 
 Start
    
+   CatalogsNode
    StoreDBNode 
 
 The store itself can be found at 
 
-   http://l3aw203:8102/ui/
+   http://localhost:8102/ui/
 
 This looks the same as the scenario 2 store but this time a database is used
 for storing items put into the shopping cart. When you add items you 
@@ -138,6 +175,7 @@ changing any of the configuration of the rest of the application
 
 Start 
 
+   CatalogsNode
    StoreSupplierNode
 
 The store itself can be found at 
@@ -145,11 +183,11 @@ The store itself can be found at
    http://localhost:8103/ui/
   
 Again this is the same basic store as in scenario 3. However this time the 
-shopping cart and catalog serivces have been given additional remote bindings so that
+shopping cart and catalog services have been given additional remote bindings so that
 the services can be accessed by others. For example, take a look at the WSDL
 description of the shopping cart service that is now available at:
 
-   http://l3aw203:8333/ShoppinCartTotalWebService?wsdl
+   http://localhost:8333/ShoppinCartTotalWebService?wsdl
 
 This WSDL is available as the shopping cart total service is now configured with a web services
 binding in the following way:
@@ -167,16 +205,17 @@ binding in the following way:
 	</component>
 
 If you want to actually exercise these services from a standalone application
-you can run up the StoreClientNode using the provided launcher
+you can run up the StoreClientNode by doing the following from a command prompt:
 
-store/store-client/launch/LaunchStoreClientNode
-
+   cd store-client
+   ant run
 
 5 - The fruit and vegetable store ships their software solution to another geography
 ------------------------------------------------------------------------------------
 
 Start
   
+   CatalogsNode
    CurrencyNode
    StoreEUNode
 
@@ -186,7 +225,7 @@ The store itself can be found at
 
 Notice now that the prices are quoted in Euros and the language is French. This was 
 achieved by editing the store.html file to change the language and presentation to 
-be appropriate for Europe. The curreny was changed by reconfiguring the catalog
+be appropriate for Europe. The currency was changed by reconfiguring the catalog
 component to use EUR instead of USD.
 
 	<component name="StoreEUCatalog">
@@ -195,39 +234,39 @@ component to use EUR instead of USD.
                 ...
         </component>
 
-6 - The fruit and vegetable running in the enterprise
----------------------------------------------------------------------------------
+6 - The fruit and vegetable store running in the enterprise
+-----------------------------------------------------------
 
 Start 
 
    CatalogsNode
    StoreEnterpriseNode 
 
-Separately run 
-   LaunchWarehouseSpring from the command line
-   TBD
+Separately run from a command prompt: 
 
-The LaunchWarehouseSpring program starts the node for the warehouse based on local
-configuration. It doesn't use the domain manager like the other nodes we start do. 
-It also start and ActiveMQ broker via which JMS messages will pass. 
+   cd domain
+   ant runWarehouseSpring
+
+This runs a launcher program which starts the node for the warehouse based on local
+configuration. It doesn't use the domain manager like the other nodes we started. 
+It also starts an ActiveMQ broker via which JMS messages will pass. 
 
 The store itself can be found at 
      
    http://localhost:8108/ui/
 
-The items in the catalog as much the same as the previous examples. 
+The items in the catalog are much the same as the previous examples. 
 This time though when you place the order a message is sent over JMS to 
 the warehouse component running outside the domain and listening on JMS. 
 In this case we have implemented the warehouse application using SCA and it
-has it's own UI. The UI can be found at
+has its own UI. The UI can be found at
 
-http://l3aw203:8088/ui/
+   http://localhost:8088/ui/
 
-You should see the orders accumulating. YOu can't do anything with the
-orders but it is just a demo.
+If you press the Refresh button, you should see the orders accumulating.
+You can't do anything with the orders but it is just a demo.
 
-The warecouse component is configured in the  composite file
-in the following way:
+The warehouse component is configured in the composite file in the following way:
 
 	<component name="Warehouse">
 		<implementation.java class="services.WarehouseImpl"/> 
