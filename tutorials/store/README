@@ -309,3 +309,20 @@ see our online guides at:
 
 http://tuscany.apache.org/sca-java-getting-started-guides-1x.html
 
+
+Building the Store Tutorial Using Ant
+-------------------------------------
+With the binary distribution the complete store tutorial can be built using Ant
+as follows:
+
+cd store
+ant compile
+
+
+Building the Store Tutorial Using Maven 
+---------------------------------------
+With either the binary or source distribution the complete store tutorial can
+be built using Maven as follows:
+
+cd store
+mvn
