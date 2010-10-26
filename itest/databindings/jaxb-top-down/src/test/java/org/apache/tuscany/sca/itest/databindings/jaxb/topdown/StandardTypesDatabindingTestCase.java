@@ -1287,7 +1287,7 @@ public class StandardTypesDatabindingTestCase {
     private void performTestNewDataHandler(StandardTypesServiceClient serviceClient) throws IOException {
         DataHandler[] dha = new DataHandler[3];
         dha[0] = new DataHandler("Some data", "text/plain");
-        dha[1] = new DataHandler(new URL("http://tuscany.apache.org/home.html"));
+        dha[1] = new DataHandler(new URL("http://localhost:8080/myWeb/home.html"));
         dha[2] = new DataHandler(new ByteArrayDataSource("Some data2".getBytes()));
 
         for (int i = 0; i < dha.length; ++i) {
@@ -1301,7 +1301,7 @@ public class StandardTypesDatabindingTestCase {
     private void performTestNewDataHandlerArray(StandardTypesServiceClient serviceClient) throws IOException {
         DataHandler[] dha = new DataHandler[3];
         dha[0] = new DataHandler("Some data", "text/plain");
-        dha[1] = new DataHandler(new URL("http://tuscany.apache.org/home.html"));
+        dha[1] = new DataHandler(new URL("http://localhost:8080/myWeb/home.html"));
         dha[2] = new DataHandler(new ByteArrayDataSource("Some data2".getBytes()));
 
         DataHandler[] actual = serviceClient.getNewDataHandlerArrayForward(dha);
