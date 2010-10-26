@@ -225,7 +225,7 @@
                 <executions>
                     <execution>
                         <configuration>
-                            <mainClass>launch.LaunchTutorialAdmin</mainClass>
+                            <mainClass>launch.LaunchTutorialDomainManager</mainClass>
                             <pathToRootDir>../../..</pathToRootDir>
                         </configuration>
                         <goals>
