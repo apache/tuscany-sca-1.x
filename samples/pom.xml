@@ -111,7 +111,9 @@
                 <module>store-distributed</module> <!-- not released in 1.6.1 -->
                 <module>supplychain</module>
                 <module>web-resource</module>
-                <module>zipcode-jaxws</module> <!-- not released in 1.6.1 -->
+                <!-- TUSCANY-3758: excluded from build
+                <module>zipcode-jaxws</module> **** not released in 1.6.1 ***
+                -->
             </modules>
         </profile>
     </profiles>
