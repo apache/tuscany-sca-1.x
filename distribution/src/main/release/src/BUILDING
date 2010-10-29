@@ -26,14 +26,6 @@ Initial Setup
    Unix users:
      export MAVEN_OPTS=-Xmx256m -XX:MaxPermSize=256m
 
-5) You don't need any other software installed to run the Apache Tuscany SCA
-   build. However, if you have Erlang/OTP installed and in your path, you could
-   experience build problems if the version of Erlang/OTP in your path isn't
-   compatible with the Apache Tuscany SCA Erlang binding.  To ensure that the
-   Apache Tuscany SCA build runs cleanly, you should either put the R12B version
-   of Erlang/OTP in your path or completely remove Erlang/OTP from your path
-   when running the Apache Tuscany SCA build. See TUSCANY-3759 for details.
-
 
 Building
 --------

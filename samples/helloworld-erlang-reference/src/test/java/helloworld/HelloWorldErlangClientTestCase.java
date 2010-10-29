@@ -19,6 +19,9 @@
 
 package helloworld;
 
+import java.io.InputStream;
+import java.io.IOException;
+
 import helloworld.dynaignore.IgnorableRunner;
 import helloworld.dynaignore.IgnoreTest;
 import junit.framework.Assert;
@@ -36,11 +39,11 @@ public class HelloWorldErlangClientTestCase {
 	private static final String EPMD_COMMAND = "epmd";
 
 	@Test
-	public void testClient() throws Exception {
+	public void testClient() {
 		Process epmdProcess = null;
 		try {
 			epmdProcess = Runtime.getRuntime().exec(EPMD_COMMAND);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Cannot proceed - exception while executing "
 							+ EPMD_COMMAND
@@ -49,6 +52,9 @@ public class HelloWorldErlangClientTestCase {
 							+ ". Valid and working Erlang/OTP distribution is required.");
 			throw new IgnoreTest();
 		}
+        startReaderThread(epmdProcess.getInputStream());
+        startReaderThread(epmdProcess.getErrorStream());
+
 		SCADomain scaServiceDomain = SCADomain
 				.newInstance("helloworlderlangservice.composite");
 		SCADomain scaClientDomain = SCADomain
@@ -59,8 +65,24 @@ public class HelloWorldErlangClientTestCase {
 		Assert.assertEquals("Hello Smith", msg);
 		scaClientDomain.close();
 		scaServiceDomain.close();
-		epmdProcess.destroy();
 
+		epmdProcess.destroy();
 	}
+
+    private static void startReaderThread(final InputStream stream) {
+        Thread readerThread = new Thread() {
+            public void run() {
+                try {
+                    byte[] buf = new byte[100];
+                    while (true) {
+                        stream.read(buf);
+                    }
+                } catch (Exception e) {
+                    return;
+                }
+            }
+        };
+        readerThread.start();
+    }
 
 }
