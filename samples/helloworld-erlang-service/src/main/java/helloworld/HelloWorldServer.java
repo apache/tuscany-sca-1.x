@@ -18,6 +18,7 @@
  */
 package helloworld;
 
+import java.io.InputStream;
 import java.io.IOException;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
@@ -35,7 +36,7 @@ public class HelloWorldServer {
 			Process process = null;
 			try {
 				process = Runtime.getRuntime().exec(EPMD_COMMAND);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Cannot proceed - exception while executing "
 								+ EPMD_COMMAND
@@ -44,22 +45,40 @@ public class HelloWorldServer {
 								+ ". Valid and working Erlang/OTP distribution is required.");
 			}
 			if (process != null) {
+                startReaderThread(process.getInputStream());
+                startReaderThread(process.getErrorStream());
 				System.out.println("EPMD server started");
+
 				SCADomain scaDomain = SCADomain
 						.newInstance("helloworlderlangservice.composite");
 				System.out
 						.println("HelloWorld server started (press enter to shutdown)");
 				System.in.read();
-				process.destroy();
 				scaDomain.close();
+                System.out.println("HelloWorld server stopped");
+
+                process.destroy();
 				System.out.println("EPMD server stopped");
-				System.out.println("HelloWorld server stopped");
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+    private static void startReaderThread(final InputStream stream) {
+        Thread readerThread = new Thread() {
+            public void run() {
+                try {
+                    byte[] buf = new byte[100];
+                    while (true) {
+                        stream.read(buf);
+                    }
+                } catch (Exception e) {
+                    return;
+                }
+            }
+        };
+        readerThread.start();
+    }
 
 }

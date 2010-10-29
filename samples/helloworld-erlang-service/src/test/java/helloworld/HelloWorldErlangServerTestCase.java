@@ -18,19 +18,18 @@
  */
 package helloworld;
 
+import java.io.InputStream;
+import java.io.IOException;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
 import helloworld.dynaignore.IgnorableRunner;
 import helloworld.dynaignore.IgnoreTest;
 
-import java.io.IOException;
-
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-
 
 /**
  * Tests that the helloworld server is available
@@ -41,11 +40,11 @@ public class HelloWorldErlangServerTestCase {
 	private static final String EPMD_COMMAND = "epmd";
 
 	@Test
-	public void testServiceCall() throws IOException {
+	public void testServiceCall() {
 		Process epmdProcess = null;
 		try {
 			epmdProcess = Runtime.getRuntime().exec(EPMD_COMMAND);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Cannot proceed - exception while executing "
 							+ EPMD_COMMAND
@@ -54,6 +53,9 @@ public class HelloWorldErlangServerTestCase {
 							+ ". Valid and working Erlang/OTP distribution is required.");
 			throw new IgnoreTest();
 		}
+        startReaderThread(epmdProcess.getInputStream());
+        startReaderThread(epmdProcess.getErrorStream());
+
 		SCADomain scaDomain = SCADomain
 				.newInstance("helloworlderlangservice.composite");
 		HelloWorldService helloWorldService = scaDomain.getService(
@@ -62,7 +64,24 @@ public class HelloWorldErlangServerTestCase {
 		assertNotNull(helloWorldService);
 		assertEquals("Hello Smith", helloWorldService.getGreetings("Smith"));
 		scaDomain.close();
+
 		epmdProcess.destroy();
 	}
+
+    private static void startReaderThread(final InputStream stream) {
+        Thread readerThread = new Thread() {
+            public void run() {
+                try {
+                    byte[] buf = new byte[100];
+                    while (true) {
+                        stream.read(buf);
+                    }
+                } catch (Exception e) {
+                    return;
+                }
+            }
+        };
+        readerThread.start();
+    }
 
 }

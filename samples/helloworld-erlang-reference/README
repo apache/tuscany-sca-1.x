@@ -8,9 +8,6 @@ first.
 
 In order to run Erlang samples you need to have Erlang/OTP distribution installed - 
 epmd binary is required in your system path. See http://erlang.org for downloads.
-The Tuscany SCA Erlang binding is compatible with Erlang/OTP version R12B but
-doesn't work correctly with some later versions including R14B. See TUSCANY-3759
-for details.
 
 If you just want to run it to see what happens you need to run the server first 
 so open a command prompt, navigate to the helloworld-erlang-service sample directory 

@@ -22,6 +22,7 @@ package org.apache.tuscany.sca.binding.erlang.testing;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.InputStream;
 import java.io.IOException;
 
 import org.apache.tuscany.sca.binding.erlang.impl.TypeMismatchException;
@@ -76,9 +77,11 @@ public class ReferenceServiceTestCase {
 	private static Process epmdProcess;
 
 	@BeforeClass
-	public static void init() throws IOException {
+	public static void init() {
 		try {
 			epmdProcess = Runtime.getRuntime().exec(EPMD_COMMAND);
+            startReaderThread(epmdProcess.getInputStream());
+            startReaderThread(epmdProcess.getErrorStream());
 			SCADomain domain = SCADomain
 					.newInstance("ErlangReference.composite");
 			SCADomain.newInstance("ErlangService.composite");
@@ -102,6 +105,22 @@ public class ReferenceServiceTestCase {
 					+ e.getLocalizedMessage() + ". Tests will be IGNORED.");
 		}
 	}
+
+    private static void startReaderThread(final InputStream stream) {
+        Thread readerThread = new Thread() {
+            public void run() {
+                try {
+                    byte[] buf = new byte[100];
+                    while (true) {
+                        stream.read(buf);
+                    }
+                } catch (Exception e) {
+                    return;
+                }
+            }
+        };
+        readerThread.start();
+    }
 
 	@AfterClass
 	public static void clean() {
@@ -737,6 +756,8 @@ public class ReferenceServiceTestCase {
 		args[0] = new OtpErlangString("world");
 		args[1] = new OtpErlangString("!");
 		refMbox.send("sayHello", "RPCServerMbox", new OtpErlangTuple(args));
+        // FIXME: this seems to help avoid occasional hangs
+        Thread.sleep(100);
 		OtpErlangString result = (OtpErlangString) refMbox.receiveMsg()
 				.getMsg();
 		assertEquals("Hello world !", result.stringValue());
