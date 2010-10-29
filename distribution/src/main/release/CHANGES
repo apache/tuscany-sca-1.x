@@ -2,6 +2,7 @@ Changes With Apache Tuscany SCA 1.6.1 November 2010
 ===================================================
 
 Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
+TUSCANY-3759 binding-erlang-runtime isn't compatible with the current version of Erlang/OTP
 TUSCANY-3743 binding.atom returns incorrect HTTP response code from If-Unmodified-Since
 TUSCANY-3742 binding.atom service problems with If-Modified-Since and If-Unmodified-Since headers
 TUSCANY-3737 feed-aggregator and feed-agggregator-webapp samples throw java.io.CharConversionException
@@ -48,6 +49,11 @@ TUSCANY-1794 mvn builds larger sample-calculator-webapp.war than ant package
 TUSCANY-242  SCDL loader should trim the whitespaces when the element text is parsed
 
 Other commits:
+r1028725 Update LICENSE file to match the binary distribution lib directory contents
+r1028703 Remove SNAPSHOT from namespace string
+r1028696 Fix copyright notice dates
+r1028691 Fix copyright notice dates
+r1027738 Change release date and update list of changes
 r1027728 Update version number of jar file in README description
 r1026272 Add note to README about possible delays receiving chat messages
 r1026251 Remove explicit host name and port number from sample files
