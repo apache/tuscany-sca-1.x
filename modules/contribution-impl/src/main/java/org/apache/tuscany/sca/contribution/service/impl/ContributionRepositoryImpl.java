@@ -63,7 +63,7 @@ import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
  * @version $Rev$ $Date$
  */
 public class ContributionRepositoryImpl implements ContributionRepository {
-    private static final String NS = "http://tuscany.apache.org/xmlns/1.0-SNAPSHOT";
+    private static final String NS = "http://tuscany.apache.org/xmlns/1.0";
     private static final String DOMAIN_INDEX_FILENAME = "sca-domain.xml";
     private boolean initialized = false;
     private String repository = null;
