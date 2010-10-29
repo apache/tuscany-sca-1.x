@@ -28,13 +28,6 @@
     <artifactId>tuscany-binding-erlang-runtime</artifactId>
     <name>Apache Tuscany SCA Erlang Binding Runtime</name>
 
-    <repositories>
-    	<repository>
-    		<id>wjaniszewski-jinterface</id>
-    		<url>http://people.apache.org/~wjaniszewski/jinterface-repo</url>
-    	</repository>
-    </repositories>
-
     <dependencies>
 		<dependency>
 			<groupId>org.apache.tuscany.sca</groupId>
@@ -54,12 +47,12 @@
 			<artifactId>tuscany-binding-erlang</artifactId>
 			<version>1.7-SNAPSHOT</version>
 		</dependency>
-		
-		<dependency>
-			<groupId>com.ericsson</groupId>
-			<artifactId>otperlang</artifactId>
-			<version>1.4.2</version>
-		</dependency>
+
+        <dependency>
+            <groupId>org.erlang.otp</groupId>
+            <artifactId>jinterface</artifactId>
+            <version>1.5.3.1</version>
+        </dependency>
 		
 		<dependency>
 			<groupId>org.apache.tuscany.sca</groupId>
