@@ -50,6 +50,7 @@ TUSCANY-1794 mvn builds larger sample-calculator-webapp.war than ant package
 TUSCANY-242  SCDL loader should trim the whitespaces when the element text is parsed
 
 Other commits:
+r1029129 Fix incorrect war name to exclude from binary distribution
 r1028770 Update LICENSE file
 r1028725 Update LICENSE file to match the binary distribution lib directory contents
 r1028703 Remove SNAPSHOT from namespace string
