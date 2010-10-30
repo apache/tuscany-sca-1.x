@@ -19,6 +19,7 @@
 
 package org.apache.tuscany.sca.node.launcher;
 
+import java.util.Arrays;
 
 /**
  * Main class for this JAR.
@@ -33,7 +34,9 @@ public class NodeMain {
     public static void main(String[] args) throws Exception {
         if (args.length != 0) {
             if (args[0].equals("domain")) {
-                DomainManagerLauncher.main(args);
+                String[] dmArgs = new String[args.length - 1];
+                System.arraycopy(args, 1, dmArgs, 0, args.length - 1);
+                DomainManagerLauncher.main(dmArgs);
             } else {
                 NodeLauncher.main(args);
             }
