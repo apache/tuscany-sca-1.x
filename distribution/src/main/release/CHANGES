@@ -2,6 +2,7 @@ Changes With Apache Tuscany SCA 1.6.1 November 2010
 ===================================================
 
 Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
+TUSCANY-3761 Using node-launcher to launch the domain manager doesn't work
 TUSCANY-3759 binding-erlang-runtime isn't compatible with the current version of Erlang/OTP
 TUSCANY-3743 binding.atom returns incorrect HTTP response code from If-Unmodified-Since
 TUSCANY-3742 binding.atom service problems with If-Modified-Since and If-Unmodified-Since headers
