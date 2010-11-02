@@ -367,7 +367,7 @@ includes the file wsdli.xsd from http://www.w3.org/2004/08/wsdl-instance
 
 The ipo.xsd and wsdli.xsd files are included under the following license:
 
-Copyright (c) 2008 World Wide Web Consortium, (Massachusetts Institute of Technology, 
+Copyright (c) 2004 World Wide Web Consortium, (Massachusetts Institute of Technology, 
 European Research Consortium for Informatics and Mathematics, Keio University). 
 All Rights Reserved. This work is distributed under the W3C(c) Software License [1] in 
 the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied 
