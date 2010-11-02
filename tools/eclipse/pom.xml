@@ -44,4 +44,28 @@
         </profile>
     </profiles>
 
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <tstamp/>
+                                <mkdir dir="target"/>
+                                <echo file="target/filter.properties" message="tuscany.eclipse.version=${pom.version}.v${DSTAMP}-${TSTAMP}"/>
+                                <replace file="target/filter.properties" token="-SNAPSHOT"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
