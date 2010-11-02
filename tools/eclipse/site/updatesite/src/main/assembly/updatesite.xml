@@ -21,12 +21,13 @@
     <id>updatesite</id>
     <includeBaseDirectory>false</includeBaseDirectory>
     <formats>
-        <format>zip</format>
+        <format>dir</format>
     </formats>
 
     <fileSets>
         <fileSet>
-             <outputDirectory>tuscany-sca-${tuscany.version}-updatesite</outputDirectory>
+            <directory>target/classes</directory>
+            <outputDirectory>tuscany-sca-${tuscany.version}-updatesite</outputDirectory>
             <includes>
                 <include>LICENSE</include>
                 <include>NOTICE</include>
@@ -35,24 +36,17 @@
         </fileSet>
     </fileSets>
         
-    <dependencySets>
-        <dependencySet>
-             <outputDirectory>tuscany-sca-${tuscany.version}-updatesite/plugins</outputDirectory>
-            <unpack>false</unpack>
-            <includes>
-                <include>org.apache.tuscany.sca:org.apache.tuscany.sca.core</include>
-            </includes>
-            <scope>runtime</scope>
-        </dependencySet>
+    <files>
+        <file>
+            <source>../../plugins/core/target/org.apache.tuscany.sca.core-${tuscany.version}.jar</source>
+            <outputDirectory>tuscany-sca-${tuscany.version}-updatesite/plugins</outputDirectory>
+            <destName>org.apache.tuscany.sca.core_${tuscany.eclipse.version}.jar</destName>
+        </file>
 
-        <dependencySet>
+        <file>
+            <source>../../features/core/target/org.apache.tuscany.sca.feature.core-${tuscany.version}.jar</source>
             <outputDirectory>tuscany-sca-${tuscany.version}-updatesite/features</outputDirectory>
-            <unpack>false</unpack>
-            <includes>
-                <include>org.apache.tuscany.sca:org.apache.tuscany.sca.feature.core</include>
-            </includes>
-            <scope>runtime</scope>
-        </dependencySet>
-    </dependencySets>
+        </file>
+    </files>
 
 </assembly>

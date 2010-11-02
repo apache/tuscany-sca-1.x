@@ -36,8 +36,10 @@
     </properties>
 
     <modules>
+        <!--
         <module>bundle</module>
         <module>manifest</module>
+        -->
     </modules>
 
     <dependencies>
@@ -351,7 +353,39 @@
                             <finalName>apache-tuscany-sca-${pom.version}</finalName>
                         </configuration>
                     </execution>
-                </executions>
+                    <execution>
+                        <id>distribution-updatesite</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/updatesite.xml</descriptor>
+                            </descriptors>
+                            <finalName>apache-tuscany-sca-${pom.version}</finalName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>distribution-featurecore</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/featurecore.xml</descriptor>
+                            </descriptors>
+                            <archive>
+                                <manifestFile>../tools/eclipse/features/core/target/classes/META-INF/MANIFEST.MF</manifestFile>
+                            </archive>
+                            <outputDirectory>target/apache-tuscany-sca-${tuscany.version}-updatesite.dir/tuscany-sca-${tuscany.version}-updatesite/features</outputDirectory>
+                            <finalName>org.apache.tuscany.sca.feature.core-${pom.version}</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <attach>false</attach>
+                        </configuration>
+                    </execution>
+                 </executions>
             </plugin>
         </plugins>
 

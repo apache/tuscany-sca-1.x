@@ -19,18 +19,20 @@
 -->
 <site>
    <description url="http://tuscany.apache.org">
-      Apache Tuscany SCA Tools.
+      Apache Tuscany SCA Eclipse Tools
    </description>
    
-   <feature id="org.apache.tuscany.sca.feature.core" version="1.5.1"
-      url="features/org.apache.tuscany.sca.feature.core-1.7-SNAPSHOT.jar"/>
+   <feature id="org.apache.tuscany.sca.feature.core" version="${tuscany.eclipse.version}"
+      url="features/org.apache.tuscany.sca.feature.core-${pom.version}.jar">
+      <category name="Apache Tuscany SCA Eclipse Tools"/>
+   </feature>
    
-   <archive path="plugins/org.apache.tuscany.sca.core_1.5.1.jar"
-      url="plugins/org.apache.tuscany.sca.core-1.7-SNAPSHOT.jar"/>
+   <archive path="plugins/org.apache.tuscany.sca.core_${tuscany.eclipse.version}"
+      url="plugins/org.apache.tuscany.sca.core_${tuscany.eclipse.version}.jar"/>
 
-   <archive path="features/org.apache.tuscany.sca.feature.core_1.5.1/runtime/apache-tuscany-sca-1.7-SNAPSHOT.jar"
-      url="../apache-tuscany-sca-1.7-SNAPSHOT.zip"/>
-
-   <archive path="features/org.apache.tuscany.sca.feature.core_1.5.1/src/apache-tuscany-sca-1.7-SNAPSHOT-src.zip"
-      url="../apache-tuscany-sca-1.7-SNAPSHOT-src.zip"/>   
+   <category-def name="Apache Tuscany SCA Eclipse Tools" label="Apache Tuscany SCA Eclipse Tools">
+      <description>
+         The Apache Tuscany SCA Eclipse Tools category contains all features related to Apache Tuscany SCA.
+      </description>
+   </category-def>
 </site>

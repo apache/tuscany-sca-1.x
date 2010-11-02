@@ -21,8 +21,11 @@ package org.apache.tuscany.sca.core.classpath;
 
 import static org.apache.tuscany.sca.core.log.LogUtil.error;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,8 +49,8 @@ public class ClasspathUtil {
 
     private static final String TUSCANY_RUNTIME_LIBRARIES = "org.apache.tuscany.sca.core.runtimeLibraries";
 
+    private static final String VERSION_RESOURCE = "/org/apache/tuscany/sca/core/feature.version";
     private static final String TUSCANY_FEATURE = "org.apache.tuscany.sca.feature.core";
-    private static final String TUSCANY_VERSION = "1.6";
     
     /**
      * Return the installed runtime classpath entries.
@@ -84,12 +87,26 @@ public class ClasspathUtil {
      * @return
      */
     static IPath feature() {
+        Path featurePath = null;
+        Exception ex = null;
         try {
-            URL location = Platform.getInstallLocation().getURL();
-            File feature = new File(location.getPath() + "/features/" + TUSCANY_FEATURE + "_" + TUSCANY_VERSION);
-            return new Path(feature.getPath());
+            InputStream resourceStream = ClasspathUtil.class.getResourceAsStream(VERSION_RESOURCE);
+            if (resourceStream != null) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(resourceStream, "UTF-8"));
+                String featureVersion = reader.readLine().trim();
+                reader.close();
+                URL location = Platform.getInstallLocation().getURL();
+                File feature = new File(location.getPath() + "/features/" + TUSCANY_FEATURE + "_" + featureVersion);
+                featurePath = new Path(feature.getPath());
+            }
         } catch (Exception e) {
-            error("Tuscany runtime feature not found", e);
+            ex = e;
+        }
+
+        if (featurePath != null) {
+            return featurePath;
+        } else {
+            error("Tuscany runtime feature not found", ex);
             return null;
         }
     }
