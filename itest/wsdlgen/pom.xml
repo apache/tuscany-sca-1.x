@@ -206,8 +206,74 @@
                     <sei>helloworld.HelloWorldImpl</sei>
                     <genWsdl>true</genWsdl>           
                     <keep>true</keep>
+                    <!-- TUSCANY-3765: avoid using class files that run only on JDK 6 -->
+                    <destDir>${basedir}/target/unused-wsgen-classes</destDir>
+                    <sourceDestDir>${basedir}/target/jaxws-source</sourceDestDir>
                 </configuration>
-            </plugin>           
+            </plugin>
+            <!-- TUSCANY-3765: produce JDK 5-compatible JAX-WS class files -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/target/jaxws-source</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- TUSCANY-3765: copy JDK 5-compatible JAX-WS class files to the correct location -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-jaxws-classes</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/helloworld</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>${basedir}/target/test-classes/helloworld</directory>
+                                    <includes>
+                                        <include>jaxws/**</include>
+                                    </includes>
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- TUSCANY-3765: delete directories containing unused class files -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>cleanup-jaxws-classes</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <delete dir="${basedir}/target/unused-wsgen-classes" includeemptydirs="true"/>
+                                <delete dir="${basedir}/target/test-classes/helloworld/jaxws" includeemptydirs="true"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
