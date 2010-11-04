@@ -96,7 +96,10 @@ Notes:
    are omitted from the binary distribution to save space (except for the calculator sample).
    These .war files can be created using the ant scripts provided.
 
-5. The Tuscany tools are distributed via the maven repository only, except for the following jar
+5. The Tuscany SCA Eclipse Tools Feature and Plug-in are distributed via the Tuscany Eclipse
+   update site only.
+
+6. Other Tuscany tools are distributed via the maven repository only, except for the following jar
    which is also included in the binary distribution:
     tuscany-wsdl2java-1.6.1.jar  (needed by the helloworld-bpel sample)
 
