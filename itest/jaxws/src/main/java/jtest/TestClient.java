@@ -24,5 +24,7 @@ package jtest;
  */
 public interface TestClient {
 
-    void runTest();
+    void runAbstractTypeTest();
+
+    void runAbstractExceptionTest();
 }

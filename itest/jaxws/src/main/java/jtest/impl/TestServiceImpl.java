@@ -21,6 +21,8 @@ package jtest.impl;
 
 import org.osoa.sca.annotations.Service;
 
+import jtest.AbstractException;
+import jtest.ConcreteException;
 import jtest.TestAbstract;
 import jtest.TestService;
 
@@ -34,5 +36,9 @@ public class TestServiceImpl implements TestService {
         System.out.println("data1 is instance of class " + data1.getClass().getName());
         System.out.println("data2 is instance of class " + data2.getClass().getName());
         System.out.println(data1.getGreeting() + " " + data2.getGreeting());
+    }
+
+    public void throwAbstract() throws AbstractException {
+        throw new ConcreteException();
     }
 }

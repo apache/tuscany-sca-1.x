@@ -19,18 +19,13 @@
 
 package jtest;
 
-import org.osoa.sca.annotations.Remotable;
-
-import jtest.AbstractException;
-import jtest.TestAbstract;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
- * The test service interface
+ * The abstract exception class
  */
-@Remotable
-public interface TestService {
+@XmlJavaTypeAdapter(TestAdapter.class)
+public abstract class AbstractException extends Exception {
 
-    void sendAbstract(TestAbstract data1, TestAbstract data2);
-
-    void throwAbstract() throws AbstractException;
+    public abstract String getGreeting();
 }

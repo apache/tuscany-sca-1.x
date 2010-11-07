@@ -25,6 +25,7 @@ import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class DatatypesTestCase {
@@ -38,10 +39,18 @@ public class DatatypesTestCase {
     }
     
     @Test
-    public void runTest() {
+    public void runAbstractTypeTest() {
         SCAClient client = (SCAClient)node;
         TestClient testClient = client.getService(TestClient.class, "TestClient");
-        testClient.runTest();
+        testClient.runAbstractTypeTest();
+    }
+
+    @Test
+    @Ignore
+    public void runAbstractExceptionTest() {
+        SCAClient client = (SCAClient)node;
+        TestClient testClient = client.getService(TestClient.class, "TestClient");
+        testClient.runAbstractExceptionTest();
     }
     
     @AfterClass

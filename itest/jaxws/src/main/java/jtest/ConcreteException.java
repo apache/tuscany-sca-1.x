@@ -17,38 +17,24 @@
  * under the License.
  */
 
-package jtest.impl;
+package jtest;
 
-import org.osoa.sca.annotations.Reference;
-import org.osoa.sca.annotations.Service;
-
-import jtest.AbstractException;
-import jtest.TestClient;
-import jtest.TestConcrete1;
-import jtest.TestConcrete2;
-import jtest.TestService;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
- * The test client implementation
+ * The concrete exception class
  */
-@Service(TestClient.class)
-public class TestClientImpl implements TestClient {
+@XmlJavaTypeAdapter(TestAdapter.class)
+public class ConcreteException extends AbstractException {
 
-    @Reference
-    protected TestService ref;
+    private String greeting;
 
-    public void runAbstractTypeTest() {
-        TestConcrete1 data1 = new TestConcrete1();
-        TestConcrete2 data2 = new TestConcrete2();
-        ref.sendAbstract(data1, data2);
+    public ConcreteException() {
+        super();
+        this.greeting = "Goodbye...";
     }
 
-    public void runAbstractExceptionTest() {
-        try {
-            ref.throwAbstract();
-        } catch (AbstractException e) {
-            System.out.println("Caught exception " + e);
-            System.out.println(e.getGreeting());
-        }
+    public String getGreeting() {
+        return greeting;
     }
 }
