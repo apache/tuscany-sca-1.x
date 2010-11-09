@@ -28,11 +28,12 @@ import org.apache.tuscany.sca.invocation.Message;
  */
 public final class ThreadMessageContext {
 
+    // TUSCANY-3770: Used as a marker for detecting when thread context information can be removed
+    private static final Message msg = new MessageImpl();
+
     private static final ThreadLocal<Message> CONTEXT = new ThreadLocal<Message>() {
         @Override
         protected synchronized Message initialValue() {
-            Message msg =  new MessageImpl();
-            msg.setFrom(new EndpointReferenceImpl("/"));
             return msg;
         }
     };
@@ -58,6 +59,12 @@ public final class ThreadMessageContext {
     public static Message setMessageContext(Message context) {
         Message old = CONTEXT.get();
         CONTEXT.set(context);
+
+        // TUSCANY-3770: Remove thread context information when the request invocation has completed
+        if (context == msg) {
+            CONTEXT.remove();
+        }
+
         return old;
     }
 
@@ -70,11 +77,13 @@ public final class ThreadMessageContext {
         return CONTEXT.get();
     }
     
-    /**
+    // TUSCANY-3770: This method is no longer needed, as thread context information is removed implicitly
+    /*
      * Removes and state from the current thread to ensure that
      * any associated classloaders can be GCd
-     */
+     *
     public static void removeMessageContext() {
         CONTEXT.remove();
     }
+    */
 }

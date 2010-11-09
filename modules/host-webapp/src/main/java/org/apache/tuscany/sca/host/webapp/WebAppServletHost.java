@@ -330,8 +330,9 @@ public class WebAppServletHost implements ServletHost {
         instance = null;
         servlets.clear();
         LogFactory.release(this.getClass().getClassLoader());
-        Introspector.flushCaches(); 
-        ThreadMessageContext.removeMessageContext();
+        Introspector.flushCaches();
+        // TUSCANY-3770: thread message context now removed implicitly
+        //ThreadMessageContext.removeMessageContext();
     }
 
     public String getContextPath() {
