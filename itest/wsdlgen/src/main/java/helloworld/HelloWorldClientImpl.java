@@ -23,6 +23,7 @@ import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
 import yetanotherpackage.DBean;
+import yetanotherpackage.HelloWorldException;
 
 import anotherpackage.BBean;
 import anotherpackage.CBean;
@@ -64,5 +65,13 @@ public class HelloWorldClientImpl implements HelloWorldService {
     
     public String getGreetingsDBean(DBean bean){
         return "Hello " + hwService.getGreetingsDBean(bean);
-    }      
+    } 
+    
+    public String getGreetingsException(String input) throws HelloWorldException {
+    	return hwService.getGreetingsException(input);
+    }
+    
+    public byte[] getGreetingsByteArray(byte[] input) {
+    	return input;
+    }
 }

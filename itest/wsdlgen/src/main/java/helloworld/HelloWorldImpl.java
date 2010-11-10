@@ -23,6 +23,7 @@ import javax.jws.WebService;
 import org.osoa.sca.annotations.Service;
 
 import yetanotherpackage.DBean;
+import yetanotherpackage.HelloWorldException;
 
 import anotherpackage.BBean;
 import anotherpackage.CBean;
@@ -65,5 +66,14 @@ public class HelloWorldImpl implements HelloWorldService {
         return "Hello " + bean.getField1() + " " + bean.getField2() + " "
                 + bean.getField3().getField1() + " "
                 + bean.getField3().getField2();
-    }    
+    }   
+    
+    public String getGreetingsException(String input) throws HelloWorldException {
+    	throw new HelloWorldException("Hello " + input);
+    }
+    
+    public byte[] getGreetingsByteArray(byte[] input){
+    	System.out.println(String.valueOf(input));
+    	return input;
+    }
 }

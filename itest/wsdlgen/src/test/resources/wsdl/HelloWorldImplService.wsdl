@@ -45,7 +45,22 @@
   <message name="getGreetingsDBeanResponse">
     <part name="parameters" element="tns:getGreetingsDBeanResponse"/>
   </message>
-  <portType name="HelloWorldService">
+  <message name="getGreetingsException">
+    <part name="parameters" element="tns:getGreetingsException"/>
+  </message>
+  <message name="getGreetingsExceptionResponse">
+    <part name="parameters" element="tns:getGreetingsExceptionResponse"/>
+  </message>
+  <message name="HelloWorldException">
+    <part name="fault" element="tns:HelloWorldException"/>
+  </message>
+  <message name="getGreetingsByteArray">
+    <part name="parameters" element="tns:getGreetingsByteArray"/>
+  </message>
+  <message name="getGreetingsByteArrayResponse">
+    <part name="parameters" element="tns:getGreetingsByteArrayResponse"/>
+  </message>
+  <portType name="HelloWorldImpl">
     <operation name="getGreetings">
       <input message="tns:getGreetings"/>
       <output message="tns:getGreetingsResponse"/>
@@ -70,8 +85,17 @@
       <input message="tns:getGreetingsDBean"/>
       <output message="tns:getGreetingsDBeanResponse"/>
     </operation>
+    <operation name="getGreetingsException">
+      <input message="tns:getGreetingsException"/>
+      <output message="tns:getGreetingsExceptionResponse"/>
+      <fault message="tns:HelloWorldException" name="HelloWorldException"/>
+    </operation>
+    <operation name="getGreetingsByteArray">
+      <input message="tns:getGreetingsByteArray"/>
+      <output message="tns:getGreetingsByteArrayResponse"/>
+    </operation>
   </portType>
-  <binding name="HelloWorldImplPortBinding" type="tns:HelloWorldService">
+  <binding name="HelloWorldImplPortBinding" type="tns:HelloWorldImpl">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
     <operation name="getGreetings">
       <soap:operation soapAction=""/>
@@ -119,6 +143,27 @@
       </output>
     </operation>
     <operation name="getGreetingsDBean">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getGreetingsException">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="HelloWorldException">
+        <soap:fault name="HelloWorldException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getGreetingsByteArray">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

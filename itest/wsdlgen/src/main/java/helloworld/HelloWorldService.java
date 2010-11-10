@@ -23,6 +23,7 @@ import javax.jws.WebService;
 import org.osoa.sca.annotations.Remotable;
 
 import yetanotherpackage.DBean;
+import yetanotherpackage.HelloWorldException;
 
 import anotherpackage.BBean;
 import anotherpackage.CBean;
@@ -33,13 +34,20 @@ import anotherpackage.CBean;
 @WebService
 @Remotable
 public interface HelloWorldService {
+	
+    // primitives
+	public String getGreetings(String name);
+    byte[] getGreetingsByteArray(byte[] input);
+    String getGreetingsException(String input) throws HelloWorldException;
 
-    public String getGreetings(String name);
+	// beans
     public String getGreetingsBean(ABean bean);
     public String getGreetingsBeanArray(ABean[] bean);
-    //public String getGreetingsBeanVector(Vector<ABean> bean);
     public String getGreetingsBBean(BBean bean);
     public String getGreetingsCBean(CBean bean);
     public String getGreetingsDBean(DBean bean);
+    
+    // collections
+    //public String getGreetingsBeanVector(Vector<ABean> bean);
 }
 

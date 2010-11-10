@@ -3,6 +3,8 @@
 
   <xs:import namespace="http://test" schemaLocation="HelloWorldImplService_schema1.xsd"/>
 
+  <xs:element name="HelloWorldException" type="tns:HelloWorldException"/>
+
   <xs:element name="getGreetings" type="tns:getGreetings"/>
 
   <xs:element name="getGreetingsBBean" type="tns:getGreetingsBBean"/>
@@ -17,6 +19,10 @@
 
   <xs:element name="getGreetingsBeanResponse" type="tns:getGreetingsBeanResponse"/>
 
+  <xs:element name="getGreetingsByteArray" type="tns:getGreetingsByteArray"/>
+
+  <xs:element name="getGreetingsByteArrayResponse" type="tns:getGreetingsByteArrayResponse"/>
+
   <xs:element name="getGreetingsCBean" type="tns:getGreetingsCBean"/>
 
   <xs:element name="getGreetingsCBeanResponse" type="tns:getGreetingsCBeanResponse"/>
@@ -25,7 +31,29 @@
 
   <xs:element name="getGreetingsDBeanResponse" type="tns:getGreetingsDBeanResponse"/>
 
+  <xs:element name="getGreetingsException" type="tns:getGreetingsException"/>
+
+  <xs:element name="getGreetingsExceptionResponse" type="tns:getGreetingsExceptionResponse"/>
+
   <xs:element name="getGreetingsResponse" type="tns:getGreetingsResponse"/>
+
+  <xs:complexType name="getGreetingsException">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getGreetingsExceptionResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="HelloWorldException">
+    <xs:sequence>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:complexType name="getGreetingsBeanArray">
     <xs:sequence>
@@ -43,6 +71,18 @@
   <xs:complexType name="getGreetingsBeanArrayResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getGreetingsByteArray">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:base64Binary" nillable="true" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getGreetingsByteArrayResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:base64Binary" nillable="true" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 

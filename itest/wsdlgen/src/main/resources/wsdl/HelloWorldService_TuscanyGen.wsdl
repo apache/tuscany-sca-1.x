@@ -22,40 +22,47 @@
 
 <wsdl:definitions name="HelloWorldServiceService"
 	targetNamespace="http://helloworld/" xmlns="http://helloworld/"
-	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:SOAP11="http://schemas.xmlsoap.org/wsdl/soap/">
+	xmlns:ns4="http://yetanotherpackage/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:SOAP11="http://schemas.xmlsoap.org/wsdl/soap/">
 	<wsdl:types>
+		<xs:schema targetNamespace="http://test" version="1.0"
+			xmlns:__nnns="http://helloworld/" xmlns:tns="http://test"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:import namespace="http://helloworld/" />
+			<xs:complexType name="aBean">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="field1" type="xs:string" />
+					<xs:element minOccurs="0" name="field2" type="xs:string" />
+					<xs:element minOccurs="0" name="field3" type="__nnns:bBean" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType final="#all" name="aBeanArray">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="item"
+						nillable="true" type="tns:aBean" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema targetNamespace="http://yetanotherpackage/"
+			version="1.0" xmlns:tns="http://yetanotherpackage/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:element name="HelloWorldException" type="tns:HelloWorldException" />
+			<xs:complexType name="HelloWorldException">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="message" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
 		<xs:schema attributeFormDefault="qualified"
 			elementFormDefault="unqualified" targetNamespace="http://helloworld/"
 			xmlns:ns0="http://test" xmlns:tns="http://helloworld/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 			<xs:import namespace="http://test" />
-			<xs:element name="getGreetingsBean">
+			<xs:element name="getGreetingsByteArrayResponse">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element minOccurs="0" name="arg0" nillable="true"
-							type="ns0:aBean" />
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="xs:byte" />
 					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="getGreetingsDBean">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element minOccurs="0" name="arg0" nillable="true"
-							type="tns:dBean" />
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="getGreetings">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element minOccurs="0" name="arg0" nillable="true"
-							type="xs:string" />
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="getGreetingsCBean">
-				<xs:complexType>
-					<xs:sequence/>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="getGreetingsDBeanResponse">
@@ -63,22 +70,6 @@
 					<xs:sequence>
 						<xs:element minOccurs="0" name="return" nillable="true"
 							type="xs:string" />
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="getGreetingsCBeanResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element minOccurs="0" name="return" nillable="true"
-							type="xs:string" />
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="getGreetingsBBean">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element minOccurs="0" name="arg0" nillable="true"
-							type="tns:bBean" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -106,14 +97,6 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="getGreetingsBBeanResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element minOccurs="0" name="return" nillable="true"
-							type="xs:string" />
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 			<xs:element name="getGreetingsBeanArray">
 				<xs:complexType>
 					<xs:sequence>
@@ -122,6 +105,87 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="getGreetingsBean">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="arg0" nillable="true"
+							type="ns0:aBean" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getGreetings">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="arg0" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getGreetingsDBean">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="arg0" nillable="true"
+							type="tns:dBean" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getGreetingsCBean">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="arg0" nillable="true"
+							type="" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getGreetingsCBeanResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getGreetingsExceptionResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getGreetingsBBean">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="arg0" nillable="true"
+							type="tns:bBean" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getGreetingsByteArray">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="arg0" nillable="true"
+							type="xs:byte" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getGreetingsException">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="arg0" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getGreetingsBBeanResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
 			<xs:complexType name="bBean">
 				<xs:sequence>
 					<xs:element minOccurs="0" name="field1" type="xs:string" />
@@ -136,62 +200,26 @@
 				</xs:sequence>
 			</xs:complexType>
 		</xs:schema>
-		<xs:schema targetNamespace="http://test" version="1.0"
-			xmlns:__nnns="http://helloworld/" xmlns:tns="http://test"
-			xmlns:xs="http://www.w3.org/2001/XMLSchema">
-			<xs:import namespace="http://helloworld/" />
-			<xs:complexType name="aBean">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="field1" type="xs:string" />
-					<xs:element minOccurs="0" name="field2" type="xs:string" />
-					<xs:element minOccurs="0" name="field3" type="__nnns:bBean" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType final="#all" name="aBeanArray">
-				<xs:sequence>
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="item"
-						nillable="true" type="tns:aBean" />
-				</xs:sequence>
-			</xs:complexType>
-		</xs:schema>
 	</wsdl:types>
-	<wsdl:message name="getGreetingsBean">
-		<wsdl:part name="getGreetingsBean" element="getGreetingsBean">
+	<wsdl:message name="getGreetingsByteArrayResponse">
+		<wsdl:part name="getGreetingsByteArrayResponse" element="getGreetingsByteArrayResponse">
 		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getGreetingsDBean">
-		<wsdl:part name="getGreetingsDBean" element="getGreetingsDBean">
-
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getGreetings">
-		<wsdl:part name="getGreetings" element="getGreetings">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getGreetingsCBean">
-		<wsdl:part name="getGreetingsCBean" element="getGreetingsCBean">
-		</wsdl:part>
-
 	</wsdl:message>
 	<wsdl:message name="getGreetingsDBeanResponse">
 		<wsdl:part name="getGreetingsDBeanResponse" element="getGreetingsDBeanResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getGreetingsCBeanResponse">
-		<wsdl:part name="getGreetingsCBeanResponse" element="getGreetingsCBeanResponse">
-		</wsdl:part>
-	</wsdl:message>
 
-	<wsdl:message name="getGreetingsBBean">
-		<wsdl:part name="getGreetingsBBean" element="getGreetingsBBean">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="HelloWorldException">
+		<wsdl:part name="HelloWorldException" element="ns4:HelloWorldException">
 		</wsdl:part>
 	</wsdl:message>
 	<wsdl:message name="getGreetingsResponse">
 		<wsdl:part name="getGreetingsResponse" element="getGreetingsResponse">
 		</wsdl:part>
+
 	</wsdl:message>
 	<wsdl:message name="getGreetingsBeanResponse">
-
 		<wsdl:part name="getGreetingsBeanResponse" element="getGreetingsBeanResponse">
 		</wsdl:part>
 	</wsdl:message>
@@ -199,19 +227,59 @@
 		<wsdl:part name="getGreetingsBeanArrayResponse" element="getGreetingsBeanArrayResponse">
 		</wsdl:part>
 	</wsdl:message>
-	<wsdl:message name="getGreetingsBBeanResponse">
-		<wsdl:part name="getGreetingsBBeanResponse" element="getGreetingsBBeanResponse">
 
-		</wsdl:part>
-	</wsdl:message>
 	<wsdl:message name="getGreetingsBeanArray">
 		<wsdl:part name="getGreetingsBeanArray" element="getGreetingsBeanArray">
 		</wsdl:part>
 	</wsdl:message>
+	<wsdl:message name="getGreetingsBean">
+		<wsdl:part name="getGreetingsBean" element="getGreetingsBean">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getGreetings">
+
+		<wsdl:part name="getGreetings" element="getGreetings">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getGreetingsDBean">
+		<wsdl:part name="getGreetingsDBean" element="getGreetingsDBean">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getGreetingsCBean">
+		<wsdl:part name="getGreetingsCBean" element="getGreetingsCBean">
+
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getGreetingsCBeanResponse">
+		<wsdl:part name="getGreetingsCBeanResponse" element="getGreetingsCBeanResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getGreetingsExceptionResponse">
+		<wsdl:part name="getGreetingsExceptionResponse" element="getGreetingsExceptionResponse">
+		</wsdl:part>
+
+	</wsdl:message>
+	<wsdl:message name="getGreetingsBBean">
+		<wsdl:part name="getGreetingsBBean" element="getGreetingsBBean">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getGreetingsByteArray">
+		<wsdl:part name="getGreetingsByteArray" element="getGreetingsByteArray">
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="getGreetingsException">
+		<wsdl:part name="getGreetingsException" element="getGreetingsException">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getGreetingsBBeanResponse">
+		<wsdl:part name="getGreetingsBBeanResponse" element="getGreetingsBBeanResponse">
+		</wsdl:part>
+	</wsdl:message>
 	<wsdl:portType name="HelloWorldService">
+
 		<wsdl:operation name="getGreetings">
 			<wsdl:input message="getGreetings">
-
 			</wsdl:input>
 			<wsdl:output message="getGreetingsResponse">
 			</wsdl:output>
@@ -219,11 +287,30 @@
 		<wsdl:operation name="getGreetingsDBean">
 			<wsdl:input message="getGreetingsDBean">
 			</wsdl:input>
+
 			<wsdl:output message="getGreetingsDBeanResponse">
 			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getGreetingsByteArray">
+			<wsdl:input message="getGreetingsByteArray">
+			</wsdl:input>
+			<wsdl:output message="getGreetingsByteArrayResponse">
+			</wsdl:output>
+		</wsdl:operation>
 
+		<wsdl:operation name="getGreetingsException">
+			<wsdl:input message="getGreetingsException">
+			</wsdl:input>
+			<wsdl:output message="getGreetingsExceptionResponse">
+			</wsdl:output>
+<!-- TUSCANY-3778 - corrected manually 			
+			<wsdl:fault name="HelloWorldException" message="ns4:HelloWorldException">
+-->
+			<wsdl:fault name="HelloWorldException" message="HelloWorldException">
+			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="getGreetingsBean">
+
 			<wsdl:input message="getGreetingsBean">
 			</wsdl:input>
 			<wsdl:output message="getGreetingsBeanResponse">
@@ -231,9 +318,9 @@
 		</wsdl:operation>
 		<wsdl:operation name="getGreetingsBeanArray">
 			<wsdl:input message="getGreetingsBeanArray">
-
 			</wsdl:input>
 			<wsdl:output message="getGreetingsBeanArrayResponse">
+
 			</wsdl:output>
 		</wsdl:operation>
 		<wsdl:operation name="getGreetingsBBean">
@@ -241,9 +328,9 @@
 			</wsdl:input>
 			<wsdl:output message="getGreetingsBBeanResponse">
 			</wsdl:output>
-
 		</wsdl:operation>
 		<wsdl:operation name="getGreetingsCBean">
+
 			<wsdl:input message="getGreetingsCBean">
 			</wsdl:input>
 			<wsdl:output message="getGreetingsCBeanResponse">
@@ -251,10 +338,10 @@
 		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:binding name="HelloWorldServiceBinding" type="HelloWorldService">
-
 		<SOAP:binding style="document"
 			transport="http://schemas.xmlsoap.org/soap/http" />
 		<wsdl:operation name="getGreetings">
+
 			<SOAP:operation />
 			<wsdl:input>
 				<SOAP:body use="literal" />
@@ -262,9 +349,9 @@
 			<wsdl:output>
 				<SOAP:body use="literal" />
 			</wsdl:output>
-
 		</wsdl:operation>
 		<wsdl:operation name="getGreetingsDBean">
+
 			<SOAP:operation />
 			<wsdl:input>
 				<SOAP:body use="literal" />
@@ -272,7 +359,30 @@
 			<wsdl:output>
 				<SOAP:body use="literal" />
 			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getGreetingsByteArray">
 
+			<SOAP:operation />
+			<wsdl:input>
+				<SOAP:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<SOAP:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getGreetingsException">
+
+			<SOAP:operation />
+			<wsdl:input>
+				<SOAP:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<SOAP:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="HelloWorldException">
+				<SOAP:fault name="HelloWorldException" use="literal" />
+
+			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="getGreetingsBean">
 			<SOAP:operation />
@@ -281,8 +391,8 @@
 			</wsdl:input>
 			<wsdl:output>
 				<SOAP:body use="literal" />
-			</wsdl:output>
 
+			</wsdl:output>
 		</wsdl:operation>
 		<wsdl:operation name="getGreetingsBeanArray">
 			<SOAP:operation />
@@ -291,8 +401,8 @@
 			</wsdl:input>
 			<wsdl:output>
 				<SOAP:body use="literal" />
-			</wsdl:output>
 
+			</wsdl:output>
 		</wsdl:operation>
 		<wsdl:operation name="getGreetingsBBean">
 			<SOAP:operation />
@@ -301,8 +411,8 @@
 			</wsdl:input>
 			<wsdl:output>
 				<SOAP:body use="literal" />
-			</wsdl:output>
 
+			</wsdl:output>
 		</wsdl:operation>
 		<wsdl:operation name="getGreetingsCBean">
 			<SOAP:operation />
@@ -311,8 +421,8 @@
 			</wsdl:input>
 			<wsdl:output>
 				<SOAP:body use="literal" />
-			</wsdl:output>
 
+			</wsdl:output>
 		</wsdl:operation>
 	</wsdl:binding>
 
