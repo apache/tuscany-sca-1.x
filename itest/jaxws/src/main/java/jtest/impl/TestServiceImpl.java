@@ -32,13 +32,16 @@ import jtest.TestService;
 @Service(TestService.class)
 public class TestServiceImpl implements TestService {
 
-    public void sendAbstract(TestAbstract data1, TestAbstract data2) {
-        System.out.println("data1 is instance of class " + data1.getClass().getName());
-        System.out.println("data2 is instance of class " + data2.getClass().getName());
-        System.out.println(data1.getGreeting() + " " + data2.getGreeting());
+    public void sendAbstract(TestAbstract data) {
+        System.out.println("data is instance of class " + data.getClass().getName());
+        System.out.println("data sent by " + data.sender);
+        System.out.println("data first+last name is " + data.firstName + " " + data.lastName);
+        System.out.println(data.getGreeting());
     }
 
+/*
     public void throwAbstract() throws AbstractException {
         throw new ConcreteException();
     }
+*/
 }

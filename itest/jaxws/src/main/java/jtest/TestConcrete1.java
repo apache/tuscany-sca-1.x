@@ -24,7 +24,7 @@ package jtest;
  */
 public class TestConcrete1 extends TestAbstract {
 
-    public String getGreeting() {
-        return "Hello";
+    public TestConcrete1() {
+        greeting = "Hello";
     }
 }

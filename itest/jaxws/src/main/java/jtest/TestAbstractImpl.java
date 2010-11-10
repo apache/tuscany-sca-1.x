@@ -19,12 +19,15 @@
 
 package jtest;
 
-/**
- * A test concrete class
- */
-public class TestConcrete2 extends TestAbstract {
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-    public TestConcrete2() {
-        greeting = "World";
-    }
+/**
+ * The test abstract class on-the-wire representation
+ */
+public class TestAbstractImpl {
+
+    public String className;
+
+    public String someMessage;
+
 }

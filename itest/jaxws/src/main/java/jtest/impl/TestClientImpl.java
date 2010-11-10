@@ -39,10 +39,16 @@ public class TestClientImpl implements TestClient {
 
     public void runAbstractTypeTest() {
         TestConcrete1 data1 = new TestConcrete1();
+        data1.firstName = "Bill";
+        data1.lastName = "Brown";
+        ref.sendAbstract(data1);
         TestConcrete2 data2 = new TestConcrete2();
-        ref.sendAbstract(data1, data2);
+        data2.firstName = "Sam";
+        data2.lastName = "Smith";
+        ref.sendAbstract(data2);
     }
 
+/*
     public void runAbstractExceptionTest() {
         try {
             ref.throwAbstract();
@@ -51,4 +57,5 @@ public class TestClientImpl implements TestClient {
             System.out.println(e.getGreeting());
         }
     }
+*/
 }

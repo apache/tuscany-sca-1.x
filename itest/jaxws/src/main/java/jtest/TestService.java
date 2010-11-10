@@ -30,7 +30,9 @@ import jtest.TestAbstract;
 @Remotable
 public interface TestService {
 
-    void sendAbstract(TestAbstract data1, TestAbstract data2);
+    void sendAbstract(TestAbstract data);
 
+/*
     void throwAbstract() throws AbstractException;
+*/
 }

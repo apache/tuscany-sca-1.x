@@ -26,5 +26,7 @@ public interface TestClient {
 
     void runAbstractTypeTest();
 
+/*
     void runAbstractExceptionTest();
+*/
 }

@@ -19,6 +19,7 @@
 
 package jtest;
 
+import org.apache.tuscany.sca.binding.ws.wsdlgen.WSDLServiceGenerator;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCAContribution;
 import org.apache.tuscany.sca.node.SCANode;
@@ -33,7 +34,8 @@ public class DatatypesTestCase {
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        node = SCANodeFactory.newInstance().createSCANode("jtest.composite", 
+    WSDLServiceGenerator.printWSDL = true;
+    node = SCANodeFactory.newInstance().createSCANode("jtest.composite", 
                 new SCAContribution("payment", "./target/classes"));
         node.start();
     }
@@ -45,13 +47,14 @@ public class DatatypesTestCase {
         testClient.runAbstractTypeTest();
     }
 
+/*
     @Test
-    @Ignore
     public void runAbstractExceptionTest() {
         SCAClient client = (SCAClient)node;
         TestClient testClient = client.getService(TestClient.class, "TestClient");
         testClient.runAbstractExceptionTest();
     }
+*/
     
     @AfterClass
     public static void tearDownAfterClass() throws Exception {

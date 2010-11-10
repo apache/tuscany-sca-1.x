@@ -27,5 +27,15 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlJavaTypeAdapter(TestAdapter.class)
 public abstract class TestAbstract {
 
-    public abstract String getGreeting();
+    public String firstName = "?";
+
+    public String lastName = "??";
+
+    public String greeting = "???";
+
+    public String sender = "Anonymous";
+
+    public String getGreeting() {
+        return greeting;
+    }
 }

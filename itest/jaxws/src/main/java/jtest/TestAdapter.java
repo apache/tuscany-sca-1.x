@@ -24,11 +24,16 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 /**
  * The test XML adapter class
  */
-public class TestAdapter extends XmlAdapter<String, TestAbstract> {
-    public TestAbstract unmarshal(String v) throws Exception {
-        return (TestAbstract)this.getClass().getClassLoader().loadClass(v).newInstance();
+public class TestAdapter extends XmlAdapter<TestAbstractImpl, TestAbstract> {
+    public TestAbstract unmarshal(TestAbstractImpl ai) throws Exception {
+        TestAbstract a = (TestAbstract)this.getClass().getClassLoader().loadClass(ai.className).newInstance();
+        a.sender = ai.someMessage;
+        return a;
     }
-    public String marshal(TestAbstract v) throws Exception {
-        return v.getClass().getName();
+    public TestAbstractImpl marshal(TestAbstract v) throws Exception {
+        TestAbstractImpl ai = new TestAbstractImpl();
+        ai.className = v.getClass().getName();
+        ai.someMessage = "YouKnowWho";
+        return ai;
     }
 }
