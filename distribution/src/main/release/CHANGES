@@ -2,6 +2,8 @@ Changes With Apache Tuscany SCA 1.6.1 November 2010
 ===================================================
 
 Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
+TUSCANY-3780 Build error in maven-incremental-build
+TUSCANY-3770 Tomcat 7 reports a memory leak when stopping a Tuscany webapp
 TUSCANY-3765 itest/wsdlgen creates classes that don't run on JDK 5
 TUSCANY-3764 Some LICENSE/NOTICE files in individual module jars aren't consistent with the LICENSE/NOTICE files in the binary distribution
 TUSCANY-3762 Tuscany SCA Eclipse plugin doesn't install correctly
