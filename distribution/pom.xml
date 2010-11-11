@@ -36,10 +36,8 @@
     </properties>
 
     <modules>
-        <!--
         <module>bundle</module>
         <module>manifest</module>
-        -->
     </modules>
 
     <dependencies>
