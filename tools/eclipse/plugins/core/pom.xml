@@ -68,8 +68,6 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>${basedir}</sourceDirectory>
-
         <filters>
             <filter>../../target/filter.properties</filter>
         </filters>
