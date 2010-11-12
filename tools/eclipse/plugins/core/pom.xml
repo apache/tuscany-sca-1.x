@@ -77,7 +77,7 @@
                 <directory>${basedir}</directory>
                 <filtering>true</filtering>
                 <excludes>
-                    <exclude>**/*.java</exclude>
+                    <exclude>src/**</exclude>
                     <exclude>**/.*/**</exclude>
                     <exclude>pom.xml</exclude>
                     <exclude>build.*</exclude>
