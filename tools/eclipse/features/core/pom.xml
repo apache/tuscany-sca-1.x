@@ -38,24 +38,47 @@
     </dependencies>
 
     <build>
-        <filters>
-            <filter>../../target/filter.properties</filter>
-        </filters>
-
         <resources>
-           <resource>
-               <directory>${basedir}</directory>
-               <filtering>true</filtering>
-               <excludes>
-                   <exclude>**/.*/**</exclude>
-                   <exclude>pom.xml</exclude>
-                   <exclude>build.*</exclude>
-                   <exclude>target/**</exclude>
-               </excludes>
-           </resource>
+            <resource>
+                <directory>${basedir}</directory>
+                <excludes>
+                    <exclude>**/.*/**</exclude>
+                    <exclude>pom.xml</exclude>
+                    <exclude>build.*</exclude>
+                    <exclude>filtered-resources/**</exclude>
+                    <exclude>target/**</exclude>
+                </excludes>
+            </resource>
         </resources>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <executions>
+                    <!-- TUSCANY-xxxx: Copy resource files that need to be filtered -->
+                    <execution>
+                        <id>copy-filtered-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}</outputDirectory>
+                            <filters>
+                                <filter>${basedir}/../../target/filter.properties</filter>
+                            </filters>
+                            <resources>          
+                                <resource>
+                                    <directory>${basedir}/filtered-resources</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -63,6 +86,23 @@
                     <archive>
                         <manifestFile>target/classes/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <!-- TUSCANY-xxxx: Delete copied filtered resource files -->
+                        <fileset>
+                            <directory>${basedir}</directory>
+                            <includes>
+                                <include>NOTICE</include>
+                                <include>META-INF/MANIFEST.MF</include>
+                                <include>feature.xml</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
                 </configuration>
             </plugin>
         </plugins>
