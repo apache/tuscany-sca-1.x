@@ -57,7 +57,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.4.3</version>
                 <executions>
-                    <!-- TUSCANY-xxxx: Copy resource files that need to be filtered -->
+                    <!-- TUSCANY-3762: Copy resource files that need to be filtered -->
                     <execution>
                         <id>copy-filtered-resources</id>
                         <phase>generate-resources</phase>
@@ -93,12 +93,12 @@
                 <artifactId>maven-clean-plugin</artifactId>
                 <configuration>
                     <filesets>
-                        <!-- TUSCANY-xxxx: Delete copied filtered resource files -->
+                        <!-- TUSCANY-3762: Delete copied filtered resource files -->
                         <fileset>
                             <directory>${basedir}</directory>
                             <includes>
                                 <include>NOTICE</include>
-                                <include>META-INF/MANIFEST.MF</include>
+                                <include>META-INF/**</include>
                                 <include>feature.xml</include>
                             </includes>
                         </fileset>
