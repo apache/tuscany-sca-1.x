@@ -50,7 +50,8 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>generate-resources</phase>
+                        <!-- TUSCANY-3762: attaching this to generate-resources would cause mvn eclipse:eclipse to run it -->
+                        <phase>install</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
