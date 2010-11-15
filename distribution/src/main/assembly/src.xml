@@ -208,6 +208,19 @@
 				<exclude>demos/secure-bigbank/secure-bigbank-account/src/main/resources/web/dojo/**/*</exclude>
                 <exclude>tutorials/travelsample</exclude>
                 <exclude>tutorials/travelsample/**/*</exclude>
+
+                <!-- TUSCANY-3762: Exclude the following which are generated from filtered-resources/* -->
+                <exclude>tools/eclipse/features/core/feature.xml</exclude>
+                <exclude>tools/eclipse/features/core/META-INF/**</exclude>
+                <exclude>tools/eclipse/features/core/NOTICE</exclude>
+                <exclude>tools/eclipse/plugins/core/about.ini</exclude>
+                <exclude>tools/eclipse/plugins/core/about_files/NOTICE</exclude>
+                <exclude>tools/eclipse/plugins/core/META-INF/**</exclude>
+                <exclude>tools/eclipse/plugins/core/org/**</exclude>
+                <exclude>tools/eclipse/site/updatesite/NOTICE</exclude>
+                <exclude>tools/eclipse/site/updatesite/site.xml</exclude>
+                <exclude>tools/eclipse/site/updatesite/src/**</exclude>
+
 				<exclude>**/derby.log</exclude>
 				<exclude>*/**/*.svg</exclude>
 				<exclude>*/**/*.ruleset</exclude>
