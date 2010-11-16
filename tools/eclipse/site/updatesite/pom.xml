@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca-tools</artifactId>
-        <version>1.6.1-SNAPSHOT</version>
+        <version>1.6.1</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
     <artifactId>org.apache.tuscany.sca.updatesite</artifactId>
@@ -36,25 +36,21 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>org.apache.tuscany.sca.core</artifactId>
-            <version>1.6.1-SNAPSHOT</version>
+            <version>1.6.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>org.apache.tuscany.sca.feature.core</artifactId>
-            <version>1.6.1-SNAPSHOT</version>
+            <version>1.6.1</version>
         </dependency>
     </dependencies>
 
     <build>
-        <filters>
-            <filter>../../target/filter.properties</filter>
-        </filters>
-
         <resources>
             <resource>
                 <directory>${basedir}</directory>
-                <filtering>true</filtering>
                 <excludes>
+                    <exclude>src/**</exclude>
                     <exclude>**/.*/**</exclude>
                     <exclude>pom.xml</exclude>
                     <exclude>build.*</exclude>
@@ -64,6 +60,33 @@
         </resources>
        
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <executions>
+                    <!-- TUSCANY-3762: Copy resource files that need to be filtered -->
+                    <execution>
+                        <id>copy-filtered-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}</outputDirectory>
+                            <filters>
+                                <filter>${basedir}/../../target/filter.properties</filter>
+                            </filters>
+                            <resources>          
+                                <resource>
+                                    <directory>${basedir}/filtered-resources</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -76,13 +99,30 @@
                         </goals>
                         <configuration>
                             <descriptors>
-                                <descriptor>target/classes/src/main/assembly/updatesite.xml</descriptor>
+                                <descriptor>src/main/assembly/updatesite.xml</descriptor>
                             </descriptors>
                             <tarLongFileMode>gnu</tarLongFileMode>
                             <finalName>apache-tuscany-sca-${pom.version}</finalName>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <!-- TUSCANY-3762: Delete copied filtered resource files -->
+                        <fileset>
+                            <directory>${basedir}</directory>
+                            <includes>
+                                <include>site.xml</include>
+                                <include>NOTICE</include>
+                                <include>src/**</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
         </plugins>
     </build>
