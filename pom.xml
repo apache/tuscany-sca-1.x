@@ -43,6 +43,7 @@
     </prerequisites>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <notice.dir>.</notice.dir>
     </properties>
 
