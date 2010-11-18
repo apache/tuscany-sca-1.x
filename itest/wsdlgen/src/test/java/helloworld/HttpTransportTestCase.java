@@ -108,9 +108,9 @@ public class HttpTransportTestCase{
         abean.setField3(bbean);
         
         assertEquals("Hello 3 4 1 2", wsProxy.getGreetingsDBean(abean));
-/* TUSCANY-3778        
+
         String byteArrayString = "Hello World";
-        assertEquals(byteArrayString, String.valueOf(wsProxy.getGreetingsByteArray(byteArrayString.getBytes())));
+        assertEquals(byteArrayString, new String(wsProxy.getGreetingsByteArray(byteArrayString.getBytes())));
         
         try {
 	        wsProxy.getGreetingsException("Fred");
@@ -118,7 +118,6 @@ public class HttpTransportTestCase{
         } catch(Exception ex) {
         	
         }  
-*/              
     }  
     
     @Test

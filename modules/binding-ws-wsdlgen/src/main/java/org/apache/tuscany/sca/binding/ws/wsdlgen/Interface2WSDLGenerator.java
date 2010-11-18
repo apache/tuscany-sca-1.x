@@ -979,7 +979,7 @@ public class Interface2WSDLGenerator {
             Message faultMsg = definition.getMessage(faultName);
             if (faultMsg == null) {
                 faultMsg = definition.createMessage();
-                faultMsg.setQName(faultName);
+                faultMsg.setQName(new QName(namespaceURI, faultName.getLocalPart()));
                 faultMsg.setUndefined(false);
                 definition.addMessage(faultMsg);
                 faultMsg.addPart(generatePart(definition, faultType.getLogical(), faultName.getLocalPart()));
@@ -1107,7 +1107,7 @@ public class Interface2WSDLGenerator {
             }
             helpers.put(db, helper);
         }
-        TypeInfo typeInfo = helper.getTypeInfo(javaType.isArray() ? javaType.getComponentType() : javaType,
+        TypeInfo typeInfo = helper.getTypeInfo(byte[].class != javaType && javaType.isArray() ? javaType.getComponentType() : javaType,
                                                dataType.getLogical());
         ElementInfo element = new ElementInfo(name, typeInfo);
         element.setMany(byte[].class != javaType && javaType.isArray());
