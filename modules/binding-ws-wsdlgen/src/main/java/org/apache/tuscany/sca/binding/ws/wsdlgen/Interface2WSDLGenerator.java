@@ -975,11 +975,12 @@ public class Interface2WSDLGenerator {
         for (DataType<DataType> faultType: op.getFaultTypes()) {
             Fault fault = definition.createFault();
             QName faultName = ((XMLType)faultType.getLogical().getLogical()).getElementName();
+            QName faultMsgName = new QName(namespaceURI, faultName.getLocalPart());
             fault.setName(faultName.getLocalPart());
-            Message faultMsg = definition.getMessage(faultName);
+            Message faultMsg = definition.getMessage(faultMsgName);
             if (faultMsg == null) {
                 faultMsg = definition.createMessage();
-                faultMsg.setQName(new QName(namespaceURI, faultName.getLocalPart()));
+                faultMsg.setQName(faultMsgName);
                 faultMsg.setUndefined(false);
                 definition.addMessage(faultMsg);
                 faultMsg.addPart(generatePart(definition, faultType.getLogical(), faultName.getLocalPart()));
