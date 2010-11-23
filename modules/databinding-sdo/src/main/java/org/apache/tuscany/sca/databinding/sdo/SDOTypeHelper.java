@@ -30,6 +30,7 @@ import javax.xml.namespace.QName;
 
 import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.databinding.XMLTypeHelper;
+import org.apache.tuscany.sca.databinding.impl.SimpleTypeMapperImpl;
 import org.apache.tuscany.sca.interfacedef.DataType;
 import org.apache.tuscany.sca.interfacedef.Interface;
 import org.apache.tuscany.sca.interfacedef.Operation;
@@ -69,6 +70,8 @@ public class SDOTypeHelper implements XMLTypeHelper {
         QName xmlType = JavaXMLMapper.getXMLType(javaType);
         if (xmlType != null) {
             return new TypeInfo(xmlType, true, null);
+        } else if (javaType == commonj.sdo.DataObject.class) {
+            return new TypeInfo(SimpleTypeMapperImpl.XSD_ANYTYPE, true, null);
         } else {
             // introspect(javaType, xsdTypesMap, typesMap);
             if (logical instanceof XMLType) {
