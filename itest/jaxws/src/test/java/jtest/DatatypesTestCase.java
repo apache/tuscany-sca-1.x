@@ -47,15 +47,21 @@ public class DatatypesTestCase {
         testClient.runAbstractTypeTest();
     }
 
-/*
     @Test
+    @Ignore
     public void runAbstractExceptionTest() {
         SCAClient client = (SCAClient)node;
         TestClient testClient = client.getService(TestClient.class, "TestClient");
         testClient.runAbstractExceptionTest();
     }
-*/
     
+    @Test
+    public void runListTypeTest() {
+        SCAClient client = (SCAClient)node;
+        TestClient testClient = client.getService(TestClient.class, "TestClient");
+        testClient.runListTypeTest();
+    }
+
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
         if (node != null) {

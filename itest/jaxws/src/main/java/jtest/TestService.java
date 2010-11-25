@@ -19,6 +19,8 @@
 
 package jtest;
 
+import java.util.List;
+
 import org.osoa.sca.annotations.Remotable;
 
 import jtest.AbstractException;
@@ -32,7 +34,7 @@ public interface TestService {
 
     void sendAbstract(TestAbstract data);
 
-/*
     void throwAbstract() throws AbstractException;
-*/
+
+    void sendList(List<String> data);
 }

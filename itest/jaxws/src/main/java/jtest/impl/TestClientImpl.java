@@ -19,6 +19,7 @@
 
 package jtest.impl;
 
+import java.util.ArrayList;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
@@ -48,7 +49,6 @@ public class TestClientImpl implements TestClient {
         ref.sendAbstract(data2);
     }
 
-/*
     public void runAbstractExceptionTest() {
         try {
             ref.throwAbstract();
@@ -57,5 +57,11 @@ public class TestClientImpl implements TestClient {
             System.out.println(e.getGreeting());
         }
     }
-*/
+
+    public void runListTypeTest() {
+        ArrayList<String> data = new ArrayList<String>();
+        data.add("Hello,");
+        data.add("World!");
+        ref.sendList(data);
+    }
 }

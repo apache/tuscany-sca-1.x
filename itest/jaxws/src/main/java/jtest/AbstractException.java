@@ -24,8 +24,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * The abstract exception class
  */
-@XmlJavaTypeAdapter(TestAdapter.class)
+@XmlJavaTypeAdapter(ExceptionAdapter.class)
 public abstract class AbstractException extends Exception {
 
     public abstract String getGreeting();
+
+    public abstract void setGreeting(String greeting);
 }

@@ -19,6 +19,8 @@
 
 package jtest.impl;
 
+import java.util.List;
+
 import org.osoa.sca.annotations.Service;
 
 import jtest.AbstractException;
@@ -39,9 +41,11 @@ public class TestServiceImpl implements TestService {
         System.out.println(data.getGreeting());
     }
 
-/*
     public void throwAbstract() throws AbstractException {
         throw new ConcreteException();
     }
-*/
+
+    public void sendList(List<String> data) {
+        System.out.println(data.get(0) + " " + data.get(1));
+    }
 }

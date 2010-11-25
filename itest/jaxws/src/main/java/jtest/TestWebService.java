@@ -18,6 +18,7 @@
  */
 package jtest;
 
+import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
@@ -26,4 +27,10 @@ public interface TestWebService {
 
     @WebMethod
     void sendAbstract(TestAbstract testData);
+
+    @WebMethod
+    void throwAbstract() throws AbstractException;
+
+    @WebMethod
+    void sendList(List<String> data);
 }
