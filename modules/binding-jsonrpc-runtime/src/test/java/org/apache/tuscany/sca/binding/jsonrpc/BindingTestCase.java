@@ -114,6 +114,7 @@ public class BindingTestCase {
     }  
     
     @Test
+    @Ignore("TUSCANY-3747")
     public void testStringArray() throws MalformedURLException, IOException {     
         
         try {
