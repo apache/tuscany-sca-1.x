@@ -68,7 +68,9 @@ public class BindingTestCase {
 	        JSONObject jsonResp    = callService ("http://localhost:8085/HelloWorldComponent/HelloWorldService",
 	                                              jsonRequest);
 	        Assert.assertNotNull(jsonResp);
-	        Assert.assertEquals("{\"id\":1,\"result\":\"Hello petra\"}", jsonResp.toString());
+	        Assert.assertEquals(new JSONObject(
+                                "{\"id\":1,\"result\":\"Hello petra\"}"
+                                ).toString(), jsonResp.toString());
 
         } catch(Exception ex){
         	ex.printStackTrace();
@@ -83,7 +85,9 @@ public class BindingTestCase {
 	        JSONObject jsonResp    = callService ("http://localhost:8085/HelloWorldComponent/HelloWorldService",
 	                                              jsonRequest);
 	        Assert.assertNotNull(jsonResp);
-	        Assert.assertEquals("{\"id\":1,\"result\":\"Hello petra arnold\"}", jsonResp.toString());
+	        Assert.assertEquals(new JSONObject(
+                                "{\"id\":1,\"result\":\"Hello petra arnold\"}"
+                                ).toString(), jsonResp.toString());
 
         } catch(Exception ex){
         	ex.printStackTrace();
@@ -101,7 +105,12 @@ public class BindingTestCase {
 	        Assert.assertNotNull(jsonResp);
 
 	        //JabSorb sends class hints with complex parameters/types
-	        Assert.assertEquals("{\"id\":1,\"result\":{\"s\":\"XYZ\",\"b\":true,\"javaClass\":\"helloworld.BeanA\",\"y\":5,\"x\":2}}", jsonResp.toString());
+            String temp = new JSONObject(
+                          "{\"x\":2,\"s\":\"XYZ\",\"b\":true,\"y\":5,\"javaClass\":\"helloworld.BeanA\"}"
+                          ).toString();
+	        Assert.assertEquals(new JSONObject(
+                                "{\"id\":1,\"result\":" + temp + "}"
+                                ).toString(), jsonResp.toString());
 
         } catch(Exception ex){
         	ex.printStackTrace();
@@ -117,7 +126,9 @@ public class BindingTestCase {
 	        JSONObject jsonResp    = callService ("http://localhost:8085/HelloWorldComponent/HelloWorldService",
 	                                              jsonRequest);
 	        Assert.assertNotNull(jsonResp);
-	        Assert.assertEquals("{\"id\":1,\"result\":[\"Hello Fred Bloggs\"]}", jsonResp.toString());
+	        Assert.assertEquals(new JSONObject(
+                                "{\"id\":1,\"result\":[\"Hello Fred Bloggs\"]}"
+                                ).toString(), jsonResp.toString());
 
         } catch(Exception ex){
         	ex.printStackTrace();
