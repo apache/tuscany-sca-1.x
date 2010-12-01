@@ -38,18 +38,20 @@ import org.apache.tuscany.sca.binding.ws.axis2.itests.mtom.FileTransferServiceCl
 import org.apache.tuscany.sca.databinding.xml.String2Node;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-public class FileTransferMTOMTestCase extends TestCase {
+public class FileTransferMTOMTestCase {
 
-    private SCADomain domain;
-    private FileTransferServiceClient filetransfer;
+    private static SCADomain domain;
+    private static FileTransferServiceClient filetransfer;
     
     /**
      * Runs once before the tests
      */
     @BeforeClass
-    protected void setUp() throws Exception {
+    public static void setUp() throws Exception {
     	domain = SCADomain.newInstance("org/apache/tuscany/sca/binding/ws/axis2/itests/mtom/filetransferservice.composite");
     	filetransfer = domain.getService(FileTransferServiceClient.class, "FileTransferClientComponent");
     }
@@ -58,7 +60,7 @@ public class FileTransferMTOMTestCase extends TestCase {
      * Runs once after the tests
      */
     @AfterClass
-    protected void tearDown() throws Exception {
+    public static void tearDown() throws Exception {
     	domain.close();
     }
 
@@ -83,6 +85,7 @@ public class FileTransferMTOMTestCase extends TestCase {
     }
     
     @Test
+    @Ignore("TUSCANY-3802")
     public void testOMElementFileTransfer() throws Exception {
         OMFactory factory = OMAbstractFactory.getOMFactory();                        
         OMElement imageElement = factory.createOMElement(new QName("image"));          
@@ -95,6 +98,7 @@ public class FileTransferMTOMTestCase extends TestCase {
     }
     
     @Test
+    @Ignore("TUSCANY-3802")
     public void testSendMyException() throws Exception {
         MyException exp = new MyExceptionImpl();
         assertEquals("File uploaded Sucessfully", filetransfer.sendMyExceptionForward(exp));            
