@@ -64,59 +64,39 @@ public class FileTransferMTOMTestCase extends TestCase {
 
     @Test
     public void testImageFileTransfer() throws Exception {
-        try {        	
-            Image image = new BufferedImage(80, 24, BufferedImage.TYPE_INT_RGB);
-            assertEquals("File uploaded Sucessfully", filetransfer.uploadImageFileForward(image));            
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
+        Image image = new BufferedImage(80, 24, BufferedImage.TYPE_INT_RGB);
+        assertEquals("File uploaded Sucessfully", filetransfer.uploadImageFileForward(image));            
     }
     
     @Test
     public void testSourceFileTransfer() throws Exception {
-        try {        	 
-        	String xml = "<a>A<b>B</b><c>C</c></a>";
-            Source source = new DOMSource(new String2Node().transform(xml, null));
-            assertEquals("File uploaded Sucessfully", filetransfer.uploadSourceFileForward(source));            
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
+        String xml = "<a>A<b>B</b><c>C</c></a>";
+        Source source = new DOMSource(new String2Node().transform(xml, null));
+        assertEquals("File uploaded Sucessfully", filetransfer.uploadSourceFileForward(source));            
     }
     
     @Test
     public void testDataHandlerFileTransfer() throws Exception {
-        try {            
-            // For testing purpose lets try uploading LICENSE file.
-            DataHandler dataHandler = new DataHandler(new FileDataSource("./LICENSE"));
-            assertEquals("File uploaded Sucessfully", filetransfer.uploadDataHandlerFileForward(dataHandler));            
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
+        // For testing purpose lets try uploading LICENSE file.
+        DataHandler dataHandler = new DataHandler(new FileDataSource("./LICENSE"));
+        assertEquals("File uploaded Sucessfully", filetransfer.uploadDataHandlerFileForward(dataHandler));            
     }
     
     @Test
     public void testOMElementFileTransfer() throws Exception {
-        try {        	
-        	OMFactory factory = OMAbstractFactory.getOMFactory();                        
-            OMElement imageElement = factory.createOMElement(new QName("image"));          
-            
-            DataHandler dataHandler = new DataHandler(new FileDataSource("./LICENSE"));
-            
-            OMText textData = factory.createOMText(dataHandler, true);
-            imageElement.addChild(textData);
-            assertEquals("File uploaded Sucessfully", filetransfer.uploadOMElementFileForward(imageElement));
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
+        OMFactory factory = OMAbstractFactory.getOMFactory();                        
+        OMElement imageElement = factory.createOMElement(new QName("image"));          
+
+        DataHandler dataHandler = new DataHandler(new FileDataSource("./LICENSE"));
+
+        OMText textData = factory.createOMText(dataHandler, true);
+        imageElement.addChild(textData);
+        assertEquals("File uploaded Sucessfully", filetransfer.uploadOMElementFileForward(imageElement));
     }
     
     @Test
     public void testSendMyException() throws Exception {
-        try {        	
-            MyException exp = new MyExceptionImpl();
-            assertEquals("File uploaded Sucessfully", filetransfer.sendMyExceptionForward(exp));            
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
+        MyException exp = new MyExceptionImpl();
+        assertEquals("File uploaded Sucessfully", filetransfer.sendMyExceptionForward(exp));            
     }
 }
