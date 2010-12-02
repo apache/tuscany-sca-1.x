@@ -85,7 +85,6 @@ public class FileTransferMTOMTestCase {
     }
     
     @Test
-    @Ignore("TUSCANY-3802")
     public void testOMElementFileTransfer() throws Exception {
         OMFactory factory = OMAbstractFactory.getOMFactory();                        
         OMElement imageElement = factory.createOMElement(new QName("image"));          
@@ -98,7 +97,7 @@ public class FileTransferMTOMTestCase {
     }
     
     @Test
-    @Ignore("TUSCANY-3802")
+    @Ignore("TUSCANY-3805")
     public void testSendMyException() throws Exception {
         MyException exp = new MyExceptionImpl();
         assertEquals("File uploaded Sucessfully", filetransfer.sendMyExceptionForward(exp));            
