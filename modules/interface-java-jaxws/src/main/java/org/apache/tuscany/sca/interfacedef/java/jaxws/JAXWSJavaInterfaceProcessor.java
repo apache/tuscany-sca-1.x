@@ -331,11 +331,13 @@ public class JAXWSJavaInterfaceProcessor implements JavaInterfaceVisitor {
                     outputElements.add(new ElementInfo(element, new TypeInfo(type, false, null)));
                 }
 
-                String db = inputWrapperDT != null ? inputWrapperDT.getDataBinding() : JAXB_DATABINDING;
+                // TUSCANY-3804: handle output wrapper separately
+                String dbIn = inputWrapperDT != null ? inputWrapperDT.getDataBinding() : JAXB_DATABINDING;
+                String dbOut = outputWrapperDT != null ? outputWrapperDT.getDataBinding() : JAXB_DATABINDING;
 
-                WrapperInfo inputWrapperInfo = new WrapperInfo(db, new ElementInfo(inputWrapper, null), inputElements);
+                WrapperInfo inputWrapperInfo = new WrapperInfo(dbIn, new ElementInfo(inputWrapper, null), inputElements);
                 WrapperInfo outputWrapperInfo =
-                    new WrapperInfo(db, new ElementInfo(outputWrapper, null), outputElements);
+                    new WrapperInfo(dbOut, new ElementInfo(outputWrapper, null), outputElements);
 
                 inputWrapperInfo.setWrapperType(inputWrapperDT);
                 outputWrapperInfo.setWrapperType(outputWrapperDT);

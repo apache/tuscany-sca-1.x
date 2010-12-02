@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.tuscany.sca.databinding.DataBinding;
 import org.apache.tuscany.sca.databinding.DataBindingExtensionPoint;
 import org.apache.tuscany.sca.databinding.WrapperHandler;
 import org.apache.tuscany.sca.databinding.javabeans.JavaBeansDataBinding;
@@ -59,22 +60,41 @@ public class WrapperJavaInterfaceProcessor implements JavaInterfaceVisitor {
             if (inputWrapperInfo == null || outputWrapperInfo == null) {
                 continue;
             }
-            // JIRA: TUSCANY-842
+            // JIRA: TUSCANY-824
             String db = inputWrapperInfo.getDataBinding();
             if (db == null || JAXB_DATABINDING.equals(db)) {
                 db = assignOperationDataBinding(operation);
             }
 
             // Introspect the wrapper data type
-            org.apache.tuscany.sca.databinding.DataBinding dbObj = dataBindingRegistry.getDataBinding(db);
+            DataBinding dbObj = dataBindingRegistry.getDataBinding(db);
             WrapperHandler handler = dbObj == null ? null : dbObj.getWrapperHandler();
             if (handler != null) {
                 inputWrapperInfo.setWrapperType(handler.getWrapperType(operation, true));
-                outputWrapperInfo.setWrapperType(handler.getWrapperType(operation, false));
+                // TUSCANY-3804: handle output wrapper separately
+                //outputWrapperInfo.setWrapperType(handler.getWrapperType(operation, false));
             }
             if (dbObj != null && handler == null) {
                 // To avoid JAXB wrapper bean generation
                 inputWrapperInfo.setWrapperType(null);
+                // TUSCANY-3804: handle output wrapper separately
+                //outputWrapperInfo.setWrapperType(null);
+            }
+
+            // TUSCANY-3804: handle output wrapper separately
+            db = outputWrapperInfo.getDataBinding();
+            if (db == null || JAXB_DATABINDING.equals(db)) {
+                db = assignOutputDataBinding(operation);
+            }
+
+            // Introspect the wrapper data type
+            dbObj = dataBindingRegistry.getDataBinding(db);
+            handler = dbObj == null ? null : dbObj.getWrapperHandler();
+            if (handler != null) {
+                outputWrapperInfo.setWrapperType(handler.getWrapperType(operation, false));
+            }
+            if (dbObj != null && handler == null) {
+                // To avoid JAXB wrapper bean generation
                 outputWrapperInfo.setWrapperType(null);
             }
         }
@@ -95,7 +115,8 @@ public class WrapperJavaInterfaceProcessor implements JavaInterfaceVisitor {
         List<DataType> opDataTypes = new LinkedList<DataType>();
 
         opDataTypes.addAll(operation.getInputType().getLogical());
-        opDataTypes.add(operation.getOutputType());
+        // TUSCANY-3804: handle output wrapper separately
+        //opDataTypes.add(operation.getOutputType());
 /*
         for (DataType<DataType> ft : operation.getFaultTypes()) {
             opDataTypes.add(ft.getLogical());
@@ -123,6 +144,26 @@ public class WrapperJavaInterfaceProcessor implements JavaInterfaceVisitor {
             return db;
         } else {
             return operation.getInputWrapper().getDataBinding();
+        }
+    }
+
+    // TUSCANY-3804: handle output wrapper separately
+    private String assignOutputDataBinding(Operation operation) {
+        String db = null;
+        DataType dt = operation.getOutputType();
+        if (dt != null) {
+            db = dt.getDataBinding();
+            if ("java:array".equals(db)) {
+                db = ((DataType)dt.getLogical()).getDataBinding();
+            }
+        }
+        if (db != null &&
+            !JavaBeansDataBinding.NAME.equals(db) &&
+            !SimpleJavaDataBinding.NAME.equals(db)) {
+            operation.getOutputWrapper().setDataBinding(db);
+            return db;
+        } else {
+            return operation.getOutputWrapper().getDataBinding();
         }
     }
 }
