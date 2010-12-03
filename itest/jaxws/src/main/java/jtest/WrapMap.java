@@ -19,22 +19,19 @@
 
 package jtest;
 
+import java.util.Map;
+
 /**
- * The test client interface
+ * The wrapped map class
  */
-public interface TestClient {
+public class WrapMap {
+    private Map<String, String> map;
 
-    void runAbstractTypeTest();
+    public Map<String, String> getMap() {
+        return map;
+    }
 
-    void runAbstractExceptionTest();
-
-    void runListTypeTest();
-
-    void runMapTypeTest();
-
-    void runWrapMapTypeTest();
-
-    void runWildcardExtendsTest();
-
-    void runWrapBeanTest();
+    public void setMap(Map<String, String> map) {
+        this.map = map;
+    }
 }

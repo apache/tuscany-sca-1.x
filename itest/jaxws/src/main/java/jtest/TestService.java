@@ -19,7 +19,10 @@
 
 package jtest;
 
+//import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+//import javax.xml.bind.annotation.XmlSeeAlso;
 
 import org.osoa.sca.annotations.Remotable;
 
@@ -30,6 +33,7 @@ import jtest.TestAbstract;
  * The test service interface
  */
 @Remotable
+//@XmlSeeAlso(Bean2.class)
 public interface TestService {
 
     void sendAbstract(TestAbstract data);
@@ -37,4 +41,12 @@ public interface TestService {
     void throwAbstract() throws AbstractException;
 
     void sendList(List<String> data);
+
+    Map<String, String> returnMap();
+
+    WrapMap returnWrapMap();
+
+    void sendWildcardExtends(Bean1</*? extends*/ Bean2> arg);
+
+    void sendWrapBean(WrapBean arg);
 }

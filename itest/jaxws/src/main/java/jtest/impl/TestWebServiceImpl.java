@@ -19,11 +19,15 @@
 package jtest.impl;
 
 import java.util.List;
+import java.util.Map;
 import javax.jws.WebService;
 
 import jtest.AbstractException;
+import jtest.Bean1;
+import jtest.Bean2;
 import jtest.ConcreteException;
 import jtest.TestAbstract;
+import jtest.TestConcrete1;
 import jtest.TestWebService;
 
 @WebService(endpointInterface = "jtest.TestWebService")
@@ -33,11 +37,24 @@ public class TestWebServiceImpl implements TestWebService {
         System.out.println(testData.getGreeting());
     }
 
+    public String sendConcrete(TestConcrete1 testData) {
+        System.out.println(testData.getGreeting());
+        return "Hi!";
+    }
+
     public void throwAbstract() throws AbstractException {
         throw new ConcreteException();
     }    
 
     public void sendList(List<String> data) {
         System.out.println(data.get(0) + " " + data.get(1));
+    }
+
+    public Map<String, String> returnMap() {
+        return null;
+    }
+
+    public void sendWildcardExtends(Bean1<Bean2> arg) {
+        System.out.println(arg);
     }
 }

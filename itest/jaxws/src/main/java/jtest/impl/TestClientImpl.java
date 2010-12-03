@@ -20,14 +20,19 @@
 package jtest.impl;
 
 import java.util.ArrayList;
+import java.util.Map;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
 import jtest.AbstractException;
+import jtest.Bean1;
+import jtest.Bean2;
 import jtest.TestClient;
 import jtest.TestConcrete1;
 import jtest.TestConcrete2;
 import jtest.TestService;
+import jtest.WrapBean;
+import jtest.WrapMap;
 
 /**
  * The test client implementation
@@ -63,5 +68,32 @@ public class TestClientImpl implements TestClient {
         data.add("Hello,");
         data.add("World!");
         ref.sendList(data);
+    }
+
+    public void runMapTypeTest() {
+        Map<String, String> myMap = ref.returnMap();
+        System.out.println(myMap.get("greeting"));
+    }
+
+    public void runWrapMapTypeTest() {
+        WrapMap myWrapMap = ref.returnWrapMap();
+        Map<String, String> myMap = myWrapMap.getMap();
+        System.out.println(myMap.get("greeting"));
+    }
+
+    public void runWildcardExtendsTest() {
+        Bean2 temp = new Bean2();
+        temp.setName("Me");
+        Bean1<Bean2> arg = new Bean1<Bean2>(temp);
+        ref.sendWildcardExtends(arg);
+    }
+
+    public void runWrapBeanTest() {
+        Bean2 temp = new Bean2();
+        temp.setName("Me");
+        Bean1<Bean2> arg = new Bean1<Bean2>(temp);
+        WrapBean bean = new WrapBean();
+        bean.setBean(arg);
+        ref.sendWrapBean(bean);
     }
 }

@@ -19,22 +19,20 @@
 
 package jtest;
 
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 /**
- * The test client interface
+ * The wrapped bean class
  */
-public interface TestClient {
+@XmlSeeAlso(Bean2.class)
+public class WrapBean {
+    private Bean1<Bean2> bean;
 
-    void runAbstractTypeTest();
+    public Bean1<Bean2> getBean() {
+        return bean;
+    }
 
-    void runAbstractExceptionTest();
-
-    void runListTypeTest();
-
-    void runMapTypeTest();
-
-    void runWrapMapTypeTest();
-
-    void runWildcardExtendsTest();
-
-    void runWrapBeanTest();
+    public void setBean(Bean1<Bean2> bean) {
+        this.bean = bean;
+    }
 }

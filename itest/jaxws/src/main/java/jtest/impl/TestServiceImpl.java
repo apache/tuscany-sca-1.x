@@ -19,14 +19,20 @@
 
 package jtest.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osoa.sca.annotations.Service;
 
 import jtest.AbstractException;
+import jtest.Bean1;
+import jtest.Bean2;
 import jtest.ConcreteException;
 import jtest.TestAbstract;
 import jtest.TestService;
+import jtest.WrapBean;
+import jtest.WrapMap;
 
 /**
  * The test service implementation
@@ -47,5 +53,27 @@ public class TestServiceImpl implements TestService {
 
     public void sendList(List<String> data) {
         System.out.println(data.get(0) + " " + data.get(1));
+    }
+
+    public Map<String, String> returnMap() {
+        Map<String, String> yourMap = new HashMap<String, String>();
+        yourMap.put("greeting", "Hello, World Map!");
+        return yourMap;
+    }
+
+    public WrapMap returnWrapMap() {
+        Map<String, String> yourMap = new HashMap<String, String>();
+        yourMap.put("greeting", "Hello, World Map!");
+        WrapMap wrapped = new WrapMap();
+        wrapped.setMap(yourMap);
+        return wrapped;
+    }
+
+    public void sendWildcardExtends(Bean1</*? extends*/ Bean2> arg) {
+        System.out.println("TestServiceImpl received generic bean " + arg);
+    }
+
+    public void sendWrapBean(WrapBean arg) {
+        System.out.println("TestServiceImpl received wrapped bean " + arg.getBean());
     }
 }

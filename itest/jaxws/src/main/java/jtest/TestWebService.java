@@ -19,6 +19,7 @@
 package jtest;
 
 import java.util.List;
+import java.util.Map;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
@@ -29,8 +30,17 @@ public interface TestWebService {
     void sendAbstract(TestAbstract testData);
 
     @WebMethod
+    String sendConcrete(TestConcrete1 testData);
+
+    @WebMethod
     void throwAbstract() throws AbstractException;
 
     @WebMethod
     void sendList(List<String> data);
+
+    @WebMethod
+    Map<String, String> returnMap();
+
+    @WebMethod
+    void sendWildcardExtends(Bean1<Bean2> arg);
 }

@@ -54,12 +54,40 @@ public class DatatypesTestCase {
         TestClient testClient = client.getService(TestClient.class, "TestClient");
         testClient.runAbstractExceptionTest();
     }
-    
+
     @Test
     public void runListTypeTest() {
         SCAClient client = (SCAClient)node;
         TestClient testClient = client.getService(TestClient.class, "TestClient");
         testClient.runListTypeTest();
+    }
+
+    @Test
+    public void runWrapMapTypeTest() {
+        SCAClient client = (SCAClient)node;
+        TestClient testClient = client.getService(TestClient.class, "TestClient");
+        testClient.runWrapMapTypeTest();
+    }
+
+    @Test
+    public void runMapTypeTest() {
+        SCAClient client = (SCAClient)node;
+        TestClient testClient = client.getService(TestClient.class, "TestClient");
+        testClient.runMapTypeTest();
+    }
+
+    @Test
+    public void runWildcardExtendsTest() {
+        SCAClient client = (SCAClient)node;
+        TestClient testClient = client.getService(TestClient.class, "TestClient");
+        testClient.runWildcardExtendsTest();
+    }
+
+    @Test
+    public void runWrapBeanTest() {
+        SCAClient client = (SCAClient)node;
+        TestClient testClient = client.getService(TestClient.class, "TestClient");
+        testClient.runWrapBeanTest();
     }
 
     @AfterClass
