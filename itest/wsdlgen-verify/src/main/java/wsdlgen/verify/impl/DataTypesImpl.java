@@ -20,6 +20,8 @@
 package wsdlgen.verify.impl;
 
 import java.util.List;
+import javax.jws.WebParam;
+import javax.jws.soap.SOAPBinding;
 import commonj.sdo.DataObject;
 import wsdlgen.verify.ComplexNumber;
 import wsdlgen.verify.DataTypes;
@@ -32,7 +34,23 @@ public class DataTypesImpl implements DataTypes {
     public void testSimpleArrayInt(int[] simple) {
     }
 
+    public void testSimpleMultiArrayInt(int[][] simple) {
+    }
+
+    public void testList(List any) {
+    }
+
     public void testSimpleListString(List<String> simple) {
+    }
+
+    public List<String> testReturnSimpleListString() {
+        return null;
+    }
+
+    public void testListByteArray(List<byte[]> byteArrayList) {
+    }
+
+    public void testListWildcard(List<?> wild) {
     }
 
     public void testComplex(ComplexNumber complex) {
@@ -46,5 +64,11 @@ public class DataTypesImpl implements DataTypes {
 
     public DataObject testDynamicSDO() {
         return null;
+    }
+
+    public void testWebParam(int simple) {
+    }
+
+    public void testWebParamArray(int[] array) {
     }
 }

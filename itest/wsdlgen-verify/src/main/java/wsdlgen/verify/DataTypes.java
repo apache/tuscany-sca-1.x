@@ -20,6 +20,8 @@
 package wsdlgen.verify;
 
 import java.util.List;
+import javax.jws.WebParam;
+import javax.jws.soap.SOAPBinding;
 import commonj.sdo.DataObject;
 import org.osoa.sca.annotations.Remotable;
 
@@ -30,7 +32,17 @@ public interface DataTypes {
 
     void testSimpleArrayInt(int[] simple);
 
+    void testSimpleMultiArrayInt(int[][] simple);
+
+    void testList(List any);
+
     void testSimpleListString(List<String> simple);
+
+    List<String> testReturnSimpleListString();
+
+    void testListByteArray(List<byte[]> byteArrayList);
+
+    void testListWildcard(List<?> wild);
 
     void testComplex(ComplexNumber complex);
 
@@ -39,4 +51,12 @@ public interface DataTypes {
     void testException() throws Exception;
 
     DataObject testDynamicSDO();
+
+/*
+    @SOAPBinding(parameterStyle=SOAPBinding.ParameterStyle.BARE)
+    void testWebParam(@WebParam(name="simpleInt") int simple);
+
+    @SOAPBinding(parameterStyle=SOAPBinding.ParameterStyle.BARE)
+    void testWebParamArray(@WebParam(name="arrayInt") int[] array);
+*/
 }

@@ -28,4 +28,11 @@
         </service>
     </component>
 
+    <component name="DynamicSDO">
+        <implementation.java class="wsdlgen.verify.impl.GetDataServiceWithoutExceptionImpl" />
+        <service name="GetDataServiceWithoutException">
+            <binding.ws uri="http://localhost:8085/GetDataServiceWithoutException" />
+        </service>
+    </component>
+
 </composite>
