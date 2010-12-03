@@ -24,8 +24,10 @@ import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
@@ -343,35 +345,77 @@ public class JAXBContextHelper {
         WrapperInfo inputWrapperInfo = op.getInputWrapper();
         WrapperInfo outputWrapperInfo = op.getOutputWrapper();
         
+        // TUSCANY-3298: Add the wrapper type instead of individual elements
+        // if possible.  JAXB will implicitly add all types that are statically
+        // reachable from the wrapper class, with the exception of type arguments
+        // for parameterized types that aren't collections.
+        DataType dt1 = null;
         if (useWrapper && (inputWrapperInfo != null)) {
-            DataType dt1 = inputWrapperInfo.getWrapperType();
+            dt1 = inputWrapperInfo.getWrapperType();
             if (dt1 != null) {
                 dataTypes.add(dt1);
+                for (DataType in : op.getInputType().getLogical()) {
+                    if (isParameterizedNonCollectionType(in)) {
+                        // JAXB won't add the type arguments, so we need to add them
+                        dataTypes.add(in);
+                    }
+                }
             }
         }
+        if (dt1 == null) {
+            // We couldn't add the wrapper, so add the elements individually
+            for (DataType dt : op.getInputType().getLogical()) {
+                dataTypes.add(dt);
+            }
+        }
+
+        // TUSCANY-3298: Add the wrapper type instead of the output type
+        // if possible.  JAXB will implicitly add all types that are statically
+        // reachable from the wrapper class, with the exception of type arguments
+        // for parameterized types that aren't collections or maps.
+        DataType dt2 = null;
         if (useWrapper && (outputWrapperInfo != null)) {
-            DataType dt2 = outputWrapperInfo.getWrapperType();
+            dt2 = outputWrapperInfo.getWrapperType();
+            if (dt2 != null) {
+                dataTypes.add(dt2);
+                DataType out = op.getOutputType();
+                if (out != null && isParameterizedNonCollectionType(out)) {
+                    // JAXB won't add the type arguments, so we need to add them
+                    dataTypes.add(out);
+                }
+            }
+        }
+        if (dt2 == null) {
+            // We couldn't add the wrapper, so add the output type directly
+            dt2 = op.getOutputType();
             if (dt2 != null) {
                 dataTypes.add(dt2);
             }
         }
-        // FIXME: [rfeng] We may need to find the referenced classes in the child types
-        // else 
-        {
-            for (DataType dt1 : op.getInputType().getLogical()) {
-                dataTypes.add(dt1);
-            }
-            DataType dt2 = op.getOutputType();
-            if (dt2 != null) {
-                dataTypes.add(dt2);
-            }
-        }
+
         for (DataType<DataType> dt3 : op.getFaultTypes()) {
             DataType dt4 = dt3.getLogical();
             if (dt4 != null) {
                 dataTypes.add(dt4);
             }
         }
+    }
+
+    /*
+     * We need to add parameterized non-collection types to the JAXB context
+     * explicitly, because type argument information for these types is erased
+     * from the generated wrapper bean. 
+     */
+    private static boolean isParameterizedNonCollectionType(DataType dt) {
+        Type type = dt.getGenericType();
+        if (type instanceof ParameterizedType) {
+            Class physical = dt.getPhysical();
+            if (!Collection.class.isAssignableFrom(physical) &&
+                !Map.class.isAssignableFrom(physical)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @SuppressWarnings("unchecked")

@@ -70,16 +70,16 @@ public class SDOTypeHelper implements XMLTypeHelper {
         QName xmlType = JavaXMLMapper.getXMLType(javaType);
         if (xmlType != null) {
             return new TypeInfo(xmlType, true, null);
-        } else if (javaType == commonj.sdo.DataObject.class) {
-            return new TypeInfo(SimpleTypeMapperImpl.XSD_ANYTYPE, true, null);
         } else {
             // introspect(javaType, xsdTypesMap, typesMap);
             if (logical instanceof XMLType) {
                 xmlType = ((XMLType)logical).getTypeName();
             }
             if (xmlType == null) {
-                xmlType =
-                    new QName(JavaXMLMapper.getNamespace(javaType), Introspector.decapitalize(javaType.getSimpleName()));
+                // TUSCANY-3298: dynamic SDO or collection of dynamic SDO
+                return new TypeInfo(SimpleTypeMapperImpl.XSD_ANYTYPE, true, null);
+                //xmlType =
+                //    new QName(JavaXMLMapper.getNamespace(javaType), Introspector.decapitalize(javaType.getSimpleName()));
             }
             return new TypeInfo(xmlType, false, null);
         }

@@ -344,7 +344,8 @@ public class Interface2WSDLGenerator {
         // call each helper in turn to populate the wsdl.types element
         XmlSchemaCollection schemaCollection = new XmlSchemaCollection(); 
 
-        for (Map.Entry<XMLTypeHelper, List<DataType>> en: getDataTypes(interfaze, false, helpers).entrySet()) {
+        // TUSCANY-3298: enable JAXB wrapper generation
+        for (Map.Entry<XMLTypeHelper, List<DataType>> en: getDataTypes(interfaze, true, helpers).entrySet()) {
             XMLTypeHelper helper = en.getKey();
             if (helper == null) {
                 continue;
@@ -1112,6 +1113,11 @@ public class Interface2WSDLGenerator {
                                                dataType.getLogical());
         ElementInfo element = new ElementInfo(name, typeInfo);
         element.setMany(byte[].class != javaType && javaType.isArray());
+        // TUSCANY-3298: Check the "many" flag set by databinding introspection
+        Object logical = dataType.getLogical();
+        if (logical instanceof XMLType && ((XMLType)logical).isMany()) {
+            element.setMany(true);
+        }
         element.setNillable(!javaType.isPrimitive());
         return element;
     }

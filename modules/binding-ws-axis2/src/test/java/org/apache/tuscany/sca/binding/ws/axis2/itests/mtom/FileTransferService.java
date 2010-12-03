@@ -38,9 +38,12 @@ public interface FileTransferService {
     public String uploadDataHandlerFile(DataHandler attachment) throws Exception;    
     
     public String uploadOMElementFile(OMElement attachment) throws Exception;
-    
+
+    // TUSCANY-3805: produces WSDL generation error with fix for TUSCANY-3298
+    /*
     //This method uses an user defined interface MyException as parameter type.
     public String sendMyException(@XmlJavaTypeAdapter(MyExceptionAdapter.class) MyException attachment) 
     																				throws Exception;
+    */
 }
 
