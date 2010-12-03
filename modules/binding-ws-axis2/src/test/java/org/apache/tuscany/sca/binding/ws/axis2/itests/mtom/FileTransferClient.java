@@ -52,6 +52,8 @@ public class FileTransferClient implements FileTransferServiceClient {
     }
     
     public String sendMyExceptionForward (MyException attachment) throws Exception {
-    	return fileTransferService.sendMyException(attachment);
+        // TUSCANY-3805
+    	//return fileTransferService.sendMyException(attachment);
+        return null;
     }
 }
