@@ -176,9 +176,11 @@ public class Interface2WSDLGenerator {
         if (db == null) {
             return null;
         }
-        if ("java:array".equals(db)) {
-            DataType dt = (DataType)type.getLogical();
-            db = dt.getDataBinding();
+
+        // TUSCANY-3800
+        while ("java:array".equals(db)) {
+            type = (DataType)type.getLogical();
+            db = type.getDataBinding();
         }
         return helpers.get(db);
     }
