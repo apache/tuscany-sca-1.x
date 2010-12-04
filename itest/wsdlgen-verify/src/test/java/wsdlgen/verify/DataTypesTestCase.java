@@ -45,14 +45,12 @@ public class DataTypesTestCase extends BaseFramework {
         assertEquals("unbounded", paramElement.getAttribute("maxOccurs"));
     }
 
-/*
     @Test
     public void testSimpleMultiArrayInt() throws Exception {
         Element paramElement = parameterElement("testSimpleMultiArrayInt");
         assertEquals("ns1:intArray", paramElement.getAttribute("type"));
         assertEquals("unbounded", paramElement.getAttribute("maxOccurs"));
     }
-*/
 
     @Test
     public void testList() throws Exception {
