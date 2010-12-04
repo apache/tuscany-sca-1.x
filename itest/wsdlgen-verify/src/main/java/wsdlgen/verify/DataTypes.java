@@ -34,6 +34,8 @@ public interface DataTypes {
 
     void testSimpleMultiArrayInt(int[][] simple);
 
+    void testSimpleMulti3ArrayInt(int[][][] simple);
+
     void testList(List any);
 
     void testSimpleListString(List<String> simple);

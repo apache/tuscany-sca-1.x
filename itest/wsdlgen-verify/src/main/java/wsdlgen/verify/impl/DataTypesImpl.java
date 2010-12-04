@@ -37,6 +37,9 @@ public class DataTypesImpl implements DataTypes {
     public void testSimpleMultiArrayInt(int[][] simple) {
     }
 
+    public void testSimpleMulti3ArrayInt(int[][][] simple) {
+    }
+
     public void testList(List any) {
     }
 

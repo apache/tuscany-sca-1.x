@@ -53,6 +53,13 @@ public class DataTypesTestCase extends BaseFramework {
     }
 
     @Test
+    public void testSimpleMulti3ArrayInt() throws Exception {
+        Element paramElement = parameterElement("testSimpleMulti3ArrayInt");
+        assertEquals("ns1:intArrayArray", paramElement.getAttribute("type"));
+        assertEquals("unbounded", paramElement.getAttribute("maxOccurs"));
+    }
+
+    @Test
     public void testList() throws Exception {
         Element paramElement = parameterElement("testList");
         assertEquals("xs:anyType", paramElement.getAttribute("type"));
