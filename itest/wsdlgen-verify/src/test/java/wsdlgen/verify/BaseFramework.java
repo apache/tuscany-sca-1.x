@@ -70,6 +70,7 @@ public class BaseFramework {
     private static SCADomain domain;
     private static Map<String, Element> schemaMap;
     private static PortType portType;
+    private static boolean printWSDL = true;
 
     private Map<String, String> prefixMap;
 
@@ -241,8 +242,9 @@ public class BaseFramework {
     }
 
     protected static void start(String serviceName) throws Exception {
-        WSDLServiceGenerator.printWSDL = true;
+        WSDLServiceGenerator.printWSDL = printWSDL;
         domain = SCADomain.newInstance("DataTypes.composite");
+        printWSDL = false;  // print WSDL once only
         readWSDL(serviceName);
     }
 
