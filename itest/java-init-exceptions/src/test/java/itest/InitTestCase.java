@@ -21,6 +21,7 @@ package itest;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import junit.framework.Assert;
 
 import org.apache.tuscany.sca.host.embedded.SCADomain;
 import org.junit.After;
@@ -140,6 +141,40 @@ public class InitTestCase {
         scaDomain = null;
         assertTrue(InitRequestScopeException.destroyRun);
     }
+    
+    @Test
+    public void testDestroyCompositeScopeException() throws Exception {
+        Service client1 = scaDomain.getService(Service.class, "DestroyCompositeScopeException");
+        try {
+            client1.doit();
+        } catch (RuntimeException e) {
+        	fail();
+        }
+        assertTrue(DestroyCompositeScopeException.initRun);
+        assertTrue(DestroyCompositeScopeException.doitRun);
+        assertFalse(DestroyCompositeScopeException.destroyRun);
+        
+        Service client2 = scaDomain.getService(Service.class, "DestroyCompositeScopeException2");
+        try {
+            client2.doit();
+        } catch (RuntimeException e) {
+        	fail();
+        }
+
+        // close the domain to case @Destroy to run
+        try {
+        	scaDomain.close();
+        } catch (RuntimeException e) {
+        	e.printStackTrace();
+        	fail();
+        }
+        scaDomain = null;
+        
+        // check that it has run twice
+        // The first run having caused an exception
+        assertTrue(DestroyCompositeScopeException.destroyRun);
+        Assert.assertEquals(2, DestroyCompositeScopeException.count);
+    }    
 
     @After
     public void end() {

@@ -32,12 +32,22 @@
 
     <component name="InitCompositeScopeException">
         <implementation.java class="itest.InitCompositeScopeException"/>
-    </component>       
+    </component> 
+      
     <component name="InitRequestScopeException">
         <implementation.java class="itest.InitRequestScopeException"/>
-    </component>       
+    </component> 
+      
     <component name="InitStatelessScopeException">
         <implementation.java class="itest.InitStatelessScopeException"/>
-    </component>       
+    </component> 
+
+    <component name="DestroyCompositeScopeException">
+        <implementation.java class="itest.DestroyCompositeScopeException"/>
+    </component>  
+    
+    <component name="DestroyCompositeScopeException2">
+        <implementation.java class="itest.DestroyCompositeScopeException"/>
+    </component> 
 
 </composite>
