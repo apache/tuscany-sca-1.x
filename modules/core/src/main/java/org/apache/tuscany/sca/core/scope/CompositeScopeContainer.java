@@ -40,6 +40,7 @@ public class CompositeScopeContainer<KEY> extends AbstractScopeContainer<KEY> {
             try {
                 wrapper.stop();
             } catch (TargetDestructionException e) {
+            	wrapper = null;
                 throw new IllegalStateException(e);
             }
         }
