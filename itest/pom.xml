@@ -73,6 +73,7 @@
                 <module>callback-set-callback</module>
                 <module>callback-set-conversation</module>
                 <module>component-type</module>
+                <module>concurrency</module>
                 <module>contribution</module>
                 <module>contribution-multiple</module>
                 <module>contribution-import-export</module>
@@ -101,6 +102,7 @@
                 <module>interop-soap-round2-client</module>
                 <module>interop-soap-service</module>
                 -->
+                <module>java-init-exceptions</module>
                 <module>jaxws</module>
                 <module>jms</module>
                 <module>jms-args</module>
