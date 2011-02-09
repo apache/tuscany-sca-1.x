@@ -88,7 +88,7 @@
             <plugin>
                 <groupId>org.apache.tuscany.sca</groupId>
                 <artifactId>tuscany-maven-ant-generator</artifactId>
-                <version>1.6.1-SNAPSHOT</version>
+                <version>1.7-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <goals>
