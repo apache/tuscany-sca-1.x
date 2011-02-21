@@ -81,6 +81,7 @@ import org.apache.tuscany.sca.interfacedef.InterfaceContractMapper;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterfaceFactory;
 import org.apache.tuscany.sca.invocation.MessageFactory;
 import org.apache.tuscany.sca.monitor.Monitor;
+import org.apache.tuscany.sca.monitor.MonitorFactory;
 import org.apache.tuscany.sca.policy.IntentAttachPointTypeFactory;
 import org.apache.tuscany.sca.policy.PolicyFactory;
 import org.apache.tuscany.sca.provider.ProviderFactoryExtensionPoint;
@@ -130,11 +131,14 @@ public class ReallySmallRuntimeBuilder {
         UtilityExtensionPoint utilities = registry.getExtensionPoint(UtilityExtensionPoint.class);
         ConversationManager conversationManager = utilities.getUtility(ConversationManager.class);
         
+        MonitorFactory monitorFactory = utilities.getUtility(MonitorFactory.class);
+        Monitor monitor = monitorFactory.createMonitor();
+
         // Create the composite activator
         CompositeActivator compositeActivator =
             new CompositeActivatorImpl(assemblyFactory, messageFactory, javaInterfaceFactory, scaBindingFactory,
                                        mapper, scopeRegistry, workScheduler, wireProcessor, requestContextFactory,
-                                       proxyFactory, providerFactories, endpointResolverFactories, processors, conversationManager);
+                                       proxyFactory, providerFactories, endpointResolverFactories, processors, conversationManager, monitor);
 
         return compositeActivator;
     }

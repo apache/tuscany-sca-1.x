@@ -57,6 +57,10 @@ import org.apache.tuscany.sca.interfacedef.InterfaceContract;
 import org.apache.tuscany.sca.interfacedef.InterfaceContractMapper;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterfaceFactory;
 import org.apache.tuscany.sca.invocation.MessageFactory;
+import org.apache.tuscany.sca.monitor.Monitor;
+import org.apache.tuscany.sca.monitor.Problem;
+import org.apache.tuscany.sca.monitor.Problem.Severity;
+import org.apache.tuscany.sca.monitor.impl.ProblemImpl;
 import org.apache.tuscany.sca.provider.BindingProviderFactory;
 import org.apache.tuscany.sca.provider.ImplementationProvider;
 import org.apache.tuscany.sca.provider.ImplementationProviderFactory;
@@ -93,6 +97,7 @@ public class CompositeActivatorImpl implements CompositeActivator {
     private final ProxyFactory proxyFactory;
     private final JavaInterfaceFactory javaInterfaceFactory;
     private final ConversationManager conversationManager;
+    private Monitor monitor;
 
     private final ComponentContextHelper componentContextHelper;
 
@@ -103,6 +108,7 @@ public class CompositeActivatorImpl implements CompositeActivator {
      * @param interfaceContractMapper
      * @param workScheduler
      * @param conversationManager TODO
+     * @param monitor 
      * @param workContext
      * @param wirePostProcessorRegistry
      */
@@ -119,7 +125,7 @@ public class CompositeActivatorImpl implements CompositeActivator {
                                   ProviderFactoryExtensionPoint providerFactories,
                                   EndpointResolverFactoryExtensionPoint endpointResolverFactories,
                                   StAXArtifactProcessorExtensionPoint processors,
-                                  ConversationManager conversationManager) {
+                                  ConversationManager conversationManager, Monitor monitor) {
         this.assemblyFactory = assemblyFactory;
         this.messageFactory = messageFactory;
         this.interfaceContractMapper = interfaceContractMapper;
@@ -132,6 +138,7 @@ public class CompositeActivatorImpl implements CompositeActivator {
         this.requestContextFactory = requestContextFactory;
         this.proxyFactory = proxyFactory;
         this.conversationManager = conversationManager;
+        this.monitor = monitor;
         this.componentContextHelper = new ComponentContextHelper(assemblyFactory, javaInterfaceFactory, processors);
     }
 
@@ -652,7 +659,7 @@ public class CompositeActivatorImpl implements CompositeActivator {
                     try {
                         stop((Composite)implementation);
                     } catch (Throwable e1) {
-                        logger.log(Level.SEVERE, e1.getMessage(), e1);
+                        error("StopException", implementation, e1);
                     }
                     rethrow(e);
                 }
@@ -707,7 +714,7 @@ public class CompositeActivatorImpl implements CompositeActivator {
                     ((ScopeContainer)provider).stop();
                 }
             } catch (Throwable e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
+                error("StopException", provider, e);
             }
         }
     }
@@ -748,7 +755,7 @@ public class CompositeActivatorImpl implements CompositeActivator {
 	                          }
 	                    }); 
 	            	} catch (Throwable ex){
-	            		logger.log(Level.SEVERE, ex.getMessage(), ex);
+	                    error("StopException", bindingProvider, ex);
 	            	}                    
                 }
             }
@@ -771,7 +778,7 @@ public class CompositeActivatorImpl implements CompositeActivator {
 	                          }
 	                    }); 
 	            	} catch (Throwable ex){
-	            		logger.log(Level.SEVERE, ex.getMessage(), ex);
+                            error("StopException", bindingProvider, ex);
 	            	}                    
                 }
             } 
@@ -788,7 +795,7 @@ public class CompositeActivatorImpl implements CompositeActivator {
 	                          }
 	                    }); 
 	            	} catch (Throwable ex){
-	            		logger.log(Level.SEVERE, ex.getMessage(), ex);
+                            error("StopException", endpointResolver, ex);
 	            	}
                 }
             }             
@@ -808,7 +815,7 @@ public class CompositeActivatorImpl implements CompositeActivator {
 	                      }
 	                });  
 	        	} catch (Throwable ex){
-	        		logger.log(Level.SEVERE, ex.getMessage(), ex);
+                            error("StopException", implementationProvider, ex);
 	        	}
             }
         }
@@ -820,7 +827,7 @@ public class CompositeActivatorImpl implements CompositeActivator {
             	try {
             		runtimeComponent.getScopeContainer().stop();
             	} catch (Throwable ex){
-            		logger.log(Level.SEVERE, ex.getMessage(), ex);
+                    error("StopException", runtimeComponent, ex);
             	}
             }
         }
@@ -1175,4 +1182,10 @@ public class CompositeActivatorImpl implements CompositeActivator {
         return conversationManager;
     }
     
+    private void error(String message, Object model, Throwable e) {
+        if (monitor != null) {
+            Problem problem = new ProblemImpl(this.getClass().getName(), "core-messages", Severity.ERROR, model, message, (Exception)e);
+            monitor.problem(problem);
+        }
+    }
 }
