@@ -69,9 +69,17 @@ public class DataTypesImpl implements DataTypes {
         return null;
     }
 
-    public void testWebParam(int simple) {
+    public void testWebParamSDO(DataObject myObject) {
     }
 
-    public void testWebParamArray(int[] array) {
+    public void testWebParamSDOArray(DataObject[] myArray) {
     }
+/*
+
+    public void testWebParamBare(int simple) {
+    }
+
+    public void testWebParamBareArray(int[] array) {
+    }
+*/
 }

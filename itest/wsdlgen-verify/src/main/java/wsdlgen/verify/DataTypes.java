@@ -54,11 +54,15 @@ public interface DataTypes {
 
     DataObject testDynamicSDO();
 
+    void testWebParamSDO(@WebParam(name="foo") DataObject myObject);
+
+    void testWebParamSDOArray(@WebParam(name="foo") DataObject[] myArray);
 /*
-    @SOAPBinding(parameterStyle=SOAPBinding.ParameterStyle.BARE)
-    void testWebParam(@WebParam(name="simpleInt") int simple);
 
     @SOAPBinding(parameterStyle=SOAPBinding.ParameterStyle.BARE)
-    void testWebParamArray(@WebParam(name="arrayInt") int[] array);
+    void testWebParamBare(@WebParam(name="simpleInt") int simple);
+
+    @SOAPBinding(parameterStyle=SOAPBinding.ParameterStyle.BARE)
+    void testWebParamBareArray(@WebParam(name="arrayInt") int[] array);
 */
 }

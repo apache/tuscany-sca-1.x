@@ -116,24 +116,38 @@ public class DataTypesTestCase extends BaseFramework {
         assertEquals("xs:anyType", returnType("testDynamicSDO"));
     }
 
-/*
     @Test
-    public void testWebParam() throws Exception {
-        Element paramElement = parameterElement("testWebParam");
+    public void testWebParamSDO() throws Exception {
+        Element paramElement = parameterElement("testWebParamSDO");
+        assertEquals("foo", paramElement.getAttribute("name"));
+        assertEquals("xs:anyType", paramElement.getAttribute("type"));
+    }
+
+    @Test
+    public void testWebParamSDOArray() throws Exception {
+        Element paramElement = parameterElement("testWebParamSDOArray");
+        assertEquals("foo", paramElement.getAttribute("name"));
+        assertEquals("xs:anyType", paramElement.getAttribute("type"));
+        assertEquals("unbounded", paramElement.getAttribute("maxOccurs"));
+    }
+/*
+
+    @Test
+    public void testWebParamBare() throws Exception {
+        Element paramElement = parameterElement("testWebParamBare");
         assertEquals("simpleInt", paramElement.getAttribute("name"));
         assertEquals("xs:int", paramElement.getAttribute("type"));
     }
 
     @Test
     @Ignore
-    public void testWebParamArray() throws Exception {
-        Element paramElement = parameterElement("testWebParamArray");
+    public void testWebParamBareArray() throws Exception {
+        Element paramElement = parameterElement("testWebParamBareArray");
         assertEquals("arrayInt", paramElement.getAttribute("name"));
         assertEquals("xs:int", paramElement.getAttribute("type"));
         assertEquals("unbounded", paramElement.getAttribute("maxOccurs"));
     }
 */
-
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
