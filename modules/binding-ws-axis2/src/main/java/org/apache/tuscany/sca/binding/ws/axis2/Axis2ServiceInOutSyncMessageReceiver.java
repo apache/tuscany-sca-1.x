@@ -80,6 +80,12 @@ public class Axis2ServiceInOutSyncMessageReceiver extends AbstractInOutSyncMessa
                 soapEnvelope.getBody().addChild(responseOM);
             }
             outMC.setEnvelope(soapEnvelope);
+
+            // TUSCANY-3822: moved afterInvoke() call from Axis2ServiceProvider           
+            for ( PolicyHandler policyHandler : policyHandlerList ) {
+                policyHandler.afterInvoke(responseOM, outMC);
+            }        
+
             outMC.getOperationContext().setProperty(Constants.RESPONSE_WRITTEN, Constants.VALUE_TRUE);
 
         } catch (InvocationTargetException e) {
