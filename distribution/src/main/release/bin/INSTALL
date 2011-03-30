@@ -1,11 +1,11 @@
-Installing the Apache Tuscany SCA 1.6.1 November 2010 Release binary distribution
-=================================================================================
+Installing the Apache Tuscany SCA 1.6.2 April 2011 Release binary distribution
+==============================================================================
 
-Unzip Tuscany binary distribution archive and you get the following:
+Unzip the Tuscany binary distribution archive and you get the following:
 
-tuscany-sca-1.6.1        
+tuscany-sca-1.6.2        
    INSTALL       - this help file
-   LICENSE       - the Apache License and any dependecy licenses
+   LICENSE       - the Apache License and any dependency licenses
    NOTICE        - attribution notices associated with the licenses
    README        - readme for the release
    RELEASE_NOTES - description of this release 

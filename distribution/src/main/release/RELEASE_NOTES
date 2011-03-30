@@ -1,5 +1,5 @@
-Apache Tuscany SCA 1.6.1 November 2010 Release Notes
-====================================================
+Apache Tuscany SCA 1.6.2 April 2011 Release Notes
+=================================================
 
 Apache Tuscany provides a runtime based on the Service Component
 Architecture. SCA is a set of specifications aimed at simplifying SOA
@@ -9,7 +9,7 @@ of Open Composite Services Architecture (Open CSA) - http://www.oasis-opencsa.or
 Overview
 --------
 
-     The Apache Tuscany SCA 1.6.1 release includes implementations of the
+     The Apache Tuscany SCA 1.6.2 release includes implementations of the
      main SCA specifications including:
 
         SCA Assembly Model V1.0
@@ -68,24 +68,24 @@ The Tuscany runtime modules and tools are available from the Maven repository
  https://repository.apache.org/content/groups/public/
 
 The Apache Tuscany SCA Tools Core Feature for Eclipse is available at the Eclipse update site
- http://www.apache.org/dist/tuscany/java/sca/1.6.1/tuscany-sca-1.6.1-updatesite/
+ http://www.apache.org/dist/tuscany/java/sca/1.6.2/tuscany-sca-1.6.2-updatesite/
 
 Notes:
 
 1. The following Tuscany runtime modules are distributed via the maven repository only and are
    not included in the binary distribution:
-    tuscany-binding-sca-corba-1.6.1.jar   (conflicts with tuscany-binding-sca-1.6.1.jar)
-    tuscany-host-corba-jee-1.6.1.jar      (conflicts with tuscany-host-corba-jse-1.6.1.jar)
-    tuscany-node-launcher-osgi-1.6.1-jar  (needs dependencies not in binary distro lib directory)
-    tuscany-policy-transaction-1.6.1.jar  (has dependency conflicts with binary distro lib directory)
+    tuscany-binding-sca-corba-1.6.2.jar   (conflicts with tuscany-binding-sca-1.6.2.jar)
+    tuscany-host-corba-jee-1.6.2.jar      (conflicts with tuscany-host-corba-jse-1.6.2.jar)
+    tuscany-node-launcher-osgi-1.6.2-jar  (needs dependencies not in binary distro lib directory)
+    tuscany-policy-transaction-1.6.2.jar  (has dependency conflicts with binary distro lib directory)
 
 2. The following Tuscany runtime modules are included in the binary distribution but are not included
-   in tuscany-sca-all-1.6.1.jar and tuscany-sca-manifest.jar:
-    tuscany-binding-atom-js-dojo-1.6.1.jar     (conflicts with tuscany-binding-atom-js-1.6.1.jar)
-    tuscany-binding-jsonrpc-js-dojo-1.6.1.jar  (conflicts with tuscany-binding-jsonrpc-js-1.6.1.jar)
-    tuscany-host-tomcat-1.6.1.jar              (conflicts with tuscany-host-jetty-1.6.1.jar)
-    tuscany-implementation-widget-runtime-dojo-1.6.1.jar  (conflicts with tuscany-implementation-widget-runtime-1.6.1.jar)
-    tuscany-web-javascript-dojo-1.6.1.jar      (conflicts with tuscany-web-javascript-1.6.1.jar)
+   in tuscany-sca-all-1.6.2.jar and tuscany-sca-manifest.jar:
+    tuscany-binding-atom-js-dojo-1.6.2.jar     (conflicts with tuscany-binding-atom-js-1.6.2.jar)
+    tuscany-binding-jsonrpc-js-dojo-1.6.2.jar  (conflicts with tuscany-binding-jsonrpc-js-1.6.2.jar)
+    tuscany-host-tomcat-1.6.2.jar              (conflicts with tuscany-host-jetty-1.6.2.jar)
+    tuscany-implementation-widget-runtime-dojo-1.6.2.jar  (conflicts with tuscany-implementation-widget-runtime-1.6.2.jar)
+    tuscany-web-javascript-dojo-1.6.2.jar      (conflicts with tuscany-web-javascript-1.6.2.jar)
    If these files are needed at runtime, the classpath must be set up to include these jars explicitly
    and exclude the jars for which conflicts are indicated above.
 
@@ -101,7 +101,7 @@ Notes:
 
 6. Other Tuscany tools are distributed via the maven repository only, except for the following jar
    which is also included in the binary distribution:
-    tuscany-wsdl2java-1.6.1.jar  (needed by the helloworld-bpel sample)
+    tuscany-wsdl2java-1.6.2.jar  (needed by the helloworld-bpel sample)
 
 Support
 -------
