@@ -164,6 +164,7 @@ public class Axis2BindingInvoker implements Invoker, DataExchangeSemantics {
             Axis2BindingHeaderConfigurator.setHeader(requestMC, msg, axis2TokenAuthenticationPolicy.getTokenName());
         }
         
+        MessageContext responseMC = null;
         // Allow privileged access to read properties. Requires PropertiesPermission read in
         // security policy.
         try {
@@ -176,12 +177,13 @@ public class Axis2BindingInvoker implements Invoker, DataExchangeSemantics {
         } catch (PrivilegedActionException e) {
             operationClient.complete(requestMC);
             throw (AxisFault)e.getException();
-        }
-
-        MessageContext responseMC = operationClient.getMessageContext(WSDLConstants.MESSAGE_LABEL_IN_VALUE);
+        } finally {
+            // TUSCANY-3838: call afterInvoke() on both normal and exception paths
+            responseMC = operationClient.getMessageContext(WSDLConstants.MESSAGE_LABEL_IN_VALUE);
         
-        for ( PolicyHandler policyHandler : policyHandlerList ) {
-            policyHandler.afterInvoke(msg, responseMC, operationClient);
+            for ( PolicyHandler policyHandler : policyHandlerList ) {
+                policyHandler.afterInvoke(msg, responseMC, operationClient);
+            }
         }
         
         OMElement response = responseMC.getEnvelope().getBody().getFirstElement();
