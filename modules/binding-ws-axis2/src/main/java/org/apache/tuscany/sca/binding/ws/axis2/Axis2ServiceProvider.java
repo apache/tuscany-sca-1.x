@@ -765,9 +765,8 @@ public class Axis2ServiceProvider {
         RuntimeWire wire = ((RuntimeComponentService)contract).getRuntimeWire(getBinding());
         Object response =  wire.invoke(op, msg);
         
-        for ( PolicyHandler policyHandler : policyHandlerList ) {
-            policyHandler.afterInvoke(response, inMC);
-        }        
+        // TUSCANY-3822: moved afterInvoke() call to Axis2ServiceInOutSyncMessageReceiver
+        // and Axis2ServiceInMessageReceiver
         
         return response;
     }

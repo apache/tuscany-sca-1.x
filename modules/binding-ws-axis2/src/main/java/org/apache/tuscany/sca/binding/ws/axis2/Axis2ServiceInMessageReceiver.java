@@ -65,6 +65,11 @@ public class Axis2ServiceInMessageReceiver extends AbstractInMessageReceiver {
             }
             */
 
+            // TUSCANY-3822: moved afterInvoke() call from Axis2ServiceProvider           
+            for ( PolicyHandler policyHandler : policyHandlerList ) {
+                policyHandler.afterInvoke(null, inMC);
+            }        
+
         } catch (InvocationTargetException e) {
             Throwable t = e.getCause();
             if (t instanceof Exception) {
