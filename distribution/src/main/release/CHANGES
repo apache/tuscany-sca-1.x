@@ -1,3 +1,19 @@
+Changes With Apache Tuscany SCA 1.6.2 April 2011 
+================================================
+
+Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
+TUSCANY-3822 PolicyHandler.afterInvoke should be called with outbound MessageContext
+TUSCANY-3838 PolicyHandler.afterInvoke() is skipped when AxisFault occurs
+
+Other commits:
+r1087105 Delete redundant build.xml file containing 1.6.1-SNAPSHOT strings
+r1087109 Remove reference to 1.6.1
+r1087125 Update version number to 1.6.2
+r1087428 Update copyright dates
+r1088106 Use correct dependency for opensaml and exclude dependency on xmlsec
+r1088250 Remove repositories at ws.zones.apache.org
+r1088335 Use new aggregated repository URL for Apache snapshots 
+
 Changes With Apache Tuscany SCA 1.6.1 November 2010 
 ===================================================
 
