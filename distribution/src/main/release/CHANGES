@@ -4,6 +4,7 @@ Changes With Apache Tuscany SCA 1.6.2 April 2011
 Fix the following JIRA issues (http://issues.apache.org/jira/browse/TUSCANY):
 TUSCANY-3822 PolicyHandler.afterInvoke should be called with outbound MessageContext
 TUSCANY-3838 PolicyHandler.afterInvoke() is skipped when AxisFault occurs
+TUSCANY-3858 Eclipse update site doesn't build correctly from a top-level build
 
 Other commits:
 r1087105 Delete redundant build.xml file containing 1.6.1-SNAPSHOT strings
@@ -13,6 +14,7 @@ r1087428 Update copyright dates
 r1088106 Use correct dependency for opensaml and exclude dependency on xmlsec
 r1088250 Remove repositories at ws.zones.apache.org
 r1088335 Use new aggregated repository URL for Apache snapshots 
+r1089138 Avoid copying duplicate resource files to target/classes directory
 
 Changes With Apache Tuscany SCA 1.6.1 November 2010 
 ===================================================
