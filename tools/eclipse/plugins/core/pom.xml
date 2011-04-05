@@ -68,6 +68,11 @@
     </dependencies>
 
     <build>
+        <!-- TUSCANY-3858: Specify filters here, not in plugin execution configuration -->
+        <filters>
+            <filter>${basedir}/../../target/filter.properties</filter>
+        </filters>
+
         <resources>
             <resource>
                 <directory>${basedir}</directory>
@@ -97,9 +102,6 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${basedir}</outputDirectory>
-                            <filters>
-                                <filter>${basedir}/../../target/filter.properties</filter>
-                            </filters>
                             <resources>          
                                 <resource>
                                     <directory>${basedir}/filtered-resources</directory>
