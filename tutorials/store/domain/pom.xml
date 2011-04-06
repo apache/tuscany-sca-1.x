@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-tutorial-store</artifactId>
-        <version>1.6.2-SNAPSHOT</version>
+        <version>1.6.2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>tutorial-domain</artifactId>
@@ -39,138 +39,138 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-node-launcher</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-node-api</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
         </dependency>        
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-domain-manager</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-node-runtime</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-java-runtime</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-widget-runtime-tuscany</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-resource-runtime</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-spring</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>    
         
          <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-spring-runtime</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency> 
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-atom-js</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-atom-abdera</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-jsonrpc-js</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-jsonrpc-runtime</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-http-runtime</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-ws-axis2</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-sca-axis2</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-ejb-runtime</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-binding-jms-runtime</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>  
         
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-host-jms-asf</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-implementation-ejb</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -221,7 +221,7 @@
             <plugin>
                 <groupId>org.apache.tuscany.sca</groupId>
                 <artifactId>tuscany-maven-ant-generator</artifactId>
-                <version>1.6.2-SNAPSHOT</version>
+                <version>1.6.2</version>
                 <executions>
                     <execution>
                         <configuration>

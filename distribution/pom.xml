@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.tuscany.sca</groupId>
         <artifactId>tuscany-sca</artifactId>
-        <version>1.6.2-SNAPSHOT</version>
+        <version>1.6.2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -100,7 +100,7 @@
         <dependency>
             <groupId>org.apache.tuscany.sca</groupId>
             <artifactId>tuscany-host-webapp</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
         </dependency>
         <!--don't put two servlet hosts in the classpath TUSCANY-1954 -->
         <!--include tomcat here so it is shipped in modules/ but not  -->
@@ -108,27 +108,27 @@
         <dependency> 
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-host-tomcat</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
         </dependency>
         <dependency> 
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-atom-js-dojo</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
         </dependency>
         <dependency> 
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-binding-jsonrpc-js-dojo</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
         </dependency>
         <dependency> 
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-implementation-widget-runtime-dojo</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
         </dependency>
         <dependency> 
             <groupId>${pom.groupId}</groupId>
             <artifactId>tuscany-web-javascript-dojo</artifactId>
-            <version>1.6.2-SNAPSHOT</version>
+            <version>1.6.2</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.dojotoolkit</groupId>
