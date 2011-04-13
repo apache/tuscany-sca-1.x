@@ -67,20 +67,9 @@
        <repository>
             <id>apache.snapshots</id>
             <name>Apache SNAPSHOT Repository</name>
-            <url>http://people.apache.org/repo/m2-snapshot-repository</url>
+            <url>http://repository.apache.org/snapshots</url>
             <releases>
                 <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>apache.repository</id>
-            <name>Apache Repository</name>
-            <url>https://repository.apache.org/content/groups/snapshots</url>
-            <releases>
-                <enabled>true</enabled>
             </releases>
             <snapshots>
                 <enabled>true</enabled>
@@ -159,7 +148,7 @@
         <pluginRepository>
             <id>apache.snapshots</id>
             <name>Apache SNAPSHOT Repository</name>
-            <url>http://people.apache.org/repo/m2-snapshot-repository</url>
+            <url>http://repository.apache.org/snapshots</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
