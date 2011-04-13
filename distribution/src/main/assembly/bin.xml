@@ -216,7 +216,17 @@
                 <exclude>travelsample/**</exclude>
                 <!-- war files to exclude -->
                 <exclude>store/catalog-webapp/target/tutorial-catalog-webapp.war</exclude>
+                <!-- exclude tutorials/store/README because it's copied with filtering below -->
+                <exclude>store/README</exclude>
             </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>../tutorials</directory>
+            <outputDirectory>tuscany-sca-${tuscany.version}/tutorials</outputDirectory>
+            <includes>
+                <include>store/README</include>
+            </includes>
+            <filtered>true</filtered>
         </fileSet>
         <!-- Add the generated tuscany manifest classpath jar to the lib directory -->
         <fileSet>
