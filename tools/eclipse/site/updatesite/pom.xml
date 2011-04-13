@@ -59,6 +59,7 @@
                     <exclude>**/.*/**</exclude>
                     <exclude>pom.xml</exclude>
                     <exclude>build.*</exclude>
+                    <exclude>filtered-resources/**</exclude>
                     <exclude>target/**</exclude>
                 </excludes>
             </resource>
