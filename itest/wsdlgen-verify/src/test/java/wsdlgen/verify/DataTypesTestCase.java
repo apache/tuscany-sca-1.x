@@ -107,6 +107,13 @@ public class DataTypesTestCase extends BaseFramework {
     }
 
     @Test
+    public void testBaseExtension() throws Exception {
+        String paramType = parameterType("testBaseExtension");
+        assertEquals("tns:extClass", paramType);
+        assertEquals("tns:baseClass", extensionElement(typeDefinition(paramType)).getAttribute("base"));
+    }
+
+    @Test
     public void testException() throws Exception {
         assertEquals("xs:string", faultType("testException", "Exception"));
     }

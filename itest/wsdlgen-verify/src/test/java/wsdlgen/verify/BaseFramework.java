@@ -199,6 +199,16 @@ public class BaseFramework {
         return (Element)childNodes.item(0);
     }
 
+    protected Element extensionElement(Element complexType) {
+        // find xs:complexContent child element
+        NodeList childNodes = complexType.getElementsByTagNameNS(SCHEMA_NS, "complexContent");
+        Element complexContent = (Element)childNodes.item(0);
+
+        // find first xs:extension child element
+        childNodes = complexContent.getElementsByTagNameNS(SCHEMA_NS, "extension");
+        return (Element)childNodes.item(0);
+    }
+
     private static void readWSDL(String serviceName) throws Exception {
         WSDLReader wsdlReader = WSDLFactory.newInstance().newWSDLReader();
         wsdlReader.setFeature("javax.wsdl.verbose",false);

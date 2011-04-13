@@ -50,6 +50,8 @@ public interface DataTypes {
 
     void testByteArray(byte[] byteArray);
 
+    void testBaseExtension(ExtClass ext);
+
     void testException() throws Exception;
 
     DataObject testDynamicSDO();

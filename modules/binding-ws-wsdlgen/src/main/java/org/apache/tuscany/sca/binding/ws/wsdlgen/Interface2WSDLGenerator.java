@@ -728,38 +728,53 @@ public class Interface2WSDLGenerator {
 	                _import.getParentNode().removeChild(_import);
 	            }
 	
-	            // look for any type attributes that refer to the 
-	            // node being merged
-	            NodeList elements = refSchema.getElementsByTagNameNS("http://www.w3.org/2001/XMLSchema","element");
-	            for (int k = 0; k < elements.getLength(); k++){
-	                Element element = (Element) elements.item(k);
-	                if (element != null && element.getAttributes() != null) {
-	                    Node type = element.getAttributes().getNamedItem("type");
-	                    
-	                    if (type != null &&
-	                        type.getNodeValue().equals(typeName)){
-	                        if (xsDef.getNamespace().equals(defaultNamespace)){
-	                            // double check that there is a "tns" namespace shortname specified
-	                            String tnsNamespace = refSchema.getDocumentElement().getAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:tns");
-	                            
-	                            if (tnsNamespace == null || tnsNamespace.length() == 0) {
-	                                refSchema.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:tns", defaultNamespace);
-	                            }
-	                            
-	                            // just add "tns" in front of the type name as
-	                            // we have merged the type into this schema
-	                            type.setNodeValue("tns:" + type.getNodeValue());
-	                        } else {
-	                            // add a namespace 
-	                            refSchema.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:__nnns", defaultNamespace);
-	
-	                            // prefix the type name with the namespace
-	                            type.setNodeValue("__nnns:" + type.getNodeValue());
-	                        }
-	                    }
-	                }
-	            }
+	            // TUSCANY-3859: Look for any attributes that refer to the node being merged
+                fixUpNoNamespaceAttributes("element", "type", xsDef, typeName, defaultNamespace);
+                fixUpNoNamespaceAttributes("extension", "base", xsDef, typeName, defaultNamespace);
         	}
+        }
+    }
+
+    /**
+     * TUSCANY-3859 
+     * Correct any schema attributes that used to point to types in the no namespace schema
+     * 
+     * @param elementName
+     * @param attributeName
+     * @param xsDef
+     * @param defaultNamespace
+     */  
+    private void fixUpNoNamespaceAttributes(String elementName, String attributeName,
+                                            XSDefinition xsDef, String typeName, String defaultNamespace) {
+        Document refSchema = xsDef.getDocument();
+        NodeList elements = refSchema.getElementsByTagNameNS("http://www.w3.org/2001/XMLSchema", elementName);
+        for (int k = 0; k < elements.getLength(); k++){
+            Element element = (Element) elements.item(k);
+            if (element != null && element.getAttributes() != null) {
+                Node type = element.getAttributes().getNamedItem(attributeName);
+                
+                if (type != null &&
+                    type.getNodeValue().equals(typeName)){
+                    if (xsDef.getNamespace().equals(defaultNamespace)){
+                        // double check that there is a "tns" namespace shortname specified
+                        String tnsNamespace = refSchema.getDocumentElement().getAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:tns");
+                        
+                        if (tnsNamespace == null || tnsNamespace.length() == 0) {
+                            refSchema.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:tns", defaultNamespace);
+                        }
+                        
+                        // just add "tns" in front of the type name as
+                        // we have merged the type into this schema
+                        type.setNodeValue("tns:" + type.getNodeValue());
+                    } else {
+                        // add a namespace 
+                        refSchema.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:__nnns", defaultNamespace);
+    
+                        // prefix the type name with the namespace
+                        type.setNodeValue("__nnns:" + type.getNodeValue());
+                    }
+                }
+            }
         }
     }
 
