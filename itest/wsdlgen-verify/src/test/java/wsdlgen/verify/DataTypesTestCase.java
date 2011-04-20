@@ -114,6 +114,11 @@ public class DataTypesTestCase extends BaseFramework {
     }
 
     @Test
+    public void testServiceReference() throws Exception {
+        assertEquals("xs:anyType", parameterType("testServiceReference"));
+    }
+
+    @Test
     public void testException() throws Exception {
         assertEquals("xs:string", faultType("testException", "Exception"));
     }

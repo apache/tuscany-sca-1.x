@@ -23,6 +23,7 @@ import java.util.List;
 import javax.jws.WebParam;
 import javax.jws.soap.SOAPBinding;
 import commonj.sdo.DataObject;
+import org.osoa.sca.ServiceReference;
 import org.osoa.sca.annotations.Remotable;
 
 @Remotable
@@ -51,6 +52,8 @@ public interface DataTypes {
     void testByteArray(byte[] byteArray);
 
     void testBaseExtension(ExtClass ext);
+
+    void testServiceReference(ServiceReference ref);
 
     void testException() throws Exception;
 

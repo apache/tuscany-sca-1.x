@@ -23,6 +23,7 @@ import java.util.List;
 import javax.jws.WebParam;
 import javax.jws.soap.SOAPBinding;
 import commonj.sdo.DataObject;
+import org.osoa.sca.ServiceReference;
 import wsdlgen.verify.BaseClass;
 import wsdlgen.verify.ComplexNumber;
 import wsdlgen.verify.DataTypes;
@@ -65,6 +66,9 @@ public class DataTypesImpl implements DataTypes {
     }
 
     public void testBaseExtension(ExtClass ext) {
+    }
+
+    public void testServiceReference(ServiceReference ref) {
     }
 
     public void testException() throws Exception {
