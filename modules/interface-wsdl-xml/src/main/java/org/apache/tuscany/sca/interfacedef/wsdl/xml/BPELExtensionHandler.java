@@ -58,16 +58,17 @@ public class BPELExtensionHandler implements ExtensionSerializer, ExtensionDeser
 		BPELPartnerLinkTypeExt thePLinkType = (BPELPartnerLinkTypeExt) theElement;
 		QName theType = thePLinkType.getElementType();
 
-		writer.println("<" + theType.toString() +
+		writer.println("<" + theType.getPrefix() + ":" + localName +
 				       " name=\"" + thePLinkType.getName() + "\">");
 		for( int i = 0; i < 2; i++ ) {
 			if( thePLinkType.getRoleName( i ) != null ) {
-				writer.println( "<" + theType.getPrefix() + ":role"
+				writer.println( "<" + theType.getPrefix() + ":" + roleName
 						       + " name=\"" + thePLinkType.getRoleName(i) + "\" portType=\""
-						       + thePLinkType.getRolePortType(i) + "\">");
+						       + thePLinkType.getRolePortType(i).getPrefix() + ":"
+                               + thePLinkType.getRolePortType(i).getLocalPart() + "\"/>");
 			} // end if
 		} // end for
-		writer.println("</" + theType.toString() + ">");
+		writer.println("</" + theType.getPrefix() + ":" + localName + ">");
 	} // end marshall
 
 	/**
@@ -89,7 +90,7 @@ public class BPELExtensionHandler implements ExtensionSerializer, ExtensionDeser
 		// Check that this elementType really is a partnerLinkType element
 		if( !elementType.getLocalPart().equals(localName) ) return null;
 		BPELPartnerLinkTypeExt theExtension = new BPELPartnerLinkTypeExt();
-		theExtension.setElementType(elementType);
+        theExtension.setElementType(getQNameValue(def, theElement.getTagName()));
 		theExtension.setName( theElement.getAttribute("name") );
 
 		// Fetch the child "role" elements

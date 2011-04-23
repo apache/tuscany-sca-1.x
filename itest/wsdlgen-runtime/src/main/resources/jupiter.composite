@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
+           targetNamespace="http://jupiter.ptg.company.com"
+           xmlns:mw="http://jupiter.ptg.company.com"
+		   xmlns:hns="http://jupiter.ptg.company.com/jupiter"
+           name="jupiter">
+
+    <component name="BPELHelloWorldComponent">
+        <implementation.bpel process="hns:Jupiter"/>
+        <service name="jupiterPartnerLink">
+			<interface.wsdl interface="http://jupiter.ptg.company.com/jupiter.wsdl#wsdl.interface(JupiterPortType)" />
+            <binding.ws uri="http://localhost:8085/BPELHelloWorldComponent" />
+        </service>
+	</component>
+    
+</composite>

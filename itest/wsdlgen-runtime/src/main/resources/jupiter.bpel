@@ -1,0 +1,48 @@
+<process name="Jupiter"
+    targetNamespace="http://jupiter.ptg.company.com/jupiter"
+    xmlns:bpws="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
+    xmlns="http://schemas.xmlsoap.org/ws/2004/03/business-process/"
+    xmlns:tns="http://jupiter.ptg.company.com/jupiter"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:mw="http://jupiter.ptg.company.com/jupiter.wsdl"
+    queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
+
+  <import location="wsdl/jupiter.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"
+     namespace="http://jupiter.ptg.company.com/jupiter.wsdl"/>
+
+   <partnerLinks>
+      <partnerLink name="jupiterPartnerLink" partnerLinkType="mw:JupiterPartnerLinkType" myRole="me" />
+   </partnerLinks>
+    
+   <variables>
+     <variable name="myVar" messageType="mw:HelloMessage"/>
+     <variable name="tmpVar" type="xsd:string"/>
+   </variables>
+
+   <sequence>
+       <receive
+          name="start"
+          partnerLink="jupiterPartnerLink"
+          portType="mw:JupiterPortType"
+          operation="hello"
+          variable="myVar"
+          createInstance="yes"/>
+
+      <assign name="assign1">
+          <copy>
+              <from variable="myVar" part="TestPart"/>
+              <to variable="tmpVar"/>
+          </copy>
+          <copy>
+              <from>concat($tmpVar,' World')</from>
+              <to variable="myVar" part="TestPart"/>
+          </copy>
+      </assign>
+       <reply name="end"  
+              partnerLink="jupiterPartnerLink"
+              portType="mw:JupiterPortType" 
+              operation="hello"
+              variable="myVar"/>
+   </sequence>
+</process>

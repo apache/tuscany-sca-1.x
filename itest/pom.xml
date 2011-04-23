@@ -141,6 +141,7 @@
                 <module>workspace-manager</module>
                 <module>wsdl</module>
                 <module>wsdlgen</module>
+                <module>wsdlgen-runtime</module>
                 <module>wsdlgen-verify</module>
                 <module>wsdlless</module>
                 <module>wsdl2java</module>
