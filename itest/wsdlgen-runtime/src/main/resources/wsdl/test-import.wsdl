@@ -23,7 +23,6 @@
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                  xmlns:plnk="http://schemas.xmlsoap.org/ws/2004/03/partner-link/"
 	              name="test-import">
 
     <wsdl:import namespace="http://account3" location="/wsdl/test-import-nested.wsdl" />
@@ -46,10 +45,5 @@
             <wsdlsoap:address location="http://localhost:8086/AccountService" />
         </wsdl:port>
     </wsdl:service>
-
-    <plnk:partnerLinkType name="AccountPartnerLinkType">
-        <plnk:role name="me" portType="account3:Account" />
-        <plnk:role name="you" portType="account3:Account" />
-    </plnk:partnerLinkType>
 
 </wsdl:definitions>
