@@ -40,7 +40,6 @@
         <file>
             <source>../../plugins/core/target/org.apache.tuscany.sca.core-${tuscany.version}.jar</source>
             <outputDirectory>tuscany-sca-${tuscany.version}-updatesite/plugins</outputDirectory>
-            <destName>org.apache.tuscany.sca.core_${tuscany.eclipse.version}.jar</destName>
         </file>
 
         <file>

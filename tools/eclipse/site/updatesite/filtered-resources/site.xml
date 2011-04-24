@@ -27,8 +27,8 @@
       <category name="Apache Tuscany SCA Eclipse Tools"/>
    </feature>
    
-   <archive path="plugins/org.apache.tuscany.sca.core_${tuscany.eclipse.version}"
-      url="plugins/org.apache.tuscany.sca.core_${tuscany.eclipse.version}.jar"/>
+   <archive path="plugins/org.apache.tuscany.sca.core_${tuscany.eclipse.version}.jar"
+      url="plugins/org.apache.tuscany.sca.core-${pom.version}.jar"/>
 
    <category-def name="Apache Tuscany SCA Eclipse Tools" label="Apache Tuscany SCA Eclipse Tools">
       <description>
