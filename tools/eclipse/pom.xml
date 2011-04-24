@@ -61,6 +61,13 @@
                                 <mkdir dir="target"/>
                                 <echo file="target/filter.properties" message="tuscany.eclipse.version=${pom.version}.v${DSTAMP}-${TSTAMP}"/>
                                 <replace file="target/filter.properties" token="-SNAPSHOT"/>
+                                <!--
+                                  The following is a temporary(?) hack to ensure Eclipse has 3 digits for
+                                  the release number.  Ideally we would use something like
+                                    replaceregexp file="target/filter.properties" match="\d+\.\d+\.v" value="\1\.\2\.0\.v"
+                                  but this requires additional dependencies and is tricky to configure.
+                                 -->
+                                <replace file="target/filter.properties" token="1.7.v" value="1.7.0.v"/>
                             </tasks>
                         </configuration>
                     </execution>
