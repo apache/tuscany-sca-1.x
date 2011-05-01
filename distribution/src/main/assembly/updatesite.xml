@@ -33,12 +33,20 @@
 			<outputDirectory></outputDirectory>
             <excludes>
                 <exclude>tuscany-sca-${tuscany.version}-updatesite/LICENSE</exclude>
+                <exclude>tuscany-sca-${tuscany.version}-updatesite-publish/LICENSE</exclude>
                 <exclude>tuscany-sca-${tuscany.version}-updatesite/features/*</exclude>
             </excludes>
 		</fileSet>
         <fileSet>
             <directory>src/main/release/bin</directory>
             <outputDirectory>tuscany-sca-${tuscany.version}-updatesite</outputDirectory>
+            <includes>
+                <include>LICENSE</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/release/bin</directory>
+            <outputDirectory>tuscany-sca-${tuscany.version}-updatesite-publish</outputDirectory>
             <includes>
                 <include>LICENSE</include>
             </includes>

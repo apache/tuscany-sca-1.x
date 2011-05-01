@@ -26,12 +26,25 @@
 
     <fileSets>
         <fileSet>
-            <directory>target/classes</directory>
+            <directory>.</directory>
             <outputDirectory>tuscany-sca-${tuscany.version}-updatesite</outputDirectory>
             <includes>
                 <include>LICENSE</include>
                 <include>NOTICE</include>
                 <include>site.xml</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>tuscany-sca-${tuscany.version}-updatesite-publish</outputDirectory>
+            <includes>
+                <include>LICENSE</include>
+                <include>NOTICE</include>
+                <include>.htaccess</include>
+                <include>index.html</include>
+                <include>site--xml.cgi</include>
+                <include>site--xml.html</include>
+                <include>web/**</include>
             </includes>
         </fileSet>
     </fileSets>

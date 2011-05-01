@@ -1,0 +1,6 @@
+RewriteEngine on
+
+RewriteBase /updatesite/java/sca/${pom.version}
+
+RewriteRule ^site.xml$ site--xml.cgi [L]
+
