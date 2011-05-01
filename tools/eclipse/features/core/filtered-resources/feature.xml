@@ -58,7 +58,7 @@ notices and license terms. Your use of these subcomponents is subject to the ter
 conditions of the licenses shown in the LICENSE file contained in this distribution
 and also available at
 
-http://tuscany.apache.org/updatesite/${pom.version}/LICENSE
+http://tuscany.apache.org/updatesite/java/sca/${pom.version}/LICENSE
    </license>
 
    <requires>
