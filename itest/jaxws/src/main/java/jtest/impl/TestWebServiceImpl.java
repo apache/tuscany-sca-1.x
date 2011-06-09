@@ -28,6 +28,7 @@ import jtest.Bean2;
 import jtest.ConcreteException;
 import jtest.TestAbstract;
 import jtest.TestConcrete1;
+import jtest.other.TestOther;
 import jtest.TestWebService;
 
 @WebService(endpointInterface = "jtest.TestWebService")
@@ -42,6 +43,10 @@ public class TestWebServiceImpl implements TestWebService {
         return "Hi!";
     }
 
+    public void sendOtherPackage(TestOther testData) {
+        System.out.println(testData.getGreeting());
+    }
+
     public void throwAbstract() throws AbstractException {
         throw new ConcreteException();
     }    
@@ -50,9 +55,9 @@ public class TestWebServiceImpl implements TestWebService {
         System.out.println(data.get(0) + " " + data.get(1));
     }
 
-    public Map<String, String> returnMap() {
-        return null;
-    }
+    //public Map<String, String> returnMap() {
+    //    return null;
+    //}
 
     public void sendWildcardExtends(Bean1<Bean2> arg) {
         System.out.println(arg);

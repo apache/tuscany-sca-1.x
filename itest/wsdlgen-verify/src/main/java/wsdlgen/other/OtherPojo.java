@@ -14,37 +14,35 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
- * under the License.
+ * under the License.    
  */
-package jtest;
 
-import java.util.List;
-import java.util.Map;
-import javax.jws.WebMethod;
-import javax.jws.WebService;
-import jtest.other.TestOther;
+package wsdlgen.other;
 
-@WebService
-public interface TestWebService {
+public class OtherPojo {
+    private double real, imaginary;
 
-    @WebMethod
-    void sendAbstract(TestAbstract testData);
+    public OtherPojo(double real, double imaginary) {
+        this.real = real;
+        this.imaginary = imaginary;
+    }
 
-    @WebMethod
-    String sendConcrete(TestConcrete1 testData);
+    public OtherPojo() {
+    }
 
-    @WebMethod
-    void sendOtherPackage(TestOther testData);
+    public double getReal() {
+        return real;
+    }
 
-    @WebMethod
-    void throwAbstract() throws AbstractException;
+    public void setReal(double real) {
+        this.real = real;
+    }
 
-    @WebMethod
-    void sendList(List<String> data);
+    public double getImaginary() {
+        return imaginary;
+    }
 
-    //@WebMethod
-    //Map<String, String> returnMap();
-
-    @WebMethod
-    void sendWildcardExtends(Bean1<Bean2> arg);
+    public void setImaginary(double imaginary) {
+        this.imaginary = imaginary;
+    }
 }

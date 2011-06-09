@@ -24,6 +24,7 @@ import javax.jws.WebParam;
 import javax.jws.soap.SOAPBinding;
 import commonj.sdo.DataObject;
 import org.osoa.sca.ServiceReference;
+import wsdlgen.other.OtherPojo;
 import wsdlgen.verify.BaseClass;
 import wsdlgen.verify.ComplexNumber;
 import wsdlgen.verify.DataTypes;
@@ -60,6 +61,9 @@ public class DataTypesImpl implements DataTypes {
     }
 
     public void testComplex(ComplexNumber complex) {
+    }
+
+    public void testOtherPackage(OtherPojo pojo) {
     }
 
     public void testByteArray(byte[] byteArray) {

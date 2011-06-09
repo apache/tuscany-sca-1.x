@@ -48,14 +48,18 @@ public class DataTypesTestCase extends BaseFramework {
     @Test
     public void testSimpleMultiArrayInt() throws Exception {
         Element paramElement = parameterElement("testSimpleMultiArrayInt");
-        assertEquals("ns1:intArray", paramElement.getAttribute("type"));
+        // prefix name can vary, so compare only the fixed parts
+        assertEquals("ns", paramElement.getAttribute("type").substring(0, 2));
+        assertEquals(":intArray", paramElement.getAttribute("type").substring(3));
         assertEquals("unbounded", paramElement.getAttribute("maxOccurs"));
     }
 
     @Test
     public void testSimpleMulti3ArrayInt() throws Exception {
         Element paramElement = parameterElement("testSimpleMulti3ArrayInt");
-        assertEquals("ns1:intArrayArray", paramElement.getAttribute("type"));
+        // prefix name can vary, so compare only the fixed parts
+        assertEquals("ns", paramElement.getAttribute("type").substring(0, 2));
+        assertEquals(":intArrayArray", paramElement.getAttribute("type").substring(3));
         assertEquals("unbounded", paramElement.getAttribute("maxOccurs"));
     }
 
@@ -98,6 +102,15 @@ public class DataTypesTestCase extends BaseFramework {
     public void testComplex() throws Exception {
         String paramType = parameterType("testComplex");
         assertEquals("tns:complexNumber", paramType);
+        assertEquals("xs:double", firstChild(typeDefinition(paramType)).getAttribute("type"));
+    }
+
+    @Test
+    public void testOtherPackage() throws Exception {
+        String paramType = parameterType("testOtherPackage");
+        // prefix name can vary, so compare only the fixed parts
+        assertEquals("ns", paramType.substring(0, 2));
+        assertEquals(":otherPojo", paramType.substring(3));
         assertEquals("xs:double", firstChild(typeDefinition(paramType)).getAttribute("type"));
     }
 

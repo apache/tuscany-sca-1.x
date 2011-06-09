@@ -25,6 +25,7 @@ import javax.jws.soap.SOAPBinding;
 import commonj.sdo.DataObject;
 import org.osoa.sca.ServiceReference;
 import org.osoa.sca.annotations.Remotable;
+import wsdlgen.other.OtherPojo;
 
 @Remotable
 public interface DataTypes {
@@ -48,6 +49,8 @@ public interface DataTypes {
     void testListWildcard(List<?> wild);
 
     void testComplex(ComplexNumber complex);
+
+    void testOtherPackage(OtherPojo pojo);
 
     void testByteArray(byte[] byteArray);
 
