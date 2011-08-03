@@ -20,6 +20,7 @@ package org.apache.tuscany.sca.implementation.spring.invocation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Logger;
 
 import org.apache.tuscany.sca.implementation.spring.SpringBeanElement;
 import org.apache.tuscany.sca.implementation.spring.SpringImplementation;
@@ -35,6 +36,7 @@ import org.apache.tuscany.sca.runtime.RuntimeComponentService;
  * @version $Rev: 511195 $ $Date: 2007-02-24 02:29:46 +0000 (Sat, 24 Feb 2007) $ 
  */
 public class SpringInvoker implements Invoker {
+    private static final Logger logger = Logger.getLogger(SpringInvoker.class.getName());
 
     private Method theMethod = null;
     private Object bean;
@@ -99,6 +101,9 @@ public class SpringInvoker implements Invoker {
             return ret;
         } catch (InvocationTargetException e) {
             throw new SpringInvocationException("Spring invoker invoke method '"+ theMethod.getName()+"' error.",e.getCause());
+        } catch (RuntimeException e) {
+        	logger.severe("TUSCANY-3909: RuntimeException, payload: " + payload + " payload type: " + (payload==null? null : payload.getClass()) + " method: " + theMethod);
+            throw new SpringInvocationException("Spring invoker invoke method '"+ theMethod.getName()+"' error.",e);
         } catch (Exception e) {
             throw new SpringInvocationException("Spring invoker invoke method '"+ theMethod.getName()+"' error.",e);
         }

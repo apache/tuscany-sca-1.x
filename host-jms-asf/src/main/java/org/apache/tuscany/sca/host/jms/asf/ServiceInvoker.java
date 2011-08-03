@@ -26,6 +26,8 @@ import java.util.logging.Logger;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
+import javax.jms.TextMessage;
 import javax.naming.NamingException;
 
 import org.apache.tuscany.sca.assembly.Binding;
@@ -69,6 +71,20 @@ public class ServiceInvoker implements MessageListener {
         try {
             invokeService(requestJMSMsg);
         } catch (Throwable e) {
+    		try {
+            	Object payload = null;
+            	String type = null;
+            	if (requestJMSMsg instanceof TextMessage) {
+    				payload = ((TextMessage)requestJMSMsg).getText();
+            		type = "text";
+            	} else if (requestJMSMsg instanceof ObjectMessage) {
+            		payload = ((ObjectMessage)requestJMSMsg).getObject();
+            		type = "objcet";
+            	}
+            	logger.severe("TUSCANY-3909: Throwable, requestJMSMsg type: " + type + " payload: " + payload);
+			} catch (JMSException e1) {
+            	logger.log(Level.SEVERE, "TUSCANY-3909: JMSException getting debug info", e1);
+			}
             logger.log(Level.SEVERE, "Exception send fault response '" + service.getName(), e);
         }
     }
