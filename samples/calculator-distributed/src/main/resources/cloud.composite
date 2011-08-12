@@ -17,9 +17,10 @@
  * specific language governing permissions and limitations
  * under the License.    
 -->
-<workspace xmlns="http://tuscany.apache.org/xmlns/sca/1.0" xmlns:ns1="http://tuscany.apache.org/xmlns/sca/1.0">
-  <contribution location="file:./src/main/resources/nodeA"  uri="nodeA"/>
-  <contribution location="file:./src/main/resources/nodeB"  uri="nodeB"/>
-  <contribution location="file:./src/main/resources/nodeC"  uri="nodeC"/>  
-  <contribution location="file:./src/main/resources/cloud" uri="http://tuscany.apache.org/cloud"/>  
-</workspace>
+<composite name="cloud.composite"
+  targetNamespace="http://tuscany.apache.org/xmlns/sca/1.0"
+  xmlns="http://www.osoa.org/xmlns/sca/1.0" xmlns:ns1="http://www.osoa.org/xmlns/sca/1.0">
+  <include name="ns2:NodeA" uri="http://tuscany.apache.org/cloud" xmlns:ns2="http://tuscany.apache.org/cloud"/>
+  <include name="ns2:NodeB" uri="http://tuscany.apache.org/cloud" xmlns:ns2="http://tuscany.apache.org/cloud"/>
+  <include name="ns2:NodeC" uri="http://tuscany.apache.org/cloud" xmlns:ns2="http://tuscany.apache.org/cloud"/>
+</composite>

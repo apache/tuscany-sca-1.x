@@ -26,8 +26,11 @@ import org.apache.tuscany.sca.node.launcher.DomainManagerLauncher;
  * in each node that talk to the registry should be replaced also. 
  */
 public class LaunchDomain {
+    private static String[] defaultRootDir = {"./target/classes/"};
+
     public static void main(String[] args) throws Exception {
-        DomainManagerLauncher.main(args);
+        String[] rootDir = args.length > 0 ? args : defaultRootDir;
+        DomainManagerLauncher.main(rootDir);
     }
 
 }

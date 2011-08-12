@@ -24,17 +24,17 @@ Please run the commands in this order.
 
 OR if you don't have ant, on Windows use
 
-java -cp src\main\resources;..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-distributed.jar node.LaunchDomain
-java -cp src\main\resources;..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-distributed.jar node.LaunchCalculatorNodeB
-java -cp src\main\resources;..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-distributed.jar node.LaunchCalculatorNodeC
-java -cp src\main\resources;..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-distributed.jar node.LaunchCalculatorNodeA
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-distributed.jar node.LaunchDomain
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-distributed.jar node.LaunchCalculatorNodeB
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-distributed.jar node.LaunchCalculatorNodeC
+java -cp ..\..\lib\tuscany-sca-manifest.jar;target\sample-calculator-distributed.jar node.LaunchCalculatorNodeA
 
 and on *nix do
 
-java -cp src/main/resources:../../lib/tuscany-sca-manifest.jar:target/sample-calculator-distributed.jar node.LaunchDomain
-java -cp src/main/resources:../../lib/tuscany-sca-manifest.jar:target/sample-calculator-distributed.jar node.LaunchCalculatorNodeB
-java -cp src/main/resources:../../lib/tuscany-sca-manifest.jar:target/sample-calculator-distributed.jar node.LaunchCalculatorNodeC
-java -cp src/main/resources:../../lib/tuscany-sca-manifest.jar:target/sample-calculator-distributed.jar node.LaunchCalculatorNodeA
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-calculator-distributed.jar node.LaunchDomain
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-calculator-distributed.jar node.LaunchCalculatorNodeB
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-calculator-distributed.jar node.LaunchCalculatorNodeC
+java -cp ../../lib/tuscany-sca-manifest.jar:target/sample-calculator-distributed.jar node.LaunchCalculatorNodeA
 
 The processes started on each of these command prompts can be ended by typing 'q'.
 
@@ -110,13 +110,17 @@ calculator/
                                     configuration to the distributed
                                     nodes
       resources/
-        cloud                     - The SCA composite files that describe
+        workspace.xml             - The domain manager configuration files that
+        domain.composite            describe the configuration of the domain's
+        cloud.composite             contributions, composites, and nodes
+
+        cloud/                    - The SCA composite files that describe
                                     the configuration of each node				
-        nodeA                     - the SCA assembly for nodeA's part of the 
+        nodeA/                    - the SCA assembly for nodeA's part of the 
                                     calculator application
-        nodeB                     - the SCA assembly for nodeB's part of the 
+        nodeB/                    - the SCA assembly for nodeB's part of the 
                                     calculator application
-        nodeC                     - the SCA assembly for nodeC's part of the 
+        nodeC/                    - the SCA assembly for nodeC's part of the 
                                     calculator application
     test/
       java/

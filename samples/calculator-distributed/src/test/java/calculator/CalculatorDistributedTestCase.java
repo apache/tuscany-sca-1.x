@@ -50,7 +50,7 @@ public class CalculatorDistributedTestCase {
             System.out.println("Setting up domain");
 
             DomainManagerLauncher managerLauncher = DomainManagerLauncher.newInstance();
-            manager = managerLauncher.createDomainManager();
+            manager = managerLauncher.createDomainManager("./target/classes/");
             manager.start();
             
             SCANodeFactory nodeFactory = SCANodeFactory.newInstance();
