@@ -99,6 +99,22 @@ public class ServicesTestCase {
 
     }
 
+    @Test
+    public void testSCASubGenericsServiceDoIt() throws Exception{
+        @SuppressWarnings("unchecked")
+        SubGenericsServiceClient<String> subGenericsServiceClient = domain.getService(SubGenericsServiceClient.class, "SubGenericsServiceClientSCAComponent");
+        String actual = "noting";
+        String expected = subGenericsServiceClient.doIt(actual);
+        Assert.assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testSCASubGenericsServicePrint() throws Exception{
+        @SuppressWarnings("unchecked")
+        SubGenericsServiceClient<String> subGenericsServiceClient = domain.getService(SubGenericsServiceClient.class, "SubGenericsServiceClientSCAComponent");
+        subGenericsServiceClient.print();
+    }
+
     public static void main(String[] args) throws Exception {
         ServicesTestCase.init();
         ServicesTestCase tester = new ServicesTestCase();
@@ -106,6 +122,8 @@ public class ServicesTestCase {
         tester.testBService();
         tester.testCService();
         tester.testDService();
+        tester.testSCASubGenericsServiceDoIt();
+        tester.testSCASubGenericsServicePrint();
         ServicesTestCase.destroy();
     }
 }
