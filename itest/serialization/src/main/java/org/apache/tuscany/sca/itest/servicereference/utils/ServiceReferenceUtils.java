@@ -23,7 +23,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.StringReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
+import org.apache.tuscany.sca.core.context.ServiceReferenceImpl;
 import org.osoa.sca.CallableReference;
 import org.osoa.sca.ServiceReference;
 
@@ -33,6 +38,7 @@ import org.osoa.sca.ServiceReference;
  * @version $Date $Revision$
  */
 public final class ServiceReferenceUtils {
+    private static final XMLInputFactory INPUT_FACTORY = XMLInputFactory.newInstance();
 
     /**
      * Constructor
@@ -68,6 +74,18 @@ public final class ServiceReferenceUtils {
         }
 
         return bos.toByteArray();
+    }
+
+    /**
+     * Serializes the specified ServiceReference to an XML String
+     * 
+     * @param obj The Object to Serialize
+     * @return The Serialized Object as an XML String
+     * @throws IOException Failed to Serialize the Object
+     */
+    public static String serializeServiceReferenceXML(ServiceReference<?> sr) throws IOException {
+        ServiceReferenceImpl<?> sri = (ServiceReferenceImpl<?>) sr;
+        return sri.toXMLString();
     }
 
     /**
@@ -123,5 +141,21 @@ public final class ServiceReferenceUtils {
                 bis.close();
             }
         }
+    }
+
+    /**
+     * Deserializes the specified XML String into a ServiceReference
+     * 
+     * @param serializedSR The Serialized ServiceReference to deserialize
+     * @return The deserialized ServiceReference
+     * @throws IOException Failed to deserialize the ServiceReference
+     * @throws ClassNotFoundException Failed to deserialize the ServiceReference
+     */
+    public static ServiceReference<?> deserializeServiceReferenceXML(String serializedSR)
+            throws Exception {
+        StringReader reader = new StringReader(serializedSR);
+        XMLStreamReader xmlReader = INPUT_FACTORY.createXMLStreamReader(reader);
+        ServiceReferenceImpl<?> sri = new ServiceReferenceImpl(xmlReader);
+        return (ServiceReference<?>) sri;
     }
 }

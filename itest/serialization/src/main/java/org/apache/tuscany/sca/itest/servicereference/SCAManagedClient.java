@@ -35,6 +35,13 @@ public interface SCAManagedClient {
     void testSerializeStatelessServiceReference() throws Exception;
 
     /**
+     * Tests Serializing a Stateless ServiceReference to XML
+     * 
+     * @throws Exception Test failed
+     */
+    void testSerializeStatelessServiceReferenceXML() throws Exception;
+
+    /**
      * Tests Serializing a Nested Stateless ServiceReference.
      * 
      * @throws Exception Test failed

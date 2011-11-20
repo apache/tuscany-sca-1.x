@@ -74,6 +74,20 @@ public class SerializeServiceReferenceTestCase {
     }
 
     /**
+     * Tests Serializing a Stateless ServiceReference to XML as managed
+     * SCA code
+     * 
+     * @throws Exception Test failed
+     */
+    @Test
+    public void testSerializeStatelessServiceReferenceInsideSCAtoXML() throws Exception {
+        SCAManagedClient client = domain.getService(
+                SCAManagedClient.class, "SCAManagedClientComponent");
+
+        client.testSerializeStatelessServiceReferenceXML();
+    }
+
+    /**
      * Tests Serializing a Nested Stateless ServiceReference as managed
      * SCA code.
      * 

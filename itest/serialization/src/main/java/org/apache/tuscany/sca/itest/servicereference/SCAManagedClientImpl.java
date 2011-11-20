@@ -53,6 +53,15 @@ public class SCAManagedClientImpl implements SCAManagedClient, StatelessServiceC
     public void testSerializeStatelessServiceReference() throws Exception {
         doTestSerializeStatelessServiceReference(statelessServiceRef);
     }
+
+    /**
+     * Tests Serializing a Stateless ServiceReference to XML
+     * 
+     * @throws Exception Test failed
+     */
+    public void testSerializeStatelessServiceReferenceXML() throws Exception {
+        doTestSerializeStatelessServiceReferenceXML(statelessServiceRef);
+    }
     
     /**
      * Tests Serializing a Nested Stateless ServiceReference.
@@ -81,6 +90,33 @@ public class SCAManagedClientImpl implements SCAManagedClient, StatelessServiceC
 
         // Deserialize the ServiceReference
         ServiceReference<?> deserializedSR = ServiceReferenceUtils.deserializeServiceReference(serializedSR);
+        Assert.assertNotNull(deserializedSR);
+        ServiceReference<StatelessService> regotServiceRef = (ServiceReference<StatelessService>) deserializedSR;
+        Assert.assertNotNull(regotServiceRef);
+
+        // Use the ServiceReference to access the Service.
+        StatelessService regotService = regotServiceRef.getService();
+        Assert.assertNotNull(regotService);
+    }
+
+    /**
+     * Tests Serializing a Stateless ServiceReference to XML.
+     * 
+     * @throws Exception Test failed
+     */
+    private void doTestSerializeStatelessServiceReferenceXML(
+            ServiceReference<StatelessService> aServiceRef) throws Exception {
+        Assert.assertNotNull(aServiceRef);
+
+        StatelessService service = aServiceRef.getService();
+        service.getCurrentTime();
+        
+        // Serialize the ServiceReference
+        String serializedSR = ServiceReferenceUtils.serializeServiceReferenceXML(aServiceRef);
+        Assert.assertNotNull(serializedSR);
+
+        // Deserialize the ServiceReference
+        ServiceReference<?> deserializedSR = ServiceReferenceUtils.deserializeServiceReferenceXML(serializedSR);
         Assert.assertNotNull(deserializedSR);
         ServiceReference<StatelessService> regotServiceRef = (ServiceReference<StatelessService>) deserializedSR;
         Assert.assertNotNull(regotServiceRef);
