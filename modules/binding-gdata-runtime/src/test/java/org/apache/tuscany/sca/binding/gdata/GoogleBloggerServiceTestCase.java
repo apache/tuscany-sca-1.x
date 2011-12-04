@@ -99,6 +99,7 @@ public class GoogleBloggerServiceTestCase {
     
     
 
+    @Ignore // TUSCANY-3991
     @Test
     public void testClientPost() throws Exception {
         if (testService == null) {
@@ -114,6 +115,7 @@ public class GoogleBloggerServiceTestCase {
     }
 
     
+    @Ignore // TUSCANY-3991 
     @Test
     public void testClientDelete() throws Exception {
         if (testService == null) {
