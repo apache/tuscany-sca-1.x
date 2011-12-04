@@ -18,13 +18,12 @@
  * under the License.    
 -->
 <sca:definitions xmlns="http://www.osoa.org/xmlns/sca/1.0"
- 			targetNamespace="http://www.osoa.org/xmlns/sca/1.0"
+ 			targetNamespace="http://helloworld"
  			xmlns:sca="http://www.osoa.org/xmlns/sca/1.0"
- 			xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0"
- 			xmlns:hw="http://helloworld">
+ 			xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.0">
  
  <!-- WS Security POLICY SETS -->
- <sca:policySet name="hw:wsClientAuthenticationPolicy"
+ <sca:policySet name="wsClientAuthenticationPolicy"
  	provides="authentication"
  	appliesTo="sca:reference/sca:binding.ws">
  	<tuscany:wsConfigParam>
@@ -40,7 +39,7 @@
  </sca:policySet>
  
  <!-- A policyset that uses WS Policy --> 
- <sca:policySet name="hw:wsSecurityPolicyForIntegrity"
+ <sca:policySet name="wsSecurityPolicyForIntegrity"
  	provides="integrity"
  	appliesTo="sca:reference/sca:binding.ws">
  	<wsp:Policy wsu:Id="SignOnly" 
@@ -116,7 +115,7 @@
  <!-- Since we use the helloworld-ws-service for the unit testing we need to 
 	 declare these policy sets and with the 'provides' set to the intents that the 
 	 composite in the helloworld-ws-service uses.  -->
- <sca:policySet name="hw:wsAuthenticationPolicy"
+ <sca:policySet name="wsAuthenticationPolicy"
  	provides="authentication"
  	appliesTo="sca:service/sca:binding.ws"
  	>
@@ -130,7 +129,7 @@
  	</tuscany:wsConfigParam>
  </sca:policySet>
  
- <sca:policySet name="hw:wsServerSecurityPolicyForIntegrity"
+ <sca:policySet name="wsServerSecurityPolicyForIntegrity"
  	provides="integrity"
  	appliesTo="sca:service/sca:binding.ws">
  	<wsp:Policy wsu:Id="SignOnly" 
