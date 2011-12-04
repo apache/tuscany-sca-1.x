@@ -71,12 +71,6 @@
             <artifactId>tuscany-host-http</artifactId>
             <version>1.7-SNAPSHOT</version>
         </dependency>
-        
-        <dependency>
-           <groupId>commons-httpclient</groupId>
-           <artifactId>commons-httpclient</artifactId>
-           <version>3.1</version>
-        </dependency>
 
         <dependency>
             <groupId>rome</groupId>
