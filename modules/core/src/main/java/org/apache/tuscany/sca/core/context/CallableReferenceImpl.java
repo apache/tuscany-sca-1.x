@@ -24,6 +24,8 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.xml.stream.XMLStreamReader;
@@ -32,11 +34,16 @@ import org.apache.tuscany.sca.assembly.Binding;
 import org.apache.tuscany.sca.assembly.Component;
 import org.apache.tuscany.sca.assembly.ComponentService;
 import org.apache.tuscany.sca.assembly.CompositeService;
+import org.apache.tuscany.sca.assembly.ConfiguredOperation;
+import org.apache.tuscany.sca.assembly.OperationsConfigurator;
 import org.apache.tuscany.sca.assembly.OptimizableBinding;
 import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.SCABinding;
 import org.apache.tuscany.sca.assembly.Service;
 import org.apache.tuscany.sca.assembly.builder.BindingBuilderExtension;
+import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
+import org.apache.tuscany.sca.contribution.resolver.ResolverExtension;
+import org.apache.tuscany.sca.core.assembly.BusinessInterfaceImpl;
 import org.apache.tuscany.sca.core.assembly.CompositeActivator;
 import org.apache.tuscany.sca.core.assembly.CompositeActivatorImpl;
 import org.apache.tuscany.sca.core.assembly.EndpointReferenceImpl;
@@ -50,6 +57,9 @@ import org.apache.tuscany.sca.core.invocation.ProxyFactory;
 import org.apache.tuscany.sca.interfacedef.Interface;
 import org.apache.tuscany.sca.interfacedef.InterfaceContract;
 import org.apache.tuscany.sca.interfacedef.java.JavaInterface;
+import org.apache.tuscany.sca.policy.PolicySet;
+import org.apache.tuscany.sca.policy.PolicySetAttachPoint;
+import org.apache.tuscany.sca.runtime.BusinessInterface;
 import org.apache.tuscany.sca.runtime.EndpointReference;
 import org.apache.tuscany.sca.runtime.ReferenceParameters;
 import org.apache.tuscany.sca.runtime.RuntimeComponent;
@@ -291,10 +301,13 @@ public class CallableReferenceImpl<B> implements CallableReference<B>, Externali
                 this.reference.setComponent(this.component);
                 clonedRef = reference;
                 ReferenceParameters parameters = null;
+                BusinessInterface businessInterfaceExt = null;
                 for (Object ext : reference.getExtensions()) {
                     if (ext instanceof ReferenceParameters) {
                         parameters = (ReferenceParameters)ext;
-                        break;
+                    } else if (ext instanceof BusinessInterface) {
+                        // this extension will always be present
+                        businessInterfaceExt = (BusinessInterface)ext;
                     }
                 }
                 if (parameters != null) {
@@ -344,6 +357,10 @@ public class CallableReferenceImpl<B> implements CallableReference<B>, Externali
                         binding = reference.getBindings().get(0);
                     }
                 }
+
+                ModelResolver resolver = ((ResolverExtension)ComponentContextHelper.getCurrentComponent()).getModelResolver();
+                componentContextHelper.resolveInterfaceContract(reference.getInterfaceContract(), resolver);
+
                 Interface i = reference.getInterfaceContract().getInterface();
                 if (i instanceof JavaInterface) {
                     JavaInterface javaInterface = (JavaInterface)i;
@@ -360,10 +377,38 @@ public class CallableReferenceImpl<B> implements CallableReference<B>, Externali
                                                                                        javaInterface.getJavaClass());
                         //FIXME: If the interface needs XSDs to be loaded (e.g., for static SDO),
                         // this needs to be done here.  We usually search for XSDs in the current
-                        // contribution at resolve time.  Is it possible to locate the current
-                        // contribution at runtime?
-                        }
+                        // contribution at resolve time.  If we need to add code here to do this,
+                        // we can resolve XSDs using the model resolver for the current component.
+                    }
                     this.businessInterface = (Class<B>)javaInterface.getJavaClass();
+                } else {
+                    // Allow privileged access to get ClassLoader. Requires RuntimePermission in
+                    // security policy.
+                    ClassLoader classLoader = AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
+                        public ClassLoader run() {
+                            return Thread.currentThread().getContextClassLoader();
+                        }
+                    });
+                    businessInterface = (Class<B>)classLoader.loadClass(businessInterfaceExt.getInterface());
+                    reference.setReference(componentContextHelper.createReference(businessInterface));
+                }
+
+                componentContextHelper.resolveBinding(binding, resolver);
+                if (binding instanceof PolicySetAttachPoint) {
+                    PolicySetAttachPoint policiedBinding = (PolicySetAttachPoint)binding;
+                    List<PolicySet> policySets = policiedBinding.getPolicySets();
+                    resolvePolicySets(policySets, resolver);
+                    List<PolicySet> applicablePolicySets = policiedBinding.getApplicablePolicySets();
+                    applicablePolicySets.addAll(policySets);
+                }
+                if (binding instanceof OperationsConfigurator) {
+                    OperationsConfigurator opConfigurator = (OperationsConfigurator)binding;
+                    for (ConfiguredOperation confOp : opConfigurator.getConfiguredOperations()) {
+                        List<PolicySet> policySets = confOp.getPolicySets();
+                        resolvePolicySets(policySets, resolver);
+                        List<PolicySet> applicablePolicySets = confOp.getApplicablePolicySets();
+                        applicablePolicySets.addAll(policySets);
+                    }
                 }
                 if (binding instanceof BindingBuilderExtension) {
                     ((BindingBuilderExtension)binding).getBuilder().build(component, reference, binding, null);
@@ -376,6 +421,26 @@ public class CallableReferenceImpl<B> implements CallableReference<B>, Externali
                 this.proxyFactory = this.compositeActivator.getProxyFactory();
             }
         }
+    }
+
+    /**
+     * Resolve policy sets attached to a specific SCA Construct
+     * @param policySets list of attached policy sets
+     * @param resolver
+     */
+    private void resolvePolicySets(List<PolicySet> policySets, ModelResolver resolver) {
+        List<PolicySet> resolvedPolicySets = new ArrayList<PolicySet>();
+        PolicySet resolvedPolicySet = null;
+        for (PolicySet policySet : policySets) {
+            if (policySet.isUnresolved()) {
+                resolvedPolicySet = resolver.resolveModel(PolicySet.class, policySet);
+                resolvedPolicySets.add(resolvedPolicySet);
+            } else {
+                resolvedPolicySets.add(policySet);
+            }
+        }
+        policySets.clear();
+        policySets.addAll(resolvedPolicySets);
     }
     
     /**
@@ -432,6 +497,9 @@ public class CallableReferenceImpl<B> implements CallableReference<B>, Externali
                 } catch (CloneNotSupportedException e) {
                     // will not happen
                 }
+                BusinessInterface bizInterface = new BusinessInterfaceImpl();
+                bizInterface.setInterface(businessInterface.getName());
+                clonedRef.getExtensions().add(bizInterface);
             }
             if (refParams == null) {
                 refParams = new ReferenceParametersImpl();
@@ -443,7 +511,6 @@ public class CallableReferenceImpl<B> implements CallableReference<B>, Externali
                         toRemove = extension;
                     }
                 }
-               
                 if (toRemove != null){
                     clonedRef.getExtensions().remove(toRemove);
                 }

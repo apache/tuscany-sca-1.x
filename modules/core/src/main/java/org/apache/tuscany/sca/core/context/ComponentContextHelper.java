@@ -45,6 +45,7 @@ import org.apache.tuscany.sca.assembly.Reference;
 import org.apache.tuscany.sca.assembly.Service;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessor;
 import org.apache.tuscany.sca.contribution.processor.StAXArtifactProcessorExtensionPoint;
+import org.apache.tuscany.sca.contribution.resolver.ModelResolver;
 import org.apache.tuscany.sca.core.assembly.CompositeActivator;
 import org.apache.tuscany.sca.core.invocation.ThreadMessageContext;
 import org.apache.tuscany.sca.interfacedef.Interface;
@@ -258,6 +259,34 @@ public class ComponentContextHelper {
 
     public Component fromXML(XMLStreamReader streamReader) throws IOException {
         return read(streamReader);
+    }
+
+    public void resolveInterfaceContract(InterfaceContract interfaceContract, ModelResolver resolver) throws Exception {
+        StAXArtifactProcessor processor = staxProcessors.getProcessor(interfaceContract.getClass());
+        processor.resolve(interfaceContract, resolver);
+    }
+
+    public void resolveBinding(Binding binding, ModelResolver resolver) throws Exception {
+        StAXArtifactProcessor processor = staxProcessors.getProcessor(binding.getClass());
+        processor.resolve(binding, resolver);
+    }
+
+    public Reference createReference(Class<?> businessInterface) throws InvalidInterfaceException {
+        InterfaceContract interfaceContract = createJavaInterfaceContract(businessInterface);
+        Reference reference = assemblyFactory.createReference();
+        reference.setInterfaceContract(interfaceContract);
+        return reference;
+    }
+
+    private InterfaceContract createJavaInterfaceContract(Class<?> businessInterface) throws InvalidInterfaceException {
+        InterfaceContract interfaceContract = javaInterfaceFactory.createJavaInterfaceContract();
+        JavaInterface callInterface = javaInterfaceFactory.createJavaInterface(businessInterface);
+        interfaceContract.setInterface(callInterface);
+        if (callInterface.getCallbackClass() != null) {
+            interfaceContract.setCallbackInterface(javaInterfaceFactory.createJavaInterface(
+                callInterface.getCallbackClass()));
+        }
+        return interfaceContract;
     }
 
     public static RuntimeComponent getCurrentComponent() {
