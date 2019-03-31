@@ -267,7 +267,7 @@ public class JSONRPCServiceServlet extends JSONRPCServlet {
             throw new RuntimeException("Unable to parse request", e);
         }
 
-        String method = jsonReq.getString("method");
+        String method = jsonReq.optString("method");
         if ((method != null) && (method.indexOf('.') < 0)) {
             jsonReq.putOpt("method", "Service" + "." + method);
         }
